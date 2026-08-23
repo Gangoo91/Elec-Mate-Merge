@@ -627,7 +627,7 @@ export default function FireAlarmCertificatePage() {
 
       <SEOCTASection
         heading="Stop writing fire alarm certificates by hand"
-        subheading="Join 1,000+ UK electricians creating professional digital certificates. 7-day free trial, cancel anytime."
+        subheading="Join 1,600+ UK electricians creating professional digital certificates. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom spacer for mobile sticky CTA */}

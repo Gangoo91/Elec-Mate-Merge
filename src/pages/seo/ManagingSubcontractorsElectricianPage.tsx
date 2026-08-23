@@ -587,7 +587,7 @@ export default function ManagingSubcontractorsElectricianPage() {
       faqHeading="Frequently Asked Questions About Managing Electrical Subcontractors"
       relatedPages={relatedPages}
       ctaHeading="Manage your jobs and subcontractors with Elec-Mate"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for job scheduling, electrical certificates, quoting, and invoicing. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for job scheduling, electrical certificates, quoting, and invoicing. 7-day free trial, cancel anytime."
     />
   );
 }

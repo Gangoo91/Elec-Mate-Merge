@@ -49,7 +49,7 @@ const quickCheckQuestions = [
     ],
     correctIndex: 2,
     explanation:
-      'Pipe sizing must balance acceptable water velocity (typically &lt;1.5 m/s to avoid noise) with total system pressure drop that the pump can overcome. Too small causes noise and high pressure drop; too large wastes material and slows response.',
+      'Pipe sizing must balance acceptable water velocity (typically <1.5 m/s to avoid noise) with total system pressure drop that the pump can overcome. Too small causes noise and high pressure drop; too large wastes material and slows response.',
   },
   {
     id: 'index-circuit',

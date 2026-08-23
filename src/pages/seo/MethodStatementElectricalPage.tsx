@@ -781,7 +781,7 @@ export default function MethodStatementElectricalPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Generate method statements with AI in seconds"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for AI-powered method statements, risk assessments, and complete RAMS packs. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI-powered method statements, risk assessments, and complete RAMS packs. 7-day free trial, cancel anytime."
     />
   );
 }

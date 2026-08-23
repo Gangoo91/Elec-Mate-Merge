@@ -277,7 +277,7 @@ const HNCModule4Section2_5 = () => {
 
           <TLDR
             points={[
-              'PVC (70&nbsp;°C) is the workhorse for general final-circuit wiring; XLPE (90&nbsp;°C) wins for sub-mains, plant rooms and where higher I_z is needed.',
+              'PVC (70 °C) is the workhorse for general final-circuit wiring; XLPE (90 °C) wins for sub-mains, plant rooms and where higher I_z is needed.',
               'LSF/LSZH cables produce low smoke and low/zero halogen on burning — mandatory in escape routes, public buildings, transport and underground stations.',
               'SWA (steel wire armour) provides mechanical protection for buried, plant-room and high-risk routes; AWA (aluminium wire armour) for single-core to avoid eddy currents.',
               'Fire-resistant cables (FP200, FP400, MICC) keep critical circuits live for the rated period — essential for fire alarm, emergency lighting, smoke extract, sprinkler.',
@@ -753,7 +753,7 @@ const HNCModule4Section2_5 = () => {
 
           <KeyTakeaways
             points={[
-              'PVC (70&nbsp;°C) is the general-purpose workhorse; XLPE (90&nbsp;°C) gives ≈ 20% more I_t and survives plant-room ambients better.',
+              'PVC (70 °C) is the general-purpose workhorse; XLPE (90 °C) gives ≈ 20% more I_t and survives plant-room ambients better.',
               'LSF/LSZH cables (BS 6724, BS 7211) are mandatory for escape routes and many public buildings — Building Regs Part B requirement.',
               'SWA (BS 6724) gives mechanical protection for buried and high-risk routes; AWA for single-core to avoid eddy-current losses.',
               'Fire-resistant cables: FP200 (60-min PH30), FP400 (120-min PH120), MICC (mineral-insulated, longest-rated) — each to specific BS EN 50200/50362 ratings.',

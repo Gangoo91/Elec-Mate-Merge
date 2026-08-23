@@ -593,7 +593,7 @@ export default function RewireCostLondonPage() {
       faqHeading="Frequently Asked Questions About Rewire Costs in London"
       relatedPages={relatedPages}
       ctaHeading="Quote London Rewires with Real Trade Pricing"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for AI-powered rewire quoting, on-site EIC certificates, and project management. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI-powered rewire quoting, on-site EIC certificates, and project management. 7-day free trial."
     />
   );
 }

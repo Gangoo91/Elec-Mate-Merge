@@ -588,7 +588,7 @@ export default function Level3ElectricalPage() {
 
       <SEOCTASection
         heading="Advance your electrical career"
-        subheading="Join 1,000+ UK electricians studying for qualifications and building their futures. 7-day free trial, cancel anytime."
+        subheading="Join 1,600+ UK electricians studying for qualifications and building their futures. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom spacer for mobile sticky CTA */}

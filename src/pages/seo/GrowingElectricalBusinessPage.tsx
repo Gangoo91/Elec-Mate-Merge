@@ -569,7 +569,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="The business platform built for growing electrical companies"
-          description="Join 1,000+ UK electricians using Elec-Mate for quoting, invoicing, job management, and certification. From sole trader to multi-van operation."
+          description="Join 1,600+ UK electricians using Elec-Mate for quoting, invoicing, job management, and certification. From sole trader to multi-van operation."
           icon={TrendingUp}
         />
       </>

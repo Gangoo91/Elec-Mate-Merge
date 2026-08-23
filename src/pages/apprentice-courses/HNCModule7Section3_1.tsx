@@ -73,7 +73,7 @@ const quickCheckQuestions = [
     ],
     correctIndex: 1,
     explanation:
-      'CRI (Colour Rendering Index) ranges from 0-100, with higher values indicating better colour rendering. Ra &gt; 90 is considered excellent, accurately revealing object colours compared to natural light.',
+      'CRI (Colour Rendering Index) ranges from 0-100, with higher values indicating better colour rendering. Ra > 90 is considered excellent, accurately revealing object colours compared to natural light.',
   },
 ];
 
@@ -165,14 +165,14 @@ const quizQuestions = [
     question:
       'For retail applications displaying fresh food, which CRI value would be considered acceptable?',
     options: [
-      'Ra &gt; 60',
-      'Ra &gt; 70',
-      'Ra &gt; 80',
-      'Ra &gt; 90',
+      'Ra > 60',
+      'Ra > 70',
+      'Ra > 80',
+      'Ra > 90',
     ],
     correctAnswer: 3,
     explanation:
-      'Retail food displays typically require Ra &gt; 90 for accurate colour rendering, ensuring meat appears red, vegetables appear vibrant, and customers perceive food as fresh and appetising.',
+      'Retail food displays typically require Ra > 90 for accurate colour rendering, ensuring meat appears red, vegetables appear vibrant, and customers perceive food as fresh and appetising.',
   },
   {
     id: 8,
@@ -251,7 +251,7 @@ const faqs = [
   {
     question: 'What is the difference between CCT and CRI, and why do both matter?',
     answer:
-      'CCT (Correlated Colour Temperature) describes the apparent warmth or coolness of the light itself - whether it appears yellowish (2700K) or bluish (6500K). CRI (Colour Rendering Index) describes how accurately the light reveals the colours of objects compared to a reference illuminant. A lamp can have any CCT with any CRI. For example, you might want 3000K warm light (CCT) with Ra &gt; 90 (CRI) for a restaurant to create ambience while ensuring food looks appetising.',
+      'CCT (Correlated Colour Temperature) describes the apparent warmth or coolness of the light itself - whether it appears yellowish (2700K) or bluish (6500K). CRI (Colour Rendering Index) describes how accurately the light reveals the colours of objects compared to a reference illuminant. A lamp can have any CCT with any CRI. For example, you might want 3000K warm light (CCT) with Ra > 90 (CRI) for a restaurant to create ambience while ensuring food looks appetising.',
   },
   {
     question: 'How do I convert between photometric units?',

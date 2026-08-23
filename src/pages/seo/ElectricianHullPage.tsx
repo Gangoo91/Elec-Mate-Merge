@@ -436,7 +436,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Hull electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
+          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -474,7 +474,7 @@ export default function ElectricianHullPage() {
       faqHeading="Frequently Asked Questions About Electricians in Hull"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Hull Electricians"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for electricians working across Yorkshire and the Humber. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for electricians working across Yorkshire and the Humber. 7-day free trial."
     />
   );
 }

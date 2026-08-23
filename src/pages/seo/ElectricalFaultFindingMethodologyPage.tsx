@@ -732,7 +732,7 @@ export default function ElectricalFaultFindingMethodologyPage() {
       faqHeading="Frequently Asked Questions About Electrical Fault Finding"
       relatedPages={relatedPages}
       ctaHeading="Document Fault Investigations and Certify Repairs on Your Phone"
-      ctaSubheading="Elec-Mate's AI fault diagnosis and certification tools help you record findings, attach photos, and issue professional reports and certificates on site. Join 1,000+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate's AI fault diagnosis and certification tools help you record findings, attach photos, and issue professional reports and certificates on site. Join 1,600+ UK electricians. 7-day free trial."
     />
   );
 }

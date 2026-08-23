@@ -138,7 +138,7 @@ export const howToPriceMaintenanceContractConfig: GeneratedGuideConfig = {
           tone: 'info',
           title: 'For electricians: stop under-pricing your work',
           body:
-            'Join 1,000+ UK electricians using Elec-Mate to quote maintenance contract (annual / quarterly) at fair-margin prices, issue compliant certificates, and get paid faster. 7-day free trial.',
+            'Join 1,600+ UK electricians using Elec-Mate to quote maintenance contract (annual / quarterly) at fair-margin prices, issue compliant certificates, and get paid faster. 7-day free trial.',
         },
       ],
     },
@@ -240,5 +240,5 @@ export const howToPriceMaintenanceContractConfig: GeneratedGuideConfig = {
   ],
   ctaHeading: 'Stop Under-Pricing Maintenance Contract (Annual / Quarterly)',
   ctaSubheading:
-    'Join 1,000+ UK electricians using Elec-Mate to quote maintenance contract (annual / quarterly) at fair-margin prices, issue compliant certificates, and get paid faster. 7-day free trial.',
+    'Join 1,600+ UK electricians using Elec-Mate to quote maintenance contract (annual / quarterly) at fair-margin prices, issue compliant certificates, and get paid faster. 7-day free trial.',
 };

@@ -7,7 +7,7 @@ import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Units and Measurement - MOET Module 2 Section 1.4';
 const DESCRIPTION =
-  'Comprehensive guide to SI units, derived electrical units, prefixes, measurement accuracy, precision, instrument resolution, calibration, and measurement uncertainty for electrical maintenance technicians per BS 7671:2018+A3:2024.';
+  'Comprehensive guide to SI units, derived electrical units, prefixes, measurement accuracy, precision, instrument resolution, calibration, and measurement uncertainty for electrical maintenance technicians per BS 7671:2018+A4:2026.';
 
 const quickCheckQuestions = [
   {
@@ -1090,7 +1090,7 @@ const MOETModule2Section1_4 = () => {
               <div>
                 <p className="font-medium text-white mb-1">Key References</p>
                 <ul className="space-y-0.5">
-                  <li>BS 7671:2018+A3:2024 — Chapter 6, test requirements</li>
+                  <li>BS 7671:2018+A4:2026 — Chapter 6, test requirements</li>
                   <li>GS38 — Voltage indicator requirements</li>
                   <li>BS EN 61557 — Electrical safety test instruments</li>
                   <li>ISO/IEC 17025 — Calibration laboratory standard</li>

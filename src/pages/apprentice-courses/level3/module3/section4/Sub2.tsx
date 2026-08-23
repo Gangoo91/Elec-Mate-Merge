@@ -525,7 +525,7 @@ export default function Sub2() {
           <ConceptBlock
             title="Insulation testing a transformer — what each reading means"
             plainEnglish="Insulation resistance test on a transformer measures whether the windings are still electrically isolated from each other and from the core/frame. Three readings: HV-to-LV, HV-to-frame, LV-to-frame. All should be in the GΩ range when new; degradation over decades is normal."
-            onSite="L3 commissioning routine for a new transformer: use a 5 kV insulation tester (1 kV is not enough on HV windings). Test HV-LV at 5 kV for 1 minute; HV-frame at 5 kV for 1 minute; LV-frame at 1 kV for 1 minute. Record polarisation index (PI) — ratio of 10-min reading to 1-min reading. PI &gt; 2.0 = good insulation; PI &lt; 1.0 = wet/damaged insulation, do not energise."
+            onSite="L3 commissioning routine for a new transformer: use a 5 kV insulation tester (1 kV is not enough on HV windings). Test HV-LV at 5 kV for 1 minute; HV-frame at 5 kV for 1 minute; LV-frame at 1 kV for 1 minute. Record polarisation index (PI) — ratio of 10-min reading to 1-min reading. PI > 2.0 = good insulation; PI < 1.0 = wet/damaged insulation, do not energise."
           >
             <p>Typical pass/fail values:</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">

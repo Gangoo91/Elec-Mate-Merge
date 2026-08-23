@@ -324,7 +324,7 @@ const MOETModule2Section2_1 = () => {
             </p>
             <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
               <li className="pl-1">
-                <strong>BS 7671:2018+A3:2024:</strong> DC voltage bands — Band I up to 120 V DC
+                <strong>BS 7671:2018+A4:2026:</strong> DC voltage bands — Band I up to 120 V DC
               </li>
               <li className="pl-1">
                 <strong>BS EN 62040:</strong> UPS systems — DC battery maintenance

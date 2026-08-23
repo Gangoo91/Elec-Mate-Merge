@@ -536,7 +536,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your Sheffield electrical business with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, instant PDF export, and professional quoting."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion, instant PDF export, and professional quoting."
           icon={FileCheck2}
         />
       </>
@@ -573,7 +573,7 @@ export default function ConsumerUnitReplacementSheffieldPage() {
       faqHeading="Frequently Asked Questions About Consumer Unit Replacement in Sheffield"
       relatedPages={relatedPages}
       ctaHeading="Complete Consumer Unit Certificates on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion with instant PDF export and schedule of test results. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion with instant PDF export and schedule of test results. 7-day free trial, cancel anytime."
     />
   );
 }

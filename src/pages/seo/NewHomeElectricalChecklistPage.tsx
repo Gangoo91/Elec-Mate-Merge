@@ -635,7 +635,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win new homeowner electrical work with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -672,7 +672,7 @@ export default function NewHomeElectricalChecklistPage() {
       faqHeading="Frequently Asked Questions About Electrical Safety in a New Home"
       relatedPages={relatedPages}
       ctaHeading="Complete Home Electrical Inspections on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning and instant PDF export. Deliver reports to new homeowners before you leave. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning and instant PDF export. Deliver reports to new homeowners before you leave. 7-day free trial."
     />
   );
 }

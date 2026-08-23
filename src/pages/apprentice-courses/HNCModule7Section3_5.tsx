@@ -179,7 +179,7 @@ const quizQuestions = [
       'SHR = 1.0 to 1.5',
       'SHR = 2.0 to 2.5',
       'SHR ≤ 1.0',
-      'SHR &gt; 3.0',
+      'SHR > 3.0',
     ],
     correctAnswer: 0,
     explanation:

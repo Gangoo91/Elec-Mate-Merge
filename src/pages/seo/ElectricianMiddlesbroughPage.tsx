@@ -510,7 +510,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Middlesbrough electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
+          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -549,7 +549,7 @@ export default function ElectricianMiddlesbroughPage() {
       faqHeading="Frequently Asked Questions About Electricians in Middlesbrough"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Middlesbrough Electricians"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for electricians working across Teesside and the North East. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for electricians working across Teesside and the North East. 7-day free trial."
     />
   );
 }

@@ -534,7 +534,7 @@ export default function GymElectricalCostPage() {
       faqHeading="Frequently Asked Questions About Gym Electrical Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Gym Electrical with Equipment and Zone Pricing"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for gym fit-out quoting with equipment schedules, wet area provisions, and professional PDF output. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for gym fit-out quoting with equipment schedules, wet area provisions, and professional PDF output. 7-day free trial."
     />
   );
 }

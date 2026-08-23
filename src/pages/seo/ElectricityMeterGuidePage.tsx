@@ -511,7 +511,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Are you an electrician? Manage all your certification with"
-          description="Complete EICs, EICRs, and minor works certificates on your phone. Join 1,000+ UK electricians. 7-day free trial, cancel anytime."
+          description="Complete EICs, EICRs, and minor works certificates on your phone. Join 1,600+ UK electricians. 7-day free trial, cancel anytime."
           icon={FileCheck2}
         />
       </>
@@ -548,7 +548,7 @@ export default function ElectricityMeterGuidePage() {
       faqHeading="Frequently Asked Questions About Electricity Meters"
       relatedPages={relatedPages}
       ctaHeading="Are You an Electrician? Try Elec-Mate Free"
-      ctaSubheading="Complete all your electrical certificates on your phone, including EICs for consumer unit work. Join 1,000+ UK electricians. 7-day free trial."
+      ctaSubheading="Complete all your electrical certificates on your phone, including EICs for consumer unit work. Join 1,600+ UK electricians. 7-day free trial."
     />
   );
 }

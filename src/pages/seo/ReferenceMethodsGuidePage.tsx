@@ -861,7 +861,7 @@ export default function ReferenceMethodsGuidePage() {
       faqHeading="Frequently Asked Questions About Reference Methods"
       relatedPages={relatedPages}
       ctaHeading="Cable Sizing with Automatic Reference Methods"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate's 70+ calculators. Select the installation method, enter the conditions — cable sizing is done in seconds with the correct Appendix 4 table applied automatically. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate's 70+ calculators. Select the installation method, enter the conditions — cable sizing is done in seconds with the correct Appendix 4 table applied automatically. 7-day free trial, cancel anytime."
     />
   );
 }

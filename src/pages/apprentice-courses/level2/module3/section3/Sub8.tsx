@@ -60,7 +60,7 @@ const checks = [
       'You are picking the protective device for the 7 kW EV charger circuit. Which RCD type is required?',
     options: [
       'Type AC — adequate because the charge point is a fixed wired load with no socket-outlet.',
-      'Type B — required because the EV charger&rsquo;s onboard charger can produce smooth DC fault current that would blind a Type A or AC.',
+      'Type B — required because the EV charger’s onboard charger can produce smooth DC fault current that would blind a Type A or AC.',
       'Type F — required because the charger only ever produces pulsating DC fault current.',
       'No RCD — the upstream Type C MCB provides all the fault protection the circuit needs.',
     ],
@@ -73,7 +73,7 @@ const checks = [
     question:
       'Single-phase 100 A intake into a small commercial unit, no exposed location, no overhead supply. What SPD do you fit at the origin?',
     options: [
-      'Type 1 SPD — mandatory at every consumer-unit origin regardless of the building&rsquo;s exposure.',
+      'Type 1 SPD — mandatory at every consumer-unit origin regardless of the building’s exposure.',
       'Type 3 SPD — the correct origin device because it gives the deepest level of clamping.',
       'Type 2 SPD — appropriate for a sub-board / consumer-unit-equivalent origin where a Type 1 lightning current SPD is not justified by the BS 7671 risk assessment.',
       'No SPD — surge protection is only required where an external lightning protection system is fitted.',
@@ -158,7 +158,7 @@ const quizQuestions = [
   {
     id: 6,
     question:
-      'The architect&rsquo;s drawing puts the EV charger 80 m from the CU. At 30 A design current on 6 mm² SWA (mV/A/m ≈ 7.3), the voltage drop is about:',
+      'The architect’s drawing puts the EV charger 80 m from the CU. At 30 A design current on 6 mm² SWA (mV/A/m ≈ 7.3), the voltage drop is about:',
     options: [
       '~1.75 V',
       '~52.6 V',
@@ -228,7 +228,7 @@ const faqs = [
   {
     question: 'I have specced everything correctly but the customer wants to add a sauna later — what do I do?',
     answer:
-      'Future-proof now or future-pain later. Two options. (1) Add a clearly labelled spare way on the CU (with the busbar capacity to take it) and run a draw-string in the trunking on the relevant route. (2) Size the sub-main and main cables now for the eventual full load, not just today&rsquo;s. The cost difference between a 16 mm² and a 25 mm² sub-main fitted today is small; the cost of upgrading it later is enormous. A senior electrician will always size the spine of the install for the building&rsquo;s likely 10-year future, not just the current spec.',
+      'Future-proof now or future-pain later. Two options. (1) Add a clearly labelled spare way on the CU (with the busbar capacity to take it) and run a draw-string in the trunking on the relevant route. (2) Size the sub-main and main cables now for the eventual full load, not just today’s. The cost difference between a 16 mm² and a 25 mm² sub-main fitted today is small; the cost of upgrading it later is enormous. A senior electrician will always size the spine of the install for the building’s likely 10-year future, not just the current spec.',
   },
 ];
 
@@ -313,7 +313,7 @@ export default function Sub8() {
 
           <ConceptBlock
             title="Build the load list, then apply diversity"
-            plainEnglish="Sum every circuit&rsquo;s rated demand assuming each runs at full load. That is the worst-case connected total. Apply IET On-Site Guide Appendix A diversity to get the realistic maximum demand. Compare that to the 100 A supply."
+            plainEnglish="Sum every circuit’s rated demand assuming each runs at full load. That is the worst-case connected total. Apply IET On-Site Guide Appendix A diversity to get the realistic maximum demand. Compare that to the 100 A supply."
             onSite="Diversity is the single biggest tool you have for keeping a small unit on a single-phase supply. Skip it and every job needs a 3-phase upgrade."
           >
             <p>
@@ -588,7 +588,7 @@ export default function Sub8() {
           <ContentEyebrow>Stage 6 — Containment fill check (Sub 3.6)</ContentEyebrow>
 
           <ConceptBlock
-            title="The 50&times;50 mm trunking carrying 6 socket + 4 lighting singles"
+            title="The 50×50 mm trunking carrying 6 socket + 4 lighting singles"
             plainEnglish="Six 32 A circuits worth of singles (line + neutral + CPC for each ring = 18 conductors of 2.5 mm²) plus four 6/10 A lighting circuits (12 conductors of 1.5 mm²) all share the back-of-house ceiling void trunking. Run the OSG Appendix H fill calc."
           >
             <p>
@@ -658,7 +658,7 @@ export default function Sub8() {
           />
 
           <Scenario
-            title="Apprentice spots that the architect&rsquo;s drawing puts the EV charger 80 m from the CU"
+            title="Apprentice spots that the architect’s drawing puts the EV charger 80 m from the CU"
             situation={
               <>
                 You are halfway through the Stage 4 schedule. Circuit S6 — the EV charger —

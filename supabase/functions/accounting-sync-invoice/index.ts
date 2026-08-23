@@ -379,6 +379,38 @@ Deno.serve(async (req: Request) => {
               : 'Discount',
         };
       })(),
+      /*
+       * ELE-1571 — the third-party grant.
+       *
+       * Read straight from settings rather than derived from the stored
+       * figures the way `discount` is, because a grant leaves NO trace in
+       * subtotal/vat/total: it comes off the gross after VAT, so the identity
+       * the discount derivation relies on cannot see it.
+       *
+       * Capped at the invoice total. `computeQuoteTotals` caps at
+       * `total − cisAmount`, but CIS is not represented in this sync at all,
+       * so the total is the correct bound for what is actually being pushed.
+       * Anything above it would produce a negative invoice.
+       */
+      grant: (() => {
+        const st = invoice.settings as Record<string, unknown> | null;
+        if (!st || (st.grantEnabled !== true && st.grantEnabled !== 'true')) return null;
+
+        const raw = Number(st.grantAmount) || 0;
+        const total = parseFloat(String(invoice.total)) || 0;
+        const amount = Math.round(Math.min(raw, Math.max(0, total)) * 100) / 100;
+
+        // A penny either way is rounding, not a grant.
+        if (!Number.isFinite(amount) || amount <= 0.01) return null;
+
+        return {
+          amount,
+          label:
+            typeof st.grantLabel === 'string' && st.grantLabel.trim()
+              ? String(st.grantLabel).trim()
+              : 'Grant',
+        };
+      })(),
     };
 
     // Sync to provider - WITHOUT retry/timeout wrappers for now to simplify debugging
@@ -739,6 +771,19 @@ interface InvoiceData {
   profit: number;
   /** Invoice-level discount as a cash amount, with the user's own wording. */
   discount?: { amount: number; label: string } | null;
+  /**
+   * ELE-1571 — third-party grant (OZEV and similar), as a cash amount off the
+   * VAT-INCLUSIVE total, with the user's own wording.
+   *
+   * ⚠️ NOT a discount, and must never be routed through the discount path. A
+   * discount reduces the price and VAT is recalculated on the lower figure. A
+   * grant is consideration from a third party: the supply is still worth the
+   * full amount, VAT stays due on all of it, and only the customer's share
+   * falls. Both providers therefore carry this as its own **zero-VAT negative
+   * line**, which lands the invoice on what the customer actually owes while
+   * leaving the VAT untouched.
+   */
+  grant?: { amount: number; label: string } | null;
   vatAmount: number;
   total: number;
   notes?: string;
@@ -883,6 +928,45 @@ async function syncToXero(
     TaxType: invoice.vatAmount > 0 ? 'OUTPUT2' : 'NONE', // 20% VAT or no VAT
   }));
 
+  /*
+   * ELE-1571 — the grant, as its own negative line carrying NO VAT.
+   *
+   * Appended AFTER `assertLinesReconcile`, deliberately: the sales lines must
+   * still sum to the true net, and this line then takes the customer's share
+   * down without touching it.
+   *
+   * `TaxType: 'NONE'` is the whole point. Coding it OUTPUT2 would credit VAT
+   * back on the grant and under-declare the tax — the supply is still worth
+   * the full amount and HMRC is still owed VAT on all of it; only who pays
+   * the balance changes. With NONE, Xero lands on:
+   *
+   *   net 833.33 + VAT 166.67 − grant 500.00 = 500.00 due
+   *
+   * which is exactly what the certificate-side PDF tells the customer to pay,
+   * so the invoice settles in Xero when they pay it instead of sitting open
+   * for the grant amount forever.
+   *
+   * Must be pushed BEFORE the isUpdate block below — that block compares line
+   * COUNTS against the live Xero invoice, so the grant line has to be part of
+   * the array being counted.
+   */
+  const xeroGrant = invoice.grant?.amount ?? 0;
+  if (xeroGrant > 0) {
+    lineItems.push({
+      Description: invoice.grant?.label ?? 'Grant',
+      Quantity: 1,
+      UnitAmount: -xeroGrant,
+      LineAmount: -xeroGrant,
+      AccountCode: '200',
+      TaxType: 'NONE',
+    });
+  }
+
+  // What Xero will actually hold once the grant line is applied. Used for the
+  // already-settled guard below — comparing against `invoice.total` there
+  // would miss the case where payments already exceed the grant-reduced total.
+  const xeroPayableTotal = Math.round(((invoice.total || 0) - xeroGrant) * 100) / 100;
+
   // Create the invoice — or update it in place. Xero's POST /Invoices
   // patches the existing record when the body carries its InvoiceID;
   // without it every re-sync created a duplicate invoice (ELE-1339).
@@ -907,10 +991,10 @@ async function syncToXero(
       const existing = (await existingRes.json()).Invoices?.[0];
       const settled = Number(existing?.AmountPaid || 0) + Number(existing?.AmountCredited || 0);
       if (settled > 0) {
-        if (invoice.total < settled) {
+        if (xeroPayableTotal < settled) {
           throw new SyncBlockedError(
             'Xero blocked the update',
-            `£${settled.toFixed(2)} is already paid or credited against this invoice in Xero, and the new total £${invoice.total.toFixed(2)} is below that. Adjust the payments in Xero first, then Re-sync.`
+            `£${settled.toFixed(2)} is already paid or credited against this invoice in Xero, and the new total £${xeroPayableTotal.toFixed(2)} is below that. Adjust the payments in Xero first, then Re-sync.`
           );
         }
         const existingLines = existing?.LineItems || [];
@@ -1219,6 +1303,33 @@ async function syncToQuickBooks(
     ')'
   );
 
+  /*
+   * Refuse to sync an invoice that carries VAT when no sales tax code could be
+   * resolved in the QuickBooks company.
+   *
+   * Without this the lines go with no `TaxCodeRef`, QuickBooks adds no tax, and
+   * the invoice lands at the EX-VAT net — silently short by the whole VAT
+   * amount. Measured on a real sync: a £1,000.00 invoice (£833.33 + £166.67
+   * VAT) arrived in QuickBooks as £833.33, with a no-grant control invoice
+   * proving it was unrelated to the grant line.
+   *
+   * A wrong figure sitting in someone's books is far worse than a sync that
+   * refuses and says why, so this blocks with an actionable message rather
+   * than warning into logs nobody reads. `reverseCharge` is deliberately
+   * excluded: that path legitimately carries no VAT, and it already falls back
+   * to zero-rated with its own warning.
+   */
+  if (invoice.vatAmount > 0 && !vatTaxCodeId && invoice.reverseCharge !== true) {
+    throw new SyncBlockedError(
+      'QuickBooks has no VAT code to use',
+      `This invoice includes £${invoice.vatAmount.toFixed(2)} VAT, but no standard-rated sales tax code could be found in your QuickBooks company. Syncing would post it as £${(
+        (invoice.total || 0) - (invoice.vatAmount || 0)
+      ).toFixed(2)} instead of £${(invoice.total || 0).toFixed(
+        2
+      )} — short by the VAT. Turn on VAT in QuickBooks (Taxes → Set up VAT) so a 20% code exists, then Re-sync.`
+    );
+  }
+
   // Format line items for QuickBooks - distribute overhead/profit into each line item
   // MUST include ItemRef or amounts are ignored!
   //
@@ -1261,6 +1372,45 @@ async function syncToQuickBooks(
       DiscountLineDetail: {
         PercentBased: false,
         ...(vatTaxCodeId ? { TaxCodeRef: { value: vatTaxCodeId } } : {}),
+      },
+    });
+  }
+
+  /*
+   * ELE-1571 — the grant.
+   *
+   * ⚠️ Deliberately NOT a DiscountLineDetail, even though one sits directly
+   * above and it would be the obvious thing to copy. QuickBooks applies a
+   * discount line to the subtotal above it and recalculates VAT on the
+   * reduced figure — which is right for a discount and wrong for a grant. The
+   * supply is still worth the full amount; VAT stays due on all of it.
+   *
+   * A negative sales line carrying the ZERO-RATED code gives the correct
+   * result: the goods lines keep their 20%, this line adds no tax, and the
+   * balance owed drops to the customer's share.
+   *
+   * Its own tax-code lookup — `vatTaxCodeId` above is the standard-rated (or
+   * reverse-charge) code and would tax the deduction.
+   */
+  const qbGrantAmount = invoice.grant?.amount ?? 0;
+  if (qbGrantAmount > 0) {
+    const zeroRatedTaxCodeId = await getQBSalesTaxCode(accessToken, realmId, false, false);
+    console.log(
+      '[QuickBooks] grant line',
+      qbGrantAmount,
+      'zero-rated tax code:',
+      zeroRatedTaxCodeId
+    );
+    lineItems.push({
+      LineNum: lineItems.length + 1,
+      Description: invoice.grant?.label ?? 'Grant',
+      Amount: -Math.round(qbGrantAmount * 100) / 100,
+      DetailType: 'SalesItemLineDetail',
+      SalesItemLineDetail: {
+        ItemRef: { value: serviceItem.id, name: serviceItem.name },
+        Qty: 1,
+        UnitPrice: -Math.round(qbGrantAmount * 100) / 100,
+        ...(zeroRatedTaxCodeId ? { TaxCodeRef: { value: zeroRatedTaxCodeId } } : {}),
       },
     });
   }
@@ -1687,7 +1837,66 @@ async function getQBSalesTaxCode(
             /20(\.0)?\s*%?\s*s\b/i.test(name(c)) &&
             !/ec|acq|purchase|reverse/i.test(name(c))
         ) || byName(/standard.*20|20(\.0)?\s*%/i);
-      return std ? String(std.Id) : null;
+      if (std) return String(std.Id);
+
+      /*
+       * Name matching failed — fall back to matching by RATE.
+       *
+       * Turning VAT on in Elec-Mate should put VAT on the QuickBooks invoice,
+       * full stop. Xero manages that unconditionally because 'OUTPUT2' is a
+       * built-in constant; QuickBooks has no equivalent, so the correct code
+       * has to be found inside the user's own company — and a company is free
+       * to name its codes anything at all. Matching on the words "20% S" is a
+       * guess about wording, and when it misses, the invoice silently posts
+       * with no tax.
+       *
+       * A rate of 20 is a fact rather than a wording, so this asks the company
+       * for its sales TaxRates and picks the one that IS 20%, then finds the
+       * code that uses it. Only runs when the cheap name match has already
+       * failed, so it costs nothing in the normal case.
+       */
+      try {
+        const rateRes = await fetch(
+          `${QUICKBOOKS_BASE_URL}/v3/company/${realmId}/query?query=${encodeURIComponent(
+            'SELECT * FROM TaxRate MAXRESULTS 200'
+          )}`,
+          { headers: { Authorization: `Bearer ${accessToken}`, Accept: 'application/json' } }
+        );
+        if (rateRes.ok) {
+          const rateData = await rateRes.json();
+          const rates: any[] = rateData.QueryResponse?.TaxRate || [];
+          // Sales-side only: a 20% PURCHASE rate is input tax and must never
+          // land on a sales invoice.
+          const twenty = rates.filter(
+            (r: any) =>
+              Number(r?.RateValue) === 20 &&
+              r?.Active !== false &&
+              !/purchase|acq|ec\b|input/i.test(String(r?.Name || ''))
+          );
+          const twentyIds = new Set(twenty.map((r: any) => String(r.Id)));
+          const byRate = codes.find((c: any) => {
+            const details = c?.SalesTaxRateList?.TaxRateDetail || [];
+            return details.some((d: any) => twentyIds.has(String(d?.TaxRateRef?.value)));
+          });
+          if (byRate) {
+            console.log(
+              '[getQBSalesTaxCode] matched standard rate by VALUE, not name:',
+              name(byRate)
+            );
+            return String(byRate.Id);
+          }
+        } else {
+          console.warn('[getQBSalesTaxCode] TaxRate query failed:', rateRes.status);
+        }
+      } catch (rateErr) {
+        console.warn('[getQBSalesTaxCode] rate-based lookup failed:', rateErr);
+      }
+
+      console.warn(
+        '[getQBSalesTaxCode] no standard-rated sales code found by name OR rate. Codes seen:',
+        codes.map(name).join(' | ')
+      );
+      return null;
     }
 
     // Zero-rated / exempt / no-VAT

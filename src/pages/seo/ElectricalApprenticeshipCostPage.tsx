@@ -146,9 +146,9 @@ const sections = [
     heading: 'How Much Does an Electrical Apprenticeship Cost?',
     content: (
       <>
-        <p className="text-sm text-white/50 mb-4">
-          Reviewed by a City &amp; Guilds 2391-qualified electrician and apprenticeship training
-          specialist. Funding figures reflect current ESFA rules and NLW rates from April 2025.
+        <p className="text-sm text-white mb-4">
+          Written and reviewed by Andrew Moore, founder of Elec-Mate — a qualified electrician (18th Edition, C&amp;G 2391 inspection and testing).
+          Funding figures reflect current ESFA rules and NLW rates from April 2025.
         </p>
         <p>
           The short answer: almost nothing for the apprentice, and significantly less than most

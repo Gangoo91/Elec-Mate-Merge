@@ -537,7 +537,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run a protected electrical business with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for electrical certificates, job scheduling, quoting, and invoicing."
+          description="Join 1,600+ UK electricians using Elec-Mate for electrical certificates, job scheduling, quoting, and invoicing."
           icon={ShieldCheck}
         />
       </>
@@ -574,7 +574,7 @@ export default function ElectricalToolInsurancePage2025Page() {
       faqHeading="Frequently Asked Questions About Electrician Tool Insurance"
       relatedPages={relatedPages}
       ctaHeading="Protect your electrical business with the right tools and systems"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for electrical certificates, job scheduling, quoting, and invoicing. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for electrical certificates, job scheduling, quoting, and invoicing. 7-day free trial, cancel anytime."
     />
   );
 }

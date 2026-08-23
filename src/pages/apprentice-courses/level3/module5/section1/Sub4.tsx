@@ -725,7 +725,7 @@ export default function Sub4() {
               "Testing and inspection can happen in any order the inspector finds convenient on the day.",
             ]}
             correctIndex={1}
-            explanation="Regulation 642.1 specifies that inspection precedes testing, and the inspection is normally done with the part of the installation disconnected. Doing it the other way round risks missing defects (loose terminations, wrong polarity, missing barriers) that should have been caught visually first. The customer&apos;s kettle waits until verification is complete."
+            explanation="Regulation 642.1 specifies that inspection precedes testing, and the inspection is normally done with the part of the installation disconnected. Doing it the other way round risks missing defects (loose terminations, wrong polarity, missing barriers) that should have been caught visually first. The customer’s kettle waits until verification is complete."
           />
 
           <SectionRule />

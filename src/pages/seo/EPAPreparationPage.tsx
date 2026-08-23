@@ -593,7 +593,7 @@ export default function EPAPreparationPage() {
 
       <SEOCTASection
         heading="Ace your End Point Assessment"
-        subheading="Join 1,000+ UK electricians and apprentices preparing for assessments and qualifications. 7-day free trial, cancel anytime."
+        subheading="Join 1,600+ UK electricians and apprentices preparing for assessments and qualifications. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom spacer for mobile sticky CTA */}

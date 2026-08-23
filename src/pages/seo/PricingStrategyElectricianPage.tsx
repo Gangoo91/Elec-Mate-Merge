@@ -434,7 +434,7 @@ export default function PricingStrategyElectricianPage() {
         },
       ]}
       ctaHeading="Price Every Job for Profit"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to quote accurately, track profitability, and build a business that pays what you deserve. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to quote accurately, track profitability, and build a business that pays what you deserve. 7-day free trial, cancel anytime."
       extraSchemas={[
         {
           '@type': 'SoftwareApplication',

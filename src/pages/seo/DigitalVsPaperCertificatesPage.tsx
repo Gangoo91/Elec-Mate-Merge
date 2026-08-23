@@ -609,7 +609,7 @@ export default function DigitalVsPaperCertificatesPage() {
       faqHeading="Frequently Asked Questions About Digital Electrical Certificates"
       relatedPages={relatedPages}
       ctaHeading="Go Digital with Elec-Mate"
-      ctaSubheading="Join 1,000+ UK electricians producing professional digital certificates with AI board scanning, voice test entry, and instant PDF delivery. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians producing professional digital certificates with AI board scanning, voice test entry, and instant PDF delivery. 7-day free trial, cancel anytime."
     />
   );
 }

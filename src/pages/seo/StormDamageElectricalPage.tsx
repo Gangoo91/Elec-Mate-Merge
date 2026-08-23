@@ -96,7 +96,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-systems-tns-tncs-tt-explained',
     title: 'Earthing Arrangements',
     description: 'TN-S, TN-C-S, and TT earthing systems explained.',
     icon: Cable,
@@ -527,7 +527,7 @@ export default function StormDamageElectricalPage() {
       faqHeading="Frequently Asked Questions About Storm Damage and Electrical Safety"
       relatedPages={relatedPages}
       ctaHeading="Be Ready for Storm Call-Outs"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EICR certificates, quoting, and cable sizing. Respond to storm damage call-outs with professional tools on your phone. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EICR certificates, quoting, and cable sizing. Respond to storm damage call-outs with professional tools on your phone. 7-day free trial."
     />
   );
 }

@@ -500,7 +500,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Manage solar battery storage jobs with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for quoting, job management, and certification. Issue MCS installation certificates, EICs…"
+          description="Join 1,600+ UK electricians using Elec-Mate for quoting, job management, and certification. Issue MCS installation certificates, EICs…"
           icon={Battery}
         />
       </>
@@ -537,7 +537,7 @@ export default function SolarBatteryStorageInstallationPage() {
       faqHeading="Frequently Asked Questions About Solar Battery Storage"
       relatedPages={relatedPages}
       ctaHeading="Quote and Manage Battery Storage Installations"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Issue MCS installation certificates on your phone. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, and job management. Issue MCS installation certificates on your phone. 7-day free trial, cancel anytime."
     />
   );
 }

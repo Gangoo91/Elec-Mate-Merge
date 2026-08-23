@@ -555,7 +555,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your EV installation business in Reading with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EV certification, instant PDF export, and professional quoting. 7-day free trial, cancel anytime."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site EV certification, instant PDF export, and professional quoting. 7-day free trial, cancel anytime."
           icon={Zap}
         />
       </>
@@ -592,7 +592,7 @@ export default function EVChargerInstallationReadingPage() {
       faqHeading="Frequently Asked Questions About EV Charger Installation in Reading"
       relatedPages={relatedPages}
       ctaHeading="Complete EV Installation Certificates On Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EV certification, OZEV documentation, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EV certification, OZEV documentation, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

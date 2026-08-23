@@ -517,7 +517,7 @@ export default function ListedBuildingRewireCostPage() {
       faqHeading="Frequently Asked Questions About Listed Building Rewire Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Heritage Electrical Work with Confidence"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for specialist quoting, on-site EIC certificates, and photographic records of heritage installations. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for specialist quoting, on-site EIC certificates, and photographic records of heritage installations. 7-day free trial."
     />
   );
 }

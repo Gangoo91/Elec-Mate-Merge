@@ -150,7 +150,7 @@ export default function StudyCentreOnlineCoursesPage() {
                 </li>
                 <li>Fault finding and diagnosis</li>
                 <li>
-                  <SEOInternalLink href="/earthing-arrangements">
+                  <SEOInternalLink href="/guides/earthing-systems-tns-tncs-tt-explained">
                     Earthing arrangements
                   </SEOInternalLink>{' '}
                   (TN-S, TN-C-S, TT)

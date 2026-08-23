@@ -277,7 +277,7 @@ const HNCModule3Section3_6 = () => {
           <TLDR
             points={[
               'You size every transformer, generator and DNO supply in kVA (apparent power) — not kW — because cable, switchgear and machine current ratings respond to apparent power.',
-              'You calculate three-phase power as P = &radic;3 &times; V&#x2097; &times; I&#x2097; &times; cos &phi; — the &radic;3 factor catches out apprentices but is non-negotiable.',
+              'You calculate three-phase power as P = √3 × V&#x2097; × I&#x2097; × cos φ — the √3 factor catches out apprentices but is non-negotiable.',
               'You quote pf at the metered point of supply, target 0.95 minimum to avoid DNO reactive penalties on commercial tariffs.',
               'You specify wattmeters, not VAR meters, for kWh billing — and pf-correcting metering on any installation with significant inductive load (motors, transformers, fluorescent ballasts).',
             ]}
@@ -830,9 +830,9 @@ const HNCModule3Section3_6 = () => {
             points={[
               'P (kW) = real / active power — does work, charged on tariffs by kWh.',
               'Q (kVAr) = reactive power — circulates between source and reactive load, no useful work, may attract DNO penalties.',
-              'S (kVA) = apparent power = &radic;(P&sup2; + Q&sup2;) — the rating you size transformers, generators and supply cables to.',
-              'pf = cos &phi; = P/S — target 0.95 or better at the point of supply on commercial tariffs.',
-              'Single-phase: P = V &times; I &times; cos &phi;. Three-phase balanced: P = &radic;3 &times; V&#x2097; &times; I&#x2097; &times; cos &phi;.',
+              'S (kVA) = apparent power = √(P² + Q²) — the rating you size transformers, generators and supply cables to.',
+              'pf = cos φ = P/S — target 0.95 or better at the point of supply on commercial tariffs.',
+              'Single-phase: P = V × I × cos φ. Three-phase balanced: P = √3 × V&#x2097; × I&#x2097; × cos φ.',
               'Wattmeter measures real kWh (the basis of DNO billing); pf meter or analyser logs Q for reactive penalty calculations.',
               'CIBSE Guide F diversity factors applied to connected load give the maximum demand the DNO supply must carry.',
               'BS 7671 Reg 311.1 makes maximum-demand assessment compulsory — in kVA at the assumed pf, not kW.',

@@ -284,7 +284,7 @@ const HNCModule3Section4_3 = () => {
             points={[
               'You design distribution boards to keep phase imbalance below 10 % at the busbar — single-phase circuits are spread L1/L2/L3 deliberately, not by accident.',
               'You account for neutral current = vector sum of phase currents on every distribution submain and final circuit.',
-              'You investigate voltage unbalance &gt; 2 % under BS EN 50160 — even modest asymmetry can derate motor capacity by 10&ndash;20 % through negative-sequence heating.',
+              'You investigate voltage unbalance > 2 % under BS EN 50160 — even modest asymmetry can derate motor capacity by 10–20 % through negative-sequence heating.',
               'You combine load balancing with triplen harmonic management — both add to neutral loading and need joint analysis on modern BSE installations.',
             ]}
           />
@@ -1071,12 +1071,12 @@ const HNCModule3Section4_3 = () => {
             points={[
               'Balanced 3-phase load: I&#x2099; = 0 in star — each phase current cancels in the neutral.',
               'Unbalanced 3-phase load: I&#x2099; = vector sum of phase currents — can approach the highest phase current under severe imbalance.',
-              'BS EN 50160: voltage unbalance &le; 2 % negative-sequence at the LV PCC under normal conditions.',
-              'Voltage unbalance derates motor torque and current capacity; 1 % unbalance &asymp; 6&ndash;10 % derating.',
+              'BS EN 50160: voltage unbalance ≤ 2 % negative-sequence at the LV PCC under normal conditions.',
+              'Voltage unbalance derates motor torque and current capacity; 1 % unbalance ≈ 6–10 % derating.',
               'Triplen harmonic content adds to neutral loading on top of any imbalance — investigate together, not separately.',
               'Distribution-board phase balancing is a design-stage activity — single-phase circuits should be deliberately spread across L1/L2/L3.',
-              'Imbalance &gt; 10 % at the busbar warrants reallocation of single-phase final circuits at next planned outage.',
-              'BS 7671 Reg 331.1 forces assessment of any equipment characteristic that may impair the supply &mdash; severe unbalance qualifies.',
+              'Imbalance > 10 % at the busbar warrants reallocation of single-phase final circuits at next planned outage.',
+              'BS 7671 Reg 331.1 forces assessment of any equipment characteristic that may impair the supply — severe unbalance qualifies.',
             ]}
           />
 

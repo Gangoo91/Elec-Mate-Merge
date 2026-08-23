@@ -275,10 +275,10 @@ const HNCModule3Section6_1 = () => {
 
           <TLDR
             points={[
-              'You categorise losses as resistive (I&sup2;R, scales with load squared) and iron (hysteresis + eddy, constant with frequency, independent of load) &mdash; the key distinction for transformer and motor lifecycle costing.',
-              'You apply skin effect to large conductors at 50 Hz (negligible below ~150 mm&sup2; copper) and proximity effect on closely-grouped cable runs &mdash; both reduce effective Iz.',
-              'You design out hysteresis loss with grain-oriented silicon steel cores; design out eddy currents with thin laminations &mdash; standard distribution-transformer practice.',
-              'You evaluate lifecycle copper-vs-iron loss tradeoff on every transformer selection &mdash; oversizing increases iron loss (24/7), undersizing increases copper loss (load-dependent).',
+              'You categorise losses as resistive (I²R, scales with load squared) and iron (hysteresis + eddy, constant with frequency, independent of load) — the key distinction for transformer and motor lifecycle costing.',
+              'You apply skin effect to large conductors at 50 Hz (negligible below ~150 mm² copper) and proximity effect on closely-grouped cable runs — both reduce effective Iz.',
+              'You design out hysteresis loss with grain-oriented silicon steel cores; design out eddy currents with thin laminations — standard distribution-transformer practice.',
+              'You evaluate lifecycle copper-vs-iron loss tradeoff on every transformer selection — oversizing increases iron loss (24/7), undersizing increases copper loss (load-dependent).',
             ]}
           />
 
@@ -295,7 +295,7 @@ const HNCModule3Section6_1 = () => {
                 Part L 2021 design consideration on commercial buildings.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026, Reg 132.5 + 524.1; CIBSE Guide F &mdash; Energy efficiency in buildings; BS EN 60076 (transformer losses)"
+            cite="Source: BS 7671:2018+A4:2026, Reg 132.5 + 524.1; CIBSE Guide F — Energy efficiency in buildings; BS EN 60076 (transformer losses)"
           />
 
           <LearningOutcomes
@@ -1198,7 +1198,7 @@ const HNCModule3Section6_1 = () => {
           <SectionRule />
 
           <Scenario
-            title="200 m main supply cable &mdash; sizing for lifecycle losses"
+            title="200 m main supply cable — sizing for lifecycle losses"
             situation={
               <>
                 A new commercial building has a 200 m main supply cable from the DNO
@@ -1239,12 +1239,12 @@ const HNCModule3Section6_1 = () => {
 
           <KeyTakeaways
             points={[
-              'I&sup2;R loss scales with load squared &mdash; doubling current quadruples the loss.',
-              'Iron losses (hysteresis + eddy) are constant 24/7 &mdash; independent of load, dominant in lightly-loaded transformers.',
-              'Skin effect: AC current concentrates near conductor surface; significant on large conductors at high frequency, negligible below ~150 mm&sup2; copper at 50 Hz.',
-              'Proximity effect: parallel current-carrying conductors push current to outer surfaces &mdash; reduces effective Iz on closely-grouped cables.',
+              'I²R loss scales with load squared — doubling current quadruples the loss.',
+              'Iron losses (hysteresis + eddy) are constant 24/7 — independent of load, dominant in lightly-loaded transformers.',
+              'Skin effect: AC current concentrates near conductor surface; significant on large conductors at high frequency, negligible below ~150 mm² copper at 50 Hz.',
+              'Proximity effect: parallel current-carrying conductors push current to outer surfaces — reduces effective Iz on closely-grouped cables.',
               'Hysteresis loss controlled by material: grain-oriented silicon steel for transformers, amorphous metal for ultra-low-loss.',
-              'Eddy current loss controlled by lamination thickness: 0.3&ndash;0.5 mm sheets standard, thinner for higher frequency.',
+              'Eddy current loss controlled by lamination thickness: 0.3–0.5 mm sheets standard, thinner for higher frequency.',
               'Cable upsize on long mains is one of the cheapest energy-efficiency interventions on a BSE design.',
               'BS 7671 Reg 132.5 + Part L 2021 expect lifecycle-loss analysis on commercial supplies, not just minimum-Iz sizing.',
             ]}

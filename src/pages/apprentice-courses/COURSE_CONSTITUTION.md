@@ -21,7 +21,8 @@
 - Do NOT invent regulation numbers
 - If a specific BS 7671 requirement is referenced, flag it as "BS 7671 reference required"
 - Prefer explaining principles over quoting clauses
-- Reference current 18th Edition Amendment 2 where applicable
+- Reference current BS 7671:2018+A4:2026 (18th Edition, Amendment 4) where applicable — never
+  Amendment 2/3, which are superseded
 
 ### Teaching Rules
 

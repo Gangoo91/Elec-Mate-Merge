@@ -555,7 +555,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Barrow-in-Furness"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
+          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -593,7 +593,7 @@ export default function ElectricianBarrowPage() {
       faqHeading="Frequently Asked Questions About Electricians in Barrow-in-Furness"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Barrow Electricians"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Barrow's Victorian terraces, defence-adjacent industrial work, and Furness Peninsula rural properties. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Barrow's Victorian terraces, defence-adjacent industrial work, and Furness Peninsula rural properties. 7-day free trial."
     />
   );
 }

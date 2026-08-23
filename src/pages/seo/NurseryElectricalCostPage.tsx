@@ -549,7 +549,7 @@ export default function NurseryElectricalCostPage() {
       faqHeading="Frequently Asked Questions About Nursery Electrical Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Nursery Electrical with Fire Safety and Ofsted Compliance"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for nursery quoting with fire alarm specifications, emergency lighting, and Ofsted-ready documentation. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for nursery quoting with fire alarm specifications, emergency lighting, and Ofsted-ready documentation. 7-day free trial."
     />
   );
 }

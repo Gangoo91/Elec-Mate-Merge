@@ -110,6 +110,15 @@ export const ELECTRICAL_EXAMS: ExamCard[] = [
     blurb: 'EICR observations, C1/C2/C3/FI coding, sampling, extent + limitations.',
   },
   {
+    // Had a route and a catalogue entry but was missing from this list, so the
+    // hub never linked it — the paper existed and was reachable only by typing
+    // the URL or landing on it from search.
+    slug: '2392-fundamental-inspection-testing',
+    title: 'C&G 2392 Fundamental Inspection & Testing',
+    qCount: 275,
+    blurb: 'Entry-level inspection and testing — instruments, dead tests, safe isolation.',
+  },
+  {
     slug: 'am2-online-knowledge-test',
     title: 'AM2 Online Knowledge Test',
     qCount: 177,

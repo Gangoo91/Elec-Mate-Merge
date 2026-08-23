@@ -665,7 +665,7 @@ export default function SolarPanelSizingCalculatorPage() {
         },
       ]}
       ctaHeading="Design solar PV systems with precision"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for solar sizing, cable calculations, and certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for solar sizing, cable calculations, and certification. 7-day free trial, cancel anytime."
       toolPath="/tools/solar-panel-sizing-calculator"
     />
   );

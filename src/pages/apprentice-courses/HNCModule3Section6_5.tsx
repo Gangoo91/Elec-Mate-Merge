@@ -275,10 +275,10 @@ const HNCModule3Section6_5 = () => {
 
           <TLDR
             points={[
-              'You design the BMS / BAS architecture in three layers &mdash; field (sensors / actuators), automation (controllers + PID loops), management (head-end + analytics) &mdash; for any modern BSE project.',
+              'You design the BMS / BAS architecture in three layers — field (sensors / actuators), automation (controllers + PID loops), management (head-end + analytics) — for any modern BSE project.',
               'You specify open protocols (BACnet IP at management/automation, BACnet MS/TP or Modbus RTU at field, KNX or DALI for lighting) for vendor independence and lifecycle replaceability.',
-              'You evaluate ASHRAE Guideline 36 / BSRIA BG-29 sequence-of-operation libraries on every new HVAC plant &mdash; supersedes bespoke sequences, enables better commissioning.',
-              'You document the BMS controls strategy in CIBSE Commissioning Code C / TM39 framework so the building can be M&amp;V&rsquo;d, recommissioned and audited under ESOS.',
+              'You evaluate ASHRAE Guideline 36 / BSRIA BG-29 sequence-of-operation libraries on every new HVAC plant — supersedes bespoke sequences, enables better commissioning.',
+              'You document the BMS controls strategy in CIBSE Commissioning Code C / TM39 framework so the building can be M&V’d, recommissioned and audited under ESOS.',
             ]}
           />
 
@@ -1107,7 +1107,7 @@ const HNCModule3Section6_5 = () => {
           <SectionRule />
 
           <Scenario
-            title="University lecture-block AHU sequence &mdash; ASHRAE Guideline 36 implementation"
+            title="University lecture-block AHU sequence — ASHRAE Guideline 36 implementation"
             situation={
               <>
                 A new university lecture-block has 6 dual-duct AHUs serving 18 lecture
@@ -1149,13 +1149,13 @@ const HNCModule3Section6_5 = () => {
 
           <KeyTakeaways
             points={[
-              'BMS / BAS three-layer architecture: field (sensors / actuators / VSDs) &rarr; automation (controllers + PID) &rarr; management (head-end + analytics).',
-              'PID control: proportional + integral + derivative &mdash; tune for stability vs response on every modulating loop.',
+              'BMS / BAS three-layer architecture: field (sensors / actuators / VSDs) → automation (controllers + PID) → management (head-end + analytics).',
+              'PID control: proportional + integral + derivative — tune for stability vs response on every modulating loop.',
               'Open protocols: BACnet IP (management/automation), BACnet MS/TP or Modbus RTU (field), KNX or DALI (lighting), MQTT / API (cloud).',
               'BS EN ISO 16484 (BACS): the umbrella standard for building automation and control systems.',
               'ASHRAE Guideline 36 / BSRIA BG-29: pre-engineered high-performance sequences that close the design vs operational performance gap.',
-              'Optimum start / stop, trim-and-respond, demand-controlled OA, supply-air-temperature reset &mdash; the standard energy-saving sequences of modern BMS.',
-              'CIBSE TM39 covers metering strategy &mdash; sub-meter at floor / department / system level for ESOS evidence.',
+              'Optimum start / stop, trim-and-respond, demand-controlled OA, supply-air-temperature reset — the standard energy-saving sequences of modern BMS.',
+              'CIBSE TM39 covers metering strategy — sub-meter at floor / department / system level for ESOS evidence.',
               'Approved Document L 2021 expects BMS controls + commissioning evidence in the Part L log book.',
             ]}
           />

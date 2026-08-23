@@ -595,7 +595,7 @@ export default function Level2ElectricalPage() {
 
       <SEOCTASection
         heading="Start your electrical career today"
-        subheading="Join 1,000+ UK electricians and apprentices learning smarter. 7-day free trial, cancel anytime."
+        subheading="Join 1,600+ UK electricians and apprentices learning smarter. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom spacer for mobile sticky CTA */}

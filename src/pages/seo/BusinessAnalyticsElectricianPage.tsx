@@ -429,7 +429,7 @@ export default function BusinessAnalyticsElectricianPage() {
         },
       ]}
       ctaHeading="Run Your Business on Data, Not Guesswork"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate's analytics to track revenue, margins, and KPIs. Make smarter decisions with real-time business intelligence. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate's analytics to track revenue, margins, and KPIs. Make smarter decisions with real-time business intelligence. 7-day free trial, cancel anytime."
       extraSchemas={[
         {
           '@type': 'SoftwareApplication',

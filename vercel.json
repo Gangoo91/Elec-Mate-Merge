@@ -765,7 +765,7 @@
     },
     {
       "source": "/guides/earthing-arrangements",
-      "destination": "/earthing-arrangements",
+      "destination": "/guides/earthing-systems-tns-tncs-tt-explained",
       "permanent": true
     },
     {
@@ -937,6 +937,16 @@
       "source": "/compare/electrician-app-android",
       "destination": "/tools/electrical-app-with-ai",
       "statusCode": 301
+    },
+    {
+      "source": "/earthing-arrangements",
+      "destination": "/guides/earthing-systems-tns-tncs-tt-explained",
+      "permanent": true
+    },
+    {
+      "source": "/earthing-systems-guide",
+      "destination": "/guides/earthing-systems-tns-tncs-tt-explained",
+      "permanent": true
     }
   ],
   "rewrites": [

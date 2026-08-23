@@ -695,7 +695,7 @@ export default function BathroomElectricalRegsPage() {
           category: 'Calculator',
         },
         {
-          href: '/earthing-arrangements',
+          href: '/guides/earthing-systems-tns-tncs-tt-explained',
           title: 'Earthing Arrangements',
           description: 'Understanding earthing — essential for bonding decisions.',
           icon: Cable,

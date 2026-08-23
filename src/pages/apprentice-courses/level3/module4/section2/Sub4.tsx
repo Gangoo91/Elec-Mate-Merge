@@ -368,7 +368,7 @@ export default function Sub4() {
             source="BS 7671:2018+A4:2026 — Reg 411.5.3"
             clause={
               <>
-                "Where an RCD is used for fault protection, the following conditions shall be fulfilled: (a) the disconnection time shall be that required by Regulation 411.3.2.2 or 411.3.2.4; and (b) Ra &times; I&Delta;n &le; 50&nbsp;V where Ra is the sum of the resistances of the earth electrode and the protective conductor connecting it to the exposed-conductive-parts (in ohms), I&Delta;n is the rated residual operating current of the RCD."
+                "Where an RCD is used for fault protection, the following conditions shall be fulfilled: (a) the disconnection time shall be that required by Regulation 411.3.2.2 or 411.3.2.4; and (b) Ra × IΔn ≤ 50 V where Ra is the sum of the resistances of the earth electrode and the protective conductor connecting it to the exposed-conductive-parts (in ohms), IΔn is the rated residual operating current of the RCD."
               </>
             }
             meaning={
@@ -481,7 +481,7 @@ export default function Sub4() {
           <ConceptBlock
             title="The dedicated tests when MFT loop test isn't enough"
             plainEnglish="For TT installations and for installations where prospective fault current matters, dedicated tests beyond the MFT's standard loop function are needed."
-            onSite="Earth electrode resistance: Megger DET3TC (3-pole), DET14C (stakeless clamp method) — typical TT electrode 50-200 Ω, anything &gt;200 Ω needs investigation. Prospective fault current (PSCC, Ipf): Megger MFT1845 has a high-current loop test that gives Ipf directly; standard MFTs calculate Ipf from Ze (Ipf = U0 / Ze)."
+            onSite="Earth electrode resistance: Megger DET3TC (3-pole), DET14C (stakeless clamp method) — typical TT electrode 50-200 Ω, anything >200 Ω needs investigation. Prospective fault current (PSCC, Ipf): Megger MFT1845 has a high-current loop test that gives Ipf directly; standard MFTs calculate Ipf from Ze (Ipf = U0 / Ze)."
           >
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li><strong>Earth electrode test (3-pole)</strong> — main electrode + auxiliary current stake (10-20 m away) + auxiliary potential stake (5-10 m). MFT injects current, measures voltage gradient. Electrode resistance read directly.</li>

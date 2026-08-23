@@ -312,7 +312,7 @@ const HNCModule2Section5_5 = () => {
 
           <RegsCallout
             source="BS EN ISO 7730 — Ergonomics of the thermal environment (PMV/PPD); CIBSE TM52 / TM59 (Overheating)"
-            clause="Methods for predicted mean vote (PMV) and predicted percentage dissatisfied (PPD) using Fanger&rsquo;s model; TM52 / TM59 adaptive overheating criteria for non-domestic and domestic buildings respectively."
+            clause="Methods for predicted mean vote (PMV) and predicted percentage dissatisfied (PPD) using Fanger’s model; TM52 / TM59 adaptive overheating criteria for non-domestic and domestic buildings respectively."
             meaning={
               <>
                 BS EN ISO 7730 + CIBSE TM52/TM59 are the reference standards for sizing

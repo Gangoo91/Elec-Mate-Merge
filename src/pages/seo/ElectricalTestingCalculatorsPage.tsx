@@ -592,7 +592,7 @@ export default function ElectricalTestingCalculatorsPage() {
 
       <SEOCTASection
         heading="Stop flipping through tables on site"
-        subheading="Join 1,000+ UK electricians using Elec-Mate calculators to speed up testing and certification. 7-day free trial, cancel anytime."
+        subheading="Join 1,600+ UK electricians using Elec-Mate calculators to speed up testing and certification. 7-day free trial, cancel anytime."
       />
     </PublicPageLayout>
   );

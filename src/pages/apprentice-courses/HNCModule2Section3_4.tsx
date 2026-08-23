@@ -303,7 +303,7 @@ const HNCModule2Section3_4 = () => {
               'You size sensible heating and cooling using Q̇s = ṁ × cp × ΔT and latent loads using Q̇l = ṁ × hfg × Δg.',
               'You select humidifier type (steam, spray, evaporative pad) by tracking the process line on the psychrometric chart against the design moisture target.',
               'You apply the apparatus dew point (ADP) and contact factor (β) when sizing a cooling coil — not just sensible duty.',
-              'You calculate Sensible Heat Ratio (SHR = Q̇s / Q̇total) to match coil performance to the building&rsquo;s sensible:latent split.',
+              'You calculate Sensible Heat Ratio (SHR = Q̇s / Q̇total) to match coil performance to the building’s sensible:latent split.',
             ]}
           />
 
@@ -690,7 +690,7 @@ const HNCModule2Section3_4 = () => {
               'Sensible heat: Q̇s = ṁ × cp × ΔT (cp = 1.005 kJ/kg·K).',
               'Latent processes change moisture content only at constant tdb — vertical on the chart.',
               'Latent heat: Q̇l = ṁ × hfg × Δg (use hfg ≈ 2,501 kJ/kg, Δg in kg/kg).',
-              'Cooling coil with dehumidification needs surface T &lt; entering-air dew point — characterised by ADP and contact factor β.',
+              'Cooling coil with dehumidification needs surface T < entering-air dew point — characterised by ADP and contact factor β.',
               'Sensible Heat Ratio SHR = Q̇s / Q̇total — drives coil and humidifier selection.',
               'Adiabatic humidification (sprays, evaporative pads): along constant-enthalpy line, tdb falls.',
               'Mixing of two streams = straight line by mass-flow lever rule, never by volume.',

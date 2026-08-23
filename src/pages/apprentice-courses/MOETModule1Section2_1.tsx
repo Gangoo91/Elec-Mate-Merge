@@ -7,7 +7,7 @@ import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Dangers of Electricity - MOET Module 1.2.1';
 const DESCRIPTION =
-  'Comprehensive guide to the dangers of electricity for maintenance technicians: electric shock mechanisms, current pathways, arc flash hazards, electrical burns, fire risks, voltage bands and UK accident statistics under BS 7671:2018+A3:2024 and EAWR 1989.';
+  'Comprehensive guide to the dangers of electricity for maintenance technicians: electric shock mechanisms, current pathways, arc flash hazards, electrical burns, fire risks, voltage bands and UK accident statistics under BS 7671:2018+A4:2026 and EAWR 1989.';
 
 const quickCheckQuestions = [
   {
@@ -54,7 +54,7 @@ const quickCheckQuestions = [
   {
     id: 'voltage-bands',
     question:
-      'Under BS 7671:2018+A3:2024, what is the upper limit of Band I (extra-low voltage) for AC?',
+      'Under BS 7671:2018+A4:2026, what is the upper limit of Band I (extra-low voltage) for AC?',
     options: [
       '50 V',
       '12 V',
@@ -150,7 +150,7 @@ const quizQuestions = [
   },
   {
     id: 7,
-    question: 'Under BS 7671:2018+A3:2024, Band II (low voltage) for AC ranges from:',
+    question: 'Under BS 7671:2018+A4:2026, Band II (low voltage) for AC ranges from:',
     options: [
       '0 V to 50 V',
       '50 V to 600 V',
@@ -325,7 +325,7 @@ const MOETModule1Section2_1 = () => {
                 <strong>EAWR 1989:</strong> Absolute duty to prevent danger from electricity
               </li>
               <li className="pl-1">
-                <strong>BS 7671:2018+A3:2024:</strong> Voltage bands, protection measures
+                <strong>BS 7671:2018+A4:2026:</strong> Voltage bands, protection measures
               </li>
               <li className="pl-1">
                 <strong>HASAWA 1974:</strong> General duty of care to employees and others
@@ -347,7 +347,7 @@ const MOETModule1Section2_1 = () => {
               'Describe arc flash hazards including temperatures, blast pressure and PPE categories',
               'Identify the three types of electrical burn and their characteristics',
               'Explain how electrical faults cause fires and cite UK statistics',
-              'Define voltage bands (ELV, LV, HV) under BS 7671:2018+A3:2024',
+              'Define voltage bands (ELV, LV, HV) under BS 7671:2018+A4:2026',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -872,7 +872,7 @@ const MOETModule1Section2_1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              BS 7671:2018+A3:2024 defines voltage bands that categorise electrical installations
+              BS 7671:2018+A4:2026 defines voltage bands that categorise electrical installations
               according to the level of danger they present. Understanding these bands is essential
               for selecting appropriate protection measures, PPE and working procedures. The
               Electricity at Work Regulations 1989 apply to all voltages, but the level of
@@ -1075,7 +1075,7 @@ const MOETModule1Section2_1 = () => {
                 <p className="font-medium text-white mb-1">Key References</p>
                 <ul className="space-y-0.5">
                   <li>EAWR 1989 — Electricity at Work Regulations</li>
-                  <li>BS 7671:2018+A3:2024 — IET Wiring Regulations</li>
+                  <li>BS 7671:2018+A4:2026 — IET Wiring Regulations</li>
                   <li>IEC 60479-1 — Effects of current on human body</li>
                   <li>IEEE 1584 — Arc flash hazard calculations</li>
                   <li>ST1426 — Maintenance technician standard</li>

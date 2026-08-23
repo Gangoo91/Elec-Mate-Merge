@@ -366,10 +366,11 @@ const Module6Section1_2 = () => {
                   <p className="font-medium text-white mb-2">Amendment Updates:</p>
                   <ul className="text-sm space-y-1">
                     <li>
-                      <strong>Current:</strong> 18th Edition Amendment 2 (2022)
+                      <strong>Current:</strong> 18th Edition Amendment 4 (BS 7671:2018+A4:2026)
                     </li>
                     <li>
-                      <strong>Key changes:</strong> AFDD requirements, EV charging provisions
+                      <strong>Key changes:</strong> revised RCD testing requirements, updated
+                      protection and energy-efficiency provisions
                     </li>
                     <li>
                       <strong>Compliance:</strong> Must use current amendment for new work
@@ -398,7 +399,7 @@ const Module6Section1_2 = () => {
               'Updates are optional guidance',
             ]}
             correctIndex={1}
-            explanation="The current standard is BS 7671 18th Edition (with Amendment 2). Updates are crucial as they incorporate new safety knowledge, technology advances, and lessons from electrical incidents."
+            explanation="The current standard is BS 7671 18th Edition (with Amendment 4, 2026). Updates are crucial as they incorporate new safety knowledge, technology advances, and lessons from electrical incidents."
           />
 
           {/* Personal Responsibility */}

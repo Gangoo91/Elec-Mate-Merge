@@ -119,7 +119,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-systems-tns-tncs-tt-explained',
     title: 'Earthing Arrangements',
     description:
       'TN-C-S (PME) considerations for EV charger installations including earth rod requirements.',
@@ -616,7 +616,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Survey, quote, install, certify, invoice — all on your phone"
-          description="Cable sizing, EIC certificates, EV charger compliance, quoting, and invoicing — in one app. Join 1,000+ UK electricians using Elec-Mate. 7-day free trial."
+          description="Cable sizing, EIC certificates, EV charger compliance, quoting, and invoicing — in one app. Join 1,600+ UK electricians using Elec-Mate. 7-day free trial."
           icon={Car}
         />
       </>
@@ -653,7 +653,7 @@ export default function ElectricCarChargingAtHomePage() {
       faqHeading="Frequently Asked Questions About Home EV Charging"
       relatedPages={relatedPages}
       ctaHeading="Design, Certify, and Invoice EV Charger Installations"
-      ctaSubheading="Cable sizing, EIC certificates, EV compliance, quoting, and invoicing — all in one app. Join 1,000+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
+      ctaSubheading="Cable sizing, EIC certificates, EV compliance, quoting, and invoicing — all in one app. Join 1,600+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
     />
   );
 }

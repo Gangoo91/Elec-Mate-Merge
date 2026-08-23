@@ -557,7 +557,7 @@ export default function HealthSafetyPolicyElectricianPage() {
       faqHeading="Frequently Asked Questions About Health and Safety Policies"
       relatedPages={relatedPages}
       ctaHeading="Generate RAMS in Minutes, Not Hours"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for AI-powered RAMS, certificates, and job management. Professional documentation that keeps you safe and wins you work. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI-powered RAMS, certificates, and job management. Professional documentation that keeps you safe and wins you work. 7-day free trial, cancel anytime."
     />
   );
 }

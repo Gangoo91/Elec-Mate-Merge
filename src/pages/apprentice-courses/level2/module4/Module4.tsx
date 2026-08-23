@@ -67,7 +67,7 @@ export default function Module4() {
       backLabel="Level 2 electrical installation"
       moduleNumber={4}
       title="Installation of wiring systems and enclosures"
-      description="City &amp; Guilds 2365-02 Unit 204 — tools, preparation, install, terminate, bond, inspect and test. The hands-on unit where you turn theory into a working installation."
+      description="City & Guilds 2365-02 Unit 204 — tools, preparation, install, terminate, bond, inspect and test. The hands-on unit where you turn theory into a working installation."
       tone="emerald"
       sectionsCount={sections.length}
       prevModuleHref="../module3"

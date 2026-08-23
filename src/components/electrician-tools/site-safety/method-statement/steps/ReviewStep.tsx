@@ -69,7 +69,10 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
     }
     setIsExporting(true);
     try {
-      downloadMethodStatementPDF(data, { companyName: 'Your Company', includeSignatures: true });
+      await downloadMethodStatementPDF(data, {
+        companyName: 'Your Company',
+        includeSignatures: true,
+      });
       toast({
         title: 'PDF Downloaded',
         description: 'Method statement PDF has been downloaded successfully.',

@@ -523,7 +523,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Liverpool electrical business with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, instant PDF export, and professional quoting."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion, instant PDF export, and professional quoting."
           icon={FileCheck2}
         />
       </>
@@ -560,7 +560,7 @@ export default function ConsumerUnitReplacementLiverpoolPage() {
       faqHeading="Frequently Asked Questions About Consumer Unit Replacement in Liverpool"
       relatedPages={relatedPages}
       ctaHeading="Complete Consumer Unit Certificates on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion with instant PDF export and schedule of test results. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion with instant PDF export and schedule of test results. 7-day free trial, cancel anytime."
     />
   );
 }

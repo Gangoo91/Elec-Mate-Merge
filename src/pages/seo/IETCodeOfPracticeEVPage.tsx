@@ -149,7 +149,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-systems-tns-tncs-tt-explained',
     title: 'Earthing Arrangements Guide',
     description:
       'TN-C-S, TN-S, and TT earthing systems explained with diagrams and practical guidance for UK electricians.',
@@ -538,7 +538,7 @@ const sections = [
         <p>
           For TN-S earthing systems, where the earth and neutral are separate throughout, the
           open-PEN risk does not arise and the{' '}
-          <SEOInternalLink href="/earthing-arrangements">earthing arrangement</SEOInternalLink> can
+          <SEOInternalLink href="/guides/earthing-systems-tns-tncs-tt-explained">earthing arrangement</SEOInternalLink> can
           be used directly for EV charging without these additional measures. TN-S supplies are far
           less common in the UK — most domestic supplies are TN-C-S (PME).
         </p>
@@ -1031,7 +1031,7 @@ export default function IETCodeOfPracticeEVPage() {
       faqHeading="Frequently Asked Questions About the IET EV Code of Practice"
       relatedPages={relatedPages}
       ctaHeading="Install EV Chargers with Confidence"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EV charger installations. Cable sizing, IET CoP checklist, open-PEN verification, and instant certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EV charger installations. Cable sizing, IET CoP checklist, open-PEN verification, and instant certificates. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -228,7 +228,7 @@ export default function EVChargerCertificatePage() {
           <div className="flex items-center gap-3 text-sm text-white">
             <FileCheck2 className="w-4 h-4 text-yellow-400 shrink-0" />
             <span>
-              Technical content reviewed by NICEIC-registered electricians. Regulations cited from
+              Technical content reviewed by Andrew Moore, founder of Elec-Mate and a qualified electrician. Regulations cited from
               BS&nbsp;7671:2018+A4:2026 (IET Wiring Regulations).
             </span>
           </div>
@@ -354,7 +354,7 @@ export default function EVChargerCertificatePage() {
             <p>
               Unlike a standard domestic circuit installation, an EV charger certificate must
               address several additional considerations specific to Section 722. These include the{' '}
-              <SEOInternalLink href="/earthing-arrangements">
+              <SEOInternalLink href="/guides/earthing-systems-tns-tncs-tt-explained">
                 earthing arrangement assessment (particularly for PME supplies)
               </SEOInternalLink>
               , load management provisions, the type of charging mode, cable sizing for continuous
@@ -1086,7 +1086,7 @@ export default function EVChargerCertificatePage() {
 
       <SEOCTASection
         heading="Stop struggling with EV charger paperwork"
-        subheading="Join 1,000+ UK electricians creating professional Section 722 compliant certificates. 7-day free trial, cancel anytime."
+        subheading="Join 1,600+ UK electricians creating professional Section 722 compliant certificates. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom spacer for mobile sticky CTA */}

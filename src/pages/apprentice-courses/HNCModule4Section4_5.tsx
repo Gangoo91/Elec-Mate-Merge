@@ -292,7 +292,7 @@ const HNCModule4Section4_5 = () => {
               'External lighting is designed to EN 12464-2 (outdoor workplaces) and the ILP Guidance Notes (GN01) for environmental zones — E1 (intrinsically dark) through E4 (high district brightness).',
               'Car parks: P-class lighting (BS EN 13201-2). Typical surface lot Em 10–20 lx with Uo ≥ 0.4. Multi-storey covered: 75 lx working, 30 lx ramps.',
               'Light pollution: control upward light ratio (ULR), spill onto windows, glare (G class). Curfew dimming after 23:00 is now a standard requirement in many local plans.',
-              'Part L (NDB) requires external luminaires ≥ 60 lm/W with daylight + presence control, OR &lt; 100 W with auto-off after no-occupancy delay.',
+              'Part L (NDB) requires external luminaires ≥ 60 lm/W with daylight + presence control, OR < 100 W with auto-off after no-occupancy delay.',
               'Earthing of luminaire columns and the BS 7671 main earthing terminal — every column carries a "Safety Electrical Connection — Do Not Remove" label per Reg 514.13.1.',
             ]}
           />

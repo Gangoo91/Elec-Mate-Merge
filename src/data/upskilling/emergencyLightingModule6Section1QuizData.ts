@@ -38,7 +38,7 @@ export const emergencyLightingModule6Section1QuizData: QuizQuestion[] = [
     ],
     correctAnswer: 3,
     explanation:
-      'EN 1838 requires a minimum of 1 lux along the centre line of escape routes to ensure safe evacuation.',
+      'EN 1838:2024 requires a minimum of 1 lux across the full width of escape routes to ensure safe evacuation — the centre line alone no longer satisfies the standard.',
   },
   {
     id: 4,

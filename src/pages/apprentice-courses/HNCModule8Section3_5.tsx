@@ -182,10 +182,10 @@ const quizQuestions = [
     question:
       'According to the F-gas Regulation phase-down schedule, what is the GWP limit for single split systems under 3 kg charge from 2025?',
     options: [
-      'GWP &lt; 750',
-      'GWP &lt; 150',
+      'GWP < 750',
+      'GWP < 150',
       'No limit applies',
-      'GWP &lt; 2500',
+      'GWP < 2500',
     ],
     correctAnswer: 0,
     explanation:
@@ -263,7 +263,7 @@ const faqs = [
   {
     question: 'How will F-gas regulations affect my system selection decisions?',
     answer:
-      'F-gas phase-down significantly impacts refrigerant choice. From 2025, single splits under 3 kg must use GWP &lt; 750 refrigerants (excluding R-410A). Systems over 50 tonnes CO2 equivalent require quarterly leak checks and certified technicians. Consider R-32 (GWP 675) for splits, R-290 propane (GWP 3) for small systems, or R-1234ze (GWP 7) for chillers. Alternatively, chilled water systems localise refrigerant in plant rooms, simplifying compliance.',
+      'F-gas phase-down significantly impacts refrigerant choice. From 2025, single splits under 3 kg must use GWP < 750 refrigerants (excluding R-410A). Systems over 50 tonnes CO2 equivalent require quarterly leak checks and certified technicians. Consider R-32 (GWP 675) for splits, R-290 propane (GWP 3) for small systems, or R-1234ze (GWP 7) for chillers. Alternatively, chilled water systems localise refrigerant in plant rooms, simplifying compliance.',
   },
   {
     question: 'What is the performance gap and how can good system selection help close it?',

@@ -512,7 +512,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage storage heater installations with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site Minor Works Certificates, EIC certificates, and professional quoting."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site Minor Works Certificates, EIC certificates, and professional quoting."
           icon={Zap}
         />
       </>
@@ -549,7 +549,7 @@ export default function ElectricStorageHeaterInstallationPage() {
       faqHeading="Frequently Asked Questions About Storage Heater Installation"
       relatedPages={relatedPages}
       ctaHeading="Certificate Storage Heater Installations on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for Minor Works Certificates, EIC certificates, and professional quoting. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for Minor Works Certificates, EIC certificates, and professional quoting. 7-day free trial, cancel anytime."
     />
   );
 }

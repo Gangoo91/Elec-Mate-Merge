@@ -174,7 +174,7 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      "Brief flicker on high-load inrush is sometimes normal (small voltage drop) and sometimes a symptom (large voltage drop). If the drop is significant (&gt;5% of nominal) it suggests high impedance — a shared neutral, undersized supply tail or HRJ at the CU; if small (&lt;2%) it's normal. Diagnose with a clamp meter on the supply tail during shower start plus a voltage measurement at the upstairs lighting, compared against BS 7671 Appendix 4 limits (3% lighting, 5% other).",
+      "Brief flicker on high-load inrush is sometimes normal (small voltage drop) and sometimes a symptom (large voltage drop). If the drop is significant (>5% of nominal) it suggests high impedance — a shared neutral, undersized supply tail or HRJ at the CU; if small (<2%) it's normal. Diagnose with a clamp meter on the supply tail during shower start plus a voltage measurement at the upstairs lighting, compared against BS 7671 Appendix 4 limits (3% lighting, 5% other).",
   },
   {
     id: 8,
@@ -458,7 +458,7 @@ export default function Sub2() {
 
           <ConceptBlock
             title="Warm or hot accessory — early-warning HRJ signal"
-            plainEnglish="A socket, switch, accessory or breaker that's warm to touch (&gt;40 °C is noticeable, &gt;60 °C is dangerous) is generating heat — typically from a high-resistance termination or chronic overload. Catch it before it becomes a fire."
+            plainEnglish="A socket, switch, accessory or breaker that's warm to touch (>40 °C is noticeable, >60 °C is dangerous) is generating heat — typically from a high-resistance termination or chronic overload. Catch it before it becomes a fire."
             onSite="Diagnosis: thermal camera (Fluke Ti401, FLIR E54) on the affected accessory under load. Compare to identical adjacent accessories — single hot accessory in a row of cold ones is the fault. Then isolate, open the accessory, inspect terminals — typically loose screw, work-hardened conductor, copper-on-aluminium corrosion (rare but seen on older installations)."
           >
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">

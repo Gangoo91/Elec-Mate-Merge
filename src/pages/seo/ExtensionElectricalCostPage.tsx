@@ -434,7 +434,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify house extension electrical work on your"
-          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification for house extension projects."
+          description="Join 1,600+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification for house extension projects."
           icon={Home}
         />
       </>

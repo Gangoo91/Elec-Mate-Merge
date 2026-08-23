@@ -491,7 +491,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify UFH installations on your phone"
-          description="Join 1,000+ UK electricians using Elec-Mate for underfloor heating installation quotes, element testing records, and EIC certification."
+          description="Join 1,600+ UK electricians using Elec-Mate for underfloor heating installation quotes, element testing records, and EIC certification."
           icon={Thermometer}
         />
       </>

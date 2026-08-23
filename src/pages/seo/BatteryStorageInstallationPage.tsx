@@ -517,7 +517,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage your battery storage installations with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site certificates, quoting, and job management."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site certificates, quoting, and job management."
           icon={Battery}
         />
       </>
@@ -555,7 +555,7 @@ export default function BatteryStorageInstallationPage() {
       faqHeading="Frequently Asked Questions About Home Battery Storage"
       relatedPages={relatedPages}
       ctaHeading="Certificate Battery Storage Installations on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site MCS commissioning documents, G98 notifications, and electrical certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site MCS commissioning documents, G98 notifications, and electrical certificates. 7-day free trial, cancel anytime."
     />
   );
 }

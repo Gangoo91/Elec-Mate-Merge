@@ -714,7 +714,7 @@ export default function WarmPlugOrSocketPage() {
       faqHeading="Frequently Asked Questions About Warm Plugs and Sockets"
       relatedPages={relatedPages}
       ctaHeading="Identify and Document Overheating Faults on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for AI fault diagnosis, thermal imaging documentation, and professional EICR certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI fault diagnosis, thermal imaging documentation, and professional EICR certificates. 7-day free trial, cancel anytime."
     />
   );
 }

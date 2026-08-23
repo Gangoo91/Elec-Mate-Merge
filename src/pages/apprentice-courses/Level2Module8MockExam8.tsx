@@ -1,33 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Progress } from '@/components/ui/progress';
-import { Badge } from '@/components/ui/badge';
-import {
-  ArrowLeft,
-  ArrowRight,
-  Flag,
-  CheckCircle,
-  Clock,
-  BookOpen,
-  Target,
-  TrendingUp,
-  Filter,
-  FileText,
-  X,
-  Eye,
-  RotateCcw,
-} from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect, useRef } from 'react';
+import { useExamExit } from '@/hooks/useExamExit';
+import { useNavigate, useResolvedPath } from 'react-router-dom';
 import useSEO from '@/hooks/useSEO';
 import {
   getRandomQuestions,
   validateQuestionBank,
   type Question,
 } from '@/data/apprentice-courses/level2/mixed/questionBank';
-import { ExamDesktopSidebar } from '@/components/apprentice-courses/ExamDesktopSidebar';
-import { ExamMobileLayout } from '@/components/apprentice-courses/ExamMobileLayout';
+import { ExamStartPanel } from '@/components/apprentice-courses/ExamStartPanel';
+import { ExamQuestionPanel } from '@/components/apprentice-courses/ExamQuestionPanel';
 import { shuffleAllQuestionOptions, createShuffleSalt } from '@/utils/shuffleOptions';
+import { useAuth } from '@/contexts/AuthContext';
+import { ExamResultsPanel } from '@/components/apprentice-courses/ExamResultsPanel';
+import {
+  ExamReviewPanel,
+  type ExamReviewFilter,
+} from '@/components/apprentice-courses/ExamReviewPanel';
+import { recordMockExamAttempt } from '@/lib/mockExamTelemetry';
+import { useMockExamHistory } from '@/hooks/useMockExamHistory';
+import { useQuestionFailureRates } from '@/hooks/useQuestionFailureRates';
 
 const Level2Module8MockExam8 = () => {
   useSEO(
@@ -46,9 +37,38 @@ const Level2Module8MockExam8 = () => {
   const [reviewMode, setReviewMode] = useState<
     'all' | 'correct' | 'incorrect' | 'unanswered' | 'flagged' | boolean
   >(false);
-  const [reviewFilter, setReviewFilter] = useState<
-    'all' | 'correct' | 'incorrect' | 'unanswered' | 'flagged'
-  >('all');
+  const [reviewFilter, setReviewFilter] = useState<ExamReviewFilter>('all');
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const missesRecordedRef = useRef(false);
+  const startedAtRef = useRef<number | null>(null);
+
+  // Where "back" goes. The paper is mounted under two different routes, so the
+  // exit has always been a relative `..` — resolve it once to a real path so
+  // the revision session can link back here too.
+  const exitPath = useResolvedPath('..').pathname;
+  // Caller-aware: returns to the mock exams library when the paper
+  // was opened from there, otherwise to its course module.
+  const examExit = useExamExit(exitPath);
+
+  // Answers as an array aligned to the questions, which is what the shared
+  // results/review panels take. This paper stores them keyed by index.
+  const answersArray = examQuestions.map((_, index) => selectedAnswers[index]);
+
+  const history = useMockExamHistory('level2-module8-mock8', user?.id ?? null);
+  const failureRates = useQuestionFailureRates(
+    'level2-module8-mock8',
+    examQuestions.map((q) => q.id),
+    showResults
+  );
+
+  const drillMissed = () =>
+    navigate('/apprentice/revision', {
+      // Honour where the learner actually came from — hardcoding the course
+      // path dropped anyone who entered from the mock exams library into a
+      // course they had never opened.
+      state: { from: examExit.to, label: examExit.label },
+    });
 
   // Initialize exam
   const startExam = () => {
@@ -63,6 +83,8 @@ const Level2Module8MockExam8 = () => {
     setShowResults(false);
     setFlaggedQuestions(new Set());
     setExamStarted(true);
+    missesRecordedRef.current = false;
+    startedAtRef.current = Date.now();
     if (import.meta.env.DEV) {
       validateQuestionBank(); // Dev-only: log mixed-bank composition
     }
@@ -84,12 +106,31 @@ const Level2Module8MockExam8 = () => {
     }
   }, [examStarted, showResults, timeRemaining]);
 
-  // Helper functions
-  const formatTime = (seconds: number): string => {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
-  };
+  // Record the attempt once per sitting — the personal revision pile plus the
+  // shared attempt/per-question dataset the public papers write to. Driven by
+  // an effect rather than handleSubmit because on timer expiry handleSubmit
+  // fires from a stale interval closure where selectedAnswers is still empty.
+  useEffect(() => {
+    if (!showResults || missesRecordedRef.current) return;
+    missesRecordedRef.current = true;
+    recordMockExamAttempt({
+      examSlug: 'level2-module8-mock8',
+      source: 'in_app',
+      examName: 'Level 2 Mock Exam 8',
+      questions: examQuestions,
+      answers: examQuestions.map((_, index) => selectedAnswers[index]),
+      startedAt: startedAtRef.current,
+      userId: user?.id ?? null,
+    });
+  }, [showResults, examQuestions, selectedAnswers, user]);
+
+  // Hide the apprentice tab bar for as long as the paper is being sat — the
+  // exam screen owns the whole viewport and the bar would cover the Next button.
+  useEffect(() => {
+    if (!examStarted || showResults) return;
+    document.body.classList.add('exam-active');
+    return () => document.body.classList.remove('exam-active');
+  }, [examStarted, showResults]);
 
   const handleAnswerSelect = (answerIndex: number) => {
     setSelectedAnswers((prev) => ({
@@ -125,681 +166,82 @@ const Level2Module8MockExam8 = () => {
     setFlaggedQuestions(newFlagged);
   };
 
-  const calculateScore = () => {
-    let correct = 0;
-    examQuestions.forEach((question, index) => {
-      if (selectedAnswers[index] === question.correctAnswer) {
-        correct++;
-      }
-    });
-    return {
-      correct,
-      total: examQuestions.length,
-      percentage: Math.round((correct / examQuestions.length) * 100),
-    };
-  };
-
-  const getQuestionStatus = (index: number) => {
-    const answer = selectedAnswers[index];
-    const isCorrect = answer === examQuestions[index]?.correctAnswer;
-    const isAnswered = answer !== undefined;
-
-    if (!isAnswered) return { type: 'unanswered', color: 'text-white' };
-    if (isCorrect) return { type: 'correct', color: 'text-green-500' };
-    return { type: 'incorrect', color: 'text-elec-yellow' };
-  };
-
-  const getFilteredQuestions = () => {
-    return examQuestions
-      .map((_, index) => index)
-      .filter((index) => {
-        const status = getQuestionStatus(index);
-        const isFlagged = flaggedQuestions.has(index);
-
-        switch (reviewFilter) {
-          case 'correct':
-            return status.type === 'correct';
-          case 'incorrect':
-            return status.type === 'incorrect';
-          case 'unanswered':
-            return status.type === 'unanswered';
-          case 'flagged':
-            return isFlagged;
-          default:
-            return true;
-        }
-      });
-  };
-
-  const getSummaryStats = () => {
-    const answered = Object.keys(selectedAnswers).length;
-    const unanswered = examQuestions.length - answered;
-    const flagged = flaggedQuestions.size;
-
-    return { answered, unanswered, flagged };
-  };
-
-  const goToNextFlagged = () => {
-    const flaggedArray = Array.from(flaggedQuestions).sort((a, b) => a - b);
-    const currentIndex = flaggedArray.indexOf(currentQuestion);
-    const nextIndex = currentIndex + 1;
-
-    if (nextIndex < flaggedArray.length) {
-      setCurrentQuestion(flaggedArray[nextIndex]);
-    } else if (flaggedArray.length > 0) {
-      setCurrentQuestion(flaggedArray[0]); // Go to first flagged
-    }
-  };
-
-  const answeredQuestions = Object.keys(selectedAnswers).length;
-  const progressPercentage = (answeredQuestions / examQuestions.length) * 100;
-
   // Exam start screen
   if (!examStarted && !showResults) {
     return (
-      <div className="bg-background p-2 sm:p-4">
-        <div>
-          <Card className="border-elec-yellow/30 bg-card">
-            <CardContent className="p-8">
-              <div className="text-center mb-8">
-                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-elec-yellow/10">
-                  <FileText className="h-6 w-6 text-elec-yellow" />
-                </div>
-                <h1 className="text-2xl font-bold text-foreground mb-2">Mock Exam 8</h1>
-                <h2 className="text-lg text-elec-yellow mb-6">Mixed Level 2 Examination</h2>
-                <p className="text-white mb-6">
-                  Comprehensive 60-question practice exam covering all Level 2 electrical
-                  installation modules including health & safety, electrical science, installation
-                  methods, and testing & certification.
-                </p>
-              </div>
-
-              <div className="bg-background p-4 rounded-xl border border-muted/40 mb-6">
-                <div className="flex items-center gap-2 mb-3">
-                  <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-elec-yellow/20">
-                    <CheckCircle className="h-3 w-3 text-elec-yellow" />
-                  </div>
-                  <h3 className="font-semibold text-foreground">Instructions</h3>
-                </div>
-                <div className="grid gap-2">
-                  <div className="flex items-start gap-2">
-                    <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
-                    <p className="text-sm text-white leading-relaxed">
-                      60 questions randomly selected from all Level 2 modules
-                    </p>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
-                    <p className="text-sm text-white leading-relaxed">90 minutes time limit</p>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
-                    <p className="text-sm text-white leading-relaxed">
-                      Progress automatically saved
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="text-center">
-                <Button
-                  onClick={startExam}
-                  className="w-full bg-elec-yellow hover:bg-elec-yellow/90 text-black font-bold py-3 text-base touch-manipulation min-h-[48px] rounded-lg"
-                  size="lg"
-                >
-                  <div className="flex items-center justify-center gap-3">
-                    <FileText className="h-4 w-4" />
-                    Start Exam
-                    <ArrowRight className="h-4 w-4" />
-                  </div>
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
+      <ExamStartPanel
+        exitLabel={examExit.label}
+        title="Mock Exam 8"
+        subtitle="Mixed Level 2 Examination"
+        totalQuestions={60}
+        timeLimitMinutes={90}
+        passThreshold={60}
+        topics={[
+          'Health & safety',
+          'Electrical science',
+          'Installation methods',
+          'Testing & certification',
+        ]}
+        history={history}
+        onStart={startExam}
+        onExit={() => navigate(examExit.to)}
+      />
     );
   }
 
   // Results screen
   if (showResults) {
-    const score = calculateScore();
-    const percentage = Math.round((score.correct / examQuestions.length) * 100);
-    const stats = getSummaryStats();
-
     if (reviewMode) {
-      const filteredQuestions = getFilteredQuestions();
-
       return (
-        <div className="bg-background p-2 sm:p-4">
-          <div className="max-w-6xl mx-auto">
-            {/* Review Header */}
-            <div className="mb-4">
-              <div className="flex items-center justify-between mb-4">
-                <div>
-                  <h1 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground">
-                    Review Answers
-                  </h1>
-                  <p className="text-sm text-white">
-                    Score: {percentage}% ({score.correct}/{examQuestions.length})
-                  </p>
-                </div>
-                <Button
-                  onClick={() => setReviewMode(false)}
-                  variant="ghost"
-                  size="sm"
-                  className="text-white hover:text-elec-yellow"
-                >
-                  <X className="h-4 w-4 mr-2" />
-                  Exit Review
-                </Button>
-              </div>
-
-              {/* Summary Stats - Clickable Filters */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4 mb-4">
-                <Card
-                  className={`bg-card border-green-500/20 cursor-pointer hover:bg-card active:scale-[0.98] transition-all touch-manipulation ${
-                    reviewFilter === 'correct' ? 'ring-2 ring-green-500/50' : ''
-                  }`}
-                  onClick={() => setReviewFilter(reviewFilter === 'correct' ? 'all' : 'correct')}
-                >
-                  <CardContent className="p-3 text-center">
-                    <div className="text-lg font-bold text-green-500">
-                      {stats.answered - (stats.answered - score.correct)}
-                    </div>
-                    <div className="text-xs text-white">Correct</div>
-                  </CardContent>
-                </Card>
-                <Card
-                  className={`bg-card border-red-500/20 cursor-pointer hover:bg-card active:scale-[0.98] transition-all touch-manipulation ${
-                    reviewFilter === 'incorrect' ? 'ring-2 ring-red-500/50' : ''
-                  }`}
-                  onClick={() =>
-                    setReviewFilter(reviewFilter === 'incorrect' ? 'all' : 'incorrect')
-                  }
-                >
-                  <CardContent className="p-3 text-center">
-                    <div className="text-lg font-bold text-elec-yellow">
-                      {stats.answered - score.correct}
-                    </div>
-                    <div className="text-xs text-white">Incorrect</div>
-                  </CardContent>
-                </Card>
-                <Card
-                  className={`bg-card border-muted/20 cursor-pointer hover:bg-muted/10 active:scale-[0.98] transition-all touch-manipulation ${
-                    reviewFilter === 'unanswered' ? 'ring-2 ring-muted/50' : ''
-                  }`}
-                  onClick={() =>
-                    setReviewFilter(reviewFilter === 'unanswered' ? 'all' : 'unanswered')
-                  }
-                >
-                  <CardContent className="p-3 text-center">
-                    <div className="text-lg font-bold text-white">{stats.unanswered}</div>
-                    <div className="text-xs text-white">Unanswered</div>
-                  </CardContent>
-                </Card>
-                <Card
-                  className={`bg-card border-elec-yellow/30 cursor-pointer hover:bg-elec-yellow/5 active:scale-[0.98] transition-all touch-manipulation ${
-                    reviewFilter === 'flagged' ? 'ring-2 ring-elec-yellow/50' : ''
-                  }`}
-                  onClick={() => setReviewFilter(reviewFilter === 'flagged' ? 'all' : 'flagged')}
-                >
-                  <CardContent className="p-3 text-center">
-                    <div className="text-lg font-bold text-elec-yellow">{stats.flagged}</div>
-                    <div className="text-xs text-white">Flagged</div>
-                  </CardContent>
-                </Card>
-              </div>
-            </div>
-
-            {/* Question List */}
-            <div className="space-y-4">
-              {filteredQuestions.map((questionIndex) => {
-                const question = examQuestions[questionIndex];
-                const userAnswer = selectedAnswers[questionIndex];
-                const correctAnswer = question.correctAnswer;
-                const status = getQuestionStatus(questionIndex);
-                const isFlagged = flaggedQuestions.has(questionIndex);
-
-                return (
-                  <Card key={questionIndex} className="bg-card border-elec-yellow/30">
-                    <CardContent className="p-4">
-                      <div className="flex items-center justify-between mb-3">
-                        <div className="text-base text-foreground font-semibold">
-                          Question {questionIndex + 1}
-                        </div>
-                        <div className="flex items-center gap-2">
-                          {isFlagged && (
-                            <Badge
-                              variant="outline"
-                              className="text-elec-yellow border-elec-yellow/40"
-                            >
-                              <Flag className="h-3 w-3 mr-1 fill-current" />
-                              Flagged
-                            </Badge>
-                          )}
-                          <Badge
-                            variant={status.type === 'correct' ? 'default' : 'destructive'}
-                            className={
-                              status.type === 'correct'
-                                ? 'bg-green-500/20 text-green-500 border-green-500/40'
-                                : status.type === 'incorrect'
-                                  ? 'bg-red-500/20 text-elec-yellow border-red-500/40'
-                                  : 'bg-muted/20 text-white border-muted/40'
-                            }
-                          >
-                            {status.type === 'correct'
-                              ? 'Correct'
-                              : status.type === 'incorrect'
-                                ? 'Incorrect'
-                                : 'Unanswered'}
-                          </Badge>
-                        </div>
-                      </div>
-
-                      <p className="text-sm leading-relaxed mb-4 font-medium">
-                        {question.question}
-                      </p>
-
-                      <div className="space-y-2">
-                        {question.options.map((option, optionIndex) => {
-                          const isUserAnswer = userAnswer === optionIndex;
-                          const isCorrectAnswer = correctAnswer === optionIndex;
-
-                          return (
-                            <div
-                              key={optionIndex}
-                              className={`p-3 rounded-lg border-2 text-sm ${
-                                isCorrectAnswer
-                                  ? 'border-green-500 bg-card text-green-500'
-                                  : isUserAnswer && !isCorrectAnswer
-                                    ? 'border-red-500 bg-card text-elec-yellow'
-                                    : 'border-muted/40 bg-muted/5'
-                              }`}
-                            >
-                              <div className="flex items-start gap-3">
-                                <div
-                                  className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 mt-0.5 ${
-                                    isCorrectAnswer
-                                      ? 'border-green-500 bg-green-500'
-                                      : isUserAnswer && !isCorrectAnswer
-                                        ? 'border-red-500 bg-red-500'
-                                        : 'border-muted-foreground'
-                                  }`}
-                                >
-                                  {(isUserAnswer || isCorrectAnswer) && (
-                                    <div className="w-1.5 h-1.5 bg-white rounded-full" />
-                                  )}
-                                </div>
-                                <span className="flex-1 leading-relaxed">{option}</span>
-                                {isCorrectAnswer && (
-                                  <CheckCircle className="h-4 w-4 text-green-500 flex-shrink-0" />
-                                )}
-                                {isUserAnswer && !isCorrectAnswer && (
-                                  <X className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-                                )}
-                              </div>
-                            </div>
-                          );
-                        })}
-                      </div>
-
-                      {question.explanation && (
-                        <div className="mt-4 p-3 bg-card rounded-lg border border-elec-yellow/30">
-                          <div className="flex items-start gap-2">
-                            <div className="flex h-5 w-5 items-center justify-center rounded-md bg-elec-yellow/20 flex-shrink-0 mt-0.5">
-                              <Eye className="h-3 w-3 text-elec-yellow" />
-                            </div>
-                            <div>
-                              <h4 className="text-sm font-semibold text-foreground mb-1">
-                                Explanation
-                              </h4>
-                              <p className="text-xs text-white leading-relaxed">
-                                {question.explanation}
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      )}
-                    </CardContent>
-                  </Card>
-                );
-              })}
-            </div>
-
-            {filteredQuestions.length === 0 && (
-              <Card className="bg-card border-elec-yellow/30">
-                <CardContent className="p-8 text-center">
-                  <div className="text-white">No questions match the current filter.</div>
-                </CardContent>
-              </Card>
-            )}
-          </div>
-        </div>
+        <ExamReviewPanel
+          questions={examQuestions}
+          answers={answersArray}
+          flagged={flaggedQuestions}
+          filter={reviewFilter}
+          onFilterChange={(f) => setReviewFilter(f)}
+          failureRates={failureRates}
+          onBack={() => setReviewMode(false)}
+          onDrillMissed={drillMissed}
+        />
       );
     }
 
     return (
-      <div className="bg-background p-2 sm:p-4">
-        <div>
-          <Card className="border-elec-yellow/30 bg-card">
-            <CardContent className="p-6 sm:p-8">
-              <div className="text-center mb-8">
-                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-elec-yellow/10">
-                  <CheckCircle className="h-8 w-8 text-elec-yellow" />
-                </div>
-                <h1 className="text-2xl font-bold text-foreground mb-2">Exam Complete!</h1>
-                <div className="text-4xl font-bold text-elec-yellow mb-2">{percentage}%</div>
-                <p className="text-lg text-white mb-4">
-                  You scored {score.correct} out of {examQuestions.length} questions correctly
-                </p>
-                <div
-                  className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-                    percentage >= 60
-                      ? 'bg-green-500/20 text-green-500 border border-green-500/40'
-                      : 'bg-red-500/20 text-elec-yellow border border-red-500/40'
-                  }`}
-                >
-                  {percentage >= 60 ? '✓ Pass' : '✗ Fail'} (60% required)
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-                <div className="text-center">
-                  <div className="text-lg font-bold text-green-500">{score.correct}</div>
-                  <div className="text-xs text-white">Correct</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-lg font-bold text-elec-yellow">
-                    {stats.answered - score.correct}
-                  </div>
-                  <div className="text-xs text-white">Incorrect</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-lg font-bold text-white">{stats.unanswered}</div>
-                  <div className="text-xs text-white">Unanswered</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-lg font-bold text-elec-yellow">{stats.flagged}</div>
-                  <div className="text-xs text-white">Flagged</div>
-                </div>
-              </div>
-
-              <div className="flex flex-col sm:flex-row gap-3">
-                <Button
-                  onClick={() => setReviewMode(true)}
-                  variant="outline"
-                  className="flex-1 border-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/10"
-                >
-                  <Eye className="h-4 w-4 mr-2" />
-                  Review Answers
-                </Button>
-                <Button
-                  onClick={startExam}
-                  className="flex-1 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium"
-                >
-                  <RotateCcw className="h-4 w-4 mr-2" />
-                  Retake Exam
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
+      <ExamResultsPanel
+        exitLabel={examExit.label}
+        questions={examQuestions}
+        answers={answersArray}
+        passThreshold={60}
+        history={history}
+        onReview={() => setReviewMode(true)}
+        onRetake={startExam}
+        onExit={() => navigate(examExit.to)}
+        onDrillMissed={drillMissed}
+      />
     );
   }
-
   // Active exam interface
-  const currentQ = examQuestions[currentQuestion];
-  const stats = getSummaryStats();
+  const question = examQuestions[currentQuestion];
+  if (!question) return null;
 
   return (
-    <div className="bg-background p-2 sm:p-4">
-      <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-4">
-            <Link
-              to=".."
-              className="inline-flex items-center text-white hover:text-foreground transition-colors"
-            >
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Exit Exam
-            </Link>
-          </div>
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 text-elec-yellow">
-              <Clock className="h-4 w-4" />
-              <span className="font-mono text-lg">{formatTime(timeRemaining)}</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          {/* Question Panel */}
-          <Card className="lg:col-span-3 bg-card border border-elec-yellow/30">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between mb-6">
-                <div>
-                  <h2 className="text-lg font-semibold text-foreground">
-                    Question {currentQuestion + 1} of {examQuestions.length}
-                  </h2>
-                  <div className="text-sm text-white mt-1">
-                    Section {currentQ?.section} • {currentQ?.difficulty} • {currentQ?.topic}
-                  </div>
-                </div>
-                <Button
-                  onClick={toggleFlag}
-                  variant="outline"
-                  size="sm"
-                  className={`border-elec-yellow/30 ${
-                    flaggedQuestions.has(currentQuestion)
-                      ? 'bg-elec-yellow/20 text-elec-yellow'
-                      : 'text-foreground hover:bg-elec-yellow/10'
-                  }`}
-                >
-                  <Flag className="h-4 w-4 mr-2" />
-                  {flaggedQuestions.has(currentQuestion) ? 'Flagged' : 'Flag'}
-                </Button>
-              </div>
-
-              <div className="mb-8">
-                <p className="text-foreground text-lg leading-relaxed mb-6">{currentQ?.question}</p>
-
-                <div className="space-y-3">
-                  {currentQ?.options.map((option, index) => (
-                    <button
-                      key={index}
-                      onClick={() => handleAnswerSelect(index)}
-                      className={`w-full p-4 text-left rounded-lg border transition-colors ${
-                        selectedAnswers[currentQuestion] === index
-                          ? 'bg-elec-yellow/20 border-elec-yellow text-foreground'
-                          : 'bg-background/30 border-elec-yellow/30 text-white hover:bg-elec-yellow/10 hover:border-elec-yellow/40'
-                      }`}
-                    >
-                      <div className="flex items-center gap-3">
-                        <span className="text-sm font-semibold min-w-[20px]">
-                          {String.fromCharCode(65 + index)}.
-                        </span>
-                        <span>{option}</span>
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Navigation */}
-              <div className="flex justify-between items-center pt-6 border-t border-elec-yellow/30">
-                <Button
-                  onClick={handlePrevious}
-                  disabled={currentQuestion === 0}
-                  variant="outline"
-                  className="border-elec-yellow/30 text-foreground hover:bg-elec-yellow/10 disabled:opacity-50"
-                >
-                  <ArrowLeft className="h-4 w-4 mr-2" />
-                  Previous
-                </Button>
-
-                <div className="flex gap-2">
-                  {currentQuestion === examQuestions.length - 1 ? (
-                    <Button
-                      onClick={handleSubmit}
-                      disabled={answeredQuestions === 0}
-                      className="bg-elec-yellow hover:bg-elec-yellow/90 text-black disabled:opacity-50 text-sm sm:text-sm px-6 py-3 sm:py-3 min-h-[52px] touch-manipulation font-semibold rounded-xl flex-shrink-0"
-                      size="sm"
-                    >
-                      <span className="hidden xs:inline">Submit Exam</span>
-                      <span className="xs:hidden">Submit</span>
-                      <CheckCircle className="h-4 w-4 ml-2" />
-                    </Button>
-                  ) : (
-                    <Button
-                      onClick={handleNext}
-                      className="flex-1 sm:flex-initial sm:px-8 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-bold py-3 sm:py-3 text-base sm:text-base touch-manipulation min-h-[48px] rounded-lg"
-                      size="lg"
-                    >
-                      Next
-                      <ArrowRight className="h-4 w-4 ml-2" />
-                    </Button>
-                  )}
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Enhanced Sidebar */}
-          <Card className="bg-card border border-elec-yellow/30 shadow-lg">
-            <CardContent className="p-4">
-              <div className="space-y-6">
-                {/* Enhanced Timer */}
-                <div className="text-center">
-                  <div className="bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/10 p-4 rounded-xl border border-elec-yellow/30">
-                    <div className="flex items-center justify-center gap-2 mb-2">
-                      <Clock className="h-5 w-5 text-elec-yellow" />
-                      <span className="text-sm font-medium text-foreground">Time Remaining</span>
-                    </div>
-                    <div className="font-mono text-2xl font-bold text-elec-yellow">
-                      {formatTime(timeRemaining)}
-                    </div>
-                    <div className="text-xs text-white mt-1">
-                      {timeRemaining < 300 ? 'Final 5 minutes!' : 'Stay focused'}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Enhanced Progress */}
-                <div>
-                  <div className="bg-background/50 p-4 rounded-lg border border-elec-yellow/30">
-                    <div className="flex justify-between items-center mb-3">
-                      <span className="text-sm font-medium text-foreground">Progress</span>
-                      <span className="text-lg font-bold text-elec-yellow">
-                        {answeredQuestions}/{examQuestions.length}
-                      </span>
-                    </div>
-                    <Progress value={progressPercentage} className="h-3 mb-3" />
-                    <div className="text-xs text-center text-white">
-                      {Math.round(progressPercentage)}% Complete
-                    </div>
-                  </div>
-                </div>
-
-                {/* Enhanced Stats */}
-                <div className="space-y-3">
-                  <h3 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
-                    <Target className="h-4 w-4 text-elec-yellow" />
-                    Statistics
-                  </h3>
-
-                  <div className="grid grid-cols-1 gap-2">
-                    <div className="flex items-center justify-between p-3 bg-card rounded-lg border border-green-500/20">
-                      <div className="flex items-center gap-2">
-                        <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                        <span className="text-sm text-green-400">Answered</span>
-                      </div>
-                      <span className="font-bold text-green-400">{stats.answered}</span>
-                    </div>
-
-                    <div className="flex items-center justify-between p-3 bg-card rounded-lg border border-red-500/20">
-                      <div className="flex items-center gap-2">
-                        <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                        <span className="text-sm text-elec-yellow">Remaining</span>
-                      </div>
-                      <span className="font-bold text-elec-yellow">{stats.unanswered}</span>
-                    </div>
-
-                    <div className="flex items-center justify-between p-3 bg-card rounded-lg border border-elec-yellow/20">
-                      <div className="flex items-center gap-2">
-                        <Flag className="w-3 h-3 text-elec-yellow" />
-                        <span className="text-sm text-elec-yellow">Flagged</span>
-                      </div>
-                      <span className="font-bold text-elec-yellow">{stats.flagged}</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Enhanced Question Grid */}
-                <div>
-                  <h3 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
-                    <BookOpen className="h-4 w-4 text-elec-yellow" />
-                    Questions
-                  </h3>
-                  <div className="grid grid-cols-5 gap-2">
-                    {examQuestions.map((_, index) => {
-                      const isAnswered = selectedAnswers.hasOwnProperty(index);
-                      const isCurrent = index === currentQuestion;
-                      const isFlagged = flaggedQuestions.has(index);
-
-                      return (
-                        <button
-                          key={index}
-                          onClick={() => setCurrentQuestion(index)}
-                          className={`
-                            relative w-10 h-10 text-xs font-bold rounded-lg transition-all duration-200 border-2
-                            ${
-                              isCurrent
-                                ? 'bg-elec-yellow text-black border-elec-yellow shadow-lg scale-110'
-                                : isAnswered
-                                  ? 'bg-green-500/30 text-green-400 border-green-500/50 hover:bg-green-500/40'
-                                  : 'bg-background/30 text-white border-elec-yellow/30 hover:bg-elec-yellow/20 hover:border-elec-yellow/40'
-                            }
-                          `}
-                        >
-                          {index + 1}
-                          {isFlagged && (
-                            <div className="absolute -top-1 -right-1 w-3 h-3 bg-elec-yellow rounded-full flex items-center justify-center">
-                              <Flag className="w-2 h-2 text-white fill-current" />
-                            </div>
-                          )}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Enhanced Quick Actions */}
-                <div className="space-y-2">
-                  <Button
-                    onClick={goToNextFlagged}
-                    disabled={flaggedQuestions.size === 0}
-                    variant="outline"
-                    size="sm"
-                    className="w-full text-xs border-border/30 text-elec-yellow hover:bg-card disabled:opacity-50"
-                  >
-                    <Flag className="h-3 w-3 mr-2" />
-                    Next Flagged ({flaggedQuestions.size})
-                  </Button>
-
-                  <div className="text-xs text-center text-white pt-2 border-t border-elec-yellow/30">
-                    <div>Exam: Module 8</div>
-                    <div>Mixed Level 2 Exam</div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-    </div>
+    <ExamQuestionPanel
+      examTitle="Level 2 Mock Exam 8"
+      question={question}
+      index={currentQuestion}
+      total={examQuestions.length}
+      selected={selectedAnswers[currentQuestion]}
+      answers={answersArray}
+      flagged={flaggedQuestions}
+      timeRemaining={timeRemaining}
+      onSelect={handleAnswerSelect}
+      onPrevious={handlePrevious}
+      onNext={handleNext}
+      onJump={setCurrentQuestion}
+      onToggleFlag={toggleFlag}
+      onSubmit={handleSubmit}
+      onExit={() => navigate(examExit.to)}
+    />
   );
 };
 

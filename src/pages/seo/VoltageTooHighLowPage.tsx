@@ -95,7 +95,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-systems-tns-tncs-tt-explained',
     title: 'Earthing Arrangements Explained',
     description:
       'TN-S, TN-C-S, and TT earthing systems and how they affect supply voltage and fault protection.',
@@ -638,7 +638,7 @@ export default function VoltageTooHighLowPage() {
       faqHeading="Frequently Asked Questions About Supply Voltage"
       relatedPages={relatedPages}
       ctaHeading="Every BS 7671 Calculator on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for voltage drop calculations, cable sizing, AI fault diagnosis, and digital certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for voltage drop calculations, cable sizing, AI fault diagnosis, and digital certificates. 7-day free trial, cancel anytime."
     />
   );
 }

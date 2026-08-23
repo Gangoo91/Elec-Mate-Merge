@@ -227,7 +227,7 @@ const sections = [
               <span>
                 <strong>Part 4:</strong> Protection for safety — protection against electric shock,
                 overcurrent, overvoltage,{' '}
-                <SEOInternalLink href="/earthing-arrangements">
+                <SEOInternalLink href="/guides/earthing-systems-tns-tncs-tt-explained">
                   earthing arrangements
                 </SEOInternalLink>
                 , RCD selection.
@@ -693,7 +693,7 @@ export default function MockExamsElectricalPage() {
       relatedPages={relatedPages}
       embeddedTool={<MockExamIndexLinks />}
       ctaHeading="Practice Exams on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for mock exams, flashcards, and structured revision. Track your scores, identify weak areas, and pass first time. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for mock exams, flashcards, and structured revision. Track your scores, identify weak areas, and pass first time. 7-day free trial, cancel anytime."
     />
   );
 }

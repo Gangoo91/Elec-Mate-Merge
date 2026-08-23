@@ -581,7 +581,7 @@ export default function BS7671Amendment3CoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Get up to speed on Amendment 3"
-      ctaSubheading="Join 1,000+ UK electricians staying current with Elec-Mate. Structured modules, interactive quizzes, video content, and an AI tutor for any BS 7671 question. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians staying current with Elec-Mate. Structured modules, interactive quizzes, video content, and an AI tutor for any BS 7671 question. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/training/bs-7671-amendment-3-course"
     />

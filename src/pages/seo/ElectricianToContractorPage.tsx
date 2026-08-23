@@ -532,7 +532,7 @@ export default function ElectricianToContractorPage() {
       faqHeading="Frequently Asked Questions About Starting an Electrical Contracting Business"
       relatedPages={relatedPages}
       ctaHeading="Run Your Electrical Business Professionally from Day One"
-      ctaSubheading="Elec-Mate gives electrical contractors professional quoting, on-site certification, and job management tools. 1,000+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate gives electrical contractors professional quoting, on-site certification, and job management tools. 1,600+ UK electricians. 7-day free trial."
     />
   );
 }

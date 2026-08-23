@@ -655,7 +655,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify hot tub connections"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
+          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
           icon={Droplets}
         />
       </>
@@ -699,7 +699,7 @@ export default function HotTubElectricalConnectionPage() {
       faqHeading="Frequently Asked Questions About Hot Tub Electrical Connections"
       relatedPages={relatedPages}
       ctaHeading="Size Cables and Certify Hot Tub Installations on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
     />
   );
 }

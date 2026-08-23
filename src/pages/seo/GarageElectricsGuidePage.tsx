@@ -128,7 +128,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-systems-tns-tncs-tt-explained',
     title: 'Earthing Arrangements',
     description:
       'TN-S, TN-C-S, and TT earthing systems explained with implications for outbuilding supplies.',
@@ -632,7 +632,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, wire, and certify garage electrics in one workflow"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
+          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
           icon={Building}
         />
       </>
@@ -669,7 +669,7 @@ export default function GarageElectricsGuidePage() {
       faqHeading="Frequently Asked Questions About Garage Electrics"
       relatedPages={relatedPages}
       ctaHeading="Size SWA Cables and Certify Garage Installations on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing with burial depth derating, professional quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing with burial depth derating, professional quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
     />
   );
 }

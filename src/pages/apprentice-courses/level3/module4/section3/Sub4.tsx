@@ -52,7 +52,7 @@ const checks = [
     ],
     correctIndex: 1,
     explanation:
-      "Cumulative leakage is the modern fault category that didn't exist in pre-2010 installations. Every electronic device contributes a tiny earth leakage; the sum can exceed RCD threshold. Diagnostic: clamp meter L+N together at the RCD output reads total leakage (1–25 mA range). Healthy is 1–3 mA; problem is &gt;8 mA approaching the 30 mA threshold.",
+      "Cumulative leakage is the modern fault category that didn't exist in pre-2010 installations. Every electronic device contributes a tiny earth leakage; the sum can exceed RCD threshold. Diagnostic: clamp meter L+N together at the RCD output reads total leakage (1–25 mA range). Healthy is 1–3 mA; problem is >8 mA approaching the 30 mA threshold.",
   },
   {
     id: 'mod4-s3-sub4-isolation',
@@ -215,7 +215,7 @@ const faqs = [
   {
     question: "What's the practical workflow for diagnosing an RCD nuisance trip on a modern domestic installation?",
     answer:
-      "(1) Customer interview — when does it trip, what's running, weather correlation. (2) Identify which RCD / RCBO is tripping. (3) With circuit live, clamp meter L+N together at RCD output — note baseline leakage. (4) If baseline &gt;8 mA, suspect cumulative leakage; isolate appliances one at a time to identify which contribute. (5) If baseline &lt;3 mA but trips occur intermittently, suspect time-of-day or load-condition leakage; trigger suspect modes and watch the clamp. (6) If confirmed leaky appliance, customer pays for replacement; if confirmed wiring fault, isolate and rectify. Document findings on job sheet.",
+      "(1) Customer interview — when does it trip, what's running, weather correlation. (2) Identify which RCD / RCBO is tripping. (3) With circuit live, clamp meter L+N together at RCD output — note baseline leakage. (4) If baseline >8 mA, suspect cumulative leakage; isolate appliances one at a time to identify which contribute. (5) If baseline <3 mA but trips occur intermittently, suspect time-of-day or load-condition leakage; trigger suspect modes and watch the clamp. (6) If confirmed leaky appliance, customer pays for replacement; if confirmed wiring fault, isolate and rectify. Document findings on job sheet.",
   },
   {
     question: "Are RCBOs more reliable than MCBs?",
@@ -245,7 +245,7 @@ export default function Sub4() {
 
           <TLDR
             points={[
-              "Modern RCD nuisance trips are usually CUMULATIVE leakage — many small leaks summing to &gt;30 mA. Clamp meter (L+N together) measures total leakage; differential isolation finds the source.",
+              "Modern RCD nuisance trips are usually CUMULATIVE leakage — many small leaks summing to >30 mA. Clamp meter (L+N together) measures total leakage; differential isolation finds the source.",
               "RCD types: AC (legacy), A (default), F (VFD), B (EV / smooth DC). Wrong type = undetected non-protection. EV chargers MUST have Type B or Type A + 6 mA DC RCM.",
               "AFDD nuisance trips are usually real arcs (cumulative motors, poor terminations) or signature false-triggers (cheap PSUs, RF interference). A4:2026 reinforced AFDD requirements.",
             ]}
@@ -363,7 +363,7 @@ export default function Sub4() {
             source="BS 7671:2018+A4:2026 — Reg 421.1.7"
             clause={
               <>
-                "It is now a requirement to protect final circuits supplying socket-outlets with a rated current not exceeding 32&nbsp;A using arc fault detection devices (AFDD) in Higher Risk Residential Buildings, Houses in Multiple Occupation, Purpose-built student accommodation and Care homes. For all other premises, the regulation recommends AFDDs for single-phase circuits."
+                "It is now a requirement to protect final circuits supplying socket-outlets with a rated current not exceeding 32 A using arc fault detection devices (AFDD) in Higher Risk Residential Buildings, Houses in Multiple Occupation, Purpose-built student accommodation and Care homes. For all other premises, the regulation recommends AFDDs for single-phase circuits."
               </>
             }
             meaning={
@@ -427,7 +427,7 @@ export default function Sub4() {
           <ConceptBlock
             title="When the clamp meter doesn't pin it down — the elimination method"
             plainEnglish="If the clamp meter shows leakage but you can't identify the source, the differential method works: disconnect everything; reset the RCD; plug back loads one at a time, observing the leakage clamp until the leakage rises above threshold. The load that pushed it over is the culprit."
-            onSite="Use a Fluke 369 FC clamp around line + neutral together at the RCD output (or RCBO terminals). A healthy circuit reads &lt;1 mA standing leakage. Plug each appliance back in turn — kettle, washing machine, dishwasher, freezer, microwave, downlights, immersion heater — observe each step on the clamp display. Note which load takes the cumulative leakage past 30 mA."
+            onSite="Use a Fluke 369 FC clamp around line + neutral together at the RCD output (or RCBO terminals). A healthy circuit reads <1 mA standing leakage. Plug each appliance back in turn — kettle, washing machine, dishwasher, freezer, microwave, downlights, immersion heater — observe each step on the clamp display. Note which load takes the cumulative leakage past 30 mA."
           >
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li><strong>Baseline reading</strong> — all loads off, all appliances unplugged. Clamp reads close to 0 mA. This is your zero baseline.</li>

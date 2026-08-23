@@ -49,7 +49,7 @@ const checks = [
   {
     id: 'l3-m8-s2-sub2-coding',
     question:
-      "On a periodic inspection (EICR) you find a 30A BS 3036 rewireable fuse protecting a 2.5mm&sup2; ring final supplying socket-outlets in a domestic kitchen. The installation was completed in 1987 to BS 7671:1981 (15th edition). The fuse and circuit otherwise function correctly. What classification code applies and why?",
+      "On a periodic inspection (EICR) you find a 30A BS 3036 rewireable fuse protecting a 2.5mm² ring final supplying socket-outlets in a domestic kitchen. The installation was completed in 1987 to BS 7671:1981 (15th edition). The fuse and circuit otherwise function correctly. What classification code applies and why?",
     options: [
       "C3 — improvement recommended. Compliant when installed under the 15th edition, now dated but not dangerous in normal service.",
       "C1 — danger present. The rewireable fuse exposes live parts and presents an immediate risk of injury, so make safe at once.",
@@ -68,11 +68,11 @@ const checks = [
       "230V — in a star system the line voltage equals the phase voltage, so root-3 does not apply and the two values are identical.",
       "690V — the line voltage equals the phase voltage multiplied by 3, giving three times the 230V phase value in a balanced star load.",
       "133V — the line voltage equals the phase voltage divided by root-3, because the star point reduces the voltage seen between lines.",
-      "398V — in a star (Y) system the line voltage equals phase voltage &times; root-3 (~1.732), so 230 &times; 1.732 gives the line value.",
+      "398V — in a star (Y) system the line voltage equals phase voltage × root-3 (~1.732), so 230 × 1.732 gives the line value.",
     ],
     correctIndex: 3,
     explanation:
-      "Star: line voltage = phase voltage &times; root-3, line current = phase current. Delta: line voltage = phase voltage, line current = phase current &times; root-3. The trap distractor 230V works on candidates who haven't internalised the star/delta relationship — it is exactly the kind of 'looks plausible' answer that exam-setters use to catch unprepared candidates. The 690V trap (phase &times; 3) catches candidates who half-remember 'multiply by something around 3'. Memorise root-3 = 1.732 and which side of the equation it lives.",
+      "Star: line voltage = phase voltage × root-3, line current = phase current. Delta: line voltage = phase voltage, line current = phase current × root-3. The trap distractor 230V works on candidates who haven't internalised the star/delta relationship — it is exactly the kind of 'looks plausible' answer that exam-setters use to catch unprepared candidates. The 690V trap (phase × 3) catches candidates who half-remember 'multiply by something around 3'. Memorise root-3 = 1.732 and which side of the equation it lives.",
   },
 ];
 

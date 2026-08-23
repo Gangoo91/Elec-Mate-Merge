@@ -250,7 +250,7 @@ const faqs = [
   {
     question: 'How do you measure user satisfaction objectively?',
     answer:
-      'Objective measurement uses standardised survey instruments like the BUS methodology, which provides benchmarked questionnaires covering thermal comfort, air quality, lighting, noise, and overall satisfaction. Results are compared against a database of similar buildings, providing percentile rankings. Surveys should achieve minimum response rates (typically &gt;40%) and use consistent timing to enable valid comparisons.',
+      'Objective measurement uses standardised survey instruments like the BUS methodology, which provides benchmarked questionnaires covering thermal comfort, air quality, lighting, noise, and overall satisfaction. Results are compared against a database of similar buildings, providing percentile rankings. Surveys should achieve minimum response rates (typically >40%) and use consistent timing to enable valid comparisons.',
   },
   {
     question: 'What should be included in a lessons learned report?',

@@ -1023,14 +1023,27 @@ const QuoteViewPage = () => {
                       {formatCurrency(quote.total)}
                     </span>
                   </div>
-                  {liveTotals && liveTotals.cisAmount > 0 && (
+                  {/* ELE-1571 — gated on `cisAmount > 0` alone, so a grant with
+                      no CIS was computed and never shown: the page displayed the
+                      full total as if nothing had been deducted (Sean, 21 Aug). */}
+                  {liveTotals && (liveTotals.cisAmount > 0 || liveTotals.grantAmount > 0) && (
                     <div className="pt-1 space-y-1.5">
+                      {liveTotals.cisAmount > 0 && (
+                        <div className="flex justify-between text-[13px]">
+                          <span className="text-white">CIS deduction ({liveTotals.cisRate}% of labour)</span>
+                          <span className="text-red-400 tabular-nums">−{formatCurrency(liveTotals.cisAmount)}</span>
+                        </div>
+                      )}
+                      {liveTotals.grantAmount > 0 && (
+                        <div className="flex justify-between text-[13px]">
+                          <span className="text-white">Less: {liveTotals.grantLabel}</span>
+                          <span className="text-red-400 tabular-nums">−{formatCurrency(liveTotals.grantAmount)}</span>
+                        </div>
+                      )}
                       <div className="flex justify-between text-[13px]">
-                        <span className="text-white/65">CIS deduction ({liveTotals.cisRate}% of labour)</span>
-                        <span className="text-red-400 tabular-nums">−{formatCurrency(liveTotals.cisAmount)}</span>
-                      </div>
-                      <div className="flex justify-between text-[13px]">
-                        <span className="text-white font-semibold">Net payable after CIS</span>
+                        <span className="text-white font-semibold">
+                          {liveTotals.grantAmount > 0 ? 'Amount to pay' : 'Net payable after CIS'}
+                        </span>
                         <span className="text-white font-semibold tabular-nums">{formatCurrency(liveTotals.netPayable)}</span>
                       </div>
                     </div>

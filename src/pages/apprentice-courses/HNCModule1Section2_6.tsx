@@ -941,7 +941,7 @@ const HNCModule1Section2_6 = () => {
               'DRA never replaces the written RA — it supplements and triggers an update.',
               'Material DRA decisions go in the day log, near-miss report or safety observation system — leaving an audit trail.',
               'Coach the workforce — confidence to stop work is a culture issue, not a procedural one.',
-              'Escalate when the new hazard exceeds the team&rsquo;s competence — supervisor first, principal contractor next, designer if a fundamental design change is needed.',
+              'Escalate when the new hazard exceeds the team’s competence — supervisor first, principal contractor next, designer if a fundamental design change is needed.',
             ]}
           />
 

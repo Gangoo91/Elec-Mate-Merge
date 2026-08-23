@@ -49,10 +49,10 @@ const checks = [
     id: 'm5-s3-sub2-temperature-correction',
     question: 'You measure R1+R2 = 0.85 Ω on a Type B 32 A radial socket circuit. Ze = 0.30 Ω. Cable was at roughly 15 °C in an unheated loft when measured. A4:2026 Table 41.3 max Zs (B32) = 1.37 Ω. What do you compare against?',
     options: [
-      'Compare measured Zs directly against the full Table 41.3 value: 0.30 + 0.85 = 1.15 Ω against 1.37 Ω. 1.15 &lt; 1.37 — PASS. The table limit already accounts for temperature, so no correction is needed for a cold-cable measurement.',
+      'Compare measured Zs directly against the full Table 41.3 value: 0.30 + 0.85 = 1.15 Ω against 1.37 Ω. 1.15 < 1.37 — PASS. The table limit already accounts for temperature, so no correction is needed for a cold-cable measurement.',
       'Add the 20 % temperature rise to the table limit instead of the measurement: 1.37 × 1.20 = 1.64 Ω. Measured Zs = 1.15 Ω is well under 1.64 Ω — PASS with comfortable margin.',
       'Halve the measured value because the cable is at half operating temperature: 1.15 ÷ 2 = 0.575 Ω against 1.37 Ω — PASS. Cold cable has roughly half the resistance of warm cable.',
-      'Apply the 0.8 rule of thumb: Zs(measured) must be ≤ 0.8 × Zs(table). For B32: 0.8 × 1.37 = 1.10 Ω. Measured Zs = 0.30 + 0.85 = 1.15 Ω. 1.15 &gt; 1.10 — FAIL the rule-of-thumb check. Either correct properly using GN3 Appendix B factors or investigate the high R1+R2.',
+      'Apply the 0.8 rule of thumb: Zs(measured) must be ≤ 0.8 × Zs(table). For B32: 0.8 × 1.37 = 1.10 Ω. Measured Zs = 0.30 + 0.85 = 1.15 Ω. 1.15 > 1.10 — FAIL the rule-of-thumb check. Either correct properly using GN3 Appendix B factors or investigate the high R1+R2.',
     ],
     correctIndex: 3,
     explanation:

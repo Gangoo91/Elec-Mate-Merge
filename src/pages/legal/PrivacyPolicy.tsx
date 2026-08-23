@@ -19,8 +19,8 @@ import {
 import LegalPageLayout from '@/components/layout/LegalPageLayout';
 
 const PrivacyPolicy = () => {
-  const lastUpdated = '27 February 2026';
-  const effectiveDate = '27 February 2026';
+  const lastUpdated = '23 August 2026';
+  const effectiveDate = '23 August 2026';
 
   return (
     <LegalPageLayout>
@@ -30,46 +30,152 @@ const PrivacyPolicy = () => {
         </div>
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold">Privacy Policy</h1>
-          <p className="text-sm text-gray-400">Last updated: {lastUpdated}</p>
+          <p className="text-sm text-white">Last updated: {lastUpdated}</p>
         </div>
       </div>
 
       <Card className="bg-neutral-900 border-white/10 mb-6">
         <CardContent className="p-4 sm:p-6">
-          <p className="text-gray-300 leading-relaxed">
+          <p className="text-white leading-relaxed">
             Elec-Mate Ltd ("we", "us", "our") is committed to protecting your privacy. This Privacy
             Policy explains how we collect, use, disclose, and safeguard your personal data when you
             use our platform, in accordance with the UK General Data Protection Regulation (UK GDPR)
             and the Data Protection Act 2018.
           </p>
-          <p className="text-gray-400 text-sm mt-3">
+          <p className="text-white text-sm mt-3">
             <strong className="text-white">Effective Date:</strong> {effectiveDate}
           </p>
         </CardContent>
       </Card>
 
+      {/*
+        The short version.
+        A privacy policy nobody reads protects nobody. The detail below is the
+        binding text and none of it is softened here — this is the same content,
+        stated plainly, so somebody deciding whether to trust us with their
+        clients' addresses can get an honest answer in thirty seconds.
+      */}
+      <Card className="bg-neutral-900 border-white/10 mb-6">
+        <CardContent className="p-4 sm:p-6">
+          <h2 className="text-lg font-bold text-yellow-400 mb-3">The short version</h2>
+          <ul className="space-y-2.5 text-[15px] leading-relaxed text-white">
+            <li className="flex gap-3">
+              <span aria-hidden="true" className="text-yellow-400">
+                •
+              </span>
+              <span>
+                <strong>We do not sell your data.</strong> Not to advertisers, not to anyone.
+              </span>
+            </li>
+            <li className="flex gap-3">
+              <span aria-hidden="true" className="text-yellow-400">
+                •
+              </span>
+              <span>
+                <strong>Your certificates and client records are yours.</strong> We store them so
+                the app works, and to produce the PDFs you ask for. We do not share them.
+              </span>
+            </li>
+            <li className="flex gap-3">
+              <span aria-hidden="true" className="text-yellow-400">
+                •
+              </span>
+              <span>
+                <strong>Your data lives in the UK.</strong> The database holding your account and
+                certificates is hosted in London.
+              </span>
+            </li>
+            <li className="flex gap-3">
+              <span aria-hidden="true" className="text-yellow-400">
+                •
+              </span>
+              <span>
+                <strong>We publish anonymised industry statistics</strong> — typical quote values,
+                common defects, exam pass rates. Never anything that identifies you, your business,
+                your clients or a specific job. You can opt out.
+              </span>
+            </li>
+            <li className="flex gap-3">
+              <span aria-hidden="true" className="text-yellow-400">
+                •
+              </span>
+              <span>
+                <strong>You can take your data or delete it</strong> at any time, and we will action
+                it within one month.
+              </span>
+            </li>
+            <li className="flex gap-3">
+              <span aria-hidden="true" className="text-yellow-400">
+                •
+              </span>
+              <span>
+                <strong>Analytics and advertising cookies are off until you say yes.</strong> The
+                app works either way.
+              </span>
+            </li>
+          </ul>
+        </CardContent>
+      </Card>
+
+      {/* Contents — this runs to fourteen sections; nobody should have to scroll to find one. */}
+      <Card className="bg-neutral-900 border-white/10 mb-6">
+        <CardContent className="p-4 sm:p-6">
+          <h2 className="text-lg font-bold text-yellow-400 mb-3">Contents</h2>
+          <nav aria-label="Privacy policy contents">
+            <ol className="grid grid-cols-1 sm:grid-cols-2 gap-x-6">
+              {[
+                'Who We Are, and Our Role',
+                'Personal Data We Collect',
+                'How We Use Your Personal Data',
+                'Legal Basis for Processing',
+                'Who We Share Your Data With',
+                'International Data Transfers',
+                'Data Security',
+                'Data Retention',
+                'Your Rights Under UK GDPR',
+                'Cookies & Tracking',
+                "Children's Privacy",
+                'Changes to This Policy',
+                'Complaints',
+                'Contact Us',
+              ].map((label, i) => (
+                <li key={label}>
+                  <a
+                    href={`#s${i + 1}`}
+                    className="flex h-11 items-center gap-3 text-[15px] text-white touch-manipulation hover:text-yellow-400"
+                  >
+                    <span className="w-6 shrink-0 tabular-nums text-yellow-400">{i + 1}</span>
+                    <span>{label}</span>
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+        </CardContent>
+      </Card>
+
       <div className="space-y-8">
         {/* 1. Data Controller */}
-        <section>
+        <section id="s1" className="scroll-mt-24">
           <h2 className="text-xl font-bold text-yellow-400 mb-3 flex items-center gap-2">
             <Globe className="h-5 w-5" />
-            1. Data Controller
+            1. Who We Are, and Our Role
           </h2>
-          <p className="text-gray-300 leading-relaxed mb-3">
+          <p className="text-white leading-relaxed mb-3">
             The data controller responsible for your personal data is:
           </p>
           <div className="p-4 rounded-xl bg-white/5 border border-white/10">
             <p className="text-white font-medium">Elec-Mate Ltd</p>
-            <p className="text-gray-400 text-sm mt-2">
+            <p className="text-white text-sm mt-2">
               Email:{' '}
               <a href="mailto:info@elec-mate.com" className="text-yellow-400 hover:underline">
                 info@elec-mate.com
               </a>
             </p>
-            <p className="text-gray-400 text-sm mt-1">
+            <p className="text-white text-sm mt-1">
               ICO Registration Number: <span className="text-white">ZB935897</span>
             </p>
-            <p className="text-gray-400 text-sm mt-1">
+            <p className="text-white text-sm mt-1">
               You can verify our registration at{' '}
               <a
                 href="https://ico.org.uk/ESDWebPages/Entry/ZB935897"
@@ -80,16 +186,71 @@ const PrivacyPolicy = () => {
                 ico.org.uk
               </a>
             </p>
+            <p className="text-white text-sm mt-3">
+              We have not appointed a Data Protection Officer, as we are not required to under
+              Article 37 UK GDPR. Data protection questions go to{' '}
+              <a href="mailto:info@elec-mate.com" className="text-yellow-400 hover:underline">
+                info@elec-mate.com
+              </a>
+              , which is monitored by a named person responsible for privacy.
+            </p>
+          </div>
+
+          {/*
+            The controller/processor split.
+
+            This is the clause that matters most for a trade app and it was
+            missing entirely. An electrician storing a customer's name and
+            address in Elec-Mate is the controller of that record; we are only
+            the processor. Saying so is not a formality — it is what tells a
+            user they carry their own duties to their customers, and it is the
+            basis on which we are allowed to hold that data at all.
+          */}
+          <div className="p-4 rounded-xl bg-white/5 border border-white/10 mt-4">
+            <h3 className="font-semibold text-white mb-2">
+              Two different roles — and which one applies to you
+            </h3>
+            <p className="text-white text-sm">
+              <strong>Your own data — we are the controller.</strong> Your account, your
+              qualifications, your learning progress, your subscription. We decide how that is used,
+              and everything in this policy applies to it.
+            </p>
+            <p className="text-white text-sm mt-2">
+              <strong>
+                Your customers' data — you are the controller and we are your processor.
+              </strong>{' '}
+              When you record a client's name, address or contact details, photograph a property, or
+              produce a certificate naming an occupier, that information is yours. We hold and
+              process it only to provide the service and only on your instructions. We do not use
+              your customers' details for our own purposes, do not market to them, and will return
+              or delete them when you ask or when your account closes.
+            </p>
+            <p className="text-white text-sm mt-2">
+              This matters to you practically: it means <em>you</em> are responsible to your
+              customers for what you record about them, including answering any request they make to
+              see or delete it. We will help you do that — see{' '}
+              <a href="#s9" className="text-yellow-400 hover:underline">
+                Your Rights
+              </a>
+              . The terms governing that processing — our security duties, use of sub-processors,
+              breach notification, audit rights, and return or deletion of your data — are set out
+              in our{' '}
+              <Link to="/dpa" className="text-yellow-400 hover:underline">
+                Data Processing Agreement
+              </Link>
+              . If a client or main contractor asks you for a signed copy, email us and we will
+              provide one.
+            </p>
           </div>
         </section>
 
         {/* 2. Data We Collect */}
-        <section>
+        <section id="s2" className="scroll-mt-24">
           <h2 className="text-xl font-bold text-yellow-400 mb-3 flex items-center gap-2">
             <Database className="h-5 w-5" />
             2. Personal Data We Collect
           </h2>
-          <p className="text-gray-300 leading-relaxed mb-4">
+          <p className="text-white leading-relaxed mb-4">
             We collect personal data that you provide directly to us, data generated through your
             use of our services, and data from third-party sources.
           </p>
@@ -97,7 +258,7 @@ const PrivacyPolicy = () => {
           <div className="space-y-4">
             <div className="p-4 rounded-xl bg-white/5 border border-white/10">
               <h3 className="font-semibold text-white mb-2">Account & Identity Data</h3>
-              <ul className="text-gray-300 text-sm space-y-1 list-disc list-inside">
+              <ul className="text-white text-sm space-y-1 list-disc list-inside">
                 <li>Full name and email address</li>
                 <li>Username and password (securely hashed)</li>
                 <li>Profile photograph (optional)</li>
@@ -112,7 +273,7 @@ const PrivacyPolicy = () => {
 
             <div className="p-4 rounded-xl bg-white/5 border border-white/10">
               <h3 className="font-semibold text-white mb-2">Professional & Qualification Data</h3>
-              <ul className="text-gray-300 text-sm space-y-1 list-disc list-inside">
+              <ul className="text-white text-sm space-y-1 list-disc list-inside">
                 <li>ECS card type, number, and expiry date</li>
                 <li>Qualifications and certifications held</li>
                 <li>Training provider and course information</li>
@@ -124,7 +285,7 @@ const PrivacyPolicy = () => {
 
             <div className="p-4 rounded-xl bg-white/5 border border-white/10">
               <h3 className="font-semibold text-white mb-2">Learning & Progress Data</h3>
-              <ul className="text-gray-300 text-sm space-y-1 list-disc list-inside">
+              <ul className="text-white text-sm space-y-1 list-disc list-inside">
                 <li>Course enrolments and completion status</li>
                 <li>Quiz scores and assessment results</li>
                 <li>Study time and module progress</li>
@@ -135,7 +296,7 @@ const PrivacyPolicy = () => {
 
             <div className="p-4 rounded-xl bg-white/5 border border-white/10">
               <h3 className="font-semibold text-white mb-2">Business & Transaction Data</h3>
-              <ul className="text-gray-300 text-sm space-y-1 list-disc list-inside">
+              <ul className="text-white text-sm space-y-1 list-disc list-inside">
                 <li>Customer records you create (names, addresses, contact details)</li>
                 <li>Invoices and quotes generated</li>
                 <li>Subscription and payment history</li>
@@ -143,9 +304,42 @@ const PrivacyPolicy = () => {
               </ul>
             </div>
 
+            {/*
+              Article 9 special category data. The accident and incident logs
+              hold injury type, injury description, the injured person's name
+              and first-aid details — that is data concerning health, and it
+              carries a higher bar than the rest of this page. It was not
+              disclosed anywhere before.
+            */}
+            <div className="p-4 rounded-xl bg-white/5 border border-yellow-400/30">
+              <h3 className="font-semibold text-white mb-2">
+                Health &amp; Safety Records (Special Category Data)
+              </h3>
+              <p className="text-white text-sm mb-2">
+                If you use the site safety tools to record an accident, incident or near miss, that
+                record can include details about a person's injuries and any first aid given. Under
+                Article 9 UK GDPR this is <strong>special category data</strong> and we treat it
+                accordingly:
+              </p>
+              <ul className="text-white text-sm space-y-1 list-disc list-inside">
+                <li>Name, role and employer of the injured person</li>
+                <li>Type and description of the injury</li>
+                <li>First aid given, and by whom</li>
+                <li>Where and when it happened, and any witnesses</li>
+              </ul>
+              <p className="text-white text-sm mt-2">
+                You are the controller of these records — they exist so you can meet your own duties
+                under RIDDOR and the Health and Safety at Work etc. Act 1974. We process them as
+                your processor, under Article 9(2)(b) (obligations in the field of employment and
+                social protection) and Schedule 1 Part 1 of the Data Protection Act 2018. They are
+                access-restricted to your account, never used to train AI models, and never included
+                in any published statistics.
+              </p>
+            </div>
+
             <div className="p-4 rounded-xl bg-white/5 border border-white/10">
               <h3 className="font-semibold text-white mb-2">Technical & Usage Data</h3>
-              <ul className="text-gray-300 text-sm space-y-1 list-disc list-inside">
+              <ul className="text-white text-sm space-y-1 list-disc list-inside">
                 <li>IP address and approximate location (country/region)</li>
                 <li>
                   Precise location data (GPS coordinates) when you use map features such as job
@@ -163,19 +357,19 @@ const PrivacyPolicy = () => {
         </section>
 
         {/* 3. How We Use Your Data */}
-        <section>
+        <section id="s3" className="scroll-mt-24">
           <h2 className="text-xl font-bold text-yellow-400 mb-3 flex items-center gap-2">
             <UserCheck className="h-5 w-5" />
             3. How We Use Your Personal Data
           </h2>
-          <p className="text-gray-300 leading-relaxed mb-4">
+          <p className="text-white leading-relaxed mb-4">
             We process your personal data for the following purposes:
           </p>
 
           <div className="space-y-3">
             <div className="p-4 rounded-xl bg-white/5 border border-white/10">
               <h3 className="font-semibold text-white mb-1">Service Delivery</h3>
-              <p className="text-gray-300 text-sm">
+              <p className="text-white text-sm">
                 Providing access to study materials, tools, calculators, and professional features.
                 Managing your account, subscriptions, and preferences.
               </p>
@@ -183,7 +377,7 @@ const PrivacyPolicy = () => {
 
             <div className="p-4 rounded-xl bg-white/5 border border-white/10">
               <h3 className="font-semibold text-white mb-1">Elec-ID Verification</h3>
-              <p className="text-gray-300 text-sm">
+              <p className="text-white text-sm">
                 Creating and maintaining your digital professional credential, verifying
                 qualifications, and enabling employers to confirm your credentials.
               </p>
@@ -191,7 +385,7 @@ const PrivacyPolicy = () => {
 
             <div className="p-4 rounded-xl bg-white/5 border border-white/10">
               <h3 className="font-semibold text-white mb-1">Progress Tracking</h3>
-              <p className="text-gray-300 text-sm">
+              <p className="text-white text-sm">
                 Recording your learning progress, quiz results, and CPD activities. Generating
                 certificates of completion.
               </p>
@@ -199,7 +393,7 @@ const PrivacyPolicy = () => {
 
             <div className="p-4 rounded-xl bg-white/5 border border-white/10">
               <h3 className="font-semibold text-white mb-1">Communication</h3>
-              <p className="text-gray-300 text-sm">
+              <p className="text-white text-sm">
                 Sending service notifications, security alerts, subscription reminders, and (with
                 your consent) marketing communications about new features.
               </p>
@@ -207,7 +401,7 @@ const PrivacyPolicy = () => {
 
             <div className="p-4 rounded-xl bg-white/5 border border-white/10">
               <h3 className="font-semibold text-white mb-1">AI-Powered Features</h3>
-              <p className="text-gray-300 text-sm">
+              <p className="text-white text-sm">
                 When you use AI tools (such as the Circuit Designer, RAMS Generator, Fault
                 Diagnosis, Cost Engineer, Commissioning Agent, or Elec-AI Assistant), the
                 information you enter — including project details, circuit specifications,
@@ -219,15 +413,45 @@ const PrivacyPolicy = () => {
 
             <div className="p-4 rounded-xl bg-white/5 border border-white/10">
               <h3 className="font-semibold text-white mb-1">Platform Improvement</h3>
-              <p className="text-gray-300 text-sm">
+              <p className="text-white text-sm">
                 Analysing usage patterns to improve our services, fix bugs, and develop new
                 features. All analytics data is aggregated and anonymised where possible.
               </p>
             </div>
 
             <div className="p-4 rounded-xl bg-white/5 border border-white/10">
+              <h3 className="font-semibold text-white mb-1">
+                Published Industry Statistics (Anonymised &amp; Aggregated)
+              </h3>
+              <p className="text-white text-sm">
+                We publish anonymised, aggregated statistics about the UK electrical trade drawn
+                from activity on the platform — for example typical quote values by job type,
+                regional price ranges, how often particular defects are recorded on inspections,
+                distributions of test readings, and exam pass rates. These are counts, medians and
+                percentages calculated across many users at once.
+              </p>
+              <p className="text-white text-sm mt-2">
+                No individual user, client, property or job is identifiable in anything we publish.
+                We never publish your name, your business, your clients, addresses, individual
+                certificates, quotes or invoices, and we do not publish a figure derived from so few
+                records that anyone could be singled out from it. Nothing in this category is sold,
+                and none of it is shared with advertisers.
+              </p>
+              <p className="text-white text-sm mt-2">
+                Our lawful basis is legitimate interests (Article 6(1)(f)) — producing free,
+                accurate benchmarks for the trade — balanced against your interests by the fact that
+                the published output is not personal data. If you would rather your activity was
+                excluded from these aggregates entirely, email{' '}
+                <a href="mailto:info@elec-mate.com" className="text-yellow-400 hover:underline">
+                  info@elec-mate.com
+                </a>{' '}
+                and we will exclude it.
+              </p>
+            </div>
+
+            <div className="p-4 rounded-xl bg-white/5 border border-white/10">
               <h3 className="font-semibold text-white mb-1">Legal & Security</h3>
-              <p className="text-gray-300 text-sm">
+              <p className="text-white text-sm">
                 Preventing fraud, enforcing our terms, complying with legal obligations, and
                 protecting the rights and safety of our users.
               </p>
@@ -236,12 +460,12 @@ const PrivacyPolicy = () => {
         </section>
 
         {/* 4. Legal Basis */}
-        <section>
+        <section id="s4" className="scroll-mt-24">
           <h2 className="text-xl font-bold text-yellow-400 mb-3 flex items-center gap-2">
             <Scale className="h-5 w-5" />
             4. Legal Basis for Processing
           </h2>
-          <p className="text-gray-300 leading-relaxed mb-4">
+          <p className="text-white leading-relaxed mb-4">
             Under UK GDPR, we must have a lawful basis for processing your personal data. We rely on
             the following:
           </p>
@@ -250,35 +474,35 @@ const PrivacyPolicy = () => {
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-white/10">
-                  <th className="text-left py-3 px-4 text-gray-300 font-medium">Legal Basis</th>
-                  <th className="text-left py-3 px-4 text-gray-300 font-medium">Purpose</th>
+                  <th className="text-left py-3 px-4 text-white font-medium">Legal Basis</th>
+                  <th className="text-left py-3 px-4 text-white font-medium">Purpose</th>
                 </tr>
               </thead>
               <tbody>
                 <tr className="border-b border-white/10">
                   <td className="py-3 px-4 text-white font-medium">Contract</td>
-                  <td className="py-3 px-4 text-gray-400">
+                  <td className="py-3 px-4 text-white">
                     Processing necessary to provide our services to you, manage your account, and
                     fulfil your subscription.
                   </td>
                 </tr>
                 <tr className="border-b border-white/10">
                   <td className="py-3 px-4 text-white font-medium">Consent</td>
-                  <td className="py-3 px-4 text-gray-400">
+                  <td className="py-3 px-4 text-white">
                     Marketing communications, optional analytics cookies, and Elec-ID public profile
                     visibility.
                   </td>
                 </tr>
                 <tr className="border-b border-white/10">
                   <td className="py-3 px-4 text-white font-medium">Legitimate Interests</td>
-                  <td className="py-3 px-4 text-gray-400">
+                  <td className="py-3 px-4 text-white">
                     Improving our services, preventing fraud, ensuring security, and understanding
                     how users interact with our platform.
                   </td>
                 </tr>
                 <tr>
                   <td className="py-3 px-4 text-white font-medium">Legal Obligation</td>
-                  <td className="py-3 px-4 text-gray-400">
+                  <td className="py-3 px-4 text-white">
                     Complying with tax, accounting, and regulatory requirements. Responding to
                     lawful requests from authorities.
                   </td>
@@ -289,12 +513,12 @@ const PrivacyPolicy = () => {
         </section>
 
         {/* 5. Data Sharing */}
-        <section>
+        <section id="s5" className="scroll-mt-24">
           <h2 className="text-xl font-bold text-yellow-400 mb-3 flex items-center gap-2">
             <Users className="h-5 w-5" />
             5. Who We Share Your Data With
           </h2>
-          <p className="text-gray-300 leading-relaxed mb-4">
+          <p className="text-white leading-relaxed mb-4">
             We do not sell your personal data. We share data only with the following categories of
             recipients:
           </p>
@@ -302,28 +526,48 @@ const PrivacyPolicy = () => {
           <div className="space-y-4">
             <div className="p-4 rounded-xl bg-white/5 border border-white/10">
               <h3 className="font-semibold text-white mb-2">Service Providers (Sub-Processors)</h3>
-              <p className="text-gray-300 text-sm mb-3">
+              <p className="text-white text-sm mb-3">
                 We use carefully selected third-party providers to help deliver our services:
               </p>
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-white/10">
-                      <th className="text-left py-2 px-3 text-gray-400 font-medium">Provider</th>
-                      <th className="text-left py-2 px-3 text-gray-400 font-medium">Purpose</th>
-                      <th className="text-left py-2 px-3 text-gray-400 font-medium">Location</th>
+                      <th className="text-left py-2 px-3 text-white font-medium">Provider</th>
+                      <th className="text-left py-2 px-3 text-white font-medium">Purpose</th>
+                      <th className="text-left py-2 px-3 text-white font-medium">Location</th>
                     </tr>
                   </thead>
-                  <tbody className="text-gray-300">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/5">
                       <td className="py-2 px-3">Supabase</td>
-                      <td className="py-2 px-3">Database & authentication</td>
-                      <td className="py-2 px-3">EU (Frankfurt)</td>
+                      <td className="py-2 px-3">
+                        Database, authentication &amp; file storage — where your account and
+                        certificates are held
+                      </td>
+                      <td className="py-2 px-3">UK (London)</td>
                     </tr>
                     <tr className="border-b border-white/5">
                       <td className="py-2 px-3">Stripe</td>
-                      <td className="py-2 px-3">Payment processing</td>
+                      <td className="py-2 px-3">
+                        Card payments and subscriptions taken on the web. We never see or store your
+                        full card number
+                      </td>
                       <td className="py-2 px-3">EU/USA</td>
+                    </tr>
+                    <tr className="border-b border-white/5">
+                      <td className="py-2 px-3">Apple &amp; Google</td>
+                      <td className="py-2 px-3">
+                        Subscriptions bought inside the iOS or Android app are billed by the app
+                        store, under its own privacy policy — we receive confirmation of the
+                        purchase, never your payment details
+                      </td>
+                      <td className="py-2 px-3">USA</td>
+                    </tr>
+                    <tr className="border-b border-white/5">
+                      <td className="py-2 px-3">RevenueCat</td>
+                      <td className="py-2 px-3">Subscription management for app store purchases</td>
+                      <td className="py-2 px-3">USA (DPA in place)</td>
                     </tr>
                     <tr className="border-b border-white/5">
                       <td className="py-2 px-3">Vercel</td>
@@ -331,9 +575,21 @@ const PrivacyPolicy = () => {
                       <td className="py-2 px-3">EU (Ireland)</td>
                     </tr>
                     <tr className="border-b border-white/5">
-                      <td className="py-2 px-3">PostHog</td>
-                      <td className="py-2 px-3">Analytics (with consent)</td>
-                      <td className="py-2 px-3">EU</td>
+                      <td className="py-2 px-3">PDFMonkey</td>
+                      <td className="py-2 px-3">
+                        Rendering your certificates and reports to PDF. Receives the contents of the
+                        document being produced, including client name, installation address and
+                        signatures
+                      </td>
+                      <td className="py-2 px-3">EU (France)</td>
+                    </tr>
+                    <tr className="border-b border-white/5">
+                      <td className="py-2 px-3">Brevo</td>
+                      <td className="py-2 px-3">
+                        Transactional and service emails — certificates you send to clients,
+                        reminders and account notices
+                      </td>
+                      <td className="py-2 px-3">EU (France)</td>
                     </tr>
                     <tr className="border-b border-white/5">
                       <td className="py-2 px-3">OpenAI</td>
@@ -341,25 +597,37 @@ const PrivacyPolicy = () => {
                       <td className="py-2 px-3">USA (DPA in place)</td>
                     </tr>
                     <tr className="border-b border-white/5">
-                      <td className="py-2 px-3">Google</td>
-                      <td className="py-2 px-3">Maps, address search & geocoding</td>
+                      <td className="py-2 px-3">Anthropic</td>
+                      <td className="py-2 px-3">
+                        AI-powered features (search and assistant responses)
+                      </td>
                       <td className="py-2 px-3">USA (DPA in place)</td>
                     </tr>
                     <tr className="border-b border-white/5">
-                      <td className="py-2 px-3">Resend</td>
-                      <td className="py-2 px-3">Transactional emails</td>
+                      <td className="py-2 px-3">Google</td>
+                      <td className="py-2 px-3">
+                        Maps, address search &amp; geocoding; and Google Analytics for website
+                        measurement (analytics-cookie consent only)
+                      </td>
                       <td className="py-2 px-3">USA (DPA in place)</td>
+                    </tr>
+                    <tr className="border-b border-white/5">
+                      <td className="py-2 px-3">Twilio / Vonage</td>
+                      <td className="py-2 px-3">
+                        SMS one-time codes, where you choose to verify a phone number
+                      </td>
+                      <td className="py-2 px-3">USA (DPA in place)</td>
+                    </tr>
+                    <tr className="border-b border-white/5">
+                      <td className="py-2 px-3">PostHog</td>
+                      <td className="py-2 px-3">Analytics (with consent)</td>
+                      <td className="py-2 px-3">EU</td>
                     </tr>
                     <tr className="border-b border-white/5">
                       <td className="py-2 px-3">Sentry</td>
                       <td className="py-2 px-3">
                         Error tracking, crash reporting & session replay for debugging
                       </td>
-                      <td className="py-2 px-3">USA (DPA in place)</td>
-                    </tr>
-                    <tr className="border-b border-white/5">
-                      <td className="py-2 px-3">RevenueCat</td>
-                      <td className="py-2 px-3">Subscription management</td>
                       <td className="py-2 px-3">USA (DPA in place)</td>
                     </tr>
                     <tr className="border-b border-white/5">
@@ -387,7 +655,7 @@ const PrivacyPolicy = () => {
               <h3 className="font-semibold text-white mb-2">
                 Elec-ID Verification (With Your Consent)
               </h3>
-              <p className="text-gray-300 text-sm">
+              <p className="text-white text-sm">
                 If you use Elec-ID and share your verification link, employers or clients can view
                 your professional credentials. You control what information is visible on your
                 public profile.
@@ -396,7 +664,7 @@ const PrivacyPolicy = () => {
 
             <div className="p-4 rounded-xl bg-white/5 border border-white/10">
               <h3 className="font-semibold text-white mb-2">Legal Requirements</h3>
-              <p className="text-gray-300 text-sm">
+              <p className="text-white text-sm">
                 We may disclose data when required by law, court order, or government request, or to
                 protect our rights, safety, or property.
               </p>
@@ -405,16 +673,16 @@ const PrivacyPolicy = () => {
         </section>
 
         {/* 6. International Transfers */}
-        <section>
+        <section id="s6" className="scroll-mt-24">
           <h2 className="text-xl font-bold text-yellow-400 mb-3 flex items-center gap-2">
             <Globe className="h-5 w-5" />
             6. International Data Transfers
           </h2>
-          <p className="text-gray-300 leading-relaxed mb-3">
+          <p className="text-white leading-relaxed mb-3">
             Some of our service providers are based outside the UK. When we transfer personal data
             internationally, we ensure appropriate safeguards are in place:
           </p>
-          <ul className="text-gray-300 text-sm space-y-2 list-disc list-inside">
+          <ul className="text-white text-sm space-y-2 list-disc list-inside">
             <li>
               <strong className="text-white">EU/EEA:</strong> Transfers covered by UK adequacy
               regulations
@@ -432,19 +700,19 @@ const PrivacyPolicy = () => {
         </section>
 
         {/* 7. Data Security */}
-        <section>
+        <section id="s7" className="scroll-mt-24">
           <h2 className="text-xl font-bold text-yellow-400 mb-3 flex items-center gap-2">
             <Lock className="h-5 w-5" />
             7. Data Security
           </h2>
-          <p className="text-gray-300 leading-relaxed mb-3">
+          <p className="text-white leading-relaxed mb-3">
             We implement appropriate technical and organisational measures to protect your personal
             data:
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div className="p-4 rounded-xl bg-white/5 border border-white/10">
               <h3 className="font-semibold text-white mb-2 text-sm">Encryption</h3>
-              <ul className="text-gray-400 text-xs space-y-1 list-disc list-inside">
+              <ul className="text-white text-xs space-y-1 list-disc list-inside">
                 <li>TLS 1.3 for data in transit</li>
                 <li>AES-256 encryption at rest</li>
                 <li>Bcrypt password hashing</li>
@@ -452,7 +720,7 @@ const PrivacyPolicy = () => {
             </div>
             <div className="p-4 rounded-xl bg-white/5 border border-white/10">
               <h3 className="font-semibold text-white mb-2 text-sm">Access Control</h3>
-              <ul className="text-gray-400 text-xs space-y-1 list-disc list-inside">
+              <ul className="text-white text-xs space-y-1 list-disc list-inside">
                 <li>Role-based access controls</li>
                 <li>Multi-factor authentication available</li>
                 <li>Regular access reviews</li>
@@ -460,7 +728,7 @@ const PrivacyPolicy = () => {
             </div>
             <div className="p-4 rounded-xl bg-white/5 border border-white/10">
               <h3 className="font-semibold text-white mb-2 text-sm">Infrastructure</h3>
-              <ul className="text-gray-400 text-xs space-y-1 list-disc list-inside">
+              <ul className="text-white text-xs space-y-1 list-disc list-inside">
                 <li>SOC 2 compliant hosting</li>
                 <li>Regular security patching</li>
                 <li>DDoS protection</li>
@@ -468,7 +736,7 @@ const PrivacyPolicy = () => {
             </div>
             <div className="p-4 rounded-xl bg-white/5 border border-white/10">
               <h3 className="font-semibold text-white mb-2 text-sm">Monitoring</h3>
-              <ul className="text-gray-400 text-xs space-y-1 list-disc list-inside">
+              <ul className="text-white text-xs space-y-1 list-disc list-inside">
                 <li>24/7 security monitoring</li>
                 <li>Automated threat detection</li>
                 <li>Incident response procedures</li>
@@ -494,21 +762,21 @@ const PrivacyPolicy = () => {
               device passcode or biometric lock to secure your device.
             </p>
             <p className="text-white text-sm mt-2">
-              Mental health check-ins, daily reflections, mood, sleep and journal entries are
-              stored securely in your account (not on your device), protected by the encryption
-              and access controls described above. They are included in your data export and
-              permanently deleted when you delete your account.
+              Mental health check-ins, daily reflections, mood, sleep and journal entries are stored
+              securely in your account (not on your device), protected by the encryption and access
+              controls described above. They are included in your data export and permanently
+              deleted when you delete your account.
             </p>
           </div>
         </section>
 
         {/* 8. Data Retention */}
-        <section>
+        <section id="s8" className="scroll-mt-24">
           <h2 className="text-xl font-bold text-yellow-400 mb-3 flex items-center gap-2">
             <Clock className="h-5 w-5" />
             8. Data Retention
           </h2>
-          <p className="text-gray-300 leading-relaxed mb-4">
+          <p className="text-white leading-relaxed mb-4">
             We retain your personal data only for as long as necessary to fulfil the purposes for
             which it was collected:
           </p>
@@ -516,40 +784,38 @@ const PrivacyPolicy = () => {
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-white/10">
-                  <th className="text-left py-3 px-4 text-gray-300 font-medium">Data Type</th>
-                  <th className="text-left py-3 px-4 text-gray-300 font-medium">
-                    Retention Period
-                  </th>
+                  <th className="text-left py-3 px-4 text-white font-medium">Data Type</th>
+                  <th className="text-left py-3 px-4 text-white font-medium">Retention Period</th>
                 </tr>
               </thead>
               <tbody>
                 <tr className="border-b border-white/10">
-                  <td className="py-3 px-4 text-gray-300">Account data</td>
-                  <td className="py-3 px-4 text-gray-400">
+                  <td className="py-3 px-4 text-white">Account data</td>
+                  <td className="py-3 px-4 text-white">
                     Duration of account + 30 days after deletion
                   </td>
                 </tr>
                 <tr className="border-b border-white/10">
-                  <td className="py-3 px-4 text-gray-300">Learning progress & certificates</td>
-                  <td className="py-3 px-4 text-gray-400">
+                  <td className="py-3 px-4 text-white">Learning progress & certificates</td>
+                  <td className="py-3 px-4 text-white">
                     Duration of account + 7 years (for verification)
                   </td>
                 </tr>
                 <tr className="border-b border-white/10">
-                  <td className="py-3 px-4 text-gray-300">Transaction & billing data</td>
-                  <td className="py-3 px-4 text-gray-400">7 years (UK tax requirements)</td>
+                  <td className="py-3 px-4 text-white">Transaction & billing data</td>
+                  <td className="py-3 px-4 text-white">7 years (UK tax requirements)</td>
                 </tr>
                 <tr className="border-b border-white/10">
-                  <td className="py-3 px-4 text-gray-300">Support tickets</td>
-                  <td className="py-3 px-4 text-gray-400">3 years after resolution</td>
+                  <td className="py-3 px-4 text-white">Support tickets</td>
+                  <td className="py-3 px-4 text-white">3 years after resolution</td>
                 </tr>
                 <tr className="border-b border-white/10">
-                  <td className="py-3 px-4 text-gray-300">Analytics data</td>
-                  <td className="py-3 px-4 text-gray-400">26 months (anonymised thereafter)</td>
+                  <td className="py-3 px-4 text-white">Analytics data</td>
+                  <td className="py-3 px-4 text-white">26 months (anonymised thereafter)</td>
                 </tr>
                 <tr>
-                  <td className="py-3 px-4 text-gray-300">Security logs</td>
-                  <td className="py-3 px-4 text-gray-400">12 months</td>
+                  <td className="py-3 px-4 text-white">Security logs</td>
+                  <td className="py-3 px-4 text-white">12 months</td>
                 </tr>
               </tbody>
             </table>
@@ -557,12 +823,12 @@ const PrivacyPolicy = () => {
         </section>
 
         {/* 9. Your Rights */}
-        <section>
+        <section id="s9" className="scroll-mt-24">
           <h2 className="text-xl font-bold text-yellow-400 mb-3 flex items-center gap-2">
             <FileText className="h-5 w-5" />
             9. Your Rights Under UK GDPR
           </h2>
-          <p className="text-gray-300 leading-relaxed mb-4">
+          <p className="text-white leading-relaxed mb-4">
             You have the following rights regarding your personal data. To exercise any of these
             rights, contact us at{' '}
             <a href="mailto:info@elec-mate.com" className="text-yellow-400 hover:underline">
@@ -574,7 +840,7 @@ const PrivacyPolicy = () => {
           <div className="space-y-3">
             <div className="p-4 rounded-xl bg-white/5 border border-white/10">
               <h3 className="font-semibold text-white mb-1">Right of Access (Article 15)</h3>
-              <p className="text-gray-300 text-sm">
+              <p className="text-white text-sm">
                 Request a copy of the personal data we hold about you. You can also download your
                 data directly from Settings &gt; Privacy.
               </p>
@@ -582,7 +848,7 @@ const PrivacyPolicy = () => {
 
             <div className="p-4 rounded-xl bg-white/5 border border-white/10">
               <h3 className="font-semibold text-white mb-1">Right to Rectification (Article 16)</h3>
-              <p className="text-gray-300 text-sm">
+              <p className="text-white text-sm">
                 Request correction of inaccurate or incomplete personal data. You can update most
                 information directly in your profile settings.
               </p>
@@ -590,7 +856,7 @@ const PrivacyPolicy = () => {
 
             <div className="p-4 rounded-xl bg-white/5 border border-white/10">
               <h3 className="font-semibold text-white mb-1">Right to Erasure (Article 17)</h3>
-              <p className="text-gray-300 text-sm">
+              <p className="text-white text-sm">
                 Request deletion of your personal data ("right to be forgotten"). We will comply
                 unless we have a legal obligation to retain the data.
               </p>
@@ -598,7 +864,7 @@ const PrivacyPolicy = () => {
 
             <div className="p-4 rounded-xl bg-white/5 border border-white/10">
               <h3 className="font-semibold text-white mb-1">Right to Restriction (Article 18)</h3>
-              <p className="text-gray-300 text-sm">
+              <p className="text-white text-sm">
                 Request that we limit the processing of your personal data in certain circumstances.
               </p>
             </div>
@@ -607,7 +873,7 @@ const PrivacyPolicy = () => {
               <h3 className="font-semibold text-white mb-1">
                 Right to Data Portability (Article 20)
               </h3>
-              <p className="text-gray-300 text-sm">
+              <p className="text-white text-sm">
                 Receive your data in a structured, commonly used format (JSON). Available via
                 Settings &gt; Privacy &gt; Download My Data.
               </p>
@@ -615,7 +881,7 @@ const PrivacyPolicy = () => {
 
             <div className="p-4 rounded-xl bg-white/5 border border-white/10">
               <h3 className="font-semibold text-white mb-1">Right to Object (Article 21)</h3>
-              <p className="text-gray-300 text-sm">
+              <p className="text-white text-sm">
                 Object to processing based on legitimate interests, including profiling. You can opt
                 out of analytics via Settings &gt; Privacy.
               </p>
@@ -623,7 +889,7 @@ const PrivacyPolicy = () => {
 
             <div className="p-4 rounded-xl bg-white/5 border border-white/10">
               <h3 className="font-semibold text-white mb-1">Right to Withdraw Consent</h3>
-              <p className="text-gray-300 text-sm">
+              <p className="text-white text-sm">
                 Where processing is based on consent, you may withdraw it at any time without
                 affecting the lawfulness of prior processing.
               </p>
@@ -633,23 +899,23 @@ const PrivacyPolicy = () => {
               <h3 className="font-semibold text-white mb-1">
                 Rights Related to Automated Decision Making (Article 22)
               </h3>
-              <p className="text-gray-300 text-sm">
+              <p className="text-white text-sm">
                 We do not make any solely automated decisions that produce legal effects or
                 significantly affect you.
               </p>
             </div>
           </div>
 
-          <p className="text-gray-400 text-sm mt-4">
+          <p className="text-white text-sm mt-4">
             We will respond to valid requests within one month. In complex cases, we may extend this
             by two months, but we will inform you if this is necessary.
           </p>
         </section>
 
         {/* 10. Cookies */}
-        <section>
+        <section id="s10" className="scroll-mt-24">
           <h2 className="text-xl font-bold text-yellow-400 mb-3">10. Cookies & Tracking</h2>
-          <p className="text-gray-300 leading-relaxed mb-3">
+          <p className="text-white leading-relaxed mb-3">
             We use cookies and similar technologies to provide and improve our services. For
             detailed information about the cookies we use and how to manage your preferences, please
             see our{' '}
@@ -661,12 +927,12 @@ const PrivacyPolicy = () => {
         </section>
 
         {/* 11. Children */}
-        <section>
+        <section id="s11" className="scroll-mt-24">
           <h2 className="text-xl font-bold text-yellow-400 mb-3 flex items-center gap-2">
             <AlertTriangle className="h-5 w-5" />
             11. Children's Privacy
           </h2>
-          <p className="text-gray-300 leading-relaxed">
+          <p className="text-white leading-relaxed">
             Elec-Mate is designed for professional use and is not intended for children under 16. We
             do not knowingly collect personal data from children under 16. If you believe we have
             inadvertently collected such data, please contact us immediately at{' '}
@@ -678,12 +944,12 @@ const PrivacyPolicy = () => {
         </section>
 
         {/* 12. Changes */}
-        <section>
+        <section id="s12" className="scroll-mt-24">
           <h2 className="text-xl font-bold text-yellow-400 mb-3 flex items-center gap-2">
             <RefreshCw className="h-5 w-5" />
             12. Changes to This Policy
           </h2>
-          <p className="text-gray-300 leading-relaxed">
+          <p className="text-white leading-relaxed">
             We may update this Privacy Policy from time to time to reflect changes in our practices,
             technology, legal requirements, or other factors. We will notify you of material changes
             by email and/or a prominent notice on our platform at least 30 days before the changes
@@ -692,18 +958,18 @@ const PrivacyPolicy = () => {
         </section>
 
         {/* 13. Complaints */}
-        <section>
+        <section id="s13" className="scroll-mt-24">
           <h2 className="text-xl font-bold text-yellow-400 mb-3 flex items-center gap-2">
             <Scale className="h-5 w-5" />
             13. Complaints
           </h2>
-          <p className="text-gray-300 leading-relaxed mb-3">
+          <p className="text-white leading-relaxed mb-3">
             If you are unhappy with how we have handled your personal data, you have the right to
             lodge a complaint with the Information Commissioner's Office (ICO):
           </p>
           <div className="p-4 rounded-xl bg-white/5 border border-white/10">
             <p className="text-white font-medium">Information Commissioner's Office</p>
-            <p className="text-gray-400 text-sm mt-2">
+            <p className="text-white text-sm mt-2">
               Website:{' '}
               <a
                 href="https://ico.org.uk/make-a-complaint/"
@@ -714,35 +980,35 @@ const PrivacyPolicy = () => {
                 ico.org.uk/make-a-complaint
               </a>
             </p>
-            <p className="text-gray-400 text-sm">Helpline: 0303 123 1113</p>
+            <p className="text-white text-sm">Helpline: 0303 123 1113</p>
           </div>
-          <p className="text-gray-400 text-sm mt-3">
+          <p className="text-white text-sm mt-3">
             However, we would appreciate the opportunity to address your concerns before you
             approach the ICO. Please contact us first.
           </p>
         </section>
 
         {/* 14. Contact */}
-        <section>
+        <section id="s14" className="scroll-mt-24">
           <h2 className="text-xl font-bold text-yellow-400 mb-3 flex items-center gap-2">
             <Mail className="h-5 w-5" />
             14. Contact Us
           </h2>
-          <p className="text-gray-300 mb-4">
+          <p className="text-white mb-4">
             For any questions, concerns, or requests regarding this Privacy Policy or your personal
             data:
           </p>
           <div className="p-4 rounded-xl bg-white/5 border border-white/10">
             <p className="text-white font-medium">Elec-Mate Ltd</p>
-            <p className="text-gray-400 text-sm mt-2">
+            <p className="text-white text-sm mt-2">
               Email:{' '}
               <a href="mailto:info@elec-mate.com" className="text-yellow-400 hover:underline">
                 info@elec-mate.com
               </a>
             </p>
-            <p className="text-gray-400 text-sm mt-1">ICO Registration: ZB935897</p>
+            <p className="text-white text-sm mt-1">ICO Registration: ZB935897</p>
           </div>
-          <p className="text-gray-400 text-sm mt-3">
+          <p className="text-white text-sm mt-3">
             We aim to respond to all enquiries within 5 working days.
           </p>
         </section>

@@ -494,7 +494,7 @@ export default function BungalowRewireCostPage() {
       faqHeading="Frequently Asked Questions About Bungalow Rewire Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Bungalow Rewires with Real Trade Pricing"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for itemised quoting, on-site EIC certificates, and AI cost engineering. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for itemised quoting, on-site EIC certificates, and AI cost engineering. 7-day free trial, cancel anytime."
     />
   );
 }

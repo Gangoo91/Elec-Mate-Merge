@@ -593,7 +593,7 @@ export default function CityGuilds2382ExamGuidePage() {
       faqHeading="Frequently Asked Questions About the 2382 Exam"
       relatedPages={relatedPages}
       ctaHeading="Prepare for the 2382 with Elec-Mate"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for exam preparation, cable sizing practice, and career development. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for exam preparation, cable sizing practice, and career development. 7-day free trial, cancel anytime."
     />
   );
 }

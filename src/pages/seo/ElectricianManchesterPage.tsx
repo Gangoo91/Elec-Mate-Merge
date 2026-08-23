@@ -540,7 +540,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Manchester electrical business"
-          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Complete EICRs and EICs on site…"
+          description="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, and job management. Complete EICRs and EICs on site…"
           icon={MapPin}
         />
       </>
@@ -578,7 +578,7 @@ export default function ElectricianManchesterPage() {
       faqHeading="Frequently Asked Questions About Electricians in Manchester"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Certificates on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site and send instant PDFs to Manchester landlords and letting agents. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site and send instant PDFs to Manchester landlords and letting agents. 7-day free trial."
     />
   );
 }

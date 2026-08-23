@@ -648,7 +648,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your EICR business in Sunderland with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate to complete EICRs on site, scan boards with AI, and export instant PDFs. 7-day free trial."
+          description="Join 1,600+ UK electricians using Elec-Mate to complete EICRs on site, scan boards with AI, and export instant PDFs. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -690,7 +690,7 @@ export default function EICRSunderlandPage() {
       faqHeading="Frequently Asked Questions About EICR in Sunderland"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs On Site — Anywhere in the North East"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

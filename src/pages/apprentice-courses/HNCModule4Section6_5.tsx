@@ -285,7 +285,7 @@ const HNCModule4Section6_5 = () => {
               'Hierarchy of control: Eliminate → Reduce → Inform. Designed-out risk is the only risk you can guarantee won’t hurt anyone.',
               'Risk register entries are project-specific (location, equipment, mitigation) — generic registers are noise. Focus on hidden, unusual or non-obvious risks.',
               'Reg 132.16 (BS 7671) ties into CDM: any addition or alteration must be verified for the existing supply, earthing and bonding adequacy — that’s a designer responsibility.',
-              'The register feeds the Pre-Construction Information (PCI) and the Health &amp; Safety File at handover. It’s a living document, not a one-shot tick.',
+              'The register feeds the Pre-Construction Information (PCI) and the Health & Safety File at handover. It’s a living document, not a one-shot tick.',
             ]}
           />
 
@@ -669,7 +669,7 @@ const HNCModule4Section6_5 = () => {
               'Project-specific entries only. Generic risk registers waste the contractor’s time and bury real issues.',
               'Reg 132.16 verification (rating, fault level, earthing, bonding adequacy) is a designer responsibility on every refurb.',
               'Tie risks to specific locations, equipment and design decisions — name them on drawings and schedules.',
-              'Risk register feeds Pre-Construction Information (PCI) and Health &amp; Safety File — it’s a project-life document.',
+              'Risk register feeds Pre-Construction Information (PCI) and Health & Safety File — it’s a project-life document.',
               'Owner, date, action, review date for every entry. Living document, signed off at each stage gate.',
               'Designer’s verification of Reg 132.16 must be evidenced — survey report, calculation, signed sign-off — never assumed.',
             ]}

@@ -511,7 +511,7 @@ export default function CSCSvsECSCardPage() {
       faqHeading="Frequently Asked Questions About CSCS and ECS Cards"
       relatedPages={relatedPages}
       ctaHeading="Track Your Cards and Qualifications"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for qualification tracking, professional certificates, and career development. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for qualification tracking, professional certificates, and career development. 7-day free trial, cancel anytime."
     />
   );
 }

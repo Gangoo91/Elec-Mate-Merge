@@ -202,8 +202,9 @@ const sections = [
 
         <div className={`${CARD_PADDED} my-6`}>
           <p className="text-sm leading-relaxed text-white">
-            <span className="font-semibold">Written by the Elec-Mate editorial team</span> &mdash;
-            verified by a qualified UK electrician and checked against BS&nbsp;7671:2018+A4:2026.
+            <span className="font-semibold">Written and reviewed by Andrew Moore, founder of
+            Elec-Mate</span> &mdash; a qualified electrician (18th Edition, C&amp;G 2391 inspection
+            and testing). Checked against BS&nbsp;7671:2018+A4:2026.
           </p>
         </div>
       </>
@@ -791,7 +792,7 @@ export default function NAPICertificateGuidePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Certificates That Work With Any Scheme"
-      ctaSubheading="Join 1,000+ UK electricians producing BS 7671:2018+A4:2026 certificates with Elec-Mate. Appendix 6 model forms, PDF export, digital signatures and cloud storage — ready to upload to your scheme portal. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians producing BS 7671:2018+A4:2026 certificates with Elec-Mate. Appendix 6 model forms, PDF export, digital signatures and cloud storage — ready to upload to your scheme portal. 7-day free trial."
     />
   );
 }

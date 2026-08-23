@@ -547,7 +547,7 @@ export default function PATTestingCostPage() {
       faqHeading="Frequently Asked Questions About PAT Testing Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote PAT Testing Jobs Professionally"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for professional quoting, job tracking, and client management. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for professional quoting, job tracking, and client management. 7-day free trial, cancel anytime."
     />
   );
 }

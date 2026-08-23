@@ -276,7 +276,7 @@ const HNCModule3Section3_3 = () => {
             points={[
               'You use phasor diagrams to size PFC capacitors, analyse motor starting, and verify three-phase sequence on every BSE installation with non-resistive load.',
               'You apply ELI / ICE — voltage leads current in inductors, current leads voltage in capacitors — to predict the sign of every reactive load.',
-              'You convert pf &harr; phase angle (pf = cos &phi;) and use the power triangle (P, Q, S) for kVA sizing and DNO penalty calculations.',
+              'You convert pf &harr; phase angle (pf = cos φ) and use the power triangle (P, Q, S) for kVA sizing and DNO penalty calculations.',
               'You verify three-phase sequence (L1-L2-L3) with a sequence indicator before energising any motor — wrong rotation can damage pumps, fans and lifts.',
             ]}
           />
@@ -843,12 +843,12 @@ const HNCModule3Section3_3 = () => {
 
           <KeyTakeaways
             points={[
-              'Phase angle &phi; = arccos(pf) — measures the angular shift between voltage and current waveforms in degrees or radians.',
+              'Phase angle φ = arccos(pf) — measures the angular shift between voltage and current waveforms in degrees or radians.',
               'ELI / ICE — voltage leads current in inductors (motors lag); current leads voltage in capacitors (PFC banks lead).',
               'Phasor length = RMS magnitude; phasor angle = phase relative to reference; rotation is anti-clockwise for positive angles.',
-              'Power triangle: P (kW) = real, Q (kVAr) = reactive, S (kVA) = apparent &mdash; pf = cos &phi; = P/S.',
-              'PFC sizing: kVAr = kW &times; (tan&phi;&#x2081; &minus; tan&phi;&#x2082;) — target 0.95 pf to avoid DNO reactive penalties.',
-              'Three-phase rotation 120&deg; apart — line voltage = &radic;3 &times; phase voltage = 1.732 &times; 230 V = 400 V on UK supplies.',
+              'Power triangle: P (kW) = real, Q (kVAr) = reactive, S (kVA) = apparent — pf = cos φ = P/S.',
+              'PFC sizing: kVAr = kW × (tanφ&#x2081; &minus; tanφ&#x2082;) — target 0.95 pf to avoid DNO reactive penalties.',
+              'Three-phase rotation 120° apart — line voltage = √3 × phase voltage = 1.732 × 230 V = 400 V on UK supplies.',
               'Reverse rotation by swapping any two phases — verify with a sequence indicator before mechanically coupling a motor.',
               'BS 7671 Table 51 colour code (L1 brown / L2 black / L3 grey / N blue) is the basis for phase identification but never substitutes for instrument testing.',
             ]}

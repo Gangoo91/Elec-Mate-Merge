@@ -663,7 +663,7 @@ export default function StudentHouseElectricalPage() {
       faqHeading="Frequently Asked Questions About Student House Electrical Safety"
       relatedPages={relatedPages}
       ctaHeading="Complete Student Property EICRs on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

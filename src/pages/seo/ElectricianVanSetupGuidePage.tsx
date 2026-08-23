@@ -649,7 +649,7 @@ export default function ElectricianVanSetupGuidePage() {
       faqHeading="Frequently Asked Questions About Electrician Van Setup"
       relatedPages={relatedPages}
       ctaHeading="Run Your Business From Your Van"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management — all from your phone. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, and job management — all from your phone. 7-day free trial, cancel anytime."
     />
   );
 }

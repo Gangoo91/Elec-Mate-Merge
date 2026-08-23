@@ -628,7 +628,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Handle emergency call-outs professionally"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site certificates, fault documentation, and instant invoicing."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site certificates, fault documentation, and instant invoicing."
           icon={Zap}
         />
       </>
@@ -664,7 +664,7 @@ export default function ElectricalEmergencyPage() {
       faqHeading="Frequently Asked Questions About Electrical Emergencies"
       relatedPages={relatedPages}
       ctaHeading="Professional Emergency Certificates on Site"
-      ctaSubheading="Join 1,000+ UK electricians completing certificates, fault documentation, and invoices on their phones — even on emergency call-outs. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians completing certificates, fault documentation, and invoices on their phones — even on emergency call-outs. 7-day free trial, cancel anytime."
     />
   );
 }

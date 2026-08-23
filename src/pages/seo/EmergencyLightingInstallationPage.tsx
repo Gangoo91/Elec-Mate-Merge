@@ -594,7 +594,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage emergency lighting certificates with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate to issue electrical certificates on site. BS 5266-1 emergency lighting certificates, EICR reports…"
+          description="Join 1,600+ UK electricians using Elec-Mate to issue electrical certificates on site. BS 5266-1 emergency lighting certificates, EICR reports…"
           icon={FileCheck2}
         />
       </>
@@ -631,7 +631,7 @@ export default function EmergencyLightingInstallationPage() {
       faqHeading="Frequently Asked Questions About Emergency Lighting Installation"
       relatedPages={relatedPages}
       ctaHeading="Issue Emergency Lighting Certificates on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site certification. BS 5266-1 emergency lighting certificates, EICR reports, and minor works notices with instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site certification. BS 5266-1 emergency lighting certificates, EICR reports, and minor works notices with instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

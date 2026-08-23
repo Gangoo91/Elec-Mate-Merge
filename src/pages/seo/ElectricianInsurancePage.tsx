@@ -1,4 +1,6 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
+import InsuranceCoverChecker from '@/components/seo/InsuranceCoverChecker';
+import InsuranceProviderDirectory from '@/components/seo/InsuranceProviderDirectory';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
@@ -36,7 +38,7 @@ const tocItems = [
   { id: 'tools-cover', label: 'Tools and Equipment Cover' },
   { id: 'van-insurance', label: 'Van Insurance' },
   { id: 'typical-costs', label: 'Typical Costs' },
-  { id: 'choosing-provider', label: 'Choosing the Right Provider' },
+  { id: 'choosing-provider', label: 'Where to Buy Cover' },
   { id: 'claiming', label: 'Making a Claim' },
   { id: 'faq', label: 'FAQ' },
   { id: 'related', label: 'Related Pages' },
@@ -146,13 +148,15 @@ const sections = [
       <>
         <div className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 mb-5 flex items-start gap-3">
           <ShieldCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
-          <p className="text-sm text-white/70 m-0">
-            <strong className="text-white/90">Reviewed by a NICEIC-registered electrician</strong> —
-            content checked against BS 7671:2018+A4:2026 and current industry practice. Last
-            reviewed May 2026.
+          <p className="text-sm text-white m-0">
+            <strong className="text-white">Written and reviewed by Andrew Moore, founder of
+            Elec-Mate</strong> — a qualified electrician (18th Edition, C&amp;G 2391 inspection and
+            testing). Cover levels and costs reflect current UK market practice. Last reviewed
+            August 2026.
           </p>
         </div>
-        <p>
+        <InsuranceCoverChecker />
+        <p className="mt-6">
           Electrical work carries inherent risk. A wiring error can cause a fire. A loose connection
           can cause an electric shock. A poorly installed consumer unit can fail catastrophically.
           Even if you are careful, experienced, and competent, things can go wrong — and when they
@@ -592,7 +596,7 @@ const sections = [
   },
   {
     id: 'choosing-provider',
-    heading: 'Choosing the Right Insurance Provider',
+    heading: 'Choosing an Insurance Provider',
     content: (
       <>
         <p>
@@ -639,11 +643,13 @@ const sections = [
           </ul>
         </div>
         <p>
-          Use a broker who specialises in trade insurance — they can compare multiple insurers and
-          find the best combination of cover, price, and policy wording for your specific situation.
-          Alternatively, get direct quotes from 3 to 4 specialist trade insurers and compare them
-          yourself.
+          A broker who specialises in trade insurance can compare multiple insurers for you;
+          alternatively, get direct quotes from three or four specialist trade insurers and compare
+          the wordings yourself. Either way, check the firm on the FCA Register first.
         </p>
+        <div className="my-6">
+          <InsuranceProviderDirectory />
+        </div>
       </>
     ),
   },
@@ -739,7 +745,7 @@ export default function ElectricianInsurancePage() {
       faqHeading="Frequently Asked Questions About Electrician Insurance"
       relatedPages={relatedPages}
       ctaHeading="Track All Business Expenses Including Insurance"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to track expenses, send invoices, and manage their business. Every insurance payment captured, every tool purchase logged, every receipt stored. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to track expenses, send invoices, and manage their business. Every insurance payment captured, every tool purchase logged, every receipt stored. 7-day free trial, cancel anytime."
     />
   );
 }

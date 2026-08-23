@@ -618,7 +618,7 @@ export default function ElectricalEstimatingGuidePage() {
       faqHeading="Frequently Asked Questions About Electrical Estimating"
       relatedPages={relatedPages}
       ctaHeading="Quote Faster, Win More Profitable Work"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional PDF quotes with built-in per-point pricing. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional PDF quotes with built-in per-point pricing. 7-day free trial, cancel anytime."
     />
   );
 }

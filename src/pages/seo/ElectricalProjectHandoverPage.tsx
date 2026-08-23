@@ -531,7 +531,7 @@ export default function ElectricalProjectHandoverPage() {
       faqHeading="Frequently Asked Questions About Electrical Project Handover"
       relatedPages={relatedPages}
       ctaHeading="Create Professional Handover Packs On Site"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for certificates, test schedules, and handover documentation. Complete everything on site, share instantly. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for certificates, test schedules, and handover documentation. Complete everything on site, share instantly. 7-day free trial, cancel anytime."
     />
   );
 }

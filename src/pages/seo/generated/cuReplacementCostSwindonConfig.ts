@@ -300,5 +300,5 @@ export const cuReplacementCostSwindonConfig: GeneratedGuideConfig = {
   ],
   ctaHeading: 'For Electricians: Quote CU Swaps in Swindon',
   ctaSubheading:
-    'Join 1,000+ UK electricians using Elec-Mate to scan boards, itemise RCBO/SPD/AFDD spec, and issue the BS 7671:2018+A4:2026 EIC on-site. 7-day free trial.',
+    'Join 1,600+ UK electricians using Elec-Mate to scan boards, itemise RCBO/SPD/AFDD spec, and issue the BS 7671:2018+A4:2026 EIC on-site. 7-day free trial.',
 };

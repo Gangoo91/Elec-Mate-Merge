@@ -475,7 +475,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Manage MCS solar installations with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Issue MCS installation certificates and EICs on your phone."
+          description="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, and job management. Issue MCS installation certificates and EICs on your phone."
           icon={PoundSterling}
         />
       </>
@@ -512,7 +512,7 @@ export default function SolarPVGrantsUKPage() {
       faqHeading="Frequently Asked Questions About Solar Panel Grants"
       relatedPages={relatedPages}
       ctaHeading="Install Solar PV with Confidence Using Elec-Mate"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for MCS certification, quoting, and job management. Issue solar installation certificates on your phone. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for MCS certification, quoting, and job management. Issue solar installation certificates on your phone. 7-day free trial, cancel anytime."
     />
   );
 }

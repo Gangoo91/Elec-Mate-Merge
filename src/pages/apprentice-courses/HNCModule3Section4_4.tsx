@@ -279,10 +279,10 @@ const HNCModule3Section4_4 = () => {
 
           <TLDR
             points={[
-              'You apply P = &radic;3 &times; V&#x2097; &times; I&#x2097; &times; cos&phi; on every three-phase calculation — and S = &radic;3 &times; V&#x2097; &times; I&#x2097; for kVA without the pf factor.',
+              'You apply P = √3 × V&#x2097; × I&#x2097; × cosφ on every three-phase calculation — and S = √3 × V&#x2097; × I&#x2097; for kVA without the pf factor.',
               'You convert kW &harr; kVA via pf at every transformer, generator and DNO supply sizing exercise — never assume unity pf on real BSE loads.',
               'You apply two-wattmeter method (3-wire delta) or three-wattmeter method (4-wire star) for measurement on test sheets and energy submetering.',
-              'You size PFC banks via kVAr = kW &times; (tan&phi;&#x2081; &minus; tan&phi;&#x2082;) — target 0.95 pf to clear DNO reactive penalties on commercial tariffs.',
+              'You size PFC banks via kVAr = kW × (tanφ&#x2081; &minus; tanφ&#x2082;) — target 0.95 pf to clear DNO reactive penalties on commercial tariffs.',
             ]}
           />
 
@@ -994,13 +994,13 @@ const HNCModule3Section4_4 = () => {
 
           <KeyTakeaways
             points={[
-              'Three-phase real power: P = &radic;3 &times; V&#x2097; &times; I&#x2097; &times; cos&phi; — the &radic;3 catches every apprentice but is non-negotiable.',
-              'Three-phase apparent power: S = &radic;3 &times; V&#x2097; &times; I&#x2097; — the value you size transformers and supply cables to.',
-              'Three-phase reactive power: Q = &radic;3 &times; V&#x2097; &times; I&#x2097; &times; sin&phi; — drives PFC capacitor sizing.',
+              'Three-phase real power: P = √3 × V&#x2097; × I&#x2097; × cosφ — the √3 catches every apprentice but is non-negotiable.',
+              'Three-phase apparent power: S = √3 × V&#x2097; × I&#x2097; — the value you size transformers and supply cables to.',
+              'Three-phase reactive power: Q = √3 × V&#x2097; × I&#x2097; × sinφ — drives PFC capacitor sizing.',
               'Two-wattmeter method (3-wire delta): P&#x209c;&#x2092;&#x209c; = W&#x2081; + W&#x2082; — pf can be derived from the wattmeter ratio.',
               'Three-wattmeter method (4-wire star with neutral): P&#x209c;&#x2092;&#x209c; = W&#x2081; + W&#x2082; + W&#x2083; — required for unbalanced star loads.',
               'Convert kW &harr; kVA via pf — kVA = kW / pf; sized at the assumed pf for the load mix (0.85 office typical, 0.78 refrigeration, 0.92 lighting).',
-              'PFC sizing: kVAr = kW &times; (tan&phi;&#x2081; &minus; tan&phi;&#x2082;) — target 0.95 pf to clear DNO reactive penalties.',
+              'PFC sizing: kVAr = kW × (tanφ&#x2081; &minus; tanφ&#x2082;) — target 0.95 pf to clear DNO reactive penalties.',
               'BS 7671 Reg 311.2 allows diversity in maximum-demand calc — the basis of every transformer and DNO supply sizing.',
             ]}
           />

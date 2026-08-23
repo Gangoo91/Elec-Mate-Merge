@@ -985,7 +985,7 @@ export default function FP200GoldCableGuidePage() {
       faqHeading="Frequently Asked Questions About FP200 Gold Fire-Resistant Cable"
       relatedPages={relatedPages}
       ctaHeading="Complete Fire Alarm Installation Certificates on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to certify fire alarm and emergency lighting installations on site. Record cable types, test results, and BS 5839-1 compliance — instant PDF export. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to certify fire alarm and emergency lighting installations on site. Record cable types, test results, and BS 5839-1 compliance — instant PDF export. 7-day free trial."
     />
   );
 }

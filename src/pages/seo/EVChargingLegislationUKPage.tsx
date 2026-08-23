@@ -773,7 +773,7 @@ export default function EVChargingLegislationUKPage() {
       faqHeading="Frequently Asked Questions About EV Charging Regulations UK"
       relatedPages={relatedPages}
       ctaHeading="Complete EV Charging Certificates on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EV charging certificates, quoting, and job management. Stay compliant and win more work. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EV charging certificates, quoting, and job management. Stay compliant and win more work. 7-day free trial, cancel anytime."
     />
   );
 }

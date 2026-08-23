@@ -628,7 +628,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify PoE lighting mains supply"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
+          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
           icon={Lightbulb}
         />
       </>
@@ -665,7 +665,7 @@ export default function PoELightingGuidePage() {
       faqHeading="Frequently Asked Questions About PoE Lighting"
       relatedPages={relatedPages}
       ctaHeading="Size Cables and Certify PoE Lighting Installations on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates. Position yourself in the growing PoE lighting market. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates. Position yourself in the growing PoE lighting market. 7-day free trial, cancel anytime."
     />
   );
 }

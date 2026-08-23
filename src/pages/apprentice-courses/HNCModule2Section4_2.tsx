@@ -305,7 +305,7 @@ const HNCModule2Section4_2 = () => {
           <TLDR
             points={[
               'You apply the lumen method N = (E × A) / (Φ × UF × MF) to size luminaire quantity for a target maintained illuminance.',
-              'You compute the room index k = (L × W) / [Hm × (L + W)] and read UF off the manufacturer&rsquo;s photometric data.',
+              'You compute the room index k = (L × W) / [Hm × (L + W)] and read UF off the manufacturer’s photometric data.',
               'You apply MF = LLMF × LSF × LMF × RSMF to allow for lamp lumen depreciation, survival, luminaire dirt and room surface maintenance.',
               'You verify the design with a point-by-point check (E = I × cos³θ / h²) on critical task positions before sign-off.',
             ]}

@@ -545,7 +545,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage fire alarm electrical work with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for EICRs, fire alarm certificates, and BS 7671-compliant documentation. 7-day free trial."
+          description="Join 1,600+ UK electricians using Elec-Mate for EICRs, fire alarm certificates, and BS 7671-compliant documentation. 7-day free trial."
           icon={BellRing}
         />
       </>
@@ -582,7 +582,7 @@ export default function FireAlarmFaultFindingPage() {
       faqHeading="Frequently Asked Questions About Fire Alarm Faults"
       relatedPages={relatedPages}
       ctaHeading="Manage Fire Alarm Electrical Work with Elec-Mate"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EICRs, fire alarm certificates, and compliant documentation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EICRs, fire alarm certificates, and compliant documentation. 7-day free trial, cancel anytime."
     />
   );
 }

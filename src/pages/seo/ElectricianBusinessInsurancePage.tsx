@@ -678,7 +678,7 @@ export default function ElectricianBusinessInsurancePage() {
       faqHeading="Frequently Asked Questions About Electrician Business Insurance"
       relatedPages={relatedPages}
       ctaHeading="Build a Professional Electrical Business"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional tools that make you look professional. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional tools that make you look professional. 7-day free trial, cancel anytime."
     />
   );
 }

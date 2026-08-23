@@ -813,7 +813,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Certificate generator installations with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, generator commissioning records, and instant PDF export. 7-day free trial."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion, generator commissioning records, and instant PDF export. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -855,7 +855,7 @@ export default function GeneratorInstallationGuidePage() {
       faqHeading="Frequently Asked Questions About Generator Installation"
       relatedPages={relatedPages}
       ctaHeading="Complete Generator Installation EICs on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site electrical installation certification, commissioning test records, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site electrical installation certification, commissioning test records, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

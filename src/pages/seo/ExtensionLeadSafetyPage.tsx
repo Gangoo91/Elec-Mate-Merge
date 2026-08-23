@@ -630,7 +630,7 @@ export default function ExtensionLeadSafetyPage() {
       faqHeading="Frequently Asked Questions About Extension Lead Safety"
       relatedPages={relatedPages}
       ctaHeading="Are You an Electrician? Try Elec-Mate Free"
-      ctaSubheading="Complete EICRs on your phone, generate quotes instantly, and manage all your certificates in one place. Join 1,000+ UK electricians. 7-day free trial."
+      ctaSubheading="Complete EICRs on your phone, generate quotes instantly, and manage all your certificates in one place. Join 1,600+ UK electricians. 7-day free trial."
     />
   );
 }

@@ -616,7 +616,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win house purchase EICR and remedial work with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion and instant quoting. Deliver both the EICR report and remedial work quote to…"
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion and instant quoting. Deliver both the EICR report and remedial work quote to…"
           icon={FileCheck2}
         />
       </>
@@ -653,7 +653,7 @@ export default function ElectricalIssuesHouseValuePage() {
       faqHeading="Frequently Asked Questions About Electrical Issues and House Value"
       relatedPages={relatedPages}
       ctaHeading="Deliver EICRs and Quotes to Buyers Before You Leave"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, instant PDF export, and same-day quoting. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, instant PDF export, and same-day quoting. 7-day free trial, cancel anytime."
     />
   );
 }

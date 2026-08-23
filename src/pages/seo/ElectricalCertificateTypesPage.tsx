@@ -772,7 +772,7 @@ export default function ElectricalCertificateTypesPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="All 19 certificate types. One app. Your phone."
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EICR, EIC, Minor Works, EV Charger, Fire Alarm, Emergency Lighting, Solar PV, and PAT Testing certificates. Board scanner, voice test entry, digital signatures. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EICR, EIC, Minor Works, EV Charger, Fire Alarm, Emergency Lighting, Solar PV, and PAT Testing certificates. Board scanner, voice test entry, digital signatures. 7-day free trial."
     />
   );
 }

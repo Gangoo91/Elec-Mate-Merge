@@ -5,6 +5,7 @@
  */
 
 import { MATE_PHONE_RAW } from '@/constants/mate';
+import { saveOrShareFile } from '@/utils/save-or-share-file';
 
 const VCARD = [
   'BEGIN:VCARD',
@@ -22,18 +23,17 @@ const VCARD = [
   '',
 ].join('\r\n');
 
-/** Trigger a download of mate.vcf. Works in browser + Capacitor WebView. */
-export function downloadMateVCard(): void {
+/**
+ * Hand the user Mate's contact card.
+ *
+ * The comment here used to claim this worked in the Capacitor WebView. It did
+ * not: WKWebView ignores `<a download>`, so on the phone — where saving a
+ * contact is the entire point — the tap did nothing. `saveOrShareFile` opens
+ * the share sheet, which offers Contacts directly, and downloads on web.
+ */
+export async function downloadMateVCard(): Promise<void> {
   const blob = new Blob([VCARD], { type: 'text/vcard;charset=utf-8' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'Mate.vcf';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  // Revoke after the download starts
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  await saveOrShareFile(blob, 'Mate.vcf');
 }
 
 /** Raw vCard text — used by edge functions that attach it to emails. */

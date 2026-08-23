@@ -16,12 +16,20 @@
  * Capture evidence doesn't mount its own sheet — it dispatches
  * `elecmate:open-capture`, which ApprenticeTabBar listens for, so there is
  * exactly one UnifiedCaptureSheet in the tree.
+ *
+ * Layout: max-w-6xl, not the 672px column this used to be — on a laptop that
+ * left two thirds of the screen empty and squeezed the quick actions two-up
+ * into a strip barely wider than a phone. Greeting, What's next, the AM2
+ * milestone and the stat strip run full width; below them the page splits into
+ * today's work (plate + quick actions) and standing context (next badge, your
+ * college) in a sticky sidebar. It stacks back to a single column on a phone.
  */
 
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
+  ArrowLeft,
   ArrowRight,
   BookOpen,
   Camera,
@@ -333,7 +341,12 @@ export default function TodayPage() {
       ? {
           label: 'Quick revision',
           icon: ClipboardList,
-          onClick: () => navigate('/apprentice/revision'),
+          // Pass the origin so the session's Back returns here rather than
+          // to a hardcoded default.
+          onClick: () =>
+            navigate('/apprentice/revision', {
+              state: { from: '/apprentice/today', label: 'Today' },
+            }),
         }
       : {
           label: 'Quick quiz',
@@ -347,18 +360,19 @@ export default function TodayPage() {
       {/* House masthead — Today is the tab-bar home, but the rest of the
           apprentice world lives off /apprentice; without this there was no
           route back to the dashboard. */}
-      <div className="sticky top-0 z-50 bg-elec-dark/95 backdrop-blur-sm border-b border-white/[0.06]">
-        <div className="mx-auto max-w-2xl px-4">
-          <div className="flex items-center h-12 gap-4">
+      <div className="sticky top-0 z-50 bg-elec-dark/95 backdrop-blur-sm border-b border-white/[0.08]">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center h-14 gap-3">
             <button
               type="button"
               onClick={() => navigate('/apprentice')}
-              className="text-[12.5px] font-medium text-white hover:text-white transition-colors touch-manipulation whitespace-nowrap"
+              className="-ml-1 flex h-11 shrink-0 items-center gap-1.5 rounded-full border border-white/[0.12] bg-white/[0.06] pl-2.5 pr-4 text-[13px] font-medium text-white transition-colors hover:bg-white/[0.1] touch-manipulation"
             >
-              ← Back
+              <ArrowLeft className="h-4 w-4" />
+              Apprentice Hub
             </button>
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-              Apprentice · Today
+            <span className="min-w-0 flex-1 truncate text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
+              Today
             </span>
           </div>
         </div>
@@ -367,47 +381,53 @@ export default function TodayPage() {
         initial={{ opacity: 0, y: 4 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.18 }}
-        className="px-4 pt-6 pb-28 max-w-2xl mx-auto space-y-6"
+        className="mx-auto max-w-6xl space-y-6 px-4 pb-28 pt-6 sm:px-6 lg:px-8"
       >
         {/* 1 · Greeting */}
         <header className="space-y-1">
-          <p className="text-[13px] text-white/55">{eyebrow}</p>
-          <h1 className="text-[24px] font-semibold tracking-tight leading-tight">
+          <p className="text-[13px] text-white">{eyebrow}</p>
+          <h1 className="text-[24px] font-semibold tracking-tight leading-tight sm:text-[30px]">
             {salutation}, {apprentice.firstName}
           </h1>
         </header>
 
-        {/* 2 · WHAT'S NEXT */}
+        {/* 2 · WHAT'S NEXT — the one thing to do, so it keeps the full width.
+            On a wide screen the copy and the action sit side by side rather
+            than the button stretching to 1100px, which read as a banner. */}
         <section
           className="relative bg-[hsl(0_0%_10%)] border border-white/[0.08] rounded-2xl overflow-hidden"
           aria-label="What's next"
         >
           <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none" />
-          <div className="p-5 space-y-3">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
+          <div className="p-5 sm:p-6">
+            <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
               What's next
             </span>
             {heroLoading ? (
-              <div className="space-y-3" aria-hidden>
+              <div className="mt-3 space-y-3" aria-hidden>
                 <div className="h-6 w-3/4 rounded bg-white/[0.06] animate-pulse" />
                 <div className="h-4 w-1/2 rounded bg-white/[0.05] animate-pulse" />
                 <div className="h-11 w-full rounded-xl bg-white/[0.04] animate-pulse" />
               </div>
             ) : (
-              <>
-                <h2 className="text-[20px] font-semibold tracking-tight leading-snug text-white">
-                  {nextUp.title}
-                </h2>
-                <p className="text-[13px] text-white/60 leading-relaxed">{nextUp.verdict}</p>
+              <div className="mt-3 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between lg:gap-8">
+                <div className="min-w-0 space-y-2">
+                  <h2 className="text-[20px] font-semibold tracking-tight leading-snug text-white sm:text-[24px]">
+                    {nextUp.title}
+                  </h2>
+                  <p className="max-w-[60ch] text-[13.5px] leading-relaxed text-white">
+                    {nextUp.verdict}
+                  </p>
+                </div>
                 <button
                   type="button"
                   onClick={() => navigate(nextUp.to)}
-                  className="w-full h-11 rounded-xl border border-elec-yellow/25 bg-elec-yellow/10 hover:bg-elec-yellow/20 text-elec-yellow text-[13px] font-medium inline-flex items-center justify-center gap-2 touch-manipulation transition-colors"
+                  className="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-xl bg-elec-yellow px-6 text-[13.5px] font-semibold text-black transition-transform active:scale-[0.98] touch-manipulation lg:h-12"
                 >
                   {nextUp.ctaLabel}
                   <ArrowRight className="h-4 w-4" />
                 </button>
-              </>
+              </div>
             )}
           </div>
         </section>
@@ -441,7 +461,7 @@ export default function TodayPage() {
                       <span className="text-[22px] font-semibold tracking-tight tabular-nums text-white">
                         {am2DayLabel}
                       </span>
-                      <span className="text-[12.5px] text-white/55">to go</span>
+                      <span className="text-[12.5px] text-white">to go</span>
                     </div>
                   ) : (
                     <div className="mt-1 text-[15px] font-semibold text-white">
@@ -449,13 +469,13 @@ export default function TodayPage() {
                     </div>
                   )}
                   {am2.score !== null ? (
-                    <p className="mt-1 text-[12px] text-white/55">
+                    <p className="mt-1 text-[12px] text-white">
                       Readiness{' '}
-                      <span className="text-white/80 font-medium tabular-nums">{am2.score}%</span> ·{' '}
+                      <span className="text-white font-medium tabular-nums">{am2.score}%</span> ·{' '}
                       {am2.sessionsCount} timed run{am2.sessionsCount === 1 ? '' : 's'}
                     </p>
                   ) : (
-                    <p className="mt-1 text-[12px] text-white/55">
+                    <p className="mt-1 text-[12px] text-white">
                       Take your first timed run to see your readiness
                     </p>
                   )}
@@ -477,7 +497,7 @@ export default function TodayPage() {
                     >
                       {am2.score}
                     </span>
-                    <span className="text-[8px] uppercase tracking-wider text-white/45 mt-0.5">
+                    <span className="text-[8px] uppercase tracking-wider text-white mt-0.5">
                       ready
                     </span>
                   </div>
@@ -485,7 +505,7 @@ export default function TodayPage() {
                 <ArrowRight
                   className={cn(
                     'h-4 w-4 shrink-0 transition-all group-hover:translate-x-0.5',
-                    am2Urgent ? 'text-red-300/70' : 'text-white/35 group-hover:text-elec-yellow'
+                    am2Urgent ? "text-red-300" : "text-white group-hover:text-elec-yellow"
                   )}
                 />
               </div>
@@ -521,17 +541,21 @@ export default function TodayPage() {
                   {cell.value}
                 </span>
               )}
-              <span className="text-[9px] font-medium uppercase tracking-[0.14em] text-white/55">
+              <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-white">
                 {cell.label}
               </span>
             </div>
           ))}
         </section>
 
+        {/* Working grid — today's work on the left, standing context on the
+            right. Stacks on a phone, where the sidebar simply follows. */}
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_340px]">
+          <div className="min-w-0 space-y-6">
         {/* 3b · ON YOUR PLATE — the rest of today's open items */}
         {!heroLoading && plateItems.length > 0 && (
           <section className="space-y-3" aria-label="On your plate">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
               On your plate
             </span>
             <div className="bg-[hsl(0_0%_10%)] border border-white/[0.08] rounded-2xl overflow-hidden divide-y divide-white/[0.05]">
@@ -570,7 +594,7 @@ export default function TodayPage() {
                       {count}
                     </span>
                   )}
-                  <ArrowRight className="h-4 w-4 shrink-0 text-white/35 group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all" />
+                  <ArrowRight className="h-4 w-4 shrink-0 text-white group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all" />
                 </button>
               ))}
             </div>
@@ -579,28 +603,32 @@ export default function TodayPage() {
 
         {/* 4 · Quick actions */}
         <section className="space-y-3" aria-label="Quick actions">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
             Quick actions
           </span>
-          <div className="grid grid-cols-2 gap-2">
+          {/* Four across once there's room — two-up in a wide column made each
+              tile 500px of empty space around a 20px icon. */}
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
             {quickActions.map(({ label, icon: Icon, onClick }) => (
               <button
                 key={label}
                 type="button"
                 onClick={onClick}
                 className={cn(
-                  'h-[72px] rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)]',
-                  'flex flex-col items-center justify-center gap-1.5 touch-manipulation',
+                  'h-[84px] rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_10%)]',
+                  'flex flex-col items-center justify-center gap-2 touch-manipulation',
                   'hover:bg-[hsl(0_0%_15%)] active:scale-[0.98] transition-all'
                 )}
               >
                 <Icon className="h-5 w-5 text-elec-yellow" strokeWidth={2} />
-                <span className="text-[12px] font-medium text-white/85">{label}</span>
+                <span className="text-[12.5px] font-medium text-white">{label}</span>
               </button>
             ))}
           </div>
         </section>
+          </div>
 
+          <aside className="space-y-6 lg:sticky lg:top-20 lg:self-start">
         {/* 4b · NEXT BADGE — the closest locked achievement, live progress */}
         {nextBadge && (
           <section aria-label="Next achievement">
@@ -617,7 +645,7 @@ export default function TodayPage() {
                   <span className="text-[13.5px] font-medium text-white truncate">
                     {nextBadge.title}
                   </span>
-                  <span className="text-[11px] font-mono tabular-nums text-white/55 shrink-0">
+                  <span className="text-[11px] font-mono tabular-nums text-white shrink-0">
                     {nextBadge.current}/{nextBadge.target}
                   </span>
                 </span>
@@ -628,7 +656,7 @@ export default function TodayPage() {
                   />
                 </span>
               </span>
-              <ArrowRight className="h-4 w-4 shrink-0 text-white/35 group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all" />
+              <ArrowRight className="h-4 w-4 shrink-0 text-white group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all" />
             </button>
           </section>
         )}
@@ -643,7 +671,7 @@ export default function TodayPage() {
             >
               <GraduationCap className="h-5 w-5 shrink-0 text-elec-yellow" strokeWidth={2} />
               <span className="flex-1 min-w-0">
-                <span className="block text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                <span className="block text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
                   From your college
                 </span>
                 <span className="block text-[13.5px] font-medium text-white truncate">
@@ -659,16 +687,18 @@ export default function TodayPage() {
                   {newCount} new
                 </span>
               ) : null}
-              <ArrowRight className="h-4 w-4 shrink-0 text-white/40 group-hover:translate-x-0.5 transition-transform" />
+              <ArrowRight className="h-4 w-4 shrink-0 text-white group-hover:translate-x-0.5 transition-transform" />
             </button>
           </section>
         )}
+          </aside>
+        </div>
 
         {/* 6 · Quiet wellbeing footer */}
         <button
           type="button"
           onClick={() => navigate('/apprentice/mental-health')}
-          className="w-full h-11 flex items-center justify-center gap-2 text-[12px] text-white/45 hover:text-white/70 touch-manipulation transition-colors"
+          className="w-full h-11 flex items-center justify-center gap-2 text-[12.5px] text-white hover:text-elec-yellow touch-manipulation transition-colors"
         >
           <HeartHandshake className="h-4 w-4" />
           Struggling or need to talk?

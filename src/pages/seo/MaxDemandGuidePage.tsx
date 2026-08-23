@@ -735,7 +735,7 @@ export default function MaxDemandGuidePage() {
       faqHeading="Frequently Asked Questions About Max Demand Calculations"
       relatedPages={relatedPages}
       ctaHeading="Calculate Max Demand on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate's 70+ calculators including max demand, cable sizing, voltage drop, Zs, PFC, and more. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate's 70+ calculators including max demand, cable sizing, voltage drop, Zs, PFC, and more. 7-day free trial, cancel anytime."
     />
   );
 }

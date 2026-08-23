@@ -139,7 +139,7 @@ export const howToPricePatTestingConfig: GeneratedGuideConfig = {
           tone: 'info',
           title: 'For electricians: stop under-pricing your work',
           body:
-            'Join 1,000+ UK electricians using Elec-Mate to quote pat testing (portable appliance testing) at fair-margin prices, issue compliant certificates, and get paid faster. 7-day free trial.',
+            'Join 1,600+ UK electricians using Elec-Mate to quote pat testing (portable appliance testing) at fair-margin prices, issue compliant certificates, and get paid faster. 7-day free trial.',
         },
       ],
     },
@@ -241,5 +241,5 @@ export const howToPricePatTestingConfig: GeneratedGuideConfig = {
   ],
   ctaHeading: 'Stop Under-Pricing PAT Testing (Portable Appliance Testing)',
   ctaSubheading:
-    'Join 1,000+ UK electricians using Elec-Mate to quote pat testing (portable appliance testing) at fair-margin prices, issue compliant certificates, and get paid faster. 7-day free trial.',
+    'Join 1,600+ UK electricians using Elec-Mate to quote pat testing (portable appliance testing) at fair-margin prices, issue compliant certificates, and get paid faster. 7-day free trial.',
 };

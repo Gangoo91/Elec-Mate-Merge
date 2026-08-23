@@ -20,6 +20,15 @@ const Footer = () => {
             <Link to="/terms" className="hover:text-elec-yellow transition-colors">
               Terms
             </Link>
+            {/*
+              The DPA was routed but linked from nowhere. It is the document a
+              main contractor asks for before letting their subbies put site
+              data in the app, so it needs to be findable without knowing the
+              URL.
+            */}
+            <Link to="/dpa" className="hover:text-elec-yellow transition-colors">
+              DPA
+            </Link>
             <Link to="/contact" className="hover:text-elec-yellow transition-colors">
               Contact
             </Link>

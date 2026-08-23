@@ -530,7 +530,7 @@ export default function FloodDamagedElectricsPage() {
       faqHeading="Frequently Asked Questions About Flood Damaged Electrics"
       relatedPages={relatedPages}
       ctaHeading="Professional Flood Recovery Documentation"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EICR certificates, quoting, and cable sizing. Produce the documentation insurance companies need. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EICR certificates, quoting, and cable sizing. Produce the documentation insurance companies need. 7-day free trial, cancel anytime."
     />
   );
 }

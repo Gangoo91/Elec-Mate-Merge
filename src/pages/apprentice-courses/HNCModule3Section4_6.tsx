@@ -281,7 +281,7 @@ const HNCModule3Section4_6 = () => {
           <TLDR
             points={[
               'You identify the DNO earthing system at every cut-out — TN-S, TN-C-S/PME or TT determines bonding, RCD strategy and ADS calculation downstream.',
-              'You verify Zs &times; Ia &le; U&#x2080; for every protective device — automatic disconnection of supply (ADS) under BS 7671 411 is the bedrock of fault protection.',
+              'You verify Zs × Ia ≤ U&#x2080; for every protective device — automatic disconnection of supply (ADS) under BS 7671 411 is the bedrock of fault protection.',
               'You apply BS 7671 A4:2026 PNB / TN-C-S enhancements — every new circuit normally protected by an RCD (30 mA on socket-outlets up to 32 A, all final circuits in domestic).',
               'You design discrimination (selectivity) up the protective tree — downstream MCB trips on the faulted final circuit before the upstream MCCB clears the whole submain.',
             ]}
@@ -1132,9 +1132,9 @@ const HNCModule3Section4_6 = () => {
               'TN-S: separate N and PE conductors back to source — common on older urban supplies.',
               'TN-C-S (PME): combined PEN downstream from supply, separated at the cut-out — dominant on modern UK urban supplies.',
               'TT: independent installation earth electrode — typical of rural overhead supplies; 30 mA RCD usually mandatory.',
-              'ADS condition: Zs &times; Ia &le; U&#x2080; (BS 7671 411.4.4 etc.) verified on every circuit, recorded in the schedule of test results.',
+              'ADS condition: Zs × Ia ≤ U&#x2080; (BS 7671 411.4.4 etc.) verified on every circuit, recorded in the schedule of test results.',
               'Disconnection times: BS 7671 Table 41.1 — 0.4 s on TN final circuits up to 63 A, 0.2 s on TT.',
-              'BS 7671 A4:2026 expansion of 30 mA RCD requirement &mdash; all final circuits in domestic, socket-outlets up to 32 A in commercial.',
+              'BS 7671 A4:2026 expansion of 30 mA RCD requirement — all final circuits in domestic, socket-outlets up to 32 A in commercial.',
               'PME PEN-fault risk on outdoor metalwork (EV chargers, car-park lighting) requires Reg 722 / 717 alternative earthing or OCPD protection.',
               'Discrimination (selectivity): downstream device must clear before upstream device — verified with manufacturer trip-curve overlays.',
             ]}

@@ -695,7 +695,7 @@ export default function Regulation411AutoDisconnectionPage() {
       faqHeading="Frequently Asked Questions About Regulation 411 and ADS"
       relatedPages={relatedPages}
       ctaHeading="Test, Record and Verify ADS Compliance on Site"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for loop impedance recording, automatic Zs validation, and on-site EIC/EICR certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for loop impedance recording, automatic Zs validation, and on-site EIC/EICR certificates. 7-day free trial, cancel anytime."
     />
   );
 }

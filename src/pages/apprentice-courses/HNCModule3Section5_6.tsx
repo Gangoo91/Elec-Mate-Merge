@@ -277,10 +277,10 @@ const HNCModule3Section5_6 = () => {
 
           <TLDR
             points={[
-              'You meet DC machines mostly in legacy contexts &mdash; pre-1990 lift gear (Ward-Leonard sets), battery-driven golf-cart-style maintenance vehicles, and small permanent-magnet DC servos.',
+              'You meet DC machines mostly in legacy contexts — pre-1990 lift gear (Ward-Leonard sets), battery-driven golf-cart-style maintenance vehicles, and small permanent-magnet DC servos.',
               'You distinguish series (high starting torque, runs away on no load), shunt (constant speed) and compound (compromise) wound-field DC motors.',
-              'You assess legacy DC lift gear for replacement with PMSM + VSD &mdash; almost always more efficient, easier to service, and brings the building under modern lift code (BS EN 81-50/-20).',
-              'You recognise the DC link bus inside every modern AC VSD &mdash; understand DC fault-current behaviour and DC-rated isolation requirements (BS EN 60947-3).',
+              'You assess legacy DC lift gear for replacement with PMSM + VSD — almost always more efficient, easier to service, and brings the building under modern lift code (BS EN 81-50/-20).',
+              'You recognise the DC link bus inside every modern AC VSD — understand DC fault-current behaviour and DC-rated isolation requirements (BS EN 60947-3).',
             ]}
           />
 
@@ -956,7 +956,7 @@ const HNCModule3Section5_6 = () => {
           <SectionRule />
 
           <Scenario
-            title="1970s lift modernisation &mdash; DC Ward-Leonard to PMSM + VSD"
+            title="1970s lift modernisation — DC Ward-Leonard to PMSM + VSD"
             situation={
               <>
                 A 12-storey commercial building has two passenger lifts dating from 1973
@@ -998,14 +998,14 @@ const HNCModule3Section5_6 = () => {
 
           <KeyTakeaways
             points={[
-              'DC machines: armature (rotor) carries current via brushes &amp; commutator; field (stator) provides flux.',
-              'Series motor: armature and field in series &mdash; high starting torque, speed varies inversely with load (will overspeed on no load).',
-              'Shunt motor: field across the supply &mdash; nearly constant speed, modest starting torque.',
-              'Compound motor: blend of series and shunt &mdash; combines starting torque with speed regulation.',
+              'DC machines: armature (rotor) carries current via brushes & commutator; field (stator) provides flux.',
+              'Series motor: armature and field in series — high starting torque, speed varies inversely with load (will overspeed on no load).',
+              'Shunt motor: field across the supply — nearly constant speed, modest starting torque.',
+              'Compound motor: blend of series and shunt — combines starting torque with speed regulation.',
               'Speed control: armature voltage (zero to base speed); field weakening (above base speed).',
-              'PWM DC drives provide four-quadrant operation (motoring + braking in both directions) &mdash; standard on modern DC servos and battery-driven equipment.',
+              'PWM DC drives provide four-quadrant operation (motoring + braking in both directions) — standard on modern DC servos and battery-driven equipment.',
               'BS EN 81-20/-50 is the modern lift safety standard; legacy DC Ward-Leonard sets are normally modernised to PMSM + VSD on refurbishment.',
-              'Every AC VSD has an internal DC link &mdash; design DC isolation to BS EN 60947-3, observe DC capacitor discharge time before maintenance.',
+              'Every AC VSD has an internal DC link — design DC isolation to BS EN 60947-3, observe DC capacitor discharge time before maintenance.',
             ]}
           />
 

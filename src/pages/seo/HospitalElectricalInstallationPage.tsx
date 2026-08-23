@@ -597,7 +597,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage healthcare electrical projects with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site certification, quoting, and project management. Complete EICs and EICRs on your phone."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site certification, quoting, and project management. Complete EICs and EICRs on your phone."
           icon={FileCheck2}
         />
       </>
@@ -634,7 +634,7 @@ export default function HospitalElectricalInstallationPage() {
       faqHeading="Frequently Asked Questions — Hospital Electrical Installation"
       relatedPages={relatedPages}
       ctaHeading="Manage Your Healthcare Electrical Projects with Elec-Mate"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site certification, quoting, and project management in healthcare environments. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site certification, quoting, and project management in healthcare environments. 7-day free trial, cancel anytime."
     />
   );
 }

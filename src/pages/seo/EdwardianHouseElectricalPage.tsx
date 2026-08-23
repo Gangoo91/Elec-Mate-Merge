@@ -665,7 +665,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage Edwardian house rewires with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for pre-rewire EICRs, professional quoting, and job management."
+          description="Join 1,600+ UK electricians using Elec-Mate for pre-rewire EICRs, professional quoting, and job management."
           icon={FileCheck2}
         />
       </>
@@ -703,7 +703,7 @@ export default function EdwardianHouseElectricalPage() {
       faqHeading="Frequently Asked Questions About Edwardian House Electrical Installations"
       relatedPages={relatedPages}
       ctaHeading="Complete Edwardian Property EICRs on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

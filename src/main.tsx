@@ -29,6 +29,53 @@ if (window.location.search.includes('_cb=')) {
   window.history.replaceState(window.history.state, '', cleanUrl);
 }
 
+// ELE-1589: count human visits referred by AI assistants (the crawler side is
+// counted in edge middleware — bots don't run this code). Aggregate counter
+// only, once per session, fire-and-forget after boot.
+try {
+  // Patterns match both referrer hostnames AND utm_source values (which drop
+  // the TLD: "perplexity", "chatgpt.com"). Anchored enough to avoid false
+  // positives ("you" alone would match youtube).
+  const AI_REFERRERS: Array<[RegExp, string]> = [
+    [/chatgpt|chat\.openai\.com/, 'referral:chatgpt'],
+    [/perplexity/, 'referral:perplexity'],
+    [/copilot/, 'referral:copilot'],
+    [/claude/, 'referral:claude'],
+    [/gemini/, 'referral:gemini'],
+    [/you\.com/, 'referral:you'],
+    [/kagi/, 'referral:kagi'],
+  ];
+  // AI assistants often strip the referrer but append utm_source to cited
+  // links (ChatGPT: utm_source=chatgpt.com, Perplexity: utm_source=perplexity)
+  // — check both signals, utm first since it is the more reliable one.
+  const utm = new URLSearchParams(window.location.search).get('utm_source') || '';
+  const ref = document.referrer;
+  const hit =
+    (utm && AI_REFERRERS.find(([re]) => re.test(utm))) ||
+    (ref && AI_REFERRERS.find(([re]) => re.test(ref)));
+  if (hit && !sessionStorage.getItem('__aiRefLogged')) {
+    sessionStorage.setItem('__aiRefLogged', '1');
+    setTimeout(() => {
+      import('@/integrations/supabase/client').then(({ SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY }) =>
+        fetch(`${SUPABASE_URL}/rest/v1/rpc/increment_ai_crawler_hit`, {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json',
+            apikey: SUPABASE_PUBLISHABLE_KEY,
+            authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
+          },
+          body: JSON.stringify({
+            p_agent: hit[1],
+            p_path: window.location.pathname.slice(0, 200),
+          }),
+        })
+      ).catch(() => {});
+    }, 3000);
+  }
+} catch {
+  // Analytics must never break boot.
+}
+
 // Global network error detection
 window.addEventListener('offline', () => {
   addBreadcrumb('Network went offline', 'network', { online: false });

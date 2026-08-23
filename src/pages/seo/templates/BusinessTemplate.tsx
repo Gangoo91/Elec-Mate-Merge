@@ -161,7 +161,7 @@ export default function BusinessTemplate({
           </a>
         </div>
         <p className="text-xs text-white/60 mb-6">
-          Free for 7 days · No charge until day 8 · Cancel anytime · Used by 1,000+ UK electricians
+          Free for 7 days · No charge until day 8 · Cancel anytime · Used by 1,600+ UK electricians
         </p>
 
         <SEOReadingMeta readingTime={readingTime} dateUpdated={dateModified} />

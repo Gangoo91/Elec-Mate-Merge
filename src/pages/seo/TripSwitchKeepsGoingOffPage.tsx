@@ -666,7 +666,7 @@ export default function TripSwitchKeepsGoingOffPage() {
       faqHeading="Frequently Asked Questions About Trip Switches"
       relatedPages={relatedPages}
       ctaHeading="Diagnose Tripping Faults and Certify Repairs on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for AI fault diagnosis, test result recording, and professional certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI fault diagnosis, test result recording, and professional certificates. 7-day free trial, cancel anytime."
     />
   );
 }

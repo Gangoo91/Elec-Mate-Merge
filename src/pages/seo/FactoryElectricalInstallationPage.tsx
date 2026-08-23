@@ -591,7 +591,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage factory electrical projects with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site certification, quoting, and project management."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site certification, quoting, and project management."
           icon={FileCheck2}
         />
       </>
@@ -628,7 +628,7 @@ export default function FactoryElectricalInstallationPage() {
       faqHeading="Frequently Asked Questions — Factory Electrical Installation"
       relatedPages={relatedPages}
       ctaHeading="Manage Your Factory Electrical Projects with Elec-Mate"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site certification, quoting, and project management in industrial environments. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site certification, quoting, and project management in industrial environments. 7-day free trial, cancel anytime."
     />
   );
 }

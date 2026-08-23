@@ -21,7 +21,10 @@ import {
   winbackTouch3,
   WINBACK_FROM,
   WINBACK_REPLY_TO,
-} from '../_shared/winback-v13.ts';
+} from '../_shared/winback-v12.ts';
+// Points at v12 deliberately: `winback-send` (the only sender that reaches real
+// churned customers) uses v12, so a preview harness pointing at v13 was showing
+// an email nobody receives. Keep this import matching winback-send's.
 import { sendEmail } from '../_shared/mailer.ts';
 import { captureException } from '../_shared/sentry.ts';
 

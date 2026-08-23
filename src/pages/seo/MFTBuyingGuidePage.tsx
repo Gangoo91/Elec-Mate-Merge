@@ -741,7 +741,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EIC and EICR certificates with your MFT results on site"
-          description="Join 1,000+ UK electricians using Elec-Mate for MFT result entry, automatic Zs compliance checking, and professional EIC and EICR certification."
+          description="Join 1,600+ UK electricians using Elec-Mate for MFT result entry, automatic Zs compliance checking, and professional EIC and EICR certification."
           icon={Wrench}
         />
       </>
@@ -785,7 +785,7 @@ export default function MFTBuyingGuidePage() {
       faqHeading="Frequently Asked Questions About Multifunction Testers"
       relatedPages={relatedPages}
       ctaHeading="Record MFT Test Results and Issue EIC Certificates on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to enter MFT readings into EIC and EICR schedules, auto-check Zs compliance, and generate professional certificates on site. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to enter MFT readings into EIC and EICR schedules, auto-check Zs compliance, and generate professional certificates on site. 7-day free trial."
     />
   );
 }

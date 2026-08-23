@@ -449,7 +449,7 @@ export default function CustomerManagementElectricianPage() {
         },
       ]}
       ctaHeading="Build Lasting Client Relationships"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to manage client records, automate follow-ups, and generate repeat work. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to manage client records, automate follow-ups, and generate repeat work. 7-day free trial, cancel anytime."
       extraSchemas={[
         {
           '@type': 'SoftwareApplication',

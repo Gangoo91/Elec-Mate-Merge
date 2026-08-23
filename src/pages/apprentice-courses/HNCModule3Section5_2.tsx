@@ -280,7 +280,7 @@ const HNCModule3Section5_2 = () => {
           <TLDR
             points={[
               'You apply turns ratio (V&#x2081;/V&#x2082; = N&#x2081;/N&#x2082;) and inverse current ratio (I&#x2081;/I&#x2082; = N&#x2082;/N&#x2081;) on every transformer kVA selection.',
-              'You separate iron losses (constant, 24/7) from copper losses (varies with I&sup2;) — peak efficiency is at the load where they balance.',
+              'You separate iron losses (constant, 24/7) from copper losses (varies with I²) — peak efficiency is at the load where they balance.',
               'You compare Tier-1 vs Tier-2 Ecodesign loss limits (Reg 548/2014) when selecting distribution transformers on UK new-build — Tier-2 is the 2021+ legal minimum.',
               'You quote voltage regulation (full-load secondary voltage drop %) on the design submission — affects motor starting on small-substation supplies.',
             ]}
@@ -299,7 +299,7 @@ const HNCModule3Section5_2 = () => {
                 is not compliant.
               </>
             }
-            cite="Source: Commission Regulation (EU) 548/2014 (retained UK law); BS EN 50588-1 (transformer Ecodesign); CIBSE Guide F &mdash; Energy efficiency in buildings"
+            cite="Source: Commission Regulation (EU) 548/2014 (retained UK law); BS EN 50588-1 (transformer Ecodesign); CIBSE Guide F — Energy efficiency in buildings"
           />
 
           <LearningOutcomes
@@ -1148,11 +1148,11 @@ const HNCModule3Section5_2 = () => {
             points={[
               'Ideal transformer: V&#x2081;/V&#x2082; = N&#x2081;/N&#x2082; (turns ratio); I&#x2081;/I&#x2082; = N&#x2082;/N&#x2081; (inverse).',
               'Iron (no-load) losses: hysteresis + eddy currents in core, constant 24/7 — the dominant lifecycle energy waste.',
-              'Copper (load) losses: I&sup2;R in windings, scales with load squared.',
-              'Peak efficiency: where copper loss = iron loss, typically 40&ndash;60 % rated load — oversizing reduces efficiency.',
-              'Voltage regulation: (V&#x2099;&#x2092;&#x2097;&#x2092;&#x2090;&#x1d05; &minus; V&#x1d05;&#x2097;) / V&#x2099;&#x2092;&#x2097;&#x2092;&#x2090;&#x1d05; &times; 100 % &mdash; affects motor starting capability.',
+              'Copper (load) losses: I²R in windings, scales with load squared.',
+              'Peak efficiency: where copper loss = iron loss, typically 40–60 % rated load — oversizing reduces efficiency.',
+              'Voltage regulation: (V&#x2099;&#x2092;&#x2097;&#x2092;&#x2090;&#x1d05; &minus; V&#x1d05;&#x2097;) / V&#x2099;&#x2092;&#x2097;&#x2092;&#x2090;&#x1d05; × 100 % — affects motor starting capability.',
               'Tier-2 Ecodesign loss limits (Reg 548/2014, retained UK law) are the 2021+ minimum for new transformers.',
-              'Amorphous-core transformers cut no-load loss by ~70 % vs grain-oriented silicon steel &mdash; payback typically &lt;5 years on continuous duty.',
+              'Amorphous-core transformers cut no-load loss by ~70 % vs grain-oriented silicon steel — payback typically <5 years on continuous duty.',
               'Cast-resin (dry-type) preferred indoors / fire-sensitive areas; oil-filled preferred outdoors / large kVA where bunding is acceptable.',
             ]}
           />

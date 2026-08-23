@@ -603,7 +603,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage manufacturing plant electrical projects with"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site certification, quoting, and project management."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site certification, quoting, and project management."
           icon={FileCheck2}
         />
       </>
@@ -640,7 +640,7 @@ export default function ManufacturingPlantElectricalPage() {
       faqHeading="Frequently Asked Questions — Manufacturing Plant Electrical Installation"
       relatedPages={relatedPages}
       ctaHeading="Manage Your Manufacturing Electrical Projects with Elec-Mate"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site certification, quoting, and project management in manufacturing environments. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site certification, quoting, and project management in manufacturing environments. 7-day free trial, cancel anytime."
     />
   );
 }

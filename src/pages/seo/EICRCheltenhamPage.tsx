@@ -540,7 +540,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win more EICR work across Cheltenham with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -577,7 +577,7 @@ export default function EICRCheltenhamPage() {
       faqHeading="Frequently Asked Questions About EICRs in Cheltenham"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs On Your Phone — Any Location in Cheltenham"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

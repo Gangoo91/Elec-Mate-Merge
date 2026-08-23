@@ -463,7 +463,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run outbuilding electrical jobs with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for EIC certificates, quoting, and job management. Complete more jobs with less paperwork. 7-day free trial."
+          description="Join 1,600+ UK electricians using Elec-Mate for EIC certificates, quoting, and job management. Complete more jobs with less paperwork. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -500,7 +500,7 @@ export default function OutbuildingElectricalInstallationPage() {
       faqHeading="Frequently Asked Questions About Outbuilding Electrical Installation"
       relatedPages={relatedPages}
       ctaHeading="Complete Outbuilding EICs on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, quoting, and job management. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion, quoting, and job management. 7-day free trial, cancel anytime."
     />
   );
 }

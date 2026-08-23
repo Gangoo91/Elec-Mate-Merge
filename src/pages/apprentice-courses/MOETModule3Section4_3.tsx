@@ -39,7 +39,7 @@ const quickCheckQuestions = [
   {
     id: 'rcd-protection',
     question:
-      'Under BS 7671:2018+A3:2024, what additional protection is required for socket outlets rated up to 32 A in all locations?',
+      'Under BS 7671:2018+A4:2026, what additional protection is required for socket outlets rated up to 32 A in all locations?',
     options: [
       'An RCD with a rated residual operating current not exceeding 100 mA',
       'An RCBO or RCD with a rated residual operating current not exceeding 30 mA',
@@ -48,7 +48,7 @@ const quickCheckQuestions = [
     ],
     correctIndex: 1,
     explanation:
-      'Regulation 411.3.3 of BS 7671:2018+A3:2024 requires that socket outlets with a rated current not exceeding 32 A are provided with additional protection by an RCD with a rated residual operating current (IΔn) not exceeding 30 mA. This applies to all locations, not just domestic premises. The RCD provides additional protection against electric shock in the event of a direct contact fault.',
+      'Regulation 411.3.3 of BS 7671:2018+A4:2026 requires that socket outlets with a rated current not exceeding 32 A are provided with additional protection by an RCD with a rated residual operating current (IΔn) not exceeding 30 mA. This applies to all locations, not just domestic premises. The RCD provides additional protection against electric shock in the event of a direct contact fault.',
   },
   {
     id: 'ring-test',
@@ -253,7 +253,7 @@ const faqs = [
   {
     question: 'Do I need RCD protection for all socket outlets, including in commercial premises?',
     answer:
-      'Yes. BS 7671:2018+A3:2024 Regulation 411.3.3 requires additional protection by a 30 mA RCD for all socket outlets with a rated current not exceeding 32 A, regardless of the type of premises. This requirement applies to domestic, commercial and industrial installations. There are limited exceptions for specific industrial applications where the socket is supervised by a skilled or instructed person and the loss of supply could cause a greater hazard.',
+      'As a rule, yes. BS 7671:2018+A4:2026 Regulation 411.3.3 requires additional protection by a 30 mA RCD for socket outlets with a rated current not exceeding 32 A, across domestic, commercial and industrial installations. A4:2026 revised the regulation and it now carries one express exception: other than for a dwelling, RCD protection may be omitted where a documented risk assessment determines it is not necessary. That exception is not available in dwellings, and the risk assessment must be recorded — an undocumented judgement on site does not satisfy it. Socket outlets rated above 32 A fall outside the scope of 411.3.3 and must be considered separately.',
   },
 ];
 
@@ -323,7 +323,7 @@ const MOETModule3Section4_3 = () => {
             </p>
             <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
               <li className="pl-1">
-                <strong>BS 7671:2018+A3:2024:</strong> Reg 411.3.3 — RCD protection for sockets
+                <strong>BS 7671:2018+A4:2026:</strong> Reg 411.3.3 — RCD protection for sockets
               </li>
               <li className="pl-1">
                 <strong>BS 1363:</strong> 13 A plugs, socket outlets and connection units
@@ -538,7 +538,7 @@ const MOETModule3Section4_3 = () => {
             <p>
               Socket outlets are the most common point of connection between the fixed wiring
               installation and portable equipment. The type of socket outlet must be appropriate for
-              the voltage, current rating and environment. BS 7671:2018+A3:2024 requires additional
+              the voltage, current rating and environment. BS 7671:2018+A4:2026 requires additional
               protection by a 30 mA RCD for all socket outlets rated up to 32 A — a requirement that
               applies across all premises types.
             </p>
@@ -627,7 +627,7 @@ const MOETModule3Section4_3 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
               <p className="text-sm font-medium text-red-400 mb-2">
-                RCD Protection Requirements (BS 7671:2018+A3:2024)
+                RCD Protection Requirements (BS 7671:2018+A4:2026)
               </p>
               <p className="text-sm text-white mb-3">
                 Regulation 411.3.3 requires additional protection by an RCD with IΔn not exceeding

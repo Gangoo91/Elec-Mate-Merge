@@ -517,7 +517,7 @@ export default function ElectricalBusinessPlanPage() {
       faqHeading="Frequently Asked Questions About Electrical Business Plans"
       relatedPages={relatedPages}
       ctaHeading="Manage Your Electrical Business in One Place"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, invoicing, and job management. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, invoicing, and job management. 7-day free trial, cancel anytime."
     />
   );
 }

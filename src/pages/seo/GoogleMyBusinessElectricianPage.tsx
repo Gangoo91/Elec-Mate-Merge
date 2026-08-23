@@ -745,7 +745,7 @@ export default function GoogleMyBusinessElectricianPage() {
       faqHeading="Frequently Asked Questions About Google Business Profile"
       relatedPages={relatedPages}
       ctaHeading="Convert Google Searches Into Booked Jobs"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Send professional quotes in minutes and win more of the jobs that find you on Google. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, and job management. Send professional quotes in minutes and win more of the jobs that find you on Google. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -506,7 +506,7 @@ export default function LandlordElectricalChecklistPage() {
       faqHeading="Frequently Asked Questions About Landlord Electrical Safety"
       relatedPages={relatedPages}
       ctaHeading="Professional EICR Reports for Landlords"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for landlord EICR reports, quoting, and invoicing. Complete on-site, send instantly. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for landlord EICR reports, quoting, and invoicing. Complete on-site, send instantly. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -549,7 +549,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your interwar property rewire business with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICRs, professional quoting, and job management."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site EICRs, professional quoting, and job management."
           icon={FileCheck2}
         />
       </>
@@ -586,7 +586,7 @@ export default function InterwarPropertyElectricalPage() {
       faqHeading="Frequently Asked Questions About Interwar Property Electrical Installations"
       relatedPages={relatedPages}
       ctaHeading="Complete Interwar Property EICRs on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

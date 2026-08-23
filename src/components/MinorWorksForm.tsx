@@ -88,6 +88,18 @@ const MinorWorksForm = ({
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [formData, setFormData] = useState<any>({
+    /*
+     * ELE-1592 — stable client-side identity for THIS certificate. The cloud
+     * sync derives its create idempotency key from it, so every save attempt
+     * (first try, retry, queued replay after a dropped connection) presents
+     * the SAME report_id and collapses into one row instead of several.
+     *
+     * Must live in form state, not a ref: a ref survives into the NEXT
+     * certificate when a failed create leaves the report id null, which would
+     * silently bind new work to the old row. Stripped before the row is
+     * written — see reportCloud.createReport.
+     */
+    _clientCertId: crypto.randomUUID(),
     // Certificate Header
     certificateNumber: '',
 
@@ -749,9 +761,13 @@ const MinorWorksForm = ({
 
   /*
    * Allocated on the first edit, not on mount — see EICRFormProvider for the
-   * full note. `generate_certificate_number` is a sequence, so mounting the form
-   * and backing out consumed a number permanently: Minor Works had spent 1,230
-   * numbers to produce 190 certificates.
+   * full note. Allocation consumes a number permanently, so mounting the form
+   * and backing out burned one: Minor Works had spent 1,230 numbers to produce
+   * 190 certificates.
+   *
+   * ELE-1542 — the counter is now `next_certificate_number`, a per-business row
+   * rather than a platform-wide Postgres sequence. Waste is still waste, so
+   * this still allocates late; it just no longer wastes OTHER firms' numbers.
    */
   const certNumberGenerated = React.useRef(false);
 
@@ -845,6 +861,9 @@ const MinorWorksForm = ({
     const certificateNumber = await generateCertificateNumber('minor-works');
 
     setFormData({
+      // ELE-1592 — a NEW certificate gets a NEW identity, so it can never be
+      // adopted onto the certificate just walked away from.
+      _clientCertId: crypto.randomUUID(),
       certificateNumber,
       propertyAddress: '',
       postcode: '',

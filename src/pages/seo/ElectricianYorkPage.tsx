@@ -531,7 +531,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional certification for York electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting."
+          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting."
           icon={MapPin}
         />
       </>
@@ -569,7 +569,7 @@ export default function ElectricianYorkPage() {
       faqHeading="Frequently Asked Questions About Electrical Work in York"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify Electrical Work in York — On Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting. Heritage work, flood remediation, or new builds — certify it all on site. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting. Heritage work, flood remediation, or new builds — certify it all on site. 7-day free trial."
     />
   );
 }

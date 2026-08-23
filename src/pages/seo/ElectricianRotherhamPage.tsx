@@ -460,7 +460,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Rotherham electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
+          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -498,7 +498,7 @@ export default function ElectricianRotherhamPage() {
       faqHeading="Frequently Asked Questions About Electricians in Rotherham"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Rotherham Electricians"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the residential and commercial electrical market in Rotherham. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the residential and commercial electrical market in Rotherham. 7-day free trial."
     />
   );
 }

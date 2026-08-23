@@ -95,7 +95,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-systems-tns-tncs-tt-explained',
     title: 'Earthing Arrangements Explained',
     description:
       'In-depth guide to TN-S, TN-C-S, and TT earthing systems with practical guidance for each type.',
@@ -600,7 +600,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Professional farm certificates on your phone"
-          description="Join 1,000+ UK electricians creating EICR and EIC certificates with AI-assisted observation coding, photo documentation, and instant PDF delivery."
+          description="Join 1,600+ UK electricians creating EICR and EIC certificates with AI-assisted observation coding, photo documentation, and instant PDF delivery."
           icon={FileCheck2}
         />
       </>
@@ -637,7 +637,7 @@ export default function AgriculturalInstallationsPage() {
       faqHeading="Frequently Asked Questions About Agricultural Electrical Installations"
       relatedPages={relatedPages}
       ctaHeading="Complete Agricultural EICRs on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians creating professional certificates with AI observation coding, photo documentation, and instant PDF delivery. Built for specialist work including agricultural installations. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians creating professional certificates with AI observation coding, photo documentation, and instant PDF delivery. Built for specialist work including agricultural installations. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -491,7 +491,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Manage solar maintenance jobs with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for job management, quoting, and certification. Issue inspection reports and EICs on your phone."
+          description="Join 1,600+ UK electricians using Elec-Mate for job management, quoting, and certification. Issue inspection reports and EICs on your phone."
           icon={Sun}
         />
       </>
@@ -528,7 +528,7 @@ export default function SolarPVMaintenancePage() {
       faqHeading="Frequently Asked Questions About Solar Panel Maintenance"
       relatedPages={relatedPages}
       ctaHeading="Manage Solar PV Maintenance with Elec-Mate"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for job management, certification, and quoting. Issue solar maintenance reports on your phone. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for job management, certification, and quoting. Issue solar maintenance reports on your phone. 7-day free trial, cancel anytime."
     />
   );
 }

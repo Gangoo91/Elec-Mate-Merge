@@ -280,7 +280,7 @@ const HNCModule3Section5_3 = () => {
           <TLDR
             points={[
               'You select three-phase transformers (Dyn11) for any UK distribution duty above ~100 kVA — single-phase is reserved for specialist isolating, control and instrument transformers.',
-              'You read vector groups (Dyn11, Yyn0) on every transformer nameplate to verify parallel operation compatibility and understand the 30&deg; phase shift.',
+              'You read vector groups (Dyn11, Yyn0) on every transformer nameplate to verify parallel operation compatibility and understand the 30° phase shift.',
               'You specify autotransformers only where galvanic isolation is not required — never for safety-isolation duty under BS 7671 414.',
               'You apply BS EN 61558 isolating transformers for medical / SELV / FELV duty where independent earth or true galvanic separation is mandated.',
             ]}
@@ -1175,7 +1175,7 @@ const HNCModule3Section5_3 = () => {
           <SectionRule />
 
           <Scenario
-            title="Operating-theatre IT system &mdash; medical isolating transformer specification"
+            title="Operating-theatre IT system — medical isolating transformer specification"
             situation={
               <>
                 A new operating theatre requires an IT (Isolated Terre) earthing system for
@@ -1217,13 +1217,13 @@ const HNCModule3Section5_3 = () => {
           <KeyTakeaways
             points={[
               'Three-phase preferred for distribution above ~100 kVA — efficiency, footprint and balance all favour 3-phase.',
-              'Vector groups: D=delta, Y=star, n=neutral brought out, number = 30&deg; phase shift in clock notation. UK distribution standard: Dyn11.',
+              'Vector groups: D=delta, Y=star, n=neutral brought out, number = 30° phase shift in clock notation. UK distribution standard: Dyn11.',
               'Parallel operation requires identical vector group, voltage ratio, %Z and tap position — mismatched parallel = circulating current.',
-              'Autotransformers: smaller / cheaper than two-winding for ratios &le; 2:1 but no galvanic isolation — never for safety-isolation duty.',
+              'Autotransformers: smaller / cheaper than two-winding for ratios ≤ 2:1 but no galvanic isolation — never for safety-isolation duty.',
               'Isolating transformers (BS EN 61558) provide true two-winding separation — mandatory for medical IT systems, SELV/PELV, marina, locations conducting electrical situations.',
               'Three-phase transformer construction: core type (3 limbs) for symmetric 3-phase, shell type for single-phase or asymmetric loading.',
               'Step-down 11 kV/415 V Dyn11 is the workhorse UK distribution transformer in private substations.',
-              'BS 7671 411 ADS depends on a known fault loop &mdash; autotransformer common winding compromises this assumption.',
+              'BS 7671 411 ADS depends on a known fault loop — autotransformer common winding compromises this assumption.',
             ]}
           />
 

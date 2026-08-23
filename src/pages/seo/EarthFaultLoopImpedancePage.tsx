@@ -128,7 +128,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-systems-tns-tncs-tt-explained',
     title: 'Earthing Arrangements',
     description:
       'TN-S, TN-C-S (PME), and TT earthing systems and how they affect Ze and Zs values.',
@@ -228,7 +228,7 @@ const sections = [
           outside the installation, belonging to the supply company. It includes the impedance of
           the supply transformer winding, the phase conductor of the supply cable from the
           transformer to the property, and the earth return path (which varies depending on the{' '}
-          <SEOInternalLink href="/earthing-arrangements">earthing arrangement</SEOInternalLink>
+          <SEOInternalLink href="/guides/earthing-systems-tns-tncs-tt-explained">earthing arrangement</SEOInternalLink>
           ).
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -609,7 +609,7 @@ const sections = [
               Note: If Ze were higher (for example, 0.80 ohms on a TN-S supply at the distributor's
               typical maximum), Zs would be 0.939 ohms — still within the 1.09 ohm maximum, but with
               very little margin. This shows why{' '}
-              <SEOInternalLink href="/earthing-arrangements">Ze values</SEOInternalLink> matter for
+              <SEOInternalLink href="/guides/earthing-systems-tns-tncs-tt-explained">Ze values</SEOInternalLink> matter for
               high-current circuits.
             </p>
           </div>
@@ -798,7 +798,7 @@ export default function EarthFaultLoopImpedancePage() {
       faqHeading="Frequently Asked Questions About Earth Fault Loop Impedance"
       relatedPages={relatedPages}
       ctaHeading="Zs Calculator on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate's 70+ calculators including Zs with automatic BS 7671 table lookup, cable sizing, voltage drop, PFC, and more. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate's 70+ calculators including Zs with automatic BS 7671 table lookup, cable sizing, voltage drop, PFC, and more. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -115,7 +115,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-systems-tns-tncs-tt-explained',
     title: 'Earthing Arrangements Guide',
     description:
       'TN-S, TN-C-S, TT — understand earthing systems and how they affect loop impedance.',
@@ -618,7 +618,7 @@ export default function EarthLoopTooHighPage() {
       faqHeading="Frequently Asked Questions About High Earth Loop Impedance"
       relatedPages={relatedPages}
       ctaHeading="Check Zs Limits Instantly on Site"
-      ctaSubheading="Zs calculator, voice test entry, AI fault diagnosis, and digital EICR certificates. Join 1,000+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
+      ctaSubheading="Zs calculator, voice test entry, AI fault diagnosis, and digital EICR certificates. Join 1,600+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
     />
   );
 }

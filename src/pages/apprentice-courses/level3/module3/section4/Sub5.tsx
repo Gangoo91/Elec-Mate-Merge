@@ -197,7 +197,7 @@ export default function Sub5() {
 
           <ConceptBlock
             title="All-day efficiency vs nameplate efficiency"
-            plainEnglish="Nameplate efficiency is measured at the design optimum (typically rated load, 0.8-1.0 pf, standard temperature). All-day efficiency is the integral over 24 h of the operating profile — and for many distribution transformers it&apos;s significantly lower than nameplate because the unit spends most of the day at light load where iron loss dominates."
+            plainEnglish="Nameplate efficiency is measured at the design optimum (typically rated load, 0.8-1.0 pf, standard temperature). All-day efficiency is the integral over 24 h of the operating profile — and for many distribution transformers it’s significantly lower than nameplate because the unit spends most of the day at light load where iron loss dominates."
             onSite="L3 framing for an energy review: ask the customer for the half-hourly meter data for the year. From that you can calculate average load fraction by hour, weight the efficiency at each load fraction, and produce a meaningful all-day efficiency number — not the nameplate number that flatters the spec sheet."
           >
             <p>All-day efficiency formula:</p>
@@ -257,8 +257,8 @@ export default function Sub5() {
 
           <ConceptBlock
             title="Comparing efficiency standards — Tier 2 vs IEC 60076-20"
-            plainEnglish="Two standards drive efficiency on transformers sold in the UK. (1) UK Ecodesign retained law (originally EU 548/2014) sets caps on losses for medium-power transformers — what we call &apos;Tier 2&apos;. (2) IEC 60076-20 is the international efficiency-class standard (similar in structure to motor IE classes) and labels transformers as Ck1, Ck2, Ck3 etc. Best-in-class units exceed both."
-            onSite="When specifying, use the IEC class on the order along with the Tier 2 cap as the legal floor. A &apos;Ck1&apos; transformer sits well below the Tier 2 cap and may have shorter payback in always-energised applications. Customers focused on sustainability ratings (BREEAM, LEED) often require Ck1 or Ck2 explicitly."
+            plainEnglish="Two standards drive efficiency on transformers sold in the UK. (1) UK Ecodesign retained law (originally EU 548/2014) sets caps on losses for medium-power transformers — what we call ’Tier 2’. (2) IEC 60076-20 is the international efficiency-class standard (similar in structure to motor IE classes) and labels transformers as Ck1, Ck2, Ck3 etc. Best-in-class units exceed both."
+            onSite="When specifying, use the IEC class on the order along with the Tier 2 cap as the legal floor. A ’Ck1’ transformer sits well below the Tier 2 cap and may have shorter payback in always-energised applications. Customers focused on sustainability ratings (BREEAM, LEED) often require Ck1 or Ck2 explicitly."
           >
             <p>Comparison of efficiency frameworks at the 1000 kVA point:</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -354,7 +354,7 @@ export default function Sub5() {
             <p>Worked: 250 kVA 400 V transformer, PSCC at LV = 7.2 kA. Sub-main 50 m of 50 mm² 4-core SWA. R = 0.46 mΩ/m, X ≈ 0.08 mΩ/m. Loop Z added = √((0.046)² + (0.008)²) = 0.047 Ω. Original Z = V/PSCC = 230/7200 = 0.032 Ω. New Z = 0.032 + 0.047 = 0.079 Ω. PSCC at sub-DB = 230/0.079 = 2.9 kA. Halved. Sub-DB MCBs only need 6 kA Icu, not 10 kA.</p>
           </ConceptBlock>
 
-          <ConceptBlock title="Tap changer effect on efficiency and regulation" plainEnglish="Setting the tap to compensate for high or low supply voltage works — but the tap position changes the per-unit impedance slightly because the in-circuit number of turns changes. Effect on Z_pu is typically &lt;1 % between extreme taps, so insignificant for most calculations.">
+          <ConceptBlock title="Tap changer effect on efficiency and regulation" plainEnglish="Setting the tap to compensate for high or low supply voltage works — but the tap position changes the per-unit impedance slightly because the in-circuit number of turns changes. Effect on Z_pu is typically <1 % between extreme taps, so insignificant for most calculations.">
             <p>What the tap actually does to performance:</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li><strong>Tap +5 % (more secondary V at no-load)</strong> — fewer primary turns, so flux density rises slightly. Iron loss may increase 5-15 %. Only noticeable on always-energised units.</li>
@@ -421,8 +421,8 @@ export default function Sub5() {
 
           <ConceptBlock
             title="Temperature class, top-oil temperature and life expectancy"
-            plainEnglish="A transformer&apos;s insulating system has a temperature class (commonly 105 °C, 130 °C, 155 °C, 180 °C, 220 °C). The class is the maximum continuous operating temperature the insulation tolerates without accelerated ageing. Run cooler and the unit lasts longer; run hotter and the insulation degrades exponentially — a rough rule of thumb is that life halves for every 7-10 °C above the rated hot-spot temperature."
-            onSite="Top-oil temperature gauges on oil-filled transformers and winding-temperature simulators give you the operational data to manage the unit. A 250 kVA distribution transformer at consistent 95 °C top oil and 110 °C winding hot-spot has a different remaining life from one at 75/95 °C — even if both are within rated. Monitor, log and trend; act on rises that don&apos;t correlate with load."
+            plainEnglish="A transformer’s insulating system has a temperature class (commonly 105 °C, 130 °C, 155 °C, 180 °C, 220 °C). The class is the maximum continuous operating temperature the insulation tolerates without accelerated ageing. Run cooler and the unit lasts longer; run hotter and the insulation degrades exponentially — a rough rule of thumb is that life halves for every 7-10 °C above the rated hot-spot temperature."
+            onSite="Top-oil temperature gauges on oil-filled transformers and winding-temperature simulators give you the operational data to manage the unit. A 250 kVA distribution transformer at consistent 95 °C top oil and 110 °C winding hot-spot has a different remaining life from one at 75/95 °C — even if both are within rated. Monitor, log and trend; act on rises that don’t correlate with load."
           >
             <p>Standard temperature classes and what they mean:</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -458,8 +458,8 @@ export default function Sub5() {
 
           <ConceptBlock
             title="Vector group selection — Dyn11 and what the symbols mean"
-            plainEnglish="A transformer&apos;s vector group describes how the primary and secondary windings connect (delta D, star Y, zigzag Z, neutral n if accessible) and the phase shift between them in 30° increments (0, 1, 5, 6, 7, 11). The most common UK distribution group is Dyn11 — delta primary, star secondary with accessible neutral, secondary leading primary by 30°."
-            onSite="L3 framing: vector groups become important when paralleling transformers, specifying transformers for fault-current management, or interfacing generation. Wrong vector group on a parallel install means circulating currents, equipment damage and grid-code breach. The DNO&apos;s vector group requirement is part of the G99 conditions for new generation connections."
+            plainEnglish="A transformer’s vector group describes how the primary and secondary windings connect (delta D, star Y, zigzag Z, neutral n if accessible) and the phase shift between them in 30° increments (0, 1, 5, 6, 7, 11). The most common UK distribution group is Dyn11 — delta primary, star secondary with accessible neutral, secondary leading primary by 30°."
+            onSite="L3 framing: vector groups become important when paralleling transformers, specifying transformers for fault-current management, or interfacing generation. Wrong vector group on a parallel install means circulating currents, equipment damage and grid-code breach. The DNO’s vector group requirement is part of the G99 conditions for new generation connections."
           >
             <p>Common UK transformer vector groups and their applications:</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -499,8 +499,8 @@ export default function Sub5() {
 
           <ConceptBlock
             title="Why economic loading does not equal full-load efficiency"
-            plainEnglish="A transformer&apos;s peak efficiency point is where iron loss equals load-related copper loss, not at full load. Mathematically: peak η at x where P_fe = x²·P_cu_FL, so x_peak = √(P_fe/P_cu_FL). For a typical distribution unit with P_fe = 0.3 kW and P_cu_FL = 2.5 kW, x_peak = √(0.3/2.5) = 0.346 ≈ 35 % load. So if a transformer runs continuously at 50 % load, it&apos;s already past its peak efficiency point."
-            onSite="L3 design implication: don&apos;t oversize transformers for &apos;future-proofing&apos; without doing the loading maths. A 1 MVA transformer at 25 % continuous load may be less efficient over the year than a 500 kVA at 50 % load — even though the bigger unit has a lower full-load efficiency, the smaller unit operates closer to its peak. Match the rating to the actual demand profile, not to a theoretical peak."
+            plainEnglish="A transformer’s peak efficiency point is where iron loss equals load-related copper loss, not at full load. Mathematically: peak η at x where P_fe = x²·P_cu_FL, so x_peak = √(P_fe/P_cu_FL). For a typical distribution unit with P_fe = 0.3 kW and P_cu_FL = 2.5 kW, x_peak = √(0.3/2.5) = 0.346 ≈ 35 % load. So if a transformer runs continuously at 50 % load, it’s already past its peak efficiency point."
+            onSite="L3 design implication: don’t oversize transformers for ’future-proofing’ without doing the loading maths. A 1 MVA transformer at 25 % continuous load may be less efficient over the year than a 500 kVA at 50 % load — even though the bigger unit has a lower full-load efficiency, the smaller unit operates closer to its peak. Match the rating to the actual demand profile, not to a theoretical peak."
           >
             <p>Worked: distribution loading question. Customer site demand profile is 350 kW continuous (95 % of the year), pf 0.95, with occasional half-hour peaks to 600 kW (5 % of the year).</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">

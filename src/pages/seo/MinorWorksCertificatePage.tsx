@@ -189,7 +189,7 @@ export default function MinorWorksCertificatePage() {
         <div className="relative max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-yellow-400 text-sm font-medium mb-6">
             <FileText className="w-4 h-4" />
-            Part of 16 Certificate Types
+            Part of 19 Certificate Types
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-5">
             Minor Works Certificate App
@@ -542,11 +542,11 @@ export default function MinorWorksCertificatePage() {
               <ClipboardCheck className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
-              All 16 Certificate Types in Elec-Mate
+              All 19 Certificate Types in Elec-Mate
             </h2>
           </div>
           <p className="text-white mb-6 leading-relaxed">
-            The Minor Works certificate is one of sixteen certificate types available in Elec-Mate.
+            The Minor Works certificate is one of nineteen certificate types available in Elec-Mate.
             Each follows BS 7671 Appendix 6 model forms and includes auto-fill, digital signatures,
             and PDF export.
           </p>
@@ -816,7 +816,7 @@ export default function MinorWorksCertificatePage() {
 
       <SEOCTASection
         heading="Create Professional Certificates in Minutes"
-        subheading="Join 1,000+ UK electricians using Elec-Mate for on-site certification. 7-day free trial, cancel anytime."
+        subheading="Join 1,600+ UK electricians using Elec-Mate for on-site certification. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

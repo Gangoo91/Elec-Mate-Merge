@@ -280,7 +280,7 @@ const HNCModule4Section5_5 = () => {
 
           <TLDR
             points={[
-              'BS EN 50160 sets the voltage quality envelope at the point of supply: ±10 % RMS, &lt; 8 % THD, ≤ 2 % unbalance, &lt; 5 % flicker.',
+              'BS EN 50160 sets the voltage quality envelope at the point of supply: ±10 % RMS, < 8 % THD, ≤ 2 % unbalance, < 5 % flicker.',
               'Harmonics: third (150 Hz) is the killer for three-phase neutrals — non-linear loads can drive neutral current ABOVE phase current. Specify 200 % neutral or oversize.',
               'SPDs: Type 1 at the origin where lightning protection is fitted, Type 2 at sub-distribution, Type 3 at sensitive equipment. Coordinate the chain (Reg 534).',
               'RCDs: Type AC is obsolete for any electronic load. Use Type A as the floor; Type B (or B+) where DC components are present (EV chargers, solar inverters, VFDs).',
@@ -647,12 +647,12 @@ const HNCModule4Section5_5 = () => {
           <KeyTakeaways
             points={[
               'Reg 331.1 is the design-stage power-quality assessment — work the 12-item list for every project.',
-              'BS EN 50160: ±10 % V, &lt; 8 % THD, ≤ 2 % unbalance, flicker Pst &lt; 1 — the supply quality envelope.',
+              'BS EN 50160: ±10 % V, < 8 % THD, ≤ 2 % unbalance, flicker Pst < 1 — the supply quality envelope.',
               'Third harmonic (150 Hz) is zero-sequence — it sums in the neutral on three-phase systems. Spec 200 % neutral or derate per OSG/IEC 60364-5-52 tables.',
               'SPD chain (Reg 534): Type 1 at origin if external LPS, Type 2 at sub-DB, Type 3 at sensitive equipment.',
               'RCD type by load: Type A minimum for any electronic load, Type B for DC-component loads (EV, PV, VFDs). Reg 531/722.',
               'Power factor correction at the source where loads are heavy on motors / drives — saves DNO charges and reduces conductor losses.',
-              'Voltage unbalance &lt; 2 % is the design target — phase balancing on the DB schedule is preventive, not corrective.',
+              'Voltage unbalance < 2 % is the design target — phase balancing on the DB schedule is preventive, not corrective.',
               'Class A power-quality logger (BS EN 50160) is the diagnostic tool when you suspect harmonics — get baseline data before you redesign.',
             ]}
           />

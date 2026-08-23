@@ -600,7 +600,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your EV installation business in Wolverhampton with"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EV certification, instant PDF export, and professional quoting."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site EV certification, instant PDF export, and professional quoting."
           icon={Zap}
         />
       </>
@@ -637,7 +637,7 @@ export default function EVChargerInstallationWolverhamptonPage() {
       faqHeading="Frequently Asked Questions About EV Charger Installation in Wolverhampton"
       relatedPages={relatedPages}
       ctaHeading="Complete EV Installation Certificates On Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EV certification, OZEV documentation, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EV certification, OZEV documentation, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

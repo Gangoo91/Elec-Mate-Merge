@@ -619,7 +619,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage customer contracts and documentation with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, RAMS generation, invoice management, and AI business support."
+          description="Join 1,600+ UK electricians using Elec-Mate for professional quoting, RAMS generation, invoice management, and AI business support."
           icon={ClipboardList}
         />
       </>
@@ -656,7 +656,7 @@ export default function ContractTemplatesElectricianPage() {
       faqHeading="Frequently Asked Questions About Electrical Contractor Contracts"
       relatedPages={relatedPages}
       ctaHeading="Build Professional Customer Contracts with Elec-Mate"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for professional quoting, contracts, and business management. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for professional quoting, contracts, and business management. 7-day free trial, cancel anytime."
     />
   );
 }

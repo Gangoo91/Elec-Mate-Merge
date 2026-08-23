@@ -626,7 +626,7 @@ export default function MileageClaimsElectricianPage() {
       faqHeading="Frequently Asked Questions About Mileage Claims"
       relatedPages={relatedPages}
       ctaHeading="Save Time and Mileage with On-Site Tools"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Complete everything on site, reduce return trips, and keep more of what you earn. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, and job management. Complete everything on site, reduce return trips, and keep more of what you earn. 7-day free trial, cancel anytime."
     />
   );
 }

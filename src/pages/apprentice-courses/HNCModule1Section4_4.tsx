@@ -790,7 +790,7 @@ const HNCModule1Section4_4 = () => {
           <KeyTakeaways
             points={[
               'Engineering Council Statement of Ethical Principles, IET Rules of Conduct and CIBSE code provide the professional framework.',
-              'Four core ethical principles: honesty &amp; integrity, respect for life/law/public good, accuracy &amp; rigour, leadership &amp; communication.',
+              'Four core ethical principles: honesty & integrity, respect for life/law/public good, accuracy & rigour, leadership & communication.',
               'Conflicts of interest: financial, personal, professional — disclose early, recuse where required.',
               'PIDA / ERA 1996 s.43 protect whistleblowers raising public-interest concerns through prescribed channels.',
               'Refuse to certify, sign or report what you cannot honestly stand behind — Fraud Act 2006 s.2 (false representation) is in play for fraudulent certification.',

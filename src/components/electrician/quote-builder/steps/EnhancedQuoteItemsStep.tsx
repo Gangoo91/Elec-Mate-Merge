@@ -97,6 +97,8 @@ interface EnhancedQuoteItemsStepProps {
   onAdd: (item: Omit<QuoteItem, 'id' | 'totalPrice'>) => void;
   onUpdate: (itemId: string, updates: Partial<QuoteItem>) => void;
   onRemove: (itemId: string) => void;
+  /** ELE-1548 — reorder a line. Optional so any other host of this step keeps working. */
+  onMove?: (itemId: string, direction: 'up' | 'down') => void;
   priceAdjustment?: number;
   setPriceAdjustment?: (adjustment: number) => void;
   calculateAdjustedPrice?: (basePrice: number) => number;
@@ -109,6 +111,7 @@ export const EnhancedQuoteItemsStep = ({
   onAdd,
   onUpdate,
   onRemove,
+  onMove,
   priceAdjustment = 0,
   setPriceAdjustment,
   calculateAdjustedPrice,
@@ -1704,8 +1707,11 @@ export const EnhancedQuoteItemsStep = ({
             Added Items ({items.length})
           </p>
           <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
-            {items.map((item) => {
+            {items.map((item, itemIndex) => {
               const cat = categories.find((c) => c.id === item.category);
+              // ELE-1548 — hidden entirely on a single-item quote, matching
+              // BoardSetupCard: a permanently-disabled control reads as broken.
+              const canReorder = !!onMove && items.length > 1;
               return (
                 <div key={item.id} className="p-3">
                   {/* Top row: Category dot + Description + Total */}
@@ -1761,8 +1767,12 @@ export const EnhancedQuoteItemsStep = ({
                     </p>
                   </div>
 
-                  {/* Bottom row: Qty × Price | Actions */}
-                  <div className="flex items-center justify-between">
+                  {/* Bottom row: Qty × Price | Actions.
+                      Wraps: with reorder added there are up to seven 44px
+                      targets beside the two numeric inputs, which is wider than
+                      a phone. Wrapping keeps every target at full size rather
+                      than shrinking them below the touch minimum. */}
+                  <div className="flex flex-wrap items-center justify-between gap-y-2">
                     {/* Quantity and Price inputs */}
                     <div className="flex items-center gap-1.5">
                       <DecimalInput
@@ -1783,7 +1793,41 @@ export const EnhancedQuoteItemsStep = ({
                     </div>
 
                     {/* Action buttons - always visible */}
-                    <div className="flex items-center gap-1.5 ml-2">
+                    <div className="flex flex-wrap items-center justify-end gap-1.5 ml-auto">
+                      {/* ELE-1548 — order is how the job reads to the client,
+                          and the top line is what they judge the price against. */}
+                      {canReorder && (
+                        <>
+                          <button
+                            type="button"
+                            onClick={() => onMove?.(item.id, 'up')}
+                            disabled={itemIndex === 0}
+                            aria-label={`Move ${item.description || 'item'} up`}
+                            className={cn(
+                              'w-11 h-11 rounded-lg flex items-center justify-center touch-manipulation active:scale-95 transition-transform',
+                              itemIndex === 0
+                                ? 'bg-white/[0.02] opacity-25 cursor-not-allowed'
+                                : 'bg-white/[0.05] active:bg-white/[0.1]'
+                            )}
+                          >
+                            <ChevronUp className="h-4 w-4 text-white" />
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => onMove?.(item.id, 'down')}
+                            disabled={itemIndex === items.length - 1}
+                            aria-label={`Move ${item.description || 'item'} down`}
+                            className={cn(
+                              'w-11 h-11 rounded-lg flex items-center justify-center touch-manipulation active:scale-95 transition-transform',
+                              itemIndex === items.length - 1
+                                ? 'bg-white/[0.02] opacity-25 cursor-not-allowed'
+                                : 'bg-white/[0.05] active:bg-white/[0.1]'
+                            )}
+                          >
+                            <ChevronDown className="h-4 w-4 text-white" />
+                          </button>
+                        </>
+                      )}
                       <button
                         type="button"
                         onClick={() => {

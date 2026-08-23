@@ -204,7 +204,7 @@ const quizQuestions = [
     question: 'Which wavelength of light has the greatest impact on circadian rhythm regulation?',
     options: [
       'Red light (630-700nm)',
-      'Infrared light (&gt;700nm)',
+      'Infrared light (>700nm)',
       'Blue light (460-490nm)',
       'Green light (520-560nm)',
     ],

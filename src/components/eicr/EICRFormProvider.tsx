@@ -159,6 +159,24 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     // If loading specific report, will be set in useEffect
     // Otherwise initialize with certificate number to be generated
     return {
+      /*
+       * ELE-1592 — stable client-side identity for THIS certificate.
+       *
+       * Minted once when the form state is created and never reused. The
+       * cloud sync derives its create idempotency key from it, so every save
+       * attempt for this certificate — first try, retry, or a queued replay
+       * after a dropped connection — presents the SAME report_id and the
+       * unique index collapses them into one row instead of several.
+       *
+       * It has to live in form state rather than a ref: a ref resets on
+       * remount and, worse, survives into the NEXT certificate when a failed
+       * create leaves the report id null. Tying it to the form data ties it
+       * to the certificate, which is the only thing that makes it safe.
+       *
+       * Stripped before the row is written — see reportCloud.createReport.
+       */
+      _clientCertId: crypto.randomUUID(),
+
       // Certificate Details
       certificateNumber: '', // Will be generated asynchronously
 
@@ -814,10 +832,16 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
   /*
    * Certificate numbers are allocated once a report row exists — never on mount.
    *
-   * `generate_certificate_number` is a Postgres sequence: every call consumes a
-   * value permanently. Allocating on mount meant opening the form and backing
-   * out burned a number, and across EICR/EIC/MW that had spent 7,745 of 9,094
-   * issued numbers (85%) on certificates that were never created.
+   * Every call consumes a value permanently. Allocating on mount meant opening
+   * the form and backing out burned a number, and across EICR/EIC/MW that had
+   * spent 7,745 of 9,094 issued numbers (85%) on certificates that were never
+   * created.
+   *
+   * ⚠️ ELE-1542 — the counter is no longer `generate_certificate_number`, a
+   * platform-wide Postgres sequence, but `next_certificate_number`, one row per
+   * business. That fixes WHOSE numbers were being burned, not the burning: a
+   * skipped number is still a visible gap in that firm's own sequence, so the
+   * late allocation below still matters.
    *
    * ⚠️ "First edit" is NOT a usable signal here. Several detail sections write
    * derived defaults from a mount effect — SupplyCharacteristicsSection sets
@@ -1001,6 +1025,11 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     const { generateCertificateNumber } = await import('@/utils/certificateNumbering');
     const certificateNumber = await generateCertificateNumber('eicr');
     const newFormData = {
+      // ELE-1592 — a NEW certificate gets a NEW identity. Without this the
+      // previous certificate's key would be inherited and this one's first
+      // create could be "recognised" as that one, silently binding the new
+      // work to the old row.
+      _clientCertId: crypto.randomUUID(),
       certificateNumber,
       clientName: '',
       clientPhone: '',

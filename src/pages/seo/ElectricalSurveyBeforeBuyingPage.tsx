@@ -673,7 +673,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete house purchase EICRs faster with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -717,7 +717,7 @@ export default function ElectricalSurveyBeforeBuyingPage() {
       faqHeading="Frequently Asked Questions About Electrical Surveys When Buying a House"
       relatedPages={relatedPages}
       ctaHeading="Deliver House Purchase EICRs Before You Leave the Property"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning and instant PDF export. Speed wins house purchase work. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning and instant PDF export. Speed wins house purchase work. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -480,7 +480,7 @@ export default function GarageSupplyCalculatorPage() {
         },
       ]}
       ctaHeading="Design garage supplies with confidence"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for load assessment, submain sizing, and certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for load assessment, submain sizing, and certification. 7-day free trial, cancel anytime."
       toolPath="/tools/garage-supply-calculator"
     />
   );

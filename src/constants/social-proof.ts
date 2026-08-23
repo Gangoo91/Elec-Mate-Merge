@@ -1,5 +1,8 @@
-export const USER_COUNT = '1,000+';
-export const USER_COUNT_LABEL = '1,000+ UK electricians & apprentices';
+// Verified against live auth.users 2026-08-22: 1,635 accounts (1,628 excluding
+// test/internal). Keep the public figure at the conservative round-down and
+// re-verify against the database before raising it.
+export const USER_COUNT = '1,600+';
+export const USER_COUNT_LABEL = '1,600+ UK electricians & apprentices';
 
 export const TESTIMONIALS = [
   {

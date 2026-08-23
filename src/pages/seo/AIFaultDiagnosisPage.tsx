@@ -297,7 +297,7 @@ const sections = [
           PVC cables), nuisance RCD tripping caused by cumulative earth leakage across multiple
           circuits, high earth fault loop impedance on long cable runs in TT earthing systems,
           neutral-earth faults in{' '}
-          <SEOInternalLink href="/earthing-arrangements">
+          <SEOInternalLink href="/guides/earthing-systems-tns-tncs-tt-explained">
             TN-C-S (PME) systems
           </SEOInternalLink>{' '}
           causing voltage on exposed metalwork, and overloaded circuits where diversity assumptions
@@ -481,7 +481,7 @@ export default function AIFaultDiagnosisPage() {
       faqHeading="Frequently Asked Questions About AI Fault Diagnosis"
       relatedPages={relatedPages}
       ctaHeading="Diagnose Faults Faster with AI"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate's AI Fault Diagnosis agent. Describe symptoms, get a ranked diagnosis with test sequences. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate's AI Fault Diagnosis agent. Describe symptoms, get a ranked diagnosis with test sequences. 7-day free trial, cancel anytime."
       toolPath="/tools/ai-fault-diagnosis"
     />
   );

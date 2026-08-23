@@ -693,7 +693,7 @@ const HNCModule2Section2_1 = () => {
               'Dynamic viscosity µ (Pa·s) and kinematic viscosity ν = µ/ρ (m²/s) — both fall sharply with temperature.',
               'Pressure: 1 bar = 100 kPa = 10⁵ Pa ≈ 10 m water head; gauge = absolute - atmospheric.',
               'Hydrostatic pressure: P = ρgh — depends only on density and depth, not container shape.',
-              'Compressibility: water&rsquo;s bulk modulus is high (~2.2 GPa) — usually treated as incompressible in building services.',
+              'Compressibility: water’s bulk modulus is high (~2.2 GPa) — usually treated as incompressible in building services.',
               'Vapour pressure rises with temperature — drives cavitation risk on pump suction at high LTHW temperatures.',
               'CIBSE Guide C tables are the UK reference — interpolate to actual operating conditions.',
               'Pressure rating of pipework and components (PN6, PN10, PN16, PN25) must exceed the static + dynamic + safety margin maximum.',

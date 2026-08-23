@@ -20,6 +20,7 @@ import { SiteLogisticsSection } from './SiteLogisticsSection';
 import { ConditionalProceduresSection } from './ConditionalProceduresSection';
 import { MobileButton } from '@/components/ui/mobile-button';
 import { RegulatoryComplianceSection } from './RegulatoryComplianceSection';
+import { saveOrShareFile } from '@/utils/save-or-share-file';
 
 interface ProjectMetadata {
   documentRef: string;
@@ -270,13 +271,13 @@ export const InstallationResultsEditor = ({
         throw new Error('PDF generation returned no URL');
       }
 
-      // Download the PDF
-      const link = document.createElement('a');
-      link.href = data.publicUrl;
-      link.download = `installation-method-${projectDetails?.projectName?.replace(/\s+/g, '-') || Date.now()}.pdf`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      // Download the PDF. Was an `<a download>` on a cross-origin public URL —
+      // ignored by browsers, and a no-op in the app, while the toast below
+      // still reported "PDF Generated Successfully".
+      await saveOrShareFile(
+        data.publicUrl,
+        `installation-method-${projectDetails?.projectName?.replace(/\s+/g, '-') || Date.now()}.pdf`
+      );
 
       toast({
         title: 'PDF Generated Successfully',

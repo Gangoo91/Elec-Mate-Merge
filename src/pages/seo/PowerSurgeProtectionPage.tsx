@@ -494,7 +494,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICs and EICRs on site with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site certificate completion, AI board scanning, and instant PDF export."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site certificate completion, AI board scanning, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -530,7 +530,7 @@ export default function PowerSurgeProtectionPage() {
       faqHeading="Frequently Asked Questions About Power Surge Protection"
       relatedPages={relatedPages}
       ctaHeading="Are You an Electrician? Try Elec-Mate Free"
-      ctaSubheading="Complete EICs and EICRs on your phone, including SPD documentation. Join 1,000+ UK electricians. 7-day free trial, cancel anytime."
+      ctaSubheading="Complete EICs and EICRs on your phone, including SPD documentation. Join 1,600+ UK electricians. 7-day free trial, cancel anytime."
     />
   );
 }

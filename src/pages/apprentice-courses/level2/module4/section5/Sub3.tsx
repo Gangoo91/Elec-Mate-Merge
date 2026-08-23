@@ -82,7 +82,7 @@ const quizQuestions = [
     question:
       'BS 7671 Reg 643.1 says the tests of Regulations 643.2 to 643.6 shall be carried out:',
     options: [
-      'In any order, depending on the engineer&rsquo;s preference.',
+      'In any order, depending on the engineer’s preference.',
       'In that order, before the installation is energised.',
       'After the installation is energised.',
       'Only when an instrument is available.',
@@ -159,7 +159,7 @@ const quizQuestions = [
     ],
     correctAnswer: 2,
     explanation:
-      'Polarity verifies the conductors are landed in the right terminals at every accessory and at the consumer unit. Reversed polarity at a switch leaves the lamp permanently live; reversed polarity at a socket means a live pin where the neutral should be. Polarity is verified by continuity from the consumer unit&rsquo;s line conductor to the line pin / line terminal at every accessory.',
+      'Polarity verifies the conductors are landed in the right terminals at every accessory and at the consumer unit. Reversed polarity at a switch leaves the lamp permanently live; reversed polarity at a socket means a live pin where the neutral should be. Polarity is verified by continuity from the consumer unit’s line conductor to the line pin / line terminal at every accessory.',
   },
   {
     id: 7,
@@ -173,12 +173,12 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      'TT installs rely on a local earth electrode rather than the supply&rsquo;s earthing arrangement. Reg 643.7 requires the earth electrode resistance to be measured — typically with a dedicated earth electrode tester or by the loop method on a TT supply. The result is recorded on the Schedule of Test Results and used to verify ADS will operate within the required time.',
+      'TT installs rely on a local earth electrode rather than the supply’s earthing arrangement. Reg 643.7 requires the earth electrode resistance to be measured — typically with a dedicated earth electrode tester or by the loop method on a TT supply. The result is recorded on the Schedule of Test Results and used to verify ADS will operate within the required time.',
   },
   {
     id: 8,
     question:
-      'You complete the dead-test sequence on a new domestic install. Continuity passes, ring final passes, IR is &gt;200 MΩ on every circuit, polarity is correct at every point. The next step is:',
+      'You complete the dead-test sequence on a new domestic install. Continuity passes, ring final passes, IR is >200 MΩ on every circuit, polarity is correct at every point. The next step is:',
     options: [
       'Energise the install in a controlled manner — main switch on, RCBOs on one at a time — then proceed to live testing (Ze, Zs, RCD operation, prospective fault current).',
       'Issue the EIC straight away — once the dead tests pass, live testing is optional and only needed on commercial installs.',
@@ -216,7 +216,7 @@ const faqs = [
     question:
       'What if a test fails — for example, IR comes back at 0.5 MΩ on a 230 V circuit?',
     answer:
-      'Stop. Do not energise. Investigate. The minimum acceptable IR for a 230 V LV circuit is 1 MΩ (BS 7671 Table 64). Below that, there is a fault somewhere in the circuit — damaged cable, wet termination, accessory with a fault, equipment left connected with a low-IR component. Disconnect each element of the circuit one at a time and re-test to localise the fault. Could be as simple as a wet shower pull-cord that has been re-fitted to a damp ceiling. Could be a damaged cable nicked during second-fix. Either way, you fix the fault, re-test, confirm the result is &gt;1 MΩ before moving on. Recorded results on the Schedule of Test Results — both the failing reading and the post-repair reading.',
+      'Stop. Do not energise. Investigate. The minimum acceptable IR for a 230 V LV circuit is 1 MΩ (BS 7671 Table 64). Below that, there is a fault somewhere in the circuit — damaged cable, wet termination, accessory with a fault, equipment left connected with a low-IR component. Disconnect each element of the circuit one at a time and re-test to localise the fault. Could be as simple as a wet shower pull-cord that has been re-fitted to a damp ceiling. Could be a damaged cable nicked during second-fix. Either way, you fix the fault, re-test, confirm the result is >1 MΩ before moving on. Recorded results on the Schedule of Test Results — both the failing reading and the post-repair reading.',
   },
   {
     question: 'Where does this prep + sequence Sub fit relative to Module 4 Section 6?',
@@ -315,7 +315,7 @@ export default function Sub3() {
               'Carry out pre-test preparation — verified safe isolation, instrument calibration check, lead null, customer briefing.',
               'Identify the correct test voltage for insulation resistance (500 V DC for normal LV, 250 V DC for SELV / PELV per Reg 643.3.2.1).',
               'Distinguish dead tests (continuity, ring final, IR, polarity, RA on TT) from live tests (Ze, Zs, RCD operation, PFC).',
-              'Recognise when a test result fails (e.g. IR &lt; 1 MΩ on a 230 V circuit) and the troubleshooting approach to localise the fault.',
+              'Recognise when a test result fails (e.g. IR < 1 MΩ on a 230 V circuit) and the troubleshooting approach to localise the fault.',
               'Bridge the inspection (Sub 5.1 / 5.2) and testing (Section 6) stages with a clear understanding of the test sequence prep and rhythm.',
             ]}
             initialVisibleCount={3}
@@ -366,7 +366,7 @@ export default function Sub3() {
           <ContentEyebrow>Pre-test preparation — the ten minutes that make testing safe</ContentEyebrow>
 
           <ConceptBlock
-            title="What &lsquo;ready to test&rsquo; actually means"
+            title="What ‘ready to test’ actually means"
             plainEnglish="Before any test lead touches the install, six things must be true. Skip any of them and you are testing in the dark — at best the results are meaningless, at worst you create a hazard."
             onSite="On site you do this in the same order every time. Five minutes of prep at the start saves an hour of confused troubleshooting later. Make it a habit."
           >
@@ -431,7 +431,7 @@ export default function Sub3() {
           <ConceptBlock
             title="The five tests in order"
             plainEnglish="Continuity → ring final → insulation resistance → polarity → earth electrode (TT only). Each test relies on the previous one having confirmed something. Skipping or re-ordering breaks the logic and produces meaningless results."
-            onSite="Walk the same sequence on every install. Continuity first at the CU. Ring final continuity if the install has rings. IR with the test voltage selector at 500 V DC and the install isolated. Polarity at every accessory. Earth electrode test if it&rsquo;s TT. Record each value on the Schedule of Test Results as you go — do not write them up later from memory."
+            onSite="Walk the same sequence on every install. Continuity first at the CU. Ring final continuity if the install has rings. IR with the test voltage selector at 500 V DC and the install isolated. Polarity at every accessory. Earth electrode test if it’s TT. Record each value on the Schedule of Test Results as you go — do not write them up later from memory."
           >
             <div className="space-y-3">
               {testSequence.map((t) => (
@@ -604,7 +604,7 @@ export default function Sub3() {
           <ConceptBlock
             title="Why ring finals get the extra continuity test"
             plainEnglish="A ring final has two conductor paths from CU to every socket. If both paths are intact, the ring is a true ring. If one path is broken (a missed termination at one socket, a damaged cable somewhere), the ring is now effectively a long radial — current still flows, sockets still work, but the two-path benefit is lost and the cable can be overloaded under fault. The cross-connection test catches this."
-            onSite="A common ring final defect is the &lsquo;bridged radial&rsquo; — installer thinks they wired a ring but actually wired two long radials with a bridge link in the CU. Cross-connection test is what catches it. Run it on every ring final at first installation."
+            onSite="A common ring final defect is the ‘bridged radial’ — installer thinks they wired a ring but actually wired two long radials with a bridge link in the CU. Cross-connection test is what catches it. Run it on every ring final at first installation."
           >
             <p>
               <strong>Step-by-step:</strong>
@@ -658,7 +658,7 @@ export default function Sub3() {
           <ConceptBlock
             title="The 500 V DC test versus modern electronic equipment"
             plainEnglish="Most modern electrical equipment contains electronics that can be damaged by the 500 V DC IR test. Computers, modems, smart lighting controllers, dimmers, low-voltage transformers, appliances with electronic boards. The standard practice is to disconnect or short out sensitive equipment for the main IR test, then carry out a confirmatory test at 250 V DC after reconnection."
-            onSite="Walk the install before you start IR testing. Anything plugged in that has a circuit board? Unplug it. Anything hard-wired with electronics? Disconnect at the FCU or bridge live and neutral as the manufacturer&rsquo;s instructions allow. After main IR is complete and good, reconnect, then 250 V DC test for the confirmation that the install with equipment connected is still acceptable."
+            onSite="Walk the install before you start IR testing. Anything plugged in that has a circuit board? Unplug it. Anything hard-wired with electronics? Disconnect at the FCU or bridge live and neutral as the manufacturer’s instructions allow. After main IR is complete and good, reconnect, then 250 V DC test for the confirmation that the install with equipment connected is still acceptable."
           >
             <p>
               <strong>Equipment to disconnect or short before 500 V DC IR test:</strong>

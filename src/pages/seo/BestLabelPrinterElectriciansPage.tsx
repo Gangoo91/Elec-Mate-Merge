@@ -718,7 +718,7 @@ export default function BestLabelPrinterElectriciansPage() {
       faqHeading="Frequently Asked Questions About Label Printers for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Generate Circuit Schedules and Certificates on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EIC and EICR certificates with automatic circuit schedules, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EIC and EICR certificates with automatic circuit schedules, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

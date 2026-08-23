@@ -516,7 +516,7 @@ export default function JobProfitabilityCalculatorPage() {
 
       <SEOCTASection
         heading="Make Every Job Profitable"
-        subheading="Join 1,000+ UK electricians using Elec-Mate to track job profitability, calculate true margins, and price with confidence. 7-day free trial, cancel anytime."
+        subheading="Join 1,600+ UK electricians using Elec-Mate to track job profitability, calculate true margins, and price with confidence. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

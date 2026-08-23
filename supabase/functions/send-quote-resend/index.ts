@@ -448,6 +448,27 @@ const handler = async (req: Request): Promise<Response> => {
       clientName,
       quoteNumber,
       total: Number(quote.total) || 0,
+      /*
+       * ELE-1571 — third-party grant. Without it the client received "Your
+       * quote from X — £1,000.00" for a job they would actually pay £500 for.
+       *
+       * `quote.settings` can arrive as a JSON string from the column, so it is
+       * parsed defensively — reading `.grantEnabled` off a string yields
+       * undefined and would silently quote the full amount.
+       */
+      ...(() => {
+        const raw = (quote as { settings?: unknown }).settings;
+        const st = (typeof raw === 'string' ? JSON.parse(raw || '{}') : raw) as
+          | Record<string, unknown>
+          | null;
+        const on = st?.grantEnabled === true || st?.grantEnabled === 'true';
+        const amt = on ? Number(st?.grantAmount) || 0 : 0;
+        return {
+          grantAmount: amt > 0 ? Math.min(amt, Number(quote.total) || 0) : 0,
+          grantLabel:
+            (typeof st?.grantLabel === 'string' && st.grantLabel.trim()) || 'Grant',
+        };
+      })(),
       validUntil: quote.expiry_date,
       jobTitle,
       jobDescription,

@@ -221,7 +221,7 @@ const sections = [
                   Chapter 52 (wiring systems) covers cable selection, installation methods, and the
                   correction factors from Appendix 4. Chapter 53 (switching and control) and Chapter
                   54 (earthing and protective conductors) are also frequently tested.{' '}
-                  <SEOInternalLink href="/earthing-arrangements">
+                  <SEOInternalLink href="/guides/earthing-systems-tns-tncs-tt-explained">
                     Earthing arrangements
                   </SEOInternalLink>{' '}
                   (TN-S, TN-C-S, TT) are essential knowledge.

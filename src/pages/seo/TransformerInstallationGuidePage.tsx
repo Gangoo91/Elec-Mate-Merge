@@ -555,7 +555,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Certificate transformer installations with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, commissioning test records, and instant PDF export. 7-day free trial."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion, commissioning test records, and instant PDF export. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -592,7 +592,7 @@ export default function TransformerInstallationGuidePage() {
       faqHeading="Frequently Asked Questions About Transformer Installation"
       relatedPages={relatedPages}
       ctaHeading="Complete Transformer Installation EICs on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site electrical installation certification, commissioning test records, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site electrical installation certification, commissioning test records, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

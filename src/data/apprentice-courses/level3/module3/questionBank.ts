@@ -3900,4 +3900,20 @@ export function validateQuestionBank(): {
   };
 }
 
+/**
+ * Section number → readable topic, taken from the section headers above.
+ * Questions here carry only `section: '3.4'` and no `topic`, so without this
+ * the results screen's "what to study next" lists bare outline numbers.
+ */
+export const M3_SECTION_TOPIC: Record<string, string> = {
+  '3.1': "Ohm's Law & Power",
+  '3.2': 'AC Theory',
+  '3.3': 'Three-Phase Systems',
+  '3.4': 'Transformers',
+  '3.5': 'Motors & Generators',
+  '3.6': 'Power Factor',
+  '3.7': 'Advanced Calculations',
+  '3.8': 'Science Principles in Depth',
+};
+
 export default module3Questions;

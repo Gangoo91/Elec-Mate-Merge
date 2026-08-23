@@ -418,7 +418,7 @@ const sections = [
           job description, specifies control measures that are practical and actionable for the
           actual work being carried out, describes a method statement that follows the logical
           sequence of your specific task, and includes details such as the{' '}
-          <SEOInternalLink href="/earthing-arrangements">
+          <SEOInternalLink href="/guides/earthing-systems-tns-tncs-tt-explained">
             earthing system type
           </SEOInternalLink>
           , cable routes, access arrangements, and building occupancy that demonstrate genuine site
@@ -487,7 +487,7 @@ export default function AIMethodStatementPage() {
       faqHeading="Frequently Asked Questions About the Method Statement Generator"
       relatedPages={relatedPages}
       ctaHeading="Generate Professional RAMS in Seconds"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for AI-powered method statements and risk assessments. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI-powered method statements and risk assessments. 7-day free trial, cancel anytime."
       toolPath="/tools/ai-method-statement-generator"
     />
   );

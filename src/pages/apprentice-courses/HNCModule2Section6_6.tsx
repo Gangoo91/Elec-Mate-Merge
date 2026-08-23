@@ -722,7 +722,7 @@ const HNCModule2Section6_6 = () => {
               'Compliance evidence: SBEM/SAP report, air-permeability test, building log book, commissioning records.',
               'BREEAM rating: Pass / Good / Very Good / Excellent / Outstanding — credit-based across 9 categories.',
               'NABERS UK: operational rating from 1–6 stars based on metered energy use over 12 months.',
-              'DEC (Display Energy Certificate): mandatory for public buildings &gt; 250 m² — operational kWh/m²·year.',
+              'DEC (Display Energy Certificate): mandatory for public buildings > 250 m² — operational kWh/m²·year.',
               'POE (post-occupancy evaluation) at 12 and 36 months — the bridge between predicted and operational.',
               'CIBSE TM22 is the UK methodology for measured energy reporting and benchmarking.',
               'Voluntary schemes (BREEAM, NABERS UK) are increasingly contractually mandated by lenders and planning.',

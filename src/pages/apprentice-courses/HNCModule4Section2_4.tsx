@@ -276,7 +276,7 @@ const HNCModule4Section2_4 = () => {
             points={[
               'Adiabatic equation: S = √(I²t) / k — or k²S² ≥ I²t. Cables must survive the fault without exceeding their limiting temperature.',
               'k values come from BS 7671 (Cu/PVC = 115, Cu/XLPE = 143, Al/PVC = 76, Al/XLPE = 94) — depends on conductor material and insulation.',
-              'I²t (let-through energy) comes from the protective device manufacturer&rsquo;s data sheet — current-limiting fuses dramatically reduce I²t vs MCBs.',
+              'I²t (let-through energy) comes from the protective device manufacturer’s data sheet — current-limiting fuses dramatically reduce I²t vs MCBs.',
               'Verification: k²S² (cable withstand) ≥ I²t (device let-through) at the maximum prospective fault current at the cable origin.',
               'BS 7671 Reg 434.5.2 requires the protective device to have an operating characteristic that protects the load-side wiring against fault current.',
             ]}

@@ -587,7 +587,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Certify external lighting installations with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate to issue Electrical Installation Certificates and Minor Works Certificates on site."
+          description="Join 1,600+ UK electricians using Elec-Mate to issue Electrical Installation Certificates and Minor Works Certificates on site."
           icon={FileCheck2}
         />
       </>
@@ -624,7 +624,7 @@ export default function ExternalLightingInstallationPage() {
       faqHeading="Frequently Asked Questions About External Lighting Installation"
       relatedPages={relatedPages}
       ctaHeading="Certify External Lighting Work on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site Electrical Installation Certificates and Minor Works Certificates. Instant PDF export, automatic competent person scheme notification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site Electrical Installation Certificates and Minor Works Certificates. Instant PDF export, automatic competent person scheme notification. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -692,7 +692,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify home office electrical work"
-          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting and on-site certification."
+          description="Join 1,600+ UK electricians using Elec-Mate for professional quoting and on-site certification."
           icon={Monitor}
         />
       </>
@@ -729,7 +729,7 @@ export default function HomeOfficeElectricalPage() {
       faqHeading="Frequently Asked Questions About Home Office Electrical Setup"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify Home Office Installations on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for professional quoting and on-site certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for professional quoting and on-site certification. 7-day free trial, cancel anytime."
     />
   );
 }

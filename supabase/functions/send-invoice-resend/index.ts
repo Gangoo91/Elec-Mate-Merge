@@ -465,6 +465,26 @@ const handler = async (req: Request): Promise<Response> => {
       clientName,
       invoiceNumber,
       total: Number(invoice.total) || 0,
+      /*
+       * ELE-1571 — third-party grant. Without it the email led with the full
+       * total while the Stripe link it points at (create-invoice-payment-link)
+       * already netted the grant off: the button said "Pay £1,000 now" and
+       * then charged £500.
+       *
+       * Same source and same clamp as the payment link, so the two cannot
+       * disagree about what the customer owes.
+       */
+      grantAmount: (() => {
+        // Uses the PARSED `settings` above, not `invoice.settings` — the raw
+        // column can arrive as a JSON string, and reading `.grantEnabled` off
+        // a string yields undefined, which would silently drop the grant and
+        // bill the customer the full amount.
+        if (settings?.grantEnabled !== true && settings?.grantEnabled !== 'true') return 0;
+        const raw = Number(settings?.grantAmount) || 0;
+        return raw > 0 ? Math.min(raw, Number(invoice.total) || 0) : 0;
+      })(),
+      grantLabel:
+        (typeof settings?.grantLabel === 'string' && settings.grantLabel.trim()) || 'Grant',
       // Partial payments — resent invoices lead with the balance, and the
       // (re)minted Stripe link charges the balance too (Alex, 2026-07-20).
       amountPaid: Math.max(

@@ -207,7 +207,7 @@ const faqs = [
   {
     question: 'Do LED lamps have power factor?',
     answer:
-      "Yes — and modern LED drivers are usually pf &gt; 0.9. Cheap unbranded drivers can be 0.5-0.7. The IEC 61000-3-2 standard limits harmonic emissions for any lamp ≥ 25 W, which forces decent PFC at the driver level.",
+      "Yes — and modern LED drivers are usually pf > 0.9. Cheap unbranded drivers can be 0.5-0.7. The IEC 61000-3-2 standard limits harmonic emissions for any lamp ≥ 25 W, which forces decent PFC at the driver level.",
   },
   {
     question: "What's the difference between PFC and harmonic filtering?",
@@ -523,7 +523,7 @@ export default function Sub4() {
           <ConceptBlock
             title="When to quote PFC at the motor vs at the main board"
             plainEnglish="Motor-level PFC corrects from the motor terminals back through every cable. Main-board PFC only corrects from the main board to the supply — internal cables still carry the inductive current. Motor-level wins on big single machines; main-board wins on diverse loads."
-            onSite="Standard L3 design rule: any single motor &gt; 30 kW running &gt; 50 % of operating hours warrants its own static PFC capacitor at the starter. Smaller motors and mixed loads go on a central automatic bank. Hybrid is most common — central bank handles variable load, big motors get individual caps."
+            onSite="Standard L3 design rule: any single motor > 30 kW running > 50 % of operating hours warrants its own static PFC capacitor at the starter. Smaller motors and mixed loads go on a central automatic bank. Hybrid is most common — central bank handles variable load, big motors get individual caps."
           >
             <p>Sizing motor-level PFC (rule of thumb):</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">

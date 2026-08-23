@@ -501,7 +501,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify kitchen island electrical work"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. 7-day free trial."
+          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. 7-day free trial."
           icon={UtensilsCrossed}
         />
       </>
@@ -538,7 +538,7 @@ export default function KitchenIslandPowerPage() {
       faqHeading="Frequently Asked Questions About Kitchen Island Power Supply"
       relatedPages={relatedPages}
       ctaHeading="Size Cables and Certify Kitchen Installations on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
     />
   );
 }

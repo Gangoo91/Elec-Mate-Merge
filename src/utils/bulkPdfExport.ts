@@ -7,6 +7,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { reportCloud, type CloudReport } from './reportCloud';
 import { optimizeForPdfGeneration } from './pdfDataOptimizer';
 import { generatePdfFilename } from './pdfFilenameGenerator';
+import { saveOrShareFile } from './save-or-share-file';
 
 interface BulkExportResult {
   successful: number;
@@ -113,17 +114,15 @@ const fetchPdfAsBlob = async (pdfUrl: string): Promise<Blob> => {
 };
 
 /**
- * Trigger browser download for a Blob
+ * Hand a generated file to the user — share sheet on native, download on web.
+ *
+ * Was a bare `<a download>`, which WKWebView ignores, so a bulk export produced
+ * nothing at all on a phone. It also revoked the object URL on the very next
+ * line, racing the browser's read of it — a bulk export is the largest file the
+ * app produces and so the most likely to lose that race.
  */
-const downloadBlob = (blob: Blob, filename: string): void => {
-  const url = window.URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = filename;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  window.URL.revokeObjectURL(url);
+const downloadBlob = async (blob: Blob, filename: string): Promise<void> => {
+  await saveOrShareFile(blob, filename);
 };
 
 /**
@@ -163,12 +162,18 @@ const validateAndEnrichReportData = (
       data.clientName = report.client_name;
     }
   }
-  if (!data.installationAddress || (typeof data.installationAddress === 'string' && data.installationAddress.trim() === '')) {
+  if (
+    !data.installationAddress ||
+    (typeof data.installationAddress === 'string' && data.installationAddress.trim() === '')
+  ) {
     if (report.installation_address) {
       data.installationAddress = report.installation_address;
     }
   }
-  if (!data.inspectorName || (typeof data.inspectorName === 'string' && data.inspectorName.trim() === '')) {
+  if (
+    !data.inspectorName ||
+    (typeof data.inspectorName === 'string' && data.inspectorName.trim() === '')
+  ) {
     if (report.inspector_name) {
       data.inspectorName = report.inspector_name;
     }
@@ -321,7 +326,9 @@ export const generateBulkPDFs = async (
         } catch {
           /* sentry optional — never block PDF flow on logging */
         }
-        throw new Error(`Please complete: ${fieldsStr}. Open the certificate and fill in the missing fields before downloading.`);
+        throw new Error(
+          `Please complete: ${fieldsStr}. Open the certificate and fill in the missing fields before downloading.`
+        );
       }
 
       // Get edge function name based on report type
@@ -337,7 +344,9 @@ export const generateBulkPDFs = async (
         console.log(`[bulkPdfExport] Using saved pdf_payload for ${reportId}`);
         dataForPdf = report.pdf_payload;
       } else {
-        console.log(`[bulkPdfExport] No pdf_payload, attempting on-the-fly format for ${reportId} (${rtLower})`);
+        console.log(
+          `[bulkPdfExport] No pdf_payload, attempting on-the-fly format for ${reportId} (${rtLower})`
+        );
         if (rtLower === 'eicr') {
           const { formatEICRJson } = await import('./eicrJsonFormatter');
           dataForPdf = await formatEICRJson(validation.data, report.report_id);
@@ -384,7 +393,8 @@ export const generateBulkPDFs = async (
         }
         // Lightning Protection
         else if (rtLower === 'lightning-protection') {
-          const { formatLightningProtectionJson } = await import('./lightningProtectionJsonFormatter');
+          const { formatLightningProtectionJson } =
+            await import('./lightningProtectionJsonFormatter');
           dataForPdf = formatLightningProtectionJson(validation.data);
         }
         // Testing Only
@@ -394,8 +404,11 @@ export const generateBulkPDFs = async (
         }
         // Disconnection Certificate
         else if (rtLower === 'disconnection') {
-          const { formatDisconnectionCertificatePayload } = await import('./disconnection-certificate-formatter');
-          dataForPdf = formatDisconnectionCertificatePayload(validation.data as Record<string, any>);
+          const { formatDisconnectionCertificatePayload } =
+            await import('./disconnection-certificate-formatter');
+          dataForPdf = formatDisconnectionCertificatePayload(
+            validation.data as Record<string, any>
+          );
         }
         // Minor Works, notices: edge function handles transform internally
       }
@@ -407,9 +420,7 @@ export const generateBulkPDFs = async (
       // through certain paths) or where a stored cert's pdf_payload still
       // has stale relative paths.
       try {
-        const { resolveSchemeLogo, resolveCompanyLogo } = await import(
-          './resolveSchemeLogo'
-        );
+        const { resolveSchemeLogo, resolveCompanyLogo } = await import('./resolveSchemeLogo');
         const fd = dataForPdf as Record<string, unknown>;
         const resolvedScheme = await resolveSchemeLogo(
           (fd.registration_scheme_logo as string) ||
@@ -462,12 +473,9 @@ export const generateBulkPDFs = async (
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       let pdfError: any = null;
       for (let attempt = 1; attempt <= 3; attempt++) {
-        ({ data: pdfResult, error: pdfError } = await supabase.functions.invoke(
-          edgeFunctionName,
-          {
-            body: requestBody,
-          }
-        ));
+        ({ data: pdfResult, error: pdfError } = await supabase.functions.invoke(edgeFunctionName, {
+          body: requestBody,
+        }));
         const isTransient = pdfError?.name === 'FunctionsFetchError';
         if (!isTransient) break;
         if (attempt < 3) {
@@ -541,7 +549,7 @@ export const generateBulkPDFs = async (
         console.log(`[bulkPdfExport] Added ${filename} to ZIP bundle`);
       } else {
         // Download immediately
-        downloadBlob(pdfBlob, filename);
+        await downloadBlob(pdfBlob, filename);
         console.log(`[bulkPdfExport] Downloaded ${filename}`);
       }
 
@@ -593,7 +601,7 @@ export const generateBulkPDFs = async (
       const zipFilename = `Certificates_Export_${dateStr}.zip`;
 
       // Download the ZIP file
-      downloadBlob(zipBlob, zipFilename);
+      await downloadBlob(zipBlob, zipFilename);
       console.log(`[bulkPdfExport] ZIP bundle downloaded: ${zipFilename}`);
     } catch (zipError) {
       console.error('[bulkPdfExport] Failed to create ZIP bundle:', zipError);

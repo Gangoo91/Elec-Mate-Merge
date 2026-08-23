@@ -275,7 +275,7 @@ const HNCModule4Section1_3 = () => {
           <TLDR
             points={[
               'Power factor (cos φ = kW/kVA) is the ratio of useful real power to total apparent power — every kVAr of reactive load uses DNO capacity but does no work.',
-              'UK DNOs typically require ≥ 0.95 lagging at the point of supply. Below that triggers reactive-energy (kVArh) charges and may need PFC plant retro-fitted at your client&rsquo;s cost.',
+              'UK DNOs typically require ≥ 0.95 lagging at the point of supply. Below that triggers reactive-energy (kVArh) charges and may need PFC plant retro-fitted at your client’s cost.',
               'Inductive loads (motors, transformers, magnetic ballasts) lag; capacitive over-correction leads — both are penalised. Target 0.95 lagging, never unity.',
               'PFC capacitor sizing: kVAr_required = kW × (tan φ₁ − tan φ₂). Use detuned reactors where the load mix includes VSDs or significant non-linear load.',
               'BS 7671 Reg 132.1 makes economic and reliable design a duty — leaving a building at 0.7 pf wastes 43% of the supply capacity and is a defendable design failure.',
@@ -686,7 +686,7 @@ const HNCModule4Section1_3 = () => {
               'Use automatic PFC for variable loads and detuned reactors (7% or 14%) wherever VSDs or significant non-linear load is present.',
               'A jump from 0.7 to 0.95 pf releases ≈ 26% of supply capacity for the same useful kW — often the cheapest way to defer a DNO upgrade.',
               'Modern LED drivers vary widely (0.5–0.98) — specify pf in the lighting schedule and check at FAT.',
-              'Reg 132.1 makes economic and reliable design the engineer&rsquo;s duty — power factor management sits squarely under that obligation.',
+              'Reg 132.1 makes economic and reliable design the engineer’s duty — power factor management sits squarely under that obligation.',
             ]}
           />
 

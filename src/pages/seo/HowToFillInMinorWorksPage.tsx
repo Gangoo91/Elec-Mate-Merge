@@ -876,7 +876,7 @@ export default function HowToFillInMinorWorksPage() {
         },
       ]}
       ctaHeading="Fill In Minor Works Certificates in Minutes"
-      ctaSubheading="Sections A to E on your phone, auto-filled site details, BS 7671 test validation, digital signatures and instant PDF export. Join 1,000+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
+      ctaSubheading="Sections A to E on your phone, auto-filled site details, BS 7671 test validation, digital signatures and instant PDF export. Join 1,600+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
     />
   );
 }

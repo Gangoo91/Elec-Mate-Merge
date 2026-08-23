@@ -212,7 +212,7 @@ const faqs = [
   {
     question: 'What does Cmin do for a circuit protected by a fuse rather than an MCB?',
     answer:
-      "Same principle, applied to the fuse characteristic. Table 41.2 in BS 7671 gives max Zs for fuses (BS 88-3 rewireable, BS 1361, BS 88 series) at the relevant disconnection time (0.4 s for final ≤ 32 A on TN; 5 s for distribution and final &gt; 32 A). The fuse Ia is read off the time-current curve at the disconnection time. A4:2026 recalculated all Table 41.2 limits with Cmin = 0.95. Example: BS 88 fuse 32 A at 5 s on TN — the 5 s prearcing current is around 130 A; max Zs = 230 × 0.95 / 130 = 1.68 Ω. The principle is identical; only the device Ia differs between MCB and fuse.",
+      "Same principle, applied to the fuse characteristic. Table 41.2 in BS 7671 gives max Zs for fuses (BS 88-3 rewireable, BS 1361, BS 88 series) at the relevant disconnection time (0.4 s for final ≤ 32 A on TN; 5 s for distribution and final > 32 A). The fuse Ia is read off the time-current curve at the disconnection time. A4:2026 recalculated all Table 41.2 limits with Cmin = 0.95. Example: BS 88 fuse 32 A at 5 s on TN — the 5 s prearcing current is around 130 A; max Zs = 230 × 0.95 / 130 = 1.68 Ω. The principle is identical; only the device Ia differs between MCB and fuse.",
   },
   {
     question: 'If Cmin appears in Table 41.3, do I also need to use Cmin in my prospective fault current Ipf calculation?',

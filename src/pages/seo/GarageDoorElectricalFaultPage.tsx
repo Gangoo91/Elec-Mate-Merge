@@ -702,7 +702,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete garage electrical certificates on your phone"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site Minor Works certificates, EICs, and instant quoting. No evening paperwork. 7-day free trial."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site Minor Works certificates, EICs, and instant quoting. No evening paperwork. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -739,7 +739,7 @@ export default function GarageDoorElectricalFaultPage() {
       faqHeading="Frequently Asked Questions — Garage Door Electrical Faults"
       relatedPages={relatedPages}
       ctaHeading="Complete Garage Electrical Certificates On Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for Minor Works certificates, EICs, and on-site quoting. No evening paperwork. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for Minor Works certificates, EICs, and on-site quoting. No evening paperwork. 7-day free trial, cancel anytime."
     />
   );
 }

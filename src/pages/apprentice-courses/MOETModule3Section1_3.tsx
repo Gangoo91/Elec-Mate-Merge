@@ -7,7 +7,7 @@ import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Circuit Breaker Operations - MOET Module 3 Section 1.3';
 const DESCRIPTION =
-  'Comprehensive guide to circuit breaker operations for electrical maintenance technicians: MCBs, MCCBs, ACBs, distribution boards, consumer units, busbar arrangements, SPD integration, labelling requirements and BS 7671 Amendment 2 compliance.';
+  'Comprehensive guide to circuit breaker operations for electrical maintenance technicians: MCBs, MCCBs, ACBs, distribution boards, consumer units, busbar arrangements, SPD integration, labelling requirements and BS 7671 A4:2026 compliance.';
 
 const quickCheckQuestions = [
   {
@@ -602,8 +602,9 @@ const MOETModule3Section1_3 = () => {
             <p>
               Surge protection devices (SPDs) protect electrical equipment from transient
               overvoltages caused by lightning, switching surges and other disturbances. BS 7671
-              Regulation 443 and the 18th Edition Amendment 2 have strengthened the requirements for
-              SPD installation, making them a standard component in most new installations.
+              Regulation 443 (18th Edition, now at Amendment 4:2026) has strengthened the
+              requirements for SPD installation, making them a standard component in most new
+              installations.
             </p>
 
             <div className="my-6">

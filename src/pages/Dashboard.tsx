@@ -303,7 +303,7 @@ function EditorialDashboard() {
         {
           title: 'Flashcards',
           description: 'Ten minutes of revision',
-          onClick: () => navigate('/study-centre/apprentice'),
+          onClick: () => navigate('/apprentice/on-job-tools/flashcards'),
         },
         {
           title: 'Mock exam',

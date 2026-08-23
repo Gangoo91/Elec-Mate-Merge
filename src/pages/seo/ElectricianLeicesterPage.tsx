@@ -494,7 +494,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your Leicester electrical business from your phone"
-          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs…"
+          description="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs…"
           icon={MapPin}
         />
       </>
@@ -532,7 +532,7 @@ export default function ElectricianLeicesterPage() {
       faqHeading="Frequently Asked Questions About Electricians in Leicester"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Certificates on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site in Leicester and send instant PDFs to your customers. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site in Leicester and send instant PDFs to your customers. 7-day free trial."
     />
   );
 }

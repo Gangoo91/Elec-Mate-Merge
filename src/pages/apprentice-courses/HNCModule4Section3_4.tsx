@@ -278,7 +278,7 @@ const HNCModule4Section3_4 = () => {
               'Discrimination (selectivity) ensures only the device closest to a fault operates — the upstream stays in, only the affected circuit loses supply.',
               'Three discrimination methods: time (delayed upstream trip), current (different rated currents), energy (current-limiting upstream — fuse vs MCB I²t).',
               'Rule-of-thumb: 2:1 current ratio between upstream and downstream for fuse-fuse, 3:1 for fuse-MCB, manufacturer tables for MCB-MCB and MCCB-MCB.',
-              'Cascade (back-up) protection: a device with lower breaking capacity is &lsquo;backed up&rsquo; by an upstream higher-capacity device — accept loss of discrimination at high fault levels.',
+              'Cascade (back-up) protection: a device with lower breaking capacity is ‘backed up’ by an upstream higher-capacity device — accept loss of discrimination at high fault levels.',
               'BS 7671 Reg 536.4.202 (redrafted in A4:2026) explicitly covers coordination between LV switchgear and overload protective device, including discrimination.',
             ]}
           />

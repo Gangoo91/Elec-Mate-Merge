@@ -404,7 +404,7 @@ export default function Sub1() {
 
           <ConceptBlock
             title="Cross-checking schedule against layout"
-            plainEnglish="The schedule says 22 m. You measure the layout with a scale rule and it is closer to 28 m. That is normal — the schedule was a designer&rsquo;s estimate, the layout is the actual route. Always verify."
+            plainEnglish="The schedule says 22 m. You measure the layout with a scale rule and it is closer to 28 m. That is normal — the schedule was a designer’s estimate, the layout is the actual route. Always verify."
             onSite="Three things change a route length on site: the route on the drawing was straight-line and the actual route snakes; the drops to back-boxes and rises to ceiling roses were not in the estimate; tails at every termination eat ~200 mm a piece. A 22 m schedule figure that lands at 28 m on the layout is not unusual."
           >
             <p>

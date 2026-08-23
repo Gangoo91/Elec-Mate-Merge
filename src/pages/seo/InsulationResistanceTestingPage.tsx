@@ -602,7 +602,7 @@ export default function InsulationResistanceTestingPage() {
       faqHeading="Frequently Asked Questions About Insulation Resistance Testing"
       relatedPages={relatedPages}
       ctaHeading="Record IR Test Results and Complete EICRs on Your Phone"
-      ctaSubheading="Elec-Mate automatically checks IR readings against the BS 7671 minimum and generates professional test schedules on site. Join 1,000+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate automatically checks IR readings against the BS 7671 minimum and generates professional test schedules on site. Join 1,600+ UK electricians. 7-day free trial."
     />
   );
 }

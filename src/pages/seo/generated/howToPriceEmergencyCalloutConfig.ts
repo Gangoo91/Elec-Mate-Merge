@@ -139,7 +139,7 @@ export const howToPriceEmergencyCalloutConfig: GeneratedGuideConfig = {
           tone: 'info',
           title: 'For electricians: stop under-pricing your work',
           body:
-            'Join 1,000+ UK electricians using Elec-Mate to quote emergency callout (24/7) at fair-margin prices, issue compliant certificates, and get paid faster. 7-day free trial.',
+            'Join 1,600+ UK electricians using Elec-Mate to quote emergency callout (24/7) at fair-margin prices, issue compliant certificates, and get paid faster. 7-day free trial.',
         },
       ],
     },
@@ -241,5 +241,5 @@ export const howToPriceEmergencyCalloutConfig: GeneratedGuideConfig = {
   ],
   ctaHeading: 'Stop Under-Pricing Emergency Callout (24/7)',
   ctaSubheading:
-    'Join 1,000+ UK electricians using Elec-Mate to quote emergency callout (24/7) at fair-margin prices, issue compliant certificates, and get paid faster. 7-day free trial.',
+    'Join 1,600+ UK electricians using Elec-Mate to quote emergency callout (24/7) at fair-margin prices, issue compliant certificates, and get paid faster. 7-day free trial.',
 };

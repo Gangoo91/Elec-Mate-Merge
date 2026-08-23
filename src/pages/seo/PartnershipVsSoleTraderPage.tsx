@@ -660,7 +660,7 @@ export default function PartnershipVsSoleTraderPage() {
       faqHeading="Frequently Asked Questions About Business Structure for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Run Your Business Your Way"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, invoicing, and job management. Works for sole traders, partnerships, and limited companies. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, invoicing, and job management. Works for sole traders, partnerships, and limited companies. 7-day free trial, cancel anytime."
     />
   );
 }

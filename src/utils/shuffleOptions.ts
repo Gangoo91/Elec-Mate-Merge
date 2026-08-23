@@ -20,12 +20,23 @@
  * selected array once inside the start handler and store it in state.
  */
 
+/**
+ * Minimum shape this module needs. Deliberately NO `[key: string]: unknown`
+ * index signature: TypeScript does not give interfaces an implicit index
+ * signature, so every question type declared as an `interface`
+ * (StandardMockQuestion, the per-exam `Question`/`QuestionBank` types) failed
+ * the `T extends ShuffleableQuestion` constraint. That produced two type
+ * errors in each of ~30 exam files and made the generic fall back to this
+ * base type, which then wouldn't assign back to the caller's own state.
+ *
+ * The implementation only ever reads id / question / options / correctAnswer,
+ * and spreads the rest through untouched, so the signature bought nothing.
+ */
 export interface ShuffleableQuestion {
   id?: number | string;
   question: string;
   options: string[];
   correctAnswer: number | string;
-  [key: string]: unknown;
 }
 
 function mulberry32(seed: number): () => number {

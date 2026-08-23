@@ -31,6 +31,7 @@ import {
   generateMethodStatementFromInstaller,
 } from '@/utils/agent-pdf-generator';
 import { openOrDownloadPdf } from '@/utils/pdf-download';
+import { saveOrShareFile } from '@/utils/save-or-share-file';
 
 interface SavedResultItemProps {
   result: SavedAgentResult;
@@ -141,12 +142,10 @@ export const SavedResultItem: React.FC<SavedResultItemProps> = ({ result, onClos
               bytes[i] = binaryData.charCodeAt(i);
             }
             const blob = new Blob([bytes], { type: 'application/pdf' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `${result.title.replace(/\s+/g, '_')}_Quote.pdf`;
-            a.click();
-            URL.revokeObjectURL(url);
+            // The 'health-safety' case below already used openOrDownloadPdf;
+            // this one was left hand-rolled, so it did nothing in the app and
+            // then reported success anyway.
+            await saveOrShareFile(blob, `${result.title.replace(/\s+/g, '_')}_Quote.pdf`);
             toast.success('Quote PDF downloaded');
           }
           break;
@@ -183,12 +182,10 @@ export const SavedResultItem: React.FC<SavedResultItemProps> = ({ result, onClos
             'Supervisor'
           );
           const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = `${result.title.replace(/\s+/g, '_')}_Method_Statement.pdf`;
-          a.click();
-          URL.revokeObjectURL(url);
+          await saveOrShareFile(
+            blob,
+            `${result.title.replace(/\s+/g, '_')}_Method_Statement.pdf`
+          );
           toast.success('Method Statement PDF downloaded');
           break;
         }

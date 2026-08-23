@@ -138,7 +138,7 @@ export const howToPriceSmartHomeInstallationConfig: GeneratedGuideConfig = {
           tone: 'info',
           title: 'For electricians: stop under-pricing your work',
           body:
-            'Join 1,000+ UK electricians using Elec-Mate to quote smart home installation at fair-margin prices, issue compliant certificates, and get paid faster. 7-day free trial.',
+            'Join 1,600+ UK electricians using Elec-Mate to quote smart home installation at fair-margin prices, issue compliant certificates, and get paid faster. 7-day free trial.',
         },
       ],
     },
@@ -240,5 +240,5 @@ export const howToPriceSmartHomeInstallationConfig: GeneratedGuideConfig = {
   ],
   ctaHeading: 'Stop Under-Pricing Smart Home Installation',
   ctaSubheading:
-    'Join 1,000+ UK electricians using Elec-Mate to quote smart home installation at fair-margin prices, issue compliant certificates, and get paid faster. 7-day free trial.',
+    'Join 1,600+ UK electricians using Elec-Mate to quote smart home installation at fair-margin prices, issue compliant certificates, and get paid faster. 7-day free trial.',
 };

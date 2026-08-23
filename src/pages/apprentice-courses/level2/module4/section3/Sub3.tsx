@@ -162,7 +162,7 @@ const quizQuestions = [
     ],
     correctAnswer: 2,
     explanation:
-      'Dado trunking has integral mounting points or accessory plates designed to clip the box to the trunking face. Once the trunking is level, every accessory mounted on it is level by definition. Don&rsquo;t fight the trunking — use it as the reference. Fixing the boxes to the wall behind the trunking and then aligning to the trunking face is double work and prone to error.',
+      'Dado trunking has integral mounting points or accessory plates designed to clip the box to the trunking face. Once the trunking is level, every accessory mounted on it is level by definition. Don’t fight the trunking — use it as the reference. Fixing the boxes to the wall behind the trunking and then aligning to the trunking face is double work and prone to error.',
   },
   {
     id: 7,
@@ -223,7 +223,7 @@ const faqs = [
   {
     question: 'How do I fix a back-box into a stud wall when the stud is in the way?',
     answer:
-      'Three options. (1) Move the accessory ±50 mm sideways within design tolerance — usually acceptable for sockets, less so for switches at architectural alignment positions. (2) Use a dry-line box that catches the stud as a side-fixing — Appleby and Hager make boxes specifically for this. (3) Move the accessory to the next stud bay if the position is critical, raise an RFI for the layout change. Never chisel or notch a structural stud — that is the carpenter&rsquo;s rule, and it applies to electricians too.',
+      'Three options. (1) Move the accessory ±50 mm sideways within design tolerance — usually acceptable for sockets, less so for switches at architectural alignment positions. (2) Use a dry-line box that catches the stud as a side-fixing — Appleby and Hager make boxes specifically for this. (3) Move the accessory to the next stud bay if the position is critical, raise an RFI for the layout change. Never chisel or notch a structural stud — that is the carpenter’s rule, and it applies to electricians too.',
   },
 ];
 
@@ -401,7 +401,7 @@ export default function Sub3() {
           <ConceptBlock
             title="Frame fixings vs separate plug + screw"
             plainEnglish="A frame fixing is a single unit — knurled-shaft screw inside an integrated nylon plug. You drill the hole through the back-box and the wall behind in one shot, push the frame fixing through the box hole into the wall, and tighten. The plug expands as the screw tightens, locking the box in. Faster than separate components and no risk of pairing the wrong plug with the wrong screw."
-            onSite="A box of 100 frame fixings (60 mm × 6 mm) lives in every electrician&rsquo;s van for masonry box-fixing. They are forgiving of slightly oversized holes and they work well in re-used holes from previous installs."
+            onSite="A box of 100 frame fixings (60 mm × 6 mm) lives in every electrician’s van for masonry box-fixing. They are forgiving of slightly oversized holes and they work well in re-used holes from previous installs."
           >
             <p>
               The legacy method — drill, push in a separate plug, then drive a screw through
@@ -498,7 +498,7 @@ export default function Sub3() {
 
           <ConceptBlock
             title="When the stud is in the way"
-            plainEnglish="Plasterboard stud walls have a stud every 400 or 600 mm. Sometimes the box position you marked lands directly on a stud. Three responses, in priority order: move sideways within tolerance, use a side-fix dry-line box, or move to the next stud bay. Never chisel or notch the stud — that is the carpenter&rsquo;s rule and it applies to electricians too."
+            plainEnglish="Plasterboard stud walls have a stud every 400 or 600 mm. Sometimes the box position you marked lands directly on a stud. Three responses, in priority order: move sideways within tolerance, use a side-fix dry-line box, or move to the next stud bay. Never chisel or notch the stud — that is the carpenter’s rule and it applies to electricians too."
             onSite="A stud detector (cheap, battery-powered, accurate to ±5 mm) catches stud positions before you cut the plasterboard. Spend £15 once and avoid the nightmare of cutting into a stud and discovering halfway through that the box will not fit."
           >
             <p>

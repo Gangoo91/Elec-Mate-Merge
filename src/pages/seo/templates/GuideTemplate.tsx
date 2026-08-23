@@ -291,7 +291,7 @@ export default function GuideTemplate({
           }
         />
         <p className="mt-3 text-[11.5px] text-white/60">
-          Free for 7 days · No charge until day 8 · Cancel anytime · Used by 1,000+ UK electricians
+          Free for 7 days · No charge until day 8 · Cancel anytime · Used by 1,600+ UK electricians
         </p>
 
         <div className="mt-6">

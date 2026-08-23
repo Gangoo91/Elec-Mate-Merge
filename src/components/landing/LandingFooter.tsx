@@ -18,6 +18,9 @@ const footerLinks = {
   Legal: [
     { name: 'Privacy Policy', href: '/privacy' },
     { name: 'Terms of Service', href: '/terms' },
+    // Findable without knowing the URL — it is what a main contractor asks for
+    // before letting their subbies put site data in the app.
+    { name: 'Data Processing Agreement', href: '/dpa' },
   ],
 };
 

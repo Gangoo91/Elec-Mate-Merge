@@ -307,10 +307,10 @@ const HNCModule2Section1_1 = () => {
 
           <TLDR
             points={[
-              'You will apply Fourier&rsquo;s law (Q = -kA·dT/dx) to size insulation, evaluate composite walls and predict pipe heat loss on building services jobs.',
+              'You will apply Fourier’s law (Q = -kA·dT/dx) to size insulation, evaluate composite walls and predict pipe heat loss on building services jobs.',
               'You can read thermal conductivity (k, W/m·K) values from product data and use them in steady-state heat-flow calculations.',
-              'You apply the &ldquo;resistance in series&rdquo; rule for layered fabric and the &ldquo;resistance in parallel&rdquo; rule for thermal-bridge analysis.',
-              'You spec pipe and duct insulation against BS 5422 and the building&rsquo;s Part L target, not just &ldquo;25 mm because that&rsquo;s what we always use&rdquo;.',
+              'You apply the “resistance in series” rule for layered fabric and the “resistance in parallel” rule for thermal-bridge analysis.',
+              'You spec pipe and duct insulation against BS 5422 and the building’s Part L target, not just “25 mm because that’s what we always use”.',
             ]}
           />
 
@@ -325,7 +325,7 @@ const HNCModule2Section1_1 = () => {
                 the project&rsquo;s as-built model.
               </>
             }
-            cite="Source: Building Regulations 2010, Part L; CIBSE Guide A &mdash; Environmental design"
+            cite="Source: Building Regulations 2010, Part L; CIBSE Guide A — Environmental design"
           />
 
           <LearningOutcomes
@@ -803,7 +803,7 @@ const HNCModule2Section1_1 = () => {
 
           <KeyTakeaways
             points={[
-              'Fourier&rsquo;s law: Q = -kA·dT/dx — the foundation equation for steady-state conduction.',
+              'Fourier’s law: Q = -kA·dT/dx — the foundation equation for steady-state conduction.',
               'Thermal conductivity k (W/m·K) is a material property — copper 385, brick 0.77, mineral wool 0.035, polyurethane 0.022.',
               'Composite walls in series: R_total = R₁ + R₂ + R₃ — same heat flow through each layer.',
               'Parallel paths (e.g. wall stud + insulation): 1/R_total = 1/R₁ + 1/R₂ — increased heat flow through the lower-R path drives thermal bridging.',

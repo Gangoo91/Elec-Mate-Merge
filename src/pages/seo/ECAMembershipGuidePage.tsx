@@ -553,7 +553,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Certificate management for ECA members"
-          description="Join 1,000+ UK electricians using Elec-Mate to complete EICRs, Minor Works Certificates, and Electrical Installation Certificates on site."
+          description="Join 1,600+ UK electricians using Elec-Mate to complete EICRs, Minor Works Certificates, and Electrical Installation Certificates on site."
           icon={FileCheck2}
         />
       </>

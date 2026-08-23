@@ -473,7 +473,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Warrington electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
+          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -512,7 +512,7 @@ export default function ElectricianWarringtonPage() {
       faqHeading="Frequently Asked Questions About Electricians in Warrington"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Warrington Electricians"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the residential and commercial electrical market in Warrington. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the residential and commercial electrical market in Warrington. 7-day free trial."
     />
   );
 }

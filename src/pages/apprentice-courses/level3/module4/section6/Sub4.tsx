@@ -213,17 +213,17 @@ const faqs = [
   {
     question: "How do I keep my technical knowledge current after the apprenticeship?",
     answer:
-      "Continuing Professional Development (CPD) — the JIB / SJIB / ECA all maintain CPD frameworks for qualified electricians. Routes include — IET membership (full access to GN3, BS 7671 updates, technical journals); manufacturer training (Schneider, Hager, Wallbox all run free or low-cost product courses for installers); industry events (Elex, Euxbridge, Skills Show); online platforms (NICEIC Online, Elec-Mate's CPD library, BPEC e-learning). The pattern is — couple of hours per month minimum, more around major BS 7671 amendments. The newly-qualified electrician who doesn't keep up falls behind on EV / PV / heat pumps within 2&ndash;3 years; the one who does becomes the supervisor in 5&ndash;7 years.",
+      "Continuing Professional Development (CPD) — the JIB / SJIB / ECA all maintain CPD frameworks for qualified electricians. Routes include — IET membership (full access to GN3, BS 7671 updates, technical journals); manufacturer training (Schneider, Hager, Wallbox all run free or low-cost product courses for installers); industry events (Elex, Euxbridge, Skills Show); online platforms (NICEIC Online, Elec-Mate's CPD library, BPEC e-learning). The pattern is — couple of hours per month minimum, more around major BS 7671 amendments. The newly-qualified electrician who doesn't keep up falls behind on EV / PV / heat pumps within 2–3 years; the one who does becomes the supervisor in 5–7 years.",
   },
   {
     question: "What's the JIB (Joint Industry Board) and how does it relate to L3 progression?",
     answer:
-      "The JIB is the trade body that operates the grading scheme (Apprentice, Electrician, Approved Electrician, Technician) and manages the JIB-ECS card scheme that lets you access most large commercial sites in the UK. Completing the C&G 2365-03 + AM2 (or apprenticeship endpoint assessment) makes you a JIB Electrician; further experience and the inspection-and-testing qualifications (C&G 2391/2394/2395) progress you to Approved Electrician; specialist work (HV, design) progresses to Technician. The JIB-ECS card is renewable every 3&ndash;5 years and requires CPD evidence — so the learning culture continues throughout your career. SJIB is the Scottish equivalent; ECS is the underlying card scheme.",
+      "The JIB is the trade body that operates the grading scheme (Apprentice, Electrician, Approved Electrician, Technician) and manages the JIB-ECS card scheme that lets you access most large commercial sites in the UK. Completing the C&G 2365-03 + AM2 (or apprenticeship endpoint assessment) makes you a JIB Electrician; further experience and the inspection-and-testing qualifications (C&G 2391/2394/2395) progress you to Approved Electrician; specialist work (HV, design) progresses to Technician. The JIB-ECS card is renewable every 3–5 years and requires CPD evidence — so the learning culture continues throughout your career. SJIB is the Scottish equivalent; ECS is the underlying card scheme.",
   },
   {
     question: "When does an L3 apprentice become safe to work without supervision?",
     answer:
-      "Gradually, by competence rather than by date. The pattern is — direct on-site supervision for the first 18&ndash;24 months; remote phone supervision (supervisor available but not on site) on routine work in months 24&ndash;36; full solo work on routine domestic / small-commercial after the apprenticeship endpoint assessment + a probationary 'newly-qualified' period (3&ndash;6 months typically). EAWR Reg 16 (competence) is the underlying duty — the supervisor judges when each level of independence is safe, the apprentice grows into it, the firm's insurance and procedure framework supports the progression. Some firms accelerate; some are conservative. The L3 apprentice's job is to demonstrate competence visit-by-visit and to honestly raise concerns when uncertain.",
+      "Gradually, by competence rather than by date. The pattern is — direct on-site supervision for the first 18–24 months; remote phone supervision (supervisor available but not on site) on routine work in months 24–36; full solo work on routine domestic / small-commercial after the apprenticeship endpoint assessment + a probationary 'newly-qualified' period (3–6 months typically). EAWR Reg 16 (competence) is the underlying duty — the supervisor judges when each level of independence is safe, the apprentice grows into it, the firm's insurance and procedure framework supports the progression. Some firms accelerate; some are conservative. The L3 apprentice's job is to demonstrate competence visit-by-visit and to honestly raise concerns when uncertain.",
   },
   {
     question: "What's the worst mistake I can make as an L3 apprentice on fault diagnosis?",
@@ -389,8 +389,8 @@ export default function Sub4() {
 
           <ConceptBlock
             title="What goes in your portfolio after each fault-correction visit"
-            plainEnglish="The L3 portfolio isn&apos;t just paperwork &mdash; it&apos;s how you evidence competence to your assessor, your future employer, and yourself. Capstone visits generate the richest evidence, but every fault job adds something."
-            onSite="Use the firm&apos;s redacted job records (customer data anonymised) plus your own learning log. A photograph of a diagnostic test result, a sketch of a fault tree, an after-action note &mdash; all anonymous, all stored in a structured folder. Twelve months of this and you&apos;ve got a real-world portfolio that beats any textbook example."
+            plainEnglish="The L3 portfolio isn’t just paperwork — it’s how you evidence competence to your assessor, your future employer, and yourself. Capstone visits generate the richest evidence, but every fault job adds something."
+            onSite="Use the firm’s redacted job records (customer data anonymised) plus your own learning log. A photograph of a diagnostic test result, a sketch of a fault tree, an after-action note — all anonymous, all stored in a structured folder. Twelve months of this and you’ve got a real-world portfolio that beats any textbook example."
           >
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li><strong>Anonymised job sheet</strong> &mdash; what was found, what was done, what was learned.</li>
@@ -407,7 +407,7 @@ export default function Sub4() {
 
           <ConceptBlock
             title="Recognising the boundary of L3 apprentice scope"
-            plainEnglish="The capstone work tests whether you know where your authority ends. Knowing when to phone the supervisor isn&apos;t weakness &mdash; it&apos;s competence under EAWR Reg 16. The L3 expectation is to lead under supervision, not to lead alone."
+            plainEnglish="The capstone work tests whether you know where your authority ends. Knowing when to phone the supervisor isn’t weakness — it’s competence under EAWR Reg 16. The L3 expectation is to lead under supervision, not to lead alone."
           >
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li><strong>Supply-side faults</strong> &mdash; cut-out, tails, service head, DNO equipment. Always escalate.</li>

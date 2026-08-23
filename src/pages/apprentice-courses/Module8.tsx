@@ -31,13 +31,13 @@ export default function Module8() {
     <ModuleShell
       backTo=".."
       backLabel="Level 2 electrical installation"
-      moduleNumber={6}
+      moduleNumber={8}
       title="Mock examinations and assessment"
       description="Practice papers and exam technique tips to build confidence for the real assessment."
       tone="emerald"
       sectionsCount={sections.length}
-      prevModuleHref="../module5"
-      prevModuleLabel="Communicate with others within building services"
+      prevModuleHref="../module7"
+      prevModuleLabel="Electrical fault finding and diagnosis"
     >
       {sections.map((section, index) => (
         <SectionCard

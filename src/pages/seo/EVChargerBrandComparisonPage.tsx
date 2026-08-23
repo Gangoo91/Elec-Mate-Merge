@@ -534,7 +534,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win more EV charger installations with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for EV certificates, quoting, and job management. Complete every installation professionally. 7-day free trial."
+          description="Join 1,600+ UK electricians using Elec-Mate for EV certificates, quoting, and job management. Complete every installation professionally. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -571,7 +571,7 @@ export default function EVChargerBrandComparisonPage() {
       faqHeading="Frequently Asked Questions About EV Charger Brands"
       relatedPages={relatedPages}
       ctaHeading="Complete EV Charging Certificates on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EV certificates, quoting, and job management. Every brand, every installation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EV certificates, quoting, and job management. Every brand, every installation. 7-day free trial, cancel anytime."
     />
   );
 }

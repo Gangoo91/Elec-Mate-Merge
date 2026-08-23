@@ -617,7 +617,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Agricultural inspection work made simple with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, test result recording, and instant PDF export."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion, test result recording, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -659,7 +659,7 @@ export default function AgriculturalElectricalInstallationPage() {
       faqHeading="Frequently Asked Questions About Agricultural Electrical Installations"
       relatedPages={relatedPages}
       ctaHeading="Complete Agricultural EICRs on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site inspection reporting, test result entry, and instant PDF export. Perfect for farm and agricultural inspections. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site inspection reporting, test result entry, and instant PDF export. Perfect for farm and agricultural inspections. 7-day free trial."
     />
   );
 }

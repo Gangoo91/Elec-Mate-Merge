@@ -581,7 +581,7 @@ export default function BMSCoursePage() {
 
       <SEOCTASection
         heading="Ready to move into BMS?"
-        subheading="Join 1,000+ UK electricians studying smarter with AI. 7-day free trial, cancel anytime."
+        subheading="Join 1,600+ UK electricians studying smarter with AI. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

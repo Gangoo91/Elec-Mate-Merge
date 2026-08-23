@@ -528,7 +528,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Issue certificates on site and quote instantly with"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site certificate completion, AI board scanning, and instant PDF export. Start your 7-day free trial."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site certificate completion, AI board scanning, and instant PDF export. Start your 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -565,7 +565,7 @@ export default function FindingEmergencyElectricianPage() {
       faqHeading="Frequently Asked Questions About Emergency Electricians"
       relatedPages={relatedPages}
       ctaHeading="Are You an Electrician? Stand Out with Elec-Mate"
-      ctaSubheading="Issue Minor Works Certificates and EICs on site before you leave. Join 1,000+ UK electricians. 7-day free trial, cancel anytime."
+      ctaSubheading="Issue Minor Works Certificates and EICs on site before you leave. Join 1,600+ UK electricians. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -175,7 +175,7 @@ Generate a branded PDF version of a quote.
 
 Send a quote to a client with accept/decline options.
 
-- **Maps to:** Edge function `send-quote-email` + WhatsApp delivery
+- **Maps to:** Edge function `send-quote-resend` (email) + WhatsApp delivery
 - **Inputs:** `{ quote_id: uuid, client_id: uuid, channel: 'whatsapp' | 'email', message?: string }`
 - **Returns:** `{ sent: boolean, acceptance_url: string }`
 - **Approval:** **YES — show full quote summary and message draft**

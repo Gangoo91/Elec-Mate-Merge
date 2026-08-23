@@ -536,7 +536,7 @@ export default function EarthingSystemFaultFindingPage() {
       faqHeading="Frequently Asked Questions About Earthing System Fault Finding"
       relatedPages={relatedPages}
       ctaHeading="Record Earthing System Test Results and Complete EICRs on Your Phone"
-      ctaSubheading="Elec-Mate's EICR app captures Ze, electrode resistance, and bonding test results, and generates coded observations for any earthing deficiencies. Join 1,000+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate's EICR app captures Ze, electrode resistance, and bonding test results, and generates coded observations for any earthing deficiencies. Join 1,600+ UK electricians. 7-day free trial."
     />
   );
 }

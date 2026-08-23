@@ -594,7 +594,7 @@ export default function CableTrayInstallationPage() {
       faqHeading="Frequently Asked Questions About Cable Tray Installation"
       relatedPages={relatedPages}
       ctaHeading="Complete Commercial Installation Certificates on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to certify commercial installations on site. Record circuit details, earth continuity, and test results — instant PDF export. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to certify commercial installations on site. Record circuit details, earth continuity, and test results — instant PDF export. 7-day free trial."
     />
   );
 }

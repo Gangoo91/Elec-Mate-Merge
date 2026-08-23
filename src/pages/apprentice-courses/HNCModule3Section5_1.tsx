@@ -277,8 +277,8 @@ const HNCModule3Section5_1 = () => {
 
           <TLDR
             points={[
-              'You apply Faraday&rsquo;s law (e = &minus;N d&Phi;/dt) to derive every transformer EMF and every motor back-EMF on a BSE installation.',
-              'You use Lenz&rsquo;s law (the induced current opposes the change that caused it) to predict reactor and inductor behaviour at switching events.',
+              'You apply Faraday’s law (e = &minus;N dΦ/dt) to derive every transformer EMF and every motor back-EMF on a BSE installation.',
+              'You use Lenz’s law (the induced current opposes the change that caused it) to predict reactor and inductor behaviour at switching events.',
               'You calculate motional EMF (e = Blv) for generator output and rotating-machine slip-ring analysis.',
               'You design out eddy-current losses with laminated cores, grain-oriented silicon steel and amorphous metal — the basis of every modern distribution transformer specification.',
             ]}
@@ -1043,11 +1043,11 @@ const HNCModule3Section5_1 = () => {
 
           <KeyTakeaways
             points={[
-              'Faraday&rsquo;s law: e = &minus;N d&Phi;/dt — induced EMF is proportional to rate of change of flux linkage.',
-              'Lenz&rsquo;s law: induced current direction opposes the change in flux that caused it &mdash; the source of inductor &ldquo;back-EMF&rdquo; on switching.',
+              'Faraday’s law: e = &minus;N dΦ/dt — induced EMF is proportional to rate of change of flux linkage.',
+              'Lenz’s law: induced current direction opposes the change in flux that caused it — the source of inductor “back-EMF” on switching.',
               'Motional EMF: e = Blv — the basis of generator and slip-ring machine analysis.',
-              'Transformer EMF: E = 4.44 &times; B &times; A &times; f &times; N — the design equation behind every transformer kVA rating.',
-              'Eddy currents: circulating currents in solid metal cores cause I&sup2;R losses — controlled by laminating cores in 0.3&ndash;0.5 mm sheets.',
+              'Transformer EMF: E = 4.44 × B × A × f × N — the design equation behind every transformer kVA rating.',
+              'Eddy currents: circulating currents in solid metal cores cause I²R losses — controlled by laminating cores in 0.3–0.5 mm sheets.',
               'Hysteresis loss: energy lost re-aligning magnetic domains every cycle — controlled by grain-oriented silicon steel.',
               'BS EN 60076 is the umbrella standard for distribution transformers; tier 2 Ecodesign limits cap no-load and load losses.',
               'Modern alternatives: amorphous metal cores (~70 % lower no-load loss than silicon steel) for ultra-low-loss transformers in Part L-driven specifications.',

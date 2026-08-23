@@ -301,7 +301,7 @@ const HNCModule1Section3_2 = () => {
 
           <TLDR
             points={[
-              'You will recognise safety culture as &ldquo;what people do when no one is watching&rdquo; — the operational reality the SSOW depends on.',
+              'You will recognise safety culture as “what people do when no one is watching” — the operational reality the SSOW depends on.',
               'You can place a workforce on the HSE culture maturity ladder (pathological → reactive → calculative → proactive → generative) and identify the moves that step it up.',
               'You apply visible felt leadership (VFL) — the senior officer is seen on the floor, listens to operatives, acts on what they hear.',
               'You separate just culture from blame culture — operatives report near-misses without fear, but reckless violations are still actionable.',
@@ -692,7 +692,7 @@ const HNCModule1Section3_2 = () => {
           <SectionRule />
 
           <Scenario
-            title="Near-miss reporting falls off after a director&rsquo;s comment"
+            title="Near-miss reporting falls off after a director’s comment"
             situation={
               <>
                 Your firm&rsquo;s near-miss reporting drops 80% over two months. You discover
@@ -726,13 +726,13 @@ const HNCModule1Section3_2 = () => {
 
           <KeyTakeaways
             points={[
-              'Safety culture is &ldquo;the way we do things around here&rdquo; — what people do without supervision.',
+              'Safety culture is “the way we do things around here” — what people do without supervision.',
               'HSE maturity ladder: pathological → reactive → calculative → proactive → generative.',
               'Visible felt leadership (VFL): senior staff seen on the floor, listening, acting on what they hear.',
               'Just culture distinguishes honest error (learn) from negligent action (coach) from reckless violation (discipline).',
               'HSWA s.2(6) consultation is the statutory underpinning of culture — workers must be heard.',
               'Leading indicators (near-miss rate, training completion, audit closeout) predict; lagging indicators (LTIs, prosecutions) confirm.',
-              'Climate surveys and culture audits (HSE&rsquo;s Safety Climate Tool) make perception measurable.',
+              'Climate surveys and culture audits (HSE’s Safety Climate Tool) make perception measurable.',
               'Cultural change is slow — measured in years, not quarters — and any reversal is fast.',
             ]}
           />

@@ -282,8 +282,8 @@ const HNCModule1Section4_3 = () => {
 
           <TLDR
             points={[
-              'You will recognise two parallel UK regimes — Safety Representatives &amp; Safety Committees Regulations 1977 (recognised unions) and Health and Safety (Consultation with Employees) Regulations 1996 (non-union workforces).',
-              'You can describe a safety rep&rsquo;s rights — investigation, inspection, paid time off for training, attendance at safety committees, communication with HSE inspectors.',
+              'You will recognise two parallel UK regimes — Safety Representatives & Safety Committees Regulations 1977 (recognised unions) and Health and Safety (Consultation with Employees) Regulations 1996 (non-union workforces).',
+              'You can describe a safety rep’s rights — investigation, inspection, paid time off for training, attendance at safety committees, communication with HSE inspectors.',
               'You apply HSWA s.2(6) consultation as a statutory duty, not a courtesy.',
               'You position the safety rep as an early-warning system on culture and conditions, not as an adversary.',
             ]}
@@ -764,7 +764,7 @@ const HNCModule1Section4_3 = () => {
           <SectionRule />
 
           <Scenario
-            title="Setting up the safety committee for a 30-person M&amp;E firm"
+            title="Setting up the safety committee for a 30-person M&E firm"
             situation={
               <>
                 The firm has grown from 8 to 30 people in two years. There is no recognised
@@ -802,7 +802,7 @@ const HNCModule1Section4_3 = () => {
             points={[
               'Two regimes: SRSCR 1977 (recognised trade unions) and HSCER 1996 (non-union — RoES route).',
               'HSWA s.2(6) is the statutory parent duty — consult on policy, RAMS, training, equipment, technology, arrangements for nominated competent persons.',
-              'Safety reps&rsquo; rights: investigate hazards, investigate complaints, inspect at least every 3 months (or after substantive change), receive paid training, attend committee, contact HSE.',
+              'Safety reps’ rights: investigate hazards, investigate complaints, inspect at least every 3 months (or after substantive change), receive paid training, attend committee, contact HSE.',
               'A safety committee is required if requested in writing by two safety reps under SRSCR 1977.',
               'Time off and facilities for safety reps are statutory rights — refusing or restricting them is an offence.',
               'Safety reps cannot be victimised under ERA 1996 s.44 — protection extends to reasonable acts in the role.',

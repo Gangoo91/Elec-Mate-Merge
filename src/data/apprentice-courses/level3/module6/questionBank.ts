@@ -3047,7 +3047,11 @@ export const getQuestionsByDifficulty = (
 };
 
 // Map section codes to broader topic labels (used by getQuestionsByTopic).
-const M6_SECTION_TOPIC: Record<string, string> = {
+/**
+ * Section number → readable topic. Exported for the results screen, which
+ * otherwise lists bare outline numbers ("6.2") as study targets.
+ */
+export const M6_SECTION_TOPIC: Record<string, string> = {
   '6.1': 'Design Principles',
   '6.2': 'Calculations',
   '6.3': 'Calculations',

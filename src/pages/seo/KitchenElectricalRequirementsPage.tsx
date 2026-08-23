@@ -700,7 +700,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Certify kitchen electrical work faster with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC and EICR completion, Part P certification, and instant quoting."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site EIC and EICR completion, Part P certification, and instant quoting."
           icon={FileCheck2}
         />
       </>
@@ -737,7 +737,7 @@ export default function KitchenElectricalRequirementsPage() {
       faqHeading="Frequently Asked Questions About Kitchen Electrical Regulations"
       relatedPages={relatedPages}
       ctaHeading="Certify Kitchen Electrical Work on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EIC and EICR completion, instant PDF export, and same-day quoting. Issue Part P certificates before you leave the job. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC and EICR completion, instant PDF export, and same-day quoting. Issue Part P certificates before you leave the job. 7-day free trial."
     />
   );
 }

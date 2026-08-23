@@ -421,7 +421,7 @@ export default function ElectricianSalaryManchesterPage() {
       faqHeading="Frequently Asked Questions About Electrician Salaries in Manchester"
       relatedPages={relatedPages}
       ctaHeading="Run Your Manchester Electrical Business on Your Phone"
-      ctaSubheading="Professional quoting, on-site certificates, and business management — all in one app. Join 1,000+ UK electricians using Elec-Mate. 7-day free trial."
+      ctaSubheading="Professional quoting, on-site certificates, and business management — all in one app. Join 1,600+ UK electricians using Elec-Mate. 7-day free trial."
     />
   );
 }

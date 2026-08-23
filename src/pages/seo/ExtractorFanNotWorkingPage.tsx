@@ -652,7 +652,7 @@ export default function ExtractorFanNotWorkingPage() {
       faqHeading="Frequently Asked Questions About Extractor Fan Problems"
       relatedPages={relatedPages}
       ctaHeading="Certify Fan Replacements on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for Minor Works Certificates, EICR reports, and AI-powered fault diagnosis. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for Minor Works Certificates, EICR reports, and AI-powered fault diagnosis. 7-day free trial, cancel anytime."
     />
   );
 }

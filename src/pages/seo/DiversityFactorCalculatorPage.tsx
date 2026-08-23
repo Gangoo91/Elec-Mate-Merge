@@ -582,7 +582,7 @@ export default function DiversityFactorCalculatorPage() {
 
       <SEOCTASection
         heading="Calculate Diversity Factors in Seconds"
-        subheading="Join 1,000+ UK electricians using Elec-Mate for on-site maximum demand calculations. 7-day free trial, cancel anytime."
+        subheading="Join 1,600+ UK electricians using Elec-Mate for on-site maximum demand calculations. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

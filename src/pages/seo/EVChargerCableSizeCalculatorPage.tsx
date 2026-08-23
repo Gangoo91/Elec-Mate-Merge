@@ -456,7 +456,7 @@ export default function EVChargerCableSizeCalculatorPage() {
         },
       ]}
       ctaHeading="Design EV charger circuits with confidence"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EV circuit design, cable sizing, and certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EV circuit design, cable sizing, and certification. 7-day free trial, cancel anytime."
       toolPath="/tools/ev-charger-cable-size-calculator"
     />
   );

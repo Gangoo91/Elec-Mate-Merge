@@ -521,7 +521,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Water feature electrical certification made simple with"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC and EICR completion, test result recording, and instant PDF export."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site EIC and EICR completion, test result recording, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -558,7 +558,7 @@ export default function FountainPoolElectricalPage() {
       faqHeading="Frequently Asked Questions About Fountain and Water Feature Electrical Installations"
       relatedPages={relatedPages}
       ctaHeading="Complete Water Feature Electrical Certificates on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EIC and EICR completion, test result recording, and instant PDF export. Perfect for fountain and water feature installations. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC and EICR completion, test result recording, and instant PDF export. Perfect for fountain and water feature installations. 7-day free trial."
     />
   );
 }

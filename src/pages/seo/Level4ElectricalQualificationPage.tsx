@@ -540,7 +540,7 @@ export default function Level4ElectricalQualificationPage() {
       faqHeading="Frequently Asked Questions About Level 4 Electrical Qualifications"
       relatedPages={relatedPages}
       ctaHeading="Advanced Design Tools for Qualified Electricians"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, circuit design, and professional certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, circuit design, and professional certification. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -609,7 +609,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Certificate PLC installations with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, commissioning test records, and instant PDF export. 7-day free trial."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion, commissioning test records, and instant PDF export. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -646,7 +646,7 @@ export default function PLCElectricalInstallationPage() {
       faqHeading="Frequently Asked Questions About PLC Electrical Installation"
       relatedPages={relatedPages}
       ctaHeading="Complete Industrial EICs on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site electrical installation certification, test result recording, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site electrical installation certification, test result recording, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

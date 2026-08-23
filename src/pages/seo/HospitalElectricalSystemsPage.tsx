@@ -648,7 +648,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Professional healthcare EICRs on your phone"
-          description="Join 1,000+ UK electricians creating professional certificates with AI observation coding, multi-board support, and instant PDF delivery."
+          description="Join 1,600+ UK electricians creating professional certificates with AI observation coding, multi-board support, and instant PDF delivery."
           icon={FileCheck2}
         />
       </>
@@ -685,7 +685,7 @@ export default function HospitalElectricalSystemsPage() {
       faqHeading="Frequently Asked Questions About Hospital Electrical Systems"
       relatedPages={relatedPages}
       ctaHeading="Complete Healthcare EICRs on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians creating professional certificates with AI observation coding, multi-board support, and instant PDF delivery. Built for the most demanding installations. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians creating professional certificates with AI observation coding, multi-board support, and instant PDF delivery. Built for the most demanding installations. 7-day free trial, cancel anytime."
     />
   );
 }

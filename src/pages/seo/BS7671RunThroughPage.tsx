@@ -525,7 +525,7 @@ export default function BS7671RunThroughPage() {
       faqHeading="Frequently Asked Questions About Studying BS 7671"
       relatedPages={relatedPages}
       ctaHeading="Study BS 7671 smarter with AI-powered tools"
-      ctaSubheading="Join 1,000+ UK electricians preparing for the 18th Edition exam with Elec-Mate. AI tutor, flashcards, unlimited mock exams, and structured study modules. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians preparing for the 18th Edition exam with Elec-Mate. AI tutor, flashcards, unlimited mock exams, and structured study modules. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -79,7 +79,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/earthing-systems-guide',
+    href: '/guides/earthing-systems-tns-tncs-tt-explained',
     title: 'Earthing Systems Guide',
     description: 'TN-S, TN-C-S and TT earthing systems explained with practical examples.',
     icon: Zap,
@@ -762,7 +762,7 @@ export default function BondingConductorsGuidePage() {
       faqHeading="Frequently Asked Questions About Bonding Conductors"
       relatedPages={relatedPages}
       ctaHeading="Complete Bonding Tests and EICRs on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with bonding continuity recording, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion with bonding continuity recording, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

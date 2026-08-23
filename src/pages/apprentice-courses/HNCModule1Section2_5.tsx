@@ -302,7 +302,7 @@ const HNCModule1Section2_5 = () => {
 
           <TLDR
             points={[
-              'You will treat &ldquo;safe system of work&rdquo; as the operational layer that sits between policy and the operative — RAMS, permits, safe-isolation procedures, lock-off/tag-out, briefings.',
+              'You will treat “safe system of work” as the operational layer that sits between policy and the operative — RAMS, permits, safe-isolation procedures, lock-off/tag-out, briefings.',
               'You can break a complex task into discrete safe sequences and identify where engineering controls give way to procedural controls.',
               'You audit live SSOW compliance — not just the paperwork, but what is happening on the floor — and feed findings back into MHSWR Reg 5 monitoring.',
               'You apply the recognised UK safe-isolation procedure (HSE GS38, ENA G39) to every electrical intervention, no exceptions.',
@@ -973,7 +973,7 @@ const HNCModule1Section2_5 = () => {
           <KeyTakeaways
             points={[
               'Safe System of Work (SSOW) is the operational layer between policy and the operative — RAMS, permits, isolation procedures, briefings.',
-              'HSWA s.2(2)(a) is the legal hook — &ldquo;safe systems of work&rdquo; is statutory language.',
+              'HSWA s.2(2)(a) is the legal hook — “safe systems of work” is statutory language.',
               'Build the SSOW from the hazard register up — never copy a generic template without site-specific adaptation.',
               'GS38 + the IET safe-isolation sequence is the UK reference for electrical SSOW.',
               'Permit-to-work systems formalise the highest-risk SSOWs — live work, confined space, hot work, high-voltage.',

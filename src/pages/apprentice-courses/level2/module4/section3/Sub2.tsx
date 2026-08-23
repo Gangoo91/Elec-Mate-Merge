@@ -47,7 +47,7 @@ const checks = [
     ],
     correctIndex: 2,
     explanation:
-      'Setting out always references the FFL — the height the customer will perceive once the floor is laid. Mark from the slab and you end up with sockets that look low after the screed and finish go in. Take the FFL from the architect&rsquo;s drawing or set it out with the principal contractor before you mark anything.',
+      'Setting out always references the FFL — the height the customer will perceive once the floor is laid. Mark from the slab and you end up with sockets that look low after the screed and finish go in. Take the FFL from the architect’s drawing or set it out with the principal contractor before you mark anything.',
   },
   {
     id: 'scale-reading',
@@ -203,7 +203,7 @@ const faqs = [
   {
     question: 'What is FFL and why does it matter so much?',
     answer:
-      'FFL is "Floor Finish Level" — the height of the finished floor as it will exist when the customer walks in, including screed, underlay, carpet, tile, vinyl, whatever the finish is. On site you may be standing on raw concrete slab; FFL might be 80 mm higher once the screed and tiles go in. Setting out from the slab gives sockets that look 80 mm low after fit-out. The architect&rsquo;s general arrangement drawing always quotes FFL — that is the number you mark from.',
+      'FFL is "Floor Finish Level" — the height of the finished floor as it will exist when the customer walks in, including screed, underlay, carpet, tile, vinyl, whatever the finish is. On site you may be standing on raw concrete slab; FFL might be 80 mm higher once the screed and tiles go in. Setting out from the slab gives sockets that look 80 mm low after fit-out. The architect’s general arrangement drawing always quotes FFL — that is the number you mark from.',
   },
   {
     question: 'Should I use a laser level for everything?',
@@ -213,12 +213,12 @@ const faqs = [
   {
     question: 'How do I deal with a wall that is not square or not plumb?',
     answer:
-      'Two strategies. (1) Set out from a single agreed datum on each wall — pick a corner that the architect has dimensioned from, set the datum line off it, mark everything from that datum, even if the wall ends up bowed. The accessories are then aligned to each other, which is what the eye sees. (2) For very poor walls, build a temporary timber batten true and plumb to the architect&rsquo;s grid, mark off the batten, then remove. Never try to make a bowed wall&rsquo;s accessories follow the bow — they look wrong.',
+      'Two strategies. (1) Set out from a single agreed datum on each wall — pick a corner that the architect has dimensioned from, set the datum line off it, mark everything from that datum, even if the wall ends up bowed. The accessories are then aligned to each other, which is what the eye sees. (2) For very poor walls, build a temporary timber batten true and plumb to the architect’s grid, mark off the batten, then remove. Never try to make a bowed wall’s accessories follow the bow — they look wrong.',
   },
   {
     question: 'Do I have to mark out fire alarm devices to a specific height?',
     answer:
-      'Yes — BS 5839-6 (domestic and similar fire detection) gives detector positioning rules. Smoke detectors at high level (300 mm minimum from any wall, on the ceiling, or on the wall ≥150 mm down from the ceiling). Heat detectors in kitchens at high level. Manual call points at 1400 mm to centre, on the escape route, no further than the manufacturer&rsquo;s reset distance from the panel. The drawing pack should give you the exact positions; you set them out from FFL or from the ceiling depending on the device type.',
+      'Yes — BS 5839-6 (domestic and similar fire detection) gives detector positioning rules. Smoke detectors at high level (300 mm minimum from any wall, on the ceiling, or on the wall ≥150 mm down from the ceiling). Heat detectors in kitchens at high level. Manual call points at 1400 mm to centre, on the escape route, no further than the manufacturer’s reset distance from the panel. The drawing pack should give you the exact positions; you set them out from FFL or from the ceiling depending on the device type.',
   },
   {
     question: 'Why are tolerances tighter on a bank of accessories?',
@@ -274,7 +274,7 @@ export default function Sub2() {
           <ConceptBlock
             title="Why every height on the drawing is FFL"
             plainEnglish="Every accessory height on a layout drawing is dimensioned from FFL (floor finish level) — the height the floor will be once it is fully laid. On site you might be standing on bare slab. Mark from the slab and your sockets end up 50-80 mm low after the floor goes in."
-            onSite="The architect&rsquo;s general arrangement drawing always shows FFL on every section. Get that number, transfer it to the wall as a horizontal mark, and that is your zero. Every socket, switch, junction box and fire alarm height comes off FFL."
+            onSite="The architect’s general arrangement drawing always shows FFL on every section. Get that number, transfer it to the wall as a horizontal mark, and that is your zero. Every socket, switch, junction box and fire alarm height comes off FFL."
           >
             <p>
               FFL is the surface the customer perceives — top of the carpet, top of the tile,
@@ -499,7 +499,7 @@ export default function Sub2() {
 
           <ConceptBlock
             title="Common marking-out errors and how to avoid them"
-            plainEnglish="Most marking-out mistakes fall into a handful of repeating patterns. Knowing them ahead of time stops you from making them — every one of these has been the cause of a remedial visit on someone&rsquo;s job."
+            plainEnglish="Most marking-out mistakes fall into a handful of repeating patterns. Knowing them ahead of time stops you from making them — every one of these has been the cause of a remedial visit on someone’s job."
             onSite="Review this list before you start marking on every new room. Five seconds of reflection can save you 30 minutes of pulling boxes out and re-cutting plaster."
           >
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">

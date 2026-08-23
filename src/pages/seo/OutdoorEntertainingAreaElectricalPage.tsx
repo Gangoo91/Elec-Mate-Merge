@@ -170,9 +170,9 @@ const sections = [
           strip and festoon lighting options, the RCD requirements under Section 714 and Regulation
           411.3.3, hot tub considerations, and the testing and certification process.
         </p>
-        <p className="text-sm text-white/60 mt-2">
-          Reviewed by a NICEIC-registered electrician. Regulation references reflect BS
-          7671:2018+A4:2026.
+        <p className="text-sm text-white mt-2">
+          Written and reviewed by Andrew Moore, founder of Elec-Mate — a qualified electrician (18th Edition, C&amp;G 2391 inspection and testing). Regulation references
+          reflect BS 7671:2018+A4:2026.
         </p>
       </>
     ),
@@ -562,7 +562,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote outdoor entertaining area electrical packages on your"
-          description="Join 1,000+ UK electricians using Elec-Mate for outdoor electrical quoting, cable sizing, and on-site EIC certification."
+          description="Join 1,600+ UK electricians using Elec-Mate for outdoor electrical quoting, cable sizing, and on-site EIC certification."
           icon={Sun}
         />
       </>

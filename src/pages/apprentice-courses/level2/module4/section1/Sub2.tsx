@@ -617,7 +617,7 @@ export default function Sub2() {
           />
 
           <Scenario
-            title="First-fix in a house extension &mdash; SDS or combi for the joist holes?"
+            title="First-fix in a house extension — SDS or combi for the joist holes?"
             situation={
               <>
                 You&apos;re second-month into your apprenticeship on a house extension. The

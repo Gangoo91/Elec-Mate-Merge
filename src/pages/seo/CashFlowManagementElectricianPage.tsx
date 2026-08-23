@@ -503,7 +503,7 @@ export default function CashFlowManagementElectricianPage() {
       faqHeading="Frequently Asked Questions About Cash Flow for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Invoice Faster, Get Paid Sooner"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for invoicing, quoting, and job management. Send invoices from site and get paid on the day. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for invoicing, quoting, and job management. Send invoices from site and get paid on the day. 7-day free trial, cancel anytime."
     />
   );
 }

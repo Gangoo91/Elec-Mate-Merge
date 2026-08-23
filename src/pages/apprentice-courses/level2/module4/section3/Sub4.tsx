@@ -93,7 +93,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      'OSG Table 4.5 gives ~400 mm for vertical T&E in the 4-6 mm² range. The cable&rsquo;s self-weight is the limiting factor — vertical clips carry less perpendicular load than horizontal, so intervals can be longer. Always check the OSG table for the specific CSA and orientation.',
+      'OSG Table 4.5 gives ~400 mm for vertical T&E in the 4-6 mm² range. The cable’s self-weight is the limiting factor — vertical clips carry less perpendicular load than horizontal, so intervals can be longer. Always check the OSG table for the specific CSA and orientation.',
   },
   {
     id: 2,

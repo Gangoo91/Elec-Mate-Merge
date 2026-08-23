@@ -282,7 +282,7 @@ const HNCModule4Section2_2 = () => {
               'V_d = (mV/A/m × I_b × L) / 1000 — the mV/A/m figures come straight from Appendix 4 cable tables and already account for cable type and reference method.',
               'Voltage drop is cumulative — sub-main + final circuit must together stay inside the limit. Allocate ≈ 1–2% to sub-mains, leaving ≈ 3% for the final circuit.',
               'For long runs, motor inrush, EV chargers and other reactive loads, the mV/A/m must be the impedance value (mV/A/m_z), not just resistance.',
-              'BS 7671 Reg 525.202 confirms compliance is &lsquo;deemed satisfied&rsquo; when measured V_d at the socket or fixed-equipment terminals does not exceed Appendix 4 limits.',
+              'BS 7671 Reg 525.202 confirms compliance is ‘deemed satisfied’ when measured V_d at the socket or fixed-equipment terminals does not exceed Appendix 4 limits.',
             ]}
           />
 

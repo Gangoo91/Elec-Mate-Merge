@@ -515,7 +515,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Grimsby electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
+          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -554,7 +554,7 @@ export default function ElectricianGrimsbyPage() {
       faqHeading="Frequently Asked Questions About Electricians in Grimsby"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Grimsby Electricians"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the residential and commercial electrical market in Grimsby and Cleethorpes. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the residential and commercial electrical market in Grimsby and Cleethorpes. 7-day free trial."
     />
   );
 }

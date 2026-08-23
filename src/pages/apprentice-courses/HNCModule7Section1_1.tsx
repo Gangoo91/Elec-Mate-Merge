@@ -243,7 +243,7 @@ const faqs = [
   {
     question: 'When should I specify an ACB instead of an MCCB?',
     answer:
-      'Specify ACBs for main incomers and major submains where: rated current exceeds 1600A; withdrawable functionality is required for maintenance without shutdown; high breaking capacities (&gt;50kA) are needed; comprehensive protection settings and communication interfaces are required; or where the installation demands enhanced safety features. For currents below 800A with moderate fault levels, MCCBs are often more economical while still providing adequate protection.',
+      'Specify ACBs for main incomers and major submains where: rated current exceeds 1600A; withdrawable functionality is required for maintenance without shutdown; high breaking capacities (>50kA) are needed; comprehensive protection settings and communication interfaces are required; or where the installation demands enhanced safety features. For currents below 800A with moderate fault levels, MCCBs are often more economical while still providing adequate protection.',
   },
   {
     question: 'What factors determine the required form of separation?',

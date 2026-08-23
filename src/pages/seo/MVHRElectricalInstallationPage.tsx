@@ -565,7 +565,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify MVHR electrical work"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
+          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
           icon={Fan}
         />
       </>
@@ -602,7 +602,7 @@ export default function MVHRElectricalInstallationPage() {
       faqHeading="Frequently Asked Questions About MVHR Electrical Installation"
       relatedPages={relatedPages}
       ctaHeading="Size Cables and Certify MVHR Installations on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates for MVHR installations. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates for MVHR installations. 7-day free trial, cancel anytime."
     />
   );
 }

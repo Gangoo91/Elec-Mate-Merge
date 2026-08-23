@@ -500,7 +500,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage your extension jobs with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for EIC certificates, quoting, job management, and Part P compliance."
+          description="Join 1,600+ UK electricians using Elec-Mate for EIC certificates, quoting, job management, and Part P compliance."
           icon={FileCheck2}
         />
       </>
@@ -537,7 +537,7 @@ export default function HouseExtensionElectricalGuidePage() {
       faqHeading="Frequently Asked Questions About House Extension Electrical Work"
       relatedPages={relatedPages}
       ctaHeading="Complete Extension EICs on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, quoting, and job management. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion, quoting, and job management. 7-day free trial, cancel anytime."
     />
   );
 }

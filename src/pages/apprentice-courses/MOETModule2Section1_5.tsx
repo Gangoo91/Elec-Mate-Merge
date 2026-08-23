@@ -157,7 +157,7 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      'L1, L2, L3 designate the three line (phase) supply connections per IEC 60445. On a motor, these are the terminals where the three-phase supply is connected. The old UK convention used R (red), Y (yellow), B (blue), which is now replaced by L1 (brown), L2 (black), L3 (grey) for conductor colours per BS 7671 Amendment 2.',
+      'L1, L2, L3 designate the three line (phase) supply connections per IEC 60445. On a motor, these are the terminals where the three-phase supply is connected. The old UK convention used R (red), Y (yellow), B (blue), which was replaced by L1 (brown), L2 (black), L3 (grey) under the harmonised conductor colours introduced in 2004.',
   },
   {
     id: 8,
@@ -1072,7 +1072,8 @@ const MOETModule2Section1_5 = () => {
               <p className="text-sm font-medium text-red-400 mb-2">Old vs New Colour Codes</p>
               <p className="text-sm text-white">
                 During maintenance, you will encounter both the old and new conductor colour codes.
-                The change was introduced in BS 7671:2008 (17th Edition). Old installations use: Red
+                The harmonised colours were introduced by Amendment 2 to BS 7671:2001 (2004) and
+                became mandatory for new work from April 2006. Old installations use: Red
                 (L1), Yellow (L2), Blue (L3), Black (N). New installations use: Brown (L1), Black
                 (L2), Grey (L3), Blue (N). Particular care is needed where old and new systems meet
                 — blue was previously L3 but is now N, and black was previously N but is now L2.

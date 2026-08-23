@@ -458,7 +458,7 @@ export default function BreakEvenCalculatorPage() {
         },
       ]}
       ctaHeading="Know Your Break-Even, Price with Confidence"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to calculate break-even, set targets, and price every job for profit. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to calculate break-even, set targets, and price every job for profit. 7-day free trial, cancel anytime."
       extraSchemas={[
         {
           '@type': 'SoftwareApplication',

@@ -238,8 +238,8 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4 flex items-start gap-4">
           <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
           <div>
-            <p className="text-white/90 text-sm font-semibold mb-0.5">
-              Reviewed by a qualified electrician
+            <p className="text-white text-sm font-semibold mb-0.5">
+              Reviewed by Andrew Moore, founder of Elec-Mate
             </p>
             <p className="text-white/60 text-xs leading-relaxed">
               The technical content on this page — regulation references, defect codes, test

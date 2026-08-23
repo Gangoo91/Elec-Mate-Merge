@@ -604,7 +604,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your EICR business in Derby with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate to complete EICRs on site, scan boards with AI, and export instant PDFs."
+          description="Join 1,600+ UK electricians using Elec-Mate to complete EICRs on site, scan boards with AI, and export instant PDFs."
           icon={FileCheck2}
         />
       </>
@@ -641,7 +641,7 @@ export default function EICRDerbyPage() {
       faqHeading="Frequently Asked Questions About EICR in Derby"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs On Site — Anywhere in the East Midlands"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

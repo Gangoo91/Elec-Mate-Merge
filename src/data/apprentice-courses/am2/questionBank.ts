@@ -3625,6 +3625,905 @@ export const am2QuestionBank: AM2Question[] = [
     topic: 'Functional Testing',
     category: 'BS7671 Inspection & Testing',
   },
+
+  // ============================================================
+  // A4:2026 ADVANCED SET - IDs 431-440
+  // Every fact below verified against bs7671_facets (2018+A4:2026)
+  // before authoring. Targets the thin advanced pool: the bank had
+  // only 29 genuinely advanced questions against measured wrong-rates.
+  // ============================================================
+  {
+    id: 431,
+    question:
+      'Under BS 7671:2018+A4:2026, what is the status of arc fault detection devices (AFDDs) in AC final circuits?',
+    options: [
+      'Mandatory on all final circuits rated 32 A or less in domestic premises under Reg 421.1.7',
+      'Recommended by Reg 421.1.7 to mitigate fire risk from arc fault currents, but not mandated',
+      'Mandatory only where the installation includes a stationary secondary battery system',
+      'Withdrawn by Amendment 4 and replaced by an equivalent RCBO requirement in Chapter 42',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Regulation 421.1.7 was introduced by A4:2026 and uses the word "recommending". It is advisory, not mandatory - it does not use "shall". Its stated purpose is mitigating fire risk in AC final circuits due to arc fault currents.',
+    section: 'Protection against fire',
+    difficulty: 'advanced',
+    topic: 'AFDD status under A4:2026',
+    category: 'BS7671 Fundamentals',
+  },
+  {
+    id: 432,
+    question:
+      'Regulation 421.1.7 recommends AFDDs specifically for which circuits of a fixed installation?',
+    options: [
+      'All final circuits, both AC and DC, in the installation',
+      'DC final circuits, where arcs do not self-extinguish',
+      'AC final circuits of a fixed installation',
+      'Distribution circuits feeding sub-distribution boards',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'The regulation limits its recommendation to AC final circuits of a fixed installation. The scope wording matters: it is not extended to DC circuits or to distribution circuits.',
+    section: 'Protection against fire',
+    difficulty: 'advanced',
+    topic: 'Scope of Reg 421.1.7',
+    category: 'BS7671 Fundamentals',
+  },
+  {
+    id: 433,
+    question:
+      'A pluggable UPS conforming to its product safety standard is installed in an office. Does Chapter 57 of BS 7671:2018+A4:2026 apply to its battery?',
+    options: [
+      'Yes - Chapter 57 applies to every stationary secondary battery regardless of the enclosure',
+      'Yes, but only the ventilation and disconnection requirements of Chapter 57 are applicable',
+      'No - Chapter 57 excludes batteries within systems conforming to appropriate product standards',
+      'No, because a UPS is classed as a safety service and falls entirely outside Part 5',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Chapter 57 is new in A4:2026 and covers stationary secondary battery installations. It expressly does not apply where the battery sits within a system such as a pluggable UPS, fire or emergency lighting, or a central safety power supply conforming to the appropriate standards.',
+    section: 'Stationary secondary batteries',
+    difficulty: 'advanced',
+    topic: 'Chapter 57 exclusions',
+    category: 'BS7671 Selection & Erection',
+  },
+  {
+    id: 434,
+    question:
+      'What did Amendment 4:2026 introduce as Chapter 57 of BS 7671?',
+    options: [
+      'Requirements for stationary secondary battery installations used for storage and supply',
+      'Requirements for prosumer low voltage installations and their bidirectional metering',
+      'Requirements for electric vehicle charging installations, relocated from Section 722',
+      'Requirements for arc fault detection devices and their coordination with RCBOs',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'A4:2026 introduced a new Chapter 57 in Part 5 dealing with stationary secondary battery installations whose designed purpose is the storage and supply of electrical installations.',
+    section: 'Stationary secondary batteries',
+    difficulty: 'advanced',
+    topic: 'New Chapter 57 in A4:2026',
+    category: 'BS7671 Selection & Erection',
+  },
+  {
+    id: 435,
+    question:
+      'In a commercial premises, when may RCD protection be omitted from a 32 A socket-outlet under BS 7671:2018+A4:2026?',
+    options: [
+      'Where the socket is under the supervision of a skilled person and labelled accordingly',
+      'Where a documented risk assessment determines that RCD protection is not necessary',
+      'Where the circuit is supplied through a transformer providing simple separation',
+      'Never - the revised Reg 411.3.3 permits no exception for socket-outlets rated 32 A or less',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A4:2026 revised Reg 411.3.3. RCD protection applies to socket-outlets rated 32 A or less unless an express exception is met. The exception permits omission only where, other than for a dwelling, a documented risk assessment determines RCD protection is not necessary.',
+    section: 'Additional protection',
+    difficulty: 'advanced',
+    topic: 'Reg 411.3.3 exception under A4:2026',
+    category: 'BS7671 Fundamentals',
+  },
+  {
+    id: 436,
+    question:
+      'Under the revised Reg 411.3.3, how are socket-outlets with a rated current above 32 A treated?',
+    options: [
+      'They fall outside the scope of Reg 411.3.3 and must be considered separately',
+      'They require additional protection by a 100 mA RCD rather than a 30 mA device',
+      'They are covered by Reg 411.3.3 in premises other than dwellings',
+      'They require additional protection where used by ordinary persons',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The revised regulation applies specifically to socket-outlets with a rated current not exceeding 32 A. Sockets rated above 32 A are outside the scope described in this revision and have to be considered separately.',
+    section: 'Additional protection',
+    difficulty: 'advanced',
+    topic: 'Reg 411.3.3 scope limit',
+    category: 'BS7671 Fundamentals',
+  },
+  {
+    id: 437,
+    question:
+      'A 30 mA general-purpose RCD is being verified on the AM2 rig. What is the required test under BS 7671:2018+A4:2026?',
+    options: [
+      'A test at 1x IdN and a further test at 5x IdN, recording the shorter of the two trip times',
+      'A no-trip test at half IdN followed by a test at 5x IdN requiring operation within 40 ms',
+      'A single AC test at 1x IdN requiring operation within 300 ms, plus the integral test button',
+      'Tests at half, one and five times IdN, with the results compared against Appendix 3 Table 3A',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'A4:2026 deleted Table 3A from Appendix 3, removing the 5x IdN row entirely. Verification is a single AC test at 1x IdN - a general-purpose non-delay RCD must operate within 300 ms - together with the manual test button. A half-IdN check some instruments run is pre-test confirmation, not part of the recorded verification.',
+    section: 'RCD testing',
+    difficulty: 'advanced',
+    topic: 'RCD verification after Table 3A deletion',
+    category: 'BS7671 Inspection & Testing',
+  },
+  {
+    id: 438,
+    question:
+      'Where does BS 7671 require cables to be adequately supported against premature collapse in a fire?',
+    options: [
+      'Along designated escape routes and within protected stairwells',
+      'Where the building has more than three storeys above ground level',
+      'Throughout the electrical installation, wherever cables are present',
+      'Where the cables supply a safety service or fire-fighting circuit',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Regulation 521.10.202 requires cables to be adequately supported so as to prevent premature collapse in the event of a fire, and it applies throughout the installation - it is not limited to escape routes.',
+    section: 'Wiring systems',
+    difficulty: 'advanced',
+    topic: 'Reg 521.10.202 scope',
+    category: 'BS7671 Selection & Erection',
+  },
+  {
+    id: 439,
+    question:
+      'Which standard do graphical symbols used on installation diagrams, charts and schedules comply with?',
+    options: [
+      'BS EN 60617, which remains the current published standard for electrical symbols',
+      'BS EN ISO 7010, which specifies graphical symbols for use on all electrical drawings',
+      'BS 8888, which governs technical product documentation and drawing conventions',
+      'IEC 60617, held as a database rather than as a conventional printed standard',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Regulation 514.9.1 requires symbols used in diagrams, charts, tables or schedules to comply with IEC 60617. BS EN 60617 was withdrawn - citing it is a common error. BS EN ISO 7010 covers safety signs, not circuit symbols.',
+    section: 'Identification and notices',
+    difficulty: 'advanced',
+    topic: 'IEC 60617 vs withdrawn BS EN 60617',
+    category: 'BS7671 Selection & Erection',
+  },
+  {
+    id: 440,
+    question:
+      'Equipment is to be worked on for mechanical maintenance. What does Regulation 464.2 require?',
+    options: [
+      'A permit to work issued by an authorised person before any guarding is removed',
+      'Suitable means to prevent the equipment being inadvertently or unintentionally reactivated',
+      'Proving dead with an approved voltage indicator immediately before work commences',
+      'A lock-off device fitted by every person working on the equipment without exception',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Regulation 464.2 requires suitable means to prevent electrically powered equipment from being inadvertently or unintentionally reactivated during mechanical maintenance. Verified means include lock-off devices, removable fuses with lockable carriers, padlocking isolators and withdrawal of removable control keys.',
+    section: 'Isolation and switching',
+    difficulty: 'advanced',
+    topic: 'Reg 464.2 mechanical maintenance',
+    category: 'Safe Isolation',
+  },
+
+  // ============================================================
+  // AM2 PRACTICAL DEPTH SET - IDs 441-480
+  // Safe isolation, GS38, test sequence, fault diagnosis, Section E
+  // ============================================================
+  {
+    id: 441,
+    question:
+      'Regulation 643.3 was redrafted in BS 7671:2018+A4:2026. Where connected equipment is likely to influence the insulation resistance test or be damaged by it, what does the redraft clarify?',
+    options: [
+      'The equipment must be disconnected and the circuit tested at 500 V DC',
+      'The insulation resistance test may be omitted and recorded as a limitation',
+      'A 1000 V DC test is applied with all vulnerable equipment left in place',
+      'A 250 V DC test carried out after the equipment is connected may be used',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'The A4:2026 redraft of Regulation 643.3 clarifies that where connected equipment would influence the verification or be damaged by the normal test voltage, a 250 V DC insulation resistance test following connection of the equipment may be used. The method and the reason for it should be recorded on the schedule of test results.',
+    section: 'Insulation resistance',
+    difficulty: 'advanced',
+    topic: 'Reg 643.3 redraft 250 V DC test',
+    category: 'BS7671 Inspection & Testing',
+  },
+  {
+    id: 442,
+    question: 'What does Guidance Note 3 say about test leads complying with HSE GS38?',
+    options: [
+      'They must be replaced after every twelve months in service',
+      'They are suitable only for dead testing at extra-low voltage',
+      'They are adequate for earth fault loop impedance testing',
+      'They need a separate fuse fitted at the instrument terminal',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Guidance Note 3 states that leads complying with HSE GS38 should be adequate for loop impedance testing, so GS38 compliance is the acceptance criterion for the leads. GS38 itself sets out the construction and rating requirements, so it is the document to consult for lead specification.',
+    section: 'Test equipment',
+    difficulty: 'intermediate',
+    topic: 'GS38 leads for loop testing',
+    category: 'BS7671 Inspection & Testing',
+  },
+  {
+    id: 443,
+    question:
+      'Guidance Note 3 sets out the sequence of tests for initial verification. What does it require about that sequence?',
+    options: [
+      'The tests in Regulations 643.2 to 643.6 are done in order before energising',
+      'The tests may be carried out in any order provided all are recorded',
+      'The tests are carried out in order once the installation has been energised',
+      'The tests follow the order given in the instrument manufacturer instructions',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The tests specified in Regulations 643.2 to 643.6 inclusive, where relevant, are conducted in the order shown prior to the installation being energised. Working out of order can leave a fault undetected until a live test exposes the tester to it.',
+    section: 'Initial verification',
+    difficulty: 'advanced',
+    topic: 'Order of the pre-energisation test sequence',
+    category: 'BS7671 Inspection & Testing',
+  },
+  {
+    id: 444,
+    question:
+      'During the initial verification test sequence a defect that materially affects safety is found. What does Guidance Note 3 require?',
+    options: [
+      'It is recorded as a departure and the installation energised as planned',
+      'It shall be remedied before the installation is energised',
+      'It is referred to the client for a decision after energisation',
+      'It is retested at the next periodic inspection of the installation',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Defects found during the test sequence should be addressed before energisation, and where a defect materially affects safety it must be remedied before the installation is energised. Energising first and recording the defect as a departure is not acceptable.',
+    section: 'Initial verification',
+    difficulty: 'advanced',
+    topic: 'Defects found before energisation',
+    category: 'BS7671 Inspection & Testing',
+  },
+  {
+    id: 445,
+    question:
+      'A lighting circuit has accessory boxes on plastic pattresses that are not connected to earthed building fabric. What will a continuity measurement from the fitting to the origin represent?',
+    options: [
+      'The resistance of the protective conductor alone, R2',
+      'The external earth fault loop impedance of the supply, Ze',
+      'The sum of the line and protective conductor resistances, R1 + R2',
+      'The insulation resistance between line and protective conductor',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Where accessory boxes are not connected to the building fabric or other earthed elements, no parallel path exists and the reading is the sum of the line and protective conductor resistances, R1 + R2. If the boxes were earthed through the fabric, a lower and misleading value would be obtained.',
+    section: 'Continuity testing',
+    difficulty: 'advanced',
+    topic: 'Interpreting R1 + R2 without parallel paths',
+    category: 'BS7671 Inspection & Testing',
+  },
+  {
+    id: 446,
+    question: 'Why is the external earth fault loop impedance Ze measured at the origin?',
+    options: [
+      'So the prospective short-circuit current between lines is known',
+      'So the insulation resistance of the supply tails can be verified',
+      'So the RCD operating current at the origin can be confirmed',
+      'So it can be added to circuit R1 + R2 values to determine Zs',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Measuring Ze at the origin gives the external component of the loop, which is added to the measured conductor resistances R1 + R2 to determine the circuit earth fault loop impedance Zs. Zs is then compared with the maximum permitted value for the protective device to confirm disconnection times.',
+    section: 'Earth fault loop impedance',
+    difficulty: 'intermediate',
+    topic: 'Purpose of measuring Ze',
+    category: 'BS7671 Inspection & Testing',
+  },
+  {
+    id: 447,
+    question: 'A measured Ze may only be added to circuit R1 + R2 values under what condition?',
+    options: [
+      'The main bonding is left connected throughout the measurement',
+      'The measurement is taken with the main switch closed and load connected',
+      'The measurement is repeated at each distribution board on the installation',
+      'The earthing and extraneous parts are isolated so no parallel paths exist',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'A measured Ze is only suitable for addition to R1 + R2 when the earthing conductor and extraneous-conductive-parts have been correctly disconnected so that no parallel paths contribute. A Ze read with bonding still connected is optimistically low and will understate the calculated Zs.',
+    section: 'Earth fault loop impedance',
+    difficulty: 'advanced',
+    topic: 'Parallel paths invalidating a Ze reading',
+    category: 'BS7671 Inspection & Testing',
+  },
+  {
+    id: 448,
+    question: 'What is the subject of HSE Guidance Note GS38?',
+    options: [
+      'Safe working practice for excavation near buried services',
+      'Electrical test equipment for use on low voltage systems',
+      'The selection of personal protective equipment for electricians',
+      'Requirements for the periodic inspection of fixed installations',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'GS38 is the HSE guidance note titled Electrical test equipment for use on low voltage electrical systems. Its safety procedures are to be observed whenever electrical test equipment is used for inspection and testing, and it governs the selection, inspection and safe use of instruments and leads.',
+    section: 'Test equipment',
+    difficulty: 'basic',
+    topic: 'Scope of HSE GS38',
+    category: 'Safe Isolation',
+  },
+  {
+    id: 449,
+    question:
+      'Guidance Note 3 requires the inspector to do what immediately after making a circuit dead and isolating it?',
+    options: [
+      'Begin the continuity tests, as isolation has already been proved',
+      'Fit a caution notice and leave the circuit for the client to check',
+      'Verify the absence of voltage before starting work or dead tests',
+      'Record the isolation point on the schedule of test results sheet',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'After making equipment or part of an installation dead and safely isolated, absence of voltage must be verified before work or non-live testing begins. Verification is by a suitable voltage indicator used in accordance with GS38 and best-practice safe isolation, not by assuming the isolation worked.',
+    section: 'Safe isolation',
+    difficulty: 'intermediate',
+    topic: 'Verifying absence of voltage after isolation',
+    category: 'Safe Isolation',
+  },
+  {
+    id: 450,
+    question: 'What does the polarity test on a single-phase final circuit confirm?',
+    options: [
+      'That the phase and neutral conductors are not reversed at accessories',
+      'That the circuit conductors carry no residual charge before testing',
+      'That the protective conductor is continuous back to the main earth bar',
+      'That the circuit breaker will disconnect within the required time',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Polarity verification confirms that line and neutral are correctly connected at accessories and have not been transposed, so that single-pole devices and protective devices are in the line conductor. Continuity of the protective conductor and disconnection time are separate tests with their own results.',
+    section: 'Polarity',
+    difficulty: 'intermediate',
+    topic: 'What polarity verification proves',
+    category: 'BS7671 Inspection & Testing',
+  },
+  {
+    id: 451,
+    question:
+      'Guidance Note 3 identifies three general methods for assessing earth electrode resistance. Which describes method E2?',
+    options: [
+      'A stakeless or clamp-type dedicated earth electrode tester',
+      'A dedicated tester using the fall-of-potential technique',
+      'An earth fault loop impedance tester used at the electrode',
+      'A four-terminal bridge comparing the electrode with a rod',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Method E2 is a dedicated stakeless or clamp-type electrode tester, sometimes called probeless, which needs no auxiliary spikes driven into the soil. E1 is the fall-of-potential dedicated tester and E3 uses an earth fault loop impedance tester.',
+    section: 'Earth electrode testing',
+    difficulty: 'advanced',
+    topic: 'Earth electrode test methods E1 to E3',
+    category: 'BS7671 Inspection & Testing',
+  },
+  {
+    id: 452,
+    question:
+      'Why does Guidance Note 3 require a four-terminal earth tester when the most accurate electrode resistance is needed?',
+    options: [
+      'It applies a higher test current than a three-terminal instrument',
+      'It allows the reading to be taken without disconnecting the electrode',
+      'It compensates automatically for seasonal variation in soil moisture',
+      'It separates current and potential connections, excluding lead resistance',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'The four-terminal arrangement keeps the current and potential connections separate, so the resistance of the test leads is excluded from the reading and the value obtained is that of the electrode and surrounding soil alone.',
+    section: 'Earth electrode testing',
+    difficulty: 'advanced',
+    topic: 'Four-terminal electrode tester',
+    category: 'BS7671 Inspection & Testing',
+  },
+  {
+    id: 453,
+    question:
+      'Guidance Note 3 suggests testing an earth electrode under the least favourable conditions. Which is an example of such a condition?',
+    options: [
+      'Immediately after a period of prolonged heavy rainfall on the site',
+      'When the ground surrounding the electrode is frozen',
+      'When the installation is carrying its maximum design load',
+      'During the warmest part of a summer day with damp soil',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Frozen ground raises the measured resistance, so testing then gives a conservative worst-case figure. Testing after heavy rain gives an optimistically low value that may not hold for the rest of the year.',
+    section: 'Earth electrode testing',
+    difficulty: 'advanced',
+    topic: 'Least favourable conditions for electrode testing',
+    category: 'BS7671 Inspection & Testing',
+  },
+  {
+    id: 454,
+    question:
+      'How does a loop impedance test instrument derive the prospective fault current that it displays?',
+    options: [
+      'It injects a calibrated fault current and measures the resulting dip',
+      'It multiplies the measured loop impedance by the nominal voltage',
+      'It divides the nominal mains voltage by the measured loop impedance',
+      'It compares the reading against a stored table of supply capacities',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'The prospective fault current is derived, not directly measured: the instrument divides the nominal mains voltage by the measured loop impedance. The basic measuring principle is identical to that of an earth fault loop impedance tester.',
+    section: 'Prospective fault current',
+    difficulty: 'advanced',
+    topic: 'How PFC is derived from loop impedance',
+    category: 'BS7671 Inspection & Testing',
+  },
+  {
+    id: 455,
+    question:
+      'What happens to the accuracy of a prospective fault current value derived from a loop impedance reading?',
+    options: [
+      'It decreases as the scale reading rises, since voltage is divided by it',
+      'It is unaffected by the magnitude of the loop impedance reading taken',
+      'It improves as the loop impedance rises because the current gets smaller',
+      'It depends solely on the calibration date recorded for the instrument',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Because the derived current comes from dividing the nominal voltage by the loop impedance, accuracy falls away as the scale reading increases: a larger loop value produces a smaller derived current with a proportionally larger relative error.',
+    section: 'Prospective fault current',
+    difficulty: 'advanced',
+    topic: 'Accuracy limits of derived PFC readings',
+    category: 'BS7671 Inspection & Testing',
+  },
+  {
+    id: 456,
+    question: 'What is meant by functional testing during initial verification?',
+    options: [
+      'Measuring the current drawn by each item of equipment under load',
+      'Operating equipment to confirm it works and is correctly installed',
+      'Confirming the circuit charts match the labelling at the board',
+      'Checking that the design current does not exceed the cable rating',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Functional testing means operating switchgear, controls, interlocks and RCDs to confirm that they work and are properly installed, mounted and adjusted. It is an operational check, not a measurement, and it complements the instrument tests.',
+    section: 'Functional testing',
+    difficulty: 'intermediate',
+    topic: 'Definition of functional testing',
+    category: 'BS7671 Inspection & Testing',
+  },
+  {
+    id: 457,
+    question:
+      'An energised RCD has its integral test button operated. What is the acceptance criterion?',
+    options: [
+      'The device shows a fault indication but need not open the circuit',
+      'The device latches out and requires the supply to be re-energised',
+      'The device operates within the time recorded during instrument testing',
+      'The device trips and isolates the circuit it protects',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Operating the built-in test button on an energised RCD must cause the device to trip and isolate the protected circuit. Failure to trip is a failed functional test, and the device must be investigated or replaced. The button checks the mechanism, not the tripping time.',
+    section: 'RCD testing',
+    difficulty: 'intermediate',
+    topic: 'RCD integral test button criterion',
+    category: 'BS7671 Inspection & Testing',
+  },
+  {
+    id: 458,
+    question:
+      'The operation of the main switch is verified during initial verification as what kind of check?',
+    options: [
+      'A dead test carried out before the sequence of tests begins',
+      'A continuity check between the incoming and outgoing terminals',
+      'A functional check, with the switch operated and the result recorded',
+      'An inspection item only, requiring no operation of the switch itself',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'The main switch is subject to a functional check: the inspector physically operates it to verify correct function and records the result. Looking at it without operating it proves nothing about the mechanism.',
+    section: 'Functional testing',
+    difficulty: 'intermediate',
+    topic: 'Functional check of the main switch',
+    category: 'BS7671 Inspection & Testing',
+  },
+  {
+    id: 459,
+    question: 'When should the continuity tests required by Regulation 643.2.1 be carried out?',
+    options: [
+      'Before circuits are energised for functional tests, where practicable',
+      'After the installation has been energised and left on load',
+      'Only where the installer suspects a broken protective conductor',
+      'At the first periodic inspection rather than initial verification',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Continuity testing is part of the pre-energisation sequence for initial verification and should be performed before circuits are energised for functional tests wherever reasonably practicable. The results are recorded in the installation documentation.',
+    section: 'Continuity testing',
+    difficulty: 'basic',
+    topic: 'When continuity tests are performed',
+    category: 'BS7671 Inspection & Testing',
+  },
+  {
+    id: 460,
+    question:
+      'How is compliance with the measures against electromagnetic disturbances verified on an installation?',
+    options: [
+      'By calculating the expected disturbance level from the design data',
+      'By inspecting mitigation, measuring where appropriate and functional tests',
+      'By a declaration of conformity supplied by the equipment manufacturer',
+      'By an insulation resistance test at 500 V DC applied to each circuit',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Verification of measures against electromagnetic disturbances combines inspection of the installed mitigation, such as SPDs, filters, screens and bonding, measurement of disturbance or residual voltage where appropriate, and functional testing of protective devices, with the results recorded.',
+    section: 'Inspection',
+    difficulty: 'advanced',
+    topic: 'Verifying electromagnetic disturbance measures',
+    category: 'BS7671 Inspection & Testing',
+  },
+  {
+    id: 461,
+    question:
+      'For a correctly connected ring final circuit, what should the step 2 line-to-neutral measurement give at each socket-outlet?',
+    options: [
+      'The sum of the line and neutral open loop resistances',
+      'Half the line open loop resistance measured at step 1',
+      'A quarter of the summed line and neutral open loop resistances',
+      'The same value as the protective conductor loop resistance',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Cross-connecting the line and neutral legs puts two equal halves of the ring in parallel, so a correctly connected ring reads one quarter of the combined open loop resistance of line and neutral, and reads substantially the same at every socket on the ring. A rogue high reading points to a spur or a broken leg.',
+    section: 'Ring final circuits',
+    difficulty: 'advanced',
+    topic: 'Expected step 2 reading on a ring',
+    category: 'BS7671 Inspection & Testing',
+  },
+  {
+    id: 462,
+    question:
+      'In the ring final circuit continuity procedure, in what order are the end-to-end resistances measured?',
+    options: [
+      'r1 for one conductor loop, then rx, then rz for the protective loop',
+      'rz for the protective conductor loop first, then r1 and then rx',
+      'rx and rz together, with r1 derived arithmetically from the two',
+      'r1 and rz at the same time, with rx taken only if a fault shows',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The procedure takes r1 first for one conductor loop, then rx for the other, then rz for the protective conductor loop. Comparing the three end-to-end values before any cross-connection is what exposes a break or a conductor of reduced cross-sectional area.',
+    section: 'Ring final circuits',
+    difficulty: 'advanced',
+    topic: 'Order of ring end-to-end measurements',
+    category: 'BS7671 Inspection & Testing',
+  },
+  {
+    id: 463,
+    question:
+      'What is the cross-connection technique used in ring final circuit continuity testing intended to reveal?',
+    options: [
+      'The temperature rise of the conductors under full load current',
+      'The insulation resistance between the two legs of the ring',
+      'Whether the protective device is correctly rated for the ring',
+      'Cross-connections or breaks in the parallel conductor paths',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'The method applies where two conductors provide parallel paths for line and neutral with protective conductors present. Cross-connecting and then measuring around the ring verifies conductor continuity and detects cross-connections or breaks that the end-to-end readings alone can hide.',
+    section: 'Ring final circuits',
+    difficulty: 'advanced',
+    topic: 'Purpose of the cross-connection method',
+    category: 'BS7671 Inspection & Testing',
+  },
+  {
+    id: 464,
+    question:
+      'SELV conductors run in a multicore cable alongside low voltage circuits and are separated by insulation alone. What insulation resistance test applies?',
+    options: [
+      '250 V DC, with a minimum acceptable value of 0.5 MΩ',
+      '500 V DC, with a value of not less than 1 MΩ required',
+      '500 V DC, with a minimum acceptable value of 0.25 MΩ',
+      '1000 V DC, with a value of not less than 2 MΩ required',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Where SELV or PELV conductors are separated from low voltage conductors only by the insulation covering the conductors, as in a shared multicore, the test voltage is increased to 500 V DC and the insulation resistance must be not less than 1 MΩ. The usual reduced-voltage SELV test does not apply here.',
+    section: 'Insulation resistance',
+    difficulty: 'advanced',
+    topic: 'SELV sharing insulation with LV conductors',
+    category: 'BS7671 Inspection & Testing',
+  },
+  {
+    id: 465,
+    question:
+      'An electrically separated circuit is tested at 500 V DC between its live conductors and the transformer secondary live conductors. What is the minimum acceptable value?',
+    options: [
+      '0.5 MΩ, the figure that applies to a normal PELV circuit test',
+      '2 MΩ, reflecting the higher integrity that separation demands',
+      '1 MΩ, the minimum stated for this basic separation test',
+      '0.25 MΩ, on the basis that no earth reference is present',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'For electrically separated circuits tested at 500 V DC, the insulation resistance between the separated live conductors and the transformer secondary live conductors must be not less than 1 MΩ. This is the acceptance criterion for the basic separation test.',
+    section: 'Insulation resistance',
+    difficulty: 'advanced',
+    topic: 'Separation test minimum value',
+    category: 'BS7671 Inspection & Testing',
+  },
+  {
+    id: 466,
+    question:
+      'A thermal imaging survey shows one terminal noticeably hotter than its neighbours. What does this establish?',
+    options: [
+      'A relative difference that may indicate a fault, needing confirmation',
+      'A confirmed loose connection that can be recorded as a defect',
+      'An overloaded circuit requiring the protective device to be uprated',
+      'An insulation failure between the terminal and the enclosure body',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Thermal imaging gives relative temperature differences, not an absolute diagnosis. A hotter reading may indicate something such as a loose connection, but further inspection and electrical testing are needed to confirm the cause and its extent before any remedial action is specified.',
+    section: 'Fault diagnosis',
+    difficulty: 'intermediate',
+    topic: 'What thermal imaging can and cannot prove',
+    category: 'Fault Finding',
+  },
+  {
+    id: 467,
+    question:
+      'Guidance Note 3 states the purpose of record keeping for inspection and testing. Which is one of those purposes?',
+    options: [
+      'To transfer legal liability for the installation to the client',
+      'To satisfy an insurer that the contractor holds indemnity cover',
+      'To establish the resale value of the property at a later date',
+      'To assist future inspection, maintenance and fault finding work',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Records provide evidence of the work carried out, support future inspection and testing, demonstrate compliance with BS 7671, and assist fault finding and maintenance. They should be sufficient to show the condition of the installation at the time of the inspection or test.',
+    section: 'Documentation',
+    difficulty: 'intermediate',
+    topic: 'Purpose of inspection and test records',
+    category: 'BS7671 Inspection & Testing',
+  },
+  {
+    id: 468,
+    question:
+      'What information should the specification provide so that an installation can be tested and maintained in future?',
+    options: [
+      'The cost breakdown for each circuit and the labour hours allowed',
+      'Drawings, circuit lists, protective device details and instructions',
+      'Manufacturer warranty documents for every accessory that is fitted',
+      'A schedule of the test instruments the contractor intends to use',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Adequate information for testing and future maintenance means drawings, circuit lists, protective device details and any special instructions needed for routine inspection and testing or for fault finding. Without it, the next person on site has to derive the installation from scratch.',
+    section: 'Documentation',
+    difficulty: 'advanced',
+    topic: 'Information needed for future testing',
+    category: 'BS7671 Inspection & Testing',
+  },
+  {
+    id: 469,
+    question: 'What should be recorded when carrying out ring final circuit continuity testing?',
+    options: [
+      'The socket-outlet positions alone, as values vary around the ring',
+      'The highest reading obtained, as the other values are not needed',
+      'The measured values, instrument used, conditions and any notes',
+      'A pass or fail entry, with figures kept in the contractor records',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'The measured values, the test instrument used, the test conditions and any interpretation notes, such as a protective conductor of reduced cross-sectional area, are all recorded. These records support certification and any later fault diagnosis on the circuit.',
+    section: 'Ring final circuits',
+    difficulty: 'basic',
+    topic: 'Recording ring continuity results',
+    category: 'BS7671 Inspection & Testing',
+  },
+  {
+    id: 470,
+    question: 'What is measured at step 3 of the ring final circuit continuity procedure?',
+    options: [
+      'Line to protective conductor resistance at each socket-outlet',
+      'Neutral to protective conductor resistance at the origin only',
+      'Insulation resistance between line and the protective conductor',
+      'The earth fault loop impedance at the furthest point on the ring',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Step 3 cross-connects the line and protective conductors and measures line to protective conductor resistance at each socket-outlet in turn. A correctly wired ring gives a substantially equal reading at every point, and that reading is the circuit R1 + R2.',
+    section: 'Ring final circuits',
+    difficulty: 'advanced',
+    topic: 'Ring final circuit step 3 measurement',
+    category: 'BS7671 Inspection & Testing',
+  },
+  {
+    id: 471,
+    question:
+      'What distinguishes the multiple-signature Electrical Installation Certificate given in Appendix 6 of BS 7671?',
+    options: [
+      'It is issued only where more than one contractor is on the site',
+      'Design, construction, and inspection and testing are signed separately',
+      'It requires the client to countersign each stage before the next',
+      'It replaces the need for a schedule of test results to be attached',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The multiple-signature form is the Appendix 6 model used for initial certification where different persons take responsibility for the design, the construction, and the inspection and testing of the installation or modification, each signing their own part.',
+    section: 'Certification',
+    difficulty: 'advanced',
+    topic: 'Multiple-signature EIC',
+    category: 'BS7671 Inspection & Testing',
+  },
+  {
+    id: 472,
+    question:
+      'Who signs the inspection and testing section, Section C, of an Electrical Installation Certificate?',
+    options: [
+      'The designer, who carries overall responsibility for the works',
+      'The client or their appointed representative on the project',
+      'The building control body notified of the notifiable work',
+      'The party responsible for inspecting and testing the installation',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'The party that carried out the inspection and testing signs Section C. That signature records responsibility for the inspection, for the testing, and for comparing the results obtained against the relevant criteria.',
+    section: 'Certification',
+    difficulty: 'intermediate',
+    topic: 'Who signs EIC Section C',
+    category: 'BS7671 Inspection & Testing',
+  },
+  {
+    id: 473,
+    question: 'What is the purpose of an Electrical Installation Certificate?',
+    options: [
+      'To record inspection and test results and identify the work covered',
+      'To confirm the installer belongs to a competent person scheme',
+      'To transfer responsibility for the installation to the occupier',
+      'To list the materials and accessories supplied under the contract',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The EIC is the formal certificate recording the results of inspection and testing and identifying the work that is the subject of the certificate. It also carries the signatory details, the dates and the recommendation for the next inspection.',
+    section: 'Certification',
+    difficulty: 'intermediate',
+    topic: 'Purpose of the EIC',
+    category: 'BS7671 Inspection & Testing',
+  },
+  {
+    id: 474,
+    question:
+      'Before taking measurements that will be entered on a Schedule of Test Results, what does Guidance Note 3 require of the test leads and probes?',
+    options: [
+      'They are replaced with a new set at the start of every project',
+      'They are proved on a known live supply before each measurement',
+      'They are visually inspected for damage, cracks or poor contacts',
+      'They are checked against the calibration certificate held on file',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'A visual inspection of leads, probes and connectors is made before recorded measurements are taken, to find deterioration, damage, cracked insulation, exposed conductors or poor contacts. Any of these can produce an inaccurate reading that then goes on the certificate as fact.',
+    section: 'Test equipment',
+    difficulty: 'advanced',
+    topic: 'Pre-use checks on leads and probes',
+    category: 'BS7671 Inspection & Testing',
+  },
+  {
+    id: 475,
+    question:
+      'Which practical information does the IET On-Site Guide provide to assist general installation work?',
+    options: [
+      'Tender pricing rates and labour allowances for common circuits',
+      'Conduit and trunking capacities and the bending radii of cables',
+      'Model wording for departures recorded on an installation certificate',
+      'Statutory notification thresholds for work in commercial premises',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The On-Site Guide carries the practical data needed in general installation work, including conduit and trunking capacities and cable bending radii, so that routing and mechanical protection can be got right on site rather than derived from first principles.',
+    section: 'Wiring systems',
+    difficulty: 'intermediate',
+    topic: 'Practical content of the On-Site Guide',
+    category: 'BS7671 Selection & Erection',
+  },
+  {
+    id: 476,
+    question: 'What does good practice require where cables enter an enclosure?',
+    options: [
+      'The sheath is stripped back at the gland to aid heat dissipation',
+      'The entry is left unsealed so that condensation can drain freely',
+      'The cable is drawn in tightly so that no slack remains inside',
+      'Grommets, glands or conduit protect the sheath and radii are kept',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Suitable mechanical protection such as grommets, glands or conduit is fitted at the entry, the sheathing is protected from chafing, and the required bending radius is maintained. This is what prevents conductor damage at the point of entry, which is a classic AM2 inspection fail.',
+    section: 'Wiring systems',
+    difficulty: 'intermediate',
+    topic: 'Cable entries into enclosures',
+    category: 'BS7671 Selection & Erection',
+  },
+  {
+    id: 477,
+    question: 'In Guidance Note 3, what does the term periodic inspection denote?',
+    options: [
+      'A visual examination carried out without any testing at all',
+      'A review of the previous certificate and its recorded results',
+      'An inspection including any tests needed to assess condition',
+      'A sampling exercise covering an agreed percentage of circuits',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Periodic inspection is not limited to looking. It denotes an inspection activity that includes whatever testing is necessary to assess the condition of the installation, and the tests required to reach the conclusion form part of the inspection.',
+    section: 'Periodic inspection',
+    difficulty: 'advanced',
+    topic: 'What periodic inspection includes',
+    category: 'BS7671 Inspection & Testing',
+  },
+  {
+    id: 478,
+    question: 'What is a visual inspection of an installation intended to identify?',
+    options: [
+      'Common defects caused by use or abuse of the installation',
+      'The precise value of the earth fault loop impedance present',
+      'Whether the original design current calculations were correct',
+      'Deterioration of insulation hidden within the wiring system',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'A visual inspection, carried out without placing the inspector or anyone else in danger, reveals many of the common defects caused by use or abuse: visible wear, damage, deterioration and unsound alterations. Hidden insulation deterioration needs an instrument test to find.',
+    section: 'Inspection',
+    difficulty: 'basic',
+    topic: 'Purpose of visual inspection',
+    category: 'BS7671 Inspection & Testing',
+  },
+  {
+    id: 479,
+    question:
+      'Full electrical testing of an installation would need isolation that is impractical to arrange. What does Guidance Note 3 allow?',
+    options: [
+      'The tests are omitted and the report issued as unsatisfactory',
+      'The installation is assessed from the previous report instead',
+      'The client signs a waiver accepting the untested condition',
+      'A thorough documented visual inspection may evidence condition',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Where isolation for full testing is impractical, a thorough visual inspection may be carried out and accepted as evidence of the condition of the installation, provided it is comprehensive and documented as part of planned maintenance or periodic assessment.',
+    section: 'Inspection',
+    difficulty: 'advanced',
+    topic: 'Visual inspection where isolation is impractical',
+    category: 'BS7671 Inspection & Testing',
+  },
+  {
+    id: 480,
+    question:
+      'How should conduit capacity and cable bending radius figures taken from the On-Site Guide be used?',
+    options: [
+      'As absolute limits that override any manufacturer instruction',
+      'Cross-checked against cable manufacturer data and BS 7671',
+      'As guidance for domestic work but not for commercial premises',
+      'As values to be applied after adding a ten per cent margin',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The Guide states that its practical data may need cross-checking against cable manufacturer information and the requirements of BS 7671. The installer has to confirm the figures are appropriate for the particular cable and the particular installation conditions.',
+    section: 'Wiring systems',
+    difficulty: 'intermediate',
+    topic: 'Limits of On-Site Guide practical data',
+    category: 'BS7671 Selection & Erection',
+  },
 ];
 
 // Helper function to shuffle array

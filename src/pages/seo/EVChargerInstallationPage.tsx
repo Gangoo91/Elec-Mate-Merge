@@ -250,7 +250,7 @@ export default function EVChargerInstallationPage() {
                 For properties with an existing TN-S earthing system (earth provided by the cable
                 sheath) or TT system (existing earth electrode), the separate earth rod may not be
                 required — but the 30 mA RCD protection is still mandatory. Always check the{' '}
-                <SEOInternalLink href="/earthing-arrangements">
+                <SEOInternalLink href="/guides/earthing-systems-tns-tncs-tt-explained">
                   earthing arrangement
                 </SEOInternalLink>{' '}
                 before specifying the installation design.
@@ -628,7 +628,7 @@ export default function EVChargerInstallationPage() {
           category: 'Calculator',
         },
         {
-          href: '/earthing-arrangements',
+          href: '/guides/earthing-systems-tns-tncs-tt-explained',
           title: 'Earthing Arrangements',
           description: 'TN-S, TN-C-S, and TT earthing systems explained.',
           icon: Cable,

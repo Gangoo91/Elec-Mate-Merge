@@ -156,6 +156,7 @@ export function trackEmailCaptured(props: {
     | 'landing_form'
     | 'exit_intent'
     | 'lead_magnet_cheatsheet'
+    | 'lead_magnet_symbols_chart'
     | 'mock_exam_result'
     | 'calculator_result'
     | 'footer'

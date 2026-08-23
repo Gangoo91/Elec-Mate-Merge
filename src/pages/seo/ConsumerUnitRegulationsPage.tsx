@@ -77,7 +77,7 @@ const features = [
   },
   {
     icon: FileText,
-    title: '16 Certificate Types',
+    title: '19 Certificate Types',
     description:
       'Generate Electrical Installation Certificates for consumer unit replacements with all mandatory fields, test result validation…',
   },
@@ -1002,7 +1002,7 @@ export default function ConsumerUnitRegulationsPage() {
 
       <SEOCTASection
         heading="Certify Consumer Unit Work Digitally"
-        subheading="Join 1,000+ UK electricians producing professional EICs with Elec-Mate. 7-day free trial, cancel anytime."
+        subheading="Join 1,600+ UK electricians producing professional EICs with Elec-Mate. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

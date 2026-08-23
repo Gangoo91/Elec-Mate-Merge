@@ -2961,7 +2961,11 @@ export const getQuestionsByDifficulty = (
 };
 
 // Map section codes to broader topic labels (used by getQuestionsByTopic).
-const M7_SECTION_TOPIC: Record<string, string> = {
+/**
+ * Section number → readable topic. Exported for the results screen, which
+ * otherwise lists bare outline numbers ("7.2") as study targets.
+ */
+export const M7_SECTION_TOPIC: Record<string, string> = {
   '7.1': 'Industry & Career',
   '7.2': 'Industry & Career',
   '7.3': 'Standards & Responsibilities',

@@ -866,7 +866,7 @@ export default function CableBasketInstallationPage() {
       faqHeading="Frequently Asked Questions About Wire Cable Basket"
       relatedPages={relatedPages}
       ctaHeading="Complete Commercial Certificates on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to certify commercial cable basket installations on site. Record test results and earth continuity — instant PDF export. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to certify commercial cable basket installations on site. Record test results and earth continuity — instant PDF export. 7-day free trial."
     />
   );
 }

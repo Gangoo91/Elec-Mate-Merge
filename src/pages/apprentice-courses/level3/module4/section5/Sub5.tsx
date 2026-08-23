@@ -141,7 +141,7 @@ const quizQuestions = [
     ],
     correctAnswer: 0,
     explanation:
-      "BS 7671 Part 6 (Inspection and Testing) is the verification framework: the MWC test panel records continuity of CPC, IR, polarity, R1+R2, Zs and RCD trip-time at I&Delta;n where RCD-protected. If the work has affected the circuit electrically — and a protective-device swap certainly has — measured verification is mandatory. The readings are the substance of the certificate, not part numbers or warranty data, and 'it looks fine' is no substitute for measurement.",
+      "BS 7671 Part 6 (Inspection and Testing) is the verification framework: the MWC test panel records continuity of CPC, IR, polarity, R1+R2, Zs and RCD trip-time at IΔn where RCD-protected. If the work has affected the circuit electrically — and a protective-device swap certainly has — measured verification is mandatory. The readings are the substance of the certificate, not part numbers or warranty data, and 'it looks fine' is no substitute for measurement.",
   },
   {
     id: 5,
@@ -179,7 +179,7 @@ const quizQuestions = [
       "Write the certificate up at the office at the end of the week from memory, reconstructing the readings later and posting it to the customer once typed up.",
       "Hand the customer a blank certificate to complete themselves — it is their record, so they fill in the details and sign while the apprentice gives readings verbally.",
       "Skip the certificate on site and post one only if the customer asks — most never want the paperwork, so close the job on the invoice alone.",
-      "Use a digital MWC app on site — pre-load the details, enter test results as you measure, sign and email the PDF, in 5&ndash;10 minutes.",
+      "Use a digital MWC app on site — pre-load the details, enter test results as you measure, sign and email the PDF, in 5–10 minutes.",
     ],
     correctAnswer: 3,
     explanation:
@@ -230,7 +230,7 @@ const faqs = [
   {
     question: "How long does the firm need to keep certificate copies?",
     answer:
-      "Recommended retention is the lifetime of the installation (potentially 25&ndash;40 years for domestic). Practical minimum under Companies Act 2006 (statutory records) and HMRC VAT records is six to seven years. Professional indemnity insurance often requires longer retention (commonly the policy lifetime plus a tail for run-off claims). For Part P notifiable work, the competent-person scheme retains a copy via the notification record. The L3 apprentice's job is to ensure every certificate gets filed in the firm's job system; the firm's retention policy then handles the period. Lost certificates can be reissued by the original contractor if their records are intact, otherwise the customer needs a new EICR.",
+      "Recommended retention is the lifetime of the installation (potentially 25–40 years for domestic). Practical minimum under Companies Act 2006 (statutory records) and HMRC VAT records is six to seven years. Professional indemnity insurance often requires longer retention (commonly the policy lifetime plus a tail for run-off claims). For Part P notifiable work, the competent-person scheme retains a copy via the notification record. The L3 apprentice's job is to ensure every certificate gets filed in the firm's job system; the firm's retention policy then handles the period. Lost certificates can be reissued by the original contractor if their records are intact, otherwise the customer needs a new EICR.",
   },
 ];
 
@@ -372,7 +372,7 @@ export default function Sub5() {
             source="Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020 — Reg 3"
             clause={
               <>
-                "A private landlord who grants or intends to grant a specified tenancy must &mdash; (a) ensure that the electrical safety standards are met during any period when the residential premises are occupied under a specified tenancy; (b) ensure every electrical installation in the residential premises is inspected and tested at regular intervals by a qualified person; AND (c) ensure the first inspection and testing is carried out before the tenancy commences, in relation to a new specified tenancy, OR by 1st April 2021, in relation to an existing specified tenancy."
+                "A private landlord who grants or intends to grant a specified tenancy must — (a) ensure that the electrical safety standards are met during any period when the residential premises are occupied under a specified tenancy; (b) ensure every electrical installation in the residential premises is inspected and tested at regular intervals by a qualified person; AND (c) ensure the first inspection and testing is carried out before the tenancy commences, in relation to a new specified tenancy, OR by 1st April 2021, in relation to an existing specified tenancy."
               </>
             }
             meaning={
@@ -397,8 +397,8 @@ export default function Sub5() {
 
           <ConceptBlock
             title="The certificate is the headline; the schedule is the evidence"
-            plainEnglish="An EIC or MEIWC without a Schedule of Test Results is half a certificate. The schedule captures the readings that justify the &lsquo;satisfactory&rsquo; declaration and is what auditors and competent-person scheme assessors actually inspect."
-            onSite="A4:2026 changed several Schedule of Test Results columns &mdash; AFDD column on the schedule, RCD trip-time entries reflect the single AC test (no 5&times;I&Delta;n column), TN-C-S identification now includes PNB. Use up-to-date model forms (2026 issue) rather than older A2:2022 templates."
+            plainEnglish="An EIC or MEIWC without a Schedule of Test Results is half a certificate. The schedule captures the readings that justify the ‘satisfactory’ declaration and is what auditors and competent-person scheme assessors actually inspect."
+            onSite="A4:2026 changed several Schedule of Test Results columns — AFDD column on the schedule, RCD trip-time entries reflect the single AC test (no 5×IΔn column), TN-C-S identification now includes PNB. Use up-to-date model forms (2026 issue) rather than older A2:2022 templates."
           >
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li><strong>Continuity of conductors</strong> &mdash; R1+R2 or end-to-end ring values per circuit.</li>
@@ -415,7 +415,7 @@ export default function Sub5() {
 
           <ConceptBlock
             title="What goes alongside the certificate at handover"
-            plainEnglish="The certificate is the formal piece of paper. The wider record pack is what makes the work defensible six months later when a question comes up &mdash; or six years later when the property changes hands."
+            plainEnglish="The certificate is the formal piece of paper. The wider record pack is what makes the work defensible six months later when a question comes up — or six years later when the property changes hands."
           >
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li><strong>Job sheet</strong> &mdash; chronological narrative of what was found, what was done, who authorised what.</li>

@@ -529,7 +529,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional invoicing and records for your mortgage"
-          description="Join 1,000+ UK electricians using Elec-Mate for professional invoicing and job records. Give your accountant a clean income record — essential for your…"
+          description="Join 1,600+ UK electricians using Elec-Mate for professional invoicing and job records. Give your accountant a clean income record — essential for your…"
           icon={Home}
         />
       </>
@@ -567,7 +567,7 @@ export default function ElectricianMortgagePage() {
       faqHeading="Frequently Asked Questions About Mortgages for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Professional Records for Your Mortgage Application"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for professional invoicing and job records. Give your accountant everything needed for accurate SA302s and certified accounts. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for professional invoicing and job records. Give your accountant everything needed for accurate SA302s and certified accounts. 7-day free trial, cancel anytime."
     />
   );
 }

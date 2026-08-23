@@ -211,7 +211,7 @@ const quizQuestions = [
     ],
     correctAnswer: 2,
     explanation:
-      'Fire alarm panels typically require the fastest changeover (&lt;0.5s) as they must maintain continuous monitoring capability. Loss of power, even momentarily, could miss a detection event.',
+      'Fire alarm panels typically require the fastest changeover (<0.5s) as they must maintain continuous monitoring capability. Loss of power, even momentarily, could miss a detection event.',
   },
   {
     id: 11,

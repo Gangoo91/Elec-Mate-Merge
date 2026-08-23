@@ -617,7 +617,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Motor circuit certification and quoting with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, motor circuit test recording, and instant PDF export."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion, motor circuit test recording, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -654,7 +654,7 @@ export default function MotorStartersInstallationPage() {
       faqHeading="Frequently Asked Questions About Motor Starter Installation"
       relatedPages={relatedPages}
       ctaHeading="Complete Motor Circuit EICs on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site electrical installation certification, test result recording, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site electrical installation certification, test result recording, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -140,7 +140,7 @@ export const howToPriceCommercialInstallConfig: GeneratedGuideConfig = {
           tone: 'info',
           title: 'For electricians: stop under-pricing your work',
           body:
-            'Join 1,000+ UK electricians using Elec-Mate to quote commercial electrical installation at fair-margin prices, issue compliant certificates, and get paid faster. 7-day free trial.',
+            'Join 1,600+ UK electricians using Elec-Mate to quote commercial electrical installation at fair-margin prices, issue compliant certificates, and get paid faster. 7-day free trial.',
         },
       ],
     },
@@ -242,5 +242,5 @@ export const howToPriceCommercialInstallConfig: GeneratedGuideConfig = {
   ],
   ctaHeading: 'Stop Under-Pricing Commercial Electrical Installation',
   ctaSubheading:
-    'Join 1,000+ UK electricians using Elec-Mate to quote commercial electrical installation at fair-margin prices, issue compliant certificates, and get paid faster. 7-day free trial.',
+    'Join 1,600+ UK electricians using Elec-Mate to quote commercial electrical installation at fair-margin prices, issue compliant certificates, and get paid faster. 7-day free trial.',
 };

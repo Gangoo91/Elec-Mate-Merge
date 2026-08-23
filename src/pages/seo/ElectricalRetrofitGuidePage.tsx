@@ -328,7 +328,7 @@ export default function ElectricalRetrofitGuidePage() {
               <p>
                 Earthing deficiencies are among the most common findings during inspections of older
                 properties. The{' '}
-                <SEOInternalLink href="/earthing-arrangements">
+                <SEOInternalLink href="/guides/earthing-systems-tns-tncs-tt-explained">
                   earthing arrangements guide
                 </SEOInternalLink>{' '}
                 covers the theory in detail. In a retrofit context, the practical considerations
@@ -637,7 +637,7 @@ export default function ElectricalRetrofitGuidePage() {
           category: 'Guide',
         },
         {
-          href: '/earthing-arrangements',
+          href: '/guides/earthing-systems-tns-tncs-tt-explained',
           title: 'Earthing Arrangements',
           description: 'TN-S, TN-C-S, and TT earthing systems explained.',
           icon: ShieldCheck,

@@ -5,6 +5,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { resolveStorageUrl } from '@/utils/storageUrls';
 import { FileText, Download, Printer, Loader2, ExternalLink, RefreshCw } from 'lucide-react';
 import { openOrDownloadPdf } from '@/utils/pdf-download';
+import { saveOrShareFile } from '@/utils/save-or-share-file';
 
 interface BriefingPDFActionsProps {
   briefing: any;
@@ -266,17 +267,15 @@ export const BriefingPDFActions = ({ briefing, companyProfile }: BriefingPDFActi
       if (!response.ok) throw new Error('Failed to fetch PDF');
 
       const blob = await response.blob();
-      const blobUrl = URL.createObjectURL(blob);
 
-      const link = document.createElement('a');
-      link.href = blobUrl;
-      link.download = `Briefing-${briefing.job_name || briefing.briefing_name}-${new Date(briefing.briefing_date).toISOString().split('T')[0]}.pdf`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-
-      // Clean up blob URL
-      setTimeout(() => URL.revokeObjectURL(blobUrl), 100);
+      // Was an `<a download>`, which does nothing inside the app — a toolbox
+      // talk is signed off on site, on a phone, so this was failing in exactly
+      // the place it is used. The 100ms revoke was also racing the browser's
+      // read of the blob.
+      await saveOrShareFile(
+        blob,
+        `Briefing-${briefing.job_name || briefing.briefing_name}-${new Date(briefing.briefing_date).toISOString().split('T')[0]}.pdf`
+      );
 
       toast({
         title: 'PDF Downloaded',

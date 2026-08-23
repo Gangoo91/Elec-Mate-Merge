@@ -762,7 +762,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Commercial EICRs, done on site"
-          description="Join 1,000+ UK electricians completing commercial EICRs on their phones. Multi-board support, unlimited circuits, AI board scanner, remedial estimator…"
+          description="Join 1,600+ UK electricians completing commercial EICRs on their phones. Multi-board support, unlimited circuits, AI board scanner, remedial estimator…"
           icon={FileCheck2}
         />
       </>

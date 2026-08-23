@@ -328,7 +328,7 @@ const MOETModule3Section4_1 = () => {
             </p>
             <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
               <li className="pl-1">
-                <strong>BS 7671:2018+A3:2024:</strong> Part 5 — selection and erection of equipment
+                <strong>BS 7671:2018+A4:2026:</strong> Part 5 — selection and erection of equipment
               </li>
               <li className="pl-1">
                 <strong>CIBSE SLL:</strong> Code for Lighting — maintained illuminance levels

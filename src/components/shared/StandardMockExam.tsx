@@ -13,7 +13,7 @@
  * - Result persistence via useQuizCompletion
  */
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   ArrowLeft,
@@ -21,7 +21,6 @@ import {
   Clock,
   CheckCircle,
   XCircle,
-  AlertTriangle,
   Flag,
   RotateCcw,
   FileText,
@@ -36,6 +35,11 @@ import { ExamMobileLayout } from '@/components/apprentice-courses/ExamMobileLayo
 import { toast } from 'sonner';
 import { useQuizCompletion } from '@/hooks/useQuizCompletion';
 import { shuffleAllQuestionOptions, createShuffleSalt } from '@/utils/shuffleOptions';
+import { useAuth } from '@/contexts/AuthContext';
+import { recordMockExamAttempt } from '@/lib/mockExamTelemetry';
+import { useMockExamHistory } from '@/hooks/useMockExamHistory';
+import { useQuestionFailureRates } from '@/hooks/useQuestionFailureRates';
+import { cn } from '@/lib/utils';
 import {
   StandardMockQuestion,
   MockExamConfig,
@@ -57,6 +61,10 @@ export const StandardMockExam = ({
 }: StandardMockExamProps) => {
   const navigate = useNavigate();
   const { completeQuiz } = useQuizCompletion();
+  const { user } = useAuth();
+  const missesRecordedRef = useRef(false);
+  const startedAtRef = useRef<number | null>(null);
+  const history = useMockExamHistory(config.examId, user?.id ?? null);
 
   // Exam state
   const [examStarted, setExamStarted] = useState(false);
@@ -69,6 +77,14 @@ export const StandardMockExam = ({
   const [flaggedQuestions, setFlaggedQuestions] = useState<Set<number>>(new Set());
   const [reviewFilter, setReviewFilter] = useState<ReviewFilter>('all');
   const [hasShownWarning, setHasShownWarning] = useState(false);
+
+  // Fetched only once the paper is done — mid-exam it would be a spoiler,
+  // and nobody needs it before they have an answer to compare against.
+  const failureRates = useQuestionFailureRates(
+    config.examId,
+    examQuestions.map((q) => q.id),
+    showResults
+  );
 
   // Start exam
   const startExam = useCallback(() => {
@@ -86,6 +102,8 @@ export const StandardMockExam = ({
     setShowResults(false);
     setShowReview(false);
     setHasShownWarning(false);
+    missesRecordedRef.current = false;
+    startedAtRef.current = Date.now();
     toast.success(`${config.examTitle} started! Good luck!`);
   }, [config, getRandomQuestions]);
 
@@ -109,6 +127,33 @@ export const StandardMockExam = ({
       return () => clearInterval(timer);
     }
   }, [examStarted, showResults, timeRemaining, hasShownWarning]);
+
+  // Record the attempt once per sitting — the personal revision pile plus the
+  // shared attempt/per-question dataset the public papers write to. Driven by
+  // an effect rather than handleSubmit because on timer expiry handleSubmit
+  // fires from a stale interval closure where selectedAnswers is still empty.
+  useEffect(() => {
+    if (!showResults || missesRecordedRef.current) return;
+    missesRecordedRef.current = true;
+    recordMockExamAttempt({
+      examSlug: config.examId,
+      source: 'in_app',
+      examName: config.examTitle,
+      questions: examQuestions,
+      answers: selectedAnswers,
+      startedAt: startedAtRef.current,
+      passThreshold: config.passThreshold,
+      userId: user?.id ?? null,
+    });
+  }, [
+    showResults,
+    examQuestions,
+    selectedAnswers,
+    user,
+    config.examId,
+    config.examTitle,
+    config.passThreshold,
+  ]);
 
   // Format time display
   const formatTime = (seconds: number): string => {
@@ -292,85 +337,150 @@ export const StandardMockExam = ({
 
   // Before exam starts - Start Screen
   if (!examStarted) {
+    const passMarkQuestions = Math.ceil((config.totalQuestions * config.passThreshold) / 100);
     return (
-      <div className="bg-[#1a1a1a] p-2 sm:p-4 lg:px-8">
-        <div className="max-w-4xl mx-auto">
-          {/* Back button to course */}
-          <Button
-            variant="ghost"
-            size="sm"
+      <div className="min-h-screen bg-[hsl(0_0%_8%)] px-4 py-6 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-5xl">
+          {/* 44px labelled control, matching the rest of the apprentice area —
+              this was a ghost text button at sm size. */}
+          <button
+            type="button"
             onClick={() => navigate(config.exitPath)}
-            className="mb-3 text-white hover:text-elec-yellow hover:bg-transparent"
+            className="-ml-1 mb-5 flex h-11 items-center gap-1.5 rounded-full border border-white/[0.12] bg-white/[0.06] pl-2.5 pr-4 text-[13px] font-medium text-white transition-colors hover:bg-white/[0.1] touch-manipulation"
           >
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Course
-          </Button>
-          <Card className="border-elec-yellow/30">
-            <CardHeader className="text-center pb-3 sm:pb-4 px-3 sm:px-6">
-              <div className="mx-auto mb-3 sm:mb-4 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-lg bg-elec-yellow/10">
-                <FileText className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
-              </div>
-              <CardTitle className="text-lg sm:text-xl md:text-2xl text-white mb-1">
-                {config.examTitle}
-              </CardTitle>
-              <h2 className="text-xs sm:text-sm md:text-lg text-elec-yellow">
-                Comprehensive Assessment Practice
-              </h2>
-            </CardHeader>
+            <ArrowLeft className="h-4 w-4" />
+            Back to course
+          </button>
 
-            <CardContent className="space-y-4 sm:space-y-6 px-3 sm:px-6">
-              <div className="bg-[#1a1a1a] p-4 rounded-xl border border-white/10 text-left">
-                <div className="flex items-center gap-2 mb-3">
-                  <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-elec-yellow/20">
-                    <CheckCircle className="h-3.5 w-3.5 text-elec-yellow" />
-                  </div>
-                  <h3 className="font-semibold text-white text-sm">Instructions</h3>
-                </div>
-                <div className="space-y-2.5 pl-1">
-                  <div className="flex items-start gap-3">
-                    <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow mt-[7px] flex-shrink-0" />
-                    <p className="text-sm text-white">
-                      {config.totalQuestions} questions from {questionBank.length} question bank
-                    </p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow mt-[7px] flex-shrink-0" />
-                    <p className="text-sm text-white">
-                      {Math.floor(config.timeLimit / 60)} minutes
-                    </p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow mt-[7px] flex-shrink-0" />
-                    <p className="text-sm text-white">
-                      Pass mark: {config.passThreshold}% (
-                      {Math.ceil((config.totalQuestions * config.passThreshold) / 100)}/
-                      {config.totalQuestions})
-                    </p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow mt-[7px] flex-shrink-0" />
-                    <p className="text-sm text-white">Covers: {config.categories.join(', ')}</p>
-                  </div>
-                  <div className="flex items-start gap-3 pt-1 mt-1 border-t border-white/10">
-                    <div className="h-1.5 w-1.5 rounded-full bg-blue-400 mt-[7px] flex-shrink-0" />
-                    <p className="text-sm text-blue-300">Flag questions to review later</p>
-                  </div>
+          <div className="overflow-hidden rounded-2xl border border-white/[0.1] bg-[hsl(0_0%_10%)]">
+            <div className="relative border-b border-white/[0.08] p-6 sm:p-8">
+              <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0" />
+              <div className="flex items-start gap-4">
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-elec-yellow/10">
+                  <FileText className="h-5 w-5 text-elec-yellow" />
+                </span>
+                <div className="min-w-0">
+                  <h1 className="text-[22px] font-semibold leading-tight tracking-tight text-white sm:text-[28px]">
+                    {config.examTitle}
+                  </h1>
+                  {/* Was "Comprehensive Assessment Practice" — filler that told
+                      a learner nothing. This says what actually happens. */}
+                  <p className="mt-1.5 text-[13.5px] leading-relaxed text-white">
+                    A fresh set of {config.totalQuestions} questions drawn at random from a bank of{' '}
+                    {questionBank.length}. Sit it as many times as you like — you'll get a
+                    different paper each go.
+                  </p>
                 </div>
               </div>
+            </div>
+
+            {/* Your history — the reason to come back. Hidden until there is
+                one, so a first sitting isn't cluttered with empty state. */}
+            {history.attempts > 0 && (
+              <div className="border-b border-white/[0.08] bg-white/[0.02] px-6 py-5 sm:px-8">
+                <p className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
+                  Your record on this paper
+                </p>
+                <div className="mt-3 grid grid-cols-3 gap-px overflow-hidden rounded-xl border border-white/[0.1] bg-white/[0.08]">
+                  <div className="bg-[hsl(0_0%_10%)] px-4 py-3">
+                    <p className="text-[20px] font-semibold leading-none tabular-nums text-white">
+                      {history.attempts}
+                    </p>
+                    <p className="mt-1 text-[11px] text-white">
+                      {history.attempts === 1 ? 'Attempt' : 'Attempts'}
+                    </p>
+                  </div>
+                  <div className="bg-[hsl(0_0%_10%)] px-4 py-3">
+                    <p
+                      className={cn(
+                        'text-[20px] font-semibold leading-none tabular-nums',
+                        (history.best ?? 0) >= config.passThreshold
+                          ? 'text-emerald-400'
+                          : 'text-white'
+                      )}
+                    >
+                      {history.best}%
+                    </p>
+                    <p className="mt-1 text-[11px] text-white">Best</p>
+                  </div>
+                  <div className="bg-[hsl(0_0%_10%)] px-4 py-3">
+                    <p
+                      className={cn(
+                        'text-[20px] font-semibold leading-none tabular-nums',
+                        history.lastPassed ? 'text-emerald-400' : 'text-orange-300'
+                      )}
+                    >
+                      {history.last}%
+                    </p>
+                    <p className="mt-1 text-[11px] text-white">Last go</p>
+                  </div>
+                </div>
+                {history.best !== null && history.best < config.passThreshold && (
+                  <p className="mt-3 text-[12.5px] leading-relaxed text-white">
+                    {config.passThreshold - history.best}% off the pass mark. Every question you
+                    get wrong is saved to your revision pile — clear that first, then come back.
+                  </p>
+                )}
+              </div>
+            )}
+
+            <div className="p-6 sm:p-8">
+              {/* Facts as a grid, not a bullet list — three numbers a learner
+                  checks before committing 45 minutes. */}
+              <div className="grid grid-cols-3 gap-px overflow-hidden rounded-xl border border-white/[0.1] bg-white/[0.08]">
+                {[
+                  { value: String(config.totalQuestions), label: 'Questions' },
+                  { value: `${Math.floor(config.timeLimit / 60)} min`, label: 'Time limit' },
+                  {
+                    value: `${config.passThreshold}%`,
+                    label: `Pass — ${passMarkQuestions} of ${config.totalQuestions}`,
+                  },
+                ].map((f) => (
+                  <div key={f.label} className="bg-[hsl(0_0%_10%)] px-4 py-4 text-center">
+                    <p className="text-[22px] font-semibold leading-none tabular-nums text-white">
+                      {f.value}
+                    </p>
+                    <p className="mt-1.5 text-[11px] leading-snug text-white">{f.label}</p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-6">
+                <p className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
+                  What it covers
+                </p>
+                {/* Chips, not a comma-run — six topic names in one sentence
+                    wrapped to three lines and read as a paragraph. */}
+                <div className="mt-2.5 flex flex-wrap gap-1.5">
+                  {config.categories.map((c) => (
+                    <span
+                      key={c}
+                      className="rounded-full border border-white/[0.12] bg-white/[0.05] px-3 py-1.5 text-[12px] text-white"
+                    >
+                      {c}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <p className="mt-6 rounded-xl border border-white/[0.08] bg-[hsl(0_0%_9%)] p-4 text-[12.5px] leading-relaxed text-white">
+                Flag anything you're unsure of and it'll be waiting at the end for review. Wrong
+                answers are added to your revision pile automatically, so nothing you miss gets
+                lost.
+              </p>
 
               <Button
                 onClick={startExam}
-                className="w-full bg-elec-yellow hover:bg-elec-yellow/90 text-black font-bold py-3 sm:py-3 text-base sm:text-base touch-manipulation min-h-[48px] rounded-lg"
+                className="mt-6 min-h-[48px] w-full rounded-xl bg-elec-yellow py-3 text-base font-bold text-black hover:bg-elec-yellow/90 touch-manipulation"
                 size="lg"
               >
-                <div className="flex items-center justify-center gap-3">
-                  <FileText className="h-4 w-4 sm:h-4 sm:w-4" />
-                  Start Exam
-                  <Clock className="h-4 w-4 sm:h-4 sm:w-4" />
-                </div>
+                <span className="flex items-center justify-center gap-2">
+                  <Clock className="h-4 w-4" />
+                  {history.attempts > 0 ? 'Sit it again' : 'Start exam'}
+                </span>
               </Button>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -381,119 +491,182 @@ export const StandardMockExam = ({
     const categoryBreakdown = getCategoryBreakdown();
     const weakCategories = categoryBreakdown.filter((c) => c.percent < config.passThreshold);
 
+    // Weakest first — the list is a study order, not a register. A learner
+    // scanning this wants "what do I fix", and the topic they got 40% on
+    // should not be below the one they aced.
+    const rankedBreakdown = [...categoryBreakdown].sort((a, b) => a.percent - b.percent);
+    const beatBest = history.best !== null && percentage > history.best;
+
     return (
-      <div className="bg-[#1a1a1a] p-2 sm:p-4 lg:px-8">
-        <div className="max-w-4xl mx-auto">
-          <Card className="border-elec-yellow/30">
-            <CardHeader className="text-center pb-4 px-4 sm:px-6">
+      <div className="min-h-screen bg-[hsl(0_0%_8%)] px-4 py-6 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-5xl space-y-5">
+          {/* Verdict. "FAILED" in red told a learner they were a failure; the
+              honest version is that they haven't passed it YET, which is also
+              the truthful description of a paper you can resit immediately. */}
+          <div className="overflow-hidden rounded-2xl border border-white/[0.1] bg-[hsl(0_0%_10%)]">
+            <div className="relative p-6 text-center sm:p-8">
               <div
-                className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-lg font-semibold mb-4 ${
-                  passed ? 'bg-elec-yellow/20 text-elec-yellow' : 'bg-red-500/20 text-elec-yellow'
-                }`}
+                className={cn(
+                  'pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent to-transparent',
+                  passed ? 'via-emerald-400/60' : 'via-orange-400/60'
+                )}
+              />
+              <span
+                className={cn(
+                  'inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-[12px] font-semibold uppercase tracking-[0.14em]',
+                  passed
+                    ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-300'
+                    : 'border-orange-500/40 bg-orange-500/10 text-orange-300'
+                )}
               >
-                {passed ? <CheckCircle className="w-5 h-5" /> : <XCircle className="w-5 h-5" />}
-                {passed ? 'PASSED' : 'FAILED'}
-              </div>
-              <CardTitle className="text-xl sm:text-2xl text-white mb-2">Exam Complete</CardTitle>
-              <p className="text-lg text-white">
-                You scored {score} out of {examQuestions.length} ({percentage}%)
+                {passed ? <CheckCircle className="h-4 w-4" /> : <XCircle className="h-4 w-4" />}
+                {passed ? 'Passed' : 'Not passed yet'}
+              </span>
+
+              <p
+                className={cn(
+                  'mt-5 text-[56px] font-semibold leading-none tabular-nums tracking-tight sm:text-[68px]',
+                  passed ? 'text-emerald-400' : 'text-white'
+                )}
+              >
+                {percentage}%
               </p>
-            </CardHeader>
+              <p className="mt-3 text-[14px] text-white">
+                {score} of {examQuestions.length} correct · pass mark {config.passThreshold}%
+              </p>
 
-            <CardContent className="px-4 sm:px-6">
-              {/* Summary Stats */}
-              <div className="grid grid-cols-3 gap-3 mb-6">
-                <Card className="bg-transparent border-green-500/20">
-                  <CardContent className="p-3 text-center">
-                    <div className="text-xl font-bold text-green-500">{stats.correct}</div>
-                    <div className="text-xs text-white">Correct</div>
-                  </CardContent>
-                </Card>
-                <Card className="bg-transparent border-red-500/20">
-                  <CardContent className="p-3 text-center">
-                    <div className="text-xl font-bold text-red-400">{stats.incorrect}</div>
-                    <div className="text-xs text-white">Incorrect</div>
-                  </CardContent>
-                </Card>
-                <Card className="bg-transparent border-muted/20">
-                  <CardContent className="p-3 text-center">
-                    <div className="text-xl font-bold text-white">{stats.unanswered}</div>
-                    <div className="text-xs text-white">Skipped</div>
-                  </CardContent>
-                </Card>
+              {/* Progress against your own history is the motivating number,
+                  and it only exists now that in-app attempts are recorded. */}
+              {history.attempts > 0 && (
+                <p className="mt-2 text-[13px] text-white">
+                  {beatBest ? (
+                    <span className="font-semibold text-elec-yellow">
+                      New personal best — your previous best was {history.best}%
+                    </span>
+                  ) : (
+                    <>
+                      Your best on this paper is {history.best}% · last go {history.last}%
+                    </>
+                  )}
+                </p>
+              )}
+
+              <div className="mt-6 grid grid-cols-3 gap-px overflow-hidden rounded-xl border border-white/[0.1] bg-white/[0.08]">
+                {[
+                  { value: stats.correct, label: 'Correct', tone: 'text-emerald-400' },
+                  { value: stats.incorrect, label: 'Wrong', tone: 'text-red-400' },
+                  { value: stats.unanswered, label: 'Skipped', tone: 'text-white' },
+                ].map((s) => (
+                  <div key={s.label} className="bg-[hsl(0_0%_10%)] px-4 py-4">
+                    <p className={cn('text-[24px] font-semibold leading-none tabular-nums', s.tone)}>
+                      {s.value}
+                    </p>
+                    <p className="mt-1 text-[11.5px] text-white">{s.label}</p>
+                  </div>
+                ))}
               </div>
+            </div>
+          </div>
 
-              {/* Category Breakdown */}
-              <div className="mb-6">
-                <h3 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
-                  <Target className="h-4 w-4 text-elec-yellow" />
-                  Performance by Category
-                </h3>
-                <div className="space-y-2">
-                  {categoryBreakdown.map(({ category, total, correct, percent }) => (
+          {/* What to study next — promoted above the fold and framed as an
+              instruction. The breakdown used to sit under the score as a
+              neutral "Performance by Category" register. */}
+          {rankedBreakdown.length > 0 && (
+            <div className="rounded-2xl border border-white/[0.1] bg-[hsl(0_0%_10%)] p-5 sm:p-6">
+              <div className="flex items-center gap-2">
+                <Target className="h-4 w-4 text-elec-yellow" />
+                <h2 className="text-[15px] font-semibold text-white">What to study next</h2>
+              </div>
+              {weakCategories.length > 0 ? (
+                <p className="mt-1.5 text-[13px] leading-relaxed text-white">
+                  {weakCategories.length === 1
+                    ? 'One topic came in under the pass mark. Start there.'
+                    : `${weakCategories.length} topics came in under the pass mark. Work down this list.`}
+                </p>
+              ) : (
+                <p className="mt-1.5 text-[13px] leading-relaxed text-white">
+                  Every topic cleared the pass mark. Weakest first, in case you want to tighten up.
+                </p>
+              )}
+
+              <div className="mt-4 space-y-2.5">
+                {rankedBreakdown.map(({ category, total, correct, percent }) => {
+                  const weak = percent < config.passThreshold;
+                  return (
                     <div
                       key={category}
-                      className="bg-white/[0.03] rounded-lg p-3 border border-white/10"
+                      className="rounded-xl border border-white/[0.08] bg-[hsl(0_0%_9%)] p-3.5"
                     >
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-sm font-medium text-white truncate pr-2">
+                      <div className="mb-2 flex items-center justify-between gap-3">
+                        <span className="min-w-0 truncate text-[13.5px] font-medium text-white">
                           {category}
                         </span>
                         <span
-                          className={`text-sm font-bold ${percent >= config.passThreshold ? 'text-green-400' : 'text-red-400'}`}
+                          className={cn(
+                            'shrink-0 text-[13px] font-semibold tabular-nums',
+                            weak ? 'text-orange-300' : 'text-emerald-400'
+                          )}
                         >
-                          {correct}/{total} ({percent}%)
+                          {correct}/{total} · {percent}%
                         </span>
                       </div>
-                      <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
+                      <div className="h-1.5 overflow-hidden rounded-full bg-white/10">
                         <div
-                          className={`h-full rounded-full transition-all duration-500 ${percent >= config.passThreshold ? 'bg-green-500' : 'bg-red-500'}`}
+                          className={cn(
+                            'h-full rounded-full transition-all duration-500',
+                            weak ? 'bg-orange-400' : 'bg-emerald-500'
+                          )}
                           style={{ width: `${percent}%` }}
                         />
                       </div>
                     </div>
-                  ))}
-                </div>
-                {weakCategories.length > 0 && (
-                  <div className="mt-3 p-3 rounded-lg border border-orange-500/30 bg-orange-500/10">
-                    <p className="text-xs text-orange-300">
-                      <AlertTriangle className="h-3 w-3 inline mr-1" />
-                      Focus on: {weakCategories.map((c) => c.category).join(', ')}
-                    </p>
-                  </div>
-                )}
+                  );
+                })}
               </div>
+            </div>
+          )}
 
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <Button
-                  onClick={() => setShowReview(true)}
-                  variant="outline"
-                  size="lg"
-                  className="border-elec-yellow/40 hover:bg-elec-yellow/10 text-white"
-                >
-                  <FileText className="w-4 h-4 mr-2" />
-                  Review Answers
-                </Button>
-                <Button
-                  onClick={resetExam}
-                  size="lg"
-                  className="bg-elec-yellow hover:bg-elec-yellow/90 text-black"
-                >
-                  <RotateCcw className="w-4 h-4 mr-2" />
-                  Retake Exam
-                </Button>
-                <Button
-                  onClick={() => navigate(config.exitPath)}
-                  variant="outline"
-                  size="lg"
-                  className="border-border/40 hover:bg-card/10 text-white"
-                >
-                  <ArrowLeft className="w-4 h-4 mr-2" />
-                  Back to Course
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
+          {/* Actions. Reviewing the paper and drilling the misses are the two
+              things that actually move a score, so they lead. */}
+          <div className="grid gap-2.5 sm:grid-cols-2">
+            <Button
+              onClick={() => setShowReview(true)}
+              className="min-h-[48px] rounded-xl bg-elec-yellow text-[14px] font-semibold text-black hover:bg-elec-yellow/90 touch-manipulation"
+            >
+              <FileText className="mr-2 h-4 w-4" />
+              Review every answer
+            </Button>
+            {stats.incorrect > 0 && (
+              <Button
+                onClick={() =>
+                  navigate('/apprentice/revision', {
+                    state: { from: config.exitPath, label: 'course' },
+                  })
+                }
+                variant="outline"
+                className="min-h-[48px] rounded-xl border-white/[0.14] bg-white/[0.06] text-[14px] font-medium text-white hover:bg-white/[0.1] touch-manipulation"
+              >
+                <RotateCcw className="mr-2 h-4 w-4" />
+                Drill the {stats.incorrect} you missed
+              </Button>
+            )}
+            <Button
+              onClick={resetExam}
+              variant="outline"
+              className="min-h-[48px] rounded-xl border-white/[0.14] bg-white/[0.06] text-[14px] font-medium text-white hover:bg-white/[0.1] touch-manipulation"
+            >
+              <RotateCcw className="mr-2 h-4 w-4" />
+              Sit a fresh paper
+            </Button>
+            <Button
+              onClick={() => navigate(config.exitPath)}
+              variant="outline"
+              className="min-h-[48px] rounded-xl border-white/[0.14] bg-white/[0.06] text-[14px] font-medium text-white hover:bg-white/[0.1] touch-manipulation"
+            >
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back to course
+            </Button>
+          </div>
         </div>
       </div>
     );
@@ -502,205 +675,245 @@ export const StandardMockExam = ({
   // Review screen
   if (showReview) {
     const filteredQuestions = getFilteredQuestions();
+    const filters: { id: ReviewFilter; label: string; count: number; tone: string }[] = [
+      { id: 'all', label: 'All', count: examQuestions.length, tone: 'text-white' },
+      { id: 'incorrect', label: 'Wrong', count: stats.incorrect, tone: 'text-red-400' },
+      { id: 'unanswered', label: 'Skipped', count: stats.unanswered, tone: 'text-white' },
+      { id: 'flagged', label: 'Flagged', count: stats.flagged, tone: 'text-elec-yellow' },
+      { id: 'correct', label: 'Correct', count: stats.correct, tone: 'text-emerald-400' },
+    ];
 
     return (
-      <div className="bg-[#1a1a1a] p-2 sm:p-4 lg:px-8">
-        <div className="max-w-4xl mx-auto">
-          {/* Review Header */}
-          <div className="mb-4">
-            <div className="flex items-center justify-between mb-4">
-              <div>
-                <h1 className="text-lg sm:text-xl font-semibold text-white">Review Answers</h1>
-                <p className="text-sm text-white">
-                  Score: {percentage}% ({score}/{examQuestions.length})
-                </p>
-              </div>
-              <Button
-                onClick={() => setShowReview(false)}
-                variant="ghost"
-                size="sm"
-                className="text-white hover:text-elec-yellow"
-              >
-                <ArrowLeft className="h-4 w-4 mr-2" />
-                Back to Results
-              </Button>
-            </div>
-
-            {/* Filter Cards */}
-            <div className="grid grid-cols-5 gap-2 mb-4">
-              <Card
-                className={`bg-transparent border-elec-yellow/30 cursor-pointer hover:bg-elec-yellow/5 active:scale-[0.98] transition-all touch-manipulation ${
-                  reviewFilter === 'all' ? 'ring-2 ring-elec-yellow/50' : ''
-                }`}
-                onClick={() => setReviewFilter('all')}
-              >
-                <CardContent className="p-2 text-center">
-                  <div className="text-sm font-bold text-elec-yellow">{examQuestions.length}</div>
-                  <div className="text-[10px] text-white">All</div>
-                </CardContent>
-              </Card>
-              <Card
-                className={`bg-transparent border-green-500/20 cursor-pointer hover:bg-transparent active:scale-[0.98] transition-all touch-manipulation ${
-                  reviewFilter === 'correct' ? 'ring-2 ring-green-500/50' : ''
-                }`}
-                onClick={() => setReviewFilter(reviewFilter === 'correct' ? 'all' : 'correct')}
-              >
-                <CardContent className="p-2 text-center">
-                  <div className="text-sm font-bold text-green-500">{stats.correct}</div>
-                  <div className="text-[10px] text-white">Correct</div>
-                </CardContent>
-              </Card>
-              <Card
-                className={`bg-transparent border-red-500/20 cursor-pointer hover:bg-transparent active:scale-[0.98] transition-all touch-manipulation ${
-                  reviewFilter === 'incorrect' ? 'ring-2 ring-red-500/50' : ''
-                }`}
-                onClick={() => setReviewFilter(reviewFilter === 'incorrect' ? 'all' : 'incorrect')}
-              >
-                <CardContent className="p-2 text-center">
-                  <div className="text-sm font-bold text-elec-yellow">{stats.incorrect}</div>
-                  <div className="text-[10px] text-white">Wrong</div>
-                </CardContent>
-              </Card>
-              <Card
-                className={`bg-transparent border-muted/20 cursor-pointer hover:bg-muted/10 active:scale-[0.98] transition-all touch-manipulation ${
-                  reviewFilter === 'unanswered' ? 'ring-2 ring-muted/50' : ''
-                }`}
-                onClick={() =>
-                  setReviewFilter(reviewFilter === 'unanswered' ? 'all' : 'unanswered')
-                }
-              >
-                <CardContent className="p-2 text-center">
-                  <div className="text-sm font-bold text-white">{stats.unanswered}</div>
-                  <div className="text-[10px] text-white">Skipped</div>
-                </CardContent>
-              </Card>
-              <Card
-                className={`bg-transparent border-elec-yellow/30 cursor-pointer hover:bg-elec-yellow/5 active:scale-[0.98] transition-all touch-manipulation ${
-                  reviewFilter === 'flagged' ? 'ring-2 ring-elec-yellow/50' : ''
-                }`}
-                onClick={() => setReviewFilter(reviewFilter === 'flagged' ? 'all' : 'flagged')}
-              >
-                <CardContent className="p-2 text-center">
-                  <div className="text-sm font-bold text-elec-yellow">{stats.flagged}</div>
-                  <div className="text-[10px] text-white">Flagged</div>
-                </CardContent>
-              </Card>
-            </div>
+      <div className="min-h-screen bg-[hsl(0_0%_8%)]">
+        {/* Sticky header — a review runs to 30 cards, and the way back to the
+            results used to scroll off the top after the first question. */}
+        <div className="sticky top-0 z-50 border-b border-white/[0.1] bg-[#1a1a1a]/90 backdrop-blur-sm">
+          <div className="mx-auto flex max-w-5xl items-center gap-3 px-4 py-2.5 sm:px-6 lg:px-8">
+            <button
+              type="button"
+              onClick={() => setShowReview(false)}
+              className="-ml-1 flex h-11 shrink-0 items-center gap-1.5 rounded-full border border-white/[0.12] bg-white/[0.06] pl-2.5 pr-4 text-[13px] font-medium text-white transition-colors hover:bg-white/[0.1] touch-manipulation"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Results
+            </button>
+            <span className="min-w-0 flex-1 truncate text-[13.5px] font-medium text-white">
+              Review answers
+            </span>
+            <span className="shrink-0 text-[12.5px] tabular-nums text-white">
+              {percentage}% · {score}/{examQuestions.length}
+            </span>
           </div>
+        </div>
 
-          {/* Question List */}
-          <div className="space-y-4">
-            {filteredQuestions.map(({ question, index }) => {
-              const status = getQuestionStatus(index);
-              const userAnswer = selectedAnswers[index];
-              const correctAnswer = question.correctAnswer;
-              const isFlagged = flaggedQuestions.has(index);
-
+        <div className="mx-auto max-w-5xl px-4 py-5 sm:px-6 lg:px-8">
+          {/* Filter chips. Five equal-weight cards gave "Correct" the same
+              prominence as "Wrong", when only one of those is worth a
+              learner's time. Chips, ordered by usefulness. */}
+          <div className="-mx-4 mb-5 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0 [&::-webkit-scrollbar]:hidden">
+            {filters.map((f) => {
+              const active = reviewFilter === f.id;
               return (
-                <Card key={index} className="bg-transparent border-elec-yellow/30">
-                  <CardHeader className="pb-3">
-                    <div className="flex items-center justify-between">
-                      <CardTitle className="text-base text-white">Question {index + 1}</CardTitle>
-                      <div className="flex items-center gap-2">
-                        {isFlagged && (
-                          <Badge
-                            variant="outline"
-                            className="text-elec-yellow border-elec-yellow/40"
-                          >
-                            <Flag className="h-3 w-3 mr-1 fill-current" />
-                            Flagged
-                          </Badge>
-                        )}
-                        <Badge
-                          variant={status === 'correct' ? 'default' : 'destructive'}
-                          className={
-                            status === 'correct'
-                              ? 'bg-green-500/20 text-green-500 border-green-500/40'
-                              : status === 'incorrect'
-                                ? 'bg-red-500/20 text-elec-yellow border-red-500/40'
-                                : 'bg-muted/20 text-white border-muted/40'
-                          }
-                        >
-                          {status === 'correct'
-                            ? 'Correct'
-                            : status === 'incorrect'
-                              ? 'Incorrect'
-                              : 'Unanswered'}
-                        </Badge>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm leading-relaxed mb-4 font-medium">{question.question}</p>
-
-                    <div className="space-y-2">
-                      {question.options.map((option, optionIndex) => {
-                        const isUserAnswer = userAnswer === optionIndex;
-                        const isCorrectAnswer = correctAnswer === optionIndex;
-
-                        return (
-                          <div
-                            key={optionIndex}
-                            className={`p-3 rounded-lg border-2 text-sm ${
-                              isCorrectAnswer
-                                ? 'border-green-500 text-green-500'
-                                : isUserAnswer && !isCorrectAnswer
-                                  ? 'border-red-500 text-elec-yellow'
-                                  : 'border-muted/40 bg-muted/5'
-                            }`}
-                          >
-                            <div className="flex items-start gap-3">
-                              <div
-                                className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 mt-0.5 ${
-                                  isCorrectAnswer
-                                    ? 'border-green-500 bg-green-500'
-                                    : isUserAnswer && !isCorrectAnswer
-                                      ? 'border-red-500 bg-red-500'
-                                      : 'border-muted-foreground'
-                                }`}
-                              >
-                                {(isUserAnswer || isCorrectAnswer) && (
-                                  <div className="w-1.5 h-1.5 bg-white rounded-full" />
-                                )}
-                              </div>
-                              <span className="flex-1 leading-relaxed">{option}</span>
-                              {isCorrectAnswer && (
-                                <CheckCircle className="h-4 w-4 text-green-500 flex-shrink-0" />
-                              )}
-                              {isUserAnswer && !isCorrectAnswer && (
-                                <XCircle className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-                              )}
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-
-                    {question.explanation && (
-                      <div className="mt-4 p-3 rounded-lg border border-elec-yellow/30">
-                        <div className="flex items-start gap-2">
-                          <div className="flex h-5 w-5 items-center justify-center rounded-md bg-elec-yellow/20 flex-shrink-0 mt-0.5">
-                            <CheckCircle className="h-3 w-3 text-elec-yellow" />
-                          </div>
-                          <div>
-                            <h4 className="text-sm font-semibold text-white mb-1">Explanation</h4>
-                            <p className="text-sm text-white leading-relaxed">
-                              {question.explanation}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                  </CardContent>
-                </Card>
+                <button
+                  key={f.id}
+                  type="button"
+                  onClick={() => setReviewFilter(active && f.id !== 'all' ? 'all' : f.id)}
+                  className={cn(
+                    'flex h-11 shrink-0 items-center gap-1.5 rounded-full border px-4 text-[13px] transition-colors touch-manipulation',
+                    active
+                      ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
+                      : 'border-white/[0.12] bg-white/[0.06] font-medium text-white hover:bg-white/[0.1]'
+                  )}
+                >
+                  {f.label}
+                  <span className={cn('tabular-nums', active ? 'text-black/70' : f.tone)}>
+                    {f.count}
+                  </span>
+                </button>
               );
             })}
+          </div>
+
+          {filteredQuestions.length === 0 ? (
+            <div className="rounded-2xl border border-white/[0.1] bg-[hsl(0_0%_10%)] p-8 text-center">
+              <p className="text-[15px] font-semibold text-white">Nothing in this filter</p>
+              <p className="mt-1.5 text-[13px] text-white">
+                {reviewFilter === 'incorrect'
+                  ? 'You did not get any wrong — worth a harder paper.'
+                  : 'Try another filter.'}
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {filteredQuestions.map(({ question, index }) => {
+                const status = getQuestionStatus(index);
+                const userAnswer = selectedAnswers[index];
+                const isFlagged = flaggedQuestions.has(index);
+                const failureRate =
+                  typeof question.id === 'number' ? failureRates[String(question.id)] : undefined;
+
+                return (
+                  <div
+                    key={index}
+                    className={cn(
+                      'overflow-hidden rounded-2xl border bg-[hsl(0_0%_10%)]',
+                      status === 'correct'
+                        ? 'border-emerald-500/25'
+                        : status === 'incorrect'
+                          ? 'border-red-500/30'
+                          : 'border-white/[0.1]'
+                    )}
+                  >
+                    <div className="flex flex-wrap items-center gap-2 border-b border-white/[0.08] px-5 py-3">
+                      <span className="text-[12.5px] font-semibold text-white">
+                        Question {index + 1}
+                      </span>
+                      {question.category && (
+                        <span className="rounded-full border border-white/[0.12] bg-white/[0.05] px-2.5 py-0.5 text-[11px] text-white">
+                          {question.category}
+                        </span>
+                      )}
+                      <span className="flex-1" />
+                      {isFlagged && (
+                        <span className="inline-flex items-center gap-1 rounded-full border border-elec-yellow/40 bg-elec-yellow/10 px-2.5 py-0.5 text-[11px] font-semibold text-elec-yellow">
+                          <Flag className="h-3 w-3 fill-current" />
+                          Flagged
+                        </span>
+                      )}
+                      <span
+                        className={cn(
+                          'rounded-full border px-2.5 py-0.5 text-[11px] font-semibold',
+                          status === 'correct'
+                            ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-300'
+                            : status === 'incorrect'
+                              ? 'border-red-500/40 bg-red-500/10 text-red-300'
+                              : 'border-white/[0.14] bg-white/[0.05] text-white'
+                        )}
+                      >
+                        {status === 'correct'
+                          ? 'Correct'
+                          : status === 'incorrect'
+                            ? 'Wrong'
+                            : 'Skipped'}
+                      </span>
+                    </div>
+
+                    <div className="p-5">
+                      <p className="text-[15px] font-medium leading-snug text-white">
+                        {question.question}
+                      </p>
+
+                      <div className="mt-4 space-y-2">
+                        {question.options.map((option, optIndex) => {
+                          const isCorrectAnswer = optIndex === question.correctAnswer;
+                          const isUserAnswer = optIndex === userAnswer;
+                          return (
+                            <div
+                              key={optIndex}
+                              className={cn(
+                                'flex items-center gap-3 rounded-xl border px-4 py-3',
+                                isCorrectAnswer
+                                  ? 'border-emerald-500/50 bg-emerald-500/[0.08]'
+                                  : isUserAnswer
+                                    ? 'border-red-400/50 bg-red-500/[0.08]'
+                                    : 'border-white/[0.08] bg-[hsl(0_0%_9%)]'
+                              )}
+                            >
+                              <span
+                                className={cn(
+                                  'flex h-7 w-7 shrink-0 items-center justify-center rounded-full border text-[11px] font-bold',
+                                  isCorrectAnswer
+                                    ? 'border-emerald-500/50 bg-emerald-500/20 text-emerald-200'
+                                    : isUserAnswer
+                                      ? 'border-red-400/50 bg-red-500/20 text-red-200'
+                                      : 'border-white/[0.14] bg-white/[0.05] text-white'
+                                )}
+                              >
+                                {isCorrectAnswer ? (
+                                  <CheckCircle className="h-3.5 w-3.5" />
+                                ) : isUserAnswer ? (
+                                  <XCircle className="h-3.5 w-3.5" />
+                                ) : (
+                                  String.fromCharCode(65 + optIndex)
+                                )}
+                              </span>
+                              <span className="flex-1 text-[14px] leading-snug text-white">
+                                {option}
+                              </span>
+                              {/* Named, not colour-only — the marking has to
+                                  survive a screen reader and colour blindness. */}
+                              {isCorrectAnswer && (
+                                <span className="shrink-0 text-[11px] font-semibold uppercase tracking-wider text-emerald-300">
+                                  Correct
+                                </span>
+                              )}
+                              {isUserAnswer && !isCorrectAnswer && (
+                                <span className="shrink-0 text-[11px] font-semibold uppercase tracking-wider text-red-300">
+                                  You
+                                </span>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+
+                      {/* Everyone else's hit rate on this question. Being told
+                          that most people miss it is the difference between
+                          "I'm behind" and "this one is genuinely hard" — and
+                          it's true far more often than learners assume. */}
+                      {failureRate !== undefined && failureRate >= 40 && (
+                        <p className="mt-4 rounded-xl border border-white/[0.1] bg-white/[0.04] px-4 py-2.5 text-[12.5px] text-white">
+                          <span className="font-semibold text-elec-yellow">{failureRate}%</span> of
+                          people get this one wrong
+                          {status === 'incorrect' ? " — you're in good company." : '.'}
+                        </p>
+                      )}
+
+                      {question.explanation && (
+                        <div className="mt-4 rounded-xl border border-white/[0.08] bg-[hsl(0_0%_9%)] p-4">
+                          <p className="mb-1.5 text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
+                            Why
+                          </p>
+                          <p className="text-[13.5px] leading-relaxed text-white">
+                            {question.explanation}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
+          {/* Reaching the end of a review is the moment to act on it. */}
+          <div className="mt-6 grid gap-2.5 sm:grid-cols-2">
+            {stats.incorrect > 0 && (
+              <Button
+                onClick={() =>
+                  navigate('/apprentice/revision', {
+                    state: { from: config.exitPath, label: 'course' },
+                  })
+                }
+                className="min-h-[48px] rounded-xl bg-elec-yellow text-[14px] font-semibold text-black hover:bg-elec-yellow/90 touch-manipulation"
+              >
+                <RotateCcw className="mr-2 h-4 w-4" />
+                Drill the {stats.incorrect} you missed
+              </Button>
+            )}
+            <Button
+              onClick={() => setShowReview(false)}
+              variant="outline"
+              className="min-h-[48px] rounded-xl border-white/[0.14] bg-white/[0.06] text-[14px] font-medium text-white hover:bg-white/[0.1] touch-manipulation"
+            >
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back to results
+            </Button>
           </div>
         </div>
       </div>
     );
   }
-
   // Active exam interface
   const answeredCount = selectedAnswers.filter((a) => a !== -1).length;
   const progressPercentage = (answeredCount / examQuestions.length) * 100;
@@ -717,22 +930,24 @@ export const StandardMockExam = ({
   return (
     <div className="bg-[#0d0d0d] overflow-x-hidden">
       {/* Desktop Header - hidden on mobile */}
-      <div className="hidden lg:block sticky top-0 z-50 backdrop-blur-sm bg-[#1a1a1a]/80 border-b border-elec-yellow/30">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
-          <div>
-            <Link to={config.exitPath} className="text-white hover:text-elec-yellow">
-              <ArrowLeft className="h-5 w-5" />
-            </Link>
-          </div>
-          <div className="text-center">
-            <div className="text-sm text-white">{config.examTitle}</div>
-            <div
-              className={`font-mono text-lg font-bold ${timeRemaining < 300 ? 'text-red-400 animate-pulse' : 'text-elec-yellow'}`}
-            >
-              {formatTime(timeRemaining)}
-            </div>
-          </div>
-          <div></div>
+      {/* The timer used to live here AND in the sidebar. Now the sidebar is
+          sticky and beside the question, one clock is enough — two running
+          countdowns on one screen is noise, not urgency. */}
+      <div className="sticky top-0 z-50 hidden border-b border-white/[0.1] bg-[#1a1a1a]/90 backdrop-blur-sm lg:block">
+        <div className="mx-auto flex max-w-6xl items-center gap-3 px-4 py-2.5 sm:px-6">
+          <Link
+            to={config.exitPath}
+            className="-ml-1 flex h-11 shrink-0 items-center gap-1.5 rounded-full border border-white/[0.12] bg-white/[0.06] pl-2.5 pr-4 text-[13px] font-medium text-white transition-colors hover:bg-white/[0.1] touch-manipulation"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Exit exam
+          </Link>
+          <span className="min-w-0 flex-1 truncate text-[13.5px] font-medium text-white">
+            {config.examTitle}
+          </span>
+          <span className="shrink-0 text-[12.5px] tabular-nums text-white">
+            {answeredCount} of {examQuestions.length} answered
+          </span>
         </div>
       </div>
 
@@ -804,10 +1019,15 @@ export const StandardMockExam = ({
 
       {/* Desktop Layout */}
       <div className="hidden lg:block">
-        <div className="max-w-4xl mx-auto p-4">
-          <div className="grid grid-cols-1 gap-4">
+        {/* Two columns, not one. This grid was `grid-cols-1`, which put the
+            timer, progress and question navigator in a card BELOW the
+            question — so on the widest screens you had to scroll past the
+            answers to see how long was left. Question left, navigator right,
+            sticky so it stays with you down a long question. */}
+        <div className="mx-auto max-w-6xl p-4">
+          <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-start">
             {/* Question Panel */}
-            <Card className="border border-elec-yellow/30">
+            <Card className="border border-white/[0.1]">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between mb-6">
                   <div>
@@ -912,7 +1132,7 @@ export const StandardMockExam = ({
             </Card>
 
             {/* Desktop Sidebar */}
-            <Card className="bg-transparent border border-elec-yellow/30 shadow-lg">
+            <Card className="border border-white/[0.1] bg-transparent shadow-lg lg:sticky lg:top-20">
               <CardContent className="p-4">
                 <div className="space-y-6">
                   {/* Timer */}

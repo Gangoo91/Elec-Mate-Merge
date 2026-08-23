@@ -558,7 +558,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Issue MCS installation certificates with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for certification, quoting, and job management. Issue EICs, EICRs…"
+          description="Join 1,600+ UK electricians using Elec-Mate for certification, quoting, and job management. Issue EICs, EICRs…"
           icon={ShieldCheck}
         />
       </>
@@ -595,7 +595,7 @@ export default function MCSCertificationGuidePage() {
       faqHeading="Frequently Asked Questions About MCS Certification"
       relatedPages={relatedPages}
       ctaHeading="Grow Your Solar Business with Elec-Mate"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for certification, quoting, and job management. Issue solar installation certificates on your phone. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for certification, quoting, and job management. Issue solar installation certificates on your phone. 7-day free trial, cancel anytime."
     />
   );
 }

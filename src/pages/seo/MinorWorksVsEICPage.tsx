@@ -608,7 +608,7 @@ const sections = [
           digital documentation, not just a PDF copy.
         </p>
         <SEOAppBridge
-          title="All 16 Certificate Types in One App"
+          title="All 19 Certificate Types in One App"
           description="Stop guessing which certificate to use. Elec-Mate guides you to the right form based on the scope of work."
           icon={ClipboardCheck}
         />
@@ -646,7 +646,7 @@ export default function MinorWorksVsEICPage() {
       faqHeading="Frequently Asked Questions About Minor Works vs EIC"
       relatedPages={relatedPages}
       ctaHeading="Right certificate, every time"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site certification. Minor Works, EIC, EICR, and 5 more certificate types. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site certification. Minor Works, EIC, EICR, and 5 more certificate types. 7-day free trial."
     />
   );
 }

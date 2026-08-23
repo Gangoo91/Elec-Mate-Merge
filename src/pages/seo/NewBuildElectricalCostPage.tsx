@@ -538,7 +538,7 @@ export default function NewBuildElectricalCostPage() {
       faqHeading="Frequently Asked Questions About New Build Electrical Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote New Build Electrical Packages with Per-Plot Pricing"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for new build quoting with outlet schedules, specification levels, and EIC templates. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for new build quoting with outlet schedules, specification levels, and EIC templates. 7-day free trial."
     />
   );
 }

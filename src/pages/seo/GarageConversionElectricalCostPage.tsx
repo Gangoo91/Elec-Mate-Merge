@@ -470,7 +470,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify garage conversion electrical work on your"
-          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification."
+          description="Join 1,600+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification."
           icon={Home}
         />
       </>

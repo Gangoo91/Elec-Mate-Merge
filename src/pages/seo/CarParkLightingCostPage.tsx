@@ -592,7 +592,7 @@ export default function CarParkLightingCostPage() {
       faqHeading="Frequently Asked Questions About Car Park Lighting Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Car Park Lighting with Per-Column Pricing"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for external lighting quotes with per-column pricing, CCTV integration, and professional PDF output. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for external lighting quotes with per-column pricing, CCTV integration, and professional PDF output. 7-day free trial."
     />
   );
 }

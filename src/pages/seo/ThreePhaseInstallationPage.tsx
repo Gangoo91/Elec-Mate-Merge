@@ -553,7 +553,7 @@ const sections = [
         </div>
         <p>
           For detailed guidance on{' '}
-          <SEOInternalLink href="/earthing-arrangements">earthing arrangements</SEOInternalLink>{' '}
+          <SEOInternalLink href="/guides/earthing-systems-tns-tncs-tt-explained">earthing arrangements</SEOInternalLink>{' '}
           including TN-S, TN-C-S, and TT systems, see our dedicated guide.
         </p>
       </>
@@ -642,7 +642,7 @@ export default function ThreePhaseInstallationPage() {
       faqHeading="Frequently Asked Questions About Three Phase Installation"
       relatedPages={relatedPages}
       ctaHeading="Size Cables and Design Boards Faster"
-      ctaSubheading="Elec-Mate's cable sizing calculator, voltage drop calculator, and AI circuit designer handle three phase calculations instantly. Join 1,000+ UK electricians. 7-day free trial, cancel anytime."
+      ctaSubheading="Elec-Mate's cable sizing calculator, voltage drop calculator, and AI circuit designer handle three phase calculations instantly. Join 1,600+ UK electricians. 7-day free trial, cancel anytime."
     />
   );
 }

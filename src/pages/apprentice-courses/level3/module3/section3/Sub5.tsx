@@ -102,7 +102,7 @@ const quizQuestions = [
     ],
     correctAnswer: 2,
     explanation:
-      'The neutral might carry full line current under fault or extreme imbalance, plus triplen harmonics that add. BS 7671 §523 may require neutral upsizing where 3rd harmonic content &gt; 15 %.',
+      'The neutral might carry full line current under fault or extreme imbalance, plus triplen harmonics that add. BS 7671 §523 may require neutral upsizing where 3rd harmonic content > 15 %.',
   },
   {
     id: 3,
@@ -184,7 +184,7 @@ const quizQuestions = [
     ],
     correctAnswer: 0,
     explanation:
-      'When 3rd harmonic content &gt; 15 % of fundamental, BS 7671 requires factoring the neutral as a current-carrying conductor in cable sizing. Practically: neutral CSA ≥ line CSA; sometimes 1.5× for very harmonic-rich loads.',
+      'When 3rd harmonic content > 15 % of fundamental, BS 7671 requires factoring the neutral as a current-carrying conductor in cable sizing. Practically: neutral CSA ≥ line CSA; sometimes 1.5× for very harmonic-rich loads.',
   },
 ];
 
@@ -197,7 +197,7 @@ const faqs = [
   {
     question: 'How do I measure triplen content in practice?',
     answer:
-      "A power-quality analyser shows harmonic spectrum and individual harmonic %. Look at the THD (Total Harmonic Distortion) figure plus the 3rd harmonic %. THD up to 5 % is normal. THD &gt; 8 % or 3rd &gt; 15 % is when you start needing neutral upsizing or active filtering.",
+      "A power-quality analyser shows harmonic spectrum and individual harmonic %. Look at the THD (Total Harmonic Distortion) figure plus the 3rd harmonic %. THD up to 5 % is normal. THD > 8 % or 3rd > 15 % is when you start needing neutral upsizing or active filtering.",
   },
   {
     question: 'Why does a server room need a 200 % neutral?',
@@ -207,7 +207,7 @@ const faqs = [
   {
     question: 'How do I balance a 3-phase install in practice?',
     answer:
-      "List every single-phase final circuit and its expected current. Distribute them across L1, L2, L3 so each line carries roughly the same total. Use a clamp meter on each line at the DB to verify after commissioning. Re-balance if any one is consistently &gt;10% above average.",
+      "List every single-phase final circuit and its expected current. Distribute them across L1, L2, L3 so each line carries roughly the same total. Use a clamp meter on each line at the DB to verify after commissioning. Re-balance if any one is consistently >10% above average.",
   },
   {
     question: 'Will a 3-phase RCD trip on harmonic neutral current?',
@@ -249,7 +249,7 @@ export default function Sub5() {
               'Imbalance creates neutral current = vector sum of unequal phase currents.',
               'Triplen harmonics (3rd, 9th, 15th) are in phase across all three lines → ADD in the neutral.',
               'On heavily non-linear loads (LED, IT, EV charging), neutral can carry > line current.',
-              'BS 7671 §523 may require oversized neutral when 3rd harmonic &gt; 15 % of fundamental.',
+              'BS 7671 §523 may require oversized neutral when 3rd harmonic > 15 % of fundamental.',
             ]}
           />
 
@@ -455,7 +455,7 @@ export default function Sub5() {
           <ConceptBlock
             title="Lost-neutral fault — why a broken neutral is dangerous"
             plainEnglish="If the neutral conductor breaks on a 3-phase + N install with single-phase loads, the loads on each phase end up in series across L1-L2-L3 instead of L1-N-N-L2 etc. Voltages on the more-lightly-loaded phases can rise from 230 V to nearly 400 V. Equipment fries."
-            onSite="Classic symptom of lost neutral on a small commercial install: customer reports 'half the lights blew at once', some sockets dead, others delivering odd voltages, computer PSUs popping. Test L-N voltages on each phase; if any reads &gt; 270 V or wildly unequal, you have lost neutral somewhere upstream. Switch off main switch immediately — every minute means more damage."
+            onSite="Classic symptom of lost neutral on a small commercial install: customer reports 'half the lights blew at once', some sockets dead, others delivering odd voltages, computer PSUs popping. Test L-N voltages on each phase; if any reads > 270 V or wildly unequal, you have lost neutral somewhere upstream. Switch off main switch immediately — every minute means more damage."
           >
             <p>
               How to find a lost neutral systematically:
@@ -470,7 +470,7 @@ export default function Sub5() {
 
           <ConceptBlock
             title="Practical balancing — the 'load schedule' approach"
-            plainEnglish="On any new 3-phase + N install, draw up a one-page load schedule listing every final circuit, its expected steady current, and which phase you have allocated it to. Tally the totals per phase. Aim for &lt; 10 % imbalance between L1, L2, L3. Adjust before pulling the cables."
+            plainEnglish="On any new 3-phase + N install, draw up a one-page load schedule listing every final circuit, its expected steady current, and which phase you have allocated it to. Tally the totals per phase. Aim for < 10 % imbalance between L1, L2, L3. Adjust before pulling the cables."
             onSite="On a refurb where the existing balance is poor, start by clamping each line at the DB during typical operating hours (lunch, mid-morning, end of day). Identify the heaviest single-phase circuits on the most-loaded phase. Move those circuits to the lightest phase at the next planned downtime. Re-clamp. Iterate."
           >
             <p>
@@ -533,7 +533,7 @@ export default function Sub5() {
               'Unbalanced loads → neutral carries the vector difference.',
               'Triplen harmonics (3rd, 9th, 15th) are in phase across all three lines → add in neutral.',
               'Heavily non-linear loads can drive neutral current higher than line current.',
-              'BS 7671 §523.6.3: neutral ≥ line where 3rd &gt; 15 %; size for full line current where &gt; 33 %.',
+              'BS 7671 §523.6.3: neutral ≥ line where 3rd > 15 %; size for full line current where > 33 %.',
               'Always balance loads at design and verify with clamp meter at commissioning.',
               'Data centres and LED-heavy commercial installs typically use 200 % neutral.',
             ]}

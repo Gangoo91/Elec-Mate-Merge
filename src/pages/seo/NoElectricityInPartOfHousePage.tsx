@@ -668,7 +668,7 @@ export default function NoElectricityInPartOfHousePage() {
       faqHeading="Frequently Asked Questions About Partial Power Loss"
       relatedPages={relatedPages}
       ctaHeading="Diagnose Power Loss and Certify Repairs on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for AI fault diagnosis, circuit testing records, and professional certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI fault diagnosis, circuit testing records, and professional certificates. 7-day free trial, cancel anytime."
     />
   );
 }

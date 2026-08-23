@@ -655,7 +655,7 @@ export default function WhenIsEICRequiredPage() {
         },
       ]}
       ctaHeading="Complete EIC Forms on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for digital EIC forms with auto-validated test results, Board Scanner, digital signatures, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for digital EIC forms with auto-validated test results, Board Scanner, digital signatures, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

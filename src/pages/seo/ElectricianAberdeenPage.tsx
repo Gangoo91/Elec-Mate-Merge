@@ -480,7 +480,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Aberdeen electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
+          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -518,7 +518,7 @@ export default function ElectricianAberdeenPage() {
       faqHeading="Frequently Asked Questions About Electricians in Aberdeen"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Aberdeen Electricians"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Scottish regulations and the challenges of granite property work. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Scottish regulations and the challenges of granite property work. 7-day free trial."
     />
   );
 }

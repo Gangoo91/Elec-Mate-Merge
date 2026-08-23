@@ -276,11 +276,11 @@ const HNCModule4Section3_5 = () => {
 
           <TLDR
             points={[
-              'BS 7671 Reg 411.3.3 (revised in A4:2026) requires 30&nbsp;mA RCD additional protection on socket-outlets ≤ 32&nbsp;A — exception for non-dwellings with documented risk assessment.',
-              'BS 7671 Reg 411.3.4 (introduced in A4:2026) requires 30&nbsp;mA RCD on AC final circuits supplying luminaires within domestic (household) premises.',
+              'BS 7671 Reg 411.3.3 (revised in A4:2026) requires 30 mA RCD additional protection on socket-outlets ≤ 32 A — exception for non-dwellings with documented risk assessment.',
+              'BS 7671 Reg 411.3.4 (introduced in A4:2026) requires 30 mA RCD on AC final circuits supplying luminaires within domestic (household) premises.',
               'RCD types: AC (resistive only), A (AC + pulsating DC), F (A + high freq for VSDs), B (A + smooth DC for EV chargers, PV, BMS).',
-              'Test: A4:2026 revised RCD test methodology — single-shot 1×IΔn (NOT 5×IΔn as in older guidance) — verifies disconnection within 300&nbsp;ms.',
-              'For TT systems: R_A × IΔn ≤ 50&nbsp;V — earth electrode resistance must be low enough that residual current trips before touch voltage exceeds 50&nbsp;V.',
+              'Test: A4:2026 revised RCD test methodology — single-shot 1×IΔn (NOT 5×IΔn as in older guidance) — verifies disconnection within 300 ms.',
+              'For TT systems: R_A × IΔn ≤ 50 V — earth electrode resistance must be low enough that residual current trips before touch voltage exceeds 50 V.',
             ]}
           />
 
@@ -707,14 +707,14 @@ const HNCModule4Section3_5 = () => {
 
           <KeyTakeaways
             points={[
-              'Reg 411.3.3 (A4:2026): 30&nbsp;mA RCD additional protection on every socket-outlet ≤ 32&nbsp;A — only escape is a documented risk assessment in non-dwellings.',
-              'Reg 411.3.4 (A4:2026, NEW): 30&nbsp;mA RCD additional protection on every AC final circuit supplying luminaires in domestic premises.',
+              'Reg 411.3.3 (A4:2026): 30 mA RCD additional protection on every socket-outlet ≤ 32 A — only escape is a documented risk assessment in non-dwellings.',
+              'Reg 411.3.4 (A4:2026, NEW): 30 mA RCD additional protection on every AC final circuit supplying luminaires in domestic premises.',
               'RCD types: AC (resistive only — now largely obsolete), A (AC + pulsating DC, general purpose), F (A + high freq, for VSDs), B (A + smooth DC, for EV / PV / BMS).',
               'Per-circuit RCBOs preferred over shared RCDs — fault on one circuit trips only that circuit, no cascade nuisance.',
-              'Test methodology under A4:2026: single-shot 1×IΔn (NOT 5×IΔn — that was older guidance), verifies disconnection within 300&nbsp;ms.',
-              'TT systems: R_A × IΔn ≤ 50&nbsp;V — earth electrode resistance must be low enough that touch voltage stays below 50&nbsp;V.',
-              'Time-delayed (S-type) RCDs at sub-main level give discrimination with downstream 30&nbsp;mA RCDs — fault stays local.',
-              'Z_s_max under Table 41.3 (A4:2026): B32 = 1.37&nbsp;Ω (NOT 1.44 — older value), C32 = 0.68&nbsp;Ω, B16 = 2.73&nbsp;Ω.',
+              'Test methodology under A4:2026: single-shot 1×IΔn (NOT 5×IΔn — that was older guidance), verifies disconnection within 300 ms.',
+              'TT systems: R_A × IΔn ≤ 50 V — earth electrode resistance must be low enough that touch voltage stays below 50 V.',
+              'Time-delayed (S-type) RCDs at sub-main level give discrimination with downstream 30 mA RCDs — fault stays local.',
+              'Z_s_max under Table 41.3 (A4:2026): B32 = 1.37 Ω (NOT 1.44 — older value), C32 = 0.68 Ω, B16 = 2.73 Ω.',
             ]}
           />
 

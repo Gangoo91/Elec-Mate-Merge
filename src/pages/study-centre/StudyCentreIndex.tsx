@@ -25,12 +25,14 @@
 import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { useAuth } from '@/contexts/AuthContext';
 import { useStudyStreak } from '@/hooks/useStudyStreak';
 import { useQuizResults } from '@/hooks/useQuizResults';
 import { useLearningXP } from '@/hooks/useLearningXP';
 import { useLastStudyLocation } from '@/hooks/useLastStudyLocation';
 import { useCourseProgress } from '@/hooks/useCourseProgress';
 import { completedSectionsForCourse } from '@/lib/courseProgressMatch';
+import { getCount as getMissedCount } from '@/lib/missedQuestions';
 import useSEO from '@/hooks/useSEO';
 
 import {
@@ -45,6 +47,8 @@ import {
   type HubTool,
 } from '@/components/hub/HubPrimitives';
 import { curatedVideos } from '@/data/apprentice/curatedVideos';
+import { TOTAL_IN_APP_MOCK_EXAMS } from '@/data/study-centre/inAppMockExams';
+import { flashcardSetDefinitions } from '@/data/flashcards';
 import {
   TOTAL_COURSES,
   countByTrack,
@@ -76,8 +80,10 @@ const CATEGORIES: CategoryDef[] = [
     id: 'apprentice',
     eyebrow: 'Apprentice',
     title: 'Apprentice training',
-    description:
-      'Level 2 & 3 qualifications, AM2 prep and the fundamentals every electrician needs.',
+    // Descriptions lead with WHO the track is for. On a hub with four
+    // near-identical cards, "who am I in this list?" is the question a new
+    // student is actually asking, and the titles alone don't answer it.
+    description: 'For apprentices and college students — Level 2, Level 3 and AM2 prep.',
     routeKeys: ['apprentice'],
     href: '/study-centre/apprentice',
   },
@@ -85,7 +91,7 @@ const CATEGORIES: CategoryDef[] = [
     id: 'upskilling',
     eyebrow: 'CPD',
     title: 'Professional upskilling',
-    description: 'BS 7671, EV charging, solar PV, smart home and other specialist tracks.',
+    description: 'For qualified electricians — BS 7671, EV charging and solar PV.',
     routeKeys: [
       'upskilling',
       'bs7671',
@@ -109,7 +115,7 @@ const CATEGORIES: CategoryDef[] = [
     id: 'general',
     eyebrow: 'Safety',
     title: 'General upskilling',
-    description: 'Cross-industry safety — IPAF, first aid, working at height and site essentials.',
+    description: 'For everyone on site — IPAF, first aid, working at height and CSCS.',
     routeKeys: [
       'general-upskilling',
       'fire-safety',
@@ -133,8 +139,7 @@ const CATEGORIES: CategoryDef[] = [
     id: 'personal',
     eyebrow: 'Growth',
     title: 'Personal development',
-    description:
-      'Leadership, emotional intelligence, resilience and the soft skills that compound.',
+    description: 'For every stage of your career — leadership, confidence and resilience.',
     routeKeys: [
       'personal-development',
       'leadership-on-site',
@@ -159,6 +164,7 @@ const CATEGORIES: CategoryDef[] = [
 
 export default function StudyCentreIndex() {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const studyStreakData = useStudyStreak();
   const quizData = useQuizResults();
   const xpData = useLearningXP();
@@ -242,34 +248,75 @@ export default function StudyCentreIndex() {
     return items;
   }, [lastLocation, lastLocLoading, getLastStudiedDisplay, navigate, totalCourses]);
 
+  // ── Revise & test yourself ───────────────────────────────────────────
+  // Mock exams and flashcards are the two most-used study habits after the
+  // courses themselves; they used to be invisible from this page (flashcards
+  // two taps away under On-the-job tools, mock exams not linked at all).
+  // Counts are derived from the catalogues, never typed by hand — see the
+  // CategoryDef note above for how hand-typed counts drift.
+  const missedCount = user?.id ? getMissedCount(user.id) : 0;
+  const reviseCards: HubTool[] = useMemo(
+    () => [
+      {
+        id: 'mock-exams',
+        title: 'Mock exams',
+        value: String(TOTAL_IN_APP_MOCK_EXAMS),
+        valueLabel: 'papers to sit',
+        // The in-app index, not the public /mock-exams SEO pages — those are
+        // the free acquisition funnel and stay where they are.
+        to: '/study-centre/mock-exams',
+      },
+      {
+        id: 'flashcards',
+        title: 'Flashcards',
+        value: String(flashcardSetDefinitions.length),
+        valueLabel: 'revision decks',
+        to: '/apprentice/on-job-tools/flashcards',
+      },
+      {
+        id: 'revision',
+        title: 'Quick revision',
+        // The pile only fills once you've got questions wrong — until then
+        // the card explains itself rather than showing a dead zero.
+        ...(missedCount > 0
+          ? { value: String(missedCount), valueLabel: 'to win back', alert: true }
+          : { description: 'Replays the questions you get wrong until you beat them.' }),
+        // onClick rather than `to` so the session knows it was opened from the
+        // Study Centre and sends the learner back here, not to Today.
+        onClick: () =>
+          navigate('/apprentice/revision', {
+            state: { from: '/study-centre', label: 'Study Centre' },
+          }),
+      },
+      {
+        id: 'videos',
+        title: 'Video library',
+        value: String(curatedVideos.length),
+        valueLabel: 'training videos',
+        to: '/study-centre/videos',
+      },
+    ],
+    [missedCount, navigate]
+  );
+
   // ── Your learning ────────────────────────────────────────────────────
-  // A card either reports or invites, never both — so a track you've started
-  // shows progress and one you haven't shows what's in it.
+  // The description ALWAYS shows: it says who the track is for, which is the
+  // one thing a learner picking a track needs and the one thing that used to
+  // vanish. Progress moves to the footer line, so a started track reports and
+  // still explains itself. (Same unit trap as the KPI above: `completed`
+  // counts sections, never courses — so it's a bare figure, not a fraction.)
   const learningCards: HubTool[] = useMemo(() => {
-    const cards: HubTool[] = CATEGORIES.map((c) => {
+    return CATEGORIES.map((c) => {
       const completed = completedByCategory[c.id] ?? 0;
       return {
         id: c.id,
         eyebrow: c.eyebrow,
         title: c.title,
-        // Same unit trap as the KPI above: `completed` is sections, so it can't
-        // be shown over a course count. A bare figure is the honest one.
-        ...(completed > 0
-          ? { value: String(completed), valueLabel: 'sections done' }
-          : { description: c.description }),
+        description: c.description,
+        meta: completed > 0 ? `${completed} section${completed === 1 ? '' : 's'} done` : undefined,
         to: c.href,
       };
     });
-
-    cards.push({
-      id: 'videos',
-      title: 'Video library',
-      value: String(curatedVideos.length),
-      valueLabel: 'training videos',
-      to: '/study-centre/videos',
-    });
-
-    return cards;
   }, [completedByCategory]);
 
   return (
@@ -312,7 +359,7 @@ export default function StudyCentreIndex() {
                 ? `Across ${totalQuizzes} quiz${totalQuizzes === 1 ? '' : 'zes'}`
                 : undefined
             }
-            onClick={() => navigate('/study-centre/apprentice')}
+            onClick={() => navigate('/mock-exams')}
           />
           <HubKpi
             /*
@@ -335,6 +382,8 @@ export default function StudyCentreIndex() {
             onClick={() => navigate('/study-centre/apprentice')}
           />
         </HubKpiRow>
+
+        <HubToolGrid label="Revise & test yourself" cards={reviseCards} columns="four" />
 
         <HubToolGrid label="Your learning" cards={learningCards} columns="four" />
       </HubBody>

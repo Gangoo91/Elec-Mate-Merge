@@ -13,7 +13,7 @@ export const EmergencyLightingQuickCheck2_1 = () => {
       type: 'correct' as const,
       text: 'Escape routes have minimum 1 lux horizontal illuminance',
       explanation:
-        'BS 5266-1 requires minimum 1 lux horizontal illuminance at floor level on the centre line of escape routes.',
+        'BS EN 1838:2024 requires minimum 1 lux horizontal illuminance at floor level across the full width of escape routes — the centre line alone is no longer sufficient.',
     },
     {
       type: 'correct' as const,

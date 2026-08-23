@@ -445,7 +445,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete Minor Works Certificates on your phone"
-          description="Elec-Mate's certificate apps let you document doorbell installations and repairs with test results and instant PDF export. Join 1,000+ UK electricians."
+          description="Elec-Mate's certificate apps let you document doorbell installations and repairs with test results and instant PDF export. Join 1,600+ UK electricians."
           icon={FileCheck2}
         />
       </>
@@ -481,7 +481,7 @@ export default function DoorbellNotWorkingPage() {
       faqHeading="Frequently Asked Questions About Doorbells Not Working"
       relatedPages={relatedPages}
       ctaHeading="Document Electrical Repairs on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for professional certificates, AI fault diagnosis, and job documentation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for professional certificates, AI fault diagnosis, and job documentation. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -491,7 +491,7 @@ export default function ConsumerUnitReplacementManchesterPage() {
       faqHeading="Frequently Asked Questions About Consumer Unit Replacement in Manchester"
       relatedPages={relatedPages}
       ctaHeading="Quote Consumer Unit Replacements in Manchester"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI board scanning. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI board scanning. 7-day free trial, cancel anytime."
     />
   );
 }

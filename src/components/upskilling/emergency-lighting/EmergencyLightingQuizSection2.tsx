@@ -26,11 +26,11 @@ export const EmergencyLightingQuizSection2 = () => {
     },
     {
       id: 2,
-      question: 'What is the minimum illuminance required along the centre line of an escape route?',
+      question: 'What is the minimum illuminance required across the width of an escape route?',
       options: ['1 lux', '0.5 lux', '2 lux', '5 lux'],
       correct: 0,
       explanation:
-        'BS 5266-1 requires a minimum of 1 lux along the centre line of an escape route, with at least 0.5 lux across the central band of the route.',
+        'BS EN 1838:2024 requires a minimum of 1 lux across the FULL WIDTH of an escape route, not just the centre line as the 2013 edition allowed. Borders are excluded: 0.5 m each side on routes wider than 2 m, or a quarter of the width on routes of 2 m or less.',
     },
     {
       id: 3,

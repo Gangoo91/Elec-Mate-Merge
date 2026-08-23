@@ -43,7 +43,7 @@ const keyTakeaways = [
   'All EV charger installations must comply with BS 7671:2018+A4:2026 Section 722 (Electric Vehicle Charging Installations), which specifies requirements for protective devices, earthing, and load management.',
   'Oxford City Council and the surrounding Oxfordshire area have seen rapid EV adoption, driven by the Ultra Low Emission Zone (ULEZ) and local Net Zero commitments — demand for home charger installations has grown significantly.',
   'Only OZEV-approved installers can apply the grant on your behalf. NICEIC and NAPIT registration also provides assurance of competence and appropriate insurance cover.',
-  'This guide is written and reviewed by the Andrew Moore, founder of Elec-Mate, — NICEIC-registered electricians and BS 7671:2018+A4:2026 specialists who produce and maintain the Elec-Mate certification platform.',
+  'This guide is written and reviewed by Andrew Moore, founder of Elec-Mate — a qualified electrician (18th Edition, C&G 2391 inspection and testing) who builds and maintains the Elec-Mate certification platform.',
 ];
 
 const faqs = [
@@ -262,7 +262,7 @@ const sections = [
             <strong>Step 0 — DNO check (often missed):</strong> If the new EV charger circuit will
             significantly increase the supply demand, your installer must notify the Distribution
             Network Operator (DNO) before work begins. Failing to notify the DNO when required is
-            one of the most common compliance mistakes identified by the Andrew Moore, founder of Elec-Mate,.
+            one of the most common compliance mistakes flagged in Elec-Mate&apos;s installer guidance.
             Your installer should confirm whether a G99/G98 notification or a new supply agreement
             is needed, particularly for three-phase or commercial installations.
           </div>
@@ -624,7 +624,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your EV charger installation business with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EV certification, instant PDF export, and professional quoting."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site EV certification, instant PDF export, and professional quoting."
           icon={Zap}
         />
       </>
@@ -661,7 +661,7 @@ export default function EVChargerInstallationOxfordPage() {
       faqHeading="Frequently Asked Questions About EV Charger Installation in Oxford"
       relatedPages={relatedPages}
       ctaHeading="Complete EV Installation Certificates On Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EV certification, OZEV documentation, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EV certification, OZEV documentation, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

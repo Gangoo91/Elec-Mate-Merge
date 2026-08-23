@@ -301,7 +301,7 @@ const HNCModule2Section3_1 = () => {
 
           <TLDR
             points={[
-              'You can state dry-air composition (78% N₂, 21% O₂) and use M = 28.97 g/mol when interrogating manufacturers&rsquo; psychrometric data.',
+              'You can state dry-air composition (78% N₂, 21% O₂) and use M = 28.97 g/mol when interrogating manufacturers’ psychrometric data.',
               'You apply the ideal gas law PV = mRT (with R = 287 J/kg·K for dry air) to derive density at any temperature, pressure or altitude on a building services project.',
               'You convert between volume flow (l/s, m³/s) and mass flow (kg/s) using ρ = P/(RT) — the bridge between fan duty schedules and coil-load calculations.',
               'You apply cp = 1005 J/kg·K to size sensible heating and cooling loads, and recognise where altitude correction (above ~500 m) changes the answer.',

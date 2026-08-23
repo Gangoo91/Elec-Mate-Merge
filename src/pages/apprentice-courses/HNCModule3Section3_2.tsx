@@ -302,8 +302,8 @@ const HNCModule3Section3_2 = () => {
 
           <TLDR
             points={[
-              'You design every UK BSE installation around 50 Hz, T = 20 ms, &omega; = 314 rad/s — these three numbers anchor every reactance, motor-speed and waveform calculation you will produce.',
-              'You convert between RMS and peak (V&#x2098; = V&#x1d63;&#x2098;&#x209b; &times; &radic;2) when sizing insulation, semiconductors and surge protection — peak is what punctures, RMS is what heats.',
+              'You design every UK BSE installation around 50 Hz, T = 20 ms, ω = 314 rad/s — these three numbers anchor every reactance, motor-speed and waveform calculation you will produce.',
+              'You convert between RMS and peak (V&#x2098; = V&#x1d63;&#x2098;&#x209b; × √2) when sizing insulation, semiconductors and surge protection — peak is what punctures, RMS is what heats.',
               'You apply n&#x209b; = 120f/p to verify motor synchronous speed before mechanical sizing — a 60 Hz import on UK supply runs 17 % slow and may overheat.',
               'You recognise X&#x2097; rises and X&#x1d04; falls with frequency — relevant when DNO frequency excursions or VSD harmonic content shift the operating point.',
             ]}
@@ -311,7 +311,7 @@ const HNCModule3Section3_2 = () => {
 
           <RegsCallout
             source="BS EN 50160 — Voltage characteristics of electricity supplied by public distribution networks"
-            clause="The nominal frequency of the supply voltage shall be 50 Hz. Under normal operating conditions the mean value of the fundamental frequency measured over 10 s shall be within 50 Hz &plusmn; 1 % during 99.5 % of a year."
+            clause="The nominal frequency of the supply voltage shall be 50 Hz. Under normal operating conditions the mean value of the fundamental frequency measured over 10 s shall be within 50 Hz ± 1 % during 99.5 % of a year."
             meaning={
               <>
                 BS EN 50160 is the standard the DNO works to. Your BSE designs assume
@@ -638,13 +638,13 @@ const HNCModule3Section3_2 = () => {
           <KeyTakeaways
             points={[
               'T = 1/f — UK 50 Hz gives T = 20 ms; 60 Hz systems give T = 16.67 ms. Memorise both for international equipment work.',
-              '&omega; = 2&pi;f — UK 50 Hz gives &omega; = 314 rad/s; 60 Hz gives 377 rad/s. Used in every instantaneous-value and reactance calculation.',
-              'V&#x2098; = V&#x1d63;&#x2098;&#x209b; &times; &radic;2 — UK 230 V RMS &harr; 325 V peak. Insulation rated to peak, conductors rated to RMS.',
-              'v(t) = V&#x2098; sin(&omega;t) — set your calculator to radians, not degrees, when computing instantaneous values.',
+              'ω = 2πf — UK 50 Hz gives ω = 314 rad/s; 60 Hz gives 377 rad/s. Used in every instantaneous-value and reactance calculation.',
+              'V&#x2098; = V&#x1d63;&#x2098;&#x209b; × √2 — UK 230 V RMS &harr; 325 V peak. Insulation rated to peak, conductors rated to RMS.',
+              'v(t) = V&#x2098; sin(ωt) — set your calculator to radians, not degrees, when computing instantaneous values.',
               'Motor synchronous speed n&#x209b; = 120f/p — drops 17 % when 60 Hz equipment is run on 50 Hz, with consequent torque and cooling implications.',
-              'X&#x2097; = 2&pi;fL rises with frequency; X&#x1d04; = 1/(2&pi;fC) falls with frequency — drives PFC capacitor sizing and harmonic resonance studies.',
+              'X&#x2097; = 2πfL rises with frequency; X&#x1d04; = 1/(2πfC) falls with frequency — drives PFC capacitor sizing and harmonic resonance studies.',
               'Wavelength at 50 Hz is ~4000 km — transmission line effects are negligible inside any building, but matter on long-haul HV.',
-              'BS EN 50160 fixes UK supply at 50 Hz &plusmn; 1 % under normal conditions — your BSE designs assume this envelope.',
+              'BS EN 50160 fixes UK supply at 50 Hz ± 1 % under normal conditions — your BSE designs assume this envelope.',
             ]}
           />
 

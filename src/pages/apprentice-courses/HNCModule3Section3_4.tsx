@@ -282,7 +282,7 @@ const HNCModule3Section3_4 = () => {
           <TLDR
             points={[
               'You decompose every distorted waveform into a Fourier series — the fundamental at 50 Hz plus integer-order harmonics tell you what neutral, transformer and PFC kit you need.',
-              'You measure THD on every commissioning of LED, VSD or IT load — voltage THD &gt; 5 % at the PCC breaches Engineering Recommendation G5/5 and demands mitigation.',
+              'You measure THD on every commissioning of LED, VSD or IT load — voltage THD > 5 % at the PCC breaches Engineering Recommendation G5/5 and demands mitigation.',
               'You size the neutral up (often equal to or larger than phase) on circuits feeding triplen-rich loads — third harmonic adds arithmetically in the neutral, not vectorially.',
               'You specify K-rated transformers (K-4 office, K-13 IT, K-20 data centre) for non-linear loads — standard transformers overheat from eddy and stray losses on harmonic currents.',
             ]}
@@ -800,14 +800,14 @@ const HNCModule3Section3_4 = () => {
 
           <KeyTakeaways
             points={[
-              'Fourier series decomposes any periodic waveform into fundamental + harmonics — order n = 1 is the 50 Hz fundamental, n &gt; 1 are integer multiples.',
-              'Triplen harmonics (3rd, 9th, 15th) are zero-sequence and add in the neutral &mdash; can drive neutral current to 1.73&times; phase current.',
-              'Positive sequence (1, 4, 7&hellip;) rotates with the fundamental; negative sequence (5, 11&hellip;) opposes; zero sequence (3, 9&hellip;) does not rotate.',
-              'THD = &radic;(&Sigma;V&#x2099;&sup2;) / V&#x2081; &mdash; G5/5 caps THDv at 5 % on LV public supplies.',
-              'BS 7671 524.2 + Appendix 4 &sect;5.5 control neutral sizing; over 33 % triplen content can require neutral &gt; phase.',
-              'IEEE 519 sets harmonic limits at the PCC; IEC 61000-3-2 limits equipment emissions (Class A&ndash;D).',
+              'Fourier series decomposes any periodic waveform into fundamental + harmonics — order n = 1 is the 50 Hz fundamental, n > 1 are integer multiples.',
+              'Triplen harmonics (3rd, 9th, 15th) are zero-sequence and add in the neutral — can drive neutral current to 1.73× phase current.',
+              'Positive sequence (1, 4, 7…) rotates with the fundamental; negative sequence (5, 11…) opposes; zero sequence (3, 9…) does not rotate.',
+              'THD = √(&Sigma;V&#x2099;²) / V&#x2081; — G5/5 caps THDv at 5 % on LV public supplies.',
+              'BS 7671 524.2 + Appendix 4 &sect;5.5 control neutral sizing; over 33 % triplen content can require neutral > phase.',
+              'IEEE 519 sets harmonic limits at the PCC; IEC 61000-3-2 limits equipment emissions (Class A–D).',
               'K-rated transformers (K-4 office, K-13 IT, K-20 data centre) handle eddy/stray heating from non-linear loads.',
-              'Mitigation hierarchy: line reactor &rarr; DC link choke &rarr; passive filter &rarr; 12-pulse rectifier &rarr; active filter / AFE drive &mdash; cost rises with effectiveness.',
+              'Mitigation hierarchy: line reactor → DC link choke → passive filter → 12-pulse rectifier → active filter / AFE drive — cost rises with effectiveness.',
             ]}
           />
 

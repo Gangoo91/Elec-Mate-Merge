@@ -94,7 +94,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/earthing-systems-guide',
+    href: '/guides/earthing-systems-tns-tncs-tt-explained',
     title: 'Earthing Systems Guide',
     description: 'TN-S, TN-C-S and TT earthing systems explained with practical examples.',
     icon: Zap,
@@ -682,7 +682,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICs and EICRs with full cable documentation on"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC and EICR completion with conductor size recording, AI board scanning, and instant PDF export."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site EIC and EICR completion with conductor size recording, AI board scanning, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -719,7 +719,7 @@ export default function CableSelectionGuidePage() {
       faqHeading="Frequently Asked Questions About Cable Selection"
       relatedPages={relatedPages}
       ctaHeading="Document Cable Selections and Complete EICs on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EIC and EICR completion with full circuit documentation, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC and EICR completion with full circuit documentation, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

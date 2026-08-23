@@ -280,7 +280,7 @@ const HNCModule1Section2_2 = () => {
 
           <TLDR
             points={[
-              'You will produce risk assessments that satisfy MHSWR Reg 3 — &ldquo;suitable and sufficient&rdquo; — and survive HSE scrutiny after an incident.',
+              'You will produce risk assessments that satisfy MHSWR Reg 3 — “suitable and sufficient” — and survive HSE scrutiny after an incident.',
               'You apply the HSE five-step process consistently — identify hazards, identify who could be harmed, evaluate risk, record significant findings, review.',
               'You can use a 3×3 or 5×5 matrix and explain ALARP versus the Tolerability of Risk model — including when residual risk crosses the broadly acceptable line.',
               'You write residual-risk content that the supervisor and operative can act on, not legalistic prose nobody reads.',
@@ -827,9 +827,9 @@ const HNCModule1Section2_2 = () => {
           <KeyTakeaways
             points={[
               'HSE five-step risk assessment: identify hazards, identify who, evaluate risk, record significant findings, review.',
-              'MHSWR Reg 3 requires &ldquo;suitable and sufficient&rdquo; — the depth scales with the complexity of the work.',
+              'MHSWR Reg 3 requires “suitable and sufficient” — the depth scales with the complexity of the work.',
               'Likelihood × severity matrix is a tool, not the answer — your judgement on residual risk is what counts.',
-              'ALARP (As Low As Reasonably Practicable) is the UK regulator&rsquo;s preferred test — risk reduced until further reduction would be grossly disproportionate.',
+              'ALARP (As Low As Reasonably Practicable) is the UK regulator’s preferred test — risk reduced until further reduction would be grossly disproportionate.',
               'Tolerability of Risk: intolerable region (must be reduced regardless of cost), tolerable region (apply ALARP), broadly acceptable region (no further action normally needed).',
               'Record significant findings only — burying important controls in a 30-page document defeats the purpose.',
               'Review triggers: change of equipment, personnel, location, substance, procedure or after any near-miss or incident.',

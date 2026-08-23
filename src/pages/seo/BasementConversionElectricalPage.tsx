@@ -479,7 +479,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage basement conversion jobs with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for EIC certificates, quoting, and job management. Specialist work deserves specialist tools. 7-day free trial."
+          description="Join 1,600+ UK electricians using Elec-Mate for EIC certificates, quoting, and job management. Specialist work deserves specialist tools. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -516,7 +516,7 @@ export default function BasementConversionElectricalPage() {
       faqHeading="Frequently Asked Questions About Basement Conversion Electrical Work"
       relatedPages={relatedPages}
       ctaHeading="Complete Basement Conversion EICs on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, quoting, and job management. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion, quoting, and job management. 7-day free trial, cancel anytime."
     />
   );
 }

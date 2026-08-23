@@ -658,7 +658,7 @@ export default function EVChargerErrorCodesPage() {
       faqHeading="Frequently Asked Questions About EV Charger Errors"
       relatedPages={relatedPages}
       ctaHeading="Diagnose and Document EV Charger Faults on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for AI fault diagnosis, EV charger testing documentation, and professional certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI fault diagnosis, EV charger testing documentation, and professional certificates. 7-day free trial, cancel anytime."
     />
   );
 }

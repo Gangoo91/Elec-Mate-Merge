@@ -457,7 +457,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage emergency lighting testing with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for EICRs, emergency lighting test records, and BS 7671-compliant documentation. 7-day free trial."
+          description="Join 1,600+ UK electricians using Elec-Mate for EICRs, emergency lighting test records, and BS 7671-compliant documentation. 7-day free trial."
           icon={Lightbulb}
         />
       </>
@@ -494,7 +494,7 @@ export default function EmergencyLightingFaultFindingPage() {
       faqHeading="Frequently Asked Questions About Emergency Lighting Faults"
       relatedPages={relatedPages}
       ctaHeading="Manage Emergency Lighting Testing with Elec-Mate"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EICRs, emergency lighting test records, and compliant documentation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EICRs, emergency lighting test records, and compliant documentation. 7-day free trial, cancel anytime."
     />
   );
 }

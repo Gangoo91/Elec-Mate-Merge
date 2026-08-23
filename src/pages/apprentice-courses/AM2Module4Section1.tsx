@@ -1146,7 +1146,7 @@ const AM2Module4Section1 = () => {
                 question:
                   "What's the actual A4:2026 RCD test routine — I've seen conflicting things online?",
                 answer:
-                  "A4:2026 deleted Table 3A from Appendix 3. The whole 5×IΔn row is gone. The verification routine is: single AC test at 1×IΔn (general-purpose non-delay RCD must trip ≤ 300 ms; delay 'S'-type 130–500 ms; ≤ 40 ms is the figure for additional protection per Chapter 41), plus the manual test button. That's it. Some MFTs still auto-run a ½×IΔn no-trip check — that's pre-test confirmation, not part of the verification you record.",
+                  "A4:2026 deleted Table 3A from Appendix 3. The whole 5×IΔn row is gone — there is no separate 40 ms additional-protection test any more. The verification routine is: single AC test at 1×IΔn (general-purpose non-delay RCD must trip ≤ 300 ms; delay 'S'-type 130–500 ms), plus the manual test button. Additional protection is verified by the device's characteristics — a 30 mA RCD passing the 1×IΔn test (Regulation 415.1.1). Some MFTs still auto-run a ½×IΔn no-trip check — that's pre-test confirmation, not part of the verification you record.",
               },
               {
                 question: 'Why is B32 Zsmax 1.37 Ω now and not the older 1.44 Ω I was taught?',

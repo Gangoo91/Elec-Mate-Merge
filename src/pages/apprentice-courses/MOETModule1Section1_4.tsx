@@ -1219,7 +1219,7 @@ const MOETModule1Section1_4 = () => {
                   <li>LOLER 1998 — MEWPs, hoists, lifting equipment</li>
                   <li>PUWER 1998 — all work equipment</li>
                   <li>CDM 2015 — construction-specific duties</li>
-                  <li>BS 7671:2018+A3:2024 — electrical safety</li>
+                  <li>BS 7671:2018+A4:2026 — electrical safety</li>
                 </ul>
               </div>
             </div>

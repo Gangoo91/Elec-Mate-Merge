@@ -1236,7 +1236,7 @@ function generateV10WinbackHTML(firstName: string, unsubscribeUrl: string): stri
   const safeName = escapeHtmlEmail(firstName);
   const safeUnsub = escapeHtmlEmail(unsubscribeUrl);
   const preheader =
-    '16 certificates redesigned. Invoices rebuilt. New Room Planner. £9.99/mo — £5 less than the App Store.';
+    '19 certificates redesigned. Invoices rebuilt. New Room Planner. £9.99/mo — £5 less than the App Store.';
 
   // Typography palette:
   //   #ffffff — headlines, CTA, price, stat numbers
@@ -1294,7 +1294,7 @@ function generateV10WinbackHTML(firstName: string, unsubscribeUrl: string): stri
 <div style="margin:0 0 6px">
 <span style="display:inline-block;padding:3px 10px;background:#fbbf24;border-radius:20px;font-size:10px;font-weight:800;color:#000;text-transform:uppercase;letter-spacing:0.8px">Redesigned</span>
 </div>
-<p style="margin:0;font-size:18px;font-weight:700;color:#ffffff;line-height:1.25">Inspection &amp; Testing &mdash; 16 certificates rebuilt</p>
+<p style="margin:0;font-size:18px;font-weight:700;color:#ffffff;line-height:1.25">Inspection &amp; Testing &mdash; 19 certificates rebuilt</p>
 <p style="margin:8px 0 0;font-size:14px;color:#f4f4f5;line-height:1.65">EICR, EIC, Minor Works, Testing Only, Fire Alarm (design / install / commission / modify / inspect), Smoke &amp; CO, Solar PV, EV Charging, Lightning Protection, BESS, G98, G99, Emergency Lighting, PAT. Rebuilt from scratch for mobile &mdash; smart cascading forms, swipe through inspection items, a Schedule of Tests that actually works on site.</p>
 </td></tr></table>
 
@@ -1449,7 +1449,7 @@ We've been building. A lot has shipped since your trial.
 
 Here's what's new:
 
-⚡ INSPECTION & TESTING — 16 certificates rebuilt
+⚡ INSPECTION & TESTING — 19 certificates rebuilt
 EICR, EIC, Minor Works, Testing Only, Fire Alarm (design / install /
 commission / modify / inspect), Smoke & CO, Solar PV, EV Charging,
 Lightning Protection, BESS, G98, G99, Emergency Lighting, PAT.
@@ -1477,7 +1477,7 @@ as well as track my CPD. Everything in one place is exactly what I
 need — worth every penny."
 — Jay, ★★★★★ App Store review
 
-750+ tradespeople · 16 certificates · ★★★★★ App Store
+1,600+ electricians · 19 certificates · ★★★★★ App Store
 
 —
 

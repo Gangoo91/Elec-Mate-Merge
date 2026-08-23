@@ -274,10 +274,10 @@ const HNCModule3Section5_5 = () => {
 
           <TLDR
             points={[
-              'You apply n&#x209b; = 120f/p &mdash; synchronous machines lock to grid frequency, no slip, perfect for constant-speed drives like compressors above ~200 kW.',
-              'You control pf via field excitation &mdash; over-excited synchronous motors deliver leading kVAr (synchronous condenser duty) and lift building pf.',
+              'You apply n&#x209b; = 120f/p — synchronous machines lock to grid frequency, no slip, perfect for constant-speed drives like compressors above ~200 kW.',
+              'You control pf via field excitation — over-excited synchronous motors deliver leading kVAr (synchronous condenser duty) and lift building pf.',
               'You specify standby alternators to BS 7698 / ISO 8528, with G99 protection relays for any installation that may run in parallel with the DNO.',
-              'You compare PMSMs (rare-earth permanent magnets, no field winding, IE5 efficiency) for high-end variable-speed duty &mdash; chiller compressors, lift gear, EV-charger output stages.',
+              'You compare PMSMs (rare-earth permanent magnets, no field winding, IE5 efficiency) for high-end variable-speed duty — chiller compressors, lift gear, EV-charger output stages.',
             ]}
           />
 
@@ -1111,7 +1111,7 @@ const HNCModule3Section5_5 = () => {
           <SectionRule />
 
           <Scenario
-            title="Hospital essential-services standby alternator &mdash; G99 connection"
+            title="Hospital essential-services standby alternator — G99 connection"
             situation={
               <>
                 A hospital essential supply has a 1100 kVA diesel-driven synchronous
@@ -1152,14 +1152,14 @@ const HNCModule3Section5_5 = () => {
 
           <KeyTakeaways
             points={[
-              'Synchronous machine: rotor locked to supply frequency &mdash; n&#x209b; = 120f/p, no slip.',
-              'Field excitation controls pf &mdash; under-excited absorbs kVAr (lagging), normally-excited unity, over-excited delivers kVAr (leading).',
+              'Synchronous machine: rotor locked to supply frequency — n&#x209b; = 120f/p, no slip.',
+              'Field excitation controls pf — under-excited absorbs kVAr (lagging), normally-excited unity, over-excited delivers kVAr (leading).',
               'Synchronous condenser: idling synchronous motor over-excited to deliver leading kVAr for grid-scale PF correction.',
-              'PMSM (permanent-magnet synchronous): no field winding, no slip, IE4&ndash;IE5 efficiency &mdash; high-end variable-speed duty.',
-              'Hunting: damped by amortisseur (cage) winding on the rotor &mdash; prevents oscillation around steady speed.',
-              'Alternator synchronisation: equal voltage, equal frequency, equal phase, equal phase sequence &mdash; the four required matches before closing the breaker.',
-              'BS 7671 Reg 551 governs LV generating sets &mdash; isolation, parallel operation, automatic disconnection.',
-              'ENA G99 for parallel-running generators &gt; 16 A per phase; G98 for smaller; G100 for export limitation.',
+              'PMSM (permanent-magnet synchronous): no field winding, no slip, IE4–IE5 efficiency — high-end variable-speed duty.',
+              'Hunting: damped by amortisseur (cage) winding on the rotor — prevents oscillation around steady speed.',
+              'Alternator synchronisation: equal voltage, equal frequency, equal phase, equal phase sequence — the four required matches before closing the breaker.',
+              'BS 7671 Reg 551 governs LV generating sets — isolation, parallel operation, automatic disconnection.',
+              'ENA G99 for parallel-running generators > 16 A per phase; G98 for smaller; G100 for export limitation.',
             ]}
           />
 

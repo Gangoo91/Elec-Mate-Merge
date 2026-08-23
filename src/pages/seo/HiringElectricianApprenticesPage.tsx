@@ -548,7 +548,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage your apprentice alongside your business with"
-          description="Scheduling, job management, certificates, and invoicing in one app. Join 1,000+ UK electricians using Elec-Mate to run their business more efficiently."
+          description="Scheduling, job management, certificates, and invoicing in one app. Join 1,600+ UK electricians using Elec-Mate to run their business more efficiently."
           icon={GraduationCap}
         />
       </>
@@ -585,7 +585,7 @@ export default function HiringElectricianApprenticesPage() {
       faqHeading="Frequently Asked Questions About Hiring Electrical Apprentices"
       relatedPages={relatedPages}
       ctaHeading="Run your electrical business and manage your apprentice with Elec-Mate"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for job scheduling, electrical certificates, quoting, and invoicing. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for job scheduling, electrical certificates, quoting, and invoicing. 7-day free trial, cancel anytime."
     />
   );
 }

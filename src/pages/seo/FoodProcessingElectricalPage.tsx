@@ -788,7 +788,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Produce professional electrical records for food factory"
-          description="Create test records and inspection reports that satisfy BRC Global Standard audit requirements. Join 1,000+ UK electricians using Elec-Mate."
+          description="Create test records and inspection reports that satisfy BRC Global Standard audit requirements. Join 1,600+ UK electricians using Elec-Mate."
           icon={ShieldCheck}
         />
       </>
@@ -826,7 +826,7 @@ export default function FoodProcessingElectricalPage() {
       faqHeading="Frequently Asked Questions About Food Processing Electrical Installation"
       relatedPages={relatedPages}
       ctaHeading="Produce BRC-Ready Electrical Records with Elec-Mate"
-      ctaSubheading="Create professional test records and inspection reports for food factory BRC audits. Join 1,000+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
+      ctaSubheading="Create professional test records and inspection reports for food factory BRC audits. Join 1,600+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
     />
   );
 }

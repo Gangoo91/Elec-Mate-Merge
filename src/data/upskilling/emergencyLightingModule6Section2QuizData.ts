@@ -125,7 +125,7 @@ export const emergencyLightingModule6Section2QuizData: QuizQuestion[] = [
     question: 'What was the compliance issue in the Manchester retail complex case study?',
     options: [
       "The luminaires failed the annual three-hour discharge duration test",
-      "Escape route illuminance fell below the 1 lux minimum on the centre line",
+      "Escape route illuminance fell below the 1 lux minimum across the route width",
       "The system achieved adequate lighting but documentation wasn't integrated with the fire safety strategy",
       "Emergency luminaires were wired to the same circuit as the fire alarm",
     ],

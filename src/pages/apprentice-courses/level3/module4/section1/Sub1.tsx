@@ -315,7 +315,7 @@ export default function Sub1() {
             source="Electricity at Work Regulations 1989 — Reg 14"
             clause={
               <>
-                "No person shall be engaged in any work activity on or so near any live conductor (other than one suitably covered with insulating material so as to prevent danger) that danger may arise unless &mdash; (a) it is unreasonable in all the circumstances for it to be dead; (b) it is reasonable in all the circumstances for him to be at work on or near it while it is live; AND (c) suitable precautions (including where necessary the provision of suitable protective equipment) are taken to prevent injury."
+                "No person shall be engaged in any work activity on or so near any live conductor (other than one suitably covered with insulating material so as to prevent danger) that danger may arise unless — (a) it is unreasonable in all the circumstances for it to be dead; (b) it is reasonable in all the circumstances for him to be at work on or near it while it is live; AND (c) suitable precautions (including where necessary the provision of suitable protective equipment) are taken to prevent injury."
               </>
             }
             meaning={

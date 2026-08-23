@@ -2,6 +2,7 @@ import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import { SymbolGallery } from '@/components/seo/SymbolGallery';
+import PdfDownloadCard from '@/components/seo/PdfDownloadCard';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
 import {
   PenTool,
@@ -117,7 +118,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-systems-tns-tncs-tt-explained',
     title: 'Earthing Arrangements',
     description: 'TN-S, TN-C-S, and TT earthing systems explained with symbols and diagrams.',
     icon: Zap,
@@ -157,11 +158,22 @@ const sections = [
           grouped by category. Right-click any symbol to save the SVG, or use the Elec-Mate diagram
           builder to drag them directly into a working drawing.
         </p>
-        <p className="text-sm text-white/70">
+        <p className="text-sm text-white">
           All 114 symbols are free to use, mobile-optimised, and IEC 60617 compliant. Click{' '}
           <strong>Full category guide</strong> on any section to drill into per-symbol reference
           pages with installation context, wiring rules, and BS 7671 cross-references.
         </p>
+        <div className="my-6">
+          <PdfDownloadCard
+            href="https://jtwygbeceundfgnkirof.supabase.co/storage/v1/object/public/lead-magnets/elec-mate-electrical-symbols-chart.pdf"
+            title="The complete UK electrical symbols chart, as a printable PDF"
+            description="Every symbol on this page in one A4 reference sheet — print it, pin it in the van, or keep it on your phone for site."
+            bullets={['All 114 symbols', 'Grouped by category', 'A4 print-ready', 'Free to share']}
+            meta="381 KB"
+            trackAs="symbols_chart_pdf"
+            captureSource="lead_magnet_symbols_chart"
+          />
+        </div>
         <SymbolGallery />
       </>
     ),
@@ -607,7 +619,7 @@ const sections = [
             </li>
             <li>
               <strong>Check the earthing.</strong> Identify the{' '}
-              <SEOInternalLink href="/earthing-arrangements">earthing arrangement</SEOInternalLink>{' '}
+              <SEOInternalLink href="/guides/earthing-systems-tns-tncs-tt-explained">earthing arrangement</SEOInternalLink>{' '}
               (TN-S, TN-C-S, or TT) and trace the main earth conductor to the earthing terminal.
             </li>
             <li>

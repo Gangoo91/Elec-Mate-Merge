@@ -121,7 +121,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-systems-tns-tncs-tt-explained',
     title: 'Earthing Arrangements UK',
     description:
       'TN-S, TN-C-S, and TT earthing systems explained with regulation references and practical guidance.',
@@ -485,7 +485,7 @@ export default function AIRegulationsLookupPage() {
       faqHeading="Frequently Asked Questions About AI Regulations Lookup"
       relatedPages={relatedPages}
       ctaHeading="Search BS 7671 in Seconds"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate's AI Regulations Lookup. Ask any question, get the specific regulation with practical guidance. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate's AI Regulations Lookup. Ask any question, get the specific regulation with practical guidance. 7-day free trial, cancel anytime."
       toolPath="/tools/ai-regulations-lookup"
     />
   );

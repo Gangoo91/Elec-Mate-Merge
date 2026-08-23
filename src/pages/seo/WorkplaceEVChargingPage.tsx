@@ -537,7 +537,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win more workplace EV charging contracts with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for EV certificates, quoting, and job management. Professional documentation wins commercial repeat business."
+          description="Join 1,600+ UK electricians using Elec-Mate for EV certificates, quoting, and job management. Professional documentation wins commercial repeat business."
           icon={FileCheck2}
         />
       </>
@@ -574,7 +574,7 @@ export default function WorkplaceEVChargingPage() {
       faqHeading="Frequently Asked Questions About Workplace EV Charging"
       relatedPages={relatedPages}
       ctaHeading="Complete EV Charging Certificates on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EV charging certificates, commercial quoting, and job management. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EV charging certificates, commercial quoting, and job management. 7-day free trial, cancel anytime."
     />
   );
 }

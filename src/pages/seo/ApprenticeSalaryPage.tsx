@@ -338,7 +338,7 @@ const sections = [
           and money — both the resit fee and the delayed pay increase.
         </p>
         <SEOAppBridge
-          title="Apprentice Electrician Salary 2026: Year 1–4 + JIB Rates"
+          title="Apprentice Electrician Pay 2026: £8.16–£14.03/hr"
           description="Apprentice electrician pay by year: £8.00/hr minimum, JIB Stage 1–4 rates £8.16–£14.03 (London £9.14–£15.72), weekly take-home examples + what you earn once qualified."
           icon={TrendingUp}
         />

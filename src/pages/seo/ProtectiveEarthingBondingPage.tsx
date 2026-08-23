@@ -90,7 +90,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-systems-tns-tncs-tt-explained',
     title: 'Earthing Arrangements Explained',
     description:
       'TN-S, TN-C-S, and TT systems — how each earthing arrangement works and testing requirements.',
@@ -243,7 +243,7 @@ const sections = [
         </div>
         <p>
           Identifying the{' '}
-          <SEOInternalLink href="/earthing-arrangements">earthing arrangement</SEOInternalLink> is
+          <SEOInternalLink href="/guides/earthing-systems-tns-tncs-tt-explained">earthing arrangement</SEOInternalLink> is
           one of the first steps in any inspection. It determines the expected earth fault loop
           impedance values, the bonding requirements, and the type of fault protection that should
           be in place. Record the earthing arrangement on the EICR and verify it by measuring Ze at

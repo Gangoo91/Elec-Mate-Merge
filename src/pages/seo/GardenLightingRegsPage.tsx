@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-systems-tns-tncs-tt-explained',
     title: 'Earthing Arrangements Explained',
     description:
       'TN-S, TN-C-S, and TT earthing — critical for outdoor circuits where PME restrictions may apply.',
@@ -606,7 +606,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Design and certify garden lighting faster"
-          description="Cable sizing, voltage drop checks, AI regulations lookup, and digital certificates — all on your phone. Join 1,000+ UK electricians using Elec-Mate."
+          description="Cable sizing, voltage drop checks, AI regulations lookup, and digital certificates — all on your phone. Join 1,600+ UK electricians using Elec-Mate."
           icon={Sun}
         />
       </>

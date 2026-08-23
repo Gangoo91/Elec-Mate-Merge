@@ -125,7 +125,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-systems-tns-tncs-tt-explained',
     title: 'Earthing Arrangements',
     description: 'TN-C-S, TN-S, and TT earthing systems explained with main bonding requirements.',
     icon: Zap,
@@ -745,7 +745,7 @@ export default function BondingInBathroomPage() {
       faqHeading="Frequently Asked Questions About Bathroom Bonding"
       relatedPages={relatedPages}
       ctaHeading="Record Bonding Observations on Your Phone"
-      ctaSubheading="EICR certificates with AI observation coding, remedial quoting, and instant PDF delivery. Join 1,000+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
+      ctaSubheading="EICR certificates with AI observation coding, remedial quoting, and instant PDF delivery. Join 1,600+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
     />
   );
 }

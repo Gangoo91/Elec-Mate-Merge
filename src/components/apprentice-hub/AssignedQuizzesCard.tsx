@@ -64,6 +64,7 @@ export function AssignedQuizzesCard() {
   const navigate = useNavigate();
   const { quizzes, loading } = useMyAssignedQuizzes();
   const [seen, setSeen] = useState<Set<string>>(() => loadSeen());
+  const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
     saveSeen(seen);
@@ -120,7 +121,7 @@ export function AssignedQuizzesCard() {
 
   const pendingCount = quizzes.filter((q) => q.status !== 'completed').length;
   const overdueCount = quizzes.filter((q) => q.status === 'overdue').length;
-  const visible = sorted.slice(0, 6);
+  const visible = showAll ? sorted : sorted.slice(0, 6);
   const overflow = sorted.length - visible.length;
 
   return (
@@ -152,7 +153,7 @@ export function AssignedQuizzesCard() {
       {overflow > 0 && (
         <button
           type="button"
-          onClick={() => navigate('/apprentice/quizzes')}
+          onClick={() => setShowAll(true)}
           className="w-full px-1 py-3 text-left text-[12px] font-medium text-white/90 hover:text-white touch-manipulation transition-colors"
         >
           View all {sorted.length} →

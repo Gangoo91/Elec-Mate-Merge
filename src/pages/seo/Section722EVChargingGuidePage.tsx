@@ -707,7 +707,7 @@ export default function Section722EVChargingGuidePage() {
       faqHeading="Frequently Asked Questions About Section 722 EV Charging"
       relatedPages={relatedPages}
       ctaHeading="Size Cables and Certify EV Installations on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EV charger cable sizing, quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EV charger cable sizing, quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
     />
   );
 }

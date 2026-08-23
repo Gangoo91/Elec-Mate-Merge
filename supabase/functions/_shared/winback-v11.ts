@@ -73,7 +73,7 @@ function v11Intro(
   return {
     subject: 'A4:2026 is here — a free cheatsheet, on us',
     preheader:
-      'Free 4-page A4:2026 changes cheatsheet · 16 certificates updated · Study Centre rebuilt · we ship every day.',
+      'Free 4-page A4:2026 changes cheatsheet · 19 certificates updated · Study Centre rebuilt · we ship every day.',
     h1: 'A4:2026 is here.',
     sub: 'Here&#x27;s a free cheatsheet on what changed &mdash; plus everything we&#x27;ve built since you last saw us.',
     greeting: `Hey ${safeName} &mdash; Andrew here, founder of Elec-Mate. Thanks for giving us a try a while back. The 18th Edition Amendment 4 dropped this April and every electrician in the country is having to relearn the schedule columns. Whatever you decide about coming back, take the cheatsheet &mdash; it&#x27;ll save you an evening of digging.`,
@@ -175,7 +175,7 @@ export function generateV11HTML(
 <div style="width:40px;height:40px;background:rgba(251,191,36,0.18);border-radius:11px;text-align:center;line-height:40px;font-size:18px">&#x1F4DC;</div>
 </td>
 <td style="padding-left:14px">
-<p style="margin:0;font-size:17px;font-weight:700;color:#ffffff;line-height:1.25">All 16 certificates &mdash; A4-ready</p>
+<p style="margin:0;font-size:17px;font-weight:700;color:#ffffff;line-height:1.25">All 19 certificates &mdash; A4-ready</p>
 <p style="margin:6px 0 0;font-size:14px;color:#f4f4f5;line-height:1.65">EIC, EICR, Minor Works, Solar PV, EV Charging, BESS, G98 / G99, Fire Alarm (design / install / commission / modify / inspect), Smoke &amp; CO, Lightning Protection, Emergency Lighting, Testing Only, PAT &mdash; all carry the new AFDD fields, supplementary-bonding records, updated declarations and the revised schedule columns.</p>
 </td></tr></table>
 

@@ -665,7 +665,7 @@ export default function ConduitInstallationGuidePage() {
       faqHeading="Frequently Asked Questions About Conduit Installation"
       relatedPages={relatedPages}
       ctaHeading="Complete Conduit Installation Certificates on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to certify wiring installations on site. Record earth continuity, loop impedance, and test results — instant PDF export. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to certify wiring installations on site. Record earth continuity, loop impedance, and test results — instant PDF export. 7-day free trial."
     />
   );
 }

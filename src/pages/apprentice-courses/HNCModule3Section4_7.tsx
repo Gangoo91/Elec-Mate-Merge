@@ -280,7 +280,7 @@ const HNCModule3Section4_7 = () => {
 
           <TLDR
             points={[
-              'You design three-phase distribution boards expecting triplen harmonic aggregation in the neutral &mdash; up to 1.73&times; phase current under high-density LED or IT load.',
+              'You design three-phase distribution boards expecting triplen harmonic aggregation in the neutral — up to 1.73× phase current under high-density LED or IT load.',
               'You apply BS 7671 Appendix 4 &sect;5.5 rating factors for harmonic content above 33 % to derate cable / upsize neutral on every distribution feed.',
               'You specify K-rated transformers (K-4 office, K-13 IT, K-20 data centre) on dedicated transformers feeding non-linear load.',
               'You document G5/5 compliance at the PCC and ENA P28 voltage-step compliance for any installation the DNO flags as a Stage 2 / 3 connection assessment.',
@@ -1109,12 +1109,12 @@ const HNCModule3Section4_7 = () => {
 
           <KeyTakeaways
             points={[
-              'Triplen harmonics (3rd, 9th&hellip;) are zero-sequence — add arithmetically in the neutral, can drive I&#x2099; up to 1.73&times; phase RMS.',
-              'BS 7671 Appendix 4 &sect;5.5 mandates derating factors above 33 % triplen content — neutral may need to be 1.45&times; or 2&times; the phase conductor.',
-              'K-rated transformers handle eddy/stray heating from non-linear load &mdash; K-4 office, K-13 IT, K-20 data centre.',
+              'Triplen harmonics (3rd, 9th…) are zero-sequence — add arithmetically in the neutral, can drive I&#x2099; up to 1.73× phase RMS.',
+              'BS 7671 Appendix 4 &sect;5.5 mandates derating factors above 33 % triplen content — neutral may need to be 1.45× or 2× the phase conductor.',
+              'K-rated transformers handle eddy/stray heating from non-linear load — K-4 office, K-13 IT, K-20 data centre.',
               'Engineering Recommendation G5/5 caps THDv at 5 % at the LV PCC — Stage 2/3 assessment for large non-linear loads.',
               'Engineering Recommendation P28 caps voltage step / fluctuation — relevant for large motor starts and welding plants.',
-              'Three-phase mitigation hierarchy: line reactor (3&ndash;5 %) &rarr; DC link choke &rarr; passive tuned filter &rarr; 12-pulse rectifier &rarr; AFE drive / active filter.',
+              'Three-phase mitigation hierarchy: line reactor (3–5 %) → DC link choke → passive tuned filter → 12-pulse rectifier → AFE drive / active filter.',
               'BS 7671 Reg 331.1 forces assessment of equipment characteristics likely to impair the supply — harmonic emission qualifies.',
               'Document harmonic study + mitigation in the design submission and the DNO connection application — both auditors will check.',
             ]}

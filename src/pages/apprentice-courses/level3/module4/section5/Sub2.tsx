@@ -338,7 +338,7 @@ export default function Sub2() {
           <ConceptBlock
             title="EIC, MEIWC or no certificate at all"
             plainEnglish="Different repairs trigger different paperwork. The L3 apprentice needs to recognise which document goes with which scope of work and who signs it."
-            onSite="Domestic kitchen socket faceplate replaced &mdash; no certificate (no circuit altered). Single RCBO swapped on a CU &mdash; MEIWC with the customer&apos;s permission. Distribution board replaced or new circuit added &mdash; full EIC. Notifiable work under Building Regulations Part P (kitchens, bathrooms, garden circuits) goes through a competent-person scheme (NICEIC, NAPIT, ECA) regardless of certificate type."
+            onSite="Domestic kitchen socket faceplate replaced — no certificate (no circuit altered). Single RCBO swapped on a CU — MEIWC with the customer’s permission. Distribution board replaced or new circuit added — full EIC. Notifiable work under Building Regulations Part P (kitchens, bathrooms, garden circuits) goes through a competent-person scheme (NICEIC, NAPIT, ECA) regardless of certificate type."
           >
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li><strong>EIC</strong> &mdash; new circuit, replacement CU / DB, major alteration. Three signatures: design, construction, verification.</li>
@@ -354,7 +354,7 @@ export default function Sub2() {
 
           <ConceptBlock
             title="Targeted retest, not full commissioning"
-            plainEnglish="A post-repair retest verifies the fix and the circuit&apos;s safety case. It doesn&apos;t need to repeat every initial verification test on every circuit; it needs to retest the ones the repair could have affected."
+            plainEnglish="A post-repair retest verifies the fix and the circuit’s safety case. It doesn’t need to repeat every initial verification test on every circuit; it needs to retest the ones the repair could have affected."
           >
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li><strong>The repaired circuit</strong> &mdash; full continuity, IR, polarity, Zs / EFLI, RCD operation. The whole point of the retest.</li>

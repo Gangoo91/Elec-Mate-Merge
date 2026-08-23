@@ -289,7 +289,7 @@ const HNCModule8Section6_5 = () => {
           <PageHero
             eyebrow="Module 8 · Section 6 · Subsection 5"
             title="Documentation"
-            description="O&amp;M manuals, as-built drawings, testing records and building log book requirements for successful project handover"
+            description="O&M manuals, as-built drawings, testing records and building log book requirements for successful project handover"
             tone="purple"
           />
 
@@ -418,7 +418,7 @@ const HNCModule8Section6_5 = () => {
 
           <SectionRule />
 
-          <ConceptBlock title="Building Log Book and Health &amp; Safety File">
+          <ConceptBlock title="Building Log Book and Health & Safety File">
             <p>The building log book (required under Part L of the Building Regulations) and the Health and Safety File (required under CDM 2015) are distinct legal requirements that ensure buildings can be operated safely and efficiently throughout their life.</p>
             <p><strong>Building Log Book Requirements (Part L)</strong></p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">

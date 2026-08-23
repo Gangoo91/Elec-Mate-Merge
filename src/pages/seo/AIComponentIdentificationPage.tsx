@@ -478,7 +478,7 @@ export default function AIComponentIdentificationPage() {
         },
       ]}
       ctaHeading="Identify any component in seconds"
-      ctaSubheading="Join 1,000+ UK electricians using AI for instant component identification, replacement sourcing, and remedial quoting. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using AI for instant component identification, replacement sourcing, and remedial quoting. 7-day free trial, cancel anytime."
     />
   );
 }

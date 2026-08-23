@@ -143,14 +143,28 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
           <span className="text-[15px] font-bold text-white">Total</span>
           <span className="text-[22px] font-bold text-elec-yellow tabular-nums">£{(quote.total || 0).toFixed(2)}</span>
         </div>
-        {totals.cisAmount > 0 && (
+        {/* ELE-1571 — this block was gated on `cisAmount > 0` alone, so a quote
+            with a grant and no CIS showed the full total and nothing else. The
+            grant was calculated correctly and then never displayed, which reads
+            as "the grant isn't deducted" (Sean, 21 Aug). */}
+        {(totals.cisAmount > 0 || totals.grantAmount > 0) && (
           <>
-            <div className="flex justify-between text-[13px] pt-1">
-              <span className="text-white">CIS deduction ({totals.cisRate}% of labour)</span>
-              <span className="text-red-400 tabular-nums">−£{totals.cisAmount.toFixed(2)}</span>
-            </div>
+            {totals.cisAmount > 0 && (
+              <div className="flex justify-between text-[13px] pt-1">
+                <span className="text-white">CIS deduction ({totals.cisRate}% of labour)</span>
+                <span className="text-red-400 tabular-nums">−£{totals.cisAmount.toFixed(2)}</span>
+              </div>
+            )}
+            {totals.grantAmount > 0 && (
+              <div className="flex justify-between text-[13px] pt-1">
+                <span className="text-white">Less: {totals.grantLabel}</span>
+                <span className="text-red-400 tabular-nums">−£{totals.grantAmount.toFixed(2)}</span>
+              </div>
+            )}
             <div className="flex justify-between text-[13px]">
-              <span className="text-white font-semibold">Net payable after CIS</span>
+              <span className="text-white font-semibold">
+                {totals.grantAmount > 0 ? 'Amount to pay' : 'Net payable after CIS'}
+              </span>
               <span className="text-white font-semibold tabular-nums">£{totals.netPayable.toFixed(2)}</span>
             </div>
           </>

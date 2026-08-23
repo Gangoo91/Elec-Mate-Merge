@@ -304,7 +304,7 @@ const HNCModule2Section1_2 = () => {
 
           <TLDR
             points={[
-              'You will apply Newton&rsquo;s law of cooling (Q = hA·ΔT) to size emitters, select coil capacity and predict surface temperatures.',
+              'You will apply Newton’s law of cooling (Q = hA·ΔT) to size emitters, select coil capacity and predict surface temperatures.',
               'You distinguish natural convection (buoyancy-driven, low h) from forced convection (pump/fan-driven, high h) and pick the right one for the duty.',
               'You read film coefficients (h, W/m²·K) from CIBSE Guide C and use them in steady-state heat transfer calculations.',
               'You apply Grashof, Reynolds, Prandtl and Nusselt numbers when you need to derive h rather than look it up.',
@@ -779,7 +779,7 @@ const HNCModule2Section1_2 = () => {
 
           <KeyTakeaways
             points={[
-              'Newton&rsquo;s law of cooling: Q = hA·ΔT — the basis of every emitter and coil sizing calculation.',
+              'Newton’s law of cooling: Q = hA·ΔT — the basis of every emitter and coil sizing calculation.',
               'Natural convection: buoyancy-driven, h typically 5-25 W/m²·K (radiator surface, vertical wall).',
               'Forced convection: pump/fan-driven, h typically 25-15,000 W/m²·K (FCU coil, AHU, condensing tube bank).',
               'Dimensionless groups: Reynolds (inertia/viscous), Grashof (buoyancy/viscous), Prandtl (momentum/thermal diffusivity), Nusselt (convective/conductive).',

@@ -2,9 +2,11 @@ import { lazyWithRetry } from '@/utils/lazyWithRetry';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { LazyRoute } from '@/components/LazyRoute';
 import { ApprenticeTabBar } from '@/components/apprentice-hub/ApprenticeTabBar';
+import { ApprenticeSetupGate } from '@/components/onboarding/ApprenticeSetupGate';
 
 // Lazy-loaded pages
 const ApprenticeHub = lazyWithRetry(() => import('@/pages/ApprenticeHub'));
+const RouteNotFound = lazyWithRetry(() => import('@/pages/apprentice-courses/NotFound'));
 const TodayPage = lazyWithRetry(() => import('@/pages/apprentice/TodayPage'));
 const RevisionSessionPage = lazyWithRetry(() => import('@/pages/apprentice/RevisionSessionPage'));
 const ApprenticeMentalHealth = lazyWithRetry(() => import('@/pages/MentalHealthHub'));
@@ -1143,6 +1145,16 @@ const ApprenticeRoutes = () => (
           </LazyRoute>
         }
       />
+      {/* Dead links must land somewhere — the app-level 404 is unreachable
+          from inside this nested <Routes>. */}
+      <Route
+        path="*"
+        element={
+          <LazyRoute>
+            <RouteNotFound />
+          </LazyRoute>
+        }
+      />
     </Routes>
 
     {/* Primary apprentice navigation — role-gated inside the component
@@ -1150,6 +1162,10 @@ const ApprenticeRoutes = () => (
         spacer before the fixed bar, so page content is never hidden behind
         it without forcing a wrapper div around <Routes>. */}
     <ApprenticeTabBar />
+
+    {/* Course / year capture for apprentices who haven't picked one —
+        renders null for everyone else. */}
+    <ApprenticeSetupGate />
   </>
 );
 

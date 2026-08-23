@@ -504,7 +504,7 @@ export default function Sub5() {
           <ConceptBlock
             title="Five fields on the job sheet protect you for the working life of the installation"
             plainEnglish="Your contemporaneous record is the single most valuable defensive document if anything is later disputed. Five short fields, signed and timed."
-            onSite="The job sheet, the isolation log, the fire log book entry, the IT shutdown confirmation, the supervisor sign-off &mdash; together they form the audit trail HSE expects for any electrical work that affected supply or life-safety systems. None of it takes long; all of it matters."
+            onSite="The job sheet, the isolation log, the fire log book entry, the IT shutdown confirmation, the supervisor sign-off — together they form the audit trail HSE expects for any electrical work that affected supply or life-safety systems. None of it takes long; all of it matters."
           >
             <p>
               The five fields:
@@ -522,7 +522,7 @@ export default function Sub5() {
             source="IET Guidance Note 3 (Inspection and Testing) — referencing HSE HSR25 'Memorandum of guidance on the Electricity at Work Regulations 1989'"
             clause={
               <>
-                "The HSE&apos;s publication HSR25 recommends that records of all maintenance, including test results, be kept throughout the working life of an installation. This recommendation supports compliance with the Electricity at Work Regulations 1989 (EAWR), Regulation 4(2)."
+                "The HSE’s publication HSR25 recommends that records of all maintenance, including test results, be kept throughout the working life of an installation. This recommendation supports compliance with the Electricity at Work Regulations 1989 (EAWR), Regulation 4(2)."
               </>
             }
             meaning={

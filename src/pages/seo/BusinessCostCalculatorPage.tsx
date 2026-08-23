@@ -467,7 +467,7 @@ export default function BusinessCostCalculatorPage() {
         },
       ]}
       ctaHeading="Know Your True Business Costs"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to calculate overheads, price jobs accurately, and run profitable businesses. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to calculate overheads, price jobs accurately, and run profitable businesses. 7-day free trial, cancel anytime."
       extraSchemas={[
         {
           '@type': 'SoftwareApplication',

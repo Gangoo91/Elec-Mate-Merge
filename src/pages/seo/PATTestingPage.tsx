@@ -118,7 +118,7 @@ const features = [
   },
   {
     icon: Briefcase,
-    title: 'Part of 16 Certificate Types',
+    title: 'Part of 19 Certificate Types',
     description:
       'PAT testing is one of eight certificate types in Elec-Mate, alongside EIC, EICR, Minor Works, Emergency Lighting, Fire Alarm, EV Charger…',
   },
@@ -191,7 +191,7 @@ export default function PATTestingPage() {
         <div className="relative max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-yellow-400 text-sm font-medium mb-6">
             <Plug className="w-4 h-4" />
-            Part of 16 Certificate Types
+            Part of 19 Certificate Types
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-5">
             PAT Testing App
@@ -851,7 +851,7 @@ export default function PATTestingPage() {
 
       <SEOCTASection
         heading="Start PAT Testing Digitally"
-        subheading="Join 1,000+ UK electricians using Elec-Mate for professional testing and certification. 7-day free trial, cancel anytime."
+        subheading="Join 1,600+ UK electricians using Elec-Mate for professional testing and certification. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

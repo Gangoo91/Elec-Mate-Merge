@@ -456,7 +456,7 @@ export default function TaxNIEstimatorPage() {
         },
       ]}
       ctaHeading="Estimate Your Tax Bill Accurately"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to track income, log expenses, and estimate tax in real time. No January surprises. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to track income, log expenses, and estimate tax in real time. No January surprises. 7-day free trial, cancel anytime."
       extraSchemas={[
         {
           '@type': 'SoftwareApplication',

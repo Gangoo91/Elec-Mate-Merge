@@ -220,8 +220,8 @@ export default function TrunkingFillCalculatorPage() {
       <section className="px-5 pb-0">
         <div className="max-w-4xl mx-auto">
           <p className="text-xs text-white text-center">
-            Reviewed by the Andrew Moore, founder of Elec-Mate, — IET Wiring Regulations (BS 7671) specialists
-            and C&amp;G 2382 qualified assessors.
+            Reviewed by Andrew Moore, founder of Elec-Mate — a qualified electrician with 18th
+            Edition (BS 7671) and C&amp;G 2391 inspection and testing qualifications.
           </p>
         </div>
       </section>
@@ -735,7 +735,7 @@ export default function TrunkingFillCalculatorPage() {
 
       <SEOCTASection
         heading="Size Trunking Correctly Every Time"
-        subheading="Join 1,000+ UK electricians using Elec-Mate for on-site calculations. 7-day free trial, cancel anytime."
+        subheading="Join 1,600+ UK electricians using Elec-Mate for on-site calculations. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

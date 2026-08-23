@@ -607,7 +607,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Design, certify, and quote commercial lighting on your phone"
-          description="Cable sizing, voltage drop, EIC and emergency lighting certificates, quoting, and invoicing — all in one app. Join 1,000+ UK electricians using Elec-Mate."
+          description="Cable sizing, voltage drop, EIC and emergency lighting certificates, quoting, and invoicing — all in one app. Join 1,600+ UK electricians using Elec-Mate."
           icon={Lightbulb}
         />
       </>
@@ -644,7 +644,7 @@ export default function CommercialLightingGuidePage() {
       faqHeading="Frequently Asked Questions About Commercial Lighting Installation"
       relatedPages={relatedPages}
       ctaHeading="Quote, Design, and Certify Commercial Lighting on Your Phone"
-      ctaSubheading="Cable sizing, voltage drop, EIC and emergency lighting certificates, professional quoting — all in one app. Join 1,000+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
+      ctaSubheading="Cable sizing, voltage drop, EIC and emergency lighting certificates, professional quoting — all in one app. Join 1,600+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
     />
   );
 }

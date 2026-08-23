@@ -144,7 +144,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      'Luminaires with high lamp luminance (&gt;50,000 cd/m²) typically require shielding angles of 30° or greater. This prevents direct view of the lamp from normal working positions and reduces discomfort glare.',
+      'Luminaires with high lamp luminance (>50,000 cd/m²) typically require shielding angles of 30° or greater. This prevents direct view of the lamp from normal working positions and reduces discomfort glare.',
   },
   {
     id: 6,

@@ -555,7 +555,7 @@ export default function MineralInsulatedCableGuidePage() {
       faqHeading="Frequently Asked Questions About Mineral Insulated (MICC) Cable"
       relatedPages={relatedPages}
       ctaHeading="Complete MICC Installation Certificates on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to certify fire-critical cable installations on site. Record insulation resistance test results and cable details — instant PDF export. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to certify fire-critical cable installations on site. Record insulation resistance test results and cable details — instant PDF export. 7-day free trial."
     />
   );
 }

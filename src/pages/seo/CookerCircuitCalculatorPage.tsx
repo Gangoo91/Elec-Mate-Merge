@@ -466,7 +466,7 @@ export default function CookerCircuitCalculatorPage() {
         },
       ]}
       ctaHeading="Size cooker circuits with confidence"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for diversity, cable sizing, and certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for diversity, cable sizing, and certification. 7-day free trial, cancel anytime."
       toolPath="/tools/cooker-circuit-calculator"
     />
   );

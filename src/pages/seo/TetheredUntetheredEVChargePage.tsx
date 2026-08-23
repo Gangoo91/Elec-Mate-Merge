@@ -639,7 +639,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional EV charger installations with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for EV certificates, quoting, and job management. Complete every installation professionally. 7-day free trial."
+          description="Join 1,600+ UK electricians using Elec-Mate for EV certificates, quoting, and job management. Complete every installation professionally. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -676,7 +676,7 @@ export default function TetheredUntetheredEVChargePage() {
       faqHeading="Frequently Asked Questions About Tethered and Untethered EV Chargers"
       relatedPages={relatedPages}
       ctaHeading="Complete EV Charging Certificates on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EV certificates, quoting, and job management. Tethered, untethered, domestic, or commercial — every installation done right. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EV certificates, quoting, and job management. Tethered, untethered, domestic, or commercial — every installation done right. 7-day free trial."
     />
   );
 }

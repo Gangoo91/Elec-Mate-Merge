@@ -157,14 +157,14 @@ const quizQuestions = [
     question:
       'Reg 642.2 says the inspection shall verify the equipment is "correctly selected and erected in accordance with BS 7671, taking into account":',
     options: [
-      'The customer&rsquo;s preferences.',
+      'The customer’s preferences.',
       'The price list at the wholesaler.',
-      'Manufacturers&rsquo; instructions.',
+      'Manufacturers’ instructions.',
       'The previous installation on the same site.',
     ],
     correctAnswer: 2,
     explanation:
-      'Reg 642.2(b) requires the inspection to verify the equipment is correctly selected and erected in accordance with BS 7671 taking into account manufacturers&rsquo; instructions. RCBOs, AFDDs, SPDs, surge devices and modern luminaires all have specific install requirements in their instructions — torque values, orientation, terminal grouping, ambient temperature limits — and the inspection is where you verify those have been followed.',
+      'Reg 642.2(b) requires the inspection to verify the equipment is correctly selected and erected in accordance with BS 7671 taking into account manufacturers’ instructions. RCBOs, AFDDs, SPDs, surge devices and modern luminaires all have specific install requirements in their instructions — torque values, orientation, terminal grouping, ambient temperature limits — and the inspection is where you verify those have been followed.',
   },
   {
     id: 7,
@@ -267,7 +267,7 @@ const inspectionChecklist = [
     chapter: '510s',
     item: 'Correct connection of accessories and equipment',
     visual:
-      'Sockets, switches, lighting points, FCUs, RCBOs all wired to the manufacturer&rsquo;s diagram — line on L, neutral on N, earth on E. Loop-in lighting wired correctly. No mixing of switched and permanent live in the same terminal.',
+      'Sockets, switches, lighting points, FCUs, RCBOs all wired to the manufacturer’s diagram — line on L, neutral on N, earth on E. Loop-in lighting wired correctly. No mixing of switched and permanent live in the same terminal.',
   },
   {
     chapter: '527',
@@ -657,7 +657,7 @@ export default function Sub1() {
 
           <ConceptBlock
             title="Inspection items unique to special locations"
-            plainEnglish="Reg 642.3 ends with &lsquo;The inspection shall include all particular requirements for special installations or locations (Part 7).&rsquo; Bathrooms (Section 701), swimming pools (702), saunas (703), construction sites (704), agricultural (705), conducting locations (706), caravans (708 / 721), marinas (709), medical (710), photovoltaic (712), EV (722), heating cables (753) and several more."
+            plainEnglish="Reg 642.3 ends with ‘The inspection shall include all particular requirements for special installations or locations (Part 7).’ Bathrooms (Section 701), swimming pools (702), saunas (703), construction sites (704), agricultural (705), conducting locations (706), caravans (708 / 721), marinas (709), medical (710), photovoltaic (712), EV (722), heating cables (753) and several more."
             onSite="At Level 2 the most common Part 7 location you will encounter is bathrooms (701). Inspection items there: zone classification correct, IP ratings correct per zone, supplementary bonding present where required (or 30 mA RCD covers the whole installation as the alternative), no socket outlets in Zones 0/1/2 (with limited exceptions for SELV / shaver sockets)."
           >
             <p>
@@ -770,7 +770,7 @@ export default function Sub1() {
           />
 
           <Scenario
-            title="First-fix domestic CU — your supervisor hands it to you and says &lsquo;inspect it&rsquo;"
+            title="First-fix domestic CU — your supervisor hands it to you and says ‘inspect it’"
             situation={
               <>
                 Friday morning. The CU has just been mounted on the wall in a new-build
@@ -779,7 +779,7 @@ export default function Sub1() {
                 (upstairs / downstairs / kitchen), two dedicated radials (cooker / shower).
                 Every cable is in, every terminal is landed, every way is labelled. The
                 CU cover is off. The Schedule of Inspections is on the clipboard. Your
-                supervisor says "inspect it — I&rsquo;ll be back in 20 minutes". The
+                supervisor says "inspect it — I’ll be back in 20 minutes". The
                 installation is dead — no incomer connection yet.
               </>
             }
@@ -825,7 +825,7 @@ export default function Sub1() {
             points={[
               'BS 7671 Section 642 governs inspection. Reg 642.1 fixes the order — inspection precedes testing, both done dead, before energisation.',
               'AC 5.1 — verify wiring systems conform to IET standards — is exactly this Section 642 inspection, evidenced on the IET model Schedule of Inspections.',
-              'Reg 642.2 sets the three verification objectives — equipment compliant with Section 511, correctly selected and erected per BS 7671 and manufacturers&rsquo; instructions, not visibly damaged.',
+              'Reg 642.2 sets the three verification objectives — equipment compliant with Section 511, correctly selected and erected per BS 7671 and manufacturers’ instructions, not visibly damaged.',
               'Reg 642.3 lists twenty inspection items, each mapping to a BS 7671 chapter — 526 connections, 514 identification, 522 routing, 524 CSA, 514.16 single-pole devices, 410 / 415 shock protection, 514.12 / 514.13 labels, 443 / 534 SPDs.',
               'Inspection is what you can see and access without dismantling the install. Where access is limited, record LIM. Where non-compliant, record ✗ and fix before energising.',
               'Inspection rhythm follows the install — origin → distribution → circuit walk → bonding → notices. Pick the same order every time.',

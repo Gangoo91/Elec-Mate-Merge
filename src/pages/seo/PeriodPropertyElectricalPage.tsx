@@ -616,7 +616,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete period property EICRs professionally with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, photographic documentation, and professional quoting."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, photographic documentation, and professional quoting."
           icon={FileCheck2}
         />
       </>
@@ -653,7 +653,7 @@ export default function PeriodPropertyElectricalPage() {
       faqHeading="Frequently Asked Questions About Period Property Electrical Safety"
       relatedPages={relatedPages}
       ctaHeading="Complete Period Property EICRs on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

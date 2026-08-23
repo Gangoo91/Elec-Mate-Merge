@@ -445,7 +445,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Basingstoke electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the South East market."
+          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the South East market."
           icon={MapPin}
         />
       </>
@@ -484,7 +484,7 @@ export default function ElectricianBasingstokePage() {
       faqHeading="Frequently Asked Questions About Electricians in Basingstoke"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Basingstoke Electricians"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the South East market. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the South East market. 7-day free trial."
     />
   );
 }

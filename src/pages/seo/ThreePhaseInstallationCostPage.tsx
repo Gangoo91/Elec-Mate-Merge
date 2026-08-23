@@ -628,7 +628,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify 3-phase installations"
-          description="Join 1,000+ UK electricians using Elec-Mate for quoting, cable sizing, and on-site EIC certification. Everything you need for 3-phase work."
+          description="Join 1,600+ UK electricians using Elec-Mate for quoting, cable sizing, and on-site EIC certification. Everything you need for 3-phase work."
           icon={Wrench}
         />
       </>
@@ -665,7 +665,7 @@ export default function ThreePhaseInstallationCostPage() {
       faqHeading="Frequently Asked Questions About 3-Phase Installation Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote 3-Phase Installations with Real Trade Pricing"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI-powered cost engineering. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI-powered cost engineering. 7-day free trial, cancel anytime."
     />
   );
 }

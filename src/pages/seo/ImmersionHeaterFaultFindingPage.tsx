@@ -569,7 +569,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete certificates and quotes on site with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site Minor Works certificates, EICRs, and instant quoting. No evening paperwork. 7-day free trial."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site Minor Works certificates, EICRs, and instant quoting. No evening paperwork. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -605,7 +605,7 @@ export default function ImmersionHeaterFaultFindingPage() {
       faqHeading="Frequently Asked Questions — Immersion Heater Faults"
       relatedPages={relatedPages}
       ctaHeading="Complete Electrical Certificates On Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for Minor Works certificates, EICRs, and on-site quoting. No evening paperwork. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for Minor Works certificates, EICRs, and on-site quoting. No evening paperwork. 7-day free trial, cancel anytime."
     />
   );
 }

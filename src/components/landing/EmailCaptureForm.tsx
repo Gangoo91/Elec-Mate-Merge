@@ -13,6 +13,7 @@ type Source =
   | 'landing_form'
   | 'exit_intent'
   | 'lead_magnet_cheatsheet'
+  | 'lead_magnet_symbols_chart'
   | 'mock_exam_result'
   | 'footer'
   | 'other';
@@ -23,6 +24,10 @@ interface Props {
   buttonLabel?: string;
   successMessage?: string;
   onSuccess?: (result: { downloadUrl: string | null }) => void;
+  /** Fired when the subscribe call fails, so a caller gating an asset behind
+   *  this form can still hand the asset over rather than leaving the visitor
+   *  with an error and nothing to show for their address. */
+  onError?: () => void;
   includeName?: boolean;
   className?: string;
   compact?: boolean;
@@ -42,6 +47,7 @@ export function EmailCaptureForm({
   buttonLabel = 'Get it',
   successMessage = "You're on the list — check your email.",
   onSuccess,
+  onError,
   includeName = false,
   className,
   compact = false,
@@ -110,6 +116,7 @@ export function EmailCaptureForm({
         downloadUrl: (data as { download_url?: string | null })?.download_url ?? null,
       });
     } catch (err) {
+      onError?.();
       setStatus('error');
       setErrorMsg(err instanceof Error ? err.message : 'Something went wrong. Try again.');
     }

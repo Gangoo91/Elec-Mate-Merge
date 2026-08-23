@@ -34,7 +34,7 @@ export default function DigitalCertificatesAppPage() {
       ]}
       tocItems={[
         { id: 'overview', label: 'Overview' },
-        { id: 'eight-certificate-types', label: '16 Certificate Types' },
+        { id: 'eight-certificate-types', label: '19 Certificate Types' },
         { id: 'ai-powered-features', label: 'AI-Powered Features' },
         { id: 'digital-signatures', label: 'Digital Signatures' },
         { id: 'pdf-export-delivery', label: 'PDF Export and Delivery' },
@@ -45,7 +45,7 @@ export default function DigitalCertificatesAppPage() {
         { id: 'faq', label: 'FAQs' },
         { id: 'related', label: 'Related Pages' },
       ]}
-      badge="16 Certificate Types"
+      badge="19 Certificate Types"
       badgeIcon={FileCheck2}
       heroTitle={
         <>
@@ -55,7 +55,7 @@ export default function DigitalCertificatesAppPage() {
       }
       heroSubtitle="19 certificate types. AI board scanner. Voice test entry. Defect code AI. Digital signatures. Professional PDF output. Email and WhatsApp delivery. Full offline support. Everything you need to complete, sign, and send electrical certificates from your phone — compliant with BS 7671:2018+A4:2026."
       heroFeaturePills={[
-        { icon: FileCheck2, label: '16 Certificate Types' },
+        { icon: FileCheck2, label: '19 Certificate Types' },
         { icon: Camera, label: 'AI Board Scanner' },
         { icon: Mic, label: 'Voice Test Entry' },
         { icon: ShieldCheck, label: 'BS 7671 Compliant' },
@@ -107,7 +107,7 @@ export default function DigitalCertificatesAppPage() {
             </>
           ),
           appBridge: {
-            title: '16 Certificate Types, Unlimited Usage',
+            title: '19 Certificate Types, Unlimited Usage',
             description:
               'EICR, EIC, Minor Works, EV Charger, Solar PV, Fire Alarm, Emergency Lighting, and PAT. AI-powered, digitally signed, professional PDF output.',
             icon: FileCheck2,
@@ -115,7 +115,7 @@ export default function DigitalCertificatesAppPage() {
         },
         {
           id: 'eight-certificate-types',
-          heading: '16 Certificate Types Included',
+          heading: '19 Certificate Types Included',
           content: (
             <>
               <p>
@@ -401,7 +401,7 @@ export default function DigitalCertificatesAppPage() {
       features={[
         {
           icon: FileCheck2,
-          title: '16 Certificate Types',
+          title: '19 Certificate Types',
           description:
             'EICR, EIC, Minor Works, EV Charger, Solar PV, Fire Alarm, Emergency Lighting, and PAT. All included, unlimited usage.',
         },

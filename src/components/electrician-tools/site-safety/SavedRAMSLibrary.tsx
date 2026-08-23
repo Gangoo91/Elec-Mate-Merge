@@ -33,6 +33,7 @@ import { RAMSFilterSheet } from './rams-library/RAMSFilterSheet';
 import { UserRAMSUpload } from './UserRAMSUpload';
 import { cn } from '@/lib/utils';
 import { PullToRefresh } from '@/components/ui/pull-to-refresh';
+import { saveOrShareFile } from '@/utils/save-or-share-file';
 
 interface SavedRAMS {
   id: string;
@@ -210,14 +211,15 @@ export const SavedRAMSLibrary = () => {
 
       if (error) throw error;
 
-      const url = URL.createObjectURL(data);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `RAMS_${doc.project_name}_${format(new Date(doc.created_at), 'yyyy-MM-dd')}.pdf`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
+      // Was an `<a download>` that WKWebView ignores, so on the phone nothing
+      // happened — and the toast below still said "Download Complete". It also
+      // revoked the object URL on the very next line, racing the browser's own
+      // read of the blob. saveOrShareFile throws if it cannot deliver, so the
+      // success toast now only fires when a file has genuinely been handed over.
+      await saveOrShareFile(
+        data,
+        `RAMS_${doc.project_name}_${format(new Date(doc.created_at), 'yyyy-MM-dd')}.pdf`
+      );
 
       toast({
         title: 'Download Complete',

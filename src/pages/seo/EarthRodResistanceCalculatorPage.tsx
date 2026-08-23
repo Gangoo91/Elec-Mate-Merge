@@ -132,7 +132,7 @@ export default function EarthRodResistanceCalculatorPage() {
                 (MCBs, fuses) alone cannot provide adequate disconnection times — the fault current
                 is too low to trip them quickly. This is why BS 7671 requires RCD protection on
                 every circuit in a TT system. Understanding{' '}
-                <SEOInternalLink href="/earthing-arrangements">
+                <SEOInternalLink href="/guides/earthing-systems-tns-tncs-tt-explained">
                   earthing arrangements
                 </SEOInternalLink>{' '}
                 is fundamental to safe installation design.
@@ -394,7 +394,7 @@ export default function EarthRodResistanceCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/earthing-arrangements',
+          href: '/guides/earthing-systems-tns-tncs-tt-explained',
           title: 'Earthing Arrangements Guide',
           description:
             'Complete guide to TN-S, TN-C-S, and TT earthing systems with BS 7671 requirements explained.',

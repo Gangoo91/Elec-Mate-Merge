@@ -300,9 +300,9 @@ const HNCModule1Section1_5 = () => {
 
           <TLDR
             points={[
-              'You will treat every piece of work equipment on a project — Megger, drill, MEWP, lifting accessory, even the client&rsquo;s plant once you operate it — as a PUWER asset.',
+              'You will treat every piece of work equipment on a project — Megger, drill, MEWP, lifting accessory, even the client’s plant once you operate it — as a PUWER asset.',
               'You can identify the regulations that bite on building services: Reg 5 (suitability), Reg 6 (maintenance), Reg 8 (information/instruction), Reg 9 (training), Regs 11-19 (specific hazards).',
-              'You document &ldquo;suitable&rdquo; under Reg 4 — fit for the task, the place and the user — and reject equipment that fails any leg.',
+              'You document “suitable” under Reg 4 — fit for the task, the place and the user — and reject equipment that fails any leg.',
               'You schedule LOLER thorough examinations alongside PUWER inspections and do not conflate the two regimes.',
             ]}
           />
@@ -968,8 +968,8 @@ const HNCModule1Section1_5 = () => {
           <KeyTakeaways
             points={[
               'PUWER 1998 covers any equipment used at work — owned, hired, supplied or even built by the employer.',
-              'Reg 4 &ldquo;suitable&rdquo; has three legs — fit for the task, the place and the user. Sign-off without all three is the most common breach.',
-              'Reg 5 maintenance and Reg 6 inspection apply throughout the equipment&rsquo;s life — not just at handover.',
+              'Reg 4 “suitable” has three legs — fit for the task, the place and the user. Sign-off without all three is the most common breach.',
+              'Reg 5 maintenance and Reg 6 inspection apply throughout the equipment’s life — not just at handover.',
               'Reg 7 deals with specific risks — equipment use restricted to nominated operators with documented training.',
               'Reg 8 information and Reg 9 training are records-based duties — the absence of a record means the duty is presumed unmet.',
               'Regs 11-19 cover dangerous parts, controls, isolation, stability, lighting, markings and warnings — the technical regulations.',

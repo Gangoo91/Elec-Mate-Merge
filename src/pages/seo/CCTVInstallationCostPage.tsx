@@ -633,7 +633,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote CCTV and security installations"
-          description="Join 1,000+ UK electricians using Elec-Mate for quoting with itemised pricing, professional PDF output, and AI cost engineering."
+          description="Join 1,600+ UK electricians using Elec-Mate for quoting with itemised pricing, professional PDF output, and AI cost engineering."
           icon={Wrench}
         />
       </>
@@ -670,7 +670,7 @@ export default function CCTVInstallationCostPage() {
       faqHeading="Frequently Asked Questions About CCTV Installation Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote CCTV Installations with Real Trade Pricing"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI-powered cost engineering. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI-powered cost engineering. 7-day free trial, cancel anytime."
     />
   );
 }

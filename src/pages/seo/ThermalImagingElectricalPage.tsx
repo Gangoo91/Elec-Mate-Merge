@@ -507,7 +507,7 @@ export default function ThermalImagingElectricalPage() {
       faqHeading="Frequently Asked Questions About Thermal Imaging in Electrical Inspections"
       relatedPages={relatedPages}
       ctaHeading="Attach Thermal Images to EICR Reports on Your Phone"
-      ctaSubheading="Elec-Mate's EICR app lets you attach thermal and optical images directly to coded observations for professional client reports. Join 1,000+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate's EICR app lets you attach thermal and optical images directly to coded observations for professional client reports. Join 1,600+ UK electricians. 7-day free trial."
     />
   );
 }

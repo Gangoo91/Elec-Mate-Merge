@@ -532,7 +532,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Whitehaven electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
+          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -571,7 +571,7 @@ export default function ElectricianWhitehavenPage() {
       faqHeading="Frequently Asked Questions About Electricians in Whitehaven"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Whitehaven Electricians"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Whitehaven's Georgian heritage properties, Sellafield-adjacent work, and coastal Cumbrian installations. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Whitehaven's Georgian heritage properties, Sellafield-adjacent work, and coastal Cumbrian installations. 7-day free trial."
     />
   );
 }

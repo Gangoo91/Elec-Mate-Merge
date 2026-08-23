@@ -270,7 +270,7 @@ const HNCModule4Section2_1 = () => {
               'BS 7671 Appendix 4 gives I_t (tabulated current) under reference conditions; you derate for grouping (Cg), ambient (Ca), thermal insulation (Ci) and harmonics (Cf).',
               'Reference method (A–G) is set by how the cable is installed — clipped direct, in conduit, in trunking, on a tray, in a duct, in thermal insulation. Get the method wrong and your I_z is wrong.',
               'For three-phase circuits with high triplen-harmonic content (>33% 3rd), Reg 524.2.2 and Appendix 4 Section 5.5 set a further rating factor for neutral loading.',
-              'BS 7671 Reg 311.1 obliges design within thermal limits and admissible voltage drop — current-carrying capacity is the &lsquo;thermal limits&rsquo; half of that duty.',
+              'BS 7671 Reg 311.1 obliges design within thermal limits and admissible voltage drop — current-carrying capacity is the ‘thermal limits’ half of that duty.',
             ]}
           />
 
@@ -693,7 +693,7 @@ const HNCModule4Section2_1 = () => {
           <KeyTakeaways
             points={[
               'Selection hierarchy: I_b ≤ I_n ≤ I_z. All three must be satisfied — and I_z is the derated capacity, not the table value.',
-              'BS 7671 Appendix 4 tabulates I_t under reference conditions (30&nbsp;°C ambient, no grouping, single circuit, no thermal insulation).',
+              'BS 7671 Appendix 4 tabulates I_t under reference conditions (30 °C ambient, no grouping, single circuit, no thermal insulation).',
               'Apply every derating factor that applies: C_g (grouping), C_a (ambient), C_i (thermal insulation), C_f (harmonics) — multiply, do not pick the lowest.',
               'Reference method (A–G) follows the actual installation. Clipped direct (C) is more generous than in-trunking (B) is more generous than fully embedded (A).',
               'For three-phase circuits with >33% 3rd harmonic, apply the BS 7671 Appendix 4 Section 5.5 rating factor to account for neutral loading.',

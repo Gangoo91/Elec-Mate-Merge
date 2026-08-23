@@ -675,7 +675,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your electrical subcontracting business with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, RAMS generation, invoice management, and AI business support."
+          description="Join 1,600+ UK electricians using Elec-Mate for professional quoting, RAMS generation, invoice management, and AI business support."
           icon={Briefcase}
         />
       </>
@@ -712,7 +712,7 @@ export default function SubcontractingGuidePage() {
       faqHeading="Frequently Asked Questions About Electrical Subcontracting"
       relatedPages={relatedPages}
       ctaHeading="Manage Your Subcontracting Business with Elec-Mate"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for professional quoting, RAMS generation, and AI business support. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for professional quoting, RAMS generation, and AI business support. 7-day free trial, cancel anytime."
     />
   );
 }

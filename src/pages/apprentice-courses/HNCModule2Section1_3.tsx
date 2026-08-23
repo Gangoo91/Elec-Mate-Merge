@@ -287,7 +287,7 @@ const HNCModule2Section1_3 = () => {
 
           <RegsCallout
             source="CIBSE Guide A — Environmental Design (thermal comfort & solar gain chapters)"
-            clause="The radiant component of a building&rsquo;s thermal environment is treated through mean radiant temperature, view factors and surface emissivity. Solar gain is modelled by total solar energy transmittance (g-value) of glazing assemblies and shading devices."
+            clause="The radiant component of a building’s thermal environment is treated through mean radiant temperature, view factors and surface emissivity. Solar gain is modelled by total solar energy transmittance (g-value) of glazing assemblies and shading devices."
             meaning={
               <>
                 CIBSE provides the UK design framework for radiative analysis. As an HNC

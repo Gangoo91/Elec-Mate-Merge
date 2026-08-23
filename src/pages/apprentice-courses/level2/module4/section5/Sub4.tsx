@@ -59,7 +59,7 @@ const checks = [
     ],
     correctIndex: 3,
     explanation:
-      'Reg 411.3.1.1 requires every Class I exposed-conductive-part to be connected to a CPC. A metal-bodied luminaire is Class I — its body is an exposed-conductive-part. CPC must be terminated at the earth terminal. Cut-off-and-ignored is a fail. The fix is straightforward — bring the CPC back to the right length, sleeve it, terminate it at the earth terminal, retest. The trap is the apprentice habit of "the lamp works, so it&rsquo;s fine" — the lamp works without earth right up until a fault makes the body live and someone touches it.',
+      'Reg 411.3.1.1 requires every Class I exposed-conductive-part to be connected to a CPC. A metal-bodied luminaire is Class I — its body is an exposed-conductive-part. CPC must be terminated at the earth terminal. Cut-off-and-ignored is a fail. The fix is straightforward — bring the CPC back to the right length, sleeve it, terminate it at the earth terminal, retest. The trap is the apprentice habit of "the lamp works, so it’s fine" — the lamp works without earth right up until a fault makes the body live and someone touches it.',
   },
   {
     id: 'inspection-rush-mindset',
@@ -95,7 +95,7 @@ const quizQuestions = [
   {
     id: 2,
     question:
-      'A circuit&rsquo;s R1+R2 reading comes back significantly higher than the design predicted — by more than 50%. The most likely cause is:',
+      'A circuit’s R1+R2 reading comes back significantly higher than the design predicted — by more than 50%. The most likely cause is:',
     options: [
       'The insulation resistance is too low somewhere on the circuit, dragging the continuity reading up because leakage current is finding an unintended path.',
       'The test leads have not been nulled, so the reading simply includes the few hundred milliohms of lead resistance and the circuit itself is fine.',
@@ -181,10 +181,10 @@ const quizQuestions = [
     question:
       'A supervisor catches a non-conformance on your install and tells you to stop, fix it, and re-inspect. The right mindset is:',
     options: [
-      'Take the feedback as the whole point of the supervised apprenticeship; understand what the defect was, why it&rsquo;s a non-conformance, fix it properly, learn so it does not happen on the next install.',
+      'Take the feedback as the whole point of the supervised apprenticeship; understand what the defect was, why it’s a non-conformance, fix it properly, learn so it does not happen on the next install.',
       'Explain to the supervisor why the defect is not really a problem and ask them to sign the work off as it stands, since the install would probably function regardless.',
       'Fix the item quickly without asking what was wrong, so the supervisor sees it corrected and does not record the non-conformance against your work.',
-      'Energise the install first to prove it works, then address the supervisor&rsquo;s point only if a fault actually develops once the circuit is live.',
+      'Energise the install first to prove it works, then address the supervisor’s point only if a fault actually develops once the circuit is live.',
     ],
     correctAnswer: 0,
     explanation:
@@ -202,7 +202,7 @@ const faqs = [
     question:
       'How do I tell the customer I cannot energise today because of a non-conformance?',
     answer:
-      'Honestly and directly. "We&rsquo;ve found one item on the install that we need to put right before we can energise safely. It&rsquo;s a small fix and we&rsquo;ll have it sorted in [time]. The reason we don&rsquo;t energise with this defect is [brief explanation of risk — fire / shock / non-compliance with the wiring regulations]. Thank you for understanding." Most customers appreciate the discipline once they understand the reason. Customers who push you to energise an install with a known defect are not customers worth the callback.',
+      'Honestly and directly. "We’ve found one item on the install that we need to put right before we can energise safely. It’s a small fix and we’ll have it sorted in [time]. The reason we don’t energise with this defect is [brief explanation of risk — fire / shock / non-compliance with the wiring regulations]. Thank you for understanding." Most customers appreciate the discipline once they understand the reason. Customers who push you to energise an install with a known defect are not customers worth the callback.',
   },
   {
     question:
@@ -220,12 +220,12 @@ const faqs = [
     question:
       'How does the inspector know to check for these specific items? Is there a hidden rulebook?',
     answer:
-      'Not hidden — it&rsquo;s the IET Guidance Note 3 (Inspection and Testing), the OSG, and the BS 7671 regs themselves. GN3 in particular lays out the inspection items and their interpretation in plain English. Most experienced inspectors carry a mental "checklist of suspicion" built up from every install they have seen go wrong — they are pattern-matching against past experience. The ten items in this Sub are the most common patterns. Once you have inspected fifty installs you build the same mental checklist yourself.',
+      'Not hidden — it’s the IET Guidance Note 3 (Inspection and Testing), the OSG, and the BS 7671 regs themselves. GN3 in particular lays out the inspection items and their interpretation in plain English. Most experienced inspectors carry a mental "checklist of suspicion" built up from every install they have seen go wrong — they are pattern-matching against past experience. The ten items in this Sub are the most common patterns. Once you have inspected fifty installs you build the same mental checklist yourself.',
   },
   {
     question: 'What is the cost of a non-conformance caught at inspection vs caught later?',
     answer:
-      'At inspection, before energisation — a non-conformance costs minutes to fix. Re-strip and re-terminate. Connect the missing CPC. Fit the missing label. Five minutes, no second visit, no rework cost. Caught after energisation, on a callback — a non-conformance costs a return visit (travel + time + apologies), often opening the install back up, possibly disturbing customer&rsquo;s decorating or finishes, and a damaged reputation. Caught much later, after a fault has occurred — a non-conformance can cost a personal injury claim, an HSE investigation, criminal prosecution under EAWR or the Building Safety Act, and the contracting business&rsquo;s insurance cover. The economic argument for slowing down at inspection is overwhelming.',
+      'At inspection, before energisation — a non-conformance costs minutes to fix. Re-strip and re-terminate. Connect the missing CPC. Fit the missing label. Five minutes, no second visit, no rework cost. Caught after energisation, on a callback — a non-conformance costs a return visit (travel + time + apologies), often opening the install back up, possibly disturbing customer’s decorating or finishes, and a damaged reputation. Caught much later, after a fault has occurred — a non-conformance can cost a personal injury claim, an HSE investigation, criminal prosecution under EAWR or the Building Safety Act, and the contracting business’s insurance cover. The economic argument for slowing down at inspection is overwhelming.',
   },
 ];
 
@@ -236,7 +236,7 @@ const nonConformances = [
     spotted:
       'Visible loose conductor at terminal, copper protruding past the brass, sheath / insulation trapped under the screw, conductor pulls out under gentle tug-test.',
     fix:
-      'Loosen the terminal, remove conductor, re-strip to correct length (calibrated cable stripper or careful measurement), re-terminate, torque to manufacturer&rsquo;s spec with a torque screwdriver.',
+      'Loosen the terminal, remove conductor, re-strip to correct length (calibrated cable stripper or careful measurement), re-terminate, torque to manufacturer’s spec with a torque screwdriver.',
     avoid:
       'Calibrate your strip length once and stick to it. Tug-test every termination immediately after you make it. Use a torque screwdriver on terminals where the manufacturer specifies a value (most modern RCBOs do).',
     reg: 'Reg 526.1',
@@ -337,7 +337,7 @@ const nonConformances = [
     fix:
       'Re-test the affected circuit(s). Record values from the instrument download directly. Re-issue the Schedule of Test Results with verified values.',
     avoid:
-      'Use the MFT&rsquo;s memory function during testing — record each value as you take it, with the circuit identifier. At the end, download to PDF or transcribe directly from the instrument. Never write up a test pack from memory after the day is over.',
+      'Use the MFT’s memory function during testing — record each value as you take it, with the circuit identifier. At the end, download to PDF or transcribe directly from the instrument. Never write up a test pack from memory after the day is over.',
     reg: 'Reg 642.4 + Section 643 (recording)',
   },
 ];
@@ -387,7 +387,7 @@ export default function Sub4() {
 
           <ConceptBlock
             title="The catch-rate is the whole point of supervised inspection"
-            plainEnglish="An apprentice working their first few independent installs will have non-conformances caught on inspection. That is the whole point — supervision is the safety net before energisation. The skill is responding properly to caught defects: understanding why it&rsquo;s a non-conformance, fixing it correctly, learning so it does not happen on the next install."
+            plainEnglish="An apprentice working their first few independent installs will have non-conformances caught on inspection. That is the whole point — supervision is the safety net before energisation. The skill is responding properly to caught defects: understanding why it’s a non-conformance, fixing it correctly, learning so it does not happen on the next install."
             onSite="Every supervisor has a story about an apprentice who responded badly to feedback — argued, hid the defect, rushed the fix. Those apprentices struggle through assessment. Every supervisor also has stories about apprentices who absorbed feedback gracefully and turned into competent engineers within two years. The mindset matters as much as the skill."
           >
             <p>
@@ -412,7 +412,7 @@ export default function Sub4() {
           <ConceptBlock
             title="How an experienced inspector sees an install"
             plainEnglish="An experienced inspector walks into a CU and sees ten things at once. The cable colours, the labelling, the busbar arrangement, the SPD presence, the bonding clamp positions, the way the tails are dressed. They are pattern-matching against every install they have ever seen. Defects light up because they break the pattern."
-            onSite="You will not have this pattern library on day one. You build it install by install. The fastest way to build it is to walk inspections alongside experienced inspectors and ask &lsquo;what are you looking at?&rsquo; at each step. After fifty supervised inspections you have the library too."
+            onSite="You will not have this pattern library on day one. You build it install by install. The fastest way to build it is to walk inspections alongside experienced inspectors and ask ‘what are you looking at?’ at each step. After fifty supervised inspections you have the library too."
           >
             <p>
               <strong>What the experienced eye notices on a CU walk-up:</strong>
@@ -644,7 +644,7 @@ export default function Sub4() {
 
           <ConceptBlock
             title="The build-time habits that catch the defect before the inspection does"
-            plainEnglish="The best inspection is one where the supervisor finds nothing — because every defect was caught at build time by the apprentice&rsquo;s own habits. Below — the practical habits that pay off install after install."
+            plainEnglish="The best inspection is one where the supervisor finds nothing — because every defect was caught at build time by the apprentice’s own habits. Below — the practical habits that pay off install after install."
             onSite="Adopt one new habit at a time. Calibrate your strip length first. Then tug-test every termination. Then verify polarity at every accessory before the faceplate goes on. By the end of Year 1 you have the full set and the supervisor catches almost nothing."
           >
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -703,7 +703,7 @@ export default function Sub4() {
 
           <ConceptBlock
             title="When a non-conformance can be accepted on the EIC"
-            plainEnglish="On a brand-new install, every non-conformance must be fixed before the EIC is issued — there is no &lsquo;observation&rsquo; for new work. On periodic inspection (EICR), findings are coded as observations using C1 (immediate danger), C2 (potentially dangerous), C3 (improvement recommended) or FI (further investigation required). The EIC is a different beast from the EICR."
+            plainEnglish="On a brand-new install, every non-conformance must be fixed before the EIC is issued — there is no ‘observation’ for new work. On periodic inspection (EICR), findings are coded as observations using C1 (immediate danger), C2 (potentially dangerous), C3 (improvement recommended) or FI (further investigation required). The EIC is a different beast from the EICR."
             onSite="Most apprentice work is new installs / additions / alterations — EIC territory. The defects you find at inspection get fixed, full stop. The EICR observation codes come later in the qualification (I&T) when you start signing off periodic inspections on existing installs."
           >
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -743,7 +743,7 @@ export default function Sub4() {
                 terminal you are not 100% sure about — copper might be showing past the
                 brass on the line of circuit 4 — but you have not opened the CU again
                 to check. You decide to call it ✓ on the Schedule of Inspections,
-                energise, and "fix it on the next visit if it&rsquo;s a real issue".
+                energise, and "fix it on the next visit if it’s a real issue".
                 That single decision puts you on a path that ends in a callback, a
                 potential fault, and a difficult conversation with your supervisor.
               </>
@@ -764,7 +764,7 @@ export default function Sub4() {
           />
 
           <Scenario
-            title="First-day-on-tools apprentice&rsquo;s inspection of their first ring final"
+            title="First-day-on-tools apprentice’s inspection of their first ring final"
             situation={
               <>
                 You have just wired your first ring final under supervision. Two
@@ -865,7 +865,7 @@ export default function Sub4() {
           <ContentEyebrow>Apprentice progression — what good looks like</ContentEyebrow>
 
           <ConceptBlock
-            title="The trajectory from &lsquo;catches everything&rsquo; to &lsquo;catches nothing&rsquo;"
+            title="The trajectory from ‘catches everything’ to ‘catches nothing’"
             plainEnglish="Across an apprenticeship, the rate at which the supervisor catches your defects should drop. Year 1: ten defects per inspection caught by the supervisor, lots of conversations. Year 2: three or four defects per inspection. Year 3: occasional finding, supervisor mostly verifying your inspection rather than catching defects you missed. Once qualified: defects caught by the supervisor are rare and surprising on both sides."
             onSite="Track this yourself. Keep a quick note of supervisor findings on each inspection. The trend should be downward. If it is not — if you are at month 18 still having the same defects flagged — the conversation with your training officer is going to be about whether the right habits are being formed."
           >

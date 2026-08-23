@@ -306,7 +306,7 @@ const HNCModule2Section6_1 = () => {
           <TLDR
             points={[
               'You compute heating load by summing fabric, infiltration and ventilation losses at design winter T (no internal gains credit when sizing the heat-source).',
-              'You compute cooling load by summing fabric gain (cooling-design ΔT), solar gain (CIBSE irradiance × g-value), and internal gains (people, IT, lighting) at the building&rsquo;s sensible peak hour.',
+              'You compute cooling load by summing fabric gain (cooling-design ΔT), solar gain (CIBSE irradiance × g-value), and internal gains (people, IT, lighting) at the building’s sensible peak hour.',
               'You apply diversity factors (CIBSE Guide A occupancy and equipment) to avoid oversizing — a 0.7 IT diversity in a flexible office, 0.5 in a call centre.',
               'You distinguish steady-state (CIBSE Guide A admittance method, plant sizing) from dynamic simulation (TM52/TM54, energy and overheating studies).',
             ]}
@@ -723,7 +723,7 @@ const HNCModule2Section6_1 = () => {
           <KeyTakeaways
             points={[
               'Heating load = Σ(Q_fabric + Q_vent + Q_inf) at design winter T — no internal gain credit when sizing heat source.',
-              'Cooling load = Σ(Q_fabric_summer + Q_solar + Q_internal) at the building&rsquo;s sensible peak hour.',
+              'Cooling load = Σ(Q_fabric_summer + Q_solar + Q_internal) at the building’s sensible peak hour.',
               'Diversity factors avoid oversizing — read from CIBSE Guide A by occupancy and equipment type.',
               'Steady-state (admittance method) used for plant sizing; dynamic simulation used for energy and overheating studies.',
               'Design margins typical: 10% on heating, 15% on cooling, 20% on humidifiers — document in the schedule notes.',

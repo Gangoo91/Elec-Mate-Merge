@@ -164,9 +164,9 @@ const sections = [
     heading: 'Industrial Electrical Installation: Scope and Key Systems',
     content: (
       <>
-        <p className="text-sm text-white/50 mb-3">
-          Written by a UK registered electrician. Verified against BS&nbsp;7671:2018+A4:2026 and IET
-          Guidance Note 3 (9th&nbsp;Ed, 2022).
+        <p className="text-sm text-white mb-3">
+          Written and reviewed by Andrew Moore, founder of Elec-Mate — a qualified electrician (18th Edition, C&amp;G 2391 inspection and testing). Verified against
+          BS&nbsp;7671:2018+A4:2026 and IET Guidance Note 3 (9th&nbsp;Ed, 2022).
         </p>
         <p>
           Industrial electrical installations are fundamentally different from commercial premises
@@ -777,7 +777,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage industrial electrical contracts with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for industrial project quoting, multi-board EICR completion, and EIC certification. 7-day free trial."
+          description="Join 1,600+ UK electricians using Elec-Mate for industrial project quoting, multi-board EICR completion, and EIC certification. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -815,7 +815,7 @@ export default function IndustrialElectricalCostPage() {
       faqHeading="Frequently Asked Questions: Industrial Electrical Installation Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certificate Industrial Electrical Projects"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for industrial project quoting, multi-board EICR completion, and EIC certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for industrial project quoting, multi-board EICR completion, and EIC certification. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -776,7 +776,7 @@ export default function BestThermalImagingCameraElectricianPage() {
       faqHeading="Frequently Asked Questions About Thermal Imaging for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Add Thermal Evidence to Your EICR Reports"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EICR certificates with photo attachments, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EICR certificates with photo attachments, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -721,7 +721,7 @@ export default function ElectricianToolInsurancePage() {
       faqHeading="Frequently Asked Questions About Electrician Tool Insurance"
       relatedPages={relatedPages}
       ctaHeading="Protect Your Business With the Right Tools"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Manage your business professionally from your phone. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, and job management. Manage your business professionally from your phone. 7-day free trial, cancel anytime."
     />
   );
 }

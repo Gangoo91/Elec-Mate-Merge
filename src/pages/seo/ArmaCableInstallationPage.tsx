@@ -913,7 +913,7 @@ export default function ArmaCableInstallationPage() {
       faqHeading="Frequently Asked Questions About SWA Armoured Cable Installation"
       relatedPages={relatedPages}
       ctaHeading="Certify SWA Cable Installations on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to complete Electrical Installation Certificates on site. Record test results, cable details, and route descriptions — instant PDF export. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to complete Electrical Installation Certificates on site. Record test results, cable details, and route descriptions — instant PDF export. 7-day free trial."
     />
   );
 }

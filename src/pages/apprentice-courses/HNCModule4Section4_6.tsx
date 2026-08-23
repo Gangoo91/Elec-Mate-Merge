@@ -291,7 +291,7 @@ const HNCModule4Section4_6 = () => {
               'Modern LED luminaires hit 130–180 lm/W; the days of 60 lm/W as a Part L floor are gone — current targets are luminaire (not source) efficacy ≥ 95 lm/W for general office.',
               'LENI (Lighting Energy Numerical Indicator, kWh/m²/yr) per BS EN 15193-1 is the calculation Part L uses. Includes parasitic + emergency + control loads — easy to under-count.',
               'Constant Light Output (CLO) compensates for L70 lumen depreciation by starting at 70–80 % power and ramping over the lifetime — saves 10–15 % over the design life.',
-              'Driver quality matters: high power factor (≥ 0.95), low THD (&lt; 15 %), flicker-free per IEEE 1789, and DALI-2 compliance for future-proof controls.',
+              'Driver quality matters: high power factor (≥ 0.95), low THD (< 15 %), flicker-free per IEEE 1789, and DALI-2 compliance for future-proof controls.',
               'AFDD (Reg 421.1.7) is now recommended for AC final circuits — particularly relevant for LED final lighting circuits where driver-end faults can develop arcing.',
             ]}
           />
@@ -710,11 +710,11 @@ const HNCModule4Section4_6 = () => {
               'Luminaire efficacy ≥ 95 lm/W is the working Part L 2021 floor — modern offices target 110–130 lm/W.',
               'LENI per BS EN 15193-1: include parasitic (sensors, emergency, controls) and pick realistic FD / FO factors.',
               'Constant Light Output (CLO) holds the maintained illuminance over life — saves 10–15 % across the design horizon.',
-              'Drivers: PF ≥ 0.95, THD &lt; 15 %, flicker-free per IEEE 1789, DALI-2 for full controls compatibility.',
+              'Drivers: PF ≥ 0.95, THD < 15 %, flicker-free per IEEE 1789, DALI-2 for full controls compatibility.',
               'Controls (absence + daylight) are where the real LENI savings come from — efficacy alone won’t hit 25 kWh/m²/yr.',
               'Reg 421.1.7 (A4:2026) recommends AFDDs for AC final circuits — apply to lighting where fire-load justifies it.',
               'Commission with a real measurement visit — modelled LENI is design intent, measured kWh is reality.',
-              'Document driver, photometric file, controls narrative and LENI workings in the O&amp;M for compliance audit.',
+              'Document driver, photometric file, controls narrative and LENI workings in the O&M for compliance audit.',
             ]}
           />
 

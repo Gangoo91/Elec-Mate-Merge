@@ -1334,7 +1334,7 @@ const FunctionalSkillsModule2Section4 = () => {
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
                     <strong className="text-white">En dash (&ndash;):</strong> Shows a range —
-                    "230&ndash;240V", "16&ndash;32A", "pages 41&ndash;45"
+                    "230–240V", "16–32A", "pages 41–45"
                   </span>
                 </li>
                 <li className="flex items-start gap-2">

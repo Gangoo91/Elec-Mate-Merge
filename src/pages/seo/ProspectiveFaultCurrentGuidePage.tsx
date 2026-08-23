@@ -436,7 +436,7 @@ const sections = [
           (line-to-neutral). The overall PFC recorded on the certificate should be the higher of the
           two values — typically the line-to-neutral short circuit current. The Ze is recorded
           separately in the supply characteristics section of the{' '}
-          <SEOInternalLink href="/earthing-arrangements">earthing arrangements</SEOInternalLink>{' '}
+          <SEOInternalLink href="/guides/earthing-systems-tns-tncs-tt-explained">earthing arrangements</SEOInternalLink>{' '}
           data.
         </p>
         <SEOAppBridge
@@ -609,7 +609,7 @@ const relatedPages = [
     category: 'Tool' as const,
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-systems-tns-tncs-tt-explained',
     title: 'Earthing Arrangements Guide',
     description: 'TN-S, TN-C-S, TT systems explained. Ze values and their relationship to PFC.',
     icon: Activity,
@@ -672,7 +672,7 @@ export default function ProspectiveFaultCurrentGuidePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="PFC verification, built into every certificate"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site testing and certification. PFC calculator, adiabatic verification, and automatic validation on every EICR. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site testing and certification. PFC calculator, adiabatic verification, and automatic validation on every EICR. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -553,7 +553,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICRs correctly and efficiently with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion. AI board scanning, voice test entry, correct C1/C2/C3/FI classification…"
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion. AI board scanning, voice test entry, correct C1/C2/C3/FI classification…"
           icon={FileCheck2}
         />
       </>
@@ -590,7 +590,7 @@ export default function EICRContractorGuidePage() {
       faqHeading="Frequently Asked Questions: EICR for Electrical Contractors"
       relatedPages={relatedPages}
       ctaHeading="Complete More EICRs Per Day with Elec-Mate"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion. AI board scanning, voice test entry, instant PDF export, and remediation quoting — all on your phone. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion. AI board scanning, voice test entry, instant PDF export, and remediation quoting — all on your phone. 7-day free trial, cancel anytime."
     />
   );
 }

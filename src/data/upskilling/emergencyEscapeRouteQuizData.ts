@@ -17,7 +17,7 @@ export const emergencyEscapeRouteQuizData: QuizQuestion[] = [
   {
     id: 2,
     question:
-      'State the minimum lux level required along the centre line of an escape route according to BS 5266.',
+      'State the minimum lux level required across the width of an escape route according to BS 5266.',
     options: [
       '0.5 lux',
       '2 lux',
@@ -26,7 +26,7 @@ export const emergencyEscapeRouteQuizData: QuizQuestion[] = [
     ],
     correctAnswer: 2,
     explanation:
-      'BS 5266 specifies a minimum of 1 lux along the centre line of the escape route. This ensures adequate visibility for safe navigation during evacuation.',
+      'BS EN 1838:2024 specifies a minimum of 1 lux across the full width of the escape route — the 2013 edition required it only on the centre line. Borders are excluded: 0.5 m each side above 2 m width, or a quarter of the width at 2 m or less.',
   },
   {
     id: 3,

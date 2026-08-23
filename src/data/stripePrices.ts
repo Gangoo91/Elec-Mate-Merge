@@ -52,14 +52,14 @@ const APPRENTICE_GROUPS: FeatureGroup[] = [
     heading: 'Learning paths',
     items: [
       'Level 2, Level 3, AM2, HNC, MOET & Functional Skills',
-      '8 mock exams, 500+ practice questions',
+      '35+ mock exam papers, 20,000+ practice questions',
       '75 curated training videos',
     ],
   },
   {
     heading: 'Study centre access',
     items: [
-      'Full study centre — 24 in-depth courses',
+      'Full study centre — 40+ in-depth courses',
       'Safety: CSCS, IPAF, PASMA, MEWP, working at height',
       'Soft skills: leadership, communication, resilience',
     ],
@@ -67,8 +67,8 @@ const APPRENTICE_GROUPS: FeatureGroup[] = [
   {
     heading: 'Study tools',
     items: [
-      '75 electrical calculators',
-      '29 flashcard sets with spaced repetition',
+      '60+ electrical calculators',
+      '28 flashcard sets with spaced repetition',
       'BS 7671 study guide with interactive diagrams',
       '28-guide toolbox: safety cases, craft skills, site jargon',
     ],

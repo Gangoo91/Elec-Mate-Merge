@@ -108,7 +108,7 @@ const quizQuestions = [
   },
   {
     id: 4,
-    question: 'What does Regulation 14 of BS 7671:2018+A3:2024 specifically require?',
+    question: 'What does Regulation 14 of BS 7671:2018+A4:2026 specifically require?',
     options: [
       'Every installation shall be provided with means of switching off and isolation',
       'Every circuit shall be provided with overcurrent protection',
@@ -884,7 +884,7 @@ const MOETModule1Section1_2 = () => {
 
               <div className="p-4 rounded-lg bg-white/5">
                 <h3 className="text-sm font-medium text-blue-400 mb-3">
-                  BS 7671:2018+A3:2024 — IET Wiring Regulations
+                  BS 7671:2018+A4:2026 — IET Wiring Regulations
                 </h3>
                 <div className="bg-black/30 p-3 rounded">
                   <p className="text-sm font-medium text-white mb-1">
@@ -1116,7 +1116,7 @@ const MOETModule1Section1_2 = () => {
                   <li>EAWR 1989, Reg 12 — Work dead where practicable</li>
                   <li>EAWR 1989, Reg 13 — Prevent becoming live</li>
                   <li>EAWR 1989, Reg 16 — Competent persons</li>
-                  <li>BS 7671:2018+A3:2024, Reg 14 — Isolation means</li>
+                  <li>BS 7671:2018+A4:2026, Reg 14 — Isolation means</li>
                   <li>HSE GS38 — Test equipment requirements</li>
                 </ul>
               </div>

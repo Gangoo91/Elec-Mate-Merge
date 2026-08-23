@@ -7,7 +7,7 @@ import useSEO from '@/hooks/useSEO';
 
 const TITLE = "Ohm's Law and Watt's Law - MOET Module 2 Section 1.2";
 const DESCRIPTION =
-  "Comprehensive guide to Ohm's Law (V=IR) and Watt's Law (P=IV) for electrical maintenance technicians: series and parallel circuits, voltage dividers, current dividers, worked examples, troubleshooting applications per BS 7671:2018+A3:2024.";
+  "Comprehensive guide to Ohm's Law (V=IR) and Watt's Law (P=IV) for electrical maintenance technicians: series and parallel circuits, voltage dividers, current dividers, worked examples, troubleshooting applications per BS 7671:2018+A4:2026.";
 
 const quickCheckQuestions = [
   {
@@ -1135,7 +1135,7 @@ const MOETModule2Section1_2 = () => {
                 </ul>
                 <p className="font-medium text-white mb-1 mt-2">Key References</p>
                 <ul className="space-y-0.5">
-                  <li>BS 7671:2018+A3:2024 — Voltage drop limits</li>
+                  <li>BS 7671:2018+A4:2026 — Voltage drop limits</li>
                   <li>ST1426 — Electrical fundamentals KSBs</li>
                 </ul>
               </div>

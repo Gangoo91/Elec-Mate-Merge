@@ -1045,7 +1045,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
 
       <SEOCTASection
         heading="Calculate Zs in Seconds on Site"
-        subheading="Join 1,000+ UK electricians using Elec-Mate for on-site calculations. 7-day free trial, cancel anytime."
+        subheading="Join 1,600+ UK electricians using Elec-Mate for on-site calculations. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

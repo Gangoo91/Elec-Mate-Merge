@@ -279,10 +279,10 @@ const HNCModule4Section2_3 = () => {
 
           <TLDR
             points={[
-              'Appendix 4 cable ratings are tabulated for an ambient of 30&nbsp;°C, single circuit, no thermal insulation. Real installations rarely match.',
+              'Appendix 4 cable ratings are tabulated for an ambient of 30 °C, single circuit, no thermal insulation. Real installations rarely match.',
               'C_a corrects for ambient temperature, C_g for grouping, C_i for thermal insulation, C_f for harmonics — all multiplied to give effective I_z.',
-              'Plant rooms run 35–45&nbsp;°C in summer; ceiling voids 35–40&nbsp;°C with downlighters; risers grouped 6–12 circuits — every one of those eats capacity.',
-              'A 70&nbsp;°C thermoplastic cable in 45&nbsp;°C ambient with 6 circuits grouped can lose 50%+ of its tabulated rating — design for the real environment.',
+              'Plant rooms run 35–45 °C in summer; ceiling voids 35–40 °C with downlighters; risers grouped 6–12 circuits — every one of those eats capacity.',
+              'A 70 °C thermoplastic cable in 45 °C ambient with 6 circuits grouped can lose 50%+ of its tabulated rating — design for the real environment.',
               'BS 7671 Reg 311.1 ties cable sizing to thermal limits; Reg 434.5.2 ties device characteristics to fault-current protection — both depend on honest derating.',
             ]}
           />
@@ -673,10 +673,10 @@ const HNCModule4Section2_3 = () => {
 
           <KeyTakeaways
             points={[
-              'Appendix 4 cable ratings assume 30&nbsp;°C ambient, single circuit, no thermal insulation — real installations almost never match.',
-              'C_a corrects for ambient temperature; pick the right column for cable insulation type (70&nbsp;°C TP vs 90&nbsp;°C XLPE).',
+              'Appendix 4 cable ratings assume 30 °C ambient, single circuit, no thermal insulation — real installations almost never match.',
+              'C_a corrects for ambient temperature; pick the right column for cable insulation type (70 °C TP vs 90 °C XLPE).',
               'C_g corrects for grouping — 6 cables grouped typically loses 40–45%, 9 cables loses 50%+.',
-              'C_i applies when cables run through thermal insulation (loft, wall void, floor) — a single &lsquo;buried in insulation&rsquo; cable can lose 50%.',
+              'C_i applies when cables run through thermal insulation (loft, wall void, floor) — a single ‘buried in insulation’ cable can lose 50%.',
               'The Appendix 4 Section 5.5 rating factor applies once triplen content exceeds 33% (Reg 524.2.2) — affects three-phase circuits with neutral loading. Above 15% the neutral already counts as a loaded conductor (Reg 523.6.3).',
               'Multiply all applicable factors: I_z = I_t × C_a × C_g × C_i × C_f. Pick the combination that applies, do not just take the lowest.',
               'Reg 311.1 ties cable sizing to thermal limits; Reg 434.5.2 ties device characteristics to fault-current protection — both rely on honest I_z.',

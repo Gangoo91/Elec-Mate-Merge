@@ -46,6 +46,13 @@ const subsections = [
     icon: Building,
     href: '../h-n-c-module2-section4-6',
   },
+  {
+    number: '4.7',
+    title: 'Standards and guidelines',
+    description: 'CIBSE, BS and EN codes — which document governs what',
+    icon: Building,
+    href: '../h-n-c-module2-section4-7',
+  },
 ];
 
 const HNCModule2Section4 = () => {

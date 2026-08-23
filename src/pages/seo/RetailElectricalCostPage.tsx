@@ -554,7 +554,7 @@ export default function RetailElectricalCostPage() {
       faqHeading="Frequently Asked Questions About Retail Shop Electrical Fit-Out Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Your Retail Electrical Fit-Out in Minutes"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to create professional retail electrical fit-out quotes with display lighting, till points, CCTV, and all certifications. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to create professional retail electrical fit-out quotes with display lighting, till points, CCTV, and all certifications. 7-day free trial, cancel anytime."
     />
   );
 }

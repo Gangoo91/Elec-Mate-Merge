@@ -516,7 +516,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Certificate solar PV installations with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for electrical certification. Complete MCS installation certificates, EICRs…"
+          description="Join 1,600+ UK electricians using Elec-Mate for electrical certification. Complete MCS installation certificates, EICRs…"
           icon={Sun}
         />
       </>
@@ -552,7 +552,7 @@ export default function SolarPVSystemDesignPage() {
       faqHeading="Frequently Asked Questions About Solar PV System Design"
       relatedPages={relatedPages}
       ctaHeading="Manage Solar PV Installations with Elec-Mate"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for certification, quoting, and job management. Complete MCS documentation on your phone. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for certification, quoting, and job management. Complete MCS documentation on your phone. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -804,7 +804,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify sauna electrical installations"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification. 7-day free trial."
+          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification. 7-day free trial."
           icon={Thermometer}
         />
       </>
@@ -848,7 +848,7 @@ export default function SaunaElectricalInstallationPage() {
       faqHeading="Frequently Asked Questions About Sauna Electrical Installation"
       relatedPages={relatedPages}
       ctaHeading="Size Cables and Certify Sauna Installations on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates for special location work. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates for special location work. 7-day free trial, cancel anytime."
     />
   );
 }

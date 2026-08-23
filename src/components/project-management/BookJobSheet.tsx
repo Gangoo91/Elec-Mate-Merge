@@ -29,7 +29,21 @@ interface DayEvent {
   start_at: string;
 }
 
-const HOURS = ['07:00', '07:30', '08:00', '08:30', '09:00', '09:30', '10:00', '10:30', '11:00', '12:00', '13:00', '14:00', '15:00'];
+const HOURS = [
+  '07:00',
+  '07:30',
+  '08:00',
+  '08:30',
+  '09:00',
+  '09:30',
+  '10:00',
+  '10:30',
+  '11:00',
+  '12:00',
+  '13:00',
+  '14:00',
+  '15:00',
+];
 
 /** Assumed length of a day on site. */
 const WORKING_DAY_HOURS = 8;
@@ -127,7 +141,7 @@ export const BookJobSheet = ({
    * Deliberately does not require the job to have been booked first — someone
    * may want the slot in their phone while they think about it.
    */
-  const handleDownloadIcs = () => {
+  const handleDownloadIcs = async () => {
     if (!date) return;
     const events = buildSlots(date, time, days).map(({ dayStart, dayEnd, index }) => ({
       // Stable per slot so re-downloading updates the existing entry rather
@@ -138,8 +152,11 @@ export const BookJobSheet = ({
       endIso: dayEnd.toISOString(),
       location: location || null,
     }));
-    const safeName = projectTitle.replace(/[^a-z0-9]+/gi, '-').toLowerCase().slice(0, 40);
-    downloadIcs(safeName || 'job', events);
+    const safeName = projectTitle
+      .replace(/[^a-z0-9]+/gi, '-')
+      .toLowerCase()
+      .slice(0, 40);
+    await downloadIcs(safeName || 'job', events);
   };
 
   const handleBook = async () => {
@@ -229,7 +246,10 @@ export const BookJobSheet = ({
           .from('calendar_events')
           .delete()
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          .in('id', ((inserted || []) as any[]).map((e) => e.id));
+          .in(
+            'id',
+            ((inserted || []) as any[]).map((e) => e.id)
+          );
         throw subjectUpdate.error;
       }
 
@@ -352,7 +372,10 @@ export const BookJobSheet = ({
                   <p className="text-[12.5px] text-emerald-300">Clear — nothing booked.</p>
                 ) : (
                   dayEvents.map((ev) => (
-                    <p key={ev.id} className="text-[12.5px] text-white/70 flex items-center gap-1.5">
+                    <p
+                      key={ev.id}
+                      className="text-[12.5px] text-white/70 flex items-center gap-1.5"
+                    >
                       <Clock className="h-3 w-3 shrink-0 text-white/40" />
                       <span className="truncate">
                         {/* Across a multi-day span the time alone is ambiguous —

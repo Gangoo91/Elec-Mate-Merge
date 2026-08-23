@@ -782,7 +782,7 @@ export default function PharmaceuticalElectricalPage() {
       faqHeading="Frequently Asked Questions About Pharmaceutical Electrical Installation"
       relatedPages={relatedPages}
       ctaHeading="Produce Professional Electrical Records with Elec-Mate"
-      ctaSubheading="Create test records and inspection reports that meet GMP documentation standards. Join 1,000+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
+      ctaSubheading="Create test records and inspection reports that meet GMP documentation standards. Join 1,600+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
     />
   );
 }

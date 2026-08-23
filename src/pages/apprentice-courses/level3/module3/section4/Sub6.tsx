@@ -120,7 +120,7 @@ const quizQuestions = [
 const faqs = [
   { question: 'Why is the UK grid 50 Hz?', answer: 'Historical accident — early German systems standardised on 50 Hz, and the UK followed Europe rather than the American 60 Hz. Both work; neither is technically superior at this scale. Frequency must be tightly controlled across the grid (within ±0.5 Hz normally).' },
   { question: 'How does power flow from generator to socket?', answer: 'Generator (11 kV) → step-up transformer (400 kV) → transmission lines → grid substation step-down (132/33 kV) → distribution → primary substation step-down (11 kV) → local distribution transformer (400/230 V) → cut-out → consumer.' },
-  { question: 'Why do PV inverters need transformers if they have isolation built in?', answer: 'Modern string inverters use transformerless designs with PV strings floating relative to earth. Larger commercial PV (&gt;50 kW) typically uses a step-up transformer to match grid voltage and provide galvanic isolation per G99 ENA grid code requirements.' },
+  { question: 'Why do PV inverters need transformers if they have isolation built in?', answer: 'Modern string inverters use transformerless designs with PV strings floating relative to earth. Larger commercial PV (>50 kW) typically uses a step-up transformer to match grid voltage and provide galvanic isolation per G99 ENA grid code requirements.' },
   { question: 'What\'s a transformer "K-factor"?', answer: 'A rating that indicates how much harmonic current the transformer can handle without overheating. K1 = pure 50 Hz only. K4, K13, K20 = increasing harmonic content tolerance. Heavy IT or VFD installs may specify K13 or K20 transformers.' },
   { question: 'Why do step-up transformers at substations have huge cooling fins?', answer: 'Even at 99.5 % efficiency, a 400 MVA transformer dissipates 2 MW of heat continuously. Forced-oil-and-air or natural cooling banks are massive. Failure to cool = failure of the transformer.' },
   { question: 'Can I install a transformer outdoors?', answer: 'Yes — both pole-mounted and pad-mounted (kiosk/substation) types are designed for outdoor use. They have weather-tight enclosures, oil with high flash point, and remote-disconnection isolation. Indoor units (dry-type) are common for commercial fit-outs.' },
@@ -211,7 +211,7 @@ export default function Sub6() {
           </ConceptBlock>
           <RegsCallout
             source="ENA Engineering Recommendation G99 — Requirements for the connection of generation equipment in parallel with public distribution networks"
-            clause="Generation &gt; 16 A per phase shall comply with the protection settings, fault ride-through requirements and operational limits specified in G99. The interface transformer shall provide galvanic isolation and the relay scheme shall include loss-of-mains, voltage and frequency protection."
+            clause="Generation > 16 A per phase shall comply with the protection settings, fault ride-through requirements and operational limits specified in G99. The interface transformer shall provide galvanic isolation and the relay scheme shall include loss-of-mains, voltage and frequency protection."
             meaning={
               <>Any commercial PV, wind or battery system above 16 A/phase needs a G99 application, agreed protection settings and (usually) a step-up isolation transformer with associated relays. Without G99 compliance the DNO will not commission the connection.</>
             }
@@ -349,7 +349,7 @@ export default function Sub6() {
 
           <ConceptBlock
             title="PV inverter transformer types — why string inverters often have no transformer"
-            plainEnglish="Modern PV string inverters (e.g. SolarEdge, SMA, Fronius) are typically &apos;transformerless&apos; — they synthesise grid-frequency AC directly from the DC strings without any internal step-up transformer. Larger central inverters (50 kW+) often include an internal isolation transformer or are paired with an external one. The choice affects safety, efficiency and the type of RCD required."
+            plainEnglish="Modern PV string inverters (e.g. SolarEdge, SMA, Fronius) are typically ’transformerless’ — they synthesise grid-frequency AC directly from the DC strings without any internal step-up transformer. Larger central inverters (50 kW+) often include an internal isolation transformer or are paired with an external one. The choice affects safety, efficiency and the type of RCD required."
             onSite="L3 framing: a transformerless string inverter floats the PV array relative to earth. RCD selection on the AC side must be Type B (for DC fault detection) because the inverter can pass DC fault current. A transformer-coupled inverter has galvanic isolation; standard Type A RCD is sufficient. Read the inverter manual; the RCD type required is always specified."
           >
             <p>PV inverter classifications and their RCD needs:</p>
@@ -512,7 +512,7 @@ export default function Sub6() {
           <ConceptBlock
             title="Earthing transformers — providing a neutral on a delta system"
             plainEnglish="Some industrial systems run on a delta primary (no neutral). If you need a neutral for single-phase loads, fault-current return path or earth fault detection, an earthing transformer (typically zigzag or wye-delta) provides the artificial neutral. Common on large industrial supplies and on generator step-up groups where the HV side is delta."
-            onSite="L3 awareness: industrial sites with their own substations often have earthing transformers as part of the HV switchgear. They&apos;re visually similar to small distribution transformers but their job is purely to provide the neutral and to limit earth fault current. The neutral terminal is often connected through a neutral earthing resistor (NER) to limit fault current to a manageable level (e.g. 50-1000 A)."
+            onSite="L3 awareness: industrial sites with their own substations often have earthing transformers as part of the HV switchgear. They’re visually similar to small distribution transformers but their job is purely to provide the neutral and to limit earth fault current. The neutral terminal is often connected through a neutral earthing resistor (NER) to limit fault current to a manageable level (e.g. 50-1000 A)."
           >
             <p>Common earthing transformer arrangements:</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -525,7 +525,7 @@ export default function Sub6() {
 
           <ConceptBlock
             title="Audio and isolation transformers — when 1:1 isolation is the whole point"
-            plainEnglish="An isolation transformer with a 1:1 turns ratio doesn&apos;t change voltage but provides galvanic separation between input and output. The two windings share no electrical connection — so a fault on one side doesn&apos;t propagate to the other. Used for medical IT systems, audio ground-loop breaking, sensitive equipment protection, and some lab installations."
+            plainEnglish="An isolation transformer with a 1:1 turns ratio doesn’t change voltage but provides galvanic separation between input and output. The two windings share no electrical connection — so a fault on one side doesn’t propagate to the other. Used for medical IT systems, audio ground-loop breaking, sensitive equipment protection, and some lab installations."
             onSite="L3 distinction: an isolation transformer is NOT the same as an auto-transformer. An auto-transformer has a single tapped winding (input and output share copper) and provides NO isolation. Always check the nameplate or the schematic; replacing an isolation transformer with an auto-transformer is a serious safety failure that often goes undetected until the first fault."
           >
             <p>Isolation transformer applications and their requirements:</p>
@@ -542,7 +542,7 @@ export default function Sub6() {
           <ConceptBlock
             title="Welding transformers — heavy leakage reactance by design"
             plainEnglish="A welding transformer steps 230 V or 400 V down to ~30-80 V at the welding electrode, but with deliberately high leakage reactance to limit short-circuit (welding-arc) current to a controlled value. Different from a regular transformer where low impedance is preferred. Modern arc-welding sets use solid-state inverters that synthesise the welding waveform and tightly control current."
-            onSite="L3 framing: a welding bay typically has its own dedicated 32 A or 63 A 3-phase supply and may need a sub-DB for multiple welder units. RCD-Type B may be needed for solid-state welder units due to their DC fault-current characteristics. Don&apos;t feed a welder via a domestic-style RCD or you&apos;ll get nuisance trips."
+            onSite="L3 framing: a welding bay typically has its own dedicated 32 A or 63 A 3-phase supply and may need a sub-DB for multiple welder units. RCD-Type B may be needed for solid-state welder units due to their DC fault-current characteristics. Don’t feed a welder via a domestic-style RCD or you’ll get nuisance trips."
           >
             <p>Welder types and their supply needs:</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">

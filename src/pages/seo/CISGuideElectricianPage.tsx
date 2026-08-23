@@ -518,7 +518,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional CIS invoicing with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for professional invoicing. Create CIS-compliant invoices with labour and materials clearly separated — on…"
+          description="Join 1,600+ UK electricians using Elec-Mate for professional invoicing. Create CIS-compliant invoices with labour and materials clearly separated — on…"
           icon={FileText}
         />
       </>
@@ -555,7 +555,7 @@ export default function CISGuideElectricianPage() {
       faqHeading="Frequently Asked Questions About CIS for Electricians"
       relatedPages={relatedPages}
       ctaHeading="CIS-Compliant Invoicing on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for professional invoicing with labour and materials clearly separated for CIS. Create invoices in seconds on site. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for professional invoicing with labour and materials clearly separated for CIS. Create invoices in seconds on site. 7-day free trial, cancel anytime."
     />
   );
 }

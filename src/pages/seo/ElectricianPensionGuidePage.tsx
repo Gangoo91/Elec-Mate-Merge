@@ -632,7 +632,7 @@ export default function ElectricianPensionGuidePage() {
       faqHeading="Frequently Asked Questions About Self-Employed Pensions"
       relatedPages={relatedPages}
       ctaHeading="Earn More, Save More, Retire Better"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. The more efficiently you run your business, the more you can invest in your future. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, and job management. The more efficiently you run your business, the more you can invest in your future. 7-day free trial, cancel anytime."
     />
   );
 }

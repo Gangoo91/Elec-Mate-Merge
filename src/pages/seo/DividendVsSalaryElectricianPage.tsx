@@ -663,7 +663,7 @@ export default function DividendVsSalaryElectricianPage() {
       faqHeading="Frequently Asked Questions About Dividend vs Salary"
       relatedPages={relatedPages}
       ctaHeading="Grow Your Limited Company Revenue"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional tools that help your limited company earn more. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional tools that help your limited company earn more. 7-day free trial, cancel anytime."
     />
   );
 }

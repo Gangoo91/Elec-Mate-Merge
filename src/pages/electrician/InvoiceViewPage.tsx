@@ -419,8 +419,14 @@ const InvoiceViewPage = () => {
   const isSent = invoice.invoice_status === 'sent';
   const isDraft = invoice.invoice_status === 'draft' || !invoice.invoice_status;
   // Outstanding is measured against the amount actually due — net payable when
-  // CIS is withheld, otherwise the stored total (preserves prior behaviour).
-  const amountDue = cisT.cisAmount > 0 ? cisT.netPayable : invoice.total;
+  // anything is withheld or paid by a third party, otherwise the stored total.
+  //
+  // ELE-1571 — this tested `cisAmount > 0` alone, so an invoice carrying a
+  // grant and no CIS fell through to `invoice.total` and **overstated what the
+  // customer owed by the grant amount**. `netPayable` already accounts for
+  // both, so the condition just needed to admit the grant (Sean, 21 Aug).
+  const amountDue =
+    cisT.cisAmount > 0 || cisT.grantAmount > 0 ? cisT.netPayable : invoice.total;
   const outstanding = Math.max(0, amountDue - totalPaid);
   const isPartPaid = !isPaid && totalPaid > 0.005;
   // ELE-1023: allow draft → paid directly. Sparks often send invoices externally
@@ -822,12 +828,22 @@ const InvoiceViewPage = () => {
                 <span className="text-[14px] font-bold text-white">Total</span>
                 <span className="text-[22px] font-bold text-elec-yellow tabular-nums tracking-tight">{formatCurrency(invoice.total)}</span>
               </div>
-              {cisT.cisAmount > 0 && (
+              {/* ELE-1571 — a grant with no CIS showed neither the deduction
+                  nor the reduced figure, so the invoice read as the full total. */}
+              {(cisT.cisAmount > 0 || cisT.grantAmount > 0) && (
                 <>
-                  <div className="flex justify-between items-baseline pt-1 text-[13px]">
-                    <span className="text-white/80">Less: CIS ({cisT.cisRate}% on labour)</span>
-                    <span className="text-red-300 tabular-nums">−{formatCurrency(cisT.cisAmount)}</span>
-                  </div>
+                  {cisT.cisAmount > 0 && (
+                    <div className="flex justify-between items-baseline pt-1 text-[13px]">
+                      <span className="text-white">Less: CIS ({cisT.cisRate}% on labour)</span>
+                      <span className="text-red-300 tabular-nums">−{formatCurrency(cisT.cisAmount)}</span>
+                    </div>
+                  )}
+                  {cisT.grantAmount > 0 && (
+                    <div className="flex justify-between items-baseline pt-1 text-[13px]">
+                      <span className="text-white">Less: {cisT.grantLabel}</span>
+                      <span className="text-red-300 tabular-nums">−{formatCurrency(cisT.grantAmount)}</span>
+                    </div>
+                  )}
                   <div className="flex justify-between items-baseline">
                     <span className="text-[14px] font-semibold text-white">Amount due</span>
                     <span className="text-[18px] font-bold text-elec-yellow tabular-nums">{formatCurrency(cisT.netPayable)}</span>

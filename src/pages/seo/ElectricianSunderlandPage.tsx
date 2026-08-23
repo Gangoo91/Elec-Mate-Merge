@@ -450,7 +450,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Sunderland electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
+          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -489,7 +489,7 @@ export default function ElectricianSunderlandPage() {
       faqHeading="Frequently Asked Questions About Electricians in Sunderland"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Sunderland Electricians"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for North East electricians working in post-war housing and rental properties. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for North East electricians working in post-war housing and rental properties. 7-day free trial."
     />
   );
 }

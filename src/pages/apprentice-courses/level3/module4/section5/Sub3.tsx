@@ -347,7 +347,7 @@ export default function Sub3() {
           <ConceptBlock
             title="Mark the route, document the depth, save the next visit"
             plainEnglish="Cables you bury today are someone else's investigation tomorrow. The L3 expectation is to leave enough breadcrumbs that a future fault-finder can trace the route without opening a wall."
-            onSite="Photograph the cable run before plastering or boarding back up. Mark depth and route on a simple sketch on the job sheet, with reference points (joist counts from a fixed corner, distances from a window head). Where the cable doesn&apos;t sit in a prescribed zone, document the alternative compliance route (RCD plus zone, earthed metallic covering, conduit) so the next sparks can verify it instead of reopening the wall."
+            onSite="Photograph the cable run before plastering or boarding back up. Mark depth and route on a simple sketch on the job sheet, with reference points (joist counts from a fixed corner, distances from a window head). Where the cable doesn’t sit in a prescribed zone, document the alternative compliance route (RCD plus zone, earthed metallic covering, conduit) so the next sparks can verify it instead of reopening the wall."
           >
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li><strong>Photo before close-up</strong> &mdash; phone camera, route visible, reference object in frame for scale.</li>
@@ -523,7 +523,7 @@ export default function Sub3() {
               "Three categories: make-good (electrician scope), basic patch (often electrician), full restoration (specialist trade). Quote upfront which applies.",
               "Make-good standard: no holes, no exposed cable, accessories refitted, fire-stops fitted, surface filled flush.",
               "Fire-stopping at compartment-wall penetrations is non-negotiable. BS 7671 527.2 + Approved Document B + RR(FS)O 2005.",
-              "Cable burial: BS 7671 522.6 safe zones (above accessory level, vertical from sockets, near edges) for cables &lt; 50 mm depth, OR mechanical protection.",
+              "Cable burial: BS 7671 522.6 safe zones (above accessory level, vertical from sockets, near edges) for cables < 50 mm depth, OR mechanical protection.",
               "Standard make-good kit: bonding plaster, filler, plasterboard offcuts, scrim tape, fire-stop sealant, touch-up paint. £40–60 cost, lasts months.",
               "Document pre-existing damage at start of work — 5-second mobile photo prevents 90% of damage disputes.",
               "Trade boundaries: electrician = electrical + make-good; plasterer / tiler / decorator = finishing trades. Refer for specialist work.",

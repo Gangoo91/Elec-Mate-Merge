@@ -33,6 +33,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { openOrDownloadPdf } from '@/utils/pdf-download';
+import { saveOrShareFile } from '@/utils/save-or-share-file';
 import {
   isFireAlarmReportType,
   fireAlarmTemplateId,
@@ -398,8 +399,66 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
         } else if (reportType === 'disconnection') {
           const { formatDisconnectionCertificatePayload } = await import('@/utils/disconnection-certificate-formatter');
           dataForPdf = formatDisconnectionCertificatePayload(reportData.data as Record<string, any>);
+        } else if (reportType === 'eic') {
+          /*
+           * ELE-1596 — EIC generated a completely blank PDF.
+           *
+           * The comment that used to sit here said "EIC and Minor Works: no
+           * standalone formatter available, fall through with raw data".
+           * `formatEicJson` does exist, and the fall-through sent the RAW
+           * camelCase form state (clientName, installationAddress, and
+           * internal keys like _draftCreatedAt) to a Liquid template that
+           * reads snake_case (client_details.client_name, insp_1). Nothing
+           * matched, so every field rendered empty while the form still showed
+           * 100% complete.
+           *
+           * The old comment was right about Minor Works, for a reason it did
+           * not give — see the note below the branch. Do not "fix" that one
+           * the same way.
+           *
+           * Confirmed against Keith's actual document in PDFMonkey: 174 keys
+           * present, 123 of them non-empty, and not one of the keys the
+           * template reads.
+           *
+           * Exactly the fault the fire-alarm branch above was already fixed
+           * for — "G1/G3/G6/G7 fell through and sent raw camelCase form data
+           * to a snake_case Liquid template".
+           *
+           * ⚠️ The company profile is loaded for the report's OWNER, not the
+           * viewer. A QS opening a team member's certificate must not stamp
+           * their own registration scheme and number onto it.
+           */
+          const { formatEicJson } = await import('@/utils/eicJsonFormatter');
+          const { data: ownerProfile } = await supabase
+            .from('company_profiles')
+            .select('*')
+            .eq('user_id', reportData.user_id)
+            .maybeSingle();
+          dataForPdf = await formatEicJson(
+            reportData.data,
+            ownerProfile,
+            reportData.report_id
+          );
         }
-        // EIC and Minor Works: no standalone formatter available, fall through with raw data
+        /*
+         * ⚠️ Minor Works is deliberately NOT formatted here, and must not be.
+         *
+         * The two edge functions have OPPOSITE contracts:
+         *   generate-eic-pdf          → `payload: formData`, passed to
+         *                               PDFMonkey untouched. The client MUST
+         *                               format (hence the branch above).
+         *   generate-minor-works-pdf  → runs transformFormDataForTemplate()
+         *                               on whatever it receives, reading
+         *                               camelCase (formData.clientName, …).
+         *                               The client MUST send RAW.
+         *
+         * Pre-formatting Minor Works would hand that transform a snake_case
+         * object, every camelCase read would come back undefined, and the
+         * result would be the very blank certificate this ticket is about —
+         * caused by the fix rather than cured by it. `bulkPdfExport` says the
+         * same thing in one line: "Minor Works, notices: edge function handles
+         * transform internally".
+         */
       }
 
       // QS countersignature must survive stale pdf_payloads (saved before the
@@ -574,22 +633,23 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
   const handleDownload = async () => {
     if (!report) return;
 
-    // Use blob URL if available (already fetched via CORS proxy)
+    // Use the blob we already fetched through the CORS proxy for the preview,
+    // rather than fetching the same PDF twice.
+    //
+    // This branch used to build an `<a download>` by hand. WKWebView ignores
+    // that attribute, so inside the iOS app it did nothing — and then toasted
+    // "Download Started" and returned, so the user was told it had worked.
+    // Only the fallback below ever reached the share sheet, which is why
+    // certificate downloads worked intermittently: they succeeded whenever the
+    // preview blob had NOT loaded, and silently failed whenever it had.
     if (blobUrl) {
       try {
-        const link = document.createElement('a');
-        link.href = blobUrl;
-        link.download = `${report.certificate_number || 'certificate'}.pdf`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-
-        toast({
-          title: 'Download Started',
-          description: 'Your PDF is downloading...',
-        });
+        const blob = await (await fetch(blobUrl)).blob();
+        await saveOrShareFile(blob, `${report.certificate_number || 'certificate'}.pdf`);
         return;
       } catch (error) {
+        // Fall through to the URL path rather than leaving the user with
+        // nothing — it reaches the same helper by a different route.
         console.error('Blob download error:', error);
       }
     }

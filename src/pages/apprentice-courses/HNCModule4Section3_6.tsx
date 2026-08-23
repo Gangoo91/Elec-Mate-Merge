@@ -276,7 +276,7 @@ const HNCModule4Section3_6 = () => {
               'AFDDs (Arc Fault Detection Devices) detect the high-frequency signature of arcing faults — series (broken conductor) or parallel (insulation breakdown) — that MCBs and RCDs miss.',
               'Arcing faults are a leading electrical fire cause: BEAMA estimates 50–60% of UK electrical fires originate from undetected arcing.',
               'BS 7671 Reg 421.1.7 (introduced by Amendment 2:2022) RECOMMENDS the installation of AFDDs in AC final circuits — recommendation, not mandatory.',
-              'Combined AFDD + MCB + RCD modules are the practical specification — single 18&nbsp;mm wide unit replaces an RCBO at slightly higher cost.',
+              'Combined AFDD + MCB + RCD modules are the practical specification — single 18 mm wide unit replaces an RCBO at slightly higher cost.',
               'Best-fit applications: HMOs, care homes, schools, listed buildings, wooden-clad construction, hospitality bedrooms — anywhere a fire would be catastrophic.',
             ]}
           />
@@ -767,9 +767,9 @@ const HNCModule4Section3_6 = () => {
               'MCBs and RCDs do NOT detect arcing — currents are below MCB trip threshold and arcing produces no residual current.',
               'Reg 421.1.7 (introduced A4:2026) RECOMMENDS — does not mandate — AFDD installation in AC final circuits to mitigate fire risk.',
               'Best-fit applications: HMOs, care homes, schools, hotels, listed buildings, wooden-clad construction, escape-route bedrooms.',
-              'Combined AFDD+MCB+RCD modules (single 18&nbsp;mm slot) are the practical specification — replaces an RCBO at modest premium.',
+              'Combined AFDD+MCB+RCD modules (single 18 mm slot) are the practical specification — replaces an RCBO at modest premium.',
               'AFDD product standard: BS EN 62606. Always specify a Listed device, never an unbranded import.',
-              'Design file documentation: where AFDDs are NOT specified, record the engineering reasoning — &lsquo;low fire risk&rsquo;, &lsquo;cost-benefit&rsquo;, etc.',
+              'Design file documentation: where AFDDs are NOT specified, record the engineering reasoning — ‘low fire risk’, ‘cost-benefit’, etc.',
               'Test methodology: AFDDs include built-in self-test functions; verify operation at commissioning and annually thereafter.',
             ]}
           />

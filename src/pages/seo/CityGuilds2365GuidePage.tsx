@@ -172,8 +172,8 @@ const sections = [
           format, practical assessments, how it relates to the apprenticeship, entry requirements,
           costs, and how it differs from the older 2330 qualification.
         </p>
-        <p className="text-white/50 text-xs mt-4">
-          Reviewed by a JIB-registered electrician, 18th Edition (BS 7671:2018+A4:2026) qualified.
+        <p className="text-white text-xs mt-4">
+          Written and reviewed by Andrew Moore, founder of Elec-Mate — a qualified electrician (18th Edition, C&amp;G 2391 inspection and testing).
           Content verified against the current edition of BS 7671 and City &amp; Guilds 2365 unit
           specifications.
         </p>

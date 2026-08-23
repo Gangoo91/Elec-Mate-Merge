@@ -579,7 +579,7 @@ export default function ApprenticeTrainingPage() {
 
       <SEOCTASection
         heading="Start your apprenticeship journey"
-        subheading="Join 1,000+ UK electricians and apprentices learning smarter. 7-day free trial, cancel anytime."
+        subheading="Join 1,600+ UK electricians and apprentices learning smarter. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

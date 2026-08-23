@@ -479,7 +479,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify Birmingham EV installations"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification. 7-day free trial, cancel anytime."
+          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification. 7-day free trial, cancel anytime."
           icon={Car}
         />
       </>
@@ -516,7 +516,7 @@ export default function EVChargerInstallationBirminghamPage() {
       faqHeading="Frequently Asked Questions About EV Charger Installation in Birmingham"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify EV Charger Installations on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -101,7 +101,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-systems-tns-tncs-tt-explained',
     title: 'Earthing Arrangements Explained',
     description:
       'TN-S, TN-C-S, and TT earthing systems explained — critical knowledge for pool installations.',

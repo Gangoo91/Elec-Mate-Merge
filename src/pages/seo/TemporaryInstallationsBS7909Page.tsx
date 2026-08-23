@@ -109,7 +109,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-systems-tns-tncs-tt-explained',
     title: 'Earthing Arrangements',
     description:
       'TN-S, TN-C-S, TT, and IT earthing systems explained with practical testing guidance.',
@@ -639,7 +639,7 @@ const sections = [
         </div>
         <p>
           The{' '}
-          <SEOInternalLink href="/earthing-arrangements">earthing arrangement</SEOInternalLink> must
+          <SEOInternalLink href="/guides/earthing-systems-tns-tncs-tt-explained">earthing arrangement</SEOInternalLink> must
           be shown on the single-line diagram and verified by testing before the installation is
           energised.
         </p>

@@ -604,7 +604,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Start your electrical business with professional tools"
-          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Look professional from day one. 7-day free trial."
+          description="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, and job management. Look professional from day one. 7-day free trial."
           icon={Briefcase}
         />
       </>
@@ -641,7 +641,7 @@ export default function FirstElectricalCustomerPage() {
       faqHeading="Frequently Asked Questions About Starting an Electrical Business"
       relatedPages={relatedPages}
       ctaHeading="Launch Your Electrical Business with Professional Tools"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and business management. Look established from day one. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, and business management. Look established from day one. 7-day free trial, cancel anytime."
     />
   );
 }

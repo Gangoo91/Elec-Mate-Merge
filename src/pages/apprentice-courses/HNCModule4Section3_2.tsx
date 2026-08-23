@@ -276,7 +276,7 @@ const HNCModule4Section3_2 = () => {
           <TLDR
             points={[
               'MCBs (BS EN 60898): Type B (3–5× I_n), C (5–10×), D (10–20×) — match the curve to the load characteristic.',
-              'MCCBs (BS EN 60947-2): adjustable thermal and magnetic settings, breaking capacities up to 200&nbsp;kA — used for sub-mains and motor starting.',
+              'MCCBs (BS EN 60947-2): adjustable thermal and magnetic settings, breaking capacities up to 200 kA — used for sub-mains and motor starting.',
               'HRC fuses (BS 88-2 / -3 / gG / gM): current-limiting let-through reduces I²t — essential for high-PSCC origins and motor circuits.',
               'RCBOs combine MCB + RCD in one module — preferred over RCD-protected MCB groups because faults trip only the affected circuit.',
               'BS 7671 Reg 432.1 requires the device to be of the appropriate type — not just sized to I_b but matched to the load and the fault scenario.',
@@ -749,13 +749,13 @@ const HNCModule4Section3_2 = () => {
 
           <KeyTakeaways
             points={[
-              'MCBs (BS EN 60898): Type B / C / D selected by load inrush characteristic, breaking capacities typically 6 / 10&nbsp;kA.',
-              'MCCBs (BS EN 60947-2): adjustable thermal and magnetic settings, breaking up to 200&nbsp;kA — the workhorse for sub-mains.',
+              'MCBs (BS EN 60898): Type B / C / D selected by load inrush characteristic, breaking capacities typically 6 / 10 kA.',
+              'MCCBs (BS EN 60947-2): adjustable thermal and magnetic settings, breaking up to 200 kA — the workhorse for sub-mains.',
               'HRC fuses (BS 88): current-limiting let-through, narrow tolerance, high breaking capacity — preferred for high-PSCC origins and motor circuits.',
               'RCBOs (BS EN 61009): MCB + RCD combined — preferred over shared RCD groups because a fault trips only the affected circuit.',
               'Reg 432.1 mandates appropriate device type: match curve to load, breaking capacity to PSCC, and standard to application.',
               'Discrimination with downstream devices is part of selection — fuse curves discriminate more reliably than MCB curves at high fault levels.',
-              'Z_s_max (Table 41.3) depends on device type and curve — current A4:2026 values include B32 = 1.37&nbsp;Ω, C32 = 0.69&nbsp;Ω.',
+              'Z_s_max (Table 41.3) depends on device type and curve — current A4:2026 values include B32 = 1.37 Ω, C32 = 0.69 Ω.',
               'Document type, rating, curve, breaking capacity and discrimination analysis on the schedule of test results — Part 6 audits all of it.',
             ]}
           />

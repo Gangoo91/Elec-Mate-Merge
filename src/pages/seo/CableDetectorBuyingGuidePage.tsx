@@ -562,7 +562,7 @@ export default function CableDetectorBuyingGuidePage() {
       faqHeading="Frequently Asked Questions About Cable Detectors"
       relatedPages={relatedPages}
       ctaHeading="Generate Method Statements and Risk Assessments for Cable Work"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for AI-generated method statements, risk assessments, and professional EIC certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI-generated method statements, risk assessments, and professional EIC certification. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -677,7 +677,7 @@ const HNCModule4Section4_3 = () => {
               'Self-contained vs central battery is a maintenance and scale decision — both are recognised under Reg 560.6.1.',
               'Reg 560.7.1 demands circuit independence from normal lighting — separate circuits, separate routes or fire-resistant cable.',
               'Test regime: monthly function test (visual), annual 1 h or 3 h full discharge — log it. BS 5266-1 is explicit.',
-              'Cover every open area &gt; 60 m², every change of direction, stair, exit and external assembly point.',
+              'Cover every open area > 60 m², every change of direction, stair, exit and external assembly point.',
               'BS 7671 Chapter 56 is the verification framework; BS 5266 is the design code; BS EN 50171 covers the central battery hardware.',
             ]}
           />

@@ -462,7 +462,7 @@ export default function CapacityPlanningCalculatorPage() {
         },
       ]}
       ctaHeading="Plan Your Capacity, Grow with Confidence"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to track utilisation, schedule jobs, and make data-driven growth decisions. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to track utilisation, schedule jobs, and make data-driven growth decisions. 7-day free trial, cancel anytime."
       extraSchemas={[
         {
           '@type': 'SoftwareApplication',

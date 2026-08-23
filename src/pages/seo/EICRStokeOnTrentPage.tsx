@@ -529,7 +529,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win more EICR work across Stoke-on-Trent with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -566,7 +566,7 @@ export default function EICRStokeOnTrentPage() {
       faqHeading="Frequently Asked Questions About EICRs in Stoke-on-Trent"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs On Your Phone — Any Location Across Stoke-on-Trent"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

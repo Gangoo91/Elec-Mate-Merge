@@ -279,7 +279,7 @@ const HNCModule3Section3_7 = () => {
             points={[
               'You apply Pythagoras to P, Q, S on every PFC sizing exercise — the geometry shows exactly how kVAr injection rotates the triangle towards unity pf.',
               'You specify motors to IE3 minimum (IE4 above 75 kW) under Ecodesign Regulation 2019/1781 — sub-IE3 motors cannot be placed on the UK market for new installations.',
-              'You evaluate transformer load profile against the efficiency curve — peak efficiency typically at 40&ndash;60 % rated kVA, not at full load.',
+              'You evaluate transformer load profile against the efficiency curve — peak efficiency typically at 40–60 % rated kVA, not at full load.',
               'You document Part L (Approved Document L 2021) compliance with motor and luminaire efficiency evidence — the BREEAM credits and SAP/SBEM submission depend on it.',
             ]}
           />
@@ -297,7 +297,7 @@ const HNCModule3Section3_7 = () => {
                 this page (efficiency, P/Q/S) is the calculation behind that evidence.
               </>
             }
-            cite="Source: Building Regulations 2010, Approved Document L (2021); Ecodesign Regulation (EU) 2019/1781 retained as UK law; CIBSE Guide F &mdash; Energy efficiency in buildings"
+            cite="Source: Building Regulations 2010, Approved Document L (2021); Ecodesign Regulation (EU) 2019/1781 retained as UK law; CIBSE Guide F — Energy efficiency in buildings"
           />
 
           <LearningOutcomes
@@ -728,7 +728,7 @@ const HNCModule3Section3_7 = () => {
           <SectionRule />
 
           <Scenario
-            title="School AHU motor replacement &mdash; IE3 vs IE4 lifecycle cost"
+            title="School AHU motor replacement — IE3 vs IE4 lifecycle cost"
             situation={
               <>
                 A school AHU has a failed 22 kW IE2 induction motor (typical 91.0 %
@@ -767,13 +767,13 @@ const HNCModule3Section3_7 = () => {
 
           <KeyTakeaways
             points={[
-              'Power triangle: S&sup2; = P&sup2; + Q&sup2; — Pythagoras applies because P (real) and Q (reactive) are 90&deg; out of phase.',
-              'pf = cos &phi; = P/S — the power-factor angle is the angle of S above the horizontal P axis.',
-              'Efficiency &eta; = P&#x2092;&#x1d64;&#x209c; / P&#x1d62;&#x2099; &times; 100 % &mdash; cumulatively multiply efficiencies through a chain (motor &times; gearbox &times; pump = system efficiency).',
-              'Motor IE classes: IE1 standard, IE2 high, IE3 premium, IE4 super-premium &mdash; UK Ecodesign Regulation 2019/1781 mandates IE3 minimum for most new motors.',
-              'Transformer efficiency curve peaks at 40&ndash;60 % load &mdash; oversizing actually loses energy because no-load (iron) losses are continuous.',
+              'Power triangle: S² = P² + Q² — Pythagoras applies because P (real) and Q (reactive) are 90° out of phase.',
+              'pf = cos φ = P/S — the power-factor angle is the angle of S above the horizontal P axis.',
+              'Efficiency η = P&#x2092;&#x1d64;&#x209c; / P&#x1d62;&#x2099; × 100 % — cumulatively multiply efficiencies through a chain (motor × gearbox × pump = system efficiency).',
+              'Motor IE classes: IE1 standard, IE2 high, IE3 premium, IE4 super-premium — UK Ecodesign Regulation 2019/1781 mandates IE3 minimum for most new motors.',
+              'Transformer efficiency curve peaks at 40–60 % load — oversizing actually loses energy because no-load (iron) losses are continuous.',
               'BREEAM Ene credits and Part L compliance both rely on the efficiency arithmetic the BSE engineer signs off on.',
-              'PFC kVAr = kW &times; (tan&phi;&#x2081; &minus; tan&phi;&#x2082;) — the geometry of the triangle is the basis of every capacitor sizing.',
+              'PFC kVAr = kW × (tanφ&#x2081; &minus; tanφ&#x2082;) — the geometry of the triangle is the basis of every capacitor sizing.',
               'Approved Document L 2021 is the over-arching regulatory anchor for every efficiency calculation on a UK building services design.',
             ]}
           />

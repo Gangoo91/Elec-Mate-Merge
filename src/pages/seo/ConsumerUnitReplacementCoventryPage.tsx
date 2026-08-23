@@ -481,7 +481,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Coventry electrical business with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC and EICR completion, instant quoting, and professional certificate management."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site EIC and EICR completion, instant quoting, and professional certificate management."
           icon={FileCheck2}
         />
       </>
@@ -518,7 +518,7 @@ export default function ConsumerUnitReplacementCoventryPage() {
       faqHeading="Frequently Asked Questions — Consumer Unit Replacement Coventry"
       relatedPages={relatedPages}
       ctaHeading="Complete Consumer Unit Certificates On Site in Coventry"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

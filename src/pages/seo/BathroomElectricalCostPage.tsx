@@ -554,7 +554,7 @@ export default function BathroomElectricalCostPage() {
       faqHeading="Frequently Asked Questions About Bathroom Electrical Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Bathroom Electrical Work with Confidence"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for itemised quoting, on-site certification, and AI cost engineering. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for itemised quoting, on-site certification, and AI cost engineering. 7-day free trial, cancel anytime."
     />
   );
 }

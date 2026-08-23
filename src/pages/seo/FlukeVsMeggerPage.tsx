@@ -660,7 +660,7 @@ export default function FlukeVsMeggerPage() {
         },
       ]}
       ctaHeading="Works with any MFT — auto-validates every reading"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site testing and certification. Enter results from any instrument brand and get instant BS 7671 validation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site testing and certification. Enter results from any instrument brand and get instant BS 7671 validation. 7-day free trial, cancel anytime."
       comparePath="/guides/fluke-vs-megger"
     />
   );

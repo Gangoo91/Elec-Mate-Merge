@@ -658,7 +658,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EV charger certificates on your phone"
-          description="EIC with EV-specific fields, integrated load assessment, and instant PDF delivery. Join 1,000+ electricians using Elec-Mate for professional…"
+          description="EIC with EV-specific fields, integrated load assessment, and instant PDF delivery. Join 1,600+ electricians using Elec-Mate for professional…"
           icon={Car}
         />
       </>
@@ -695,7 +695,7 @@ export default function EVChargerCertificateRequirementsPage() {
       faqHeading="Frequently Asked Questions About EV Charger Certification"
       relatedPages={relatedPages}
       ctaHeading="Complete EV Certificates on Your Phone"
-      ctaSubheading="EIC with EV-specific fields, integrated load assessment calculator, and instant PDF delivery to the customer. Join 1,000+ electricians doing certification the smart way. 7-day free trial."
+      ctaSubheading="EIC with EV-specific fields, integrated load assessment calculator, and instant PDF delivery to the customer. Join 1,600+ electricians doing certification the smart way. 7-day free trial."
     />
   );
 }

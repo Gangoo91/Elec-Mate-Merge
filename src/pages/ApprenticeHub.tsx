@@ -4,7 +4,7 @@
  *
  * Sticky text-only masthead, date-eyebrow Hero with rotating thematic
  * two-tone tagline + verdict + CTA, numbered hairline-grid sections:
- *   01 · AT A GLANCE        (Streak / Progress / Videos / Diary)
+ *   01 · AT A GLANCE        (Streak / Progress / XP / Diary)
  *   02 · FROM YOUR COLLEGE  (College plan + assigned quizzes)
  *   03 · CORE LEARNING      (Study Centre · Inspection & Testing)
  *   04 · EXAM PREP          (EPA Simulator · AM2 Simulator)
@@ -39,10 +39,9 @@ import useSEO from '@/hooks/useSEO';
 import { useApprenticeData } from '@/hooks/useApprenticeData';
 import { useMyIlp } from '@/hooks/useMyIlp';
 import { useMyAssignedQuizzes } from '@/hooks/useMyAssignedQuizzes';
-import { useVideoInsights } from '@/hooks/apprentice-stats/useVideoInsights';
+import { useLearningXP } from '@/hooks/useLearningXP';
 import { useSiteDiaryEntries } from '@/hooks/site-diary/useSiteDiaryEntries';
 import { LearningVideosSection } from '@/components/apprentice/learning-videos/LearningVideosSection';
-import { VideosWatchedDetailSheet } from '@/components/apprentice/stats-detail/VideosWatchedDetailSheet';
 import { DiaryEntriesDetailSheet } from '@/components/apprentice/stats-detail/DiaryEntriesDetailSheet';
 import { StudyStreakDetailSheet } from '@/components/apprentice/stats-detail/StudyStreakDetailSheet';
 import { ProgressDetailSheet } from '@/components/apprentice/stats-detail/ProgressDetailSheet';
@@ -107,7 +106,10 @@ const toHubTool = (c: ToolCard): HubTool => {
     title: c.title,
     description: c.description,
     to: c.to,
-    onClick: c.onClick,
+    // External cards (e.g. TradeFox) carry href, not to — without this
+    // mapping the card renders but a tap does nothing.
+    onClick:
+      c.onClick ?? (c.href ? () => window.open(c.href, '_blank', 'noopener') : undefined),
     value: m ? m[1] : undefined,
     valueLabel: m ? m[2] : undefined,
   };
@@ -131,8 +133,8 @@ export default function ApprenticeHub() {
   const { stats, isLoading: appLoading } = useApprenticeData();
   const { ilp, rollUp, hasCollegeLink, loading: ilpLoading } = useMyIlp();
   const { quizzes, loading: quizzesLoading } = useMyAssignedQuizzes();
-  const { watchedCount, totalVideos } = useVideoInsights();
   const { entries, isLoading: diaryLoading } = useSiteDiaryEntries();
+  const { totalXP, level: xpLevel } = useLearningXP();
 
   // First-load gate — show skeletons rather than flashing 0-day streak / 0%
   // / "Pick a card below to get started" to a returning apprentice while the
@@ -142,7 +144,6 @@ export default function ApprenticeHub() {
 
   const [streakOpen, setStreakOpen] = useState(false);
   const [progressOpen, setProgressOpen] = useState(false);
-  const [videosOpen, setVideosOpen] = useState(false);
   const [diaryOpen, setDiaryOpen] = useState(false);
 
   // Solo mode — the apprentice has said "no college for now". Collapses the
@@ -477,10 +478,10 @@ export default function ApprenticeHub() {
             onClick={() => setProgressOpen(true)}
           />
           <HubKpi
-            label="Videos"
-            value={totalVideos > 0 ? `${watchedCount}/${totalVideos}` : `${watchedCount}`}
-            verdict="Watched this term"
-            onClick={() => setVideosOpen(true)}
+            label="XP"
+            value={totalXP.toLocaleString()}
+            verdict={`Level ${xpLevel}`}
+            onClick={() => navigate('/apprentice/hub?tab=progress')}
           />
           <HubKpi
             label="Diary"
@@ -614,7 +615,6 @@ export default function ApprenticeHub() {
       {/* Stat detail sheets */}
       <StudyStreakDetailSheet open={streakOpen} onOpenChange={setStreakOpen} />
       <ProgressDetailSheet open={progressOpen} onOpenChange={setProgressOpen} />
-      <VideosWatchedDetailSheet open={videosOpen} onOpenChange={setVideosOpen} />
       <DiaryEntriesDetailSheet
         open={diaryOpen}
         onOpenChange={setDiaryOpen}

@@ -760,7 +760,7 @@ export default function AdiabaticEquationCalculatorPage() {
       {/* CTA */}
       <SEOCTASection
         heading="Size protective conductors in seconds"
-        subheading="Join 1,000+ UK electricians using 70 professional calculators on their phone. 7-day free trial, cancel anytime."
+        subheading="Join 1,600+ UK electricians using 70 professional calculators on their phone. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom spacer for mobile sticky CTA */}

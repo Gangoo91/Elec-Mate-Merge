@@ -644,7 +644,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your solar PV business with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site certification, instant quoting, and business management. Complete solar EICs on your phone."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site certification, instant quoting, and business management. Complete solar EICs on your phone."
           icon={FileCheck2}
         />
       </>
@@ -681,7 +681,7 @@ export default function SolarPanelInstallationLondonPage() {
       faqHeading="Frequently Asked Questions About Solar Panel Installation in London"
       relatedPages={relatedPages}
       ctaHeading="Complete Solar PV Certificates On Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site solar EICs, quoting, and business management. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site solar EICs, quoting, and business management. 7-day free trial, cancel anytime."
     />
   );
 }

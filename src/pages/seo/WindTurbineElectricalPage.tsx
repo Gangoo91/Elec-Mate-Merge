@@ -539,7 +539,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage wind turbine installations with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC certificates, G99 commissioning records, and professional quoting."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site EIC certificates, G99 commissioning records, and professional quoting."
           icon={Wind}
         />
       </>
@@ -576,7 +576,7 @@ export default function WindTurbineElectricalPage() {
       faqHeading="Frequently Asked Questions About Small Wind Turbine Installation"
       relatedPages={relatedPages}
       ctaHeading="Certificate Wind Turbine Installations on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EIC certificates, G99 commissioning records, and MCS documentation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC certificates, G99 commissioning records, and MCS documentation. 7-day free trial, cancel anytime."
     />
   );
 }

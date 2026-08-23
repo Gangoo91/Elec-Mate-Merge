@@ -584,7 +584,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Certify immersion heater installations with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate to issue Electrical Installation Certificates and Minor Works Certificates on site."
+          description="Join 1,600+ UK electricians using Elec-Mate to issue Electrical Installation Certificates and Minor Works Certificates on site."
           icon={FileCheck2}
         />
       </>
@@ -621,7 +621,7 @@ export default function ImmersionHeaterInstallationPage() {
       faqHeading="Frequently Asked Questions About Immersion Heater Installation"
       relatedPages={relatedPages}
       ctaHeading="Certify Immersion Heater Installations on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to issue Electrical Installation Certificates and Minor Works Certificates on site. Instant PDF export, Part P compliant. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to issue Electrical Installation Certificates and Minor Works Certificates on site. Instant PDF export, Part P compliant. 7-day free trial, cancel anytime."
     />
   );
 }

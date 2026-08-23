@@ -577,7 +577,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, invoice, and certify — all from your phone"
-          description="Join 1,000+ UK electricians using Elec-Mate to produce professional quotes, certificates, and invoices on site. Stop losing jobs to slower competitors."
+          description="Join 1,600+ UK electricians using Elec-Mate to produce professional quotes, certificates, and invoices on site. Stop losing jobs to slower competitors."
           icon={Zap}
         />
       </>
@@ -614,7 +614,7 @@ export default function ElectricianHourlyRatePage() {
       faqHeading="Frequently Asked Questions About Electrician Hourly Rates"
       relatedPages={relatedPages}
       ctaHeading="Quote and Invoice Like a Professional with Elec-Mate"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to produce professional quotes, certificates, and invoices on site. 7-day free trial, no charge until day 8."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to produce professional quotes, certificates, and invoices on site. 7-day free trial, no charge until day 8."
     />
   );
 }

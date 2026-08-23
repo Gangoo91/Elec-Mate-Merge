@@ -654,7 +654,7 @@ export default function USBSocketNotChargingPage() {
       faqHeading="Frequently Asked Questions About USB Socket Problems"
       relatedPages={relatedPages}
       ctaHeading="Document Socket Work with Professional Certificates"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for Minor Works Certificates, EICR reports, and AI-powered tools. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for Minor Works Certificates, EICR reports, and AI-powered tools. 7-day free trial, cancel anytime."
     />
   );
 }

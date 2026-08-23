@@ -562,7 +562,7 @@ export default function CPDForElectriciansPage() {
       faqHeading="Frequently Asked Questions About CPD for Electricians"
       relatedPages={relatedPages}
       ctaHeading="CPD tracked automatically"
-      ctaSubheading="Join 1,000+ UK electricians studying with Elec-Mate. 46+ courses, automatic CPD tracking, and scheme-ready reports. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians studying with Elec-Mate. 46+ courses, automatic CPD tracking, and scheme-ready reports. 7-day free trial, cancel anytime."
     />
   );
 }

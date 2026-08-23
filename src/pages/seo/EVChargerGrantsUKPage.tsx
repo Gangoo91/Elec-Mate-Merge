@@ -577,7 +577,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win more EV charger grant installations with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for EV certificates, quoting, and job management. Complete OZEV grant documentation on site. 7-day free trial."
+          description="Join 1,600+ UK electricians using Elec-Mate for EV certificates, quoting, and job management. Complete OZEV grant documentation on site. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -614,7 +614,7 @@ export default function EVChargerGrantsUKPage() {
       faqHeading="Frequently Asked Questions About EV Charger Grants UK"
       relatedPages={relatedPages}
       ctaHeading="Complete EV Charging Certificates on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EV certificates, quoting, and OZEV grant documentation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EV certificates, quoting, and OZEV grant documentation. 7-day free trial, cancel anytime."
     />
   );
 }

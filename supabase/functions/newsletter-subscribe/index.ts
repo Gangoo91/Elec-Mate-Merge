@@ -21,6 +21,7 @@
 import { serve, corsHeaders, createClient } from '../_shared/deps.ts';
 import { fireCapiEvent } from '../_shared/meta-capi.ts';
 import { sendCheatSheetEmail } from '../_shared/cheatsheet-email.ts';
+import { sendLeadMagnetEmail, type LeadMagnet } from '../_shared/lead-magnet-email.ts';
 import {
   sendMockResultEmail,
   type MockResultPayload,
@@ -235,9 +236,15 @@ serve(async (req) => {
       });
     }
 
-    const isLeadMagnet = body.source === 'lead_magnet_cheatsheet';
-    const isMockExam = body.source === 'mock_exam_result';
-    const isCalculator = body.source === 'calculator_result';
+    // Prefix match, not equality: every new lead magnet (symbols chart, and
+    // whatever comes next) routes to the lead-magnet list without another
+    // deploy. SIGNUP_SOURCE keeps the exact magnet segmentable in Brevo.
+    // Coerce once: `source` arrives from a public unauthenticated endpoint, and
+    // calling .startsWith on a non-string 500s the request.
+    const source = typeof body.source === 'string' ? body.source : '';
+    const isLeadMagnet = source.startsWith('lead_magnet');
+    const isMockExam = source === 'mock_exam_result';
+    const isCalculator = source === 'calculator_result';
     const listIdRaw = isCalculator
       ? Deno.env.get('BREVO_CALCULATOR_LIST_ID') || Deno.env.get('BREVO_NEWSLETTER_LIST_ID')
       : isMockExam
@@ -350,14 +357,45 @@ serve(async (req) => {
       custom_data: { content_name: body.source },
     });
 
-    const pdfUrl = Deno.env.get('LEAD_MAGNET_CHEATSHEET_URL') || null;
-    const wantsCheatSheet =
-      body.source === 'lead_magnet_cheatsheet' || body.source === 'exit_intent';
+    // ---- lead magnets -------------------------------------------------
+    // The cheat sheet keeps its own bespoke template and env-var URL. Every
+    // other magnet is a data entry here, delivered by the shared template.
+    // A magnet MUST appear in this map or its download_url comes back null —
+    // never fall back to another magnet's file.
+    const OTHER_MAGNETS: Record<string, LeadMagnet> = {
+      lead_magnet_symbols_chart: {
+        name: 'UK electrical symbols chart',
+        // Served from the public lead-magnets bucket, same as the welcome
+        // email's Getting Started guide — so delivery does not depend on a
+        // site deploy, and the file is fetchable for the attachment.
+        url: `${Deno.env.get('SUPABASE_URL') || 'https://jtwygbeceundfgnkirof.supabase.co'}/storage/v1/object/public/lead-magnets/elec-mate-electrical-symbols-chart.pdf`,
+        filename: 'Elec-Mate-Electrical-Symbols-Chart.pdf',
+        blurb:
+          'All 114 IEC 60617 symbols on one A4 sheet, grouped by category — the standard referenced by BS 7671:2018+A4:2026 Regulation 514.9.1 for installation drawings.',
+        utmMedium: 'symbols_chart',
+        facts: [
+          'All 114 symbols, grouped by category',
+          'A4 and print-ready — pin it up in the van',
+          'IEC 60617, per BS 7671 Regulation 514.9.1',
+        ],
+      },
+    };
 
-    // Fire the cheat sheet email for lead magnet + exit intent sources.
-    // Fire-and-forget — don't block the response on SMTP.
-    if (wantsCheatSheet && pdfUrl) {
-      sendCheatSheetEmail(email, body.first_name, pdfUrl).catch(() => {});
+    const cheatSheetUrl = Deno.env.get('LEAD_MAGNET_CHEATSHEET_URL') || null;
+    const wantsCheatSheet = source === 'lead_magnet_cheatsheet' || source === 'exit_intent';
+    const otherMagnet = Object.prototype.hasOwnProperty.call(OTHER_MAGNETS, source)
+      ? OTHER_MAGNETS[source]
+      : undefined;
+
+    // Fire the delivery email. Fire-and-forget — never block the response on SMTP.
+    if (wantsCheatSheet && cheatSheetUrl) {
+      sendCheatSheetEmail(email, body.first_name, cheatSheetUrl).catch(() => {});
+    } else if (otherMagnet) {
+      sendLeadMagnetEmail(email, body.first_name, otherMagnet).catch(() => {});
+    } else if (isLeadMagnet) {
+      // Routed to the lead-magnet list but has no registry entry, so nothing is
+      // delivered. Silent in production otherwise — shout so it gets noticed.
+      console.error('[newsletter-subscribe] lead magnet has no OTHER_MAGNETS entry:', source);
     }
 
     // Mock exam breakdown — same fire-and-forget shape.
@@ -370,7 +408,14 @@ serve(async (req) => {
       sendCalculatorResultEmail(email, calcResult).catch(() => {});
     }
 
-    const download_url = isLeadMagnet ? pdfUrl : null;
+    // Per-magnet — returning the cheat sheet URL for a different magnet would
+    // hand the visitor the wrong file.
+    // `exit_intent` is deliberately excluded: it still RECEIVES the cheat sheet
+    // email above, but ExitIntentModal window.open()s any non-null downloadUrl
+    // after an await (popup-blocked) and fires download analytics regardless.
+    // It returned null before the prefix-routing change and must keep doing so.
+    const download_url =
+      otherMagnet?.url ?? (source === 'lead_magnet_cheatsheet' ? cheatSheetUrl : null);
 
     return new Response(JSON.stringify({ ok: true, event_id: eventId, download_url }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },

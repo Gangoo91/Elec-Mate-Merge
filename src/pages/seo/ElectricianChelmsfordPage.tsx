@@ -434,7 +434,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Chelmsford electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
+          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -473,7 +473,7 @@ export default function ElectricianChelmsfordPage() {
       faqHeading="Frequently Asked Questions About Electricians in Chelmsford"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Chelmsford Electricians"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for South East electricians working across Chelmsford and Essex. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for South East electricians working across Chelmsford and Essex. 7-day free trial."
     />
   );
 }

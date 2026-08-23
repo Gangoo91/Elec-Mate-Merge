@@ -51,7 +51,7 @@ const checks = [
   {
     id: 'torque-discipline',
     question:
-      'Hager NDN132A RCBO terminal torque per the manufacturer&rsquo;s data sheet is 1.2 Nm. You over-tighten "by feel" with a screwdriver. What is the most likely failure mode?',
+      'Hager NDN132A RCBO terminal torque per the manufacturer’s data sheet is 1.2 Nm. You over-tighten "by feel" with a screwdriver. What is the most likely failure mode?',
     options: [
       'Crushed conductor strands → reduced effective CSA → high-resistance joint → eventual loop test fail or thermal damage.',
       'The terminal screw thread strips, so the conductor immediately falls out of the device.',
@@ -60,7 +60,7 @@ const checks = [
     ],
     correctIndex: 0,
     explanation:
-      'Over-torquing crushes the conductor under the terminal. The crushed strands have higher resistance than uncompressed copper, the joint runs hot under load, the local heating accelerates oxidation, and the joint progressively fails. By the next periodic inspection the loop impedance test catches it. The fix is a torque screwdriver set to the manufacturer&rsquo;s figure — typically 1.0-1.5 Nm for circuit-side terminals on a domestic RCBO, 3.5-4.0 Nm for incomer terminals.',
+      'Over-torquing crushes the conductor under the terminal. The crushed strands have higher resistance than uncompressed copper, the joint runs hot under load, the local heating accelerates oxidation, and the joint progressively fails. By the next periodic inspection the loop impedance test catches it. The fix is a torque screwdriver set to the manufacturer’s figure — typically 1.0-1.5 Nm for circuit-side terminals on a domestic RCBO, 3.5-4.0 Nm for incomer terminals.',
   },
   {
     id: 'ferrule-when',

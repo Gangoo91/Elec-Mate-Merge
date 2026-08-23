@@ -27,6 +27,7 @@ function Level2Tracker() {
 
 // Level 2 main page
 const Level2 = lazyWithRetry(() => import('@/pages/apprentice-courses/Level2'));
+const NotFound = lazyWithRetry(() => import('@/pages/apprentice-courses/NotFound'));
 
 // Module pages (8 modules)
 const Module1 = lazyWithRetry(() => import('@/pages/apprentice-courses/level2/module1/Module1'));
@@ -308,6 +309,47 @@ const Module6Section7_1 = lazyWithRetry(() => import('@/pages/apprentice-courses
 const Module6Section7_2 = lazyWithRetry(() => import('@/pages/apprentice-courses/Module6Section7_2'));
 const Module6Section7_3 = lazyWithRetry(() => import('@/pages/apprentice-courses/Module6Section7_3'));
 const Module6Section7_4 = lazyWithRetry(() => import('@/pages/apprentice-courses/Module6Section7_4'));
+
+// Module 7 pages (Fault Finding & Diagnosis)
+const Module7 = lazyWithRetry(() => import('@/pages/apprentice-courses/Module7'));
+const Module7Section1 = lazyWithRetry(() => import('@/pages/apprentice-courses/Module7Section1'));
+const Module7Section1_1 = lazyWithRetry(() => import('@/pages/apprentice-courses/Module7Section1_1'));
+const Module7Section1_2 = lazyWithRetry(() => import('@/pages/apprentice-courses/Module7Section1_2'));
+const Module7Section1_3 = lazyWithRetry(() => import('@/pages/apprentice-courses/Module7Section1_3'));
+const Module7Section1_4 = lazyWithRetry(() => import('@/pages/apprentice-courses/Module7Section1_4'));
+const Module7Section1_5 = lazyWithRetry(() => import('@/pages/apprentice-courses/Module7Section1_5'));
+const Module7Section2 = lazyWithRetry(() => import('@/pages/apprentice-courses/Module7Section2'));
+const Module7Section2_1 = lazyWithRetry(() => import('@/pages/apprentice-courses/Module7Section2_1'));
+const Module7Section2_2 = lazyWithRetry(() => import('@/pages/apprentice-courses/Module7Section2_2'));
+const Module7Section2_3 = lazyWithRetry(() => import('@/pages/apprentice-courses/Module7Section2_3'));
+const Module7Section2_4 = lazyWithRetry(() => import('@/pages/apprentice-courses/Module7Section2_4'));
+const Module7Section2_5 = lazyWithRetry(() => import('@/pages/apprentice-courses/Module7Section2_5'));
+const Module7Section2_6 = lazyWithRetry(() => import('@/pages/apprentice-courses/Module7Section2_6'));
+const Module7Section3 = lazyWithRetry(() => import('@/pages/apprentice-courses/Module7Section3'));
+const Module7Section3_1 = lazyWithRetry(() => import('@/pages/apprentice-courses/Module7Section3_1'));
+const Module7Section3_2 = lazyWithRetry(() => import('@/pages/apprentice-courses/Module7Section3_2'));
+const Module7Section3_3 = lazyWithRetry(() => import('@/pages/apprentice-courses/Module7Section3_3'));
+const Module7Section3_4 = lazyWithRetry(() => import('@/pages/apprentice-courses/Module7Section3_4'));
+const Module7Section3_5 = lazyWithRetry(() => import('@/pages/apprentice-courses/Module7Section3_5'));
+const Module7Section4 = lazyWithRetry(() => import('@/pages/apprentice-courses/Module7Section4'));
+const Module7Section4_1 = lazyWithRetry(() => import('@/pages/apprentice-courses/Module7Section4_1'));
+const Module7Section4_2 = lazyWithRetry(() => import('@/pages/apprentice-courses/Module7Section4_2'));
+const Module7Section4_3 = lazyWithRetry(() => import('@/pages/apprentice-courses/Module7Section4_3'));
+const Module7Section4_4 = lazyWithRetry(() => import('@/pages/apprentice-courses/Module7Section4_4'));
+const Module7Section4_5 = lazyWithRetry(() => import('@/pages/apprentice-courses/Module7Section4_5'));
+const Module7Section4_6 = lazyWithRetry(() => import('@/pages/apprentice-courses/Module7Section4_6'));
+const Module7Section5 = lazyWithRetry(() => import('@/pages/apprentice-courses/Module7Section5'));
+const Module7Section5_1 = lazyWithRetry(() => import('@/pages/apprentice-courses/Module7Section5_1'));
+const Module7Section5_2 = lazyWithRetry(() => import('@/pages/apprentice-courses/Module7Section5_2'));
+const Module7Section5_3 = lazyWithRetry(() => import('@/pages/apprentice-courses/Module7Section5_3'));
+const Module7Section5_4 = lazyWithRetry(() => import('@/pages/apprentice-courses/Module7Section5_4'));
+const Module7Section5_5 = lazyWithRetry(() => import('@/pages/apprentice-courses/Module7Section5_5'));
+const Module7Section6 = lazyWithRetry(() => import('@/pages/apprentice-courses/Module7Section6'));
+const Module7Section6_1 = lazyWithRetry(() => import('@/pages/apprentice-courses/Module7Section6_1'));
+const Module7Section6_2 = lazyWithRetry(() => import('@/pages/apprentice-courses/Module7Section6_2'));
+const Module7Section6_3 = lazyWithRetry(() => import('@/pages/apprentice-courses/Module7Section6_3'));
+const Module7Section6_4 = lazyWithRetry(() => import('@/pages/apprentice-courses/Module7Section6_4'));
+const Module7Section6_5 = lazyWithRetry(() => import('@/pages/apprentice-courses/Module7Section6_5'));
 
 // Module 8 pages (Mock Exams)
 const Level2Module8Section1 = lazyWithRetry(
@@ -605,6 +647,47 @@ export default function Level2Routes() {
         <Route path="module6/section7/7-3" element={<Module6Section7_3 />} />
         <Route path="module6/section7/7-4" element={<Module6Section7_4 />} />
 
+        {/* Module 7: Fault Finding & Diagnosis */}
+        <Route path="module7" element={<Module7 />} />
+        <Route path="module7/section1" element={<Module7Section1 />} />
+        <Route path="module7/section1/1-1" element={<Module7Section1_1 />} />
+        <Route path="module7/section1/1-2" element={<Module7Section1_2 />} />
+        <Route path="module7/section1/1-3" element={<Module7Section1_3 />} />
+        <Route path="module7/section1/1-4" element={<Module7Section1_4 />} />
+        <Route path="module7/section1/1-5" element={<Module7Section1_5 />} />
+        <Route path="module7/section2" element={<Module7Section2 />} />
+        <Route path="module7/section2/2-1" element={<Module7Section2_1 />} />
+        <Route path="module7/section2/2-2" element={<Module7Section2_2 />} />
+        <Route path="module7/section2/2-3" element={<Module7Section2_3 />} />
+        <Route path="module7/section2/2-4" element={<Module7Section2_4 />} />
+        <Route path="module7/section2/2-5" element={<Module7Section2_5 />} />
+        <Route path="module7/section2/2-6" element={<Module7Section2_6 />} />
+        <Route path="module7/section3" element={<Module7Section3 />} />
+        <Route path="module7/section3/3-1" element={<Module7Section3_1 />} />
+        <Route path="module7/section3/3-2" element={<Module7Section3_2 />} />
+        <Route path="module7/section3/3-3" element={<Module7Section3_3 />} />
+        <Route path="module7/section3/3-4" element={<Module7Section3_4 />} />
+        <Route path="module7/section3/3-5" element={<Module7Section3_5 />} />
+        <Route path="module7/section4" element={<Module7Section4 />} />
+        <Route path="module7/section4/4-1" element={<Module7Section4_1 />} />
+        <Route path="module7/section4/4-2" element={<Module7Section4_2 />} />
+        <Route path="module7/section4/4-3" element={<Module7Section4_3 />} />
+        <Route path="module7/section4/4-4" element={<Module7Section4_4 />} />
+        <Route path="module7/section4/4-5" element={<Module7Section4_5 />} />
+        <Route path="module7/section4/4-6" element={<Module7Section4_6 />} />
+        <Route path="module7/section5" element={<Module7Section5 />} />
+        <Route path="module7/section5/5-1" element={<Module7Section5_1 />} />
+        <Route path="module7/section5/5-2" element={<Module7Section5_2 />} />
+        <Route path="module7/section5/5-3" element={<Module7Section5_3 />} />
+        <Route path="module7/section5/5-4" element={<Module7Section5_4 />} />
+        <Route path="module7/section5/5-5" element={<Module7Section5_5 />} />
+        <Route path="module7/section6" element={<Module7Section6 />} />
+        <Route path="module7/section6/6-1" element={<Module7Section6_1 />} />
+        <Route path="module7/section6/6-2" element={<Module7Section6_2 />} />
+        <Route path="module7/section6/6-3" element={<Module7Section6_3 />} />
+        <Route path="module7/section6/6-4" element={<Module7Section6_4 />} />
+        <Route path="module7/section6/6-5" element={<Module7Section6_5 />} />
+
         {/* Module 8: Mock Exams */}
         <Route path="module8" element={<Module8 />} />
         <Route path="module8/section1" element={<Level2Module8Section1 />} />
@@ -619,6 +702,9 @@ export default function Level2Routes() {
         <Route path="module8/section2/section2" element={<Level2Module8Section2Section2 />} />
         <Route path="module8/section2/section3" element={<Level2Module8Section2Section3 />} />
         <Route path="module8/section2/section4" element={<Level2Module8Section2Section4 />} />
+        {/* Dead links must land somewhere — the app-level 404 is unreachable
+            from inside this nested <Routes>. */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>
   );

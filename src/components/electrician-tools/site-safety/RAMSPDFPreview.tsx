@@ -17,6 +17,7 @@ import {
   RefreshCw,
   FileText,
 } from 'lucide-react';
+import { saveOrShareFile } from '@/utils/save-or-share-file';
 
 interface RAMSPDFPreviewProps {
   isOpen: boolean;
@@ -166,7 +167,7 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
     }
   }, [ramsData, reportOptions, signOff, cacheKey, retryCount]);
 
-  const handleDownload = useCallback(() => {
+  const handleDownload = useCallback(async () => {
     if (pdfUrl) {
       const fileName =
         safeFileName(ramsData.projectName) +
@@ -174,17 +175,25 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
         new Date().toISOString().split('T')[0].replace(/-/g, '') +
         '.pdf';
 
-      const link = document.createElement('a');
-      link.href = pdfUrl;
-      link.download = fileName;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-
-      toast({
-        title: 'Download Started',
-        description: `Downloading ${fileName}`,
-      });
+      // `link.href = pdfUrl` pointed at a REMOTE url, and browsers ignore the
+      // `download` attribute cross-origin — so this navigated away instead of
+      // saving on the web, and did nothing at all inside the app, while still
+      // toasting "Download Started". saveOrShareFile fetches the bytes first,
+      // so the file is genuinely delivered on every platform.
+      try {
+        await saveOrShareFile(pdfUrl, fileName);
+        toast({
+          title: 'Download Started',
+          description: `Downloading ${fileName}`,
+        });
+      } catch (err) {
+        console.error('RAMS PDF download failed:', err);
+        toast({
+          title: 'Download Failed',
+          description: 'Could not download the PDF. Please try again.',
+          variant: 'destructive',
+        });
+      }
     }
   }, [pdfUrl, ramsData.projectName]);
 

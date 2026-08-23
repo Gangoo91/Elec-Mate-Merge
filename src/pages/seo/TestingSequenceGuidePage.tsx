@@ -1120,7 +1120,7 @@ export default function TestingSequenceGuidePage() {
       {/* CTA */}
       <SEOCTASection
         heading="Record Test Results Digitally"
-        subheading="Join 1,000+ UK electricians using Elec-Mate for on-site testing and certification. 7-day free trial, cancel anytime."
+        subheading="Join 1,600+ UK electricians using Elec-Mate for on-site testing and certification. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

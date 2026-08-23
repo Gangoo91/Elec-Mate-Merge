@@ -632,7 +632,7 @@ export default function ElectricalQuotingAppPage() {
 
       <SEOCTASection
         heading="Quote Faster, Win More Work"
-        subheading="Join 1,000+ UK electricians using Elec-Mate for professional quotes and invoices. 7-day free trial, cancel anytime."
+        subheading="Join 1,600+ UK electricians using Elec-Mate for professional quotes and invoices. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

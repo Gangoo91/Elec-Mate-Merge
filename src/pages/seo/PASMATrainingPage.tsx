@@ -192,7 +192,7 @@ export default function PASMATrainingPage() {
           <div className="flex flex-wrap items-center justify-center gap-4 mt-8 text-sm text-white">
             <span className="flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" />
-              1,000+ electricians learning
+              1,600+ electricians learning
             </span>
             <span className="flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" />8 Elec-AI agents
@@ -482,7 +482,7 @@ export default function PASMATrainingPage() {
 
       <SEOCTASection
         heading="Start Your PASMA Study Today"
-        subheading="Join 1,000+ UK electricians using Elec-Mate for training and professional development. 7-day free trial, cancel anytime."
+        subheading="Join 1,600+ UK electricians using Elec-Mate for training and professional development. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

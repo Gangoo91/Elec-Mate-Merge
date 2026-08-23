@@ -611,7 +611,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICRs and EICs with correct earthing system"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR and EIC completion. Built-in guidance for earthing system identification, AI board scanning…"
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site EICR and EIC completion. Built-in guidance for earthing system identification, AI board scanning…"
           icon={FileCheck2}
         />
       </>
@@ -648,7 +648,7 @@ export default function EarthingSystemsGuidePage() {
       faqHeading="Frequently Asked Questions About UK Earthing Systems"
       relatedPages={relatedPages}
       ctaHeading="Complete Earthing Documentation Correctly on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR and EIC completion with correct earthing system documentation, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR and EIC completion with correct earthing system documentation, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

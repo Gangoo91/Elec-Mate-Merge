@@ -302,7 +302,7 @@ const HNCModule2Section1_4 = () => {
           <TLDR
             points={[
               'You will calculate the U-value of any building element from first principles using R-value addition (1/U = R_si + Σ(d/k) + R_se).',
-              'You can read and reject manufacturer&rsquo;s &ldquo;ideal&rdquo; U-values that ignore thermal bridging — apply BS EN ISO 6946 corrections.',
+              'You can read and reject manufacturer’s “ideal” U-values that ignore thermal bridging — apply BS EN ISO 6946 corrections.',
               'You apply Part L target U-values for new and existing dwellings (and Part L2 for non-domestic) and the Limiting Fabric Standards.',
               'You feed U-values into SAP (domestic) or SBEM (non-domestic) and trace the Part L compliance back to the assembly drawing.',
             ]}

@@ -24,6 +24,7 @@ import {
   SecondaryButton,
   textareaClass,
 } from '@/components/employer/editorial';
+import { saveOrShareFile } from '@/utils/save-or-share-file';
 
 interface AIRAMSSectionProps {
   onNavigate: (section: Section) => void;
@@ -287,10 +288,13 @@ export function AIRAMSSection({ onNavigate }: AIRAMSSectionProps) {
         body: { ramsData: result.ramsData, userId: user?.id },
       });
       if (data?.success && data?.downloadUrl) {
-        const a = document.createElement('a');
-        a.href = data.downloadUrl;
-        a.download = `Risk_Assessment_${(selectedJobPack?.title || 'document').replace(/[^a-z0-9]/gi, '_')}.pdf`;
-        a.click();
+        // `<a download>` on a cross-origin renderer URL: ignored by browsers,
+        // and a no-op inside the app. saveOrShareFile fetches the bytes and
+        // hands them over properly on every platform.
+        await saveOrShareFile(
+          data.downloadUrl,
+          `Risk_Assessment_${(selectedJobPack?.title || 'document').replace(/[^a-z0-9]/gi, '_')}.pdf`
+        );
 
         // Persist DURABLY (renderer URLs expire within the hour)
         let saved = false;

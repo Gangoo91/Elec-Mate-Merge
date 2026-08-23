@@ -757,7 +757,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, size, and certify barn conversion electrics"
-          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification."
+          description="Join 1,600+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification."
           icon={Landmark}
         />
       </>
@@ -794,7 +794,7 @@ export default function BarnConversionElectricsPage() {
       faqHeading="Frequently Asked Questions About Barn Conversion Electrics"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify Barn Conversion Electrics on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certificates. Built for complex projects. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certificates. Built for complex projects. 7-day free trial, cancel anytime."
     />
   );
 }

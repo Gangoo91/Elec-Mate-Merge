@@ -137,8 +137,8 @@ const sections = [
     content: (
       <>
         <p className="text-sm text-white/50 mb-4">
-          Written by the Andrew Moore, founder of Elec-Mate, — qualified electricians and NICEIC-registered
-          contractors who have run Google Ads campaigns for their own businesses.
+          Written by Andrew Moore, founder of Elec-Mate — a qualified electrician who built the
+          platform used by UK electrical contractors.
         </p>
         <p>
           Google Local Services Ads (LSAs) are the most powerful paid advertising format available

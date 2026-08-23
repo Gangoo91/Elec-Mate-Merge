@@ -7318,6 +7318,9 @@ export default function ApprenticeCourseRoutes() {
         <Route path="subsection7" element={<subsection7 />} />
         <Route path="subsection8" element={<subsection8 />} />
         <Route path="subsection9" element={<subsection9 />} />
+        {/* Dead links must land somewhere — the app-level 404 is unreachable
+            from inside this nested <Routes>. */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>
   );

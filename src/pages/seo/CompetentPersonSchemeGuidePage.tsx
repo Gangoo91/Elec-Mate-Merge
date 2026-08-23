@@ -502,7 +502,7 @@ export default function CompetentPersonSchemeGuidePage() {
       faqHeading="Frequently Asked Questions About Competent Person Schemes"
       relatedPages={relatedPages}
       ctaHeading="Professional Certificates for Scheme Assessments"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EICs, EICRs, and minor works certificates. Professional documentation that passes every assessment. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EICs, EICRs, and minor works certificates. Professional documentation that passes every assessment. 7-day free trial."
     />
   );
 }

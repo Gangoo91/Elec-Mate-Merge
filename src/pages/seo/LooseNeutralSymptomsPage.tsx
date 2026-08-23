@@ -100,7 +100,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-systems-tns-tncs-tt-explained',
     title: 'Earthing Arrangements Explained',
     description:
       'TN-C-S, TN-S, and TT earthing systems — how they work and why they matter for fault finding.',
@@ -360,7 +360,7 @@ const sections = [
       <>
         <p>
           The danger of a lost neutral is greatest on{' '}
-          <SEOInternalLink href="/earthing-arrangements">
+          <SEOInternalLink href="/guides/earthing-systems-tns-tncs-tt-explained">
             TN-C-S (Protective Multiple Earthing)
           </SEOInternalLink>{' '}
           installations, which are the most common earthing arrangement in the UK. On a TN-C-S

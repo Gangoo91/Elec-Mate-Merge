@@ -597,7 +597,7 @@ export default function CityGuilds2396DesignCoursePage() {
       faqHeading="Frequently Asked Questions About the C&G 2396"
       relatedPages={relatedPages}
       ctaHeading="Design Electrical Installations With Confidence"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, voltage drop calculations, and AI-powered circuit design. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, voltage drop calculations, and AI-powered circuit design. 7-day free trial, cancel anytime."
     />
   );
 }

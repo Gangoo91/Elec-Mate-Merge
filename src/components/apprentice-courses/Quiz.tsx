@@ -10,8 +10,10 @@ import {
   Trophy,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useAuth } from '@/contexts/AuthContext';
 import { useCourseProgress } from '@/hooks/useCourseProgress';
 import { deriveProgressKeys } from '@/lib/apprentice-progress';
+import { recordMiss } from '@/lib/missedQuestions';
 import { shuffleAllQuestionOptions, createShuffleSalt } from '@/utils/shuffleOptions';
 
 interface QuizQuestion {
@@ -28,7 +30,25 @@ interface QuizProps {
   title?: string;
 }
 
+/**
+ * Course banks record the answer three different ways: a numeric
+ * `correctAnswer`, a numeric `correctIndex`, or `correctAnswer` as the answer
+ * TEXT. Resolve to a single numeric index up front.
+ *
+ * This runs BEFORE the shuffle rather than at render time, because the
+ * shuffler needs a definite `correctAnswer` to remap — handed a question
+ * carrying only `correctIndex` it would fall back to index 0 and silently
+ * mark the wrong option correct.
+ */
+const resolveCorrectIndex = (q: QuizQuestion): number => {
+  if (typeof q.correctAnswer === 'number') return q.correctAnswer;
+  if (typeof q.correctIndex === 'number') return q.correctIndex;
+  const i = q.options.findIndex((opt) => opt === q.correctAnswer);
+  return i >= 0 ? i : 0;
+};
+
 export const Quiz: React.FC<QuizProps> = ({ questions: rawQuestions, title = 'Knowledge check' }) => {
+  const { user } = useAuth();
   const { recordProgress } = useCourseProgress();
   const hasRecorded = useRef(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -39,16 +59,17 @@ export const Quiz: React.FC<QuizProps> = ({ questions: rawQuestions, title = 'Kn
   // shift the correct answer. Regenerated on restart for a fresh order.
   const [shuffleSalt, setShuffleSalt] = useState(() => createShuffleSalt());
   const questions = useMemo(
-    () => shuffleAllQuestionOptions(rawQuestions, shuffleSalt),
+    () =>
+      shuffleAllQuestionOptions(
+        rawQuestions.map((q) => ({ ...q, correctAnswer: resolveCorrectIndex(q) })),
+        shuffleSalt
+      ),
     [rawQuestions, shuffleSalt]
   );
 
-  const getCorrectAnswerIndex = (q: QuizQuestion): number => {
-    if (typeof q.correctAnswer === 'number') return q.correctAnswer;
-    if (typeof q.correctIndex === 'number') return q.correctIndex;
-    const i = q.options.findIndex((opt) => opt === q.correctAnswer);
-    return i >= 0 ? i : 0;
-  };
+  // Post-normalisation every question carries a numeric correctAnswer, which
+  // the shuffler has already remapped to the displayed order.
+  const getCorrectAnswerIndex = (q: { correctAnswer: number }): number => q.correctAnswer;
 
   const handleAnswerSelect = (i: number) => {
     if (showResult) return;
@@ -81,8 +102,23 @@ export const Quiz: React.FC<QuizProps> = ({ questions: rawQuestions, title = 'Kn
 
   const handleSubmitAnswer = () => {
     setShowResult(true);
+    const answeredCorrectly = currentQ && selectedAnswers[currentQuestion] === correctIndex;
+    // Wrong answers feed the personal revision pile — the same one the
+    // public mock exams fill, replayed by /apprentice/revision.
+    if (!answeredCorrectly && currentQ && user?.id) {
+      recordMiss(
+        user.id,
+        {
+          question: currentQ.question,
+          options: currentQ.options,
+          correctAnswer: correctIndex,
+          explanation: typeof currentQ.explanation === 'string' ? currentQ.explanation : undefined,
+        },
+        title
+      );
+    }
     try {
-      navigator.vibrate?.(currentQ && selectedAnswers[currentQuestion] === correctIndex ? 12 : 30);
+      navigator.vibrate?.(answeredCorrectly ? 12 : 30);
     } catch {
       /* ignore */
     }

@@ -87,6 +87,11 @@ export const countCircuits = (data: unknown): number => {
  * is treated as reusable spec / setup data and is preserved.
  */
 const IDENTITY_FIELDS_TO_STRIP = [
+  // ELE-1592 — the client-side certificate identity that the cloud sync
+  // derives its create idempotency key from. A duplicate is a NEW certificate,
+  // so it must not inherit this: if it did, the copy's first save would be
+  // recognised as the original's and silently bound to that row.
+  '_clientCertId',
   // Cert metadata
   'certificateNumber',
   'reportNumber',

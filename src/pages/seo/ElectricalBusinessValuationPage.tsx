@@ -592,7 +592,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Build a more valuable electrical business with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, invoicing, and electrical certification."
+          description="Join 1,600+ UK electricians using Elec-Mate for professional quoting, invoicing, and electrical certification."
           icon={BarChart2}
         />
       </>
@@ -629,7 +629,7 @@ export default function ElectricalBusinessValuationPage() {
       faqHeading="Frequently Asked Questions About Electrical Business Valuation"
       relatedPages={relatedPages}
       ctaHeading="Build a More Valuable Electrical Business"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for professional quoting, invoicing, and certification. Build the systems and records that make your business more valuable and easier to sell. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for professional quoting, invoicing, and certification. Build the systems and records that make your business more valuable and easier to sell. 7-day free trial, cancel anytime."
     />
   );
 }

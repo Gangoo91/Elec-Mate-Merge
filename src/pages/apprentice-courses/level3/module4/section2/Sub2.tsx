@@ -414,7 +414,7 @@ export default function Sub2() {
           <ConceptBlock
             title="The 60-second pre-use check that catches a faulty instrument"
             plainEnglish="Calibration certificate in date is necessary but not sufficient — an instrument can develop a fault between calibration cycles. The pre-use functional check takes 60 seconds and catches the faults that would otherwise produce a misleading reading."
-            onSite="The Megger MFT1741+, Kewtech KT64+ and Fluke 1664FC all support a self-test on power-up. Beyond that, manual functional checks: prove the two-pole tester on the Martindale GVD2; test the multimeter against a 9 V battery (should read 9.0 ± 0.2 V); check the MFT continuity against a known short (a 4 mm shorting link); check the IR test against an open circuit (should read &gt;999 MΩ) and a known resistor (e.g. a 1 MΩ test resistor)."
+            onSite="The Megger MFT1741+, Kewtech KT64+ and Fluke 1664FC all support a self-test on power-up. Beyond that, manual functional checks: prove the two-pole tester on the Martindale GVD2; test the multimeter against a 9 V battery (should read 9.0 ± 0.2 V); check the MFT continuity against a known short (a 4 mm shorting link); check the IR test against an open circuit (should read >999 MΩ) and a known resistor (e.g. a 1 MΩ test resistor)."
           >
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li><strong>Two-pole tester</strong> — prove on Martindale GVD2 (or known live socket). Confirm full lamp + LED + audible.</li>

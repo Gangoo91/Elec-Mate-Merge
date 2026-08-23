@@ -578,7 +578,7 @@ export default function JIBGradingExplainedPage() {
       faqHeading="Frequently Asked Questions About JIB Grading"
       relatedPages={relatedPages}
       ctaHeading="Progress Your Electrical Career With Elec-Mate"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for training, qualification tracking, and career development. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for training, qualification tracking, and career development. 7-day free trial, cancel anytime."
     />
   );
 }

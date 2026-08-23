@@ -661,7 +661,7 @@ export default function CheckatradeVsMyBuilderPage() {
       faqHeading="Frequently Asked Questions About Lead Generation Platforms"
       relatedPages={relatedPages}
       ctaHeading="Convert More Leads with Professional Tools"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional quotes and same-day certificates help you win jobs from any platform. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional quotes and same-day certificates help you win jobs from any platform. 7-day free trial, cancel anytime."
     />
   );
 }

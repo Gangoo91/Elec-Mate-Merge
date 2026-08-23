@@ -313,7 +313,7 @@ export default function Sub5() {
           <ConceptBlock
             title="Inverter replacement is part of the whole-life cost"
             plainEnglish="PV panels are warrantied 25 years and often deliver useful output well beyond that. Inverters are warrantied 5-12 years depending on type — string inverters typically 10-12 years; microinverters often warranty-matched to the panels at 25 years. Most domestic PV systems will need at least one inverter replacement during the 25-year panel lifetime. The replacement is straightforward — disconnect old, fit replacement of compatible spec, recommission, update the EIC."
-            onSite="As the L3 electrician on an inverter replacement visit you isolate AC and DC sides, lock-off, prove dead. Replace the inverter with a compatible-spec unit (matching MPPT range, network export limit, communication protocol if integrated with battery storage). Re-commission the manufacturer settings. Update the EIC schedules to reflect the new inverter make and model. Update the customer&apos;s handover pack with the new commissioning record."
+            onSite="As the L3 electrician on an inverter replacement visit you isolate AC and DC sides, lock-off, prove dead. Replace the inverter with a compatible-spec unit (matching MPPT range, network export limit, communication protocol if integrated with battery storage). Re-commission the manufacturer settings. Update the EIC schedules to reflect the new inverter make and model. Update the customer’s handover pack with the new commissioning record."
           >
             <p>
               Why the inverter is the wear part:

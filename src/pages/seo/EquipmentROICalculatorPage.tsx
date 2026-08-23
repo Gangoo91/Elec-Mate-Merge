@@ -525,7 +525,7 @@ export default function EquipmentROICalculatorPage() {
       faqHeading="Frequently Asked Questions About Equipment ROI"
       relatedPages={relatedPages}
       ctaHeading="Make Smarter Investment Decisions"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for business calculations, job costing, and financial planning. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for business calculations, job costing, and financial planning. 7-day free trial, cancel anytime."
       pagePath="/tools/equipment-roi-calculator"
     />
   );

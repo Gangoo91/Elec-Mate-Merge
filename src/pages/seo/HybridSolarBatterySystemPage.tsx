@@ -483,7 +483,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage hybrid solar installations with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for MCS commissioning documents, EIC certificates, and professional quoting. 7-day free trial, cancel anytime."
+          description="Join 1,600+ UK electricians using Elec-Mate for MCS commissioning documents, EIC certificates, and professional quoting. 7-day free trial, cancel anytime."
           icon={Sun}
         />
       </>
@@ -520,7 +520,7 @@ export default function HybridSolarBatterySystemPage() {
       faqHeading="Frequently Asked Questions About Hybrid Solar Battery Systems"
       relatedPages={relatedPages}
       ctaHeading="Complete Hybrid Solar Installations on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for MCS commissioning documents, EIC certificates, and hybrid solar quoting. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for MCS commissioning documents, EIC certificates, and hybrid solar quoting. 7-day free trial, cancel anytime."
     />
   );
 }

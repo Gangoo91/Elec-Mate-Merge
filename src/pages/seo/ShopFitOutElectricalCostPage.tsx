@@ -673,7 +673,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify commercial fit-outs"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, commercial quoting, and on-site EIC certification."
+          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, commercial quoting, and on-site EIC certification."
           icon={Building2}
         />
       </>
@@ -715,7 +715,7 @@ export default function ShopFitOutElectricalCostPage() {
       faqHeading="Frequently Asked Questions About Shop Fit-Out Electrical Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Commercial Fit-Outs on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, commercial quoting, and on-site EIC certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, commercial quoting, and on-site EIC certification. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -558,7 +558,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete HMO EICRs faster with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion. AI board scanning, voice test entry, and instant PDF export."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion. AI board scanning, voice test entry, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -594,7 +594,7 @@ export default function EICRForHMOPage() {
       faqHeading="Frequently Asked Questions: EICR for HMO Properties"
       relatedPages={relatedPages}
       ctaHeading="Complete HMO EICRs on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

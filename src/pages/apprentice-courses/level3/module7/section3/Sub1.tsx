@@ -216,7 +216,7 @@ const faqs = [
   {
     question: "What's an FRS105 and FRS102?",
     answer:
-      "FRS 105 (Financial Reporting Standard for Microentities) and FRS 102 are the UK accounting standards small companies file under. FRS 105 is for very small companies (turnover <£632k, balance sheet <£316k, employees &lt;10) and is simpler. FRS 102 (Section 1A) is for slightly larger small companies. Your accountant will choose the appropriate standard. Affects what level of detail goes in your filed accounts.",
+      "FRS 105 (Financial Reporting Standard for Microentities) and FRS 102 are the UK accounting standards small companies file under. FRS 105 is for very small companies (turnover <£632k, balance sheet <£316k, employees <10) and is simpler. FRS 102 (Section 1A) is for slightly larger small companies. Your accountant will choose the appropriate standard. Affects what level of detail goes in your filed accounts.",
   },
 ];
 

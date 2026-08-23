@@ -93,7 +93,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/earthing-systems-guide',
+    href: '/guides/earthing-systems-tns-tncs-tt-explained',
     title: 'Earthing Systems Guide',
     description: 'TN-S, TN-C-S and TT earthing systems explained with practical examples.',
     icon: Zap,
@@ -576,7 +576,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete consumer unit certificates on your phone"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC and EICR completion with AI board scanning, test result recording, and instant PDF export."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site EIC and EICR completion with AI board scanning, test result recording, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -613,7 +613,7 @@ export default function CircuitBreakerTypesPage() {
       faqHeading="Frequently Asked Questions About Circuit Breaker Types"
       relatedPages={relatedPages}
       ctaHeading="Complete Circuit Certificates and EICRs on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EIC and EICR completion with AI board scanning, test result recording, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC and EICR completion with AI board scanning, test result recording, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

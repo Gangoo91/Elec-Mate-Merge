@@ -490,7 +490,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage loft conversion jobs with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for EIC certificates, quoting, job management, and compliance. 7-day free trial, cancel anytime."
+          description="Join 1,600+ UK electricians using Elec-Mate for EIC certificates, quoting, job management, and compliance. 7-day free trial, cancel anytime."
           icon={FileCheck2}
         />
       </>
@@ -527,7 +527,7 @@ export default function LoftConversionElectricalGuidePage() {
       faqHeading="Frequently Asked Questions About Loft Conversion Electrical Work"
       relatedPages={relatedPages}
       ctaHeading="Complete Loft Conversion EICs on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, quoting, and job management. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion, quoting, and job management. 7-day free trial, cancel anytime."
     />
   );
 }

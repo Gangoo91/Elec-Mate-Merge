@@ -586,7 +586,7 @@ export default function NICEICRegistrationPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Certificates That Meet NICEIC Requirements"
-      ctaSubheading="Join 1,000+ UK electricians producing professional BS 7671 compliant certificates with Elec-Mate. All 19 certificate types, PDF export, digital signatures. Ready for your NICEIC assessment. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians producing professional BS 7671 compliant certificates with Elec-Mate. All 19 certificate types, PDF export, digital signatures. Ready for your NICEIC assessment. 7-day free trial."
     />
   );
 }

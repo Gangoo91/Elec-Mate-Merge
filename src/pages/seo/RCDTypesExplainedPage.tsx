@@ -725,7 +725,7 @@ export default function RCDTypesExplainedPage() {
           category: 'Guide',
         },
         {
-          href: '/earthing-arrangements',
+          href: '/guides/earthing-systems-tns-tncs-tt-explained',
           title: 'Earthing Arrangements',
           description: 'TN-S, TN-C-S, TT and their impact on RCD selection.',
           icon: Cable,
@@ -740,7 +740,7 @@ export default function RCDTypesExplainedPage() {
         },
       ]}
       ctaHeading="Get RCD Type Right Every Time"
-      ctaSubheading="Elec-Mate captures RCD types on every certificate, validates trip times against BS 7671, and scans board labels from photos. Join 1,000+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate captures RCD types on every certificate, validates trip times against BS 7671, and scans board labels from photos. Join 1,600+ UK electricians. 7-day free trial."
     />
   );
 }

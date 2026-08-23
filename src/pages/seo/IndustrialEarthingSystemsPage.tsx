@@ -610,7 +610,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Industrial earthing system certification with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for industrial EIC and EICR completion, earthing test records, and instant PDF export. 7-day free trial."
+          description="Join 1,600+ UK electricians using Elec-Mate for industrial EIC and EICR completion, earthing test records, and instant PDF export. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -647,7 +647,7 @@ export default function IndustrialEarthingSystemsPage() {
       faqHeading="Frequently Asked Questions About Industrial Earthing Systems"
       relatedPages={relatedPages}
       ctaHeading="Complete Industrial Electrical Certificates on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EIC and EICR completion, earthing test records, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC and EICR completion, earthing test records, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

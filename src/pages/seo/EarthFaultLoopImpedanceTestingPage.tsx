@@ -543,7 +543,7 @@ export default function EarthFaultLoopImpedanceTestingPage() {
       faqHeading="Frequently Asked Questions About Earth Fault Loop Impedance Testing"
       relatedPages={relatedPages}
       ctaHeading="Record Zs Test Results and Complete EICs on Your Phone"
-      ctaSubheading="Elec-Mate automatically checks Zs readings against BS 7671 Appendix 3 tables and generates professional test schedules on site. Join 1,000+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate automatically checks Zs readings against BS 7671 Appendix 3 tables and generates professional test schedules on site. Join 1,600+ UK electricians. 7-day free trial."
     />
   );
 }

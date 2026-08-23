@@ -4,6 +4,8 @@ import {
   Wrench,
   HardHat,
   MessageSquare,
+  TestTube,
+  AlertTriangle,
   GraduationCap,
 } from 'lucide-react';
 import { ModuleCard } from '@/components/upskilling/cards';
@@ -52,6 +54,22 @@ const modules = [
   },
   {
     moduleNumber: 6,
+    title: 'Inspection, testing and certification',
+    description:
+      'Visual inspection, testing instruments, continuity, polarity, insulation resistance and certification.',
+    icon: TestTube,
+    link: 'module6',
+  },
+  {
+    moduleNumber: 7,
+    title: 'Electrical fault finding and diagnosis',
+    description:
+      'Fault types, signs and symptoms, logical diagnosis processes, safe use of test equipment and fault reporting.',
+    icon: AlertTriangle,
+    link: 'module7',
+  },
+  {
+    moduleNumber: 8,
     title: 'Mock examinations and assessment',
     description:
       'Practice exam papers and exam technique tips to build confidence for the real 2365-02 assessment.',

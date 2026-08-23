@@ -585,7 +585,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete outdoor electrical certificates on your phone"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site Minor Works certificates, EICs, and instant quoting. No evening paperwork. 7-day free trial."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site Minor Works certificates, EICs, and instant quoting. No evening paperwork. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -622,7 +622,7 @@ export default function OutdoorSocketFaultFindingPage() {
       faqHeading="Frequently Asked Questions — Outdoor Socket Faults"
       relatedPages={relatedPages}
       ctaHeading="Complete Outdoor Electrical Certificates On Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for Minor Works certificates, EICs, and on-site quoting. No evening paperwork. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for Minor Works certificates, EICs, and on-site quoting. No evening paperwork. 7-day free trial, cancel anytime."
     />
   );
 }

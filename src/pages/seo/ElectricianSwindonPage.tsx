@@ -455,7 +455,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Swindon electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
+          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -492,7 +492,7 @@ export default function ElectricianSwindonPage() {
       faqHeading="Frequently Asked Questions About Electricians in Swindon"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Swindon Electricians"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for electricians working across Swindon, Wiltshire, and the M4 corridor. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for electricians working across Swindon, Wiltshire, and the M4 corridor. 7-day free trial."
     />
   );
 }

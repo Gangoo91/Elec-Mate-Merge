@@ -400,7 +400,7 @@ export default function Sub3() {
           <ConceptBlock
             title="IR readings — what 1 MΩ, 100 MΩ and 999+ MΩ each mean"
             plainEnglish="BS 7671 Reg 643.3.3 sets the IR pass threshold at 1 MΩ at 500 V test for general circuits. But healthy modern wiring should read 100+ MΩ — anything between 1 MΩ and 100 MΩ is degraded but not failed. The L3 apprentice reads the number, not just pass/fail."
-            onSite="Megger MFT1741+ displays IR up to 999 MΩ then shows '>999 MΩ' or 'OL'. New PVC insulation typically reads &gt;999 MΩ; 5-10 year old in dry conditions also &gt;999 MΩ; 20+ year old in damp conditions often 50-200 MΩ; circuits with surface contamination or wet joints 5-50 MΩ; failing circuits 1-5 MΩ; failed &lt;1 MΩ."
+            onSite="Megger MFT1741+ displays IR up to 999 MΩ then shows '>999 MΩ' or 'OL'. New PVC insulation typically reads >999 MΩ; 5-10 year old in dry conditions also >999 MΩ; 20+ year old in damp conditions often 50-200 MΩ; circuits with surface contamination or wet joints 5-50 MΩ; failing circuits 1-5 MΩ; failed <1 MΩ."
           >
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li><strong>&gt;999 MΩ</strong> — healthy. New or well-maintained installation in dry conditions.</li>
@@ -420,7 +420,7 @@ export default function Sub3() {
           <ConceptBlock
             title="R1+R2 — comparing measured to expected"
             plainEnglish="R1+R2 is the line + CPC loop resistance from the supply end to the accessory. The expected value depends on conductor size, length and material. Compare measured to expected — significant discrepancy indicates a HRJ somewhere along the route."
-            onSite="Use the conductor-resistance tables in the IET On-Site Guide or GN3 — BS 7671 itself does not tabulate (R1+R2). For a typical 32 A ring final at 4 mm²/2.5 mm² T+E across 30 m: R1+R2 ≈ 0.45 Ω. Measured &gt;0.7 Ω = +50% above expected = HRJ candidate. Megger MFT1741+ in continuity mode (200 mA, autoranging) reads R1+R2 in seconds with the circuit isolated."
+            onSite="Use the conductor-resistance tables in the IET On-Site Guide or GN3 — BS 7671 itself does not tabulate (R1+R2). For a typical 32 A ring final at 4 mm²/2.5 mm² T+E across 30 m: R1+R2 ≈ 0.45 Ω. Measured >0.7 Ω = +50% above expected = HRJ candidate. Megger MFT1741+ in continuity mode (200 mA, autoranging) reads R1+R2 in seconds with the circuit isolated."
           >
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li><strong>Expected R1+R2</strong> — depends on cable size, length, material. Resistance-per-metre tables are in the On-Site Guide.</li>

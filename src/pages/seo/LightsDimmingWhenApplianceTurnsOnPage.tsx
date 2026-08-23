@@ -636,7 +636,7 @@ export default function LightsDimmingWhenApplianceTurnsOnPage() {
       faqHeading="Frequently Asked Questions About Dimming Lights"
       relatedPages={relatedPages}
       ctaHeading="Diagnose and Document Electrical Faults on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for AI fault diagnosis, voltage drop calculations, and professional EICR certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI fault diagnosis, voltage drop calculations, and professional EICR certificates. 7-day free trial, cancel anytime."
     />
   );
 }

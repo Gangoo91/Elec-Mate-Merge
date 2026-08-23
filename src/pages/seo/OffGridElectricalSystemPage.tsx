@@ -519,7 +519,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage off-grid installations with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for certificates, quoting, and job management. Complete EIC and commissioning documents on your phone."
+          description="Join 1,600+ UK electricians using Elec-Mate for certificates, quoting, and job management. Complete EIC and commissioning documents on your phone."
           icon={Sun}
         />
       </>
@@ -556,7 +556,7 @@ export default function OffGridElectricalSystemPage() {
       faqHeading="Frequently Asked Questions About Off-Grid Electrical Systems"
       relatedPages={relatedPages}
       ctaHeading="Certificate Off-Grid Electrical Installations on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EIC certificates, test schedules, and commissioning records. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC certificates, test schedules, and commissioning records. 7-day free trial, cancel anytime."
     />
   );
 }

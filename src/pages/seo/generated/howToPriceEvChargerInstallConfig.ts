@@ -140,7 +140,7 @@ export const howToPriceEvChargerInstallConfig: GeneratedGuideConfig = {
           tone: 'info',
           title: 'For electricians: stop under-pricing your work',
           body:
-            'Join 1,000+ UK electricians using Elec-Mate to quote ev charger installation at fair-margin prices, issue compliant certificates, and get paid faster. 7-day free trial.',
+            'Join 1,600+ UK electricians using Elec-Mate to quote ev charger installation at fair-margin prices, issue compliant certificates, and get paid faster. 7-day free trial.',
         },
       ],
     },
@@ -242,5 +242,5 @@ export const howToPriceEvChargerInstallConfig: GeneratedGuideConfig = {
   ],
   ctaHeading: 'Stop Under-Pricing EV Charger Installation',
   ctaSubheading:
-    'Join 1,000+ UK electricians using Elec-Mate to quote ev charger installation at fair-margin prices, issue compliant certificates, and get paid faster. 7-day free trial.',
+    'Join 1,600+ UK electricians using Elec-Mate to quote ev charger installation at fair-margin prices, issue compliant certificates, and get paid faster. 7-day free trial.',
 };

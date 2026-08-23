@@ -721,8 +721,8 @@ export default function Sub4() {
 
           <ConceptBlock
             title="Customer-facing handover — what the duty cascade transfers"
-            plainEnglish="At commissioning the regulatory duty for the installation transfers from designer / installer / certifier into the customer&apos;s ongoing duty as duty holder. They become responsible for keeping the system safe under the Electricity at Work Regulations 1989 (or equivalent for domestic). A clean handover gives them the documents, the operating knowledge and the maintenance plan they need to discharge that duty without surprise."
-            onSite="Walk the customer through every isolator, every label, every notice, every smartphone app. Hand them the file in person — physical pack plus a digital copy. Tell them about the next periodic inspection date and put a reminder in their calendar there and then. The customer who knows what to do never feels stranded; the customer who doesn&apos;t becomes a problem in six months."
+            plainEnglish="At commissioning the regulatory duty for the installation transfers from designer / installer / certifier into the customer’s ongoing duty as duty holder. They become responsible for keeping the system safe under the Electricity at Work Regulations 1989 (or equivalent for domestic). A clean handover gives them the documents, the operating knowledge and the maintenance plan they need to discharge that duty without surprise."
+            onSite="Walk the customer through every isolator, every label, every notice, every smartphone app. Hand them the file in person — physical pack plus a digital copy. Tell them about the next periodic inspection date and put a reminder in their calendar there and then. The customer who knows what to do never feels stranded; the customer who doesn’t becomes a problem in six months."
           >
             <p>The handover deliverable list:</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">

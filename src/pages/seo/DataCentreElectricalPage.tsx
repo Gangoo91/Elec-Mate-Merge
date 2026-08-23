@@ -617,7 +617,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage data centre electrical projects with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site certification, quoting, and project management."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site certification, quoting, and project management."
           icon={FileCheck2}
         />
       </>
@@ -655,7 +655,7 @@ export default function DataCentreElectricalPage() {
       faqHeading="Frequently Asked Questions — Data Centre Electrical Installation"
       relatedPages={relatedPages}
       ctaHeading="Manage Your Data Centre Electrical Projects with Elec-Mate"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site certification, quoting, and project management. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site certification, quoting, and project management. 7-day free trial, cancel anytime."
     />
   );
 }

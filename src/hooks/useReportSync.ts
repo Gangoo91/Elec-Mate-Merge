@@ -623,11 +623,18 @@ export const useReportSync = ({
 
       try {
         if (operation.type === 'create') {
+          // ELE-1592 — replay with the original report_id so a create that
+          // already landed is adopted instead of duplicated. Stripped from the
+          // payload so the marker never reaches the stored certificate data.
+          const queuedData = operation.data as Record<string, unknown>;
+          const { __createReportId, ...createData } = queuedData;
           const result = await reportCloud.createReport(
             userId,
             operation.reportType,
-            operation.data,
-            customerId
+            createData,
+            customerId,
+            false,
+            typeof __createReportId === 'string' ? __createReportId : undefined
           );
           if (result.success) {
             await syncQueue.complete(operation.id);
@@ -823,6 +830,19 @@ export const useReportSync = ({
       setStatus((prev) => ({ ...prev, cloud: 'syncing' }));
       localDataRef.current = currentFormData;
 
+      /*
+       * ELE-1592 — idempotency key for a create made during THIS invocation.
+       *
+       * Deliberately a local, not a ref. A ref would outlive the certificate
+       * it belongs to: `currentReportIdRef` is synced from the `reportId`
+       * prop, so starting a new certificate after a failed create leaves the
+       * prop null→null, the effect never fires, and a stale key would be
+       * reused by a DIFFERENT certificate — whose create would then be
+       * "adopted" onto the old row and never saved. Scoped to one call, that
+       * cannot happen.
+       */
+      let attemptedCreateId: string | null = null;
+
       try {
         let savedReportId = currentReportIdRef.current;
 
@@ -887,14 +907,50 @@ export const useReportSync = ({
             expectedVersionRef.current += 1;
           }
         } else {
-          // Create new report (no version conflict possible)
-          // Pass isAutoSync to set 'auto-draft' status for auto-synced reports
+          /*
+           * Create new report (no version conflict possible).
+           *
+           * ELE-1592 — the report_id is minted HERE, once, and reused if this
+           * create has to be retried.
+           *
+           * Previously `createReport` generated it internally, so a create
+           * whose row landed in Postgres but whose RESPONSE was lost left
+           * `currentReportIdRef` null, queued itself again as a `create`, and
+           * inserted a SECOND row — carrying the first row's certificate
+           * number. That is 19 of the 25 duplicate groups in production.
+           *
+           * With a stable id the retry hits the unique index on `report_id`,
+           * `createReport` recognises its own earlier write and adopts it. No
+           * second row, and nothing existing is modified.
+           */
+          /*
+           * ELE-1592 — derived from the certificate's own identity when it has
+           * one, so it is IDENTICAL across every attempt for this certificate:
+           * first try, retry, and any queued replay after a dropped
+           * connection. That is what makes repeated failures collapse into a
+           * single row instead of one row per attempt.
+           *
+           * `_clientCertId` is minted in the form's initial state and reminted
+           * by "start new", so it can never be shared with another
+           * certificate. Falls back to a fresh random id for forms that do not
+           * carry one yet — those keep the previous behaviour (a single
+           * replay is still deduplicated) rather than regressing.
+           */
+          const certIdentity = (currentFormData as Record<string, unknown>)?._clientCertId;
+          attemptedCreateId =
+            typeof certIdentity === 'string' && certIdentity
+              ? `${reportType.toUpperCase()}-${certIdentity}`
+              : `${reportType.toUpperCase()}-${Date.now()}-${Math.random()
+                  .toString(36)
+                  .substr(2, 6)}`;
+
           const result = await reportCloud.createReport(
             userId,
             reportType,
             currentFormData,
             customerId,
-            isAutoSync
+            isAutoSync,
+            attemptedCreateId
           );
           if (!result.success || !result.reportId) throw result.error ?? new Error('Create failed');
           savedReportId = result.reportId;
@@ -951,11 +1007,22 @@ export const useReportSync = ({
         // Queue for retry if online, or just mark as queued if offline
         if (isOnline) {
           try {
+            /*
+             * ELE-1592 — carry the idempotency key on a queued create.
+             *
+             * `reportId` is null for a create, which is what marks it as one.
+             * The key travels separately so the drain can reuse the SAME
+             * report_id: if the original create actually landed, the replay is
+             * rejected by the unique index and adopted rather than inserting a
+             * duplicate.
+             */
             await syncQueue.enqueue({
               type: currentReportIdRef.current ? 'update' : 'create',
               reportType,
               reportId: currentReportIdRef.current,
-              data: currentFormData,
+              data: currentReportIdRef.current
+                ? currentFormData
+                : { ...currentFormData, __createReportId: attemptedCreateId },
               userId,
             });
             await updateQueueCount();

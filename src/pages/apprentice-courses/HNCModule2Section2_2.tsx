@@ -304,7 +304,7 @@ const HNCModule2Section2_2 = () => {
 
           <TLDR
             points={[
-              'You will calculate Reynolds number (Re = ρvD/µ) for any pipe or duct flow and place it on the laminar (&lt;2,300), transitional (2,300-4,000) or turbulent (&gt;4,000) shelf.',
+              'You will calculate Reynolds number (Re = ρvD/µ) for any pipe or duct flow and place it on the laminar (<2,300), transitional (2,300-4,000) or turbulent (>4,000) shelf.',
               'You distinguish laminar (parabolic velocity profile) from turbulent (flatter, time-averaged profile) and explain why heat transfer is much higher in turbulent flow.',
               'You apply the right friction-factor correlation for the regime — Hagen-Poiseuille (laminar), Colebrook-White or Moody chart (turbulent).',
               'You design building services flows to land in turbulent regime — predictable losses, better mixing, better heat transfer.',
@@ -313,7 +313,7 @@ const HNCModule2Section2_2 = () => {
 
           <RegsCallout
             source="CIBSE Guide C — Reference Data (flow regimes and friction)"
-            clause="Reynolds number is calculated from Re = ρvD/µ for circular ducts, with hydraulic diameter substituted for non-circular sections. Laminar flow is taken as Re &lt; 2,300; fully developed turbulent flow occurs above Re ≈ 4,000. Friction factor is read from the Moody chart or calculated from Colebrook-White as a function of Re and relative roughness."
+            clause="Reynolds number is calculated from Re = ρvD/µ for circular ducts, with hydraulic diameter substituted for non-circular sections. Laminar flow is taken as Re < 2,300; fully developed turbulent flow occurs above Re ≈ 4,000. Friction factor is read from the Moody chart or calculated from Colebrook-White as a function of Re and relative roughness."
             meaning={
               <>
                 CIBSE Guide C provides the UK reference data and friction-factor charts used
@@ -706,7 +706,7 @@ const HNCModule2Section2_2 = () => {
           <KeyTakeaways
             points={[
               'Reynolds number Re = ρvD/µ — dimensionless, dictates flow regime.',
-              'Laminar Re &lt; 2,300, transitional 2,300-4,000, turbulent &gt; 4,000 (for circular pipe).',
+              'Laminar Re < 2,300, transitional 2,300-4,000, turbulent > 4,000 (for circular pipe).',
               'Laminar: parabolic velocity profile, friction factor f = 64/Re — losses linear in velocity.',
               'Turbulent: time-averaged flat velocity profile, friction factor from Colebrook-White or Moody chart — losses quadratic in velocity.',
               'Heat transfer is much higher in turbulent flow — Nusselt number jumps from ~3.66 (laminar) to 100+ (turbulent).',

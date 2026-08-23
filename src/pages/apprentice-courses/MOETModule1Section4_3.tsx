@@ -7,7 +7,7 @@ import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'BS 7671 Wiring Regulations - MOET Module 1 Section 4.3';
 const DESCRIPTION =
-  'Comprehensive guide to BS 7671:2018+A3:2024 (IET Wiring Regulations) for electrical maintenance technicians: structure, 7 parts, fundamental principles, scope, amendments, and relationship to EAWR 1989.';
+  'Comprehensive guide to BS 7671:2018+A4:2026 (IET Wiring Regulations) for electrical maintenance technicians: structure, 7 parts, fundamental principles, scope, amendments, and relationship to EAWR 1989.';
 
 const quickCheckQuestions = [
   {
@@ -25,7 +25,7 @@ const quickCheckQuestions = [
   },
   {
     id: 'bs7671-parts',
-    question: 'How many main parts does BS 7671:2018+A3:2024 contain?',
+    question: 'How many main parts does BS 7671:2018+A4:2026 contain?',
     options: [
       '5 parts',
       '4 parts',
@@ -51,7 +51,7 @@ const quickCheckQuestions = [
   },
   {
     id: 'bs7671-amendment',
-    question: "What does 'BS 7671:2018+A3:2024' mean in terms of the document's history?",
+    question: "What does 'BS 7671:2018+A4:2026' mean in terms of the document's history?",
     options: [
       'It is the third edition published in 2018 and reissued in 2024',
       'It is the 2018 edition with the third amendment (published 2024) incorporated',
@@ -60,7 +60,7 @@ const quickCheckQuestions = [
     ],
     correctIndex: 1,
     explanation:
-      "The notation 'BS 7671:2018+A3:2024' means the base document is the 2018 edition (the 18th Edition), with Amendment 3 (published in 2024) incorporated. Amendments update specific sections without replacing the entire standard. Previous amendments were A1:2020 (withdrawn) and A2:2022.",
+      "The notation 'BS 7671:2018+A4:2026' means the base document is the 2018 edition (the 18th Edition), with Amendment 4 (published in 2026) incorporated. Amendments update specific sections without replacing the entire standard. Previous amendments were A1:2020 (withdrawn), A2:2022 and A3:2024.",
   },
 ];
 
@@ -310,7 +310,7 @@ const MOETModule1Section4_3 = () => {
                 <strong>Structure:</strong> 7 parts + appendices covering design to testing
               </li>
               <li className="pl-1">
-                <strong>Current:</strong> 18th Edition (2018) + Amendment 3 (2024)
+                <strong>Current:</strong> 18th Edition (2018) + Amendment 4 (2026)
               </li>
               <li className="pl-1">
                 <strong>Relationship:</strong> Provides means of compliance with EAWR 1989
@@ -343,7 +343,7 @@ const MOETModule1Section4_3 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              'Explain the structure and scope of BS 7671:2018+A3:2024',
+              'Explain the structure and scope of BS 7671:2018+A4:2026',
               'Describe the non-statutory status of BS 7671 and its relationship to the EAWR 1989',
               'Identify the content and purpose of each of the 7 parts',
               'Explain the fundamental principles established in Part 1 (Chapter 13)',
@@ -376,7 +376,7 @@ const MOETModule1Section4_3 = () => {
               Regulations or simply "the Regs".
             </p>
             <p>
-              The current edition is BS 7671:2018+A3:2024 — the 18th Edition with Amendment 3. The
+              The current edition is BS 7671:2018+A4:2026 — the 18th Edition with Amendment 4. The
               standard is based on the CENELEC Harmonisation Documents (HD 60364 series) with UK
               national deviations. It has a long history, with the first edition of the IEE (now
               IET) Wiring Regulations published in 1882.
@@ -844,6 +844,15 @@ const MOETModule1Section4_3 = () => {
                         installations
                       </td>
                     </tr>
+                    <tr>
+                      <td className="border border-white/10 px-3 py-2">18th Ed. A4:2026</td>
+                      <td className="border border-white/10 px-3 py-2">2026</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Current edition. Revised Reg 411.3.3 (socket-outlets ≤ 32 A, with a
+                        documented risk-assessment exception outside dwellings); new Chapter 57 for
+                        stationary batteries; revised RCD verification
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -963,7 +972,7 @@ const MOETModule1Section4_3 = () => {
                 <ul className="space-y-0.5">
                   <li>Non-statutory British Standard (not law)</li>
                   <li>Published by BSI and IET</li>
-                  <li>Current: 18th Edition + A3:2024</li>
+                  <li>Current: 18th Edition + A4:2026</li>
                   <li>Based on CENELEC HD 60364 series</li>
                   <li>Scope: up to 1000 V AC / 1500 V DC</li>
                   <li>Certification: EIC, MEIWC, EICR (Appendix 6)</li>

@@ -559,7 +559,7 @@ export default function Sub2() {
           <ConceptBlock
             title="Lock-off, prove-test-prove and the Reg 13 audit trail"
             plainEnglish="Reg 13 is the regulation that sits behind every safe-isolation procedure. It requires adequate precautions to prevent equipment that has been made dead from becoming live during work on or near it. Lock-off, tag-out, prove-test-prove and the inspection of the isolation point are the practical discharges of that duty."
-            onSite="The L3 step beyond L2: knowing that &apos;skipping the prove-test-prove because I just isolated 30 seconds ago&apos; is a Reg 13 breach in itself, regardless of whether the circuit was actually re-energised. The HSE prosecutes Reg 13 breaches when an incident exposes a missing isolation step — the absence of the prove is the offence."
+            onSite="The L3 step beyond L2: knowing that ’skipping the prove-test-prove because I just isolated 30 seconds ago’ is a Reg 13 breach in itself, regardless of whether the circuit was actually re-energised. The HSE prosecutes Reg 13 breaches when an incident exposes a missing isolation step — the absence of the prove is the offence."
           >
             <p>The defensible safe-isolation sequence at L3:</p>
             <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
@@ -629,7 +629,7 @@ export default function Sub2() {
           <ConceptBlock
             title="The two clauses Reg 13 depends on"
             plainEnglish="Reg 13 (precautions during dead working) only works if Reg 12 (means for cutting off the supply and for isolation) and Reg 15 (working space, access and lighting) are also discharged. Reg 12 is what gives you a usable isolation point. Reg 15 is what gives you the room and the light to actually do the work safely once isolated."
-            onSite="On a real job: the disused single-throw switch on the ceiling void above a suspended ceiling that you can&apos;t see and can&apos;t lock is a Reg 12 problem. The 600mm-deep cupboard with the DB jammed against the back wall is a Reg 15 problem. Both are L3 things to spot during the dynamic risk assessment — and both can be the reason a job is paused before tools come out."
+            onSite="On a real job: the disused single-throw switch on the ceiling void above a suspended ceiling that you can’t see and can’t lock is a Reg 12 problem. The 600mm-deep cupboard with the DB jammed against the back wall is a Reg 15 problem. Both are L3 things to spot during the dynamic risk assessment — and both can be the reason a job is paused before tools come out."
           >
             <p>Reg 12 and Reg 15 — what to check on arrival:</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -663,8 +663,8 @@ export default function Sub2() {
 
           <ConceptBlock
             title="Scheme registration is evidence of competence, not authority by itself"
-            plainEnglish="Reg 16 is satisfied by competence (limb 1) or by appropriate supervision (limb 2). Scheme registration — NICEIC, NAPIT, Stroma, ELECSA — is one piece of evidence the firm uses to demonstrate Reg 16 competence to the world. But scheme registration belongs to the FIRM and is underwritten by a specific Qualified Supervisor; an L3 apprentice working for a registered firm doesn&apos;t inherit Qualified Supervisor authority by association."
-            onSite="The L3 trap: the firm&apos;s NICEIC sticker on the van doesn&apos;t make you NICEIC-competent for sign-off purposes. The Qualified Supervisor (named individual on the firm&apos;s registration) is the one whose competence the scheme audits. Sign-off on EICs / EICRs / Minor Works / completion certs sits with that named individual — not with you because you&apos;re the operative who did the work."
+            plainEnglish="Reg 16 is satisfied by competence (limb 1) or by appropriate supervision (limb 2). Scheme registration — NICEIC, NAPIT, Stroma, ELECSA — is one piece of evidence the firm uses to demonstrate Reg 16 competence to the world. But scheme registration belongs to the FIRM and is underwritten by a specific Qualified Supervisor; an L3 apprentice working for a registered firm doesn’t inherit Qualified Supervisor authority by association."
+            onSite="The L3 trap: the firm’s NICEIC sticker on the van doesn’t make you NICEIC-competent for sign-off purposes. The Qualified Supervisor (named individual on the firm’s registration) is the one whose competence the scheme audits. Sign-off on EICs / EICRs / Minor Works / completion certs sits with that named individual — not with you because you’re the operative who did the work."
           >
             <p>How scheme registration interacts with Reg 16:</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">

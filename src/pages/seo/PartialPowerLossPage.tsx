@@ -519,7 +519,7 @@ export default function PartialPowerLossPage() {
       faqHeading="Frequently Asked Questions About Partial Power Loss"
       relatedPages={relatedPages}
       ctaHeading="Document Fault Findings and Issue Certificates on Your Phone"
-      ctaSubheading="Elec-Mate's AI fault diagnosis and EICR app help you record findings, generate reports, and issue certificates on site. Join 1,000+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate's AI fault diagnosis and EICR app help you record findings, generate reports, and issue certificates on site. Join 1,600+ UK electricians. 7-day free trial."
     />
   );
 }

@@ -611,7 +611,7 @@ export default function CaravanParkElectricalPage() {
       faqHeading="Frequently Asked Questions About Caravan Park Electrical Installations"
       relatedPages={relatedPages}
       ctaHeading="Complete Caravan Park EICRs on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site inspection reporting, RCD test entry, and instant PDF export. Perfect for annual caravan park inspections. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site inspection reporting, RCD test entry, and instant PDF export. Perfect for annual caravan park inspections. 7-day free trial."
     />
   );
 }

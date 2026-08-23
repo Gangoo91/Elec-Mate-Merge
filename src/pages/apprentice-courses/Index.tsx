@@ -93,6 +93,30 @@ const COURSES: Course[] = [
     link: 'functional-skills',
     routeKey: 'functional-skills',
   },
+  // Cross-listed from the upskilling track — Level 3 learners typically sit
+  // 2382 alongside the diploma and 2391 straight after the AM2, so both
+  // belong on the apprentice spine too. Same course content, same progress
+  // keys; only the entry point differs.
+  {
+    id: 'bs7671',
+    title: '18th Edition Wiring Regulations',
+    description:
+      'BS 7671:2018+A4:2026 wiring regulations — the C&G 2382 exam most Level 3 learners sit alongside the diploma.',
+    level: 'Essential',
+    duration: '6 weeks',
+    link: '/study-centre/upskilling/bs7671-course',
+    routeKey: 'bs7671',
+  },
+  {
+    id: 'inspection-testing',
+    title: 'Inspection & testing (2391)',
+    description:
+      'Inspection, testing and certification — the natural next step straight after your AM2.',
+    level: 'Advanced',
+    duration: '8 weeks',
+    link: '/study-centre/upskilling/inspection-testing',
+    routeKey: 'inspection-testing',
+  },
 ];
 
 export default function ApprenticeCoursesIndex() {

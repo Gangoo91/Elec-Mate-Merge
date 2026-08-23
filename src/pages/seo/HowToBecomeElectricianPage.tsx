@@ -810,7 +810,7 @@ export default function HowToBecomeElectricianPage() {
           <span className="text-yellow-400">The Complete 2026 Guide</span>
         </>
       }
-      heroSubtitle="Everything you need to know about becoming a qualified electrician — from choosing your route (apprenticeship or adult retraining) to passing the AM2, joining a scheme, and building a career. Written by qualified electricians, not marketing writers."
+      heroSubtitle="Everything you need to know about becoming a qualified electrician — from choosing your route (apprenticeship or adult retraining) to passing the AM2, joining a scheme, and building a career. Written by Andrew Moore, founder of Elec-Mate and a qualified electrician."
       readingTime={22}
       keyTakeaways={keyTakeaways}
       sections={sections}

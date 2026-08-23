@@ -693,7 +693,7 @@ export default function RestaurantKitchenElectricalCostPage() {
       faqHeading="Frequently Asked Questions About Restaurant Kitchen Electrical Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Restaurant Kitchen Electrical with Equipment Schedules"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for commercial kitchen quoting with equipment schedules, interlock costing, and professional PDF output. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for commercial kitchen quoting with equipment schedules, interlock costing, and professional PDF output. 7-day free trial."
     />
   );
 }

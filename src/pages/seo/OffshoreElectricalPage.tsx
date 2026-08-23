@@ -608,7 +608,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage your offshore qualifications with Elec-Mate"
-          description="Keep your BOSIET, CompEx, 18th Edition, and all offshore certifications organised with renewal reminders. Join 1,000+ UK electricians using Elec-Mate."
+          description="Keep your BOSIET, CompEx, 18th Edition, and all offshore certifications organised with renewal reminders. Join 1,600+ UK electricians using Elec-Mate."
           icon={ShieldCheck}
         />
       </>

@@ -564,7 +564,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage infrared heating installations with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for Minor Works Certificates, EIC certificates, and professional multi-room heating quotes."
+          description="Join 1,600+ UK electricians using Elec-Mate for Minor Works Certificates, EIC certificates, and professional multi-room heating quotes."
           icon={Zap}
         />
       </>
@@ -601,7 +601,7 @@ export default function InfraredHeatingInstallationPage() {
       faqHeading="Frequently Asked Questions About Infrared Heating Installation"
       relatedPages={relatedPages}
       ctaHeading="Certificate Infrared Heating Installations on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for Minor Works Certificates, EIC certificates, and professional heating system quotes. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for Minor Works Certificates, EIC certificates, and professional heating system quotes. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -503,7 +503,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify consumer unit upgrades"
-          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification. 7-day free trial."
+          description="Join 1,600+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification. 7-day free trial."
           icon={ShieldCheck}
         />
       </>
@@ -539,7 +539,7 @@ export default function MCBVsRCBOComparisonPage() {
       faqHeading="Frequently Asked Questions About MCBs and RCBOs"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify Consumer Unit Upgrades on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for professional quoting and on-site EIC certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for professional quoting and on-site EIC certification. 7-day free trial, cancel anytime."
     />
   );
 }

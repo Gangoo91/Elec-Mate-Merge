@@ -664,7 +664,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Produce qualification-ready electrical records with"
-          description="Create professional test records and inspection reports that support cleanroom IQ/OQ/PQ qualification. Join 1,000+ UK electricians using Elec-Mate."
+          description="Create professional test records and inspection reports that support cleanroom IQ/OQ/PQ qualification. Join 1,600+ UK electricians using Elec-Mate."
           icon={ShieldCheck}
         />
       </>

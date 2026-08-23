@@ -426,7 +426,7 @@ export function PublicPageLayout({ children }: PublicPageLayoutProps) {
         <div className="mx-auto max-w-6xl px-5 py-9 sm:px-6 lg:px-8">
           <dl className="grid grid-cols-2 gap-y-7 sm:grid-cols-4 sm:gap-y-0">
             {[
-              ['16', 'Certificate types'],
+              ['19', 'Certificate types'],
               ['70+', 'Calculators'],
               ['46+', 'Training courses'],
               ['8', 'AI specialists'],
@@ -498,7 +498,7 @@ export function PublicPageLayout({ children }: PublicPageLayoutProps) {
 
               <div className="mt-7 grid grid-cols-2 gap-x-6">
                 <div>
-                  <h4 className={`${FOOTER_LABEL} text-white`}>Legal</h4>
+                  <h4 className={`${FOOTER_LABEL} text-white`}>Company</h4>
                   <ul className="mt-3 space-y-0.5">
                     {[
                       { to: '/privacy', label: 'Privacy policy' },
@@ -506,6 +506,8 @@ export function PublicPageLayout({ children }: PublicPageLayoutProps) {
                       { to: '/cookies', label: 'Cookie policy' },
                       { to: '/acceptable-use', label: 'Acceptable use' },
                       { to: '/dpa', label: 'Data processing' },
+                      { to: '/press', label: 'Press kit' },
+                      { to: '/story', label: 'Our story' },
                     ].map((l) => (
                       <li key={l.to}>
                         <Link
@@ -588,7 +590,7 @@ export function PublicPageLayout({ children }: PublicPageLayoutProps) {
           data-exam-obstructs
           className="fixed bottom-0 left-0 right-0 sm:hidden z-50 px-4 pt-6 pb-[max(0.75rem,env(safe-area-inset-bottom))] bg-gradient-to-t from-black via-black/95 to-transparent">
           <p className="text-center text-[11px] text-white mb-2">
-            <span className="text-green-400 font-semibold">1,000+ electricians</span>
+            <span className="text-green-400 font-semibold">1,600+ electricians</span>
             {' · '}From £6.99/mo after trial
           </p>
           <div className="flex items-center gap-2">

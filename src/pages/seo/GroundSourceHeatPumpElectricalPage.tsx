@@ -842,7 +842,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify GSHP electrical work"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
+          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
           icon={Layers}
         />
       </>
@@ -880,7 +880,7 @@ export default function GroundSourceHeatPumpElectricalPage() {
       faqHeading="Frequently Asked Questions About GSHP Electrical Installation"
       relatedPages={relatedPages}
       ctaHeading="Size Cables and Certify GSHP Installations on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates for ground source heat pump installations. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates for ground source heat pump installations. 7-day free trial, cancel anytime."
     />
   );
 }

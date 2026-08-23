@@ -279,10 +279,10 @@ const HNCModule3Section6_2 = () => {
 
           <TLDR
             points={[
-              'You compute system efficiency as the product of stage efficiencies &mdash; motor &times; gearbox &times; pump cascades down quickly, rewarding upstream IE class selection.',
-              'You apply IE3 minimum (2021), IE4 minimum 75&ndash;200 kW (2023) under Ecodesign Reg 2019/1781 retained as UK law.',
-              'You evaluate part-load efficiency curves, not just nameplate &mdash; transformer peaks at 40&ndash;60 % rated kVA, motor peaks at 75&ndash;100 % rated power.',
-              'You produce life-cycle cost analysis (LCCA) on every motor, transformer and VSD specification &mdash; energy is typically 90&ndash;97 % of motor lifetime cost.',
+              'You compute system efficiency as the product of stage efficiencies — motor × gearbox × pump cascades down quickly, rewarding upstream IE class selection.',
+              'You apply IE3 minimum (2021), IE4 minimum 75–200 kW (2023) under Ecodesign Reg 2019/1781 retained as UK law.',
+              'You evaluate part-load efficiency curves, not just nameplate — transformer peaks at 40–60 % rated kVA, motor peaks at 75–100 % rated power.',
+              'You produce life-cycle cost analysis (LCCA) on every motor, transformer and VSD specification — energy is typically 90–97 % of motor lifetime cost.',
             ]}
           />
 
@@ -300,7 +300,7 @@ const HNCModule3Section6_2 = () => {
                 on commercial submissions.
               </>
             }
-            cite="Source: Building Regulations 2010 + Approved Document L (2021); Commission Regulation (EU) 2019/1781 (retained UK law); CIBSE Guide F &mdash; Energy efficiency in buildings; CIBSE TM39 &mdash; Building energy metering"
+            cite="Source: Building Regulations 2010 + Approved Document L (2021); Commission Regulation (EU) 2019/1781 (retained UK law); CIBSE Guide F — Energy efficiency in buildings; CIBSE TM39 — Building energy metering"
           />
 
           <SectionRule />
@@ -1213,7 +1213,7 @@ const HNCModule3Section6_2 = () => {
           <SectionRule />
 
           <Scenario
-            title="Pump system efficiency audit &mdash; identifying the worst stage"
+            title="Pump system efficiency audit — identifying the worst stage"
             situation={
               <>
                 A primary chilled-water circulation pump has the following nameplate
@@ -1255,14 +1255,14 @@ const HNCModule3Section6_2 = () => {
 
           <KeyTakeaways
             points={[
-              'Efficiency &eta; = P&#x2092;&#x1d64;&#x209c; / P&#x1d62;&#x2099; &times; 100 % &mdash; report at the operating point, not just at nameplate full load.',
-              'System efficiency = product of stage efficiencies &mdash; cascade compounds quickly so weak stages dominate.',
-              'Motor IE classes: IE1 standard, IE2 high, IE3 premium, IE4 super-premium, IE5 ultra (PMSM only) &mdash; UK minimum IE3.',
-              'Transformer efficiency curve peaks at 40&ndash;60 % rated kVA &mdash; oversizing increases iron loss continuously.',
-              'Part-load efficiency is the operating reality &mdash; nameplate full-load values flatter equipment that runs lightly loaded.',
-              'Life-cycle cost analysis: capital + lifetime energy + maintenance + disposal &mdash; energy is 90&ndash;97 % of motor LCC.',
-              'Building Regs Approved Document L 2021 expects energy-efficient fixed services &mdash; the IE-class arithmetic is the evidence.',
-              'CIBSE TM39 covers building energy metering strategy &mdash; tie efficiency claims to measured kWh, not vendor curves.',
+              'Efficiency η = P&#x2092;&#x1d64;&#x209c; / P&#x1d62;&#x2099; × 100 % — report at the operating point, not just at nameplate full load.',
+              'System efficiency = product of stage efficiencies — cascade compounds quickly so weak stages dominate.',
+              'Motor IE classes: IE1 standard, IE2 high, IE3 premium, IE4 super-premium, IE5 ultra (PMSM only) — UK minimum IE3.',
+              'Transformer efficiency curve peaks at 40–60 % rated kVA — oversizing increases iron loss continuously.',
+              'Part-load efficiency is the operating reality — nameplate full-load values flatter equipment that runs lightly loaded.',
+              'Life-cycle cost analysis: capital + lifetime energy + maintenance + disposal — energy is 90–97 % of motor LCC.',
+              'Building Regs Approved Document L 2021 expects energy-efficient fixed services — the IE-class arithmetic is the evidence.',
+              'CIBSE TM39 covers building energy metering strategy — tie efficiency claims to measured kWh, not vendor curves.',
             ]}
           />
 

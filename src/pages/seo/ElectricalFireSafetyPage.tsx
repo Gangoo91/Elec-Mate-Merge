@@ -590,7 +590,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICRs on your phone with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
           icon={Flame}
         />
       </>

@@ -633,7 +633,7 @@ export default function ElectricalSalaryBenchmarkingPage() {
       faqHeading="Frequently Asked Questions About Electrician Pay Rates"
       relatedPages={relatedPages}
       ctaHeading="Run a more profitable electrical business with Elec-Mate"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting, invoicing, electrical certificates, and job scheduling. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting, invoicing, electrical certificates, and job scheduling. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -171,7 +171,7 @@ const sections = [
         </p>
         <p>
           The external earth return path differs depending on the{' '}
-          <SEOInternalLink href="/earthing-arrangements">earthing system</SEOInternalLink>:
+          <SEOInternalLink href="/guides/earthing-systems-tns-tncs-tt-explained">earthing system</SEOInternalLink>:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
           <h3 className="font-bold text-white text-lg mb-4">
@@ -724,7 +724,7 @@ export default function EarthFaultLoopExplainedPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Validate Zs against BS 7671 automatically on site"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site testing and certification. Zs lookup by protective device, auto-validation, voice test entry, 70+ calculators. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site testing and certification. Zs lookup by protective device, auto-validation, voice test entry, 70+ calculators. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -681,7 +681,7 @@ export default function Sub1() {
             points={[
               "Zs = Ze + (R1 + R2) is the single equation that gates every ADS decision. Ze is the supply external loop; R1 is the line conductor from origin to fault; R2 is the cpc from fault back to MET.",
               "Reg 411.3.1.1 makes the Zs framework physically possible (cpc connected back to MET); Reg 411.3.1.2 makes it safe under the disconnection time window (equipotential bonding limits touch voltage).",
-              "Reg 411.3.2.2 sets the disconnection times — 0.4 s for final circuits ≤ 32 A on TN; 5 s for distribution circuits and final circuits &gt; 32 A.",
+              "Reg 411.3.2.2 sets the disconnection times — 0.4 s for final circuits ≤ 32 A on TN; 5 s for distribution circuits and final circuits > 32 A.",
               "Reg 411.4.5 sets the Zs equation: Zs × Ia ≤ U0 × Cmin where Cmin = 0.95 in A4:2026. Table 41.3 is the pre-solved lookup for common BS EN 60898 MCBs.",
               "Design uses the DNO declared Ze (Form 1) or the BS 7671 assumed maximum (0.35 Ω TN-C-S; 0.80 Ω TN-S). Measured Ze is for verification, not design.",
               "(R1 + R2) at 70 degrees C operating temperature uses OSG Table I1 cold values × 1.20 (or × 1.28 for 90-deg thermosetting). Cold (R1 + R2) understates Zs by 20 percent — never use cold value on the design pack.",

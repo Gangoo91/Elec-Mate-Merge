@@ -287,9 +287,9 @@ const HNCModule3Section6_4 = () => {
           <TLDR
             points={[
               'You specify IE3 minimum motors (IE4 above 75 kW) and 110+ lm/W LED luminaires as the BSE design baseline for any Part L 2021 / BREEAM submission.',
-              'You compute LENI (Lighting Energy Numeric Indicator, kWh/m&sup2;/yr) per BS EN 15193 to demonstrate Part L compliance and support BREEAM Hea / Ene credits.',
-              'You apply CIBSE TM54 methodology for predicted operational energy &mdash; goes beyond the SBEM compliance model to reality-check the design.',
-              'You design lighting controls (presence, daylight, dimmable scene-set) to deliver the 30&ndash;50 % saving over uncontrolled installations that Part L 2021 expects.',
+              'You compute LENI (Lighting Energy Numeric Indicator, kWh/m²/yr) per BS EN 15193 to demonstrate Part L compliance and support BREEAM Hea / Ene credits.',
+              'You apply CIBSE TM54 methodology for predicted operational energy — goes beyond the SBEM compliance model to reality-check the design.',
+              'You design lighting controls (presence, daylight, dimmable scene-set) to deliver the 30–50 % saving over uncontrolled installations that Part L 2021 expects.',
             ]}
           />
 
@@ -1015,7 +1015,7 @@ const HNCModule3Section6_4 = () => {
           <SectionRule />
 
           <Scenario
-            title="Open-plan office LED &amp; controls retrofit &mdash; LENI evidence"
+            title="Open-plan office LED & controls retrofit — LENI evidence"
             situation={
               <>
                 A 1500 m&sup2; open-plan office is being refurbished. Existing 4&times;36 W
@@ -1059,14 +1059,14 @@ const HNCModule3Section6_4 = () => {
 
           <KeyTakeaways
             points={[
-              'IE3 minimum motors (Ecodesign Reg 2019/1781) for any UK new-installation; IE4 minimum 75&ndash;200 kW since 2023.',
-              'Right-size motors &mdash; oversizing pushes the operating point onto a flatter / lower part of the efficiency curve.',
+              'IE3 minimum motors (Ecodesign Reg 2019/1781) for any UK new-installation; IE4 minimum 75–200 kW since 2023.',
+              'Right-size motors — oversizing pushes the operating point onto a flatter / lower part of the efficiency curve.',
               'LED luminaires: target 110+ lm/W (efficacy) + L80B10 50,000 hours (lifetime) for commercial-grade specification.',
-              'Lighting controls: presence detection + daylight linking + constant-illumination factor &mdash; routinely deliver 30&ndash;50 % saving over uncontrolled.',
-              'LENI (Lighting Energy Numeric Indicator, kWh/m&sup2;/yr) per BS EN 15193 &mdash; the Part L 2021 + BREEAM compliance metric.',
-              'CIBSE TM54: predicted operational energy &mdash; sanity-check the SBEM compliance model.',
-              'BS EN 12464-1 sets task-based lux levels &mdash; 500 lux desk, 300 lux corridor, 200 lux store, etc.',
-              'Approved Document L Volume 2 (2021) is the regulatory anchor &mdash; lighting controls and LENI evidence are explicit Building Control submission items.',
+              'Lighting controls: presence detection + daylight linking + constant-illumination factor — routinely deliver 30–50 % saving over uncontrolled.',
+              'LENI (Lighting Energy Numeric Indicator, kWh/m²/yr) per BS EN 15193 — the Part L 2021 + BREEAM compliance metric.',
+              'CIBSE TM54: predicted operational energy — sanity-check the SBEM compliance model.',
+              'BS EN 12464-1 sets task-based lux levels — 500 lux desk, 300 lux corridor, 200 lux store, etc.',
+              'Approved Document L Volume 2 (2021) is the regulatory anchor — lighting controls and LENI evidence are explicit Building Control submission items.',
             ]}
           />
 

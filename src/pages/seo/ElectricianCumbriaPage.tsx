@@ -636,7 +636,7 @@ export default function ElectricianCumbriaPage() {
       faqHeading="Frequently Asked Questions About Electricians in Cumbria"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Cumbria Electricians"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the realities of Cumbria's nuclear sites, rural properties, and coastal industrial work. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the realities of Cumbria's nuclear sites, rural properties, and coastal industrial work. 7-day free trial."
     />
   );
 }

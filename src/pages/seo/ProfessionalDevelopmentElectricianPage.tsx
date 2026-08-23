@@ -602,7 +602,7 @@ export default function ProfessionalDevelopmentElectricianPage() {
       faqHeading="Frequently Asked Questions About Electrician CPD"
       relatedPages={relatedPages}
       ctaHeading="Manage Your CPD on Your Phone"
-      ctaSubheading="Structured courses, automatic hour tracking, and a professional CPD record for your scheme assessor. Join 1,000+ electricians doing CPD the easy way. 7-day free trial, cancel anytime."
+      ctaSubheading="Structured courses, automatic hour tracking, and a professional CPD record for your scheme assessor. Join 1,600+ electricians doing CPD the easy way. 7-day free trial, cancel anytime."
     />
   );
 }

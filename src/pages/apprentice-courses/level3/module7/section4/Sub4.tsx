@@ -734,7 +734,7 @@ export default function Sub4() {
                 <strong>Follow up</strong> &mdash; check back a few days later, quietly.
               </li>
               <li>
-                <strong>Don't be the counsellor</strong> &mdash; refer on; you're not trained.
+                <strong>Don't be the counsellor</strong> — refer on; you're not trained.
               </li>
               <li>
                 <strong>MHFA training</strong> &mdash; 2 days, ~&pound;300, gives you the framework.

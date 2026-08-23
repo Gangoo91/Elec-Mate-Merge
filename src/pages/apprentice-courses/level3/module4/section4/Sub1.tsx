@@ -359,7 +359,7 @@ export default function Sub1() {
             source="BS 7671:2018+A4:2026 — Reg 642.2"
             clause={
               <>
-                "The inspection shall be made to verify that the installed electrical equipment is: (a) in compliance with the requirements of Section 511; (b) correctly selected and erected in accordance with BS 7671, taking into account manufacturers&apos; instructions; and (c) not visibly damaged or defective so as to impair safety."
+                "The inspection shall be made to verify that the installed electrical equipment is: (a) in compliance with the requirements of Section 511; (b) correctly selected and erected in accordance with BS 7671, taking into account manufacturers’ instructions; and (c) not visibly damaged or defective so as to impair safety."
               </>
             }
             meaning={

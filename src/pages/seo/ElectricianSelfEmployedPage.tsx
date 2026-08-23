@@ -897,7 +897,7 @@ export default function ElectricianSelfEmployedPage() {
           <span className="text-yellow-400">Everything You Need to Know</span>
         </>
       }
-      heroSubtitle="The complete, honest guide to setting up on your own. From registering with HMRC and getting insured to pricing jobs, finding clients, managing tax, and keeping records. Written by electricians who have done it."
+      heroSubtitle="The complete, honest guide to setting up on your own. From registering with HMRC and getting insured to pricing jobs, finding clients, managing tax, and keeping records. Written by Andrew Moore, founder of Elec-Mate and a qualified electrician."
       readingTime={24}
       keyTakeaways={keyTakeaways}
       sections={sections}

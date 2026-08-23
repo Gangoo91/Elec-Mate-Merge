@@ -91,7 +91,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      'HASAWA 1974 section 7 — verbatim. Employees must take reasonable care for themselves AND others, AND co-operate with the employer&rsquo;s safety arrangements. The "others affected" clause is critical for site work — your actions affect every other trade, the customer, and members of the public. A trip hazard in a corridor affects the cleaner; an unsecured cable run affects the next trade.',
+      'HASAWA 1974 section 7 — verbatim. Employees must take reasonable care for themselves AND others, AND co-operate with the employer’s safety arrangements. The "others affected" clause is critical for site work — your actions affect every other trade, the customer, and members of the public. A trip hazard in a corridor affects the cleaner; an unsecured cable run affects the next trade.',
   },
   {
     id: 2,
@@ -142,19 +142,19 @@ const quizQuestions = [
     options: [
       'A dedicated site office, a canteen with hot food and on-site sleeping accommodation.',
       'Toilets, washing facilities, drinking water, an eating area and clothing storage, proportionate to the project.',
-      'Only drinking water and a toilet, with washing and eating left to the worker&rsquo;s own arrangements.',
+      'Only drinking water and a toilet, with washing and eating left to the worker’s own arrangements.',
       'Showers and lockers for every operative regardless of the size or length of the project.',
     ],
     correctAnswer: 1,
     explanation:
-      'CDM 2015 Schedule 2 — welfare facilities: WC, washing facilities (hot and cold water + soap), drinking water, eating area separate from the work area, clothing storage / drying. Scale to the project — a one-day install in an occupied house can usually use the customer&rsquo;s facilities; a multi-week site needs a welfare unit. Failing to provide is a CDM enforcement matter.',
+      'CDM 2015 Schedule 2 — welfare facilities: WC, washing facilities (hot and cold water + soap), drinking water, eating area separate from the work area, clothing storage / drying. Scale to the project — a one-day install in an occupied house can usually use the customer’s facilities; a multi-week site needs a welfare unit. Failing to provide is a CDM enforcement matter.',
   },
   {
     id: 6,
     question:
-      'You arrive on a domestic rewire to find the customer has decided to remove their elderly relative&rsquo;s mobility scooter from the corridor "for the day". The corridor is now blocked by your tools and is the customer&rsquo;s only escape route. The right action is:',
+      'You arrive on a domestic rewire to find the customer has decided to remove their elderly relative’s mobility scooter from the corridor "for the day". The corridor is now blocked by your tools and is the customer’s only escape route. The right action is:',
     options: [
-      'Carry on working, treating the corridor as the customer&rsquo;s responsibility while you are in occupation.',
+      'Carry on working, treating the corridor as the customer’s responsibility while you are in occupation.',
       'Move your tools to one side of the corridor so there is a narrow gap for people to pass.',
       'Clear the escape route immediately, brief the customer, and stop work if they refuse to keep it clear.',
       'Wait until the end of the day to clear the route, since you need the tools there meanwhile.',
@@ -183,7 +183,7 @@ const quizQuestions = [
       'End-of-shift sign-off on a multi-day commercial install typically includes:',
     options: [
       'Securing isolations, closing enclosures, stowing tools, sweeping the area and briefing the next shift.',
-      'Restoring every isolation to live so the building&rsquo;s services work overnight, whatever the work state.',
+      'Restoring every isolation to live so the building’s services work overnight, whatever the work state.',
       'Leaving tools and materials in place so the next shift can pick up exactly where you left off.',
       'Signing off the whole installation as complete each evening so the paperwork is never outstanding.',
     ],
@@ -217,7 +217,7 @@ const faqs = [
   {
     question: 'What welfare facilities should I expect on a small domestic job?',
     answer:
-      'For a single-day domestic install, the customer&rsquo;s facilities (WC, kitchen tap, somewhere to sit for break) are usually acceptable — confirm with the customer in advance. For a multi-week refurb where the customer is in occupation, agree facilities at the quote stage. For an unoccupied refurb (vacant property), bring your own — porta-loo hire, jerry can of water, kettle and break area in the van. CDM 2015 requires welfare proportionate to the project; a single-operative single-day domestic does not need a welfare unit but still needs reasonable access to basics.',
+      'For a single-day domestic install, the customer’s facilities (WC, kitchen tap, somewhere to sit for break) are usually acceptable — confirm with the customer in advance. For a multi-week refurb where the customer is in occupation, agree facilities at the quote stage. For an unoccupied refurb (vacant property), bring your own — porta-loo hire, jerry can of water, kettle and break area in the van. CDM 2015 requires welfare proportionate to the project; a single-operative single-day domestic does not need a welfare unit but still needs reasonable access to basics.',
   },
   {
     question: 'When should I refuse to start or continue work on safety grounds?',
@@ -457,7 +457,7 @@ export default function Sub6() {
 
           <ConceptBlock
             title="Welfare facilities — proportionate to the project"
-            plainEnglish="CDM 2015 Schedule 2 requires welfare facilities on every construction project. Scale to size — a one-day domestic install can use the customer&rsquo;s facilities (with permission); a multi-week refurb where the customer is in residence needs a clear arrangement; an unoccupied refurb needs you to bring welfare with you (porta-loo hire, water, kettle, break area)."
+            plainEnglish="CDM 2015 Schedule 2 requires welfare facilities on every construction project. Scale to size — a one-day domestic install can use the customer’s facilities (with permission); a multi-week refurb where the customer is in residence needs a clear arrangement; an unoccupied refurb needs you to bring welfare with you (porta-loo hire, water, kettle, break area)."
           >
             <p>
               The CDM Schedule 2 list:
@@ -481,7 +481,7 @@ export default function Sub6() {
           <ConceptBlock
             title="Fatigue — recognise your limits, stop when judgement slips"
             plainEnglish="Fatigue is the silent cause of most late-shift mistakes that lead to electrical accidents. The 16-hour day, the rushed last termination, the 'just one more circuit' — that is when conductors get nicked, terminations get over-torqued, and isolations get missed. The discipline is to recognise your own state and stop when you are no longer at full attention."
-            onSite="The brain&rsquo;s decision-making capacity drops sharply after 8-10 hours of focused technical work. By hour 12 you are making errors you would never make at hour 4. Stop, lock the site down, come back tomorrow — your future self will thank you."
+            onSite="The brain’s decision-making capacity drops sharply after 8-10 hours of focused technical work. By hour 12 you are making errors you would never make at hour 4. Stop, lock the site down, come back tomorrow — your future self will thank you."
           >
             <p>
               Practical fatigue management:
@@ -519,7 +519,7 @@ export default function Sub6() {
 
           <RegsCallout
             source="Management of Health and Safety at Work Regulations 1999 — Regulation 14 (Employee duties)"
-            clause="(Paraphrased.) Every employee shall use any machinery, equipment, dangerous substance, transport equipment, means of production or safety device provided to him by his employer in accordance with both any training and the instructions which may have been provided. Every employee shall inform his employer or any other employee with specific responsibility of (a) any work situation which a person with the first-mentioned employee&rsquo;s training and instruction would reasonably consider represented a serious and immediate danger to health and safety; (b) any matter which a person with the first-mentioned employee&rsquo;s training and instruction would reasonably consider represented a shortcoming in the employer&rsquo;s protection arrangements."
+            clause="(Paraphrased.) Every employee shall use any machinery, equipment, dangerous substance, transport equipment, means of production or safety device provided to him by his employer in accordance with both any training and the instructions which may have been provided. Every employee shall inform his employer or any other employee with specific responsibility of (a) any work situation which a person with the first-mentioned employee’s training and instruction would reasonably consider represented a serious and immediate danger to health and safety; (b) any matter which a person with the first-mentioned employee’s training and instruction would reasonably consider represented a shortcoming in the employer’s protection arrangements."
             meaning={
               <>
                 Mgmt H&S Regs Reg 14 expands HASAWA s.7 with two specific duties — use
@@ -527,7 +527,7 @@ export default function Sub6() {
                 danger AND report shortcomings in protection arrangements. As an apprentice
                 or junior electrician you are obliged to report — to your supervisor, your
                 employer, the principal contractor — when you see a serious danger or a
-                gap in safety provision. Saying nothing because "it&rsquo;s not my job" is
+                gap in safety provision. Saying nothing because "it’s not my job" is
                 a breach of Reg 14.
               </>
             }

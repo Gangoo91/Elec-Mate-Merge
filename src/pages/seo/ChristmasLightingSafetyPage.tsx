@@ -551,7 +551,7 @@ export default function ChristmasLightingSafetyPage() {
       faqHeading="Frequently Asked Questions About Christmas Lighting Safety"
       relatedPages={relatedPages}
       ctaHeading="Keep Your Customers Safe This Christmas"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for PAT testing records, quoting outdoor installations, and on-site EIC certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for PAT testing records, quoting outdoor installations, and on-site EIC certificates. 7-day free trial, cancel anytime."
     />
   );
 }

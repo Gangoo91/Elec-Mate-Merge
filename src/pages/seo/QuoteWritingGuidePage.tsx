@@ -598,7 +598,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote faster and win more work with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, invoice management, and business AI."
+          description="Join 1,600+ UK electricians using Elec-Mate for professional quoting, invoice management, and business AI."
           icon={FileText}
         />
       </>
@@ -635,7 +635,7 @@ export default function QuoteWritingGuidePage() {
       faqHeading="Frequently Asked Questions About Electrical Quote Writing"
       relatedPages={relatedPages}
       ctaHeading="Send Professional Electrical Quotes from Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to build and send professional quotes on site. Materials pricing built in. PDF export in seconds. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to build and send professional quotes on site. Materials pricing built in. PDF export in seconds. 7-day free trial, cancel anytime."
     />
   );
 }

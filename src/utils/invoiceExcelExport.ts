@@ -42,6 +42,8 @@ export interface ExportInvoiceRow {
   paymentDetails: string;
   cisRate: number;
   cisDeducted: number;
+  /** ELE-1571 — third-party grant (OZEV and similar) off the VAT-inclusive total. */
+  grantDeducted: number;
   netPayable: number;
   status: string;
   vatTreatment: 'Standard' | 'Reverse charge' | 'No VAT';
@@ -129,6 +131,24 @@ export async function fetchAllInvoicesForExport(): Promise<ExportInvoiceRow[]> {
         }
       }
 
+      /*
+       * ELE-1571 — third-party grant.
+       *
+       * Read from settings rather than recomputed, because a grant leaves no
+       * trace in subtotal/tax/total: it comes off the gross AFTER VAT. Without
+       * it this export reported a net payable higher than the invoice the
+       * customer was actually sent — and this is the file that goes to an
+       * accountant.
+       *
+       * Capped at what is left after CIS, matching computeQuoteTotals.
+       */
+      let grantDeducted = 0;
+      if (settings.grantEnabled === true || settings.grantEnabled === 'true') {
+        const raw = Number(settings.grantAmount) || 0;
+        grantDeducted =
+          raw > 0 ? Math.round(Math.min(raw, Math.max(0, total - cisDeducted)) * 100) / 100 : 0;
+      }
+
       return {
         invoiceNumber: String(r.invoice_number),
         // Some invoices predate the invoice_date column or were raised via
@@ -150,7 +170,8 @@ export async function fetchAllInvoicesForExport(): Promise<ExportInvoiceRow[]> {
           .join(' · '),
         cisRate,
         cisDeducted,
-        netPayable: Math.round((total - cisDeducted) * 100) / 100,
+        grantDeducted,
+        netPayable: Math.round((total - cisDeducted - grantDeducted) * 100) / 100,
         status: status.charAt(0).toUpperCase() + status.slice(1),
         vatTreatment: reverseCharge ? 'Reverse charge' : tax > 0 ? 'Standard' : 'No VAT',
       } satisfies ExportInvoiceRow;
@@ -187,14 +208,20 @@ const HEADER = [
   'Payment details',
   'CIS rate',
   'CIS deducted',
+  'Grant deducted',
   'Net payable',
   'Status',
   'VAT treatment',
 ] as const;
 
-const LAST_COL = 'T'; // 20 columns, A..T
-// Column letters for typed formatting. Money: H I J K L N Q R. Dates: B C M.
-const MONEY_COLS = ['H', 'I', 'J', 'K', 'L', 'N', 'Q', 'R'];
+// ⚠️ POSITIONAL — re-derive these whenever HEADER changes. Inserting a column
+// silently shifts every letter after it, and a money column that loses its
+// format renders as a bare number in an accountant's spreadsheet.
+// ELE-1571 inserted 'Grant deducted' at R, pushing Net payable R→S,
+// Status S→T and VAT treatment T→U.
+const LAST_COL = 'U'; // 21 columns, A..U
+// Column letters for typed formatting. Money: H I J K L N Q R S. Dates: B C M.
+const MONEY_COLS = ['H', 'I', 'J', 'K', 'L', 'N', 'Q', 'R', 'S'];
 const DATE_COLS = ['B', 'C', 'M'];
 const HEADER_ROW = 4; // 1-based: title, range, blank, header
 
@@ -241,6 +268,7 @@ export async function exportInvoiceSummaryXlsx(
     r.paymentDetails,
     r.cisRate > 0 ? `${r.cisRate}%` : '',
     r.cisDeducted,
+    r.grantDeducted,
     r.netPayable,
     r.status,
     r.vatTreatment,
@@ -313,7 +341,10 @@ export async function exportInvoiceSummaryXlsx(
     [],
     ['CIS invoices', cisRows.length, false],
     ['CIS deducted in period', sum((r) => r.cisDeducted), true],
-    ['Net payable after CIS', sum((r) => r.netPayable), true],
+    ['Grant deducted in period', sum((r) => r.grantDeducted), true],
+    // Named for what it is: net of BOTH deductions, not CIS alone. The old
+    // label said "after CIS" while the figure now also nets off any grant.
+    ['Net payable after deductions', sum((r) => r.netPayable), true],
     [],
     ['Paid invoices', byStatus('Paid').length, false],
     ['Sent / awaiting payment', byStatus('Sent').length, false],

@@ -482,7 +482,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Produce compliant EICRs that protect landlords and tenants"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion. Clear C1/C2/C3/FI classification, instant PDF export, and landlord portal upload."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion. Clear C1/C2/C3/FI classification, instant PDF export, and landlord portal upload."
           icon={FileCheck2}
         />
       </>
@@ -519,7 +519,7 @@ export default function EICRTenantRightsPage() {
       faqHeading="Frequently Asked Questions: Tenant EICR Rights"
       relatedPages={relatedPages}
       ctaHeading="For Electricians: Complete Compliant EICRs on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to produce clearly documented, fully compliant EICRs on site. Help landlords meet their obligations and protect their tenants. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to produce clearly documented, fully compliant EICRs on site. Help landlords meet their obligations and protect their tenants. 7-day free trial."
     />
   );
 }

@@ -678,7 +678,7 @@ export default function Sub1() {
           />
 
           <Scenario
-            title="First job — &apos;go and prep the kitchen ring&apos;"
+            title="First job — ’go and prep the kitchen ring’"
             situation={
               <>
                 You&apos;re first day on a refurb. The senior electrician hands you a drum of 2.5

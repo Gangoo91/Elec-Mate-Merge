@@ -509,7 +509,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Keep your accounts in order with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate to manage quotes, invoices, and job records on their phone."
+          description="Join 1,600+ UK electricians using Elec-Mate to manage quotes, invoices, and job records on their phone."
           icon={FileText}
         />
       </>
@@ -546,7 +546,7 @@ export default function UTRNumberElectricianPage() {
       faqHeading="Frequently Asked Questions About UTR Numbers for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Keep Your Electrical Business Finances Organised"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for professional invoicing, payment tracking, and job records. Everything your accountant needs at self-assessment time. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for professional invoicing, payment tracking, and job records. Everything your accountant needs at self-assessment time. 7-day free trial, cancel anytime."
     />
   );
 }

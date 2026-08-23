@@ -123,8 +123,38 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
       // Prepare form data in the format expected by PDF Monkey template
       const pdfData = await formatEicJson(formData, companyProfile, reportId);
 
-      // Save formatted payload for email/reports page reuse
-      await supabase.from('reports').update({ pdf_payload: pdfData }).eq('report_id', reportId);
+      /*
+       * Cache the formatted payload for email / the reports list to reuse.
+       *
+       * ⚠️ Short-lived BY DESIGN. `reportCloud` sets `pdf_payload: null` on
+       * every report update, so the next autosave clears it — that is
+       * deliberate, and stops a stale payload rendering a certificate that no
+       * longer matches the form. It only survives while nothing has been
+       * edited since generation, which is precisely when reusing it is safe.
+       *
+       * So this is an optimisation, never a dependency: every consumer
+       * (ReportPdfViewer, bulkPdfExport) must be able to format on the fly.
+       * ELE-1596 was caused by EIC missing from that fallback, not by this
+       * write failing.
+       *
+       * The error is checked rather than discarded. It used to be a bare
+       * `await` with no handling, so a schema or policy failure here would
+       * have been invisible — the same silent-write trap that hid a broken
+       * column on the quote autosave for four months.
+       */
+      const { error: payloadError } = await supabase
+        .from('reports')
+        .update({ pdf_payload: pdfData })
+        .eq('report_id', reportId);
+      if (payloadError) {
+        // Non-fatal: generation continues, the payload is simply not cached.
+        console.warn(
+          '[EIC] Could not cache pdf_payload:',
+          payloadError.code ?? '(no code)',
+          payloadError.message ?? '',
+          payloadError.details ?? ''
+        );
+      }
 
       setExportProgress(30);
       setExportStatus('generating');

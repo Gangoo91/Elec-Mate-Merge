@@ -440,7 +440,7 @@ export default function Sub7() {
 
           <ConceptBlock
             title="Gate 5 — Required tabulated It"
-            plainEnglish="The cable&rsquo;s untouched table figure must be Ib divided by the combined derate. That gives you the floor — the smallest CCC the cable can have on paper before any conditions kick in."
+            plainEnglish="The cable’s untouched table figure must be Ib divided by the combined derate. That gives you the floor — the smallest CCC the cable can have on paper before any conditions kick in."
           >
             <p>
               Required <strong>It ≥ Ib / (Ca &times; Cg)</strong> where Ci is built into Method 103.
@@ -518,7 +518,7 @@ export default function Sub7() {
           </ConceptBlock>
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 — Regulation 525.202 (Voltage drop in consumers&rsquo; installations)"
+            source="BS 7671:2018+A4:2026 — Regulation 525.202 (Voltage drop in consumers’ installations)"
             clause="The above requirements are deemed to be satisfied if the voltage drop between the origin of the installation (usually the supply terminals) and a socket-outlet or the terminals of fixed current-using equipment does not exceed that stated in Appendix 4, Section 6.4."
             meaning={
               <>
@@ -534,7 +534,7 @@ export default function Sub7() {
           />
 
           <ConceptBlock
-            title="Gate 8 — I&sup2;R thermal sanity check"
+            title="Gate 8 — I²R thermal sanity check"
             plainEnglish="At full load, how much waste heat is the cable shedding into its surroundings? A few watts is fine. A hundred-plus watts buried in foam insulation is a fire."
           >
             <p>
@@ -563,7 +563,7 @@ export default function Sub7() {
 
           <RegsCallout
             source="BS 7671:2018+A4:2026 — Regulation 423.1 (Protection against burns)"
-            clause="Excepting equipment for which a Harmonized Standard specifies a limiting temperature, an accessible part of fixed electrical equipment within arm&rsquo;s reach shall not attain a temperature in excess of the appropriate limit stated in Table 42.1."
+            clause="Excepting equipment for which a Harmonized Standard specifies a limiting temperature, an accessible part of fixed electrical equipment within arm’s reach shall not attain a temperature in excess of the appropriate limit stated in Table 42.1."
             meaning={
               <>
                 Reg 423.1 sets the burn-risk limits for accessible equipment surfaces. The I²R

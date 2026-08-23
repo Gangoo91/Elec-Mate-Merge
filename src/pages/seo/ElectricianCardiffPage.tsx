@@ -640,7 +640,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Cardiff electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
+          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -677,7 +677,7 @@ export default function ElectricianCardiffPage() {
       faqHeading="Frequently Asked Questions About Electricians in Cardiff"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Cardiff Electricians"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Cardiff's terraced housing, Bay regeneration, and Welsh regulatory framework. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Cardiff's terraced housing, Bay regeneration, and Welsh regulatory framework. 7-day free trial."
     />
   );
 }

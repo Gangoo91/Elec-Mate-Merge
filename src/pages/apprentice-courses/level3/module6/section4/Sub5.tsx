@@ -241,7 +241,7 @@ export default function Sub5() {
 
           <PageHero
             eyebrow="Module 6 · Section 4 · Subsection 5"
-            title="Thermal constraint — t &lt; kS²/I² (the adiabatic gate)"
+            title="Thermal constraint — t < kS²/I² (the adiabatic gate)"
             description="The check that protects the protective conductor. The Reg 543.1.3 adiabatic equation S = √(I²t)/k end to end, the k values from Table 43.1, where the t value really comes from, and a full TN-C-S worked example for a B32 RCBO at the end of a domestic radial."
             tone="amber"
           />

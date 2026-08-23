@@ -547,7 +547,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Event electrical work made simple with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site inspection reporting, pre-energisation check documentation, and instant PDF export."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site inspection reporting, pre-energisation check documentation, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -584,7 +584,7 @@ export default function ExhibitionElectricalPage() {
       faqHeading="Frequently Asked Questions About Exhibition and Event Electrical Installations"
       relatedPages={relatedPages}
       ctaHeading="Complete Event Pre-Energisation Checks on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site inspection reporting, test result recording, and instant PDF export. Perfect for BS 7909 pre-energisation checks. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site inspection reporting, test result recording, and instant PDF export. Perfect for BS 7909 pre-energisation checks. 7-day free trial."
     />
   );
 }

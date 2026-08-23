@@ -567,7 +567,7 @@ export default function PATTestingFrequencyPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Digital PAT Testing from Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for PAT testing certificates, equipment registers, client scheduling, and re-test reminders. Quote and invoice from site. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for PAT testing certificates, equipment registers, client scheduling, and re-test reminders. Quote and invoice from site. 7-day free trial."
     />
   );
 }

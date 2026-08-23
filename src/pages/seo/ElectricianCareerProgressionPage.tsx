@@ -209,7 +209,7 @@ const sections = [
           <ShieldCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
           <div>
             <p className="text-white font-semibold text-sm mb-1">
-              Reviewed by a JIB-registered electrician
+              Reviewed by Andrew Moore, founder of Elec-Mate
             </p>
             <p className="text-white/70 text-sm leading-relaxed">
               The career stages, salaries, and qualifications on this page have been reviewed by a

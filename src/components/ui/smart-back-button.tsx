@@ -13,25 +13,6 @@ interface RouteMapping {
 // Route mappings for smart breadcrumb labels
 // Order matters - more specific patterns should come first
 const routeMappings: RouteMapping[] = [
-  // Apprentice Study paths (most specific first)
-  {
-    pattern: /^\/apprentice\/study\/eal\/[^/]+\/unit\/[^/]+\/section\/[^/]+\//,
-    label: 'Back to Section',
-    destination: '',
-  },
-  {
-    pattern: /^\/apprentice\/study\/eal\/[^/]+\/unit\/[^/]+\/section/,
-    label: 'Back to Unit',
-    destination: '',
-  },
-  { pattern: /^\/apprentice\/study\/eal\/[^/]+\/unit/, label: 'Back to Course', destination: '' },
-  {
-    pattern: /^\/apprentice\/study\/eal\/[^/]+/,
-    label: 'Back to Study Centre',
-    destination: '/apprentice/study',
-  },
-  { pattern: /^\/apprentice\/study/, label: 'Back to Apprentice Hub', destination: '/apprentice' },
-
   // Apprentice Toolbox paths
   {
     pattern: /^\/apprentice\/toolbox\/site-jargon\/[^/]+/,

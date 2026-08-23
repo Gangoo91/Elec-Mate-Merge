@@ -66,7 +66,7 @@ const quickCheckQuestions = [
   {
     id: 'fgas-certification',
     question:
-      'Under F-Gas Regulations, what certification is required to handle refrigerants with GWP &gt; 2500?',
+      'Under F-Gas Regulations, what certification is required to handle refrigerants with GWP > 2500?',
     options: [
       'A water hygiene certificate under L8 and HSG274',
       'Category I, II, III or IV depending on activity',
@@ -75,7 +75,7 @@ const quickCheckQuestions = [
     ],
     correctIndex: 1,
     explanation:
-      'F-Gas Regulations require personnel to hold appropriate Category certification (I-IV) based on the type of work undertaken. Category I covers all activities, Category II covers recovery, Category III covers systems &lt;3kg, and Category IV covers leak checking only.',
+      'F-Gas Regulations require personnel to hold appropriate Category certification (I-IV) based on the type of work undertaken. Category I covers all activities, Category II covers recovery, Category III covers systems <3kg, and Category IV covers leak checking only.',
   },
 ];
 

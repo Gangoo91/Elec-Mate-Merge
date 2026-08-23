@@ -601,7 +601,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Newcastle electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
+          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -638,7 +638,7 @@ export default function ElectricianNewcastlePage() {
       faqHeading="Frequently Asked Questions About Electricians in Newcastle"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Newcastle Electricians"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Tyneside flats, HMO compliance, and North East conditions. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Tyneside flats, HMO compliance, and North East conditions. 7-day free trial."
     />
   );
 }

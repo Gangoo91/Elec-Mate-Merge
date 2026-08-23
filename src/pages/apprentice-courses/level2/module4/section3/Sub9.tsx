@@ -56,16 +56,16 @@ const checks = [
       'Strip back the outer sheath and tie the pulling rope directly around the bare conductors.',
       'Crimp a ring lug onto the stripped conductor and clip the pulling rope to the lug.',
       'Wrap several turns of insulation tape around the cable end and tie the rope to the tape.',
-      'Use a pulling grip ("Chinese finger trap") that grips the cable&rsquo;s outer sheath, distributing the force without stressing the conductor.',
+      'Use a pulling grip ("Chinese finger trap") that grips the cable’s outer sheath, distributing the force without stressing the conductor.',
     ],
     correctIndex: 3,
     explanation:
-      'Pulling grips (sometimes called "Chinese finger traps" or "stockings") wrap around the cable&rsquo;s outer sheath and tighten as the rope pulls — distributing the pulling force evenly along ~150-300 mm of cable. The conductor inside is never stressed. Pulling on the conductor directly (with rope or crimp) damages the conductor at the eye and causes IR / continuity failures later. Tape gives way at the first hard bend.',
+      'Pulling grips (sometimes called "Chinese finger traps" or "stockings") wrap around the cable’s outer sheath and tighten as the rope pulls — distributing the pulling force evenly along ~150-300 mm of cable. The conductor inside is never stressed. Pulling on the conductor directly (with rope or crimp) damages the conductor at the eye and causes IR / continuity failures later. Tape gives way at the first hard bend.',
   },
   {
     id: 'bend-radius-pull',
     question:
-      'You are about to pull SWA cable through a route with one tight bend that does not respect the cable&rsquo;s 8× OD minimum bend radius. The right action is:',
+      'You are about to pull SWA cable through a route with one tight bend that does not respect the cable’s 8× OD minimum bend radius. The right action is:',
     options: [
       'Pull the cable slowly and steadily through the tight bend, on the basis that speed causes the damage.',
       'Add a draw box at the tight bend so the pull splits into two straight segments, or re-route to avoid it.',
@@ -105,7 +105,7 @@ const quizQuestions = [
     ],
     correctAnswer: 2,
     explanation:
-      'Use a proper cable-pulling lube (Polywater, Yellow 77, equivalent). Wax-free for PVC conduit (waxes can chemically react with PVC and degrade it). Compatible with the cable&rsquo;s outer sheath. Slow-evaporating so it stays slick during a long pull. Generic oils, WD-40, soap, washing-up liquid all either degrade PVC, dry out fast, or leave residues that attract dust and create future problems.',
+      'Use a proper cable-pulling lube (Polywater, Yellow 77, equivalent). Wax-free for PVC conduit (waxes can chemically react with PVC and degrade it). Compatible with the cable’s outer sheath. Slow-evaporating so it stays slick during a long pull. Generic oils, WD-40, soap, washing-up liquid all either degrade PVC, dry out fast, or leave residues that attract dust and create future problems.',
   },
   {
     id: 3,
@@ -133,7 +133,7 @@ const quizQuestions = [
     ],
     correctAnswer: 0,
     explanation:
-      'Cable dressing matters for both performance and aesthetics. Parallel laying minimises crossings. Segregation by service type meets BS separation requirements (BS 6701 for data, BS 5839 for fire alarm). Spacing for thermal dissipation respects the OSG grouping correction factor Cg. Metal cable ties at intervals (per A4:2026 Reg 521.10.202) keep the dressing in place. Bundling tightly increases the effective grouping count and reduces every cable&rsquo;s rated current.',
+      'Cable dressing matters for both performance and aesthetics. Parallel laying minimises crossings. Segregation by service type meets BS separation requirements (BS 6701 for data, BS 5839 for fire alarm). Spacing for thermal dissipation respects the OSG grouping correction factor Cg. Metal cable ties at intervals (per A4:2026 Reg 521.10.202) keep the dressing in place. Bundling tightly increases the effective grouping count and reduces every cable’s rated current.',
   },
   {
     id: 5,
@@ -141,7 +141,7 @@ const quizQuestions = [
       'A draw rope is left in a conduit run after a cable is pulled because:',
     options: [
       'BS 7671 requires a spare draw rope to remain in every conduit run for earthing purposes.',
-      'It is the next person&rsquo;s draw rope — a ready path for future cable additions without re-roding.',
+      'It is the next person’s draw rope — a ready path for future cable additions without re-roding.',
       'The rope absorbs moisture and helps keep the inside of the conduit dry over time.',
       'The rope holds the installed cables in position and stops them sliding back out of the conduit.',
     ],
@@ -175,7 +175,7 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      'Pulling eyes are factory-fitted loops on large SWA, MV and HV cables — a specifically engineered termination that connects the pulling rope to the cable without stressing the conductor. The pulling force goes through the eye to the cable&rsquo;s mechanical termination (compression on the armour, the bedding, the sheath) — never directly on the conductor. For smaller cables you make a field-installed pulling grip from braided wire mesh that grips the outer sheath.',
+      'Pulling eyes are factory-fitted loops on large SWA, MV and HV cables — a specifically engineered termination that connects the pulling rope to the cable without stressing the conductor. The pulling force goes through the eye to the cable’s mechanical termination (compression on the armour, the bedding, the sheath) — never directly on the conductor. For smaller cables you make a field-installed pulling grip from braided wire mesh that grips the outer sheath.',
   },
   {
     id: 8,
@@ -189,7 +189,7 @@ const quizQuestions = [
     ],
     correctAnswer: 0,
     explanation:
-      'The IET On-Site Guide Appendix E gives the cable factors for conduit and trunking (BS 7671 does not tabulate them; Reg 522.8.1 sets the principle). ~40-45 % maximum fill is the install limit; this allows cables to slide past each other during the pull and gives room for thermal dissipation in service. Tighter fills cause pulls to jam (in the worst case, you cannot get the cable through at all) and reduce the cables&rsquo; rated current via thermal grouping.',
+      'The IET On-Site Guide Appendix E gives the cable factors for conduit and trunking (BS 7671 does not tabulate them; Reg 522.8.1 sets the principle). ~40-45 % maximum fill is the install limit; this allows cables to slide past each other during the pull and gives room for thermal dissipation in service. Tighter fills cause pulls to jam (in the worst case, you cannot get the cable through at all) and reduce the cables’ rated current via thermal grouping.',
   },
 ];
 
@@ -217,7 +217,7 @@ const faqs = [
   {
     question: 'How tight is too tight on the bend during a pull?',
     answer:
-      'The cable manufacturer&rsquo;s minimum bend radius — typically 6× OD for unarmoured cable (T&E, FP200), 8× OD for SWA, 12× OD for MICC. For a single-cable pull this is the LIVE bend radius (during the pull); the installed bend can be tighter only if it would still satisfy the regulation 522.8.3 in service. In practice, design the route so the installed bends already meet or exceed the pull-time radius — that way the pull is always within tolerance.',
+      'The cable manufacturer’s minimum bend radius — typically 6× OD for unarmoured cable (T&E, FP200), 8× OD for SWA, 12× OD for MICC. For a single-cable pull this is the LIVE bend radius (during the pull); the installed bend can be tighter only if it would still satisfy the regulation 522.8.3 in service. In practice, design the route so the installed bends already meet or exceed the pull-time radius — that way the pull is always within tolerance.',
   },
   {
     question: 'How do I dress cables tidily on a tray run after pulling?',
@@ -251,7 +251,7 @@ export default function Sub9() {
           <TLDR
             points={[
               'Pre-pull prep is everything — route survey, draw rope in, lubricant ready, pulling grip or eye attached. A thirty-second prep saves a thirty-minute jam.',
-              'Pull on the cable&rsquo;s outer sheath via a pulling grip or eye — NEVER on the conductor directly. Conductor pulls damage the conductor at the eye and cause IR failures later.',
+              'Pull on the cable’s outer sheath via a pulling grip or eye — NEVER on the conductor directly. Conductor pulls damage the conductor at the eye and cause IR failures later.',
               'Pulling tension limit ~50 N/mm² (≈ 5 kg/mm²) for copper with stocking grip per published manufacturer / IET Electrical Installation Design Guide; ~30 N/mm² if pulling on the conductor itself. Many sites use a conservative 1.5-2 kg/mm² field rule. Bend radius 6× OD unarmoured / 8× SWA / 12× MICC — at PULL time, not just installed.',
             ]}
           />
@@ -261,7 +261,7 @@ export default function Sub9() {
               'Supplementary content — extends LO3 but is not directly mapped to a 204 AC. Designed to deepen apprentice understanding of cable pulling and dressing as a craft skill that turns first-fix planning into installed circuits.',
               'Plan a cable pull — route survey, conduit fill check, intermediate draw box positions, draw rope installation, lubricant choice.',
               'Apply pulling tension limits (~50 N/mm² ≈ 5 kg/mm² copper with stocking grip per published manufacturer / IET Electrical Installation Design Guide; conservative 1.5-2 kg/mm² no-thinking-required field rule on most sites) and recognise the warning signs of an over-tensioned pull.',
-              'Use pulling grips and pulling eyes correctly so that pulling force is applied to the cable&rsquo;s sheath and mechanical termination, never directly to the conductor.',
+              'Use pulling grips and pulling eyes correctly so that pulling force is applied to the cable’s sheath and mechanical termination, never directly to the conductor.',
               'Maintain bend radius minimums during the pull and in the installed run (6× OD unarmoured, 8× OD SWA, 12× OD MICC).',
               'Dress cables on tray, basket and ladder runs — parallel, segregated by service, spaced for thermal dissipation, secured with non-combustible metal ties per A4:2026 Reg 521.10.202.',
             ]}
@@ -364,8 +364,8 @@ export default function Sub9() {
 
           <ConceptBlock
             title="Pulling grip vs pulling eye — never pull on the conductor"
-            plainEnglish="The pulling rope MUST attach to the cable&rsquo;s outer sheath (via a pulling grip) or to the cable&rsquo;s mechanical termination (via a pulling eye). Pulling on the conductor itself — by tying the rope around bare conductors, by crimping the rope onto a stripped end, or by relying on tape — damages the conductor at the attachment point and causes failure."
-            onSite="A pulling grip (also called a Chinese finger trap or stocking) is a braided wire mesh tube that wraps around the cable and tightens as the rope pulls — distributing the force evenly along ~150-300 mm of cable sheath. The grip costs ~£15-25, sized to the cable OD, and is reusable across many pulls. Pulling eyes are factory-fitted on large SWA, MV and HV cables — a specifically engineered loop that connects the rope to the cable&rsquo;s mechanical termination."
+            plainEnglish="The pulling rope MUST attach to the cable’s outer sheath (via a pulling grip) or to the cable’s mechanical termination (via a pulling eye). Pulling on the conductor itself — by tying the rope around bare conductors, by crimping the rope onto a stripped end, or by relying on tape — damages the conductor at the attachment point and causes failure."
+            onSite="A pulling grip (also called a Chinese finger trap or stocking) is a braided wire mesh tube that wraps around the cable and tightens as the rope pulls — distributing the force evenly along ~150-300 mm of cable sheath. The grip costs ~£15-25, sized to the cable OD, and is reusable across many pulls. Pulling eyes are factory-fitted on large SWA, MV and HV cables — a specifically engineered loop that connects the rope to the cable’s mechanical termination."
           >
             <p>
               Attachment options by cable type:
@@ -581,7 +581,7 @@ export default function Sub9() {
 
           <ConceptBlock
             title="Leave a draw rope for the next person"
-            plainEnglish="After completing the pull, leave a polyester draw rope in the conduit / trunking for the next person who needs to add a cable. Costs 50 p of rope; saves the next electrician 30 minutes of re-rodding. Professional courtesy that compounds across the building&rsquo;s lifetime — the third or fourth cable addition years later still benefits from the rope you left in on day one."
+            plainEnglish="After completing the pull, leave a polyester draw rope in the conduit / trunking for the next person who needs to add a cable. Costs 50 p of rope; saves the next electrician 30 minutes of re-rodding. Professional courtesy that compounds across the building’s lifetime — the third or fourth cable addition years later still benefits from the rope you left in on day one."
           >
             <p>
               The standard practice — feed a fresh ~6 mm polyester draw rope through
@@ -749,7 +749,7 @@ export default function Sub9() {
           <KeyTakeaways
             points={[
               'Pre-pull prep — survey the route, confirm fill, install draw rope, ready the lubricant, attach pulling grip / eye. Five minutes of prep saves five hours of jammed pull.',
-              'Pull on the cable&rsquo;s outer sheath via a pulling grip OR on the cable&rsquo;s mechanical termination via a pulling eye. NEVER on the conductor directly.',
+              'Pull on the cable’s outer sheath via a pulling grip OR on the cable’s mechanical termination via a pulling eye. NEVER on the conductor directly.',
               'Pulling tension limit ~50 N/mm² (≈ 5 kg/mm²) for copper with stocking grip per published manufacturer / IET Electrical Installation Design Guide (~30 N/mm² if pulling on the conductor itself). Many sites use a conservative 1.5-2 kg/mm² no-thinking-required field rule. Calculate before pulling, use a tension meter on heavy pulls, listen for warning signs.',
               'Bend radius minimums apply BOTH during the pull AND in the installed run — 6× OD unarmoured, 8× SWA, 12× MICC. Tighter = damaged cable.',
               'Long pulls split into shorter segments at intermediate draw boxes — every ~30 m, at every complex bend, at every floor penetration.',

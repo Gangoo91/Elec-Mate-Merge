@@ -589,7 +589,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Build professional H&S documentation with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for AI-generated RAMS, H&S policy templates, and business management tools."
+          description="Join 1,600+ UK electricians using Elec-Mate for AI-generated RAMS, H&S policy templates, and business management tools."
           icon={ShieldCheck}
         />
       </>
@@ -626,7 +626,7 @@ export default function HealthSafetyAuditElectricianPage() {
       faqHeading="Frequently Asked Questions About H&S for Electrical Contractors"
       relatedPages={relatedPages}
       ctaHeading="Build Professional H&S Documentation with Elec-Mate"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for AI-generated RAMS, H&S templates, and business tools. Win more commercial work with better documentation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI-generated RAMS, H&S templates, and business tools. Win more commercial work with better documentation. 7-day free trial, cancel anytime."
     />
   );
 }

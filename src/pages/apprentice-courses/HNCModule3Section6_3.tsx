@@ -282,10 +282,10 @@ const HNCModule3Section6_3 = () => {
 
           <TLDR
             points={[
-              'You compute load factor (LF = average demand / maximum demand) on every metered building &mdash; LF &lt; 0.4 indicates spikey load profile and PFC / battery storage opportunity.',
-              'You design BMS staggered starts and load-shedding schemes that respect motor inrush sequencing and equipment criticality &mdash; sized to keep MD below DNO capacity-charge bands.',
-              'You combine peak-shaving (battery / generator) with time-of-use (TOU) tariff arbitrage on commercial sites &mdash; typical payback 5&ndash;8 years with current red/amber/green DUoS bands.',
-              'You document the demand-management strategy against ESOS Phase 3+ (Energy Savings Opportunity Scheme) for sites &gt; 250 employees or &pound;44m turnover.',
+              'You compute load factor (LF = average demand / maximum demand) on every metered building — LF < 0.4 indicates spikey load profile and PFC / battery storage opportunity.',
+              'You design BMS staggered starts and load-shedding schemes that respect motor inrush sequencing and equipment criticality — sized to keep MD below DNO capacity-charge bands.',
+              'You combine peak-shaving (battery / generator) with time-of-use (TOU) tariff arbitrage on commercial sites — typical payback 5–8 years with current red/amber/green DUoS bands.',
+              'You document the demand-management strategy against ESOS Phase 3+ (Energy Savings Opportunity Scheme) for sites > 250 employees or &pound;44m turnover.',
             ]}
           />
 
@@ -1041,7 +1041,7 @@ const HNCModule3Section6_3 = () => {
           <SectionRule />
 
           <Scenario
-            title="Distribution warehouse with EV fleet &mdash; peak-shaving battery business case"
+            title="Distribution warehouse with EV fleet — peak-shaving battery business case"
             situation={
               <>
                 A distribution warehouse has a 1500 kVA DNO supply, current peak demand
@@ -1085,13 +1085,13 @@ const HNCModule3Section6_3 = () => {
 
           <KeyTakeaways
             points={[
-              'Maximum demand: highest 30-min average kVA over the billing period &mdash; basis of DNO capacity charges.',
-              'Load factor (LF) = average demand / maximum demand &mdash; closer to 1 is flatter, more efficient.',
-              'Demand response: paying users to reduce demand during grid stress &mdash; revenue stream on commercial / industrial sites via DSO services.',
+              'Maximum demand: highest 30-min average kVA over the billing period — basis of DNO capacity charges.',
+              'Load factor (LF) = average demand / maximum demand — closer to 1 is flatter, more efficient.',
+              'Demand response: paying users to reduce demand during grid stress — revenue stream on commercial / industrial sites via DSO services.',
               'Peak shaving: battery / generator dispatch during peak periods to suppress recorded MD.',
               'Time-of-use (TOU) tariffs: DUoS red / amber / green zones (and DNO-specific equivalents) drive arbitrage opportunity.',
               'BMS staggered starts: sequence motors during morning warm-up to avoid inrush coincidence on the busbar.',
-              'Power-factor correction lifts effective kW capacity within the same kVA contract &mdash; cheap demand management.',
+              'Power-factor correction lifts effective kW capacity within the same kVA contract — cheap demand management.',
               'BS 7671 311.1 + ESOS Regulations 2014 anchor the regulatory case for active demand management.',
             ]}
           />

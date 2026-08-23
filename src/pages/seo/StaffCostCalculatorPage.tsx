@@ -530,7 +530,7 @@ export default function StaffCostCalculatorPage() {
         },
       ]}
       ctaHeading="Know the True Cost Before You Hire"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to calculate staff costs, plan capacity, and grow their teams profitably. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to calculate staff costs, plan capacity, and grow their teams profitably. 7-day free trial, cancel anytime."
       extraSchemas={[
         {
           '@type': 'SoftwareApplication',

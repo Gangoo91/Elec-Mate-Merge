@@ -24,6 +24,7 @@ import {
   textareaClass,
 } from '@/components/employer/editorial';
 import { RefreshCw, Download, Sparkles, Loader2 } from 'lucide-react';
+import { saveOrShareFile } from '@/utils/save-or-share-file';
 
 interface AIMethodStatementSectionProps {
   onNavigate: (section: Section) => void;
@@ -216,10 +217,13 @@ export function AIMethodStatementSection({ onNavigate }: AIMethodStatementSectio
         },
       });
       if (data?.success && data?.downloadUrl) {
-        const a = document.createElement('a');
-        a.href = data.downloadUrl;
-        a.download = `Method_Statement_${(selectedJobPack?.title || 'document').replace(/[^a-z0-9]/gi, '_')}.pdf`;
-        a.click();
+        // `<a download>` on a cross-origin renderer URL: ignored by browsers,
+        // and a no-op inside the app. saveOrShareFile fetches the bytes and
+        // hands them over properly on every platform.
+        await saveOrShareFile(
+          data.downloadUrl,
+          `Method_Statement_${(selectedJobPack?.title || 'document').replace(/[^a-z0-9]/gi, '_')}.pdf`
+        );
 
         // Persist DURABLY (renderer URLs expire within the hour)
         let saved = false;

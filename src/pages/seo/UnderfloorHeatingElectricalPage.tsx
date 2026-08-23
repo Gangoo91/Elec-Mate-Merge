@@ -633,7 +633,7 @@ export default function UnderfloorHeatingElectricalPage() {
       faqHeading="Frequently Asked Questions About Underfloor Heating Electrical"
       relatedPages={relatedPages}
       ctaHeading="Size UFH Circuits and Certify on Your Phone"
-      ctaSubheading="Cable sizing calculators, EIC certificates, quoting, and invoicing — all in one app. Join 1,000+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
+      ctaSubheading="Cable sizing calculators, EIC certificates, quoting, and invoicing — all in one app. Join 1,600+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
     />
   );
 }

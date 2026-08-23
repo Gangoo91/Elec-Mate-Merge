@@ -522,7 +522,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your Wolverhampton electrical business with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC and EICR completion, instant quoting, and certificate management. 7-day free trial."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site EIC and EICR completion, instant quoting, and certificate management. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -559,7 +559,7 @@ export default function ConsumerUnitReplacementWolverhamptonPage() {
       faqHeading="Frequently Asked Questions — Consumer Unit Replacement Wolverhampton"
       relatedPages={relatedPages}
       ctaHeading="Complete Consumer Unit Certificates On Site"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -442,7 +442,7 @@ export default function CookerConnectionCostPage() {
       faqHeading="Frequently Asked Questions About Cooker Connection Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Cooker Connections Professionally"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and AI cost engineering. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, and AI cost engineering. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -764,7 +764,7 @@ export default function BestVanRackingElectriciansPage() {
       faqHeading="Frequently Asked Questions About Van Racking for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Run Your Business From Your Van With Elec-Mate"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting, cable sizing, and on-site certificates. Professional tools on your phone — no paperwork, no office trips. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting, cable sizing, and on-site certificates. Professional tools on your phone — no paperwork, no office trips. 7-day free trial."
     />
   );
 }

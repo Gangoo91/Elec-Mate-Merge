@@ -316,7 +316,7 @@ const HNCModule1Section1_3 = () => {
             points={[
               'You will identify each duty-holder under CDM 2015 (client, principal designer, designer, principal contractor, contractor, worker) on every building services project you support.',
               'You can list the notification trigger (more than 30 working days and >20 workers simultaneously, or more than 500 person days) and complete an F10 mentally before the kick-off meeting.',
-              'You apply Regulation 9 (designer&rsquo;s duty to eliminate, reduce or control foreseeable risks) when you produce a circuit-design package, switchroom layout or services-coordination drawing.',
+              'You apply Regulation 9 (designer’s duty to eliminate, reduce or control foreseeable risks) when you produce a circuit-design package, switchroom layout or services-coordination drawing.',
               'You contribute residual-risk information to the pre-construction information pack and to the H&S file at handover.',
             ]}
           />

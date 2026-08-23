@@ -7,7 +7,7 @@ import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Earthing and Bonding for Safety - MOET Module 1.2.5';
 const DESCRIPTION =
-  'Comprehensive guide to earthing and bonding: fault current paths, disconnection times, TN-S/TN-C-S/TT/IT systems, main protective bonding, supplementary bonding, earth electrodes, earth fault loop impedance, protective conductor sizing and testing under BS 7671:2018+A3:2024.';
+  'Comprehensive guide to earthing and bonding: fault current paths, disconnection times, TN-S/TN-C-S/TT/IT systems, main protective bonding, supplementary bonding, earth electrodes, earth fault loop impedance, protective conductor sizing and testing under BS 7671:2018+A4:2026.';
 
 const quickCheckQuestions = [
   {
@@ -107,7 +107,7 @@ const quizQuestions = [
   {
     id: 4,
     question:
-      'Under BS 7671:2018+A3:2024, the minimum cross-sectional area of a main protective bonding conductor in a PME installation with 25 mm² supply tails is:',
+      'Under BS 7671:2018+A4:2026, the minimum cross-sectional area of a main protective bonding conductor in a PME installation with 25 mm² supply tails is:',
     options: [
       '10 mm²',
       '6 mm²',
@@ -320,7 +320,7 @@ const MOETModule1Section2_5 = () => {
             </p>
             <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
               <li className="pl-1">
-                <strong>BS 7671:2018+A3:2024:</strong> Chapters 41, 54; Tables 41.1-41.6
+                <strong>BS 7671:2018+A4:2026:</strong> Chapters 41, 54; Tables 41.1-41.6
               </li>
               <li className="pl-1">
                 <strong>EAWR 1989:</strong> Reg 8 (earthing); Reg 9 (integrity of earth)
@@ -1071,7 +1071,7 @@ const MOETModule1Section2_5 = () => {
               <div>
                 <p className="font-medium text-white mb-1">Key References</p>
                 <ul className="space-y-0.5">
-                  <li>BS 7671:2018+A3:2024 — Chapters 41, 54</li>
+                  <li>BS 7671:2018+A4:2026 — Chapters 41, 54</li>
                   <li>EAWR 1989 — Regulations 8, 9, 10</li>
                   <li>BS 7430 — Code of practice for earthing</li>
                   <li>BS EN 62305 — Lightning protection</li>

@@ -125,7 +125,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-systems-tns-tncs-tt-explained',
     title: 'Earthing Arrangements',
     description:
       'TN-S, TN-C-S, and TT earthing systems with implications for outbuilding supplies.',
@@ -601,7 +601,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify garden offices faster"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
+          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
           icon={Sun}
         />
       </>
@@ -638,7 +638,7 @@ export default function GardenOfficeElectricsPage() {
       faqHeading="Frequently Asked Questions About Garden Office Electrics"
       relatedPages={relatedPages}
       ctaHeading="Size Cables and Certify Garden Office Installations on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for SWA cable sizing, professional quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for SWA cable sizing, professional quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
     />
   );
 }

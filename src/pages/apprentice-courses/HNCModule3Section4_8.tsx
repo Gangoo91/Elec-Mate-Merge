@@ -280,7 +280,7 @@ const HNCModule3Section4_8 = () => {
               'You specify distribution boards by Form of separation (BS EN 61439-1) — Form 4 (Type 7) for critical / public access boards, Form 2 acceptable for plantroom / staff-only boards.',
               'You apply BS 7671 A4:2026 SPD requirements (Reg 443) — Type 1+2 SPD at the origin of every installation; Type 2 at sub-boards in long-cable / high-CRL areas.',
               'You design phase allocation and neutral sizing into the panel schedule — distribution-board overheating in service is almost always a design omission, not an install fault.',
-              'You document maximum demand, Zs at each device, and discrimination assessment on the as-built panel schedule — required for the EICR and the building&rsquo;s log book.',
+              'You document maximum demand, Zs at each device, and discrimination assessment on the as-built panel schedule — required for the EICR and the building’s log book.',
             ]}
           />
 
@@ -1166,7 +1166,7 @@ const HNCModule3Section4_8 = () => {
           <SectionRule />
 
           <Scenario
-            title="Hospital ward distribution board &mdash; Form 4 vs Form 2 specification"
+            title="Hospital ward distribution board — Form 4 vs Form 2 specification"
             situation={
               <>
                 A new hospital ward refurbishment requires a 250 A distribution board
@@ -1209,11 +1209,11 @@ const HNCModule3Section4_8 = () => {
           <KeyTakeaways
             points={[
               'Distribution boards specified to BS EN 61439-1/-2 — Form 1 (no separation) up to Form 4 Type 7 (full segregation including outgoing terminals).',
-              'BS 7671 A4:2026 Reg 443.4 risk assessment for SPD &mdash; default Yes for all but simplest domestic installations.',
+              'BS 7671 A4:2026 Reg 443.4 risk assessment for SPD — default Yes for all but simplest domestic installations.',
               'Type 1+2 SPDs at the origin (close to incoming TX or main switch); Type 2 SPDs at sub-boards in long-cable / high-CRL areas.',
-              'Phase allocation: spread single-phase final circuits L1/L2/L3 deliberately at design, target imbalance &lt; 10 % at busbar.',
+              'Phase allocation: spread single-phase final circuits L1/L2/L3 deliberately at design, target imbalance < 10 % at busbar.',
               'Neutral sizing: BS 7671 524.2 + Appendix 4 &sect;5.5 — full-rated or oversize neutral on harmonic-rich boards.',
-              'Panel schedule: document Ib, In, Iz, Zs, voltage drop, phase allocation per circuit &mdash; required for EICR and log book.',
+              'Panel schedule: document Ib, In, Iz, Zs, voltage drop, phase allocation per circuit — required for EICR and log book.',
               'HTM 06-01 mandates Form 4 boards in healthcare patient-treatment areas; HTM 08-01 covers escape lighting in healthcare.',
               'Discrimination overlays the upstream MCCB trip curve over the downstream MCB curve — verified at design stage with manufacturer software.',
             ]}

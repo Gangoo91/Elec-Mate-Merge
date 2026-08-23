@@ -543,7 +543,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify heat pump electrical installations"
-          description="Join 1,000+ UK electricians using Elec-Mate for heat pump circuit sizing, professional quoting, and on-site EIC certification."
+          description="Join 1,600+ UK electricians using Elec-Mate for heat pump circuit sizing, professional quoting, and on-site EIC certification."
           icon={Leaf}
         />
       </>

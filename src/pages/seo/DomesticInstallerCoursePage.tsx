@@ -570,7 +570,7 @@ export default function DomesticInstallerCoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Ready to master domestic electrical installation?"
-      ctaSubheading="Join 1,000+ UK electricians studying smarter with Elec-Mate. 12 structured modules, interactive quizzes, video content, and an AI tutor for any Part P or domestic wiring question. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians studying smarter with Elec-Mate. 12 structured modules, interactive quizzes, video content, and an AI tutor for any Part P or domestic wiring question. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/training/domestic-installer"
     />

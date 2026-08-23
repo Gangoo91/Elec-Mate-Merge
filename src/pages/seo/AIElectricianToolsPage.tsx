@@ -615,7 +615,7 @@ export default function AIElectricianToolsPage() {
 
       <SEOCTASection
         heading="Ask your first question in 30 seconds"
-        subheading="Join 1,000+ UK electricians using AI to save hours on design, quoting, and documentation. 7-day free trial, cancel anytime."
+        subheading="Join 1,600+ UK electricians using AI to save hours on design, quoting, and documentation. 7-day free trial, cancel anytime."
       />
     </PublicPageLayout>
   );

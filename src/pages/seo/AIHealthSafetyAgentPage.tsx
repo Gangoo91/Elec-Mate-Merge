@@ -430,7 +430,7 @@ export default function AIHealthSafetyAgentPage() {
 
       <SEOCTASection
         heading="Generate professional RAMS in minutes"
-        subheading="Join 1,000+ UK electricians using AI for CDM 2015 compliant health and safety documentation. 7-day free trial, cancel anytime."
+        subheading="Join 1,600+ UK electricians using AI for CDM 2015 compliant health and safety documentation. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

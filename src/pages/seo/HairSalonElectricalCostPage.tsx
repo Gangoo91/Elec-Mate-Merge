@@ -466,7 +466,7 @@ export default function HairSalonElectricalCostPage() {
       faqHeading="Frequently Asked Questions About Hair Salon Electrical Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Hair Salon Fit-Outs with Per-Station Pricing"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for salon quoting with station-by-station pricing, lighting specifications, and professional PDF output. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for salon quoting with station-by-station pricing, lighting specifications, and professional PDF output. 7-day free trial."
     />
   );
 }

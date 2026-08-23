@@ -301,7 +301,7 @@ export default function SPDSurgeProtectionPage() {
               </div>
               <p>
                 The{' '}
-                <SEOInternalLink href="/earthing-arrangements">
+                <SEOInternalLink href="/guides/earthing-systems-tns-tncs-tt-explained">
                   earthing arrangement
                 </SEOInternalLink>{' '}
                 must be verified on site before specifying the SPD. The SPD manufacturer's
@@ -569,7 +569,7 @@ export default function SPDSurgeProtectionPage() {
           category: 'Regulations',
         },
         {
-          href: '/earthing-arrangements',
+          href: '/guides/earthing-systems-tns-tncs-tt-explained',
           title: 'Earthing Arrangements',
           description: 'TN-S, TN-C-S, and TT systems and their impact on SPD selection.',
           icon: Cable,
@@ -605,7 +605,7 @@ export default function SPDSurgeProtectionPage() {
         },
       ]}
       ctaHeading="Specify and Certify SPDs With Confidence"
-      ctaSubheading="SPD fields in every certificate, BS 7671 Section 534 accessible in-app, and AI Circuit Designer includes SPD in designs. Join 1,000+ UK electricians. 7-day free trial."
+      ctaSubheading="SPD fields in every certificate, BS 7671 Section 534 accessible in-app, and AI Circuit Designer includes SPD in designs. Join 1,600+ UK electricians. 7-day free trial."
     />
   );
 }

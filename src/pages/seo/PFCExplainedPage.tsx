@@ -603,7 +603,7 @@ export default function PFCExplainedPage() {
       faqHeading="Frequently Asked Questions About Prospective Fault Current"
       relatedPages={relatedPages}
       ctaHeading="PFC Calculator in Your Pocket"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate's 70+ calculators including PFC, Zs, cable sizing, voltage drop, adiabatic equation, and more. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate's 70+ calculators including PFC, Zs, cable sizing, voltage drop, adiabatic equation, and more. 7-day free trial, cancel anytime."
     />
   );
 }

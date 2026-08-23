@@ -298,7 +298,7 @@ const faqs = [
   {
     question: 'How does building airtightness affect MVHR effectiveness?',
     answer:
-      'MVHR systems rely on controlled ventilation through the unit to recover heat effectively. In leaky buildings (air permeability &gt;5 m³/h.m² at 50Pa), significant uncontrolled air infiltration bypasses the heat recovery system entirely, reducing its effectiveness and wasting energy. Building Regulations typically require air permeability &lt;5 m³/h.m² for MVHR to be effective, with best practice being &lt;3 m³/h.m². Very airtight Passivhaus buildings (&lt;0.6 ACH at 50Pa) achieve maximum benefit from MVHR.',
+      'MVHR systems rely on controlled ventilation through the unit to recover heat effectively. In leaky buildings (air permeability >5 m³/h.m² at 50Pa), significant uncontrolled air infiltration bypasses the heat recovery system entirely, reducing its effectiveness and wasting energy. Building Regulations typically require air permeability <5 m³/h.m² for MVHR to be effective, with best practice being <3 m³/h.m². Very airtight Passivhaus buildings (<0.6 ACH at 50Pa) achieve maximum benefit from MVHR.',
   },
 ];
 

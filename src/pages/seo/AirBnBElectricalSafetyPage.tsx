@@ -650,7 +650,7 @@ export default function AirBnBElectricalSafetyPage() {
       faqHeading="Frequently Asked Questions About Airbnb Electrical Safety"
       relatedPages={relatedPages}
       ctaHeading="Complete Airbnb Property EICRs on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { CheckCircle2, GraduationCap } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { useCourseProgress } from '@/hooks/useCourseProgress';
 import { moduleProgress } from '@/lib/courseProgressMatch';
 import { cn } from '@/lib/utils';
@@ -11,7 +12,8 @@ interface ModuleCardProps {
   title: string;
   description?: string;
   duration?: string;
-  icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
+  /** Lucide icons are ForwardRefExoticComponent — see SectionCard. */
+  icon: LucideIcon;
   isExam?: boolean;
   isCompleted?: boolean;
   progress?: number;

@@ -746,7 +746,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify garage conversion electrics"
-          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification."
+          description="Join 1,600+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification."
           icon={Warehouse}
         />
       </>
@@ -788,7 +788,7 @@ export default function GarageConversionElectricsPage() {
       faqHeading="Frequently Asked Questions About Garage Conversion Electrics"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify Garage Conversions on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certificates. 7-day free trial, cancel anytime."
     />
   );
 }

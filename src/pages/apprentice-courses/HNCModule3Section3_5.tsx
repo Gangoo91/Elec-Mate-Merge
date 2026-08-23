@@ -824,12 +824,12 @@ const HNCModule3Section3_5 = () => {
 
           <KeyTakeaways
             points={[
-              'Harmonic frequency f&#x2099; = n &times; f&#x2081; — 3rd = 150 Hz, 5th = 250 Hz, 7th = 350 Hz at 50 Hz fundamental.',
-              'Triplen (3rd, 9th, 15th) zero-sequence harmonics add in the neutral; can drive neutral current to 1.73&times; phase current.',
+              'Harmonic frequency f&#x2099; = n × f&#x2081; — 3rd = 150 Hz, 5th = 250 Hz, 7th = 350 Hz at 50 Hz fundamental.',
+              'Triplen (3rd, 9th, 15th) zero-sequence harmonics add in the neutral; can drive neutral current to 1.73× phase current.',
               'Negative-sequence harmonics (5th, 11th) cause reverse-rotating fields in motors — heating and torque pulsation.',
               'Source spectra: 6-pulse VSD = 5/7/11/13; LED driver = 3/5; SMPS PSU = 3/5/7/9; UPS = 5/7/11.',
               'K-rated transformers handle eddy/stray heating from harmonics — K-4 office, K-13 IT, K-20 data centre.',
-              'Mitigation hierarchy: line reactor (3&ndash;5 %) &rarr; DC link choke &rarr; passive tuned filter &rarr; 12-pulse rectifier &rarr; AFE drive / active filter.',
+              'Mitigation hierarchy: line reactor (3–5 %) → DC link choke → passive tuned filter → 12-pulse rectifier → AFE drive / active filter.',
               'BS 7671 Reg 524.2 + Appendix 4 &sect;5.5 governs neutral sizing under harmonic loading.',
               'Engineering Recommendation G5/5 caps THDv at 5 % at the PCC for LV public networks — Stage 2/3 assessment for large non-linear loads.',
             ]}

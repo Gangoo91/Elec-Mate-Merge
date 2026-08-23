@@ -634,7 +634,7 @@ export default function MCBTypesBCDPage() {
       faqHeading="Frequently Asked Questions About MCB Types"
       relatedPages={relatedPages}
       ctaHeading="Look Up Maximum Zs by MCB Type Instantly"
-      ctaSubheading="Elec-Mate has every BS 7671 Zs value for Type B, C, and D MCBs built in. AI board scanner reads MCB types from a photo. Voice entry records test results hands-free. Join 1,000+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate has every BS 7671 Zs value for Type B, C, and D MCBs built in. AI board scanner reads MCB types from a photo. Voice entry records test results hands-free. Join 1,600+ UK electricians. 7-day free trial."
     />
   );
 }

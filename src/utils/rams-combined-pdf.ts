@@ -486,14 +486,19 @@ async function buildCombinedRAMSDoc(
   checkPageBreak(40);
 
   // Method Steps Table
-  const methodTableData = methodData.steps.map((step: MethodStep) => [
-    step.stepNumber.toString(),
+  // `MethodStep` types stepNumber/riskLevel as required, but these steps come
+  // from the AI, and TypeScript cannot police what a model returns. A single
+  // step missing `riskLevel` threw here and took the whole PDF down — the user
+  // taps Download and nothing happens, with no error to report. 22 stored jobs
+  // have at least one such step, so this is not theoretical.
+  const methodTableData = methodData.steps.map((step: MethodStep, idx: number) => [
+    String(step.stepNumber ?? idx + 1),
     safeText(step.title),
     formatDescription(safeText(step.description)),
     step.safetyRequirements && step.safetyRequirements.length > 0
       ? step.safetyRequirements.map((r) => `• ${r}`).join('\n')
       : 'N/A',
-    step.riskLevel.toUpperCase(),
+    (step.riskLevel || 'medium').toUpperCase(),
     safeText(step.estimatedDuration),
   ]);
 
@@ -568,7 +573,11 @@ async function buildCombinedRAMSDoc(
       doc.setFontSize(10);
       doc.setFont('helvetica', 'bold');
       doc.setTextColor(20, 20, 20);
-      doc.text(`${String(s.stepNumber ?? idx + 1).padStart(2, '0')}  ${safeText(s.title)}`, margin, yPos);
+      doc.text(
+        `${String(s.stepNumber ?? idx + 1).padStart(2, '0')}  ${safeText(s.title)}`,
+        margin,
+        yPos
+      );
       yPos += 5;
 
       if (s.phase || s.objective) {
@@ -595,10 +604,7 @@ async function buildCombinedRAMSDoc(
         doc.setFont('helvetica', 'bold');
         doc.text('Instruments:', margin, yPos);
         doc.setFont('helvetica', 'normal');
-        const il = doc.splitTextToSize(
-          s.named_instruments.join(', '),
-          pageWidth - 2 * margin - 24
-        );
+        const il = doc.splitTextToSize(s.named_instruments.join(', '), pageWidth - 2 * margin - 24);
         doc.text(il, margin + 24, yPos);
         yPos += il.length * 4;
       }

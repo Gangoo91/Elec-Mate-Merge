@@ -22,6 +22,14 @@ export interface QuoteSendData {
   quoteNumber: string;
   /** Total quote amount in pounds (e.g. 487.5) */
   total: number;
+  /**
+   * ELE-1571 — third-party grant (OZEV and similar) off the VAT-inclusive
+   * total. The client only pays `total − grant`, so the headline, subject and
+   * preheader lead with THAT; the full total stays visible in the meta grid
+   * because VAT is still due on the whole value of the supply.
+   */
+  grantAmount?: number;
+  grantLabel?: string;
   /** Quote validity date — ISO string or Date */
   validUntil?: string | Date | null;
   /** Job title from quote.jobDetails.title */
@@ -69,13 +77,22 @@ const formatDateLong = (d: string | Date | null | undefined): string => {
 
 export function buildQuoteSendEmail(data: QuoteSendData): QuoteSendEmail {
   const totalStr = formatGbp(data.total);
+  // ELE-1571 — clamped to the total so a stale or oversized grant can never
+  // show a negative headline.
+  const grantAmount = Math.min(
+    Math.max(0, Number(data.grantAmount) || 0),
+    Math.max(0, Number(data.total) || 0)
+  );
+  const payableStr = formatGbp(Math.max(0, (Number(data.total) || 0) - grantAmount));
+  // What the client is actually asked for — the whole point of the email.
+  const headlineStr = grantAmount > 0 ? payableStr : totalStr;
   const validUntilStr = formatDateLong(data.validUntil);
   const firstName = (data.clientName || 'there').split(' ')[0] || 'there';
   const jobLine = data.jobTitle ? data.jobTitle : 'the work we discussed';
 
   const subject =
-    data.customSubject?.trim() || `Your quote from ${data.company.name} — ${totalStr}`;
-  const preheader = `Quote ${data.quoteNumber} · ${totalStr}${validUntilStr ? ` · valid until ${validUntilStr}` : ''}`;
+    data.customSubject?.trim() || `Your quote from ${data.company.name} — ${headlineStr}`;
+  const preheader = `Quote ${data.quoteNumber} · ${headlineStr}${validUntilStr ? ` · valid until ${validUntilStr}` : ''}`;
 
   // Body copy — caller-supplied custom message wins, else warm default.
   const greeting = `Hi <strong style="color:#0f172a">${firstName}</strong>,`;
@@ -108,12 +125,21 @@ export function buildQuoteSendEmail(data: QuoteSendData): QuoteSendEmail {
       value: `<span style="font-family:'SF Mono',Menlo,Consolas,monospace;">${data.quoteNumber}</span>`,
     },
   ];
+  // Show the full total and the deduction whenever the headline differs from
+  // it — otherwise the client sees a reduced figure with no explanation.
+  if (grantAmount > 0) {
+    metaItems.push({ label: 'Quote total', value: totalStr });
+    metaItems.push({
+      label: data.grantLabel?.trim() || 'Grant',
+      value: `−${formatGbp(grantAmount)}`,
+    });
+  }
   if (validUntilStr) metaItems.push({ label: 'Valid until', value: validUntilStr });
   if (data.jobTitle) metaItems.push({ label: 'Job', value: data.jobTitle });
 
   const hero = renderHero({
-    label: 'Quote total',
-    value: totalStr,
+    label: grantAmount > 0 ? 'Amount to pay' : 'Quote total',
+    value: headlineStr,
     meta: metaItems,
   });
 

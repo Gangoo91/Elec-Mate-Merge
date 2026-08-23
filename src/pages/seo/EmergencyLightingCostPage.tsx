@@ -667,7 +667,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and maintain emergency lighting systems"
-          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, emergency lighting certification, and maintenance documentation."
+          description="Join 1,600+ UK electricians using Elec-Mate for professional quoting, emergency lighting certification, and maintenance documentation."
           icon={Lightbulb}
         />
       </>
@@ -704,7 +704,7 @@ export default function EmergencyLightingCostPage() {
       faqHeading="Frequently Asked Questions About Emergency Lighting Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify Emergency Lighting on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for emergency lighting quoting, certification, and test documentation. Professional results every time. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for emergency lighting quoting, certification, and test documentation. Professional results every time. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -509,7 +509,7 @@ export default function DentalSurgeryElectricalCostPage() {
       faqHeading="Frequently Asked Questions About Dental Surgery Electrical Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Dental Surgery Electrical with Medical Location Compliance"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for medical location quoting with Section 710 compliance, equipment schedules, and CQC-ready EIC certificates. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for medical location quoting with Section 710 compliance, equipment schedules, and CQC-ready EIC certificates. 7-day free trial."
     />
   );
 }

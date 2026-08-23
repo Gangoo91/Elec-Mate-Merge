@@ -654,9 +654,9 @@ export default function PowerFactorCalculatorPage() {
       <section className="px-5 pb-2">
         <div className="max-w-4xl mx-auto">
           <p className="text-xs text-white text-center">
-            Reviewed by <strong className="text-white">Chris Dawson</strong>, qualified
-            electrician (City &amp; Guilds 2382, 18th Edition) · Last reviewed May 2026 · All
-            calculations verified against BS 7671:2018+A4:2026
+            Reviewed by <strong className="text-white">Andrew Moore</strong>, founder of
+            Elec-Mate — a qualified electrician (18th Edition, C&amp;G 2391 inspection and testing)
+            · Last reviewed May 2026 · All calculations verified against BS 7671:2018+A4:2026
           </p>
         </div>
       </section>
@@ -740,7 +740,7 @@ export default function PowerFactorCalculatorPage() {
 
       <SEOCTASection
         heading="Calculate Power Factor in Seconds"
-        subheading="Join 1,000+ UK electricians using Elec-Mate for on-site calculations. 7-day free trial, cancel anytime."
+        subheading="Join 1,600+ UK electricians using Elec-Mate for on-site calculations. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

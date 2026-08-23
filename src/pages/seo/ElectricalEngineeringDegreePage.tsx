@@ -134,10 +134,9 @@ const sections = [
       <>
         <div className="rounded-2xl bg-white/[0.03] border border-white/10 px-5 py-3 mb-4 flex items-center gap-3">
           <Award className="w-5 h-5 text-yellow-400 shrink-0" />
-          <p className="text-sm text-white/70 leading-snug">
-            Written by a qualified electrician (City &amp; Guilds 2382, AM2) and reviewed by an IET
-            Member (MIET). Content is aligned to BS&nbsp;7671:2018+A4:2026 — the current edition of
-            the IET Wiring Regulations.
+          <p className="text-sm text-white leading-snug">
+            Written and reviewed by Andrew Moore, founder of Elec-Mate — a qualified electrician (18th Edition, C&amp;G 2391 inspection and testing). Content is aligned to
+            BS&nbsp;7671:2018+A4:2026 — the current edition of the IET Wiring Regulations.
           </p>
         </div>
         <p>
@@ -908,7 +907,7 @@ export default function ElectricalEngineeringDegreePage() {
         faqHeading="Frequently Asked Questions About Electrical Engineering Degrees"
         relatedPages={relatedPages}
         ctaHeading="Manage Your Electrical Career with Elec-Mate"
-        ctaSubheading="Join 1,000+ UK electricians and engineers using Elec-Mate to certify, quote, and manage their electrical business. 7-day free trial — no charge until day 8."
+        ctaSubheading="Join 1,600+ UK electricians and engineers using Elec-Mate to certify, quote, and manage their electrical business. 7-day free trial — no charge until day 8."
       />
     </>
   );

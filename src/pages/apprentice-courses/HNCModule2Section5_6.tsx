@@ -720,7 +720,7 @@ const HNCModule2Section5_6 = () => {
 
           <KeyTakeaways
             points={[
-              'Surface condensation: surface T &lt; air dew point — fix by raising surface T (insulation) or lowering RH (ventilation).',
+              'Surface condensation: surface T < air dew point — fix by raising surface T (insulation) or lowering RH (ventilation).',
               'Interstitial condensation: vapour pressure inside the build-up exceeds saturation at the local temperature.',
               'Glaser method: plot temperature, vapour pressure and saturation vapour pressure profiles; intersections = risk.',
               'Vapour control layer (VCL): warm side of insulation in heating-dominant UK climate.',

@@ -49,10 +49,10 @@ const quickCheckQuestions = [
     question:
       'For a typical office environment, what is the recommended UGR limit according to CIBSE/BS EN 12464-1?',
     options: [
-      'UGR &lt; 25',
-      'UGR &lt; 22',
-      'UGR &lt; 16',
-      'UGR &lt; 19',
+      'UGR < 25',
+      'UGR < 22',
+      'UGR < 16',
+      'UGR < 19',
     ],
     correctIndex: 3,
     explanation:
@@ -63,14 +63,14 @@ const quickCheckQuestions = [
     question:
       'What minimum colour rendering index (Ra) is required for offices under CIBSE guidelines?',
     options: [
-      'Ra &gt; 80',
-      'Ra &gt; 70',
-      'Ra &gt; 60',
-      'Ra &gt; 90',
+      'Ra > 80',
+      'Ra > 70',
+      'Ra > 60',
+      'Ra > 90',
     ],
     correctIndex: 0,
     explanation:
-      'A minimum colour rendering index of Ra &gt; 80 is required for most office and commercial environments. This ensures accurate colour perception for tasks and maintains a pleasant visual environment.',
+      'A minimum colour rendering index of Ra > 80 is required for most office and commercial environments. This ensures accurate colour perception for tasks and maintains a pleasant visual environment.',
   },
 ];
 
@@ -186,10 +186,10 @@ const quizQuestions = [
     question:
       'What uniformity ratio (Uo) is typically required for office task areas under CIBSE guidance?',
     options: [
-      'Uo &gt; 0.3',
-      'Uo &gt; 0.6',
-      'Uo &gt; 0.4',
-      'Uo &gt; 0.8',
+      'Uo > 0.3',
+      'Uo > 0.6',
+      'Uo > 0.4',
+      'Uo > 0.8',
     ],
     correctAnswer: 1,
     explanation:
@@ -252,7 +252,7 @@ const faqs = [
   {
     question: 'Why is UGR important in office lighting design?',
     answer:
-      "Unified Glare Rating (UGR) quantifies discomfort glare from luminaires in an observer's field of view. In offices, excessive glare causes visual discomfort, eye strain, headaches, and reduced productivity. UGR limits (typically 19 for offices) ensure luminaires are appropriately shielded and positioned. Modern LED luminaires often have UGR &lt; 19 built into their design through optical control.",
+      "Unified Glare Rating (UGR) quantifies discomfort glare from luminaires in an observer's field of view. In offices, excessive glare causes visual discomfort, eye strain, headaches, and reduced productivity. UGR limits (typically 19 for offices) ensure luminaires are appropriately shielded and positioned. Modern LED luminaires often have UGR < 19 built into their design through optical control.",
   },
   {
     question: 'What is the relationship between task lighting and ambient lighting?',

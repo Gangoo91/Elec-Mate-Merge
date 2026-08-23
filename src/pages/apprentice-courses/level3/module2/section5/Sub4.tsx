@@ -407,7 +407,7 @@ export default function Sub4() {
           <ConceptBlock
             title="MCS certifies the install, MCS Code 4.0 protects the customer"
             plainEnglish="The Microgeneration Certification Scheme (MCS) is the UK quality assurance scheme for small-scale renewable energy installations. An MCS certificate confirms that an MCS-certified installer designed, installed and commissioned the system to the relevant MIS Installation Standard (MIS 3002 for PV, MIS 3005 for heat pumps, MIS 3007 for biomass etc.). MCS Code 4.0, in force from 2023, is the consumer-protection wrapper — it sets out the contractual duties, complaint handling, deposit protection and post-handover support requirements every MCS-certified installer signs up to."
-            onSite="Customer-facing significance: the MCS certificate is what unlocks Smart Export Guarantee export payments, the Boiler Upgrade Scheme grant for heat pumps, and most insurance / mortgage references for renewables. As the L3 electrician you do not issue the MCS certificate — that is the MCS-certified installer&apos;s role through the MCS database — but you should recognise it as the document the customer needs for every grant or tariff claim downstream."
+            onSite="Customer-facing significance: the MCS certificate is what unlocks Smart Export Guarantee export payments, the Boiler Upgrade Scheme grant for heat pumps, and most insurance / mortgage references for renewables. As the L3 electrician you do not issue the MCS certificate — that is the MCS-certified installer’s role through the MCS database — but you should recognise it as the document the customer needs for every grant or tariff claim downstream."
           >
             <p>
               What the MCS certificate carries:
@@ -523,7 +523,7 @@ export default function Sub4() {
           <ConceptBlock
             title="The BS 7671 Electrical Installation Certificate covers the electrical scope"
             plainEnglish="The EIC is the universal BS 7671 compliance document. For a renewables install it certifies the new circuits — the DC strings on a PV install, the AC final connection back to the consumer unit, the EV charger circuit, the heat pump supply — against the wiring regulations. The accompanying schedule of inspections and schedule of test results record the inspection items and measured values. Section 712 (PV), Section 722 (EV) and Section 753 (heat pumps embedded in floors) drive the special inspection items beyond the general requirements."
-            onSite="The L3 electrician carrying out the inspection and test signs the inspector / tester box. The designer and constructor boxes are typically signed by the MCS-certified lead engineer or the qualifying supervisor on the installer&apos;s scheme. Test values (continuity, IR, polarity, Zs, RCD operation, plus DC IR for PV strings) are entered on the schedule. Labelling and signage at the consumer unit, the inverter, the DC isolators and the AC isolator are all inspection items."
+            onSite="The L3 electrician carrying out the inspection and test signs the inspector / tester box. The designer and constructor boxes are typically signed by the MCS-certified lead engineer or the qualifying supervisor on the installer’s scheme. Test values (continuity, IR, polarity, Zs, RCD operation, plus DC IR for PV strings) are entered on the schedule. Labelling and signage at the consumer unit, the inverter, the DC isolators and the AC isolator are all inspection items."
           >
             <p>
               EIC items the L3 electrician inspects on a renewables install:
@@ -830,7 +830,7 @@ export default function Sub4() {
               "G98 is fit-and-inform up to 16 A per phase; 28-day deadline from energisation. G99 is apply-to-connect for larger systems and needs DNO acceptance before switch-on.",
               "MCS certificate unlocks Smart Export Guarantee, the Boiler Upgrade Scheme grant and consumer-protection cover under MCS Code 4.0. It sits alongside (not instead of) the BS 7671 EIC.",
               "MCS Code 4.0 (in force from 2023) defines the contractual customer-facing duties — pre-contract information, handover pack contents, complaints handling, alternative dispute resolution via RECC or HIES.",
-              "The L3 electrician&apos;s signature usually sits in the EIC inspector / tester box. Designer / constructor boxes are signed by the MCS-certified lead engineer or qualifying supervisor.",
+              "The L3 electrician’s signature usually sits in the EIC inspector / tester box. Designer / constructor boxes are signed by the MCS-certified lead engineer or qualifying supervisor.",
               "Manufacturer commissioning record certifies equipment start-up and is required for warranty cover. The annual service baseline is referenced against it.",
               "F-Gas record logs every refrigerant transaction; F-Gas-certified engineer only; required by the F-Gas Regulations and central to keeping the warranty alive.",
               "Handover pack is assembled on handover day under MCS Code 4.0. Physical or durable digital. Half-built packs with promises to send the rest later breach the Code.",

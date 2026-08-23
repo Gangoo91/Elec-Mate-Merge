@@ -544,7 +544,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Protect your business with professional documentation"
-          description="Join 1,000+ UK electricians using Elec-Mate for compliant certificates, professional quotes, and organised job records."
+          description="Join 1,600+ UK electricians using Elec-Mate for compliant certificates, professional quotes, and organised job records."
           icon={Zap}
         />
       </>
@@ -581,7 +581,7 @@ export default function ElectricalContractorInsurancePage() {
       faqHeading="Frequently Asked Questions About Electrical Contractor Insurance"
       relatedPages={relatedPages}
       ctaHeading="Run a Professional, Compliant Electrical Business"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for compliant certificates, professional quotes, and organised job management. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for compliant certificates, professional quotes, and organised job management. 7-day free trial."
     />
   );
 }

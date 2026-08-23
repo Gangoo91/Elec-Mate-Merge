@@ -127,7 +127,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-systems-tns-tncs-tt-explained',
     title: 'Earthing Arrangements',
     description:
       'TN-S, TN-C-S, and TT earthing systems and their implications for outdoor electrical work.',
@@ -645,7 +645,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify outdoor socket installations"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Quick jobs, professional results."
+          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Quick jobs, professional results."
           icon={Sun}
         />
       </>
@@ -682,7 +682,7 @@ export default function OutdoorSocketsGuidePage() {
       faqHeading="Frequently Asked Questions About Outdoor Sockets"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify Outdoor Installations on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC and Minor Works certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC and Minor Works certificates. 7-day free trial, cancel anytime."
     />
   );
 }

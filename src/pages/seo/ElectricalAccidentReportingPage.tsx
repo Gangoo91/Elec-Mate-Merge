@@ -692,7 +692,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional H&S documentation for UK electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for RAMS generation, risk assessment, and health and safety documentation."
+          description="Join 1,600+ UK electricians using Elec-Mate for RAMS generation, risk assessment, and health and safety documentation."
           icon={HardHat}
         />
       </>

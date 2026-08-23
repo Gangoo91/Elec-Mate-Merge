@@ -642,7 +642,7 @@ export default function PartPBuildingRegulationsGuidePage() {
       faqHeading="Frequently Asked Questions About Part P Building Regulations"
       relatedPages={relatedPages}
       ctaHeading="Issue Part P Certificates On Site"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to issue EICs and Minor Works Certificates on site. AI board scanning, voice test entry, instant PDF — Part P documentation done before you leave. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to issue EICs and Minor Works Certificates on site. AI board scanning, voice test entry, instant PDF — Part P documentation done before you leave. 7-day free trial."
     />
   );
 }

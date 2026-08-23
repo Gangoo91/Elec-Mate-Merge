@@ -380,7 +380,7 @@ ${sig()}`;
   <li>70+ calculators + live materials pricing + price book</li>
   <li>Quote + invoice builder, customer CRM, photo docs, expenses with OCR</li>
   <li>RAMS generator with 1000+ hazard database</li>
-  <li>9 AI specialists (circuit designer, cost engineer, commissioning…)</li>
+  <li>8 AI specialists (circuit designer, cost engineer, commissioning…)</li>
   <li>Voice-to-form on site + Xero / QuickBooks sync</li>
 </ul>`;
 

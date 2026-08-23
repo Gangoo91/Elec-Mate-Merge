@@ -840,7 +840,7 @@ export default function NICEICCertificateRequirementsPage() {
       faqHeading="Frequently Asked Questions About NICEIC Certificate Requirements"
       relatedPages={relatedPages}
       ctaHeading="Produce Assessment-Ready Certificates"
-      ctaSubheading="Join 1,000+ UK electricians creating NICEIC-compliant certificates with AI board scanning, voice test entry, and automatic validation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians creating NICEIC-compliant certificates with AI board scanning, voice test entry, and automatic validation. 7-day free trial, cancel anytime."
     />
   );
 }

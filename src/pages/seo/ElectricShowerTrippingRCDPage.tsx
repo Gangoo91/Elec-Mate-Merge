@@ -665,7 +665,7 @@ export default function ElectricShowerTrippingRCDPage() {
       faqHeading="Frequently Asked Questions About Electric Showers Tripping the RCD"
       relatedPages={relatedPages}
       ctaHeading="Diagnose and Certify Shower Installations on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for AI fault diagnosis, insulation resistance guidance, and professional certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI fault diagnosis, insulation resistance guidance, and professional certificates. 7-day free trial, cancel anytime."
     />
   );
 }

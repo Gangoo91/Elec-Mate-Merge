@@ -510,7 +510,7 @@ export default function FlatRewireCostPage() {
       faqHeading="Frequently Asked Questions About Flat Rewire Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Flat Rewires with Confidence"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for itemised quoting, on-site EIC certificates, and AI cost engineering. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for itemised quoting, on-site EIC certificates, and AI cost engineering. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -280,7 +280,7 @@ const HNCModule4Section3_1 = () => {
             points={[
               'Three layers of circuit protection: overload (Reg 433 series), fault current / short-circuit (Reg 434 series), and earth fault (Reg 411 / 415 series).',
               'Selection hierarchy: I_b ≤ I_n ≤ I_z and I_2 ≤ 1.45 × I_z. Both must be satisfied — never just one.',
-              'Automatic disconnection times depend on system earthing and circuit type — Table 41.1 (TN: 0.4&nbsp;s for ≤ 32&nbsp;A circuits) and Reg 411 series.',
+              'Automatic disconnection times depend on system earthing and circuit type — Table 41.1 (TN: 0.4 s for ≤ 32 A circuits) and Reg 411 series.',
               'BS 7671 Reg 432 requires the protective device to be of the appropriate type for the protection function (overload, short-circuit, or both).',
               'A single device can protect against both overload AND short-circuit (the usual MCB / MCCB) but separate devices are sometimes needed (e.g. motor circuits with HRC fuses + MPCB).',
             ]}
@@ -708,8 +708,8 @@ const HNCModule4Section3_1 = () => {
               'Reg 432 requires the device to be of the appropriate type for the protection function — design choice, not default.',
               'Selection hierarchy: I_b ≤ I_n ≤ I_z AND I_2 ≤ 1.45 × I_z. Both must be satisfied.',
               'MCB curves: Type B (3–5× I_n) for resistive / lighting; Type C (5–10×) for general / mixed; Type D (10–20×) for motor / transformer inrush.',
-              'Automatic disconnection times in Table 41.1: 0.4&nbsp;s for ≤ 32&nbsp;A TN circuits and ≤ 63&nbsp;A circuits with sockets; 5&nbsp;s for distribution circuits.',
-              'Z_s_max from Table 41.3 (current A4:2026 values, e.g. B32 = 1.37&nbsp;Ω) — verify on every circuit during design and confirm at testing.',
+              'Automatic disconnection times in Table 41.1: 0.4 s for ≤ 32 A TN circuits and ≤ 63 A circuits with sockets; 5 s for distribution circuits.',
+              'Z_s_max from Table 41.3 (current A4:2026 values, e.g. B32 = 1.37 Ω) — verify on every circuit during design and confirm at testing.',
               'Single device for both overload and fault (typical MCB / MCCB) is the norm; separate devices for motor circuits (HRC + MPCB) where fault current is high.',
               'Document device type, rating, curve and adiabatic check on the schedule of test results — Part 6 verification audits all of it.',
             ]}

@@ -9,6 +9,7 @@ import { supabase } from '@/integrations/supabase/client';
 import type { CompanyProfile } from '@/types/company';
 import { logger, generateRequestId } from '@/utils/logger';
 import { computeQuoteTotals } from '@/utils/quote-calculations';
+import { moveLineItemAcross } from '@/utils/lineItemReorder';
 
 // Shared calculation logic — single source of truth for all totals.
 // ELE-888 + ELE-891: per-item and per-category adjustments now applied
@@ -326,6 +327,34 @@ export const useInvoiceBuilder = (sourceQuote?: Quote, existingInvoice?: Partial
     });
   }, []);
 
+  /**
+   * ELE-1548 — move a line up or down.
+   *
+   * An invoice holds two arrays: `items` (carried over from the quote) and
+   * `additional_invoice_items` (added on the invoice). They render as separate
+   * sections, so each reorders within itself — a line cannot jump between them,
+   * which would silently change what the client is told was quoted versus
+   * added. `moveLineItemAcross` finds whichever array holds the id and leaves
+   * the other's reference untouched.
+   *
+   * No totals recalculation — order changes no total.
+   */
+  const moveInvoiceItem = useCallback((itemId: string, direction: 'up' | 'down') => {
+    setInvoice((prev) => {
+      const items = prev.items || [];
+      const additional = prev.additional_invoice_items || [];
+      const [nextItems, nextAdditional] = moveLineItemAcross(
+        [items, additional],
+        itemId,
+        direction
+      );
+      // Nothing moved (not found, or already at the end) — return prev so this
+      // does not wake the autosave for a no-op.
+      if (nextItems === items && nextAdditional === additional) return prev;
+      return { ...prev, items: nextItems, additional_invoice_items: nextAdditional };
+    });
+  }, []);
+
   const updateInvoiceSettings = useCallback((settings: Partial<InvoiceSettings>) => {
     setInvoice((prev) => {
       const updatedInvoice = {
@@ -409,6 +438,7 @@ export const useInvoiceBuilder = (sourceQuote?: Quote, existingInvoice?: Partial
     addInvoiceItem,
     updateInvoiceItem,
     removeInvoiceItem,
+    moveInvoiceItem,
     updateInvoiceSettings,
     setInvoiceNotes,
     updateInvoiceStatus,

@@ -501,7 +501,7 @@ export default function SSSMTSGuidePage() {
       faqHeading="Frequently Asked Questions About SSSTS and SMSTS"
       relatedPages={relatedPages}
       ctaHeading="Professional Site Safety Documentation"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for risk assessments, method statements, and site safety management. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for risk assessments, method statements, and site safety management. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -415,7 +415,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Generate electrical certificates on your phone with"
-          description="Join 1,000+ UK electricians using Elec-Mate for EICRs, minor works certificates, and BS 7671-compliant documentation. 7-day free trial."
+          description="Join 1,600+ UK electricians using Elec-Mate for EICRs, minor works certificates, and BS 7671-compliant documentation. 7-day free trial."
           icon={ShieldAlert}
         />
       </>
@@ -452,7 +452,7 @@ export default function SecurityAlarmElectricalFaultPage() {
       faqHeading="Frequently Asked Questions About Security Alarm Faults"
       relatedPages={relatedPages}
       ctaHeading="Generate Electrical Certificates on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EICRs, minor works certificates, and BS 7671-compliant documentation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EICRs, minor works certificates, and BS 7671-compliant documentation. 7-day free trial, cancel anytime."
     />
   );
 }

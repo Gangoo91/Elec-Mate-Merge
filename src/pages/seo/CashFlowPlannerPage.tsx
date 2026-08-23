@@ -456,7 +456,7 @@ export default function CashFlowPlannerPage() {
 
       <SEOCTASection
         heading="Take Control of Your Cash Flow"
-        subheading="Join 1,000+ UK electricians using Elec-Mate to forecast cash flow, chase invoices, and never be surprised by a cash gap again. 7-day free trial, cancel anytime."
+        subheading="Join 1,600+ UK electricians using Elec-Mate to forecast cash flow, chase invoices, and never be surprised by a cash gap again. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

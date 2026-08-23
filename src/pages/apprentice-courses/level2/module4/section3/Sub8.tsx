@@ -74,7 +74,7 @@ const checks = [
     ],
     correctIndex: 0,
     explanation:
-      'LSZH cables are specified for buildings where smoke from a fire would seriously affect evacuation — schools, hospitals, transport hubs, public buildings, theatres, large commercial. Standard PVC cables release dense black smoke and hydrogen chloride gas when burned; LSZH cables release minimal smoke and no acid gases. The decision is driven by the building&rsquo;s fire risk assessment and BS 9999 / BS 5266 / BS 5839 — not by cost (LSZH is typically 30-50 % more than PVC).',
+      'LSZH cables are specified for buildings where smoke from a fire would seriously affect evacuation — schools, hospitals, transport hubs, public buildings, theatres, large commercial. Standard PVC cables release dense black smoke and hydrogen chloride gas when burned; LSZH cables release minimal smoke and no acid gases. The decision is driven by the building’s fire risk assessment and BS 9999 / BS 5266 / BS 5839 — not by cost (LSZH is typically 30-50 % more than PVC).',
   },
 ];
 
@@ -161,7 +161,7 @@ const quizQuestions = [
     ],
     correctAnswer: 2,
     explanation:
-      'A4:2026 introduced separate requirements for escape routes (deleting the old BD2/BD3/BD4 condition references). Reg 422.3 covers cable selection in escape routes — fire-resistant cable, non-combustible supports, both for the duration required by the building&rsquo;s fire safety strategy (typically 30, 60, 90 or 120 minutes for a building with phased evacuation). This is a significant tightening from previous editions and changes the cable take-off on every commercial / HMO / public-building project.',
+      'A4:2026 introduced separate requirements for escape routes (deleting the old BD2/BD3/BD4 condition references). Reg 422.3 covers cable selection in escape routes — fire-resistant cable, non-combustible supports, both for the duration required by the building’s fire safety strategy (typically 30, 60, 90 or 120 minutes for a building with phased evacuation). This is a significant tightening from previous editions and changes the cable take-off on every commercial / HMO / public-building project.',
   },
   {
     id: 7,
@@ -175,7 +175,7 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      'BS 5839-6 (domestic and similar fire detection) sets cable requirements for the smoke alarm chain. For Grade D systems (mains-powered with backup) the cable can typically be standard PVC IF the support method is non-combustible throughout (Reg 521.10.202 from A4:2026). For higher Grade C systems (in HMOs and larger dwellings) fire-resistant cable may be required. Always check the building&rsquo;s grade requirement against BS 5839-6 before specifying.',
+      'BS 5839-6 (domestic and similar fire detection) sets cable requirements for the smoke alarm chain. For Grade D systems (mains-powered with backup) the cable can typically be standard PVC IF the support method is non-combustible throughout (Reg 521.10.202 from A4:2026). For higher Grade C systems (in HMOs and larger dwellings) fire-resistant cable may be required. Always check the building’s grade requirement against BS 5839-6 before specifying.',
   },
   {
     id: 8,
@@ -207,7 +207,7 @@ const faqs = [
   {
     question: 'Why is MICC ("Pyro") still used at all if FP200 is easier?',
     answer:
-      'Three reasons MICC persists. (1) Heritage installations — there is a huge installed base of MICC in older commercial buildings, and replacements / extensions are sometimes specified to match. (2) Highest fire-performance applications — MICC handles ~1000 °C briefly, exceeding most modern alternatives. Critical infrastructure (oil rigs, nuclear plant) sometimes specifies it for that reason. (3) Specific environments where MICC&rsquo;s naturally-waterproof construction is an advantage. For new commercial fire-alarm / emergency-lighting work, FP200 / FP400 has largely replaced MICC due to lower install cost.',
+      'Three reasons MICC persists. (1) Heritage installations — there is a huge installed base of MICC in older commercial buildings, and replacements / extensions are sometimes specified to match. (2) Highest fire-performance applications — MICC handles ~1000 °C briefly, exceeding most modern alternatives. Critical infrastructure (oil rigs, nuclear plant) sometimes specifies it for that reason. (3) Specific environments where MICC’s naturally-waterproof construction is an advantage. For new commercial fire-alarm / emergency-lighting work, FP200 / FP400 has largely replaced MICC due to lower install cost.',
   },
   {
     question: 'Can I use SWA in domestic installations?',
@@ -440,7 +440,7 @@ export default function Sub8() {
           <ConceptBlock
             title="SWA termination — gland, banjo, ferrule, terminate"
             plainEnglish="SWA termination is a sequence — strip the outer sheath inside the gland, the gland clamps onto the steel armour to give earth continuity, terminate the inner conductors per the device. The earth bond from the armour to the gland to the metal enclosure makes the SWA armour the CPC for the circuit. Get this wrong and the armour is just floating metal at potentially dangerous voltage during a fault."
-            onSite="A correctly-terminated SWA gland gives a low-resistance earth path from cable to enclosure that an MFT continuity test confirms (typically &lt;0.05 Ω end to end). A bad termination — armour not properly clamped, banjo washer missing, locknut loose — fails this test and the armour does not function as a CPC."
+            onSite="A correctly-terminated SWA gland gives a low-resistance earth path from cable to enclosure that an MFT continuity test confirms (typically <0.05 Ω end to end). A bad termination — armour not properly clamped, banjo washer missing, locknut loose — fails this test and the armour does not function as a CPC."
           >
             <p>
               The SWA termination sequence:
@@ -544,7 +544,7 @@ export default function Sub8() {
 
           <RegsCallout
             source="BS 7671:2018+A4:2026 — Regulation 422.2 + 422.3 (Conditions likely to cause fire — escape routes)"
-            clause="(Paraphrased from the regulation as introduced in A4:2026.) Where wiring systems pass through escape routes (or supply equipment in escape routes), the cable shall be selected and installed to maintain circuit integrity for the duration required by the building&rsquo;s fire safety strategy. Cables shall be of fire-resistant construction (BS EN 50200 PH30 / PH60 / PH90 / PH120 as required) and supported by non-combustible means (Reg 521.10.202)."
+            clause="(Paraphrased from the regulation as introduced in A4:2026.) Where wiring systems pass through escape routes (or supply equipment in escape routes), the cable shall be selected and installed to maintain circuit integrity for the duration required by the building’s fire safety strategy. Cables shall be of fire-resistant construction (BS EN 50200 PH30 / PH60 / PH90 / PH120 as required) and supported by non-combustible means (Reg 521.10.202)."
             meaning={
               <>
                 A4:2026 introduced separate requirements for escape routes (Reg 422.2 + 422.3),
@@ -723,7 +723,7 @@ export default function Sub8() {
               'LSZH sheath for public buildings (schools, hospitals, transport, large commercial) — premium cost justified by smoke-toxicity reduction during evacuation.',
               'A4:2026 Reg 422.2 + 422.3 introduced new escape-route cable requirements — fire-resistant cable AND non-combustible supports for the duration required by the fire-safety strategy.',
               'NEVER substitute standard PVC for fire-resistant cable. The names look similar (1.5 mm² 2-core); the fire performance is fundamentally different.',
-              'Cable selection is driven by Section 521 of BS 7671, the relevant product standards, and the building&rsquo;s fire-safety strategy. Always cross-check the design before ordering.',
+              'Cable selection is driven by Section 521 of BS 7671, the relevant product standards, and the building’s fire-safety strategy. Always cross-check the design before ordering.',
             ]}
           />
 

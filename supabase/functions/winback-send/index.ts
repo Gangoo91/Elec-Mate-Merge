@@ -135,6 +135,86 @@ serve(async (req) => {
       .in('id', userIds);
     const subscribedAgain = new Set((profiles ?? []).filter((p) => p.subscribed).map((p) => p.id));
 
+    // 2b. …and that the PERSON hasn't got an active subscription on a DIFFERENT
+    //     account. The check above only ever looked at the queued account, so
+    //     somebody with two accounts could be paying full price on one while
+    //     being chased with a discount on the other.
+    //
+    //     That is not hypothetical. Josh Green cancelled a free trial on
+    //     info@greenvoltservices.co.uk on 23 Jul and ran the full three-touch
+    //     sequence, while paying full price on the App Store the whole time
+    //     under j.greenelectrical@outlook.com. Five minutes after touch 3
+    //     landed he took the £9.99-for-life offer — so a customer who had never
+    //     churned was handed a permanent 50% cut, and the Apple subscription he
+    //     will now cancel was worth more than the Stripe one replacing it.
+    //     Shane Godliman was queued to repeat it exactly (App Store, renewing
+    //     19 Sep) and had to be held back by hand.
+    //
+    //     Matched on name because it is the only signal shared across accounts —
+    //     the emails differ by definition, or they would be the same account.
+    //     Two guards keep it conservative, because a false positive here
+    //     silently suppresses a winback we genuinely want to send:
+    //
+    //       1. Forename AND surname. A lone "Adam" or "Adrian" collides with
+    //          half the user base.
+    //       2. The name must appear on EXACTLY two accounts. The data splits
+    //          cleanly on this: every real duplicate — Josh Green, Shane
+    //          Godliman, Luke Hall, Joe Baxter, Luke Parfitt — sits on exactly
+    //          2, while "John Smith" sits on 5 and is plainly several different
+    //          people (or a placeholder). Three or more means the name is not
+    //          identifying anybody.
+    //
+    //     It therefore UNDER-catches by design: someone who typed their name
+    //     differently on the two accounts still slips through. Every catch is a
+    //     real one, which is the trade worth making.
+    const normaliseName = (n?: string | null) => (n || '').trim().toLowerCase().replace(/\s+/g, ' ');
+    const isMatchableName = (n: string) => n.length >= 5 && n.split(' ').length >= 2;
+
+    // Explicit range: PostgREST caps an unbounded select at 1000 rows, which
+    // would silently truncate the name index and quietly stop catching people.
+    const { data: allProfiles } = await supabase
+      .from('profiles')
+      .select('id, full_name, subscribed')
+      .range(0, 49999);
+
+    const accountsPerName = new Map<string, number>();
+    const activeIdsByName = new Map<string, string[]>();
+    for (const p of allProfiles ?? []) {
+      const key = normaliseName(p.full_name);
+      if (!isMatchableName(key)) continue;
+      accountsPerName.set(key, (accountsPerName.get(key) ?? 0) + 1);
+      if (p.subscribed) {
+        activeIdsByName.set(key, [...(activeIdsByName.get(key) ?? []), p.id]);
+      }
+    }
+
+    const activeElsewhere = (row: QueueRow): string[] => {
+      const key = normaliseName(row.full_name);
+      if (!isMatchableName(key)) return [];
+      if ((accountsPerName.get(key) ?? 0) !== 2) return []; // not a distinctive name
+      return (activeIdsByName.get(key) ?? []).filter((id) => id !== row.user_id);
+    };
+
+    // 2c. Honour the suppression list. This function never read it, so a
+    //     winback would still land on somebody who had unsubscribed — the one
+    //     campaign most likely to annoy the people least pleased with us. It is
+    //     also the only durable way to keep a specific address out: the
+    //     RevenueCat enqueue path checks nothing but "a recent winback row
+    //     exists", so skipping queued rows by hand is undone the next time
+    //     someone subscribes and cancels again.
+    //     Read whole and compared lower-cased, rather than filtered with
+    //     `.in()`: the filter is case-SENSITIVE, so a stored `Foo@Bar.com`
+    //     would never match a queued `foo@bar.com` and the suppression would
+    //     silently do nothing. Same explicit range as above, for the same
+    //     reason — an unbounded select stops at 1000 rows.
+    const { data: suppressedRows } = await supabase
+      .from('email_suppressions')
+      .select('email')
+      .range(0, 49999);
+    const suppressed = new Set(
+      (suppressedRows ?? []).map((s) => (s.email || '').trim().toLowerCase()).filter(Boolean)
+    );
+
     let sent = 0;
     let skipped = 0;
     let failed = 0;
@@ -150,6 +230,44 @@ serve(async (req) => {
             sent_at: new Date().toISOString(),
           })
           .eq('id', row.id);
+        skipped++;
+        continue;
+      }
+
+      // Skip — suppressed address. Either they unsubscribed, or they have been
+      // blocked deliberately.
+      if (suppressed.has((row.email || '').trim().toLowerCase())) {
+        await supabase
+          .from('winback_queue')
+          .update({
+            status: 'skipped',
+            skip_reason: 'email_suppressed',
+            sent_at: new Date().toISOString(),
+          })
+          .eq('id', row.id);
+        skipped++;
+        continue;
+      }
+
+      // Skip — same person, still paying us somewhere else. Chasing them with a
+      // discount can only cost money: the best case is they move their own
+      // subscription onto a cheaper plan.
+      const otherActive = activeElsewhere(row);
+      if (otherActive.length > 0) {
+        await supabase
+          .from('winback_queue')
+          .update({
+            status: 'skipped',
+            skip_reason: `active_subscription_on_another_account:${otherActive.join(',')}`,
+            sent_at: new Date().toISOString(),
+          })
+          .eq('id', row.id);
+        log('Skipped — active subscription on another account', {
+          userId: row.user_id,
+          email: row.email,
+          otherAccountIds: otherActive,
+          touch: row.touch_number,
+        });
         skipped++;
         continue;
       }

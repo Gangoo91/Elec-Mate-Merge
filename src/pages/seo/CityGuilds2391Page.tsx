@@ -686,7 +686,7 @@ export default function CityGuilds2391Page() {
 
       <SEOCTASection
         heading="Pass the 2391-52 with confidence"
-        subheading="Join 1,000+ UK electricians studying for qualifications and growing their careers. 7-day free trial, cancel anytime."
+        subheading="Join 1,600+ UK electricians studying for qualifications and growing their careers. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom spacer for mobile sticky CTA */}

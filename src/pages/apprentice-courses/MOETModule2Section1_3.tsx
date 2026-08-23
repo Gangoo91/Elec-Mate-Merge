@@ -7,7 +7,7 @@ import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Energy and Efficiency - MOET Module 2 Section 1.3';
 const DESCRIPTION =
-  'Comprehensive guide to electrical energy calculations, efficiency, power losses, motor efficiency classes IE1-IE4, transformer efficiency, energy auditing and cost analysis for maintenance technicians per BS 7671:2018+A3:2024.';
+  'Comprehensive guide to electrical energy calculations, efficiency, power losses, motor efficiency classes IE1-IE4, transformer efficiency, energy auditing and cost analysis for maintenance technicians per BS 7671:2018+A4:2026.';
 
 const quickCheckQuestions = [
   {

@@ -194,7 +194,7 @@ export default function AICostEngineerPage() {
             </span>
             <span className="flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" />
-              1,000+ electricians
+              1,600+ electricians
             </span>
             <span className="flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" />
@@ -490,7 +490,7 @@ export default function AICostEngineerPage() {
 
       <SEOCTASection
         heading="Quote your next job in minutes"
-        subheading="Join 1,000+ UK electricians using AI for accurate, professional cost estimates. 7-day free trial, cancel anytime."
+        subheading="Join 1,600+ UK electricians using AI for accurate, professional cost estimates. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

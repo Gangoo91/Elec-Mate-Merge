@@ -64,7 +64,7 @@ const faqs = [
 const features = [
   {
     icon: FileText,
-    title: '16 Certificate Types',
+    title: '19 Certificate Types',
     description:
       'Generate EICs, Minor Works certificates, EICRs, and more — all built to BS 7671:2018+A4:2026. Part P compliance documentation made simple.',
   },
@@ -745,7 +745,7 @@ export default function PartPBuildingRegulationsPage() {
 
       <SEOCTASection
         heading="Certify Part P Work with Confidence"
-        subheading="Join 1,000+ UK electricians producing professional certificates with Elec-Mate. 7-day free trial, cancel anytime."
+        subheading="Join 1,600+ UK electricians producing professional certificates with Elec-Mate. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

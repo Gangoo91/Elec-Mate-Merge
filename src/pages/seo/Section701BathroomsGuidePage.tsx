@@ -844,7 +844,7 @@ export default function Section701BathroomsGuidePage() {
       faqHeading="Frequently Asked Questions About Section 701 Bathroom Regulations"
       relatedPages={relatedPages}
       ctaHeading="Certify Bathroom Installations on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for digital EIC and Minor Works certificates with bathroom zone diagrams and supplementary bonding records. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for digital EIC and Minor Works certificates with bathroom zone diagrams and supplementary bonding records. 7-day free trial."
     />
   );
 }

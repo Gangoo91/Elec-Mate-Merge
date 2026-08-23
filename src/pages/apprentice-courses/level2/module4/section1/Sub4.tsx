@@ -635,7 +635,7 @@ export default function Sub4() {
           />
 
           <Scenario
-            title="Prep&apos;ing 2.5 mm&sup2; stranded for a Hager DB"
+            title="Prep’ing 2.5 mm² stranded for a Hager DB"
             situation={
               <>
                 You&apos;re terminating eight 2.5 mm&sup2; stranded cores from a kitchen ring final

@@ -218,7 +218,7 @@ export default function SWACableInstallationPage() {
                 replacement without excavation. The duct should extend at least 300 mm beyond the
                 edge of the hard surface on each side.
               </p>
-              <SEOInternalLink href="/earthing-arrangements">
+              <SEOInternalLink href="/guides/earthing-systems-tns-tncs-tt-explained">
                 Earthing arrangements for outdoor installations
               </SEOInternalLink>{' '}
               — check PME restrictions for supplies extending outside the main equipotential zone.
@@ -388,7 +388,7 @@ export default function SWACableInstallationPage() {
                 consumer unit or distribution board enclosure. At the load end, if the cable
                 terminates at a non-metallic enclosure (such as a plastic isolator or junction box),
                 an{' '}
-                <SEOInternalLink href="/earthing-arrangements">earth tail</SEOInternalLink>{' '}
+                <SEOInternalLink href="/guides/earthing-systems-tns-tncs-tt-explained">earth tail</SEOInternalLink>{' '}
                 must be connected from the gland earth tag to the circuit earth terminal.
               </p>
             </>
@@ -592,7 +592,7 @@ export default function SWACableInstallationPage() {
           category: 'Guide',
         },
         {
-          href: '/earthing-arrangements',
+          href: '/guides/earthing-systems-tns-tncs-tt-explained',
           title: 'Earthing Arrangements',
           description: 'TN-S, TN-C-S, TT systems and PME restrictions.',
           icon: ShieldCheck,
@@ -628,7 +628,7 @@ export default function SWACableInstallationPage() {
         },
       ]}
       ctaHeading="Size and Certify SWA Installations"
-      ctaSubheading="Elec-Mate's cable sizing calculator, AI installer, and digital certificates cover every SWA cable job. Join 1,000+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate's cable sizing calculator, AI installer, and digital certificates cover every SWA cable job. Join 1,600+ UK electricians. 7-day free trial."
     />
   );
 }

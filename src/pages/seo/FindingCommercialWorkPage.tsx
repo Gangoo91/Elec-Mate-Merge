@@ -506,7 +506,7 @@ export default function FindingCommercialWorkPage() {
       faqHeading="Frequently Asked Questions About Commercial Electrical Work"
       relatedPages={relatedPages}
       ctaHeading="Manage Commercial Work Professionally"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional documentation that commercial clients expect. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional documentation that commercial clients expect. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -558,7 +558,7 @@ export default function MockExamsElectricianPage() {
       relatedPages={relatedPages}
       embeddedTool={<MockExamIndexLinks />}
       ctaHeading="Start practising with unlimited mock exams today"
-      ctaSubheading="Join 1,000+ UK electricians preparing for their exams with Elec-Mate. AI-powered mock exams that adapt to your weak areas, flashcards with spaced repetition, and structured study courses. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians preparing for their exams with Elec-Mate. AI-powered mock exams that adapt to your weak areas, flashcards with spaced repetition, and structured study courses. 7-day free trial, cancel anytime."
     />
   );
 }

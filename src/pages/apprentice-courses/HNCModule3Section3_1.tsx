@@ -302,7 +302,7 @@ const HNCModule3Section3_1 = () => {
               'You will work with RMS values for every power calculation, voltage drop sum and cable rating on a building services project — RMS is the equivalent DC heating value.',
               'You can convert peak (325 V) ↔ RMS (230 V) ↔ peak-to-peak (650 V) ↔ half-cycle average (207 V) for the UK 230 V single-phase supply.',
               'You select true-RMS instruments for any circuit feeding LED lighting, VSDs or switch-mode loads — average-responding meters lie on distorted waveforms.',
-              'You specify equipment insulation against peak voltage with margin (400 V class for 230 V RMS), not RMS — switching transients can reach 2&ndash;3&times; nominal peak.',
+              'You specify equipment insulation against peak voltage with margin (400 V class for 230 V RMS), not RMS — switching transients can reach 2–3× nominal peak.',
             ]}
           />
 
@@ -318,7 +318,7 @@ const HNCModule3Section3_1 = () => {
                 for the voltage-drop calculation in Appendix 4.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026, Reg 525.1; BS EN 50160 (supply voltage characteristics, &plusmn;10 %)"
+            cite="Source: BS 7671:2018+A4:2026, Reg 525.1; BS EN 50160 (supply voltage characteristics, ±10 %)"
           />
 
           <LearningOutcomes
@@ -674,12 +674,12 @@ const HNCModule3Section3_1 = () => {
 
           <KeyTakeaways
             points={[
-              'RMS = peak / &radic;2 = peak &times; 0.707 — the value that produces the same heating effect as DC of the same magnitude.',
+              'RMS = peak / √2 = peak × 0.707 — the value that produces the same heating effect as DC of the same magnitude.',
               'UK single-phase: 230 V RMS &harr; 325 V peak &harr; 650 V peak-to-peak &harr; 207 V half-cycle average.',
               'UK three-phase line: 400 V RMS &harr; 566 V peak — equipment insulation must withstand the 566 V peak with margin.',
               'Form factor 1.11 (RMS/avg) and crest factor 1.414 (peak/RMS) confirm a pure sine — deviations indicate harmonic distortion.',
-              'P = V&sup2;/R works directly with RMS values — never use peak for power, never use full-cycle average (which is zero).',
-              'Half-cycle average (0.637 &times; peak) only applies to rectified waveforms — used in DC bus calculations for VSD inputs.',
+              'P = V²/R works directly with RMS values — never use peak for power, never use full-cycle average (which is zero).',
+              'Half-cycle average (0.637 × peak) only applies to rectified waveforms — used in DC bus calculations for VSD inputs.',
               'True-RMS meters mandatory for LED, VSD, SMPS and any non-linear load — average-responding meters give wrong readings on distorted waveforms.',
               'Building Regs Part L energy meters log true RMS power — this is your source of truth for kWh consumption regardless of waveform shape.',
             ]}

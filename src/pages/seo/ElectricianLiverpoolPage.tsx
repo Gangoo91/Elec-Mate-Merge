@@ -581,7 +581,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Liverpool electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
+          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -619,7 +619,7 @@ export default function ElectricianLiverpoolPage() {
       faqHeading="Frequently Asked Questions About Electricians in Liverpool"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Liverpool Electricians"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Liverpool's terraced housing, HMO market, and dock area regeneration. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Liverpool's terraced housing, HMO market, and dock area regeneration. 7-day free trial."
     />
   );
 }

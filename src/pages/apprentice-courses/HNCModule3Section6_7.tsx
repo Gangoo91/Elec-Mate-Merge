@@ -278,10 +278,10 @@ const HNCModule3Section6_7 = () => {
 
           <TLDR
             points={[
-              'You design Solar PV to BS 7671 Section 712 + IEC 62548; submit G98 (single phase &le; 16 A) or G99 (everything larger) connection application; verify export limitation under G100 if needed.',
+              'You design Solar PV to BS 7671 Section 712 + IEC 62548; submit G98 (single phase ≤ 16 A) or G99 (everything larger) connection application; verify export limitation under G100 if needed.',
               'You size BESS (battery energy storage) for arbitrage / peak-shaving / backup duty; specify to BS EN 62619 (cells) + BS EN 62933 (system) + IEC 62443 (cyber security).',
               'You design EV charging to BS 7671 Section 722 + Open Charge Point Protocol (OCPP); apply BS 7671 A4:2026 PEN-fault protection on outdoor PME-supplied chargers.',
-              'You document the integrated renewables + storage + EV scheme in the building&rsquo;s log book + lodge the connection agreement with the DNO &mdash; both regulatory and commercial deliverables.',
+              'You document the integrated renewables + storage + EV scheme in the building’s log book + lodge the connection agreement with the DNO — both regulatory and commercial deliverables.',
             ]}
           />
 
@@ -1006,7 +1006,7 @@ const HNCModule3Section6_7 = () => {
           <SectionRule />
 
           <Scenario
-            title="School with PV + BESS + EV charging &mdash; integrated G99 connection"
+            title="School with PV + BESS + EV charging — integrated G99 connection"
             situation={
               <>
                 A secondary school is adding 200 kWp rooftop solar PV + 250 kWh / 100 kW
@@ -1051,13 +1051,13 @@ const HNCModule3Section6_7 = () => {
           <KeyTakeaways
             points={[
               'Solar PV: BS 7671 Section 712 (DC isolation, string V, labelling) + IEC 62548 (system design).',
-              'G98: micro-generation &le; 16 A single-phase, fit-and-inform DNO; G99: anything larger, prior connection agreement.',
-              'G100: export limitation scheme &mdash; allows higher generation behind a cap that prevents export above DNO-agreed limit.',
+              'G98: micro-generation ≤ 16 A single-phase, fit-and-inform DNO; G99: anything larger, prior connection agreement.',
+              'G100: export limitation scheme — allows higher generation behind a cap that prevents export above DNO-agreed limit.',
               'BESS battery storage: BS EN 62619 (cells), BS EN 62933 (system), thermal management + fire detection essential.',
               'EV charging: BS 7671 Section 722 + IEC 61851; A4:2026 tightened PEN-fault protection for PME-supplied outdoor chargers.',
               'OCPP (Open Charge Point Protocol): vendor-neutral EV management protocol; OSCP for grid-side smart charging.',
-              'Microgrid: islandable subsystem with own generation + storage + load &mdash; needs synchronisation, black-start, and DNO interface protection.',
-              'Integrated PV + BESS + EV on common BMS dispatch &mdash; the standard pattern for school / commercial decarbonisation projects in 2026 onwards.',
+              'Microgrid: islandable subsystem with own generation + storage + load — needs synchronisation, black-start, and DNO interface protection.',
+              'Integrated PV + BESS + EV on common BMS dispatch — the standard pattern for school / commercial decarbonisation projects in 2026 onwards.',
             ]}
           />
 

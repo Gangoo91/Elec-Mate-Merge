@@ -67,7 +67,7 @@ const guideCollections = [
       { href: '/bs7671-observation-codes', label: 'BS 7671 Observation Codes' },
       { href: '/part-p-building-regulations', label: 'Part P Building Regulations' },
       { href: '/consumer-unit-regulations', label: 'Consumer Unit Regulations' },
-      { href: '/earthing-arrangements', label: 'Earthing Arrangements' },
+      { href: '/guides/earthing-systems-tns-tncs-tt-explained', label: 'Earthing Arrangements' },
       { href: '/guides/special-locations-part-7-bs-7671', label: 'Special Locations (Part 7)' },
       { href: '/guides/appendix-4-tables-bs-7671', label: 'Appendix 4 Tables' },
     ],
@@ -284,7 +284,7 @@ export default function GuidesHubPage() {
           <p className="text-white leading-relaxed mb-8 max-w-4xl">
             If you need a quick answer on{' '}
             <SEOInternalLink href="/part-p-building-regulations">Part P</SEOInternalLink>,{' '}
-            <SEOInternalLink href="/earthing-arrangements">
+            <SEOInternalLink href="/guides/earthing-systems-tns-tncs-tt-explained">
               earthing arrangements
             </SEOInternalLink>
             ,{' '}

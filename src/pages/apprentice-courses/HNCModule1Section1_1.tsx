@@ -872,11 +872,11 @@ const HNCModule1Section1_1 = () => {
             points={[
               'HSWA 1974 is enabling legislation — it sets duties, the regulations made under it (EAWR, CDM, COSHH, PUWER) set the technical detail.',
               'Section 2 places five core duties on the employer: safe plant/systems, safe handling, ITIS (information, instruction, training, supervision), safe place, welfare.',
-              'Section 3 extends duties to non-employees affected by the work — a critical clause when you are on someone else&rsquo;s site or designing an occupied refurbishment.',
+              'Section 3 extends duties to non-employees affected by the work — a critical clause when you are on someone else’s site or designing an occupied refurbishment.',
               'Section 7 puts a personal duty of care on every employee; Section 8 prohibits interference with safety provisions, with personal criminal liability under Section 36.',
               'SFARP requires a documented balance — risk vs sacrifice. The burden of proof sits with the duty-holder, not the regulator.',
               'HSE enforcement runs from FFI (£163/hr) through Improvement Notices (21-day minimum) and Prohibition Notices (immediate effect) to unlimited fines and 2-year custodial sentences.',
-              'Employers with 5 or more employees must have a written H&S policy under s.2(3) — make sure you can find your firm&rsquo;s before any job starts.',
+              'Employers with 5 or more employees must have a written H&S policy under s.2(3) — make sure you can find your firm’s before any job starts.',
               'On a building services project HSWA underpins your CDM file, your method statements, your permits and your EICs — every layer of paperwork traces back to the Act.',
             ]}
           />

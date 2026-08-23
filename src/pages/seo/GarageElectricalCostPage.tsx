@@ -744,7 +744,7 @@ export default function GarageElectricalCostPage() {
       faqHeading="Frequently Asked Questions About Garage Electrical Installation Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Your Garage Electrical Installation in Minutes"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to create professional garage electrical quotes with armoured cable, trenching, and EV charger options. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to create professional garage electrical quotes with armoured cable, trenching, and EV charger options. 7-day free trial, cancel anytime."
     />
   );
 }

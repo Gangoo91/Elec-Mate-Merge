@@ -616,7 +616,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify V2G charger installations"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
+          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
           icon={Car}
         />
       </>
@@ -653,7 +653,7 @@ export default function V2GInstallationGuidePage() {
       faqHeading="Frequently Asked Questions About V2G Installation"
       relatedPages={relatedPages}
       ctaHeading="Size Cables and Certify V2G Installations on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates for V2G charger installations. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates for V2G charger installations. 7-day free trial, cancel anytime."
     />
   );
 }

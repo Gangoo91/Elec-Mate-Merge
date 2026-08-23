@@ -567,7 +567,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Record test results, certify installations, find faults"
-          description="Join 1,000+ UK electricians using Elec-Mate to record multimeter readings, complete EIC and EICR certificates, and get AI fault-finding support on site."
+          description="Join 1,600+ UK electricians using Elec-Mate to record multimeter readings, complete EIC and EICR certificates, and get AI fault-finding support on site."
           icon={Wrench}
         />
       </>
@@ -604,7 +604,7 @@ export default function MultimeterGuideElectriciansPage() {
       faqHeading="Frequently Asked Questions About Multimeters for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Record Multimeter Readings and Certify Installations on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site test result entry, EIC and EICR certification, and AI fault-finding support. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site test result entry, EIC and EICR certification, and AI fault-finding support. 7-day free trial, cancel anytime."
     />
   );
 }

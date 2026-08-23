@@ -304,7 +304,7 @@ const HNCModule2Section6_5 = () => {
               'You coordinate HVAC, electrical, public health, fire, security and lifts via a clear interface schedule and BIM clash-detection cycle.',
               'You apply BSRIA BG49/BG50 commissioning and CIBSE Commissioning Codes A–C as the contractual standards for AHU, water and lighting commissioning.',
               'You drive Soft Landings (BSRIA BG54) — the framework that bridges design intent, commissioning, handover and 3-year aftercare.',
-              'You produce a building log book per Approved Document L — the as-built operational manual the FM team will use for the building&rsquo;s life.',
+              'You produce a building log book per Approved Document L — the as-built operational manual the FM team will use for the building’s life.',
             ]}
           />
 

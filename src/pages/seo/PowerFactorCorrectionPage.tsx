@@ -689,7 +689,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Certificate PFC installations and quote industrial work"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, power quality test records, industrial quoting, and instant PDF export."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion, power quality test records, industrial quoting, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -727,7 +727,7 @@ export default function PowerFactorCorrectionPage() {
       faqHeading="Frequently Asked Questions About Power Factor Correction"
       relatedPages={relatedPages}
       ctaHeading="Complete PFC Installation EICs on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site electrical installation certification, commissioning test records, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site electrical installation certification, commissioning test records, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

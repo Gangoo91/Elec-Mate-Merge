@@ -636,7 +636,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win and manage framework contracts with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, RAMS generation, H&S documentation, and AI business support."
+          description="Join 1,600+ UK electricians using Elec-Mate for professional quoting, RAMS generation, H&S documentation, and AI business support."
           icon={Building2}
         />
       </>
@@ -673,7 +673,7 @@ export default function ElectricalFrameworkContractsPage() {
       faqHeading="Frequently Asked Questions About Electrical Framework Contracts"
       relatedPages={relatedPages}
       ctaHeading="Build the Documentation to Win Framework Contracts"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for professional quoting, RAMS generation, and business management. Build the H&S and commercial documentation library that public sector clients require. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for professional quoting, RAMS generation, and business management. Build the H&S and commercial documentation library that public sector clients require. 7-day free trial, cancel anytime."
     />
   );
 }

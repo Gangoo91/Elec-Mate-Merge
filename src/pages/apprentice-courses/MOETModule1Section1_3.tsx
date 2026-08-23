@@ -456,7 +456,7 @@ const MOETModule1Section1_3 = () => {
                       </td>
                     </tr>
                     <tr>
-                      <td className="border border-white/10 px-3 py-2">BS 7671:2018+A3:2024</td>
+                      <td className="border border-white/10 px-3 py-2">BS 7671:2018+A4:2026</td>
                       <td className="border border-white/10 px-3 py-2">
                         Section 537 — requirements for isolating and switching devices
                       </td>
@@ -1194,7 +1194,7 @@ const MOETModule1Section1_3 = () => {
                   <li>HSWA 1974 — Safe systems of work</li>
                   <li>EAWR 1989 — Regs 12, 13 (isolation, dead working)</li>
                   <li>PUWER 1998 — Regs 19-22 (energy isolation)</li>
-                  <li>BS 7671:2018+A3:2024 — Section 537</li>
+                  <li>BS 7671:2018+A4:2026 — Section 537</li>
                   <li>HSG85 — Safe working practices</li>
                 </ul>
               </div>

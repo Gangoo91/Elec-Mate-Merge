@@ -768,7 +768,7 @@ const HNCModule1Section3_5 = () => {
           <KeyTakeaways
             points={[
               'MHSWR Reg 8 makes emergency procedures a statutory duty for foreseeable serious and imminent danger.',
-              'Site procedures integrate with the building&rsquo;s fire strategy and the principal contractor&rsquo;s evacuation plan — never stand alone.',
+              'Site procedures integrate with the building’s fire strategy and the principal contractor’s evacuation plan — never stand alone.',
               'Foreseeable emergencies on building services work: fire, electrical shock, confined-space casualty, flood, structural collapse, gas release.',
               'Each procedure names: trigger, call sequence, muster point, roles, rescue method, communication channel.',
               'Confined Spaces Regulations 1997 require a rescue plan before entry — not after a casualty.',

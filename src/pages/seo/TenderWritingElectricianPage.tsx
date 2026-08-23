@@ -653,7 +653,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win more commercial electrical tenders with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, RAMS generation, and business management."
+          description="Join 1,600+ UK electricians using Elec-Mate for professional quoting, RAMS generation, and business management."
           icon={Briefcase}
         />
       </>
@@ -690,7 +690,7 @@ export default function TenderWritingElectricianPage() {
       faqHeading="Frequently Asked Questions About Electrical Tender Writing"
       relatedPages={relatedPages}
       ctaHeading="Build Professional Electrical Tenders with Elec-Mate"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for structured quoting, RAMS generation, and business management tools. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for structured quoting, RAMS generation, and business management tools. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -114,6 +114,16 @@ const GUIDES: ToolDef[] = [
     link: '/apprentice/on-job-tools/supervisor-knowledge',
     tone: 'purple',
   },
+  {
+    number: '10',
+    eyebrow: 'Reference',
+    title: 'Electrical symbols chart',
+    description:
+      'IEC 60617 circuit and installation symbols — the full chart for drawings and coursework.',
+    meta: 'IEC 60617',
+    link: '/guides/electrical-symbols-chart',
+    tone: 'emerald',
+  },
 ];
 
 const PRACTICE: ToolDef[] = [

@@ -307,7 +307,7 @@ const HNCModule1Section3_1 = () => {
 
           <TLDR
             points={[
-              'You will know the three required parts of a safety policy under HSWA s.2(3) — statement of intent, organisation, arrangements — and find them in your firm&rsquo;s policy on day one.',
+              'You will know the three required parts of a safety policy under HSWA s.2(3) — statement of intent, organisation, arrangements — and find them in your firm’s policy on day one.',
               'You can map roles up the chain (board, director, manager, supervisor, operative) and explain who has which named duty.',
               'You apply HSG65 (Plan-Do-Check-Act) as the framework that links policy to practice.',
               'You recognise when a policy is unfit for purpose — out-of-date, unsigned, generic, untranslated for the workforce — and trigger revision.',
@@ -747,8 +747,8 @@ const HNCModule1Section3_1 = () => {
               'Policy must be brought to the notice of every employee — printed, posted, briefed, signed-for.',
               'Review trigger: change of organisation, change of activity, change of legislation, after any incident, and at least annually.',
               'Roles up the chain: board accountability, director assignment, manager ownership, supervisor delivery, operative compliance.',
-              'Worker consultation under HSWA s.2(6) and Safety Reps Regulations 1977 is part of the &ldquo;arrangements&rdquo; section.',
-              'A generic, off-the-shelf policy is presumed inadequate — it must reflect the firm&rsquo;s actual activities and structure.',
+              'Worker consultation under HSWA s.2(6) and Safety Reps Regulations 1977 is part of the “arrangements” section.',
+              'A generic, off-the-shelf policy is presumed inadequate — it must reflect the firm’s actual activities and structure.',
             ]}
           />
 

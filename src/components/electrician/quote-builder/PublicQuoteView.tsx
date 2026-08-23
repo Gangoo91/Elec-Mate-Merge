@@ -466,8 +466,21 @@ const PublicQuoteView = () => {
     }).format(amount);
   };
 
-  const groupItemsByCategory = (items: QuoteItem[]) => {
-    const grouped = items.reduce(
+  /**
+   * Group for display, preserving the order the electrician put the lines in.
+   *
+   * ELE-1548 — this used to sort each category most-expensive-first. That made
+   * the new reorder controls do nothing on the surface that matters most: the
+   * builder and the PDF would show the chosen order, and the page the client
+   * actually opens would show price order. `reduce` walks the array in order,
+   * so simply not re-sorting is the fix.
+   *
+   * It also settles a disagreement that predates the reorder work — the PDF
+   * (`generate-pdf-monkey`) has always mapped `items` in array order with no
+   * sort, so the PDF and this page were already showing lines differently.
+   */
+  const groupItemsByCategory = (items: QuoteItem[]) =>
+    items.reduce(
       (acc, item) => {
         if (!acc[item.category]) {
           acc[item.category] = [];
@@ -477,13 +490,6 @@ const PublicQuoteView = () => {
       },
       {} as Record<string, QuoteItem[]>
     );
-
-    Object.keys(grouped).forEach((category) => {
-      grouped[category].sort((a, b) => b.totalPrice - a.totalPrice);
-    });
-
-    return grouped;
-  };
 
   // Loading state — match shared design (light slate body, white card)
   if (loading) {

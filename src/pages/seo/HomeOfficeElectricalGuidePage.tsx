@@ -635,7 +635,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Certificate home office and garden office work with"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, instant PDF export, and same-day quoting."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion, instant PDF export, and same-day quoting."
           icon={FileCheck2}
         />
       </>
@@ -672,7 +672,7 @@ export default function HomeOfficeElectricalGuidePage() {
       faqHeading="Frequently Asked Questions About Home Office Electrical Installations"
       relatedPages={relatedPages}
       ctaHeading="Certificate Home Office Electrical Work on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion with AI assistance, instant PDF export, and same-day quoting. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion with AI assistance, instant PDF export, and same-day quoting. 7-day free trial, cancel anytime."
     />
   );
 }

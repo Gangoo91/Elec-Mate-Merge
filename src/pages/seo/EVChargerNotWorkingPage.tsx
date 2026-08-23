@@ -504,7 +504,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Certificate EV charger installations with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate to certificate EV charger installations, complete EICRs, and generate BS 7671-compliant documentation on site."
+          description="Join 1,600+ UK electricians using Elec-Mate to certificate EV charger installations, complete EICRs, and generate BS 7671-compliant documentation on site."
           icon={Zap}
         />
       </>
@@ -541,7 +541,7 @@ export default function EVChargerNotWorkingPage() {
       faqHeading="Frequently Asked Questions About EV Charger Faults"
       relatedPages={relatedPages}
       ctaHeading="Certificate EV Charger Installations on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EV charger installation certificates, EICRs, and BS 7671-compliant documentation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EV charger installation certificates, EICRs, and BS 7671-compliant documentation. 7-day free trial, cancel anytime."
     />
   );
 }

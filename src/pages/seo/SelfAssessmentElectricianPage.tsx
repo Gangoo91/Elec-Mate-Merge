@@ -528,7 +528,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your electrical business finances with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, invoicing, and job records."
+          description="Join 1,600+ UK electricians using Elec-Mate for professional quoting, invoicing, and job records."
           icon={FileText}
         />
       </>
@@ -565,7 +565,7 @@ export default function SelfAssessmentElectricianPage() {
       faqHeading="Frequently Asked Questions About Self-Assessment for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Keep Your Income Records Organised All Year"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for professional invoicing and job records. Hand your accountant a complete income record at self-assessment time — no scrambling in January. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for professional invoicing and job records. Hand your accountant a complete income record at self-assessment time — no scrambling in January. 7-day free trial."
     />
   );
 }

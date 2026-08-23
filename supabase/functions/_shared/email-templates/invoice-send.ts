@@ -28,6 +28,18 @@ export interface InvoiceSendData {
    * part-paid customer for the full total again.
    */
   amountPaid?: number;
+  /**
+   * ELE-1571 — third-party grant (OZEV and similar) off the VAT-inclusive
+   * total. The customer only owes `total − grant`, so this MUST come off the
+   * balance: the balance drives the subject line, the "Amount due" hero and
+   * the Pay button. `create-invoice-payment-link` is already grant-aware, so
+   * without this the button reads "Pay £1,000 now" and then charges £500.
+   *
+   * The "Invoice total" row deliberately keeps the FULL figure — VAT is still
+   * due on the whole value of the supply; only the customer's share falls.
+   */
+  grantAmount?: number;
+  grantLabel?: string;
   subtotal?: number | null;
   vatAmount?: number | null;
   invoiceDate?: string | Date | null;
@@ -75,8 +87,15 @@ const formatDateLong = (d: string | Date | null | undefined): string => {
 export function buildInvoiceSendEmail(data: InvoiceSendData): InvoiceSendEmail {
   const totalStr = formatGbp(data.total);
   const amountPaid = Math.max(0, Number(data.amountPaid) || 0);
-  const isPartiallyPaid = amountPaid > 0 && amountPaid < (Number(data.total) || 0);
-  const balance = Math.max(0, (Number(data.total) || 0) - amountPaid);
+  // ELE-1571 — clamped to the total so a stale or oversized grant can never
+  // produce a negative balance or a £0 "pay now".
+  const grantAmount = Math.min(
+    Math.max(0, Number(data.grantAmount) || 0),
+    Math.max(0, Number(data.total) || 0)
+  );
+  const customerOwes = Math.max(0, (Number(data.total) || 0) - grantAmount);
+  const isPartiallyPaid = amountPaid > 0 && amountPaid < customerOwes;
+  const balance = Math.max(0, customerOwes - amountPaid);
   const balanceStr = formatGbp(balance);
   const paidStr = formatGbp(amountPaid);
   const dueDateStr = formatDateLong(data.dueDate);
@@ -116,8 +135,18 @@ export function buildInvoiceSendEmail(data: InvoiceSendData): InvoiceSendEmail {
       value: `<span style="font-family:'SF Mono',Menlo,Consolas,monospace;">${data.invoiceNumber}</span>`,
     },
   ];
-  if (isPartiallyPaid) {
+  // Show the full total whenever the amount due differs from it — otherwise a
+  // customer sees only the reduced figure and cannot tell why.
+  if (isPartiallyPaid || grantAmount > 0) {
     meta.push({ label: 'Invoice total', value: totalStr });
+  }
+  if (grantAmount > 0) {
+    meta.push({
+      label: data.grantLabel?.trim() || 'Grant',
+      value: `−${formatGbp(grantAmount)}`,
+    });
+  }
+  if (isPartiallyPaid) {
     meta.push({ label: 'Received', value: paidStr });
   }
   if (dueDateStr) meta.push({ label: 'Due', value: dueDateStr });

@@ -744,7 +744,7 @@ const HNCModule2Section5_2 = () => {
               'Internal gains: people, equipment, lighting — each split sensible/latent (people only).',
               'Office occupant: 75 W sensible + 55 W latent ≈ 130 W total per person at light work.',
               'Equipment gain ≈ installed power × diversity factor (typically 0.4–0.6 for office IT).',
-              'Lighting gain = installed lighting power × usage factor (post-LED retrofit, often &lt; 5 W/m²).',
+              'Lighting gain = installed lighting power × usage factor (post-LED retrofit, often < 5 W/m²).',
               'Fabric loss Q = U × A × ΔT for each element; sum over the envelope.',
               'Ventilation loss Q = 0.33 × n × V × ΔT (ach × volume × ΔT × 0.33).',
               'Apply infiltration factor for naturally ventilated buildings (typical 0.5–1.0 ach winter).',

@@ -52,7 +52,7 @@ export default function ElectricianAppForiPhonePage() {
       heroFeaturePills={[
         { icon: Smartphone, label: 'Native iOS' },
         { icon: Fingerprint, label: 'Face ID' },
-        { icon: FileCheck2, label: '16 Certificate Types' },
+        { icon: FileCheck2, label: '19 Certificate Types' },
         { icon: WifiOff, label: 'Full Offline Mode' },
       ]}
       readingTime={10}
@@ -399,7 +399,7 @@ export default function ElectricianAppForiPhonePage() {
         },
         {
           icon: FileCheck2,
-          title: '16 Certificate Types',
+          title: '19 Certificate Types',
           description:
             'EICR, EIC, Minor Works, EV Charger, Solar PV, Fire Alarm, Emergency Lighting, and PAT. All optimised for iPhone.',
         },

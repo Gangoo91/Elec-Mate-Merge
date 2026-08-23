@@ -529,7 +529,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Birmingham electrical business"
-          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Complete EICRs and EICs on site…"
+          description="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, and job management. Complete EICRs and EICs on site…"
           icon={MapPin}
         />
       </>
@@ -567,7 +567,7 @@ export default function ElectricianBirminghamPage() {
       faqHeading="Frequently Asked Questions About Electricians in Birmingham"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Certificates on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site and send instant PDFs to Birmingham landlords and letting agents. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site and send instant PDFs to Birmingham landlords and letting agents. 7-day free trial."
     />
   );
 }

@@ -547,7 +547,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your electrical partnership with Elec-Mate"
-          description="Job scheduling, electrical certificates, quoting, and invoicing for two-person electrical partnerships. Join 1,000+ UK electricians using Elec-Mate."
+          description="Job scheduling, electrical certificates, quoting, and invoicing for two-person electrical partnerships. Join 1,600+ UK electricians using Elec-Mate."
           icon={Building2}
         />
       </>
@@ -584,7 +584,7 @@ export default function ElectricalBusinessPartnershipPage() {
       faqHeading="Frequently Asked Questions About Electrical Business Partnerships"
       relatedPages={relatedPages}
       ctaHeading="Manage your electrical partnership with Elec-Mate"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for job scheduling, electrical certificates, quoting, and invoicing. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for job scheduling, electrical certificates, quoting, and invoicing. 7-day free trial, cancel anytime."
     />
   );
 }

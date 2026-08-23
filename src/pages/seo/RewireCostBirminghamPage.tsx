@@ -51,7 +51,7 @@ const keyTakeaways = [
   'Victorian back-to-back terraces in the inner ring — Handsworth, Saltley, Sparkbrook, and Digbeth — present the same challenges as any Victorian property: lath-and-plaster walls, limited void access, and ad-hoc wiring additions over the decades.',
   'Birmingham rewires are notifiable under Part P of the Building Regulations. Use a registered electrician (NICEIC, NAPIT, or ELECSA) to self-certify and avoid costly building control inspection fees.',
   'An Electrical Installation Certificate (EIC) is mandatory on completion, documenting design, construction, inspection, and testing to BS 7671:2018+A4:2026.',
-  'This guide has been reviewed by NICEIC-registered electricians. All regulatory references reflect BS 7671:2018+A4:2026, the current edition of the wiring regulations.',
+  'Written and reviewed by Andrew Moore, founder of Elec-Mate — a qualified electrician (18th Edition, C&G 2391 inspection and testing). All regulatory references reflect BS 7671:2018+A4:2026, the current edition of the wiring regulations.',
 ];
 
 const faqs = [
@@ -587,7 +587,7 @@ export default function RewireCostBirminghamPage() {
       faqHeading="Frequently Asked Questions About Rewire Costs in Birmingham"
       relatedPages={relatedPages}
       ctaHeading="Quote Birmingham Rewires with Real Trade Pricing"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for AI-powered rewire quoting, on-site EIC certificates, and project management. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI-powered rewire quoting, on-site EIC certificates, and project management. 7-day free trial."
     />
   );
 }

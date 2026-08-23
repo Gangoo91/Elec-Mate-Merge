@@ -827,7 +827,7 @@ const HNCModule1Section4_2 = () => {
               'Competence matrix: name × task × evidence × verifier × review date — the live record.',
               'Currency matters — BS 7671 amendments (A4:2026), new technologies (EV, PV, BESS) require regular refresh.',
               'Supervised work and signed log books are the route from instructed to skilled person.',
-              'Document the assessment — &ldquo;I judged him competent&rdquo; is not enough; show the reasoning.',
+              'Document the assessment — “I judged him competent” is not enough; show the reasoning.',
             ]}
           />
 

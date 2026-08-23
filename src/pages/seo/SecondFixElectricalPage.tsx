@@ -454,7 +454,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Complete EIC certificates on your phone"
-          description="Join 1,000+ UK electricians creating professional EIC certificates with Elec-Mate. AI board scanner, voice test entry, schedule of test results…"
+          description="Join 1,600+ UK electricians creating professional EIC certificates with Elec-Mate. AI board scanner, voice test entry, schedule of test results…"
           icon={FileCheck2}
         />
       </>
@@ -600,7 +600,7 @@ export default function SecondFixElectricalPage() {
       faqHeading="Frequently Asked Questions About Second Fix Electrical"
       relatedPages={relatedPages}
       ctaHeading="Complete Certificates On Site, Not At Your Desk"
-      ctaSubheading="Elec-Mate lets you test, certify, and invoice in a single visit. Voice test entry, AI board scanning, professional EIC certificates, and instant delivery. Join 1,000+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate lets you test, certify, and invoice in a single visit. Voice test entry, AI board scanning, professional EIC certificates, and instant delivery. Join 1,600+ UK electricians. 7-day free trial."
     />
   );
 }

@@ -303,7 +303,7 @@ const HNCModule2Section6_2 = () => {
             points={[
               'You construct a whole-building Sankey-style energy balance and use it to spot the dominant loss/gain path before specifying retrofit measures.',
               'You benchmark performance against CIBSE TM46 by use-class (kWh/m²·year electricity and fossil fuel) and explain divergence quantitatively.',
-              'You apply CIBSE TM54 to predict operational energy at design stage — the rigorous answer to &ldquo;what will it actually use, not what does the EPC say&rdquo;.',
+              'You apply CIBSE TM54 to predict operational energy at design stage — the rigorous answer to “what will it actually use, not what does the EPC say”.',
               'You weather-normalise meter data using degree-days and calibrate a building energy model to close the performance gap.',
             ]}
           />

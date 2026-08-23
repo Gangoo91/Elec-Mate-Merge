@@ -590,7 +590,7 @@ export default function SmokeDetectorBeepingPage() {
       faqHeading="Frequently Asked Questions About Smoke Detector Beeping"
       relatedPages={relatedPages}
       ctaHeading="Document Fire Detection Systems on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for fire alarm certificates, BS 5839-6 compliance, and professional documentation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for fire alarm certificates, BS 5839-6 compliance, and professional documentation. 7-day free trial, cancel anytime."
     />
   );
 }

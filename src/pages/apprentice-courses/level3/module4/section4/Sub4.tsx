@@ -500,7 +500,7 @@ export default function Sub4() {
               "Recommend rewire when cable type at end of life, multiple EICR codes, change of use, building work happening.",
               "Engineering compromise must satisfy BS 7671. Below-spec compromise is corner-cutting, not engineering.",
               "Customer communication: plain English + cost + safety implication. Three options with trade-offs lets customer choose.",
-              "Escalate to supervisor on cost &gt; £500, Code 1/2 EICR coding, engineering compromise borderline, customer dispute, specialist work.",
+              "Escalate to supervisor on cost > £500, Code 1/2 EICR coding, engineering compromise borderline, customer dispute, specialist work.",
               "Customer education prevents 60–80% of behaviour-related recurrent faults. Brief verbal + written summary at every job completion.",
             ]}
           />

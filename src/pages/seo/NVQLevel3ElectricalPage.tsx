@@ -734,7 +734,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Start your electrical business with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site certifying, professional quoting, and business management from their phone."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site certifying, professional quoting, and business management from their phone."
           icon={Zap}
         />
       </>
@@ -776,7 +776,7 @@ export default function NVQLevel3ElectricalPage() {
       faqHeading="Frequently Asked Questions About the NVQ Level 3 Electrical"
       relatedPages={relatedPages}
       ctaHeading="Certify and Quote Professionally with Elec-Mate"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EIC and EICR completion, instant PDF export, and professional quoting. Start your 7-day free trial today."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC and EICR completion, instant PDF export, and professional quoting. Start your 7-day free trial today."
     />
   );
 }

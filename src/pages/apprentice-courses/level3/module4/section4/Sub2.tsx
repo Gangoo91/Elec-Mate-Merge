@@ -302,7 +302,7 @@ export default function Sub2() {
 
           <ConceptBlock
             title="The supply-side hazards A4:2026 reinforced"
-            onSite="Open PEN is invisible to standard RCDs. The customer's bonded metalwork can be at significant voltage above true earth without any indication. Detection: N–E voltage at cut-out should be near zero; anything &gt;5 V is suspect; anything &gt;30 V is dangerous."
+            onSite="Open PEN is invisible to standard RCDs. The customer's bonded metalwork can be at significant voltage above true earth without any indication. Detection: N–E voltage at cut-out should be near zero; anything >5 V is suspect; anything >30 V is dangerous."
           >
             <p>Open PEN diagnostic check (do this at the start of every TN-C-S investigation):</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">

@@ -513,7 +513,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Chester electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
+          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -551,7 +551,7 @@ export default function ElectricianChesterPage() {
       faqHeading="Frequently Asked Questions About Electricians in Chester"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Chester Electricians"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Part P compliance and the realities of Chester's heritage property stock. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Part P compliance and the realities of Chester's heritage property stock. 7-day free trial."
     />
   );
 }

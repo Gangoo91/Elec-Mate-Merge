@@ -281,7 +281,7 @@ const HNCModule4Section5_6 = () => {
 
           <TLDR
             points={[
-              'Fiscal metering: MID-approved (Class 1 or better), DCC-compliant for half-hourly settlement &gt; 100 kVA, sealed by the supplier — your design defines the location, not the meter itself.',
+              'Fiscal metering: MID-approved (Class 1 or better), DCC-compliant for half-hourly settlement > 100 kVA, sealed by the supplier — your design defines the location, not the meter itself.',
               'Sub-metering for Part L 2021: every end-use (lighting, small power, HVAC) plus tenanted floors. ≥ 90 % of consumption must be sub-metered.',
               'CT-operated meters: x/5 A or x/1 A secondaries. NEVER open-circuit a CT secondary on an energised primary — short the secondary before disconnecting the meter.',
               'BMS integration: Modbus RTU (RS-485) for floor-level meters, Modbus TCP/IP or BACnet/IP for head-end. Tag points clearly in the BMS schedule.',
@@ -643,7 +643,7 @@ const HNCModule4Section5_6 = () => {
               'MID Class 1 or better for fiscal billing; Class 0.5S for performance monitoring on critical loads.',
               'CT installation safety: short the secondary before disconnecting an energised primary — open CT secondaries develop dangerous voltages.',
               'BMS protocols: Modbus RTU (RS-485) downstream, Modbus TCP/IP or BACnet/IP for head-end — pick one and tag the BMS schedule cleanly.',
-              'Document CT ratios, meter ID, channel mapping and BMS tag in the M&amp;V plan — saves weeks of commissioning.',
+              'Document CT ratios, meter ID, channel mapping and BMS tag in the M&V plan — saves weeks of commissioning.',
               'Reg 132.16 is THE retrofit governance regulation — verify supply/earthing/bonding adequacy before adding meter loads.',
               'Each board with new sub-metering carries its own Minor Works Certificate showing the 132.16 verification.',
             ]}

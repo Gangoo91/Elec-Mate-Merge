@@ -693,7 +693,7 @@ export default function CompetentPersonSchemePage() {
       faqHeading="Frequently Asked Questions About Competent Person Schemes"
       relatedPages={relatedPages}
       ctaHeading="Produce Scheme-Ready Certificates on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EIC, Minor Works, and EICR certificates in the correct BS 7671 format. Professional PDFs ready for your scheme provider. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EIC, Minor Works, and EICR certificates in the correct BS 7671 format. Professional PDFs ready for your scheme provider. 7-day free trial, cancel anytime."
     />
   );
 }

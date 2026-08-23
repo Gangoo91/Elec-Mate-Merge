@@ -544,7 +544,7 @@ export default function ContinuityTestingPage() {
       faqHeading="Frequently Asked Questions About Continuity Testing"
       relatedPages={relatedPages}
       ctaHeading="Record Continuity Test Results and Complete EICs on Your Phone"
-      ctaSubheading="Elec-Mate records R1+R2 and r1+r2/4 values, calculates Zs automatically, and generates professional test schedules on site. Join 1,000+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate records R1+R2 and r1+r2/4 values, calculates Zs automatically, and generates professional test schedules on site. Join 1,600+ UK electricians. 7-day free trial."
     />
   );
 }

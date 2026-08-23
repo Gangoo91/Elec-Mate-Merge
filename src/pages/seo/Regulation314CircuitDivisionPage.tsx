@@ -849,7 +849,7 @@ export default function Regulation314CircuitDivisionPage() {
       faqHeading="Frequently Asked Questions About Circuit Division and Design"
       relatedPages={relatedPages}
       ctaHeading="Design Circuit Schedules and Size Cables on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for AI-assisted circuit design, cable sizing, and on-site EIC certificates with professional schedules. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI-assisted circuit design, cable sizing, and on-site EIC certificates with professional schedules. 7-day free trial, cancel anytime."
     />
   );
 }

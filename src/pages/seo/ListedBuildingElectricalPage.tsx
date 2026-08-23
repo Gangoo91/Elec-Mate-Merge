@@ -626,7 +626,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete listed building EICRs professionally with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with thorough photographic documentation, AI board scanning…"
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion with thorough photographic documentation, AI board scanning…"
           icon={FileCheck2}
         />
       </>
@@ -663,7 +663,7 @@ export default function ListedBuildingElectricalPage() {
       faqHeading="Frequently Asked Questions About Listed Building Electrical Work"
       relatedPages={relatedPages}
       ctaHeading="Complete Listed Building EICRs on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with thorough photographic documentation, AI board scanning, and professional quoting. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion with thorough photographic documentation, AI board scanning, and professional quoting. 7-day free trial, cancel anytime."
     />
   );
 }

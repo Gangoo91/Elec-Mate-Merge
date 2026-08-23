@@ -274,9 +274,9 @@ const HNCModule3Section4_2 = () => {
 
           <TLDR
             points={[
-              'You apply &radic;3 = 1.732 in every three-phase calculation — line voltage 400 V derives from 230 V phase voltage in a star secondary, and three-phase power adds the &radic;3 factor.',
-              'You measure phase voltages (line-to-neutral) for single-phase loads and line voltages (line-to-line) for three-phase loads &mdash; never confuse the two on test sheets.',
-              'You design to BS EN 50160 supply tolerances of 230 V +10 % / &minus;6 % (216&ndash;253 V) and account for them in voltage-drop budgets.',
+              'You apply √3 = 1.732 in every three-phase calculation — line voltage 400 V derives from 230 V phase voltage in a star secondary, and three-phase power adds the √3 factor.',
+              'You measure phase voltages (line-to-neutral) for single-phase loads and line voltages (line-to-line) for three-phase loads — never confuse the two on test sheets.',
+              'You design to BS EN 50160 supply tolerances of 230 V +10 % / &minus;6 % (216–253 V) and account for them in voltage-drop budgets.',
               'You verify L1-L2-L3 phase sequence on every new three-phase circuit before motor energisation — a sequence indicator catches misconnection before mechanical damage.',
             ]}
           />
@@ -759,7 +759,7 @@ const HNCModule3Section4_2 = () => {
           <SectionRule />
 
           <Scenario
-            title="Long submain run &mdash; voltage drop on a remote plantroom feed"
+            title="Long submain run — voltage drop on a remote plantroom feed"
             situation={
               <>
                 A 90 m three-phase submain feeds a roof plantroom MCC carrying 120 A
@@ -798,12 +798,12 @@ const HNCModule3Section4_2 = () => {
 
           <KeyTakeaways
             points={[
-              'Star: V&#x2097; = &radic;3 &times; V&#x209a; and I&#x2097; = I&#x209a;. UK 400 V line / 230 V phase.',
-              'Delta: V&#x2097; = V&#x209a; and I&#x2097; = &radic;3 &times; I&#x209a;. Used for motor running and TX primaries.',
-              '&radic;3 = 1.732 — appears in three-phase voltage, current, power and voltage-drop calculations.',
-              'BS EN 50160: UK supply 230 V +10 % / &minus;6 % (216&ndash;253 V) and 400 V three-phase line correspondingly.',
+              'Star: V&#x2097; = √3 × V&#x209a; and I&#x2097; = I&#x209a;. UK 400 V line / 230 V phase.',
+              'Delta: V&#x2097; = V&#x209a; and I&#x2097; = √3 × I&#x209a;. Used for motor running and TX primaries.',
+              '√3 = 1.732 — appears in three-phase voltage, current, power and voltage-drop calculations.',
+              'BS EN 50160: UK supply 230 V +10 % / &minus;6 % (216–253 V) and 400 V three-phase line correspondingly.',
               'BS 7671 Appendix 4 voltage-drop limits: 3 % for lighting, 5 % for other uses (single-phase); 5 % cumulative on three-phase distribution + final.',
-              'Three-phase voltage drop: V&#x1d05; = &radic;3 &times; I &times; (R cos&phi; + X sin&phi;) &times; L &mdash; or simplified using mV/A/m tables.',
+              'Three-phase voltage drop: V&#x1d05; = √3 × I × (R cosφ + X sinφ) × L — or simplified using mV/A/m tables.',
               'Phase sequence verification (sequence indicator) is mandatory before motor energisation — wrong rotation can damage pumps, fans, lifts.',
               'Phase voltage = line-to-neutral; line voltage = line-to-line — confusing the two is the commonest exam-board error and a real-site safety issue.',
             ]}

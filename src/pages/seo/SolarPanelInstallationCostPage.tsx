@@ -640,7 +640,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify solar PV electrical work"
-          description="Join 1,000+ UK electricians using Elec-Mate for quoting, cable sizing, and on-site EIC certification."
+          description="Join 1,600+ UK electricians using Elec-Mate for quoting, cable sizing, and on-site EIC certification."
           icon={Wrench}
         />
       </>
@@ -676,7 +676,7 @@ export default function SolarPanelInstallationCostPage() {
       faqHeading="Frequently Asked Questions About Solar Panel Electrical Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Solar PV Electrical Work with Real Trade Pricing"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI-powered cost engineering. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI-powered cost engineering. 7-day free trial, cancel anytime."
     />
   );
 }

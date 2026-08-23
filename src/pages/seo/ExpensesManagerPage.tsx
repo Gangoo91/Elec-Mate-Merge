@@ -141,9 +141,9 @@ const sections = [
     heading: 'Why Expense Tracking Matters for Electricians',
     content: (
       <>
-        <p className="text-sm text-white/50 italic mb-4">
-          Written by a qualified electrician (18th Edition, AM2) and reviewed by a chartered
-          accountant (ICAEW) specialising in self-employed tradespeople and MTD compliance.
+        <p className="text-sm text-white mb-4">
+          Written and reviewed by Andrew Moore, founder of Elec-Mate — a qualified electrician (18th Edition, C&amp;G 2391 inspection and testing). This guide is general
+          information, not tax advice — check your own position with an accountant.
         </p>
         <p>
           Every pound you spend on legitimate business expenses reduces your taxable profit. If you
@@ -534,7 +534,7 @@ export default function ExpensesManagerPage() {
       faqHeading="Frequently Asked Questions About Expense Tracking"
       relatedPages={relatedPages}
       ctaHeading="Stop Missing Deductible Expenses"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to track expenses, maximise tax deductions, and keep HMRC-compliant records. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to track expenses, maximise tax deductions, and keep HMRC-compliant records. 7-day free trial, cancel anytime."
       pagePath="/tools/expenses-manager-electrician"
     />
   );

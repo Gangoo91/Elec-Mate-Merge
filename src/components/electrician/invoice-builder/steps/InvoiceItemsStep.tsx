@@ -63,6 +63,13 @@ interface InvoiceItemsStepProps {
   onAddItem: (item: Omit<InvoiceItem, 'id' | 'totalPrice'>) => void;
   onUpdateItem: (itemId: string, updates: Partial<InvoiceItem>) => void;
   onRemoveItem: (itemId: string) => void;
+  /**
+   * ELE-1548 — reorder a line. Each list reorders within itself: a quoted line
+   * must not be able to move into the "added on the invoice" section, since
+   * that changes what the client is told was quoted. Optional so other hosts of
+   * this step keep working.
+   */
+  onMoveItem?: (itemId: string, direction: 'up' | 'down') => void;
   settings?: InvoiceSettings;
   subtotal?: number;
   vatAmount?: number;
@@ -84,6 +91,60 @@ function titleCaseProduct(name: string): string {
     .join(' ');
 }
 
+/**
+ * ELE-1548 — up/down pair for a line item.
+ *
+ * Module-level so it keeps its identity across renders, and shared because the
+ * invoice draws this row twice (quoted lines and added lines) — two copies of
+ * the markup is how the two halves drift apart.
+ *
+ * Renders nothing when there is only one item in the list: a permanently
+ * disabled control reads as broken, which is the call BoardSetupCard already
+ * made for boards.
+ */
+const LineItemReorderButtons = ({
+  onMove,
+  itemId,
+  label,
+  index,
+  count,
+}: {
+  onMove?: (itemId: string, direction: 'up' | 'down') => void;
+  itemId: string;
+  label: string;
+  index: number;
+  count: number;
+}) => {
+  if (!onMove || count <= 1) return null;
+  const btn = (disabled: boolean) =>
+    cn(
+      'w-11 h-11 rounded-lg flex items-center justify-center touch-manipulation active:scale-95',
+      disabled ? 'bg-white/[0.03] opacity-25 cursor-not-allowed' : 'bg-white/[0.08]'
+    );
+  return (
+    <>
+      <button
+        type="button"
+        onClick={() => onMove(itemId, 'up')}
+        disabled={index === 0}
+        aria-label={`Move ${label} up`}
+        className={btn(index === 0)}
+      >
+        <ChevronUp className="h-3.5 w-3.5 text-white" />
+      </button>
+      <button
+        type="button"
+        onClick={() => onMove(itemId, 'down')}
+        disabled={index === count - 1}
+        aria-label={`Move ${label} down`}
+        className={btn(index === count - 1)}
+      >
+        <ChevronDown className="h-3.5 w-3.5 text-white" />
+      </button>
+    </>
+  );
+};
+
 export const InvoiceItemsStep = ({
   // Default to empty arrays so the component can never crash on
   // `.length` / `.map` if a parent or persisted draft passes undefined.
@@ -95,6 +156,7 @@ export const InvoiceItemsStep = ({
   onAddItem,
   onUpdateItem,
   onRemoveItem,
+  onMoveItem,
   settings,
   subtotal = 0,
   vatAmount = 0,
@@ -652,7 +714,7 @@ export const InvoiceItemsStep = ({
           </button>
           {showOriginalItems && (
             <div className="divide-y divide-white/[0.06]">
-              {originalItems.map((item) => (
+              {originalItems.map((item, itemIndex) => (
                 <div key={item.id} className="py-3">
                   <div className="flex items-start justify-between mb-2">
                     {editingItemId === item.id ? (
@@ -688,7 +750,7 @@ export const InvoiceItemsStep = ({
                         )}
                       </button>
                     )}
-                    <div className="flex items-center gap-1 ml-2">
+                    <div className="flex flex-wrap items-center justify-end gap-1 ml-2">
                       <p
                         className={cn(
                           'text-[13px] font-bold mr-1',
@@ -699,6 +761,13 @@ export const InvoiceItemsStep = ({
                       >
                         {formatCurrency((item.quantity || 0) * (item.unitPrice || 0))}
                       </p>
+                      <LineItemReorderButtons
+                        onMove={onMoveItem}
+                        itemId={item.id}
+                        label={item.description || 'item'}
+                        index={itemIndex}
+                        count={originalItems.length}
+                      />
                       <button
                         onClick={() => {
                           if (editingItemId === item.id) {
@@ -1568,7 +1637,7 @@ export const InvoiceItemsStep = ({
             <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">· Added on site ({additionalItems.length})</span>
           </p>
           <AnimatePresence mode="popLayout">
-            {additionalItems.map((item) => (
+            {additionalItems.map((item, itemIndex) => (
               <motion.div
                 key={item.id}
                 initial={{ opacity: 0, y: -8 }}
@@ -1611,7 +1680,14 @@ export const InvoiceItemsStep = ({
                       )}
                     </button>
                   )}
-                  <div className="flex items-center gap-1.5 ml-2">
+                  <div className="flex flex-wrap items-center justify-end gap-1.5 ml-2">
+                    <LineItemReorderButtons
+                      onMove={onMoveItem}
+                      itemId={item.id}
+                      label={item.description || 'item'}
+                      index={itemIndex}
+                      count={additionalItems.length}
+                    />
                     <button
                       onClick={() => {
                         if (editingItemId === item.id) {

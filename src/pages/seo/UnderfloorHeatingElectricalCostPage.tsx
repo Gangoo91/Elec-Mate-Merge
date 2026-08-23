@@ -584,7 +584,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify UFH installations faster"
-          description="Join 1,000+ UK electricians using Elec-Mate for quoting, cable sizing, and on-site EIC certification. Everything you need for underfloor heating work."
+          description="Join 1,600+ UK electricians using Elec-Mate for quoting, cable sizing, and on-site EIC certification. Everything you need for underfloor heating work."
           icon={Wrench}
         />
       </>
@@ -621,7 +621,7 @@ export default function UnderfloorHeatingElectricalCostPage() {
       faqHeading="Frequently Asked Questions About Underfloor Heating Electrical Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Underfloor Heating with Real Trade Pricing"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI-powered cost engineering. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI-powered cost engineering. 7-day free trial, cancel anytime."
     />
   );
 }

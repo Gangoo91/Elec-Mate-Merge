@@ -527,7 +527,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your EV charging installation business with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for EV charging certificates, quoting, and job management."
+          description="Join 1,600+ UK electricians using Elec-Mate for EV charging certificates, quoting, and job management."
           icon={FileCheck2}
         />
       </>
@@ -564,7 +564,7 @@ export default function SmartEVChargingPage() {
       faqHeading="Frequently Asked Questions About Smart EV Charging"
       relatedPages={relatedPages}
       ctaHeading="Complete EV Charging Certificates on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EV charging certificates, quoting, and job management. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EV charging certificates, quoting, and job management. 7-day free trial, cancel anytime."
     />
   );
 }

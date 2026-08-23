@@ -615,7 +615,7 @@ const HNCModule2Section2_5 = () => {
               'Pump curve: head H vs volumetric flow Q at fixed impeller speed.',
               'Operating point = intersection of pump curve and system curve. Aim for the BEP (best efficiency point).',
               'Affinity laws: Q ∝ N, H ∝ N², P ∝ N³ — halving the speed cuts power to one-eighth.',
-              'NPSHa &gt; NPSHr + margin (typically 0.5 m) — otherwise cavitation, noise, impeller damage, head loss.',
+              'NPSHa > NPSHr + margin (typically 0.5 m) — otherwise cavitation, noise, impeller damage, head loss.',
               'NPSHa = (P_atm + P_static_suction - P_vapour)/ρg - friction loss in suction line.',
               'Centrifugal: smooth Q-H curve, common in building services (LTHW, CHW, DCWS booster).',
               'Positive displacement: constant flow regardless of head, used for chemical dosing and high-pressure cleaning.',

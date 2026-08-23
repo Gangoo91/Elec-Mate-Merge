@@ -145,7 +145,7 @@ const quickCheckQuestions = [
     ],
     correctIndex: 3,
     explanation:
-      'Non-combustible supports prevent cables from falling and blocking escape routes during fires, as required by BS 7671 Amendment 2.',
+      'Non-combustible supports prevent cables from falling and blocking escape routes during fires, as required by BS 7671 Regulation 521.10.202.',
   },
   {
     id: 'vertical-horizontal',
@@ -211,7 +211,8 @@ export default function Module3Section6_1() {
                 <li>Proper cable support prevents sagging, damage, and termination strain.</li>
                 <li>Support distances vary by cable type, weight, and installation method.</li>
                 <li>
-                  Fire escape routes require non-combustible supports (18th Edition Amendment 2).
+                  Cables must be supported against premature collapse in fire throughout the
+                  installation, not just escape routes (Regulation 521.10.202).
                 </li>
                 <li>Manufacturer guidance overrides general recommendations where specified.</li>
               </ul>
@@ -333,7 +334,7 @@ export default function Module3Section6_1() {
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <h6 className="font-medium text-white mb-2">
-                      BS 7671 18th Edition Amendment 2 Requirements
+                      BS 7671 Regulation 521.10.202 requirements
                     </h6>
                     <ul className="space-y-1 text-sm">
                       <li>

@@ -697,7 +697,7 @@ export default function Sub1() {
                 <strong>Annual scheme assessment</strong> &mdash; the QS faces the scheme's assessor for the firm.
               </li>
               <li>
-                <strong>Calibration of the firm's standards</strong> &mdash; reviewing junior staff's work, second-checking certificates.
+                <strong>Calibration of the firm's standards</strong> — reviewing junior staff's work, second-checking certificates.
               </li>
               <li>
                 <strong>Test equipment register</strong> &mdash; ensuring kit is calibrated and traceable.

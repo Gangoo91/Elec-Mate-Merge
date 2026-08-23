@@ -650,7 +650,7 @@ export default function GoldCardRequirementsPage() {
       faqHeading="Frequently Asked Questions About the ECS Gold Card"
       relatedPages={relatedPages}
       ctaHeading="Start Your Path to Gold Card"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for training, exam preparation, and career development. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for training, exam preparation, and career development. 7-day free trial, cancel anytime."
     />
   );
 }

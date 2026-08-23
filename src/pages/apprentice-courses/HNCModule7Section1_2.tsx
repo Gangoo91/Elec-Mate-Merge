@@ -246,7 +246,7 @@ const faqs = [
   {
     question: 'When should busbar trunking be specified instead of cables?',
     answer:
-      'Busbar trunking is typically specified for: high current loads (&gt;400A) where multiple cables would be required, installations requiring flexibility for future modifications, rising mains in multi-storey buildings, situations where quick installation is essential, and where tap-off connections will be required along the distribution route. Cable systems may be more economical for lower currents, simple point-to-point connections, or where routing is complex.',
+      'Busbar trunking is typically specified for: high current loads (>400A) where multiple cables would be required, installations requiring flexibility for future modifications, rising mains in multi-storey buildings, situations where quick installation is essential, and where tap-off connections will be required along the distribution route. Cable systems may be more economical for lower currents, simple point-to-point connections, or where routing is complex.',
   },
   {
     question: 'How do I determine the correct busbar rating for a rising main?',

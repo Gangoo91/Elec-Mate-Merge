@@ -527,7 +527,7 @@ export default function WorkingWithOtherTradesPage() {
       faqHeading="Frequently Asked Questions About Working with Other Trades"
       relatedPages={relatedPages}
       ctaHeading="Manage Multi-Trade Projects with Confidence"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for scheduling, job management, and on-site documentation. Stay organised across every project. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for scheduling, job management, and on-site documentation. Stay organised across every project. 7-day free trial, cancel anytime."
     />
   );
 }

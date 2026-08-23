@@ -21,7 +21,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Regulation 411.3.3 mandates RCD protection for circuits supplying portable outdoor equipment.',
     category: 'Protection & Devices',
-    difficulty: 'intermediate'
+    difficulty: 'advanced'
   },
   {
     id: 3,
@@ -139,7 +139,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 3,
     explanation: 'General safety assessment should be the first priority during any inspection.',
     category: 'Inspection & Testing',
-    difficulty: 'advanced'
+    difficulty: 'intermediate'
   },
   {
     id: 12,
@@ -239,7 +239,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 2,
     explanation: 'Voltage indicators must be proven on a known live source before and after use.',
     category: 'Safe Isolation',
-    difficulty: 'intermediate'
+    difficulty: 'basic'
   },
   {
     id: 19,
@@ -301,7 +301,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Low insulation resistance commonly results from moisture, connected equipment giving a parallel path, or genuine insulation breakdown.',
     category: 'Inspection & Testing',
-    difficulty: 'advanced'
+    difficulty: 'intermediate'
   },
   {
     id: 23,
@@ -330,7 +330,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 0,
     explanation: 'An infinite resistance reading indicates an open circuit or break in the ring.',
     category: 'Inspection & Testing',
-    difficulty: 'intermediate'
+    difficulty: 'advanced'
   },
   {
     id: 25,
@@ -408,7 +408,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'The extent section must specify exactly which areas and circuits were included in the inspection, so the report scope is unambiguous.',
     category: 'Certification & Reporting',
-    difficulty: 'advanced'
+    difficulty: 'intermediate'
   },
   {
     id: 30,
@@ -423,7 +423,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Limitations are recorded when agreed restrictions, such as inaccessible areas or occupied premises, prevent full inspection or testing.',
     category: 'Certification & Reporting',
-    difficulty: 'intermediate'
+    difficulty: 'basic'
   },
 
   // Observation Coding
@@ -458,7 +458,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 1,
     explanation: 'A missing circuit protective conductor poses a potentially dangerous situation.',
     category: 'Certification & Reporting',
-    difficulty: 'intermediate'
+    difficulty: 'advanced'
   },
   {
     id: 34,
@@ -488,7 +488,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'C3 observations are for improvements recommended to enhance safety or compliance.',
     category: 'Certification & Reporting',
-    difficulty: 'advanced'
+    difficulty: 'intermediate'
   },
 
   // Additional Questions - Testing Procedures
@@ -541,7 +541,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'PFC is Prospective Fault Current, measured to ensure equipment can safely interrupt fault currents.',
     category: 'Protection & Devices',
-    difficulty: 'intermediate'
+    difficulty: 'advanced'
   },
   {
     id: 40,
@@ -597,7 +597,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 0,
     explanation: 'Equipment in bathroom Zone 1 requires a minimum IP rating of IPX4.',
     category: 'Special Locations',
-    difficulty: 'advanced'
+    difficulty: 'intermediate'
   },
   {
     id: 45,
@@ -612,7 +612,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Supplementary bonding may be omitted if all circuits in the location have RCD protection.',
     category: 'Earthing & Bonding',
-    difficulty: 'advanced'
+    difficulty: 'intermediate'
   },
 
   // Testing Equipment and Calibration
@@ -638,7 +638,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Always prove the meter works on a known live source before relying on a dead reading.',
     category: 'Inspection & Testing',
-    difficulty: 'basic'
+    difficulty: 'intermediate'
   },
   {
     id: 48,
@@ -772,7 +772,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'PV arrays generate DC whenever there is light, so DC isolation procedures and awareness that the array cannot be made fully dead in daylight are essential.',
     category: 'EV & Renewables',
-    difficulty: 'advanced'
+    difficulty: 'intermediate'
   },
   {
     id: 58,
@@ -787,7 +787,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'In an IT system the first fault does not cause disconnection, so the insulation monitoring device that signals that first fault must be verified.',
     category: 'Inspection & Testing',
-    difficulty: 'intermediate'
+    difficulty: 'advanced'
   },
   {
     id: 59,
@@ -802,7 +802,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Functional testing confirms that switchgear, isolators, controls and interlocks operate correctly and as intended in service.',
     category: 'Inspection & Testing',
-    difficulty: 'intermediate'
+    difficulty: 'basic'
   },
   {
     id: 60,
@@ -933,7 +933,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'A 32A ring final in 2.5mm² cable should not exceed approximately 100 metres total cable length.',
     category: 'Cables & Containment',
-    difficulty: 'advanced'
+    difficulty: 'intermediate'
   },
   {
     id: 69,
@@ -969,7 +969,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'The recommended limits are 3% for lighting circuits and 5% for other uses (for an installation supplied directly from a public distribution network).',
     category: 'Cables & Containment',
-    difficulty: 'advanced'
+    difficulty: 'intermediate'
   },
   {
     id: 72,
@@ -1001,7 +1001,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 2,
     explanation:
       'Cables less than 50mm deep in walls require RCD protection or additional mechanical protection.',
-    difficulty: 'advanced'
+    difficulty: 'intermediate'
   },
   {
     id: 75,
@@ -1097,7 +1097,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Continuity tests use a low-resistance ohmmeter delivering at least 200mA at no more than 24V open-circuit, with the circuit dead.',
     category: 'Inspection & Testing',
-    difficulty: 'advanced'
+    difficulty: 'intermediate'
   },
   {
     id: 83,
@@ -1133,7 +1133,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Diversity recognises that not all connected loads operate at full demand simultaneously, allowing economic sizing of the supply and main cables.',
     category: 'Design & Selection',
-    difficulty: 'advanced'
+    difficulty: 'intermediate'
   },
   {
     id: 86,
@@ -1202,7 +1202,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Discrimination ensures only the protective device immediately upstream of a fault operates, leaving the rest of the installation supplied.',
     category: 'Protection & Devices',
-    difficulty: 'intermediate'
+    difficulty: 'advanced'
   },
   {
     id: 91,
@@ -1316,7 +1316,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'The first characteristic numeral 2 means protection against solid objects ≥12.5mm, i.e. finger contact with hazardous live parts.',
     category: 'Design & Selection',
-    difficulty: 'intermediate'
+    difficulty: 'advanced'
   },
   {
     id: 100,
@@ -1406,7 +1406,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 3,
     explanation:
       'HSWA 1974 places duties on employers (to provide safe systems of work) and on employees (to take reasonable care and to cooperate).',
-    difficulty: 'intermediate'
+    difficulty: 'basic'
   },
   {
     id: 108,
@@ -1424,7 +1424,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 1,
     explanation:
       'Part 7 of BS 7671 covers special installations or locations with specific requirements.',
-    difficulty: 'advanced'
+    difficulty: 'intermediate'
   },
   {
     id: 110,
@@ -1462,7 +1462,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'SELV (Safety Extra Low Voltage) systems must not exceed 50V AC or 120V ripple-free DC under normal conditions.',
     category: 'Protection & Devices',
-    difficulty: 'advanced'
+    difficulty: 'intermediate'
   },
   {
     id: 113,
@@ -1519,7 +1519,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Each line conductor must be tested separately to earth to identify any differences in impedance values.',
     category: 'Inspection & Testing',
-    difficulty: 'intermediate'
+    difficulty: 'advanced'
   },
   {
     id: 117,
@@ -1534,7 +1534,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Insulation resistance is measured between all live conductors connected together and earth, and between live conductors, to prove the insulation throughout.',
     category: 'Inspection & Testing',
-    difficulty: 'intermediate'
+    difficulty: 'basic'
   },
   {
     id: 118,
@@ -1890,7 +1890,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 1,
     explanation:
       'At 50% of IΔn (half-rated current) the RCD should not trip; it must then trip within the stated times at 100% and 500%.',
-    difficulty: 'advanced'
+    difficulty: 'intermediate'
   },
   {
     id: 142,
@@ -1980,7 +1980,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Excessive Zs should be reduced by improving the CPC/earthing or shortening the run; fitting an RCD that meets the disconnection time is the recognised alternative measure.',
     category: 'Inspection & Testing',
-    difficulty: 'basic'
+    difficulty: 'intermediate'
   },
   {
     id: 149,
@@ -2065,7 +2065,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'High Zs typically indicates loose connections, damaged conductors or an inadequate/poorly connected earth path.',
     category: 'Inspection & Testing',
-    difficulty: 'advanced'
+    difficulty: 'intermediate'
   },
   {
     id: 155,
@@ -2403,7 +2403,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       "Limitations must be clearly stated with explanation of their potential impact on the inspection's effectiveness.",
     category: 'Certification & Reporting',
-    difficulty: 'intermediate'
+    difficulty: 'basic'
   },
   {
     id: 178,
@@ -2418,7 +2418,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'This section must detail exactly what was inspected, any limitations, and the percentage of the installation sampled.',
     category: 'Certification & Reporting',
-    difficulty: 'intermediate'
+    difficulty: 'basic'
   },
   {
     id: 179,
@@ -2433,7 +2433,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Unsatisfactory classification indicates C1 (danger present) or C2 (potentially dangerous) observations exist.',
     category: 'Certification & Reporting',
-    difficulty: 'advanced'
+    difficulty: 'intermediate'
   },
   {
     id: 180,
@@ -2448,7 +2448,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'C1 (danger present), C2 (potentially dangerous) and FI (further investigation) findings require the person ordering the report to be advised without delay.',
     category: 'Certification & Reporting',
-    difficulty: 'advanced'
+    difficulty: 'intermediate'
   },
   {
     id: 181,
@@ -2569,7 +2569,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Commercial offices typically require EICR every 5 years, though this may vary based on risk assessment.',
     category: 'Certification & Reporting',
-    difficulty: 'advanced'
+    difficulty: 'intermediate'
   },
   {
     id: 190,
@@ -2673,7 +2673,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 0,
     explanation:
       'A large voltage drop appearing only under load points to high-resistance joints or conductors too small for the current drawn.',
-    difficulty: 'advanced'
+    difficulty: 'intermediate'
   },
   {
     id: 197,
@@ -2687,7 +2687,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 1,
     explanation:
       'Safety systems and interlocks must be prioritised to prevent dangerous conditions during troubleshooting.',
-    difficulty: 'intermediate'
+    difficulty: 'basic'
   },
   {
     id: 198,
@@ -2763,7 +2763,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Pool installations require comprehensive equipotential bonding of all metallic parts within specified zones.',
     category: 'Earthing & Bonding',
-    difficulty: 'advanced'
+    difficulty: 'intermediate'
   },
   {
     id: 203,
@@ -2779,7 +2779,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Marine environments cause accelerated corrosion requiring more frequent inspection and specialised protection.',
     category: 'Inspection & Testing',
-    difficulty: 'intermediate'
+    difficulty: 'basic'
   },
   {
     id: 204,
@@ -2794,7 +2794,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 0,
     explanation:
       'Systematic isolation from supply to load helps locate faults efficiently while maintaining safety.',
-    difficulty: 'intermediate'
+    difficulty: 'basic'
   },
   {
     id: 205,
@@ -2960,7 +2960,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'PV systems require DC isolation and consideration of multiple energy sources during testing.',
     category: 'EV & Renewables',
-    difficulty: 'advanced'
+    difficulty: 'intermediate'
   },
   {
     id: 216,
@@ -3021,7 +3021,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Heritage buildings may have access restrictions and require conservation-aware testing methods.',
     category: 'Inspection & Testing',
-    difficulty: 'basic'
+    difficulty: 'intermediate'
   },
   {
     id: 220,
@@ -3035,7 +3035,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 0,
     explanation:
       'Chemical plants require explosion-proof equipment and chemical compatibility considerations.',
-    difficulty: 'intermediate'
+    difficulty: 'basic'
   },
   {
     id: 221,
@@ -3080,7 +3080,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Temporary installations require enhanced protection and more frequent testing due to their nature.',
     category: 'Inspection & Testing',
-    difficulty: 'intermediate'
+    difficulty: 'basic'
   },
   {
     id: 224,
@@ -3095,7 +3095,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Educational facility testing must be scheduled to minimise disruption to teaching activities.',
     category: 'Inspection & Testing',
-    difficulty: 'intermediate'
+    difficulty: 'basic'
   },
   {
     id: 225,
@@ -3109,7 +3109,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 1,
     explanation:
       'Intermittent faults require systematic monitoring and recreation of fault conditions for diagnosis.',
-    difficulty: 'advanced'
+    difficulty: 'intermediate'
   },
 
   // Modern Installation Technologies (Questions 226-250)
@@ -3141,7 +3141,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Smart home systems require verification of communication protocols and electromagnetic compatibility.',
     category: 'Inspection & Testing',
-    difficulty: 'advanced'
+    difficulty: 'intermediate'
   },
   {
     id: 228,
@@ -3156,7 +3156,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Battery systems present DC hazards, fire risks and require proper ventilation during testing.',
     category: 'EV & Renewables',
-    difficulty: 'basic'
+    difficulty: 'intermediate'
   },
   {
     id: 229,
@@ -3245,7 +3245,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 2,
     explanation: 'EV charging requires PEN fault detection to prevent dangerous touch voltages.',
     category: 'EV & Renewables',
-    difficulty: 'advanced'
+    difficulty: 'intermediate'
   },
   {
     id: 235,
@@ -3303,7 +3303,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Micro-generation requires verification of export controls and grid protection systems.',
     category: 'Inspection & Testing',
-    difficulty: 'advanced'
+    difficulty: 'intermediate'
   },
   {
     id: 239,
@@ -3348,7 +3348,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'EVSE requires verification of pilot signals and protective conductor current limits.',
     category: 'EV & Renewables',
-    difficulty: 'advanced'
+    difficulty: 'intermediate'
   },
   {
     id: 242,
@@ -3363,7 +3363,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'PoE systems require verification of power limits and connected equipment protection.',
     category: 'Inspection & Testing',
-    difficulty: 'advanced'
+    difficulty: 'intermediate'
   },
   {
     id: 243,
@@ -3484,7 +3484,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Smart garage doors require comprehensive safety system verification including sensors and emergency functions.',
     category: 'Inspection & Testing',
-    difficulty: 'intermediate'
+    difficulty: 'basic'
   },
 
   // Advanced Safety & Risk Assessment (Questions 251-275)
@@ -3538,7 +3538,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 2,
     explanation:
       'Arc flash energy rises with the available fault current, so the greatest risk is live work on high-energy equipment near the supply.',
-    difficulty: 'intermediate'
+    difficulty: 'advanced'
   },
   {
     id: 255,
@@ -3566,7 +3566,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 0,
     explanation:
       'A permit-to-work formally controls complex or high-risk tasks, ensuring isolation and coordination before work begins.',
-    difficulty: 'advanced'
+    difficulty: 'intermediate'
   },
   {
     id: 257,
@@ -3599,7 +3599,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 3,
     explanation:
       'Moisture significantly reduces insulation effectiveness and increases shock risk.',
-    difficulty: 'advanced'
+    difficulty: 'intermediate'
   },
   {
     id: 260,
@@ -3640,7 +3640,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 2,
     explanation:
       'Under the Electricity at Work Regulations live working is only justified where it is unreasonable to work dead and suitable precautions are in place.',
-    difficulty: 'intermediate'
+    difficulty: 'basic'
   },
   {
     id: 263,
@@ -3682,7 +3682,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 1,
     explanation:
       'Safety documentation must comprehensively address hazards, risks and control measures.',
-    difficulty: 'advanced'
+    difficulty: 'intermediate'
   },
   {
     id: 266,
@@ -3827,7 +3827,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 3,
     explanation:
       'Healthcare facilities require consideration of patient safety, critical systems and infection control procedures.',
-    difficulty: 'intermediate'
+    difficulty: 'basic'
   },
 
   // Regulatory Updates & Standards (Questions 276-300)
@@ -3872,7 +3872,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 2,
     explanation:
       'Part P requires notification for new circuits, consumer unit work and installations in special locations.',
-    difficulty: 'intermediate'
+    difficulty: 'basic'
   },
   {
     id: 279,
@@ -3888,7 +3888,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'CDM regulations require health and safety planning, coordination and competency throughout construction.',
     category: 'Inspection & Testing',
-    difficulty: 'advanced'
+    difficulty: 'intermediate'
   },
   {
     id: 280,
@@ -3915,7 +3915,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 0,
     explanation:
       'Current regulations require surge protection for most installations with specific exemption criteria.',
-    difficulty: 'basic'
+    difficulty: 'intermediate'
   },
   {
     id: 282,
@@ -3943,7 +3943,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 3,
     explanation:
       'CPD requires ongoing development to maintain current knowledge and competency standards.',
-    difficulty: 'advanced'
+    difficulty: 'intermediate'
   },
   {
     id: 284,
@@ -4031,7 +4031,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Environmental regulations address WEEE disposal and energy efficiency requirements.',
     category: 'Inspection & Testing',
-    difficulty: 'intermediate'
+    difficulty: 'basic'
   },
   {
     id: 290,
@@ -4073,7 +4073,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 0,
     explanation:
       "EMC regulations ensure equipment doesn't cause interference and operates correctly despite interference.",
-    difficulty: 'advanced'
+    difficulty: 'intermediate'
   },
   {
     id: 293,
@@ -4088,7 +4088,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Current certificate requirements include detailed testing schedules and digital submission capabilities.',
     category: 'Certification & Reporting',
-    difficulty: 'advanced'
+    difficulty: 'intermediate'
   },
   {
     id: 294,
@@ -4101,7 +4101,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     ],
     correctAnswer: 2,
     explanation: "LVD compliance requires CE marking and manufacturer's declaration of conformity.",
-    difficulty: 'advanced'
+    difficulty: 'intermediate'
   },
   {
     id: 295,
@@ -4129,7 +4129,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 0,
     explanation:
       'Security systems require tamper detection and reliable backup power for effectiveness.',
-    difficulty: 'intermediate'
+    difficulty: 'basic'
   },
   {
     id: 297,
@@ -4158,7 +4158,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Medical locations require IT earthing systems and comprehensive supplementary bonding for patient safety.',
     category: 'Earthing & Bonding',
-    difficulty: 'advanced'
+    difficulty: 'intermediate'
   },
   {
     id: 299,
@@ -4172,7 +4172,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 3,
     explanation:
       'Renewable installations must comply with grid codes and include appropriate export limitation.',
-    difficulty: 'advanced'
+    difficulty: 'intermediate'
   },
   {
     id: 300,
@@ -4200,7 +4200,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 0,
     explanation:
       'BS 7671:2018+A4:2026 is the current standard, published 15 April 2026. The 18th Edition has had four amendments in total: A1:2020, A2:2022, A3:2024 and A4:2026. The free PDF supplement issued on 31 July 2024 was Amendment 3, which is a frequent source of confusion.',
-    difficulty: 'basic'
+    difficulty: 'intermediate'
   },
   {
     id: 302,
@@ -4214,7 +4214,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 1,
     explanation:
       'Table 64 gives 250 V DC and 0.5 MΩ for SELV and PELV, 500 V DC and 1.0 MΩ for circuits up to and including 500 V, and 1000 V DC and 1.0 MΩ above that. Older material refers to this as Table 61 — that numbering is superseded.',
-    difficulty: 'basic'
+    difficulty: 'intermediate'
   },
   {
     id: 303,
@@ -4228,7 +4228,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 2,
     explanation:
       'R1 is the line conductor and R2 is the circuit protective conductor. Calling R2 the neutral is the most common error in this topic — the end-to-end neutral resistance is rn. R1+R2 is added to Ze to give Zs.',
-    difficulty: 'basic'
+    difficulty: 'intermediate'
   },
   {
     id: 304,
@@ -4242,7 +4242,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 3,
     explanation:
       'Table 3A, the time/current performance criteria for RCDs, has been deleted. Verification is now an alternating current test at the rated residual operating current, IΔn, whatever the RCD type — a general non-delay device must operate within 300 ms.',
-    difficulty: 'basic'
+    difficulty: 'intermediate'
   },
   {
     id: 305,
@@ -4256,7 +4256,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 0,
     explanation:
       'TN-C-S, commonly called PME, combines the neutral and protective functions in a PEN conductor within the distributor\'s network, separating them at the origin of the installation. TN-S has separate conductors throughout, TT relies on an installation earth electrode, and IT has no direct earth connection at the source.',
-    difficulty: 'basic'
+    difficulty: 'intermediate'
   },
   {
     id: 306,
@@ -4270,7 +4270,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 1,
     explanation:
       '411.3.1.2 covers protective equipotential bonding. Its companion 411.3.1.1 covers protective earthing of exposed-conductive-parts, and 411.3.2.2 holds the maximum disconnection times. Conductor sizing for main bonding comes from 544.1.1.',
-    difficulty: 'basic'
+    difficulty: 'advanced'
   },
   {
     id: 307,
@@ -4284,7 +4284,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 2,
     explanation:
       '300 ms is the figure BS 7671 verifies against for a general non-delay device. The 40 ms often quoted is a device characteristic at five times IΔn from BS EN 61008/61009, not a BS 7671 test criterion. A Type S device operates between 130 and 500 ms.',
-    difficulty: 'basic'
+    difficulty: 'advanced'
   },
   {
     id: 308,
@@ -4298,7 +4298,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 3,
     explanation:
       'Part 6 covers inspection and testing, including Chapter 64 on initial verification. Part 4 is protection for safety, Part 5 is selection and erection of equipment, and Part 7 covers special installations or locations.',
-    difficulty: 'basic'
+    difficulty: 'advanced'
   },
 
   // ── Part 7 special locations (added 2026-08-07) ──────────────────────────
@@ -4318,7 +4318,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 0,
     explanation:
       'Regulation 702.410.3.4.1 states that, except for fountains, in zone 0 only protection by SELV at a nominal voltage not exceeding 12 V AC RMS or 30 V ripple-free DC is permitted, with the SELV source installed outside zones 0, 1 and 2.',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Swimming Pools',
     category: 'Special Locations',
   },
@@ -4366,7 +4366,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 0,
     explanation:
       'Regulation 701.415.2 requires local supplementary protective equipotential bonding connecting together the terminals of the protective conductor of each circuit supplying Class I and Class II equipment to the accessible extraneous-conductive-parts, including metallic service and waste pipes and metallic central heating and air conditioning systems.',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Bathrooms',
     category: 'Special Locations',
   },
@@ -4435,7 +4435,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 0,
     explanation:
       'Regulation 311.1 requires the maximum demand to be determined for economic and reliable design of an installation within thermal limits and admissible voltage drop.',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Maximum Demand',
     category: 'Design & Selection',
   },
@@ -4515,9 +4515,814 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 2,
     explanation:
       'Regulation 314.1(b) requires division into circuits to facilitate safe inspection, testing and maintenance, and cross-refers to Chapter 46 and Section 537, which deal with isolation and switching.',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Division of Installation',
     category: 'Design & Selection',
+  },
+  {
+    id: 322,
+    question:
+      'In BS 7671:2018+A4:2026 the revised Regulation 411.3.3 applies RCD protection to socket-outlets up to which rated current?',
+    options: [
+      'Socket-outlets with a rated current not exceeding 32 A',
+      'Socket-outlets with a rated current not exceeding 20 A',
+      'Socket-outlets with a rated current not exceeding 63 A',
+      'Socket-outlets with a rated current not exceeding 16 A',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Regulation 411.3.3 was revised in A4:2026 and now applies specifically to socket-outlets with a rated current not exceeding 32 A. Socket-outlets rated above 32 A fall outside its scope and must be assessed against other applicable regulations.',
+    difficulty: 'advanced',
+    topic: 'RCD Protection of Socket-Outlets',
+    category: 'Protection & Devices',
+  },
+  {
+    id: 323,
+    question:
+      'Under the revised Regulation 411.3.3, in what circumstances may RCD protection be omitted from a 13 A socket-outlet?',
+    options: [
+      'Where the socket-outlet in a dwelling is labelled for one appliance',
+      'Where, other than in a dwelling, a documented risk assessment applies',
+      'Where the circuit is supplied through a separate isolating transformer',
+      'Where the socket-outlet is under the supervision of a skilled person',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The exception permits omission only where, other than for a dwelling, a documented risk assessment determines that RCD protection is not necessary. The assessment must be specific to that installation and retained as a record. Supervision by a skilled person is superseded wording and never applied to dwellings.',
+    difficulty: 'advanced',
+    topic: 'RCD Protection of Socket-Outlets',
+    category: 'Protection & Devices',
+  },
+  {
+    id: 324,
+    question:
+      'What status does Regulation 421.1.7 give to arc fault detection devices (AFDDs) in AC final circuits?',
+    options: [
+      'They are required in all final circuits of higher risk premises',
+      'They are required in every AC final circuit of a fixed installation',
+      'They are recommended to mitigate the risk of fire in those circuits',
+      'They are permitted where the designer records a written assessment',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Regulation 421.1.7 recommends the installation of AFDDs to mitigate the risk of fire in AC final circuits arising from the effects of arc fault currents. The wording is advisory: it recommends rather than requires, so an AFDD is not mandated by this regulation.',
+    difficulty: 'intermediate',
+    topic: 'Arc Fault Detection Devices',
+    category: 'Protection & Devices',
+  },
+  {
+    id: 325,
+    question:
+      'To which circuits is the AFDD recommendation in Regulation 421.1.7 directed?',
+    options: [
+      'Distribution circuits feeding a submain or subsidiary board',
+      'DC circuits within a battery energy storage installation',
+      'Generation circuits between an inverter and the board',
+      'AC final circuits of a fixed electrical installation',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'The recommendation in Regulation 421.1.7 is expressly directed at AC final circuits of a fixed installation. It does not extend to upstream distribution circuits, to generation circuits, or to DC circuits.',
+    difficulty: 'intermediate',
+    topic: 'Arc Fault Detection Devices',
+    category: 'Protection & Devices',
+  },
+  {
+    id: 326,
+    question:
+      'Which risk is an arc fault detection device intended to address under Regulation 421.1.7?',
+    options: [
+      'Fire caused by the effects of arc fault currents in a circuit',
+      'Electric shock from direct contact with a live conductor',
+      'Overvoltage reaching equipment after a lightning strike',
+      'Overload heating caused by too many appliances in use',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Regulation 421.1.7 sits in Chapter 42, protection against thermal effects, and recommends AFDDs specifically to mitigate the risk of fire due to the effects of arc fault currents. Shock protection is Chapter 41, overvoltage is Chapter 44 and overload is Chapter 43.',
+    difficulty: 'basic',
+    topic: 'Arc Fault Detection Devices',
+    category: 'Protection & Devices',
+  },
+  {
+    id: 327,
+    question: 'What does the new Chapter 57 of BS 7671:2018+A4:2026 cover?',
+    options: [
+      'Portable battery packs supplied with an item of equipment',
+      'Stationary secondary battery installations for storage',
+      'Traction batteries fitted within electric road vehicles',
+      'Primary cells used to power fire detection equipment',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A new Chapter 57 was introduced by A4:2026 in Part 5, dealing with stationary secondary battery installations where the designed purpose is storage and supply of electrical installations. Batteries not designed for that purpose fall outside its intended scope.',
+    difficulty: 'intermediate',
+    topic: 'Stationary Secondary Batteries',
+    category: 'EV & Renewables',
+  },
+  {
+    id: 328,
+    question: 'Which battery installation falls outside the scope of Chapter 57?',
+    options: [
+      'A lithium battery mounted outdoors beside a domestic array',
+      'A lead-acid battery bank standing in a plant room cabinet',
+      'A battery inside a pluggable UPS covered by its own standard',
+      'A battery cabinet supplying a small commercial building',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Chapter 57 does not apply to stationary secondary batteries incorporated into products covered by product safety standards, and a pluggable UPS is given as an example. Designers of such products follow the applicable product standard instead of Chapter 57.',
+    difficulty: 'advanced',
+    topic: 'Stationary Secondary Batteries',
+    category: 'EV & Renewables',
+  },
+  {
+    id: 329,
+    question: 'Chapter 57 does not apply to batteries within which of these systems?',
+    options: [
+      'Off-grid battery supplies for a remote dwelling',
+      'Battery storage paired with a rooftop PV array',
+      'Standby battery supplies in a data centre room',
+      'Fire alarm and emergency lighting systems',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'The scope exclusions in Chapter 57 cover batteries within fire and emergency lighting systems, pluggable UPS, and central safety power supply systems conforming to their appropriate standards. Storage batteries serving an installation remain within scope.',
+    difficulty: 'advanced',
+    topic: 'Stationary Secondary Batteries',
+    category: 'EV & Renewables',
+  },
+  {
+    id: 330,
+    question: 'What does Regulation 521.10.202 give requirements for?',
+    options: [
+      'The methods of support used for wiring systems',
+      'The bending radii permitted for armoured cables',
+      'The depth at which cables in walls are buried',
+      'The spacing between cables grouped in a tray',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Regulation 521.10.202 in Part 5, Chapter 52 gives requirements for the methods of support of wiring systems, covering the fixings and arrangements by which a wiring system is supported and secured within an installation.',
+    difficulty: 'intermediate',
+    topic: 'Support of Wiring Systems',
+    category: 'Cables & Containment',
+  },
+  {
+    id: 331,
+    question:
+      'On what basis may an inspector accept the supports of a wiring system as compliant?',
+    options: [
+      'The fixings are of metal and were installed by a competent person',
+      'The supports demonstrably meet the requirements of Reg 521.10.202',
+      'The cables are clipped at intervals given in the manufacturer data',
+      'The containment carries a CE or UKCA mark from its manufacturer',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Acceptance rests on the method of support demonstrably meeting the requirements given in Regulation 521.10.202. Evidence can include drawings, schedules of fixings, product specifications for support fittings and site inspection confirming correct implementation.',
+    difficulty: 'advanced',
+    topic: 'Support of Wiring Systems',
+    category: 'Cables & Containment',
+  },
+  {
+    id: 332,
+    question:
+      'Regulation 110.1.2 states that the Regulations include requirements for circuits supplied at nominal voltages up to and including which values?',
+    options: ['400 V AC or 600 V DC', '230 V AC or 500 V DC', '1000 V AC or 1500 V DC', '1500 V AC or 1000 V DC'],
+    correctAnswer: 2,
+    explanation:
+      'Regulation 110.1.2 sets the voltage limits of the main body of BS 7671 at nominal voltages up to and including 1000 V AC or 1500 V DC, unless stated otherwise within the Regulations themselves.',
+    difficulty: 'intermediate',
+    topic: 'Scope of BS 7671',
+    category: 'Design & Selection',
+  },
+  {
+    id: 333,
+    question: 'Which statement about Power over Ethernet is correct under BS 7671?',
+    options: [
+      'PoE is excluded because it carries data as well as power',
+      'PoE is covered instead by the network cabling standards',
+      'PoE falls outside scope as it is a band I ELV system',
+      'PoE installations are within the scope of the Regulations',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Regulation 110.1.1 confirms that the Regulations apply to the design, erection and verification of Power over Ethernet installations. Carrying data alongside power does not remove a system from the scope of BS 7671.',
+    difficulty: 'basic',
+    topic: 'Scope of BS 7671',
+    category: 'Design & Selection',
+  },
+  {
+    id: 334,
+    question:
+      'What does Regulation 132.15.201 require to be provided for every installation and every circuit?',
+    options: [
+      'A device that disconnects the supply automatically on a fault',
+      'Effective means, suitably placed, to cut off all voltage',
+      'A warning notice stating the voltage present at the origin',
+      'A lockable enclosure around every item of fixed equipment',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Regulation 132.15.201 requires effective means, suitably placed for ready operation, so that all voltage may be cut off from every installation, from every circuit and from all equipment as necessary to prevent or remove danger.',
+    difficulty: 'intermediate',
+    topic: 'Isolation and Switching',
+    category: 'Safe Isolation',
+  },
+  {
+    id: 335,
+    question: 'Regulation 132.15.202 requires every fixed electric motor to be provided with what?',
+    options: [
+      'An overload device set at the full-load current of the motor',
+      'A star-delta starter to limit the current drawn on starting',
+      'An efficient means of switching off, placed to prevent danger',
+      'A local isolator fitted with a padlockable rotary handle',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Every fixed electric motor must have an efficient means of switching off, and that means shall be so placed as to prevent danger, for example away from moving parts or hazardous processes. A motor permanently installed as part of the installation is a fixed motor.',
+    difficulty: 'intermediate',
+    topic: 'Isolation and Switching',
+    category: 'Design & Selection',
+  },
+  {
+    id: 336,
+    question:
+      'For a low voltage supply given in accordance with the ESQCR, what value does BS 7671 give to the minimum voltage factor Cmin?',
+    options: ['0.95', '0.80', '1.00', '0.90'],
+    correctAnswer: 0,
+    explanation:
+      'Cmin is the minimum voltage factor accounting for voltage variations with time and place, transformer tap changes and similar effects. For a low voltage supply given under the ESQCR, Cmin is given the value 0.95. The 0.80 figure is the separate rule-of-thumb factor applied to measured values.',
+    difficulty: 'advanced',
+    topic: 'Earth Fault Loop Impedance',
+    category: 'Inspection & Testing',
+  },
+  {
+    id: 337,
+    question:
+      'Which expression gives the maximum earth fault loop impedance used in Regulations 411.4.4 to 411.5.4?',
+    options: ['Zs = Up / (Ia * Cmin)', 'Zs = Up * Cmin / Ia', 'Zs = Up / (Ia * 0.8)', 'Zs = Up * Ia / Cmin'],
+    correctAnswer: 1,
+    explanation:
+      'The maximum earth fault loop impedance is Zs = Up * Cmin / Ia, where Up is the nominal line-to-earth voltage, Ia is the current causing operation of the protective device within the required time and Cmin is the minimum voltage factor.',
+    difficulty: 'advanced',
+    topic: 'Earth Fault Loop Impedance',
+    category: 'Inspection & Testing',
+  },
+  {
+    id: 338,
+    question:
+      'How should a value of Zs measured at ambient temperature be compared with the requirement of Regulation 411.4.4?',
+    options: [
+      'It must be below Up divided by Ia with no correction used',
+      'It must be below 1.2 times the tabulated maximum value',
+      'It must equal the tabulated value multiplied by Cmin',
+      'It must be below 0.8 times Up divided by Ia and Cmin',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'The requirement is treated as met where the measured value satisfies Zs(m) < 0.8 x (Up / (Ia x Cmin)). The 0.8 factor corrects an ambient-temperature measurement for the higher conductor temperature reached under fault conditions.',
+    difficulty: 'advanced',
+    topic: 'Earth Fault Loop Impedance',
+    category: 'Inspection & Testing',
+  },
+  {
+    id: 339,
+    question:
+      'Regulation 133.1.3 has been modified so that certain usage of equipment must be:',
+    options: [
+      'Recorded on the appropriate electrical certification',
+      'Agreed in writing with the distributor before work',
+      'Marked on a label fixed inside the consumer unit',
+      'Declared to the building control body on completion',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Regulation 133.1.3 now requires certain usage of equipment to be recorded on the appropriate electrical certification specified in Part 6. The duty is not blanket: it is triggered where BS 7671 identifies the particular usage as one to be recorded.',
+    difficulty: 'intermediate',
+    topic: 'Selection of Equipment',
+    category: 'Certification & Reporting',
+  },
+  {
+    id: 340,
+    question:
+      'How must the type and rating of the overcurrent protective device at the origin be established?',
+    options: [
+      'By assuming the standard value for the premises type',
+      'By reading the rating plate on the service cut-out fuse',
+      'By reference to the last certificate issued for the site',
+      'By calculation, measurement, enquiry or inspection',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Regulation 312.3 requires the type and rating of the overcurrent protective device acting at the origin to be determined for each supply or source by calculation, measurement, enquiry or inspection. Supply characteristics may not simply be assumed.',
+    difficulty: 'intermediate',
+    topic: 'Assessment of General Characteristics',
+    category: 'Design & Selection',
+  },
+  {
+    id: 341,
+    question:
+      'When need a metallic service pipe entering a building not be connected to the protective equipotential bonding?',
+    options: [
+      'Where the pipe is supplied through a plastic underground main',
+      'Where an insulating section is fitted at its point of entry',
+      'Where the pipe serves no electrical equipment in the building',
+      'Where the pipe is bonded to the structural steel of the frame',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Metallic pipes entering a building that have an insulating section at their point of entry need not be connected to the protective equipotential bonding. The insulating section must be at the entry point; if it is elsewhere, the condition for omitting the bond is not met.',
+    difficulty: 'advanced',
+    topic: 'Protective Equipotential Bonding',
+    category: 'Earthing & Bonding',
+  },
+  {
+    id: 342,
+    question:
+      'Currents in parallel conductors are treated as unequal when the difference between them is what?',
+    options: [
+      'More than 10% of the design current for each',
+      'More than 5% of the design current for each',
+      'More than 20% of the design current for each',
+      'More than 30% of the design current for each',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The note to Regulation 433.4.2 sets the threshold at more than 10% of the design current for each conductor. Where the sharing is unequal beyond that, the simplified approach cannot be used; Appendix 10, Item 2 gives the calculation guidance.',
+    difficulty: 'advanced',
+    topic: 'Parallel Conductors',
+    category: 'Design & Selection',
+  },
+  {
+    id: 343,
+    question: 'What does the new Chapter 46 introduced into BS 7671 deal with?',
+    options: [
+      'Automatic disconnection of a supply on an earth fault',
+      'Protection of wiring systems against thermal effects',
+      'Non-automatic local and remote isolation and switching',
+      'Coordination of protective devices for selectivity',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Chapter 46 covers non-automatic local and remote isolation and switching measures for the prevention or removal of dangers associated with an installation or with electrically powered equipment. Automatic disconnection remains the subject of Chapter 41.',
+    difficulty: 'intermediate',
+    topic: 'Isolation and Switching',
+    category: 'Safe Isolation',
+  },
+  {
+    id: 344,
+    question:
+      'An installation is not covered by the specific criteria in Regulation 443.4(a) to (d). What does BS 7671 then require?',
+    options: [
+      'An SPD must be fitted at the origin in every case',
+      'A risk assessment to decide if protection is needed',
+      'A declaration by the installer that risk is tolerable',
+      'A calculation of the conventional length of the line',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'For all other cases, Regulation 443.4 requires a risk assessment to determine whether protection against transient overvoltage is needed. The assessment weighs the likelihood of transient overvoltages against the consequences of them occurring.',
+    difficulty: 'advanced',
+    topic: 'Transient Overvoltage Protection',
+    category: 'Protection & Devices',
+  },
+  {
+    id: 345,
+    question:
+      'An owner declares that protection against transient overvoltage is not required. What should be done with that decision?',
+    options: [
+      'The installer must still fit a Type 2 SPD at the board',
+      'The declaration applies to a safety service as well',
+      'The circuits concerned are then coded C3 on a report',
+      'The declaration is recorded and kept with the records',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Where an owner declares under Regulation 443.4.1 that transient overvoltage protection is not required, the declaration should be recorded and retained with the installation documentation and certification, evidencing acceptance of the tolerable loss.',
+    difficulty: 'advanced',
+    topic: 'Transient Overvoltage Protection',
+    category: 'Certification & Reporting',
+  },
+  {
+    id: 346,
+    question: 'Which equipment is given as likely to produce switching overvoltages?',
+    options: [
+      'Motors, transformers and capacitor banks',
+      'Filament lamps and resistive heaters',
+      'Socket-outlets serving portable tools',
+      'Emergency luminaires and exit signs',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Inductive or capacitive equipment such as motors, transformers, capacitor banks, storage units, high current loads and variable speed drives is given as likely to produce switching overvoltages or disturbances exceeding rated impulse voltages.',
+    difficulty: 'intermediate',
+    topic: 'Transient Overvoltage Protection',
+    category: 'Protection & Devices',
+  },
+  {
+    id: 347,
+    question:
+      'Where are the applicable rated impulse voltage values for equipment selection and SPD coordination given?',
+    options: ['Table 41.3 of Chapter 41', 'Table 443.2 of Chapter 44', 'Table 54.7 of Chapter 54', 'Table 4Ab of Appendix 4'],
+    correctAnswer: 1,
+    explanation:
+      'Regulation 443.4.2 refers to disturbances exceeding the applicable rated impulse voltage of equipment according to Table 443.2, which is where the values for equipment selection and SPD coordination are taken from.',
+    difficulty: 'intermediate',
+    topic: 'Transient Overvoltage Protection',
+    category: 'Protection & Devices',
+  },
+  {
+    id: 348,
+    question: 'What does the impulse discharge current Iimp of a surge protective device describe?',
+    options: [
+      'The current the SPD passes to earth in normal use',
+      'The current at which the SPD begins to conduct fully',
+      'The maximum single impulse current it can withstand',
+      'The current the upstream device must clear on failure',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Iimp is the maximum single impulse current an SPD can withstand, referenced to a standard impulse waveform. It is one of the parameters to be considered when selecting an SPD.',
+    difficulty: 'advanced',
+    topic: 'Surge Protective Devices',
+    category: 'Protection & Devices',
+  },
+  {
+    id: 349,
+    question: 'Why must the connecting conductors of an SPD be kept as short as possible?',
+    options: [
+      'Long conductors raise the earth fault loop impedance value',
+      'Long conductors reduce the follow current the SPD passes',
+      'Long conductors alter the rated impulse voltage of the SPD',
+      'Each metre at 10 kA adds roughly 1000 V of voltage drop',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'A note in Chapter 53 records that a 1 m length of conductor carrying a discharge current of 10 kA (8/20) adds a voltage drop of about 1000 V. That added voltage is in series with the SPD and worsens the voltage protection level seen by the equipment.',
+    difficulty: 'advanced',
+    topic: 'Surge Protective Devices',
+    category: 'Protection & Devices',
+  },
+  {
+    id: 350,
+    question:
+      'Where should a Type 2 SPD be installed to satisfy the requirement to be as close as possible to the origin?',
+    options: [
+      'At the origin or adjacent to the main distribution board',
+      'At the final socket-outlet of each protected circuit',
+      'Downstream of the first RCD in the consumer unit',
+      'Within the meter cabinet on the distributor side',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The acceptance criterion is a Type 2 SPD installed at the origin or adjacent to the consumer unit or main distribution board, with evidence such as a photograph or drawing showing its location relative to the incoming supply point.',
+    difficulty: 'intermediate',
+    topic: 'Surge Protective Devices',
+    category: 'Protection & Devices',
+  },
+  {
+    id: 351,
+    question: 'Which residual current must a Type F RCD trip for, beyond the duties of a Type A?',
+    options: [
+      'Alternating residual current at the rated tripping value',
+      'Pulsating DC superimposed on a smooth direct current',
+      'Smooth direct residual current above 6 mA in the load',
+      'Residual current at frequencies below the supply value',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A Type F RCD must achieve tripping for residual pulsating direct currents superimposed on a smooth direct current. This capability sits above Type A and is intended to improve immunity where power electronic loads are supplied.',
+    difficulty: 'advanced',
+    topic: 'RCD Types',
+    category: 'Protection & Devices',
+  },
+  {
+    id: 352,
+    question: 'How is zone 1 of a sauna defined in relation to the heater?',
+    options: [
+      'The volume within 0.6 m of the door and its frame',
+      'The volume above the heater to the ceiling surface',
+      'The volume within 0.5 m of the heater surface',
+      'The volume within 1.2 m of the heater surface',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Sauna zone 1 is the volume containing the heater, limited by the floor, the cold side of the thermal insulation of the ceiling, and a vertical surface circumscribing the heater at 0.5 m from its surface.',
+    difficulty: 'advanced',
+    topic: 'Saunas',
+    category: 'Special Locations',
+  },
+  {
+    id: 353,
+    question:
+      'Which pair of protective measures may not be used in the special locations covered by Chapter 70?',
+    options: [
+      'Non-conducting location and earth-free bonding',
+      'Automatic disconnection and supplementary bonding',
+      'SELV and PELV supplied from a safety transformer',
+      'Double insulation and reinforced insulation of parts',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The protective measures of non-conducting location, Regulation 418.1, and earth-free local equipotential bonding, Regulation 418.2, shall not be used in the special installations or locations of Chapter 70. An inspector who finds protection relying on non-conductive surfaces must record non-compliance.',
+    difficulty: 'advanced',
+    topic: 'Special Locations',
+    category: 'Special Locations',
+  },
+  {
+    id: 354,
+    question:
+      'In a conducting location with restricted movement, reliance on which protective measures is prohibited?',
+    options: [
+      'Electrical separation and the use of an isolating transformer',
+      'Obstacles and placing out of reach, as given in Section 417',
+      'Automatic disconnection using a 30 mA residual current device',
+      'Supplementary bonding of simultaneously accessible parts',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Regulation 706.410.3.5 states that the protective measures of obstacles and placing out of reach, given in Section 417, shall not be used. Placing out of reach relies on distance or height keeping live parts inaccessible, which cannot be relied on where movement is restricted.',
+    difficulty: 'intermediate',
+    topic: 'Restricted Conducting Locations',
+    category: 'Special Locations',
+  },
+  {
+    id: 355,
+    question:
+      'Which height forms the horizontal plane at the upper limit of zones 1 and 2 at a swimming pool?',
+    options: ['2.00 m', '3.00 m', '1.50 m', '2.50 m'],
+    correctAnswer: 3,
+    explanation:
+      'Regulation 702.4 uses 2.50 m as the height of the horizontal plane forming the upper limit of the zones, measured from the floor or the surface expected to be occupied by persons.',
+    difficulty: 'basic',
+    topic: 'Swimming Pool Zones',
+    category: 'Special Locations',
+  },
+  {
+    id: 356,
+    question: 'What must be done where a cable is installed at a water depth greater than 10 m?',
+    options: [
+      'The cable manufacturer shall be consulted on suitability',
+      'The circuit shall be supplied at SELV not exceeding 12 V',
+      'The cable shall be enclosed in a steel wire armour sheath',
+      'The circuit shall be protected by a 10 mA device instead',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'For depths of water greater than 10 m the cable manufacturer must be consulted about the suitability of the chosen cable and any additional requirements. The consultation is mandatory once that depth is exceeded.',
+    difficulty: 'intermediate',
+    topic: 'Swimming Pools and Fountains',
+    category: 'Special Locations',
+  },
+  {
+    id: 357,
+    question:
+      'How must a final circuit intended for fixed connection to a houseboat be protected?',
+    options: [
+      'By one RCD shared across the whole distribution board',
+      'Individually, by an RCD with the specified characteristics',
+      'By an overcurrent device selected for the mooring load',
+      'By an isolating transformer at the head of the circuit',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Regulation 709.531.2 requires final circuits intended for fixed connection supplying houseboats to be protected individually by an RCD having the characteristics specified in Regulation 415.1.1. A single shared RCD does not meet the requirement.',
+    difficulty: 'intermediate',
+    topic: 'Marinas and Houseboats',
+    category: 'Special Locations',
+  },
+  {
+    id: 358,
+    question:
+      'Why may the lowest part of a socket-outlet on a caravan park be placed higher than 1.5 m?',
+    options: [
+      'To keep it out of reach of children on the site',
+      'To allow a longer flexible cable to be used safely',
+      'Because of flooding or heavy snow at the location',
+      'To keep it above the level of any vehicle exhaust',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'The note to Regulation 708.55.1.6 gives caravan and camping parks as examples where exceeding 1.5 m can be necessary because of flooding or heavy snow. The examples guide practice but do not limit the special cases to those two locations.',
+    difficulty: 'intermediate',
+    topic: 'Caravan and Camping Parks',
+    category: 'Special Locations',
+  },
+  {
+    id: 359,
+    question:
+      'On a construction site, which regulation is stated not to apply to a circuit supplying socket-outlets rated above 32 A?',
+    options: [
+      'Regulation 411.3.3 of Chapter 41',
+      'Regulation 415.2 of Chapter 41',
+      'Regulation 421.1.7 of Chapter 42',
+      'Regulation 411.3.2.5 of Chapter 41',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Regulation 704.411.3.2.1 states expressly that for any circuit supplying one or more socket-outlets with a rated current exceeding 32 A, Regulation 411.3.2.5 is not applicable. It is an explicit exception rather than a relaxation to be judged case by case.',
+    difficulty: 'advanced',
+    topic: 'Construction Sites',
+    category: 'Special Locations',
+  },
+  {
+    id: 360,
+    question: 'What change did A4:2026 make to Section 710 for medical locations?',
+    options: [
+      'Table 710 was removed from the section',
+      'Group 2 locations were taken out of it',
+      'The section was renumbered as 712',
+      'IT systems were banned in theatres',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Among the small changes in A4:2026, Table 710 was removed from Section 710. Where that table previously carried tabulated information, the amended textual requirements of Section 710 must now be consulted instead.',
+    difficulty: 'basic',
+    topic: 'Medical Locations',
+    category: 'Special Locations',
+  },
+  {
+    id: 361,
+    question:
+      'In a livestock location where feeding and watering take place, what must the equipment enclosures suit?',
+    options: [
+      'Ambient temperatures above 40 degrees Celsius',
+      'Wet and dirty conditions, and easy cleaning',
+      'Direct sunlight and ultraviolet degradation',
+      'Impact from vehicles used on the holding',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Regulation 705.513.2 requires equipment in livestock environments where feeding and watering occur to be installed in enclosures suitable for wet and dirty conditions, with ingress protection and cleanability appropriate to the environment.',
+    difficulty: 'basic',
+    topic: 'Agricultural Locations',
+    category: 'Special Locations',
+  },
+  {
+    id: 362,
+    question:
+      'What does Regulation 644.4.202 address in relation to Electrical Installation Certificates?',
+    options: [
+      'The minimum period for which they must be retained',
+      'The qualifications required of the person signing',
+      'The formats permitted and verifying authenticity',
+      'The fee that may be charged for issuing a copy',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Regulation 644.4.202 deals with the formats in which certificates may be provided and the need for authenticity and integrity to be reliably verified. It is silent on how long originals or copies must be kept.',
+    difficulty: 'intermediate',
+    topic: 'Certification',
+    category: 'Certification & Reporting',
+  },
+  {
+    id: 363,
+    question:
+      'Which work removes the option of issuing a Minor Electrical Installation Works Certificate?',
+    options: [
+      'Adding one socket-outlet to an existing ring final',
+      'Replacing a damaged accessory on a lighting circuit',
+      'Adding a spur to feed an outdoor lighting bollard',
+      'Replacing the consumer unit or distribution board',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'The permission to use a Minor Works Certificate applies only where the work does not include replacement of a distribution board or consumer unit. That work requires a full Electrical Installation Certificate instead.',
+    difficulty: 'intermediate',
+    topic: 'Certification',
+    category: 'Certification & Reporting',
+  },
+  {
+    id: 364,
+    question: 'Under Regulation 641.4, what must happen once inspection and testing is complete?',
+    options: [
+      'The instruments used must be recalibrated on site',
+      'The final circuits must be left isolated overnight',
+      'Temporary links and jumpers must all be removed',
+      'The results must be sent to the local authority',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Precautions must avoid danger to persons and livestock and damage to property, which includes returning circuits and equipment to a safe condition and removing any temporary measures such as bridges, jumpers and isolation tags after testing.',
+    difficulty: 'basic',
+    topic: 'Test Precautions',
+    category: 'Inspection & Testing',
+  },
+  {
+    id: 365,
+    question: 'Between which points is insulation resistance measured under Regulation 643.3.1?',
+    options: [
+      'Between live conductors, and live to protective conductor',
+      'Between the line conductor and the earth electrode only',
+      'Between each live conductor and the nearest metal pipe',
+      'Between the protective conductor and the main earth bar',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Insulation resistance is measured between live conductors and between live conductors and the protective conductor. Both sets of values are recorded on the Schedule of Test Results to demonstrate compliance with the required limits.',
+    difficulty: 'intermediate',
+    topic: 'Insulation Resistance',
+    category: 'Inspection & Testing',
+  },
+  {
+    id: 366,
+    question: 'What determines whether periodic inspection and testing has to be carried out?',
+    options: [
+      'The interval printed on the previous condition report',
+      'The age of the installation reaching ten years of use',
+      'The insurer of the premises asking for a fresh report',
+      'Requirements set elsewhere in BS 7671 or in statute',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Regulation 651.1 is qualified by the words where required, so the duty is conditional on requirements set out elsewhere in BS 7671, in statutory instruments or in codes of practice, rather than arising automatically from the age of an installation.',
+    difficulty: 'advanced',
+    topic: 'Periodic Inspection',
+    category: 'Inspection & Testing',
+  },
+  {
+    id: 367,
+    question:
+      'During initial verification, what may be used as evidence that equipment complies with Section 511?',
+    options: [
+      'A visual check that the equipment carries a CE mark',
+      'A certification furnished by the equipment maker',
+      'A statement of the design current on the schedule',
+      'A record of the supply characteristics at the origin',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Regulation 642.2(a) permits certification furnished by the manufacturer to be used when ascertaining compliance with Section 511 during inspection. That certification should state conformity with the relevant requirements of Section 511.',
+    difficulty: 'advanced',
+    topic: 'Initial Verification',
+    category: 'Inspection & Testing',
+  },
+  {
+    id: 368,
+    question: 'For which conductors must the single colour green not be used?',
+    options: [
+      'Line conductors of a three-phase final circuit',
+      'Neutral conductors within a distribution board',
+      'Functional earthing and bonding conductors',
+      'Bare protective conductors within an enclosure',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Regulation 514.4.5 states that the single colour green shall not be used for the identification of functional earthing and bonding conductors. Green combined with yellow remains the identification for protective conductors.',
+    difficulty: 'basic',
+    topic: 'Identification of Conductors',
+    category: 'Cables & Containment',
+  },
+  {
+    id: 369,
+    question: 'What does the instruction notice required at an RCD tell the user to do?',
+    options: [
+      'Press the test button, then switch the device on',
+      'Press the test button once every twelve months',
+      'Call the installer before operating the device',
+      'Record each test in a log kept at the premises',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The notice sets out that pressing the test button should operate the device, after which it is manually switched back on. If the device fails to operate or indicates a fault, the user is told to seek expert advice.',
+    difficulty: 'basic',
+    topic: 'Notices and Labelling',
+    category: 'Certification & Reporting',
+  },
+  {
+    id: 370,
+    question:
+      'A separable transformer supplies two machine tools using electrical separation. What does Regulation 514.13.2 require?',
+    options: [
+      'A residual current device in each secondary circuit',
+      'An earth electrode connected to the secondary side',
+      'A label giving the maximum load of the transformer',
+      'A warning notice at every point of access to the room',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Where electrical separation is used to supply more than one item of equipment, a warning notice complying with Regulation 514.13.2 must be fixed in a prominent position adjacent to every point of access to the room or enclosure concerned.',
+    difficulty: 'intermediate',
+    topic: 'Notices and Labelling',
+    category: 'Design & Selection',
+  },
+  {
+    id: 371,
+    question: 'Why must the results of testing be compared with the relevant criteria?',
+    options: [
+      'It sets the interval before the next inspection',
+      'It confirms the instrument was within calibration',
+      'It is the basis for issuing certificates and reports',
+      'It fixes the code allocated to each observation',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'The note to Regulation 641.3 makes the comparison of results with the relevant criteria the basis on which certificates, schedules of test results and reports are issued. Without that documented comparison, compliance cannot reliably be claimed.',
+    difficulty: 'intermediate',
+    topic: 'Verification',
+    category: 'Inspection & Testing',
   },
 ];
 

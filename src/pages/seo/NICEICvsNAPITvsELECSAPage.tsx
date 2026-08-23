@@ -637,7 +637,7 @@ export default function NICEICvsNAPITvsELECSAPage() {
       faqHeading="Frequently Asked Questions About NICEIC, NAPIT, ELECSA, and STROMA"
       relatedPages={relatedPages}
       ctaHeading="Professional Certificates for Any Scheme Assessment"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EICs, EICRs, and minor works certificates — assessment-ready documentation accepted by NICEIC, NAPIT, ELECSA, and STROMA. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EICs, EICRs, and minor works certificates — assessment-ready documentation accepted by NICEIC, NAPIT, ELECSA, and STROMA. 7-day free trial."
     />
   );
 }

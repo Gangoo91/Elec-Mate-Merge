@@ -283,5 +283,5 @@ export const eicrCostCardiffConfig: GeneratedGuideConfig = {
   ],
   ctaHeading: 'For Electricians: Quote and Certify EICRs in Cardiff',
   ctaSubheading:
-    'Join 1,000+ UK electricians using Elec-Mate to inspect, certify and quote EICRs on their phone. Voice-driven test entry, 19 certificate types, on-site PDF. 7-day free trial.',
+    'Join 1,600+ UK electricians using Elec-Mate to inspect, certify and quote EICRs on their phone. Voice-driven test entry, 19 certificate types, on-site PDF. 7-day free trial.',
 };

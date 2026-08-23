@@ -493,7 +493,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Produce EICR and EIC reports on site with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site certificate completion. EICR, EIC…"
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site certificate completion. EICR, EIC…"
           icon={FileCheck2}
         />
       </>
@@ -530,7 +530,7 @@ export default function EICRForNewBuildPage() {
       faqHeading="Frequently Asked Questions: EICR for New Builds"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs and EICs on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site certificate production. EICR, EIC, and snagging reports — all on your phone with AI assistance and instant PDF export. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site certificate production. EICR, EIC, and snagging reports — all on your phone with AI assistance and instant PDF export. 7-day free trial."
     />
   );
 }

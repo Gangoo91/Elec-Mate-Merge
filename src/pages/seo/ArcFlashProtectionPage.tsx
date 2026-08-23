@@ -826,7 +826,7 @@ export default function ArcFlashProtectionPage() {
       faqHeading="Frequently Asked Questions About Arc Flash Protection"
       relatedPages={relatedPages}
       ctaHeading="Generate Arc Flash Risk Assessments in Minutes"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate's AI Health and Safety agent to create arc flash risk assessments, PPE selection guidance, and complete RAMS packages. Describe the installation, get a professional document. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate's AI Health and Safety agent to create arc flash risk assessments, PPE selection guidance, and complete RAMS packages. Describe the installation, get a professional document. 7-day free trial, cancel anytime."
     />
   );
 }

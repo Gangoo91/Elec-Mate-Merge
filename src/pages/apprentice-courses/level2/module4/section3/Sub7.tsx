@@ -193,7 +193,7 @@ const quizQuestions = [
     ],
     correctAnswer: 0,
     explanation:
-      'Any breach of the isolation security means stopping work and re-verifying the dead state. The MCB might have been switched on briefly while the lockout was off; the circuit may now be live. The correct response is: stop, re-test isolation at the point of work, re-prove the voltage indicator after the test, re-secure the lockout properly, then resume work. Continuing on the assumption "it&rsquo;s still off because nobody touched it" is the kind of assumption that leads to fatalities.',
+      'Any breach of the isolation security means stopping work and re-verifying the dead state. The MCB might have been switched on briefly while the lockout was off; the circuit may now be live. The correct response is: stop, re-test isolation at the point of work, re-prove the voltage indicator after the test, re-secure the lockout properly, then resume work. Continuing on the assumption "it’s still off because nobody touched it" is the kind of assumption that leads to fatalities.',
   },
 ];
 
@@ -605,7 +605,7 @@ export default function Sub7() {
           <ConceptBlock
             title="Step 7 — Re-prove the voltage indicator on a known supply (or proving unit)"
             plainEnglish="After testing for dead at step 6, prove the indicator works AGAIN — same as step 3. This is the critical step that catches a failed indicator mid-test. If the indicator broke between step 3 and step 6 (battery died, lead came loose, internal failure), step 7 catches it and you know step 6 was unreliable."
-            onSite="Step 7 is the step that separates a competent procedure from a tragic one. A working indicator at step 3, a &lsquo;dead&rsquo; reading at step 6, a failed indicator at step 7 — that is when you know the circuit might still be live and step 6 lied to you. Repeat the test for dead if step 7 fails."
+            onSite="Step 7 is the step that separates a competent procedure from a tragic one. A working indicator at step 3, a ‘dead’ reading at step 6, a failed indicator at step 7 — that is when you know the circuit might still be live and step 6 lied to you. Repeat the test for dead if step 7 fails."
           >
             <p>
               Step 7 mechanics:

@@ -625,7 +625,7 @@ export default function AppendixFourTablesGuidePage() {
       faqHeading="Frequently Asked Questions About BS 7671 Appendix 4 Tables"
       relatedPages={relatedPages}
       ctaHeading="Size Cables Correctly Every Time"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate's 70+ calculators including cable sizing with automatic Appendix 4 table selection and correction factor application. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate's 70+ calculators including cable sizing with automatic Appendix 4 table selection and correction factor application. 7-day free trial, cancel anytime."
     />
   );
 }

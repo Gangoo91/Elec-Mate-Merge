@@ -562,7 +562,7 @@ export default function GDPRForElectriciansPage() {
       faqHeading="Frequently Asked Questions About GDPR for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Keep Customer Data Secure"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for secure customer records, certificates, and invoices. Cloud-encrypted, backed up, always accessible. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for secure customer records, certificates, and invoices. Cloud-encrypted, backed up, always accessible. 7-day free trial, cancel anytime."
     />
   );
 }

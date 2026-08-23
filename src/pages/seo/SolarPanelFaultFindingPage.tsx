@@ -479,7 +479,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Certificate solar PV installations with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate to certificate solar PV installations, complete EICRs, and generate BS 7671-compliant documentation on site."
+          description="Join 1,600+ UK electricians using Elec-Mate to certificate solar PV installations, complete EICRs, and generate BS 7671-compliant documentation on site."
           icon={Sun}
         />
       </>
@@ -516,7 +516,7 @@ export default function SolarPanelFaultFindingPage() {
       faqHeading="Frequently Asked Questions About Solar Panel Faults"
       relatedPages={relatedPages}
       ctaHeading="Certificate Solar PV Installations on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for solar PV commissioning certificates, EICRs, and BS 7671-compliant documentation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for solar PV commissioning certificates, EICRs, and BS 7671-compliant documentation. 7-day free trial, cancel anytime."
     />
   );
 }

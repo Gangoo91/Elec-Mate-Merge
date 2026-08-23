@@ -514,7 +514,7 @@ export default function HouseExtensionElectricalCostPage() {
       faqHeading="Frequently Asked Questions About House Extension Electrical Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Your Extension Electrical Work in Minutes"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to create professional electrical quotes, issue EICs on site, and manage multi-stage extension jobs. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to create professional electrical quotes, issue EICs on site, and manage multi-stage extension jobs. 7-day free trial, cancel anytime."
     />
   );
 }

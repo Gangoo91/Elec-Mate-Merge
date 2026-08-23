@@ -599,7 +599,7 @@ export default function WiringColoursUKPage() {
           category: 'Regulations',
         },
         {
-          href: '/earthing-arrangements',
+          href: '/guides/earthing-systems-tns-tncs-tt-explained',
           title: 'Earthing Arrangements',
           description: 'TN-S, TN-C-S, and TT earthing systems explained.',
           icon: Cable,

@@ -227,7 +227,7 @@ const faqs = [
   {
     question: 'What CPD should I undertake after completing my apprenticeship?',
     answer:
-      'Focus on: staying current with BS 7671 amendments (Amendment 2 is current as of 2022), developing specialist knowledge in your area of work (e.g., EV charging, renewable energy, building management systems), pursuing additional qualifications (such as the City & Guilds 2391 Inspection and Testing), attending manufacturer training on equipment you maintain, and reading industry publications such as IET Wiring Matters.',
+      'Focus on: staying current with BS 7671 amendments (Amendment 4:2026 is current), developing specialist knowledge in your area of work (e.g., EV charging, renewable energy, building management systems), pursuing additional qualifications (such as the City & Guilds 2391 Inspection and Testing), attending manufacturer training on equipment you maintain, and reading industry publications such as IET Wiring Matters.',
   },
   {
     question:

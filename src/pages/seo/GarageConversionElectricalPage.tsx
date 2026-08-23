@@ -466,7 +466,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your garage conversion jobs with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for EIC certificates, quoting, and job management. Complete more jobs with less paperwork. 7-day free trial."
+          description="Join 1,600+ UK electricians using Elec-Mate for EIC certificates, quoting, and job management. Complete more jobs with less paperwork. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -503,7 +503,7 @@ export default function GarageConversionElectricalPage() {
       faqHeading="Frequently Asked Questions About Garage Conversion Electrical Work"
       relatedPages={relatedPages}
       ctaHeading="Complete Garage Conversion EICs on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, quoting, and Part P compliance. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion, quoting, and Part P compliance. 7-day free trial, cancel anytime."
     />
   );
 }

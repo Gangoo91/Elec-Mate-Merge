@@ -601,7 +601,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your electrical business from your phone"
-          description="Elec-Mate gives electricians professional quoting, invoicing, job management, and certification in one app. Join 1,000+ UK electricians. 7-day free trial."
+          description="Elec-Mate gives electricians professional quoting, invoicing, job management, and certification in one app. Join 1,600+ UK electricians. 7-day free trial."
           icon={Globe}
         />
       </>

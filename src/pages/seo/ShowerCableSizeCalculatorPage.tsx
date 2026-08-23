@@ -483,7 +483,7 @@ export default function ShowerCableSizeCalculatorPage() {
         },
       ]}
       ctaHeading="Size shower circuits with confidence"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, voltage drop, and certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, voltage drop, and certification. 7-day free trial, cancel anytime."
       toolPath="/tools/shower-cable-size-calculator"
     />
   );

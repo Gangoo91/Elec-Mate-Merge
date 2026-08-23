@@ -601,7 +601,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify fire alarm systems"
-          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, fire alarm certification, and on-site documentation. 7-day free trial."
+          description="Join 1,600+ UK electricians using Elec-Mate for professional quoting, fire alarm certification, and on-site documentation. 7-day free trial."
           icon={Flame}
         />
       </>
@@ -638,7 +638,7 @@ export default function FireAlarmInstallationCostPage() {
       faqHeading="Frequently Asked Questions About Fire Alarm Installation Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify Fire Alarm Installations on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for fire alarm quoting, certification, and on-site documentation. Professional results, every time. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for fire alarm quoting, certification, and on-site documentation. Professional results, every time. 7-day free trial, cancel anytime."
     />
   );
 }

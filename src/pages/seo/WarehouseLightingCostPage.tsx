@@ -526,7 +526,7 @@ export default function WarehouseLightingCostPage() {
       faqHeading="Frequently Asked Questions About Warehouse Lighting Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Warehouse Lighting with Per-Fitting Pricing"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for commercial lighting quotes with fitting schedules, energy saving calculations, and professional PDF output. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for commercial lighting quotes with fitting schedules, energy saving calculations, and professional PDF output. 7-day free trial."
     />
   );
 }

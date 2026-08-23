@@ -554,7 +554,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Track EICR due dates for all your landlord clients"
-          description="Join 1,000+ UK electricians using Elec-Mate to complete on-site EICRs and track reinspection schedules."
+          description="Join 1,600+ UK electricians using Elec-Mate to complete on-site EICRs and track reinspection schedules."
           icon={FileCheck2}
         />
       </>
@@ -591,7 +591,7 @@ export default function EICRFrequencyGuidePage() {
       faqHeading="Frequently Asked Questions: EICR Frequency"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs on Your Phone with Elec-Mate"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion. Track reinspection dates, send PDFs to landlords on site, and build a recurring inspection client base. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion. Track reinspection dates, send PDFs to landlords on site, and build a recurring inspection client base. 7-day free trial."
     />
   );
 }

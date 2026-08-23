@@ -729,7 +729,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional VAT invoicing for electricians — Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for professional invoicing. VAT-compliant invoices with correct labour/materials splits…"
+          description="Join 1,600+ UK electricians using Elec-Mate for professional invoicing. VAT-compliant invoices with correct labour/materials splits…"
           icon={Receipt}
         />
       </>
@@ -773,7 +773,7 @@ export default function VATForElectriciansPage() {
       faqHeading="Frequently Asked Questions About VAT for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Professional VAT Invoicing on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for VAT-compliant invoicing. Correctly separated labour and materials, sent as professional PDFs from your phone. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for VAT-compliant invoicing. Correctly separated labour and materials, sent as professional PDFs from your phone. 7-day free trial, cancel anytime."
     />
   );
 }

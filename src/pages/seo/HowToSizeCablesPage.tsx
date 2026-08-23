@@ -76,7 +76,7 @@ const appPreviewFeatures = [
   },
   {
     icon: FileCheck,
-    title: '16 Certificate Types',
+    title: '19 Certificate Types',
     description:
       'EICR, EIC, Minor Works, EV Charger, Emergency Lighting, Fire Alarm, Solar PV, and PAT \u2014 auto-filled, digitally signed, PDF exported.',
   },
@@ -665,7 +665,7 @@ export default function HowToSizeCablesPage() {
 
       <SEOCTASection
         heading="Size Cables in Seconds, Not Minutes"
-        subheading="Join 1,000+ UK electricians using Elec-Mate. 70+ calculators, 19 certificate types, 8 Elec-AI agents, and 46+ training courses — all BS 7671:2018+A4:2026 compliant."
+        subheading="Join 1,600+ UK electricians using Elec-Mate. 70+ calculators, 19 certificate types, 8 Elec-AI agents, and 46+ training courses — all BS 7671:2018+A4:2026 compliant."
       />
     </PublicPageLayout>
   );

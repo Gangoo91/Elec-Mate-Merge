@@ -852,7 +852,7 @@ export default function ElectricShowerFaultFindingPage() {
       faqHeading="Frequently Asked Questions — Electric Shower Faults"
       relatedPages={relatedPages}
       ctaHeading="Complete Electrical Certificates On Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for Electrical Installation Certificates, Minor Works certificates, and on-site quoting. No evening paperwork. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for Electrical Installation Certificates, Minor Works certificates, and on-site quoting. No evening paperwork. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -759,7 +759,7 @@ const HNCModule2Section5_1 = () => {
 
           <KeyTakeaways
             points={[
-              'Solar altitude β and azimuth γs fix the sun&rsquo;s position; both are functions of latitude, declination and hour angle.',
+              'Solar altitude β and azimuth γs fix the sun’s position; both are functions of latitude, declination and hour angle.',
               'Solar declination δ varies sinusoidally between +23.45° (summer solstice) and -23.45° (winter solstice).',
               'Global irradiance G = Ib + Id (direct beam + diffuse).',
               'Solar constant ≈ 1361 W/m² at top of atmosphere; surface peak ≈ 1000 W/m² on a clear day.',

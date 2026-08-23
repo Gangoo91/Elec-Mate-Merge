@@ -776,7 +776,7 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
 
       <SEOCTASection
         heading="Calculate fault current in seconds, not minutes"
-        subheading="Join 1,000+ UK electricians using 70 professional calculators on their phone. 7-day free trial, cancel anytime."
+        subheading="Join 1,600+ UK electricians using 70 professional calculators on their phone. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom spacer for mobile sticky CTA */}

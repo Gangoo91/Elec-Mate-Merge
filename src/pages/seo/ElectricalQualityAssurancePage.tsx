@@ -628,7 +628,7 @@ export default function ElectricalQualityAssurancePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Professional quality documentation tools"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for BS 7671-compliant certification, professional test documentation, and digital record-keeping. Build your reputation for quality. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for BS 7671-compliant certification, professional test documentation, and digital record-keeping. Build your reputation for quality. 7-day free trial, cancel anytime."
     />
   );
 }

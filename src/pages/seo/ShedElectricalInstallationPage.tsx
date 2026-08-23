@@ -661,7 +661,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify shed electrics"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
+          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
           icon={Home}
         />
       </>
@@ -698,7 +698,7 @@ export default function ShedElectricalInstallationPage() {
       faqHeading="Frequently Asked Questions About Shed Electrical Installation"
       relatedPages={relatedPages}
       ctaHeading="Size Cables and Certify Shed Installations on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates for outbuilding installations. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates for outbuilding installations. 7-day free trial, cancel anytime."
     />
   );
 }

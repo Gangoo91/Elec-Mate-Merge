@@ -683,7 +683,7 @@ export default function CableSizingCalculatorPage() {
 
       <SEOCTASection
         heading="Stop flipping through cable sizing tables"
-        subheading="Join 1,000+ UK electricians using Elec-Mate to size cables in seconds. 7-day free trial, cancel anytime."
+        subheading="Join 1,600+ UK electricians using Elec-Mate to size cables in seconds. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom spacer for mobile sticky CTA */}

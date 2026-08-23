@@ -293,7 +293,7 @@ export default function SolarPanelInstallationPage() {
               </p>
               <p>
                 Always verify the{' '}
-                <SEOInternalLink href="/earthing-arrangements">
+                <SEOInternalLink href="/guides/earthing-systems-tns-tncs-tt-explained">
                   earthing arrangement
                 </SEOInternalLink>{' '}
                 by inspecting the supply and measuring Ze before designing the PV installation
@@ -720,7 +720,7 @@ export default function SolarPanelInstallationPage() {
           category: 'Calculator',
         },
         {
-          href: '/earthing-arrangements',
+          href: '/guides/earthing-systems-tns-tncs-tt-explained',
           title: 'Earthing Arrangements',
           description: 'TN-S, TN-C-S, and TT earthing — critical for PV installations.',
           icon: Cable,

@@ -281,7 +281,7 @@ const HNCModule4Section6_3 = () => {
           <TLDR
             points={[
               'Schedules tabulate the design — equipment, cables, luminaires, emergency lights, controls — with unique tags that join drawings and specs.',
-              'Cable schedule is the engineering record: From → To, route, csa, type, length, voltage drop, protective device, fault level. Drives O&amp;M and EIC.',
+              'Cable schedule is the engineering record: From → To, route, csa, type, length, voltage drop, protective device, fault level. Drives O&M and EIC.',
               'Luminaire schedule pairs design intent (Em, UGR, Ra, CCT) with product (manufacturer, model code, lamp/driver, mounting, IP). Emergency lighting on its own schedule.',
               'BS 7671 Appendix 6 schedules (circuit details, test results, inspection schedule) are the legal record at handover — they live alongside the engineer’s schedules, not instead of them.',
               'Reg 514.12.1 instruction notice (dates of last and next periodic inspection) sits at the DB — it is the schedule of record for the next dutyholder.',

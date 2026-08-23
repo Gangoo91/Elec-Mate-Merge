@@ -859,7 +859,7 @@ The requirements of this regulation are met if the earth fault loop impedance of
             ]}
           />
 
-          <Quiz title="TT systems &amp; earth electrode design — knowledge check" questions={quizQuestions} />
+          <Quiz title="TT systems & earth electrode design — knowledge check" questions={quizQuestions} />
 
           <div className="grid grid-cols-2 gap-3 pt-2">
             <button

@@ -706,7 +706,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote garden lighting and outdoor electrical work"
-          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification."
+          description="Join 1,600+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification."
           icon={TreePine}
         />
       </>
@@ -744,7 +744,7 @@ export default function GardenLightingCostPage() {
       faqHeading="Frequently Asked Questions About Garden Lighting Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Garden Lighting Projects with Confidence"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, itemised quoting, and on-site EIC certification. Win more outdoor lighting work with professional quotes. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, itemised quoting, and on-site EIC certification. Win more outdoor lighting work with professional quotes. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -469,7 +469,7 @@ export default function PolarityTestingPage() {
       faqHeading="Frequently Asked Questions About Polarity Testing"
       relatedPages={relatedPages}
       ctaHeading="Record Polarity Tests and Complete EICs on Your Phone"
-      ctaSubheading="Elec-Mate captures polarity test results for all circuits and generates professional test schedules on site. Join 1,000+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate captures polarity test results for all circuits and generates professional test schedules on site. Join 1,600+ UK electricians. 7-day free trial."
     />
   );
 }

@@ -172,7 +172,7 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      'Motor power rating is the primary factor in starter selection. Small motors (&lt;7.5 kW) typically use DOL starters, medium motors may use star-delta starters, and larger motors often require soft starters or VSDs to limit starting current and mechanical stress.',
+      'Motor power rating is the primary factor in starter selection. Small motors (<7.5 kW) typically use DOL starters, medium motors may use star-delta starters, and larger motors often require soft starters or VSDs to limit starting current and mechanical stress.',
   },
   {
     id: 8,

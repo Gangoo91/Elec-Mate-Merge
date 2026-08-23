@@ -764,7 +764,7 @@ export default function HiringFirstEmployeePage() {
       faqHeading="Frequently Asked Questions About Hiring Employees"
       relatedPages={relatedPages}
       ctaHeading="Grow Your Team with Professional Tools"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Consistent quality across your team. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, and job management. Consistent quality across your team. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -52,7 +52,7 @@ export default function ElectricalCertificateSoftwarePage() {
       }
       heroSubtitle="Choosing electrical certificate software comes down to four things: which certificates it covers, what it costs per certificate, how fast it is on site, and whether the forms are current with BS 7671:2018+A4:2026. Elec-Mate covers 19 certificate types with unlimited usage from £6.99/month — with an AI board scanner, voice test entry, and full offline support."
       heroFeaturePills={[
-        { icon: FileCheck2, label: '16 Certificate Types' },
+        { icon: FileCheck2, label: '19 Certificate Types' },
         { icon: PoundSterling, label: 'Unlimited — No Per-Cert Fees' },
         { icon: ShieldCheck, label: 'A4:2026 Model Forms' },
         { icon: WifiOff, label: 'Works Offline' },
@@ -60,7 +60,7 @@ export default function ElectricalCertificateSoftwarePage() {
       readingTime={9}
       keyTakeaways={[
         'Good electrical certificate software should cover the certificates you actually issue — EICR, EIC, and Minor Works as a minimum, plus EV charger, solar PV, fire alarm, emergency lighting, and PAT if you do that work.',
-        'Pricing models differ sharply across the market: some software charges per certificate or per AI credit, which penalises busy electricians. Elec-Mate includes unlimited certificates across all 16 types from £6.99/month.',
+        'Pricing models differ sharply across the market: some software charges per certificate or per AI credit, which penalises busy electricians. Elec-Mate includes unlimited certificates across all 19 types from £6.99/month.',
         'Forms must follow the current BS 7671:2018+A4:2026 Appendix 6 model forms, including the SPD and AFDD recording fields — certificates produced on out-of-date forms create avoidable scheme-assessment questions.',
         'Speed on site comes from automation: an AI board scanner that reads the consumer unit from a photo, voice entry for test results, and automatic validation of readings against BS 7671 maximum values.',
         'Offline capability is non-negotiable — plant rooms, basements, and rural jobs regularly have no signal, and certificate software that needs a connection stops the job.',
@@ -215,7 +215,7 @@ export default function ElectricalCertificateSoftwarePage() {
               </p>
               <p>
                 Elec-Mate charges a flat subscription from £6.99/month with unlimited certificate
-                generation across all 16 types. No per-certificate fees, no credits, no caps. The
+                generation across all 19 types. No per-certificate fees, no credits, no caps. The
                 subscription also includes 70+ BS 7671 calculators, AI tools, training courses, and
                 quoting and invoicing — so the certificate software is one part of a complete
                 platform rather than a separate line on your software bill.
@@ -346,7 +346,7 @@ export default function ElectricalCertificateSoftwarePage() {
       features={[
         {
           icon: FileCheck2,
-          title: '16 Certificate Types',
+          title: '19 Certificate Types',
           description:
             'EICR, EIC, Minor Works, EV Charger, Solar PV, Fire Alarm, Emergency Lighting, PAT and more — all included, unlimited usage.',
         },

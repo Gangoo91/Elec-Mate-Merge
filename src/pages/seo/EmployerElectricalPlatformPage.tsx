@@ -216,7 +216,7 @@ export default function EmployerElectricalPlatformPage() {
                 produced by the team:
               </p>
               <ul className="list-disc pl-6 space-y-2">
-                <li>All certificates across all 16 types in one searchable list</li>
+                <li>All certificates across all 19 types in one searchable list</li>
                 <li>Status tracking — draft, in progress, completed, delivered, and archived</li>
                 <li>
                   Quality review — managers can review certificates before they are sent to clients
@@ -369,7 +369,7 @@ export default function EmployerElectricalPlatformPage() {
           icon: FileCheck2,
           title: 'Certificate Oversight',
           description:
-            'Review, approve, and track all certificates across 16 types. Search by property, client, date, or electrician.',
+            'Review, approve, and track all certificates across 19 types. Search by property, client, date, or electrician.',
         },
         {
           icon: Shield,

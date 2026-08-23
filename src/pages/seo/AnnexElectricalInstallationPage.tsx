@@ -728,7 +728,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify annex electrics"
-          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification."
+          description="Join 1,600+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification."
           icon={Home}
         />
       </>
@@ -765,7 +765,7 @@ export default function AnnexElectricalInstallationPage() {
       faqHeading="Frequently Asked Questions About Annex Electrical Installation"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify Annex Installations on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certificates for annex installations. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certificates for annex installations. 7-day free trial, cancel anytime."
     />
   );
 }

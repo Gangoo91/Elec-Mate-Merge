@@ -571,7 +571,7 @@ const EmergencyLightingCalculator = () => {
                       formula: `(${result.totalLuminaires} × ${fixtureProfiles[fixtureType as keyof typeof fixtureProfiles]?.lumens} lm) ÷ ${floorArea}m²`,
                       value: `${result.illuminanceAchieved.toFixed(1)} lux`,
                       description:
-                        'BS 5266-1 requires minimum 1 lux on escape route centrelines and 0.5 lux in open areas. Uniformity ratio must not exceed 40:1.',
+                        'BS 5266-1 requires minimum 1 lux across the FULL WIDTH of an escape route (not just the centre line) and 0.5 lux in open areas. Uniformity ratio must not exceed 40:1.',
                     },
                   ]}
                 />
@@ -614,8 +614,8 @@ const EmergencyLightingCalculator = () => {
                               className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
                               style={{ backgroundColor: config.gradientFrom }}
                             />
-                            Escape routes: minimum 1 lux on the centreline, changeover within 0.5
-                            seconds
+                            Escape routes: minimum 1 lux across the full route width, changeover
+                            within 0.5 seconds
                           </li>
                           <li className="flex items-start gap-2 text-sm text-white">
                             <span

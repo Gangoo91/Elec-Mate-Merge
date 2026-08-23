@@ -22,7 +22,10 @@ function escapeIcsText(text: string): string {
 
 /** UTC basic format — 20260817T080000Z. */
 function formatIcsDate(iso: string): string {
-  return new Date(iso).toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+  return new Date(iso)
+    .toISOString()
+    .replace(/[-:]/g, '')
+    .replace(/\.\d{3}/, '');
 }
 
 /**
@@ -40,6 +43,8 @@ function foldLine(line: string): string {
   if (rest.length) parts.push(` ${rest}`);
   return parts.join('\r\n');
 }
+
+import { saveOrShareFile } from '@/utils/save-or-share-file';
 
 export interface IcsEvent {
   uid: string;
@@ -79,19 +84,17 @@ export function buildIcs(events: IcsEvent[]): string {
   return lines.join('\r\n');
 }
 
-/** Trigger a download. Safe to call from a click handler. */
-export function downloadIcs(filename: string, events: IcsEvent[]): void {
+/**
+ * Hand the calendar file to the user. Safe to call from a click handler.
+ *
+ * Was an `<a download>`, which WKWebView ignores — so on native nothing
+ * happened, which for a calendar invite means the event simply never got added.
+ * `saveOrShareFile` opens the share sheet there, where iOS offers Calendar
+ * directly, and still downloads on web.
+ */
+export async function downloadIcs(filename: string, events: IcsEvent[]): Promise<void> {
   const blob = new Blob([buildIcs(events)], {
     type: 'text/calendar;charset=utf-8',
   });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = filename.endsWith('.ics') ? filename : `${filename}.ics`;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  // Revoke on the next tick — revoking synchronously cancels the download in
-  // Safari before it has read the blob.
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  await saveOrShareFile(blob, filename.endsWith('.ics') ? filename : `${filename}.ics`);
 }

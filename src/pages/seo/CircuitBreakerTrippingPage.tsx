@@ -682,7 +682,7 @@ export default function CircuitBreakerTrippingPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Diagnose Circuit Faults Faster with Elec-Mate"
-      ctaSubheading="Max demand calculator, board scanner, AI fault diagnosis, and digital EICR forms. Join 1,000+ UK electricians. 7-day free trial, cancel anytime."
+      ctaSubheading="Max demand calculator, board scanner, AI fault diagnosis, and digital EICR forms. Join 1,600+ UK electricians. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -623,7 +623,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Be ready for Amendment 4 on day one"
-          description="Join 1,000+ UK electricians using Elec-Mate for certificates, calculations, AI agents, and CPD."
+          description="Join 1,600+ UK electricians using Elec-Mate for certificates, calculations, AI agents, and CPD."
           icon={ShieldCheck}
         />
       </>

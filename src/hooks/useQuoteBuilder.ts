@@ -9,6 +9,7 @@ import { generateSequentialQuoteNumber } from '@/utils/quote-number-generator';
 import { supabase } from '@/integrations/supabase/client';
 import { logger, generateRequestId } from '@/utils/logger';
 import { computeQuoteTotals } from '@/utils/quote-calculations';
+import { moveLineItemUp, moveLineItemDown } from '@/utils/lineItemReorder';
 import { openOrDownloadPdf } from '@/utils/pdf-download';
 
 export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Quote) => {
@@ -104,6 +105,23 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
     }));
   }, []);
 
+  /**
+   * ELE-1548 — move a line up or down. No totals recalculation: order does not
+   * affect any total, and running one anyway would re-derive every item's
+   * price on a purely presentational change.
+   */
+  const moveItem = useCallback((itemId: string, direction: 'up' | 'down') => {
+    setQuote((prev) => {
+      const items = prev.items || [];
+      const next =
+        direction === 'up' ? moveLineItemUp(items, itemId) : moveLineItemDown(items, itemId);
+      // Already at the end it can move to — return prev untouched so this does
+      // not stamp updatedAt and wake the autosave for a no-op.
+      if (next === items) return prev;
+      return { ...prev, items: next, updatedAt: new Date() };
+    });
+  }, []);
+
   const calculateTotals = useCallback(() => {
     const items = quote.items || [];
     const settings = quote.settings;
@@ -126,6 +144,12 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
 
   // Cloud auto-save — upserts draft to Supabase every 10s when data changes
   const lastSavedRef = useRef<string>('');
+  /**
+   * Creation instant for a quote that has no `createdAt` yet (a brand-new
+   * draft). Held in a ref so every autosave in this session anchors the expiry
+   * to the SAME moment — see the expiry_date derivation in persistDraft.
+   */
+  const draftAnchorRef = useRef<number | null>(null);
   const isPersistingDraftRef = useRef(false);
   const [cloudSaveStatus, setCloudSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>(
     'idle'
@@ -173,7 +197,26 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
         subtotal: finalQuote.subtotal || 0,
         overhead: 0,
         profit: 0,
-        discount_amount: finalQuote.discountAmount || 0,
+        /*
+         * `discount_amount` is NOT sent — the column does not exist on
+         * `quotes`, and PostgREST rejects the whole request when it sees one:
+         *
+         *   PGRST204 — Could not find the 'discount_amount' column of
+         *   'quotes' in the schema cache
+         *
+         * That failed the ENTIRE upsert, so no draft was ever autosaved. The
+         * footer sat on "Retrying" and an interrupted quote was simply lost.
+         * Present since 4d85e1984 (11 Apr 2026) and silent because the catch
+         * logs the error object, which prints as "Object".
+         *
+         * Nothing is lost by dropping it: the value is derivable
+         * (subtotal + overhead + profit − (total − vat)), it is what
+         * `accounting-sync-invoice` already derives rather than reads, and
+         * every read site (`useQuoteStorage`, `useInvoiceStorage`,
+         * `QuoteViewPage`) already tolerates it being absent.
+         *
+         * ⚠️ Do not re-add it without adding the column first.
+         */
         vat_amount: finalQuote.vatAmount || 0,
         total: finalQuote.total || 0,
         status: 'draft',
@@ -191,8 +234,57 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
 
       if (!lastSavedRef.current) {
         dbData.created_at = new Date().toISOString();
-        dbData.expiry_date = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
       }
+
+      /*
+       * `expiry_date` is NOT NULL with no database default, and this is an
+       * UPSERT — PostgREST builds INSERT … ON CONFLICT DO UPDATE, so Postgres
+       * validates the INSERT tuple whether or not the row already exists.
+       * Omitting the column therefore fails EVERY time, not just on insert:
+       *
+       *   23502 — null value in column "expiry_date" of relation "quotes"
+       *
+       * It used to be sent only on the first save, so autosave worked exactly
+       * once and then failed silently for the rest of the session. Always sent
+       * now.
+       *
+       * ⚠️ Derived the same way as the real save in useQuoteStorage, NOT from
+       * `Date.now()`. Saving is not the same event as issuing: measuring from
+       * the save would push the expiry forward on every keystroke-triggered
+       * autosave, silently extending a deadline the client had already been
+       * given (ELE-1576). A per-quote `validForDays` wins, anchored to the
+       * quote's CREATION date; otherwise the existing expiry stands.
+       */
+      dbData.expiry_date = (() => {
+        /*
+         * The anchor is the quote's creation instant, held in a ref so it is
+         * stable for the life of the builder.
+         *
+         * Measured: with the anchor taken as `Date.now()` at each save, the
+         * stored window came out as "30 days 00:02:51" — the expiry crept
+         * forward by however long the quote had been open. Harmless on a draft,
+         * but the same expression governs a quote that has been sent, and there
+         * it silently extends a deadline the client was already given
+         * (ELE-1576).
+         */
+        const anchorMs = (() => {
+          const fromQuote = quote.createdAt ? new Date(quote.createdAt).getTime() : NaN;
+          if (Number.isFinite(fromQuote)) return fromQuote;
+          if (!draftAnchorRef.current) draftAnchorRef.current = Date.now();
+          return draftAnchorRef.current;
+        })();
+
+        const days = quote.settings?.validForDays;
+        if (typeof days === 'number' && days > 0) {
+          return new Date(anchorMs + days * 24 * 60 * 60 * 1000).toISOString();
+        }
+        if (quote.expiryDate) {
+          return quote.expiryDate instanceof Date
+            ? quote.expiryDate.toISOString()
+            : new Date(quote.expiryDate).toISOString();
+        }
+        return new Date(anchorMs + 30 * 24 * 60 * 60 * 1000).toISOString();
+      })();
 
       // ELE-1466 — take back whatever number the DB assigned. quote_number is
       // sent as null until a row exists; the assign_document_numbers trigger
@@ -213,7 +305,18 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
       setCloudSaveStatus('saved');
       return true;
     } catch (err) {
-      console.warn('[QuoteBuilder] Cloud auto-save failed:', err);
+      // Logged FIELD BY FIELD, not as the raw object. A Supabase error object
+      // has no `message` on its prototype chain that console picks up, so
+      // `console.warn(msg, err)` printed "Cloud auto-save failed: Object" —
+      // which is how a PGRST204 schema error went unnoticed for four months.
+      const e = err as { code?: string; message?: string; details?: string; hint?: string };
+      console.warn(
+        '[QuoteBuilder] Cloud auto-save failed:',
+        e?.code ?? '(no code)',
+        e?.message ?? String(err),
+        e?.details ?? '',
+        e?.hint ?? ''
+      );
       // A duplicate quote number is the one autosave failure the user can
       // actually fix, so it is named rather than left as the generic "error"
       // status. The allocator now skips numbers already in use, so this can no
@@ -565,6 +668,7 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
     addItem,
     updateItem,
     removeItem,
+    moveItem,
     nextStep,
     prevStep,
     generateQuote,

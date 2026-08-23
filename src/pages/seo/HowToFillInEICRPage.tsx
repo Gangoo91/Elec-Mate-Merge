@@ -643,7 +643,7 @@ export default function HowToFillInEICRPage() {
 
       <SEOCTASection
         heading="Fill In EICR Forms Digitally"
-        subheading="Join 1,000+ UK electricians creating professional EICR certificates on their phones. 7-day free trial, cancel anytime."
+        subheading="Join 1,600+ UK electricians creating professional EICR certificates on their phones. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

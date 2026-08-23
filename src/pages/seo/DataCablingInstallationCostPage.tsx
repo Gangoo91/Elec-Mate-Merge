@@ -600,7 +600,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote data cabling projects professionally"
-          description="Join 1,000+ UK electricians using Elec-Mate for quoting with itemised pricing, professional PDF output, and AI cost engineering."
+          description="Join 1,600+ UK electricians using Elec-Mate for quoting with itemised pricing, professional PDF output, and AI cost engineering."
           icon={Wrench}
         />
       </>
@@ -637,7 +637,7 @@ export default function DataCablingInstallationCostPage() {
       faqHeading="Frequently Asked Questions About Data Cabling Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Data Cabling Projects with Professional Pricing"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and AI-powered cost engineering. Diversify into data cabling with confidence. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting, certification, and AI-powered cost engineering. Diversify into data cabling with confidence. 7-day free trial, cancel anytime."
     />
   );
 }

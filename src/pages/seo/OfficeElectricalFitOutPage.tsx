@@ -602,7 +602,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage office fit-out electrical projects with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site certification, quoting, and project management."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site certification, quoting, and project management."
           icon={FileCheck2}
         />
       </>
@@ -639,7 +639,7 @@ export default function OfficeElectricalFitOutPage() {
       faqHeading="Frequently Asked Questions — Office Electrical Fit Out"
       relatedPages={relatedPages}
       ctaHeading="Manage Your Office Fit-Out Projects with Elec-Mate"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site certification, quoting, and project management. Complete EICs and EICRs on your phone. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site certification, quoting, and project management. Complete EICs and EICRs on your phone. 7-day free trial, cancel anytime."
     />
   );
 }

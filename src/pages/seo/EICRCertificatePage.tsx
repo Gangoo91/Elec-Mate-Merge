@@ -456,7 +456,7 @@ export default function EICRCertificatePage() {
             (the IET Wiring Regulations, 18th Edition) and follows the model forms published in
             Appendix 6 of the standard. It records the extent of the installation inspected, the
             supply characteristics, details of the{' '}
-            <SEOInternalLink href="/earthing-arrangements">earthing arrangements</SEOInternalLink>,
+            <SEOInternalLink href="/guides/earthing-systems-tns-tncs-tt-explained">earthing arrangements</SEOInternalLink>,
             the test results for every circuit, and any observations about departures from the
             current standard or defects that could pose a danger.
           </p>
@@ -1058,7 +1058,7 @@ export default function EICRCertificatePage() {
       {/* CTA */}
       <SEOCTASection
         heading="Stop writing EICR certificates by hand"
-        subheading="Join 1,000+ UK electricians creating professional digital certificates. 7-day free trial, cancel anytime."
+        subheading="Join 1,600+ UK electricians creating professional digital certificates. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom spacer for mobile sticky CTA */}

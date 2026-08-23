@@ -90,7 +90,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-systems-tns-tncs-tt-explained',
     title: 'Earthing Arrangements',
     description: 'TN-S, TN-C-S, and TT earthing systems explained.',
     icon: Cable,
@@ -543,7 +543,7 @@ export default function LightningProtectionGuidePage() {
       faqHeading="Frequently Asked Questions About Lightning Protection"
       relatedPages={relatedPages}
       ctaHeading="Install SPDs and Certify on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EIC certificates, cable sizing, and regulation lookup. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EIC certificates, cable sizing, and regulation lookup. 7-day free trial, cancel anytime."
     />
   );
 }

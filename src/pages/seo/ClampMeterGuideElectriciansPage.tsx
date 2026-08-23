@@ -545,7 +545,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Document load measurements and certify installations"
-          description="Join 1,000+ UK electricians using Elec-Mate for load survey documentation, EIC and EICR certification, and AI fault-finding support. 7-day free trial."
+          description="Join 1,600+ UK electricians using Elec-Mate for load survey documentation, EIC and EICR certification, and AI fault-finding support. 7-day free trial."
           icon={Wrench}
         />
       </>
@@ -582,7 +582,7 @@ export default function ClampMeterGuideElectriciansPage() {
       faqHeading="Frequently Asked Questions About Clamp Meters for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Record Load Measurements and Certify Installations on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for load survey documentation, EIC and EICR certificates, and AI fault-finding support on site. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for load survey documentation, EIC and EICR certificates, and AI fault-finding support on site. 7-day free trial, cancel anytime."
     />
   );
 }

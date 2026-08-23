@@ -41,6 +41,7 @@ import { MobileBottomActionBar } from './MobileBottomActionBar';
 import { useMobileKeyboard } from '@/hooks/use-mobile-keyboard';
 import { cn } from '@/lib/utils';
 import { copyToClipboard } from '@/utils/clipboard';
+import { openOrDownloadPdf, openOrDownloadBlobPdf } from '@/utils/pdf-download';
 import { SummaryStatsCard } from './results/SummaryStatsCard';
 import { EnhancedRiskCard } from './results/EnhancedRiskCard';
 import { PPEGridView } from './results/PPEGridView';
@@ -57,6 +58,26 @@ import { MethodStatementSummary } from './results/MethodStatementSummary';
 import { SiteLogisticsCard } from './results/SiteLogisticsCard';
 import { CompetencyMatrixCard } from './results/CompetencyMatrixCard';
 import { RiskAssessmentSummary } from './results/RiskAssessmentSummary';
+
+/**
+ * Every PDF exit on this screen used to hand-roll the same download:
+ *
+ *   const link = document.createElement('a');
+ *   link.href = url; link.download = name; link.click();
+ *
+ * WKWebView ignores the `download` attribute, so inside the iOS app that does
+ * nothing at all — no file, no error, no clue. Nine copies of it here meant
+ * *no* PDF could leave this screen on an iPhone. Several also revoked the
+ * object URL on the very next line, racing the browser's own read of it.
+ *
+ * `openOrDownloadPdf` / `openOrDownloadBlobPdf` already solve this for the rest
+ * of the app — native writes to the filesystem and opens the share sheet, PWA
+ * and browser get a blob URL with a deferred revoke. Use them.
+ */
+const downloadPdfFromDataUri = async (dataUri: string, filename: string): Promise<void> => {
+  const blob = await (await fetch(dataUri)).blob();
+  await openOrDownloadBlobPdf(blob, filename);
+};
 
 interface RAMSReviewEditorProps {
   ramsData?: RAMSData;
@@ -446,10 +467,10 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
       });
 
       if (data?.success && data?.downloadUrl) {
-        const link = document.createElement('a');
-        link.href = data.downloadUrl;
-        link.download = `Risk_Assessment_${ramsData.projectName?.replace(/[^a-z0-9]/gi, '_') || Date.now()}.pdf`;
-        link.click();
+        await openOrDownloadPdf(
+          data.downloadUrl,
+          `Risk_Assessment_${ramsData.projectName?.replace(/[^a-z0-9]/gi, '_') || Date.now()}.pdf`
+        );
 
         setShowPDFModal(false);
         toast({
@@ -467,10 +488,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
           reviewDate: methodData.reviewDate,
         });
 
-        const link = document.createElement('a');
-        link.href = pdfDataUri;
-        link.download = `Risk_Assessment_${Date.now()}.pdf`;
-        link.click();
+        await downloadPdfFromDataUri(pdfDataUri, `Risk_Assessment_${Date.now()}.pdf`);
 
         toast({
           title: 'PDF Downloaded',
@@ -488,10 +506,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
         reviewDate: methodData.reviewDate,
       });
 
-      const link = document.createElement('a');
-      link.href = pdfDataUri;
-      link.download = `Risk_Assessment_${Date.now()}.pdf`;
-      link.click();
+      await downloadPdfFromDataUri(pdfDataUri, `Risk_Assessment_${Date.now()}.pdf`);
 
       toast({
         title: 'PDF Generation Error',
@@ -520,10 +535,10 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
       });
 
       if (data?.success && data?.downloadUrl) {
-        const link = document.createElement('a');
-        link.href = data.downloadUrl;
-        link.download = `Method_Statement_${methodData.jobTitle?.replace(/[^a-z0-9]/gi, '_') || Date.now()}.pdf`;
-        link.click();
+        await openOrDownloadPdf(
+          data.downloadUrl,
+          `Method_Statement_${methodData.jobTitle?.replace(/[^a-z0-9]/gi, '_') || Date.now()}.pdf`
+        );
 
         setShowPDFModal(false);
         toast({
@@ -539,12 +554,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
         });
 
         const blob = new Blob([new Uint8Array(methodPdfData)], { type: 'application/pdf' });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = `Method_Statement_${Date.now()}.pdf`;
-        link.click();
-        URL.revokeObjectURL(url);
+        await openOrDownloadBlobPdf(blob, `Method_Statement_${Date.now()}.pdf`);
 
         toast({
           title: 'PDF Downloaded',
@@ -560,12 +570,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
       });
 
       const blob = new Blob([new Uint8Array(methodPdfData)], { type: 'application/pdf' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `Method_Statement_${Date.now()}.pdf`;
-      link.click();
-      URL.revokeObjectURL(url);
+      await openOrDownloadBlobPdf(blob, `Method_Statement_${Date.now()}.pdf`);
 
       toast({
         title: 'PDF Generation Error',
@@ -627,10 +632,10 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
       });
 
       if (data?.success && data?.downloadUrl) {
-        const link = document.createElement('a');
-        link.href = data.downloadUrl;
-        link.download = `Combined_RAMS_${ramsData.projectName?.replace(/[^a-z0-9]/gi, '_') || Date.now()}.pdf`;
-        link.click();
+        await openOrDownloadPdf(
+          data.downloadUrl,
+          `Combined_RAMS_${ramsData.projectName?.replace(/[^a-z0-9]/gi, '_') || Date.now()}.pdf`
+        );
 
         setShowPDFModal(false);
         toast({
@@ -675,14 +680,10 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
 
         if (saveResult.success) {
           // Also trigger download
-          const url = URL.createObjectURL(pdfBlob);
-          const link = document.createElement('a');
-          link.href = url;
-          link.download = `Combined_RAMS_${ramsData.projectName?.replace(/[^a-z0-9]/gi, '_') || Date.now()}.pdf`;
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-          URL.revokeObjectURL(url);
+          await openOrDownloadBlobPdf(
+            pdfBlob,
+            `Combined_RAMS_${ramsData.projectName?.replace(/[^a-z0-9]/gi, '_') || Date.now()}.pdf`
+          );
 
           toast({
             title: 'PDF Downloaded & Saved',
@@ -724,14 +725,10 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
         await saveRAMSPDFToStorage(pdfBlob, ramsData, methodData, 'draft');
 
         // Download
-        const url = URL.createObjectURL(pdfBlob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = `Combined_RAMS_${ramsData.projectName?.replace(/[^a-z0-9]/gi, '_') || Date.now()}.pdf`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(url);
+        await openOrDownloadBlobPdf(
+          pdfBlob,
+          `Combined_RAMS_${ramsData.projectName?.replace(/[^a-z0-9]/gi, '_') || Date.now()}.pdf`
+        );
 
         toast({
           title: 'PDF Downloaded & Saved',
@@ -937,410 +934,406 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
   // Built once, rendered by whichever layout is active (see the note below).
   const ramsPanel = (
     <>
-              {ramsData ? (
-                <>
-                  {/* Summary Stats Card */}
-                  <SummaryStatsCard risks={ramsData.risks || []} />
+      {ramsData ? (
+        <>
+          {/* Summary Stats Card */}
+          <SummaryStatsCard risks={ramsData.risks || []} />
 
-                  {/* Issued date — day / month / year. Editable so users can
+          {/* Issued date — day / month / year. Editable so users can
                       backdate documents for assessments or retrospective records. */}
-                  {(() => {
-                    const [yy, mm, dd] = toInputDate(ramsData.date).split('-');
-                    const thisYear = new Date().getFullYear();
-                    const MONTHS = [
-                      'January',
-                      'February',
-                      'March',
-                      'April',
-                      'May',
-                      'June',
-                      'July',
-                      'August',
-                      'September',
-                      'October',
-                      'November',
-                      'December',
-                    ];
-                    const selectCls =
-                      'h-11 px-3 rounded-xl bg-white/[0.05] border border-white/[0.12] text-[14px] text-white touch-manipulation focus:border-elec-yellow/50 focus:outline-none [color-scheme:dark]';
-                    return (
-                      <section className="bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.08] rounded-2xl p-4 sm:p-5 space-y-3">
-                        <div className="space-y-0.5">
-                          <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white block">
-                            Issued date
-                          </span>
-                          <p className="text-[12px] text-white">
-                            Defaults to today — change to backdate the document.
-                          </p>
-                        </div>
-                        <div className="grid grid-cols-3 gap-2.5">
-                          <select
-                            aria-label="Day"
-                            value={String(Number(dd))}
-                            onChange={(e) => setIssuedPart('d', e.target.value)}
-                            className={selectCls}
-                          >
-                            {Array.from({ length: 31 }, (_, i) => i + 1).map((n) => (
-                              <option key={n} value={n}>
-                                {n}
-                              </option>
-                            ))}
-                          </select>
-                          <select
-                            aria-label="Month"
-                            value={mm}
-                            onChange={(e) => setIssuedPart('m', e.target.value)}
-                            className={selectCls}
-                          >
-                            {MONTHS.map((name, i) => (
-                              <option key={name} value={String(i + 1).padStart(2, '0')}>
-                                {name}
-                              </option>
-                            ))}
-                          </select>
-                          <select
-                            aria-label="Year"
-                            value={yy}
-                            onChange={(e) => setIssuedPart('y', e.target.value)}
-                            className={selectCls}
-                          >
-                            {Array.from({ length: 8 }, (_, i) => thisYear - 6 + i).map((y) => (
-                              <option key={y} value={y}>
-                                {y}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
-                      </section>
-                    );
-                  })()}
-
-                  {/* Identified Hazards — editorial section */}
-                  <section className="space-y-4">
-                    <div className="flex items-baseline justify-between gap-3">
-                      <div className="space-y-1">
-                        <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
-                          Identified hazards
-                        </div>
-                        <h3 className="text-[20px] sm:text-[24px] font-semibold tracking-tight leading-tight text-white">
-                          Risks and controls.
-                        </h3>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={addRisk}
-                        className="inline-flex items-center gap-1.5 h-9 px-3 rounded-xl text-[12.5px] font-semibold bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-colors active:scale-[0.99] touch-manipulation whitespace-nowrap"
-                      >
-                        <Plus className="h-3.5 w-3.5" />
-                        Add hazard
-                      </button>
-                    </div>
-
-                    {/* Empty state — editorial banner */}
-                    {(!ramsData.risks || ramsData.risks.length === 0) && (
-                      <div className="bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-dashed border-white/[0.12] rounded-2xl p-6 sm:p-8 text-center">
-                        <div className="text-[10.5px] uppercase tracking-[0.18em] font-semibold text-white mb-2">
-                          Nothing here yet
-                        </div>
-                        <h4 className="text-[17px] font-semibold text-white mb-2">
-                          No hazards identified
-                        </h4>
-                        <p className="text-[13px] leading-relaxed text-white max-w-md mx-auto mb-4">
-                          Add a hazard manually with the button above, or regenerate to let the AI
-                          re-read your brief.
-                        </p>
-                        {onRegenerate && (
-                          <button
-                            type="button"
-                            onClick={onRegenerate}
-                            className="inline-flex items-center gap-2 h-10 px-4 rounded-xl text-[13px] font-medium bg-white/[0.05] border border-white/[0.10] text-white hover:border-elec-yellow/40 hover:text-elec-yellow transition-colors touch-manipulation"
-                          >
-                            <Sparkles className="h-3.5 w-3.5" />
-                            Try again
-                          </button>
-                        )}
-                      </div>
-                    )}
-
-                    {/* Risk Cards - Sorted by Risk Rating */}
-                    {ramsData.risks && ramsData.risks.length > 0 && (
-                      <div className="space-y-3">
-                        {[...(ramsData.risks || [])]
-                          .sort((a, b) => (b.riskRating || 0) - (a.riskRating || 0))
-                          .map((risk, sortedIndex) => (
-                            <EnhancedRiskCard
-                              key={risk.id}
-                              risk={risk}
-                              index={sortedIndex}
-                              editable={true}
-                              onUpdate={updateRisk}
-                              onRemove={removeRisk}
-                            />
-                          ))}
-                      </div>
-                    )}
-                  </section>
-
-                  {/* PPE Section */}
-                  <PPEGridView
-                    ppeDetails={ramsData.ppeDetails}
-                    requiredPPE={ramsData.requiredPPE}
-                    editable={true}
-                    onUpdate={updatePPE}
-                  />
-
-                  {/* Emergency Procedures */}
-                  <EmergencyProceduresCards procedures={ramsData.emergencyProcedures} />
-
-                  {/* Safety / emergency contacts — editable */}
-                  <section className="bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.06] rounded-2xl p-4 sm:p-6 space-y-4">
-                    <div>
-                      <div className="text-[10.5px] uppercase tracking-[0.18em] font-semibold text-elec-yellow mb-1">
-                        Safety contacts
-                      </div>
-                      <h3 className="text-[17px] font-semibold text-white">
-                        Emergency &amp; site contacts
-                      </h3>
-                      <p className="text-[12.5px] leading-relaxed text-white mt-1">
-                        Who to call on site. These appear on the RAMS and the exported PDF.
-                      </p>
-                    </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                      {(
-                        [
-                          {
-                            label: 'Site manager',
-                            nameKey: 'siteManagerName',
-                            phoneKey: 'siteManagerPhone',
-                          },
-                          {
-                            label: 'First aider',
-                            nameKey: 'firstAiderName',
-                            phoneKey: 'firstAiderPhone',
-                          },
-                          {
-                            label: 'Safety officer',
-                            nameKey: 'safetyOfficerName',
-                            phoneKey: 'safetyOfficerPhone',
-                          },
-                        ] as const
-                      ).map((c) => (
-                        <div key={c.nameKey} className="space-y-2">
-                          <label className="block text-[11px] uppercase tracking-[0.14em] font-semibold text-white">
-                            {c.label}
-                          </label>
-                          <Input
-                            value={(ramsData[c.nameKey] as string) || ''}
-                            onChange={(e) => updateContact(c.nameKey, e.target.value)}
-                            placeholder="Name"
-                            className="h-11 text-base touch-manipulation bg-gradient-to-b from-white/[0.08] to-white/[0.04] border-white/20 focus:border-elec-yellow focus:ring-elec-yellow text-white"
-                          />
-                          <Input
-                            value={(ramsData[c.phoneKey] as string) || ''}
-                            onChange={(e) => updateContact(c.phoneKey, e.target.value)}
-                            placeholder="Phone"
-                            inputMode="tel"
-                            className="h-11 text-base touch-manipulation bg-gradient-to-b from-white/[0.08] to-white/[0.04] border-white/20 focus:border-elec-yellow focus:ring-elec-yellow text-white"
-                          />
-                        </div>
-                      ))}
-                    </div>
-                    <div className="space-y-2">
-                      <label className="block text-[11px] uppercase tracking-[0.14em] font-semibold text-white">
-                        Assembly point
-                      </label>
-                      <Input
-                        value={ramsData.assemblyPoint || ''}
-                        onChange={(e) => updateContact('assemblyPoint', e.target.value)}
-                        placeholder="e.g. Main car park, front gate"
-                        className="h-11 text-base touch-manipulation bg-gradient-to-b from-white/[0.08] to-white/[0.04] border-white/20 focus:border-elec-yellow focus:ring-elec-yellow text-white"
-                      />
-                    </div>
-                  </section>
-                </>
-              ) : (
-                <div className="bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-dashed border-amber-500/30 rounded-2xl p-6 sm:p-8 text-center">
-                  <div className="text-[10.5px] uppercase tracking-[0.18em] font-semibold text-amber-400 mb-2">
-                    Section unavailable
-                  </div>
-                  <h3 className="text-[17px] font-semibold text-white mb-2">
-                    Risk assessment not generated
-                  </h3>
-                  <p className="text-[13px] leading-relaxed text-white max-w-md mx-auto mb-4">
-                    The risk assessment didn't generate. Retry just this half to patch it in.
+          {(() => {
+            const [yy, mm, dd] = toInputDate(ramsData.date).split('-');
+            const thisYear = new Date().getFullYear();
+            const MONTHS = [
+              'January',
+              'February',
+              'March',
+              'April',
+              'May',
+              'June',
+              'July',
+              'August',
+              'September',
+              'October',
+              'November',
+              'December',
+            ];
+            const selectCls =
+              'h-11 px-3 rounded-xl bg-white/[0.05] border border-white/[0.12] text-[14px] text-white touch-manipulation focus:border-elec-yellow/50 focus:outline-none [color-scheme:dark]';
+            return (
+              <section className="bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.08] rounded-2xl p-4 sm:p-5 space-y-3">
+                <div className="space-y-0.5">
+                  <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white block">
+                    Issued date
+                  </span>
+                  <p className="text-[12px] text-white">
+                    Defaults to today — change to backdate the document.
                   </p>
-                  {onRetryAgent ? (
-                    <button
-                      type="button"
-                      onClick={() => onRetryAgent('hs')}
-                      className="inline-flex items-center gap-2 h-10 px-4 rounded-xl text-[13px] font-medium bg-white/[0.05] border border-white/[0.10] text-white hover:border-elec-yellow/40 hover:text-elec-yellow transition-colors touch-manipulation"
-                    >
-                      <Sparkles className="h-3.5 w-3.5" />
-                      Retry hazard register
-                    </button>
-                  ) : (
-                    onRetry && (
-                      <button
-                        type="button"
-                        onClick={onRetry}
-                        className="inline-flex items-center gap-2 h-10 px-4 rounded-xl text-[13px] font-medium bg-white/[0.05] border border-white/[0.10] text-white hover:border-elec-yellow/40 hover:text-elec-yellow transition-colors touch-manipulation"
-                      >
-                        <Sparkles className="h-3.5 w-3.5" />
-                        Retry generation
-                      </button>
-                    )
-                  )}
                 </div>
-              )}
+                <div className="grid grid-cols-3 gap-2.5">
+                  <select
+                    aria-label="Day"
+                    value={String(Number(dd))}
+                    onChange={(e) => setIssuedPart('d', e.target.value)}
+                    className={selectCls}
+                  >
+                    {Array.from({ length: 31 }, (_, i) => i + 1).map((n) => (
+                      <option key={n} value={n}>
+                        {n}
+                      </option>
+                    ))}
+                  </select>
+                  <select
+                    aria-label="Month"
+                    value={mm}
+                    onChange={(e) => setIssuedPart('m', e.target.value)}
+                    className={selectCls}
+                  >
+                    {MONTHS.map((name, i) => (
+                      <option key={name} value={String(i + 1).padStart(2, '0')}>
+                        {name}
+                      </option>
+                    ))}
+                  </select>
+                  <select
+                    aria-label="Year"
+                    value={yy}
+                    onChange={(e) => setIssuedPart('y', e.target.value)}
+                    className={selectCls}
+                  >
+                    {Array.from({ length: 8 }, (_, i) => thisYear - 6 + i).map((y) => (
+                      <option key={y} value={y}>
+                        {y}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </section>
+            );
+          })()}
+
+          {/* Identified Hazards — editorial section */}
+          <section className="space-y-4">
+            <div className="flex items-baseline justify-between gap-3">
+              <div className="space-y-1">
+                <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
+                  Identified hazards
+                </div>
+                <h3 className="text-[20px] sm:text-[24px] font-semibold tracking-tight leading-tight text-white">
+                  Risks and controls.
+                </h3>
+              </div>
+              <button
+                type="button"
+                onClick={addRisk}
+                className="inline-flex items-center gap-1.5 h-9 px-3 rounded-xl text-[12.5px] font-semibold bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-colors active:scale-[0.99] touch-manipulation whitespace-nowrap"
+              >
+                <Plus className="h-3.5 w-3.5" />
+                Add hazard
+              </button>
+            </div>
+
+            {/* Empty state — editorial banner */}
+            {(!ramsData.risks || ramsData.risks.length === 0) && (
+              <div className="bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-dashed border-white/[0.12] rounded-2xl p-6 sm:p-8 text-center">
+                <div className="text-[10.5px] uppercase tracking-[0.18em] font-semibold text-white mb-2">
+                  Nothing here yet
+                </div>
+                <h4 className="text-[17px] font-semibold text-white mb-2">No hazards identified</h4>
+                <p className="text-[13px] leading-relaxed text-white max-w-md mx-auto mb-4">
+                  Add a hazard manually with the button above, or regenerate to let the AI re-read
+                  your brief.
+                </p>
+                {onRegenerate && (
+                  <button
+                    type="button"
+                    onClick={onRegenerate}
+                    className="inline-flex items-center gap-2 h-10 px-4 rounded-xl text-[13px] font-medium bg-white/[0.05] border border-white/[0.10] text-white hover:border-elec-yellow/40 hover:text-elec-yellow transition-colors touch-manipulation"
+                  >
+                    <Sparkles className="h-3.5 w-3.5" />
+                    Try again
+                  </button>
+                )}
+              </div>
+            )}
+
+            {/* Risk Cards - Sorted by Risk Rating */}
+            {ramsData.risks && ramsData.risks.length > 0 && (
+              <div className="space-y-3">
+                {[...(ramsData.risks || [])]
+                  .sort((a, b) => (b.riskRating || 0) - (a.riskRating || 0))
+                  .map((risk, sortedIndex) => (
+                    <EnhancedRiskCard
+                      key={risk.id}
+                      risk={risk}
+                      index={sortedIndex}
+                      editable={true}
+                      onUpdate={updateRisk}
+                      onRemove={removeRisk}
+                    />
+                  ))}
+              </div>
+            )}
+          </section>
+
+          {/* PPE Section */}
+          <PPEGridView
+            ppeDetails={ramsData.ppeDetails}
+            requiredPPE={ramsData.requiredPPE}
+            editable={true}
+            onUpdate={updatePPE}
+          />
+
+          {/* Emergency Procedures */}
+          <EmergencyProceduresCards procedures={ramsData.emergencyProcedures} />
+
+          {/* Safety / emergency contacts — editable */}
+          <section className="bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.06] rounded-2xl p-4 sm:p-6 space-y-4">
+            <div>
+              <div className="text-[10.5px] uppercase tracking-[0.18em] font-semibold text-elec-yellow mb-1">
+                Safety contacts
+              </div>
+              <h3 className="text-[17px] font-semibold text-white">
+                Emergency &amp; site contacts
+              </h3>
+              <p className="text-[12.5px] leading-relaxed text-white mt-1">
+                Who to call on site. These appear on the RAMS and the exported PDF.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              {(
+                [
+                  {
+                    label: 'Site manager',
+                    nameKey: 'siteManagerName',
+                    phoneKey: 'siteManagerPhone',
+                  },
+                  {
+                    label: 'First aider',
+                    nameKey: 'firstAiderName',
+                    phoneKey: 'firstAiderPhone',
+                  },
+                  {
+                    label: 'Safety officer',
+                    nameKey: 'safetyOfficerName',
+                    phoneKey: 'safetyOfficerPhone',
+                  },
+                ] as const
+              ).map((c) => (
+                <div key={c.nameKey} className="space-y-2">
+                  <label className="block text-[11px] uppercase tracking-[0.14em] font-semibold text-white">
+                    {c.label}
+                  </label>
+                  <Input
+                    value={(ramsData[c.nameKey] as string) || ''}
+                    onChange={(e) => updateContact(c.nameKey, e.target.value)}
+                    placeholder="Name"
+                    className="h-11 text-base touch-manipulation bg-gradient-to-b from-white/[0.08] to-white/[0.04] border-white/20 focus:border-elec-yellow focus:ring-elec-yellow text-white"
+                  />
+                  <Input
+                    value={(ramsData[c.phoneKey] as string) || ''}
+                    onChange={(e) => updateContact(c.phoneKey, e.target.value)}
+                    placeholder="Phone"
+                    inputMode="tel"
+                    className="h-11 text-base touch-manipulation bg-gradient-to-b from-white/[0.08] to-white/[0.04] border-white/20 focus:border-elec-yellow focus:ring-elec-yellow text-white"
+                  />
+                </div>
+              ))}
+            </div>
+            <div className="space-y-2">
+              <label className="block text-[11px] uppercase tracking-[0.14em] font-semibold text-white">
+                Assembly point
+              </label>
+              <Input
+                value={ramsData.assemblyPoint || ''}
+                onChange={(e) => updateContact('assemblyPoint', e.target.value)}
+                placeholder="e.g. Main car park, front gate"
+                className="h-11 text-base touch-manipulation bg-gradient-to-b from-white/[0.08] to-white/[0.04] border-white/20 focus:border-elec-yellow focus:ring-elec-yellow text-white"
+              />
+            </div>
+          </section>
+        </>
+      ) : (
+        <div className="bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-dashed border-amber-500/30 rounded-2xl p-6 sm:p-8 text-center">
+          <div className="text-[10.5px] uppercase tracking-[0.18em] font-semibold text-amber-400 mb-2">
+            Section unavailable
+          </div>
+          <h3 className="text-[17px] font-semibold text-white mb-2">
+            Risk assessment not generated
+          </h3>
+          <p className="text-[13px] leading-relaxed text-white max-w-md mx-auto mb-4">
+            The risk assessment didn't generate. Retry just this half to patch it in.
+          </p>
+          {onRetryAgent ? (
+            <button
+              type="button"
+              onClick={() => onRetryAgent('hs')}
+              className="inline-flex items-center gap-2 h-10 px-4 rounded-xl text-[13px] font-medium bg-white/[0.05] border border-white/[0.10] text-white hover:border-elec-yellow/40 hover:text-elec-yellow transition-colors touch-manipulation"
+            >
+              <Sparkles className="h-3.5 w-3.5" />
+              Retry hazard register
+            </button>
+          ) : (
+            onRetry && (
+              <button
+                type="button"
+                onClick={onRetry}
+                className="inline-flex items-center gap-2 h-10 px-4 rounded-xl text-[13px] font-medium bg-white/[0.05] border border-white/[0.10] text-white hover:border-elec-yellow/40 hover:text-elec-yellow transition-colors touch-manipulation"
+              >
+                <Sparkles className="h-3.5 w-3.5" />
+                Retry generation
+              </button>
+            )
+          )}
+        </div>
+      )}
     </>
   );
 
   const methodPanel = (
     <>
-              {methodData && Object.keys(methodData).length > 0 ? (
-                <div className="space-y-7 sm:space-y-10">
-                  {/* Project Info Header */}
-                  <ProjectInfoHeader
-                    methodData={methodData}
-                    projectName={ramsData?.projectName}
-                    location={ramsData?.location}
-                  />
+      {methodData && Object.keys(methodData).length > 0 ? (
+        <div className="space-y-7 sm:space-y-10">
+          {/* Project Info Header */}
+          <ProjectInfoHeader
+            methodData={methodData}
+            projectName={ramsData?.projectName}
+            location={ramsData?.location}
+          />
 
-                  {/* Emergency Contacts */}
-                  <EmergencyContactsCard methodData={methodData as MethodStatementData} />
+          {/* Emergency Contacts */}
+          <EmergencyContactsCard methodData={methodData as MethodStatementData} />
 
-                  {/* Scope of Work */}
-                  <ScopeOfWorkCard methodData={methodData as MethodStatementData} />
+          {/* Scope of Work */}
+          <ScopeOfWorkCard methodData={methodData as MethodStatementData} />
 
-                  {/* Tools, Materials, Tips, Mistakes */}
-                  <MethodStatementSummary
-                    methodData={methodData as MethodStatementData}
+          {/* Tools, Materials, Tips, Mistakes */}
+          <MethodStatementSummary
+            methodData={methodData as MethodStatementData}
+            editable={true}
+            onUpdateTools={updateTools}
+            onUpdateMaterials={updateMaterials}
+            onUpdateTips={updateTips}
+            onUpdateMistakes={updateMistakes}
+          />
+
+          {/* Site Logistics */}
+          <SiteLogisticsCard methodData={methodData as MethodStatementData} />
+
+          {/* Competency Matrix */}
+          <CompetencyMatrixCard methodData={methodData as MethodStatementData} />
+
+          {/* PPE Details - REMOVED: Already shown in Risk Assessment tab */}
+          {/* <PPEDetailsGrid methodData={methodData as MethodStatementData} /> */}
+
+          {/* Progress Summary */}
+          {methodData.steps && methodData.steps.length > 0 && (
+            <ProgressSummary steps={methodData.steps} />
+          )}
+
+          {/* Installation Steps — editorial section */}
+          <section className="space-y-4">
+            <div className="flex items-baseline justify-between gap-3">
+              <div className="space-y-1">
+                <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
+                  Installation steps
+                </div>
+                <h3 className="text-[20px] sm:text-[24px] font-semibold tracking-tight leading-tight text-white">
+                  The method, step by step.
+                </h3>
+                <p className="text-[12.5px] text-white tabular-nums">
+                  {methodData.steps?.length || 0}{' '}
+                  {(methodData.steps?.length || 0) === 1 ? 'step' : 'steps'}
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={addStep}
+                className="inline-flex items-center gap-1.5 h-9 px-3 rounded-xl text-[12.5px] font-semibold bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-colors active:scale-[0.99] touch-manipulation whitespace-nowrap"
+              >
+                <Plus className="h-3.5 w-3.5" />
+                Add step
+              </button>
+            </div>
+
+            {methodData.steps && methodData.steps.length > 0 ? (
+              <div className="space-y-3">
+                {methodData.steps.map((step, index) => (
+                  <EnhancedStepCard
+                    key={step.id}
+                    step={step}
+                    index={index}
                     editable={true}
-                    onUpdateTools={updateTools}
-                    onUpdateMaterials={updateMaterials}
-                    onUpdateTips={updateTips}
-                    onUpdateMistakes={updateMistakes}
+                    onUpdate={updateStep}
+                    onRemove={removeStep}
                   />
-
-                  {/* Site Logistics */}
-                  <SiteLogisticsCard methodData={methodData as MethodStatementData} />
-
-                  {/* Competency Matrix */}
-                  <CompetencyMatrixCard methodData={methodData as MethodStatementData} />
-
-                  {/* PPE Details - REMOVED: Already shown in Risk Assessment tab */}
-                  {/* <PPEDetailsGrid methodData={methodData as MethodStatementData} /> */}
-
-                  {/* Progress Summary */}
-                  {methodData.steps && methodData.steps.length > 0 && (
-                    <ProgressSummary steps={methodData.steps} />
-                  )}
-
-                  {/* Installation Steps — editorial section */}
-                  <section className="space-y-4">
-                    <div className="flex items-baseline justify-between gap-3">
-                      <div className="space-y-1">
-                        <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
-                          Installation steps
-                        </div>
-                        <h3 className="text-[20px] sm:text-[24px] font-semibold tracking-tight leading-tight text-white">
-                          The method, step by step.
-                        </h3>
-                        <p className="text-[12.5px] text-white tabular-nums">
-                          {methodData.steps?.length || 0}{' '}
-                          {(methodData.steps?.length || 0) === 1 ? 'step' : 'steps'}
-                        </p>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={addStep}
-                        className="inline-flex items-center gap-1.5 h-9 px-3 rounded-xl text-[12.5px] font-semibold bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-colors active:scale-[0.99] touch-manipulation whitespace-nowrap"
-                      >
-                        <Plus className="h-3.5 w-3.5" />
-                        Add step
-                      </button>
-                    </div>
-
-                    {methodData.steps && methodData.steps.length > 0 ? (
-                      <div className="space-y-3">
-                        {methodData.steps.map((step, index) => (
-                          <EnhancedStepCard
-                            key={step.id}
-                            step={step}
-                            index={index}
-                            editable={true}
-                            onUpdate={updateStep}
-                            onRemove={removeStep}
-                          />
-                        ))}
-                      </div>
-                    ) : (
-                      <div className="bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-dashed border-white/[0.12] rounded-2xl p-6 sm:p-8 text-center">
-                        <div className="text-[10.5px] uppercase tracking-[0.18em] font-semibold text-white mb-2">
-                          Nothing here yet
-                        </div>
-                        <h4 className="text-[17px] font-semibold text-white mb-2">
-                          No installation steps
-                        </h4>
-                        <p className="text-[13px] leading-relaxed text-white max-w-md mx-auto mb-4">
-                          Add a step manually with the button above, or regenerate to have the AI
-                          build the method statement.
-                        </p>
-                        {onRegenerate && (
-                          <button
-                            type="button"
-                            onClick={onRegenerate}
-                            className="inline-flex items-center gap-2 h-10 px-4 rounded-xl text-[13px] font-medium bg-white/[0.05] border border-white/[0.10] text-white hover:border-elec-yellow/40 hover:text-elec-yellow transition-colors touch-manipulation"
-                          >
-                            <Sparkles className="h-3.5 w-3.5" />
-                            Try again
-                          </button>
-                        )}
-                      </div>
-                    )}
-                  </section>
-
-                  {/* Risk Assessment Summary */}
-                  <RiskAssessmentSummary ramsData={ramsData} />
-
-                  {/* Compliance References */}
-                  <ComplianceReferencesCard methodData={methodData as MethodStatementData} />
+                ))}
+              </div>
+            ) : (
+              <div className="bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-dashed border-white/[0.12] rounded-2xl p-6 sm:p-8 text-center">
+                <div className="text-[10.5px] uppercase tracking-[0.18em] font-semibold text-white mb-2">
+                  Nothing here yet
                 </div>
-              ) : (
-                <div className="bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-dashed border-amber-500/30 rounded-2xl p-6 sm:p-8 text-center">
-                  <div className="text-[10.5px] uppercase tracking-[0.18em] font-semibold text-amber-400 mb-2">
-                    Section unavailable
-                  </div>
-                  <h3 className="text-[17px] font-semibold text-white mb-2">
-                    Method statement not generated
-                  </h3>
-                  <p className="text-[13px] leading-relaxed text-white max-w-md mx-auto mb-4">
-                    The method statement didn't generate. Retry just this half to patch it into the
-                    existing RAMS.
-                  </p>
-                  {onRetryAgent ? (
-                    <button
-                      type="button"
-                      onClick={() => onRetryAgent('method')}
-                      className="inline-flex items-center gap-2 h-10 px-4 rounded-xl text-[13px] font-medium bg-white/[0.05] border border-white/[0.10] text-white hover:border-elec-yellow/40 hover:text-elec-yellow transition-colors touch-manipulation"
-                    >
-                      <Sparkles className="h-3.5 w-3.5" />
-                      Retry method statement
-                    </button>
-                  ) : (
-                    onRegenerate && (
-                      <button
-                        type="button"
-                        onClick={onRegenerate}
-                        className="inline-flex items-center gap-2 h-10 px-4 rounded-xl text-[13px] font-medium bg-white/[0.05] border border-white/[0.10] text-white hover:border-elec-yellow/40 hover:text-elec-yellow transition-colors touch-manipulation"
-                      >
-                        <Sparkles className="h-3.5 w-3.5" />
-                        Regenerate full document
-                      </button>
-                    )
-                  )}
-                </div>
-              )}
+                <h4 className="text-[17px] font-semibold text-white mb-2">No installation steps</h4>
+                <p className="text-[13px] leading-relaxed text-white max-w-md mx-auto mb-4">
+                  Add a step manually with the button above, or regenerate to have the AI build the
+                  method statement.
+                </p>
+                {onRegenerate && (
+                  <button
+                    type="button"
+                    onClick={onRegenerate}
+                    className="inline-flex items-center gap-2 h-10 px-4 rounded-xl text-[13px] font-medium bg-white/[0.05] border border-white/[0.10] text-white hover:border-elec-yellow/40 hover:text-elec-yellow transition-colors touch-manipulation"
+                  >
+                    <Sparkles className="h-3.5 w-3.5" />
+                    Try again
+                  </button>
+                )}
+              </div>
+            )}
+          </section>
+
+          {/* Risk Assessment Summary */}
+          <RiskAssessmentSummary ramsData={ramsData} />
+
+          {/* Compliance References */}
+          <ComplianceReferencesCard methodData={methodData as MethodStatementData} />
+        </div>
+      ) : (
+        <div className="bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-dashed border-amber-500/30 rounded-2xl p-6 sm:p-8 text-center">
+          <div className="text-[10.5px] uppercase tracking-[0.18em] font-semibold text-amber-400 mb-2">
+            Section unavailable
+          </div>
+          <h3 className="text-[17px] font-semibold text-white mb-2">
+            Method statement not generated
+          </h3>
+          <p className="text-[13px] leading-relaxed text-white max-w-md mx-auto mb-4">
+            The method statement didn't generate. Retry just this half to patch it into the existing
+            RAMS.
+          </p>
+          {onRetryAgent ? (
+            <button
+              type="button"
+              onClick={() => onRetryAgent('method')}
+              className="inline-flex items-center gap-2 h-10 px-4 rounded-xl text-[13px] font-medium bg-white/[0.05] border border-white/[0.10] text-white hover:border-elec-yellow/40 hover:text-elec-yellow transition-colors touch-manipulation"
+            >
+              <Sparkles className="h-3.5 w-3.5" />
+              Retry method statement
+            </button>
+          ) : (
+            onRegenerate && (
+              <button
+                type="button"
+                onClick={onRegenerate}
+                className="inline-flex items-center gap-2 h-10 px-4 rounded-xl text-[13px] font-medium bg-white/[0.05] border border-white/[0.10] text-white hover:border-elec-yellow/40 hover:text-elec-yellow transition-colors touch-manipulation"
+              >
+                <Sparkles className="h-3.5 w-3.5" />
+                Regenerate full document
+              </button>
+            )
+          )}
+        </div>
+      )}
     </>
   );
 

@@ -278,7 +278,7 @@ const HNCModule1Section4_5 = () => {
 
           <TLDR
             points={[
-              'You will treat CPD as a structured, recorded discipline — not as &ldquo;the courses I happened to attend last year&rdquo;.',
+              'You will treat CPD as a structured, recorded discipline — not as “the courses I happened to attend last year”.',
               'You can design a CPD plan with measurable outcomes against the Engineering Council UK-SPEC and the IET / CIBSE registration requirements.',
               'You log activity (formal, informal, structured, reflective) and demonstrate impact on your day job.',
               'You stay current on BS 7671 amendments (latest A4:2026), new technologies (EV, PV, BESS) and new regulatory regimes.',
@@ -820,7 +820,7 @@ const HNCModule1Section4_5 = () => {
           <KeyTakeaways
             points={[
               'CPD is structured, recorded development — not ad-hoc course attendance.',
-              'EAWR Reg 16 makes &ldquo;technical knowledge or experience&rdquo; a statutory requirement that must be maintained.',
+              'EAWR Reg 16 makes “technical knowledge or experience” a statutory requirement that must be maintained.',
               'Plan-Do-Reflect-Apply cycle: identify gap, undertake learning, reflect on outcome, apply in practice.',
               'Activity types: formal courses, structured experience, conferences, technical reading, mentoring, presentations, professional papers.',
               'CPD logs are the audit trail — date, activity, hours, outcome, reflection, evidence.',

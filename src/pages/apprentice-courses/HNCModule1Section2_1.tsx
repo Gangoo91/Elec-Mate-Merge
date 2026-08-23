@@ -285,7 +285,7 @@ const HNCModule1Section2_1 = () => {
             points={[
               'You will choose the right hazard identification technique for the job — checklist, walk-through, task analysis, what-if, HAZOP, FMEA — rather than defaulting to a generic template.',
               'You can run a structured workshop (multi-discipline, time-boxed, evidence-based) and capture findings in a register that maps to MHSWR Reg 3.',
-              'You apply the &ldquo;eight categories&rdquo; mental model — physical, chemical, biological, ergonomic, psychosocial, electrical, environmental, organisational — to avoid blind spots.',
+              'You apply the “eight categories” mental model — physical, chemical, biological, ergonomic, psychosocial, electrical, environmental, organisational — to avoid blind spots.',
               'You consult the workforce under HSWA s.2(6) and Safety Reps Regs 1977 — and you record the consultation, not just the outcome.',
             ]}
           />

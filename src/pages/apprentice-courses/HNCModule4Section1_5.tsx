@@ -281,8 +281,8 @@ const HNCModule4Section1_5 = () => {
             points={[
               'Building electrical systems live 30–50 years — design for the loads of year 30, not year 1.',
               'Standard growth headroom: 20–25% on supply capacity, 25–30% spare ways in DBs, 30–40% spare containment fill.',
-              'EV charging is the dominant change driver — domestic 7&nbsp;kW chargers, commercial 7–22&nbsp;kW per bay, rapid 50&nbsp;kW+ DC at strategic sites.',
-              'Building electrification (heat pumps replacing gas, induction kitchens, electric DHW) shifts dwellings from 2–3&nbsp;kVA gas-heated to 4–6&nbsp;kVA all-electric.',
+              'EV charging is the dominant change driver — domestic 7 kW chargers, commercial 7–22 kW per bay, rapid 50 kW+ DC at strategic sites.',
+              'Building electrification (heat pumps replacing gas, induction kitchens, electric DHW) shifts dwellings from 2–3 kVA gas-heated to 4–6 kVA all-electric.',
               'BS 7671 Reg 132.16 makes additions and alterations a design assessment — leaving spare capacity now avoids ripping out switchgear later.',
             ]}
           />
@@ -753,12 +753,12 @@ const HNCModule4Section1_5 = () => {
             points={[
               'Buildings live 30–50 years — design for the loads of year 30, not year 1.',
               'Standard growth headroom: 20–25% supply capacity, 25–30% spare DB ways, 30–40% spare containment fill.',
-              'EV charging is the dominant load growth driver: 7&nbsp;kW domestic, 7–22&nbsp;kW commercial, smart-charging diversity 0.2–0.3.',
-              'Building electrification shifts dwelling ADMD from 2–3&nbsp;kVA (gas) to 4–6&nbsp;kVA (all-electric) — design for the heat-pump future today.',
+              'EV charging is the dominant load growth driver: 7 kW domestic, 7–22 kW commercial, smart-charging diversity 0.2–0.3.',
+              'Building electrification shifts dwelling ADMD from 2–3 kVA (gas) to 4–6 kVA (all-electric) — design for the heat-pump future today.',
               'Reg 132.16 forces a capacity re-assessment on every addition or alteration — spare capacity now avoids ripping out switchgear later.',
               'High-density loads (data, EV bay, server room) need dedicated infrastructure, not shared diversity assumptions.',
               'Containment first: oversize ladders/trays/risers — they are nearly impossible to upgrade later without major works.',
-              'Document the design intent in O&amp;M — future engineers need to know what you assumed.',
+              'Document the design intent in O&M — future engineers need to know what you assumed.',
             ]}
           />
 

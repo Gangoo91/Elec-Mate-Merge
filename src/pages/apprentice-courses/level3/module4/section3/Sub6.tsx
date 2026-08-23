@@ -52,7 +52,7 @@ const checks = [
     ],
     correctIndex: 1,
     explanation:
-      "Immersion-element earth-fault is the single most common L3 immersion-circuit fault. The element is the metal coil immersed in water; when the sheath develops a pinhole the conductor is in direct contact with the water and the customer's bonded copper pipework, so the RCD sees the leakage as a residual current and trips. 0.12 MΩ at 500 V is well below the 1 MΩ Reg 643.3 acceptance, and the leakage calculates to roughly 1.9 mA — enough to trip a 30 mA RCD on the switch-on transient. The routine: isolate the element from the wiring; IR-test its terminals to body/earth at 500 V; replace with a brass-flanged Backer / Heatrae Sadia element; re-test IR (a healthy new element reads &gt; 200 MΩ), check the cylinder for leaks, and recommission confirming no trip.",
+      "Immersion-element earth-fault is the single most common L3 immersion-circuit fault. The element is the metal coil immersed in water; when the sheath develops a pinhole the conductor is in direct contact with the water and the customer's bonded copper pipework, so the RCD sees the leakage as a residual current and trips. 0.12 MΩ at 500 V is well below the 1 MΩ Reg 643.3 acceptance, and the leakage calculates to roughly 1.9 mA — enough to trip a 30 mA RCD on the switch-on transient. The routine: isolate the element from the wiring; IR-test its terminals to body/earth at 500 V; replace with a brass-flanged Backer / Heatrae Sadia element; re-test IR (a healthy new element reads > 200 MΩ), check the cylinder for leaks, and recommission confirming no trip.",
   },
   {
     id: 'mod4-s3-sub6-leddriver',
@@ -80,7 +80,7 @@ const checks = [
     ],
     correctIndex: 3,
     explanation:
-      "EV charging faults split into three categories: (a) wiring / supply — your job (IR, Zs, RCD test); (b) the charger / EVSE itself — manufacturer warranty if &lt; 2 years, sometimes firmware-updateable; (c) vehicle-side handshake or onboard charger — the vehicle's problem. The SAE J1772 / IEC 61851 protocol is a low-voltage 12 V handshake: the charger sends a PWM signal on the CP pin and the vehicle pulls the line down through resistors to indicate state, so a flaky cable, dirty plug or EV-side software issue can fail it without any L–N–E fault. The L3 apprentice confirms (a) is healthy, rules out the handshake and the customer's vehicle (a second car that charges proves the fault is the original car), then hands off — never replacing the wallbox first. Replacing kit before ruling out the handshake is a chargeable mistake the firm wears.",
+      "EV charging faults split into three categories: (a) wiring / supply — your job (IR, Zs, RCD test); (b) the charger / EVSE itself — manufacturer warranty if < 2 years, sometimes firmware-updateable; (c) vehicle-side handshake or onboard charger — the vehicle's problem. The SAE J1772 / IEC 61851 protocol is a low-voltage 12 V handshake: the charger sends a PWM signal on the CP pin and the vehicle pulls the line down through resistors to indicate state, so a flaky cable, dirty plug or EV-side software issue can fail it without any L–N–E fault. The L3 apprentice confirms (a) is healthy, rules out the handshake and the customer's vehicle (a second car that charges proves the fault is the original car), then hands off — never replacing the wallbox first. Replacing kit before ruling out the handshake is a chargeable mistake the firm wears.",
   },
 ];
 
@@ -125,7 +125,7 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      "Driver-side dimming faults present as 'wiring-like' symptoms but the wiring tests are always clean — that's the diagnostic separator. The candidates are: (a) supply voltage below the driver's input range — e.g. L–N reads 215 V against a 220–240 V driver spec, so check the upstream sub-main and the DNO if voltage is &lt; 216 V (statutory 230 V −6%); (b) a dimmable driver with the dimmer set to minimum; (c) drivers ageing, with the constant-current circuit degrading (typical onset 4–7 years in a hot environment). The L3 apprentice tests supply voltage at the cut-out FIRST (Reg 312 supply characteristics), because DNO under-voltage is increasingly common as networks come under load from EV charging and PV export; if supply is OK, the drivers are the candidate.",
+      "Driver-side dimming faults present as 'wiring-like' symptoms but the wiring tests are always clean — that's the diagnostic separator. The candidates are: (a) supply voltage below the driver's input range — e.g. L–N reads 215 V against a 220–240 V driver spec, so check the upstream sub-main and the DNO if voltage is < 216 V (statutory 230 V −6%); (b) a dimmable driver with the dimmer set to minimum; (c) drivers ageing, with the constant-current circuit degrading (typical onset 4–7 years in a hot environment). The L3 apprentice tests supply voltage at the cut-out FIRST (Reg 312 supply characteristics), because DNO under-voltage is increasingly common as networks come under load from EV charging and PV export; if supply is OK, the drivers are the candidate.",
   },
   {
     id: 4,
@@ -162,12 +162,12 @@ const quizQuestions = [
     options: [
       "There is no diagnostic signature — a failing washing machine motor reads identically to healthy fixed wiring on every L–N–E test. The only way to confirm it is to dismantle the machine, so the L3 apprentice strips the appliance down on site.",
       "A failing motor always raises the circuit's Zs above the Table 41.3 maximum. Measure Zs at the socket; if it is high, the motor is the cause, and you rectify by re-terminating the socket back-box rather than touching the machine.",
-      "The signature depends on the failure mode — winding insulation breakdown reads &lt; 1 MΩ L–E and trips the RCD on start, a winding short trips the MCB on inrush, an open-circuit winding draws nothing. Isolate the machine at the plug, prove the socket healthy with a known-good appliance, then advise the customer the appliance is at fault.",
+      "The signature depends on the failure mode — winding insulation breakdown reads < 1 MΩ L–E and trips the RCD on start, a winding short trips the MCB on inrush, an open-circuit winding draws nothing. Isolate the machine at the plug, prove the socket healthy with a known-good appliance, then advise the customer the appliance is at fault.",
       "A failing motor only ever shows as cumulative earth leakage on a clamp meter and never as low IR. Clamp L+N at the consumer unit; if leakage is above 30 mA the motor is failing, but the machine's own IR will always read healthy.",
     ],
     correctAnswer: 2,
     explanation:
-      "Washing machines, dishwashers and tumble dryers are the most common 'appliance trips the RCD' fault on a domestic call-out. The three signatures: (1) insulation breakdown in the windings — IR L–E reads &lt; 1 MΩ at 500 V as the commutator and brush gear degrade in wash-water aerosol, tripping the RCD on start; (2) a short between phases (or run/start windings) — high inrush trips the MCB or burns out the motor; (3) an open-circuit winding — no start, no current, no trip. The diagnostic move is to isolate the appliance, IR-test the supply circuit (clean), and advise the customer the appliance is at fault — the L3 apprentice does NOT spend hours testing wiring already proven healthy.",
+      "Washing machines, dishwashers and tumble dryers are the most common 'appliance trips the RCD' fault on a domestic call-out. The three signatures: (1) insulation breakdown in the windings — IR L–E reads < 1 MΩ at 500 V as the commutator and brush gear degrade in wash-water aerosol, tripping the RCD on start; (2) a short between phases (or run/start windings) — high inrush trips the MCB or burns out the motor; (3) an open-circuit winding — no start, no current, no trip. The diagnostic move is to isolate the appliance, IR-test the supply circuit (clean), and advise the customer the appliance is at fault — the L3 apprentice does NOT spend hours testing wiring already proven healthy.",
   },
   {
     id: 7,
@@ -177,7 +177,7 @@ const quizQuestions = [
       "The charger's internal contactor has failed. After 18 months of daily switching the contacts pit and arc on closing, tripping the upstream RCBO. The fix is to replace the wallbox; nothing on the supply side needs checking because the install IR was good.",
       "The dedicated EV cable has been damaged by rodents and is now leaking to earth. Re-run the supply cable in steel conduit and the intermittent trips will stop; a clamp meter would only confirm what the symptom already tells you.",
       "The upstream RCBO has drifted and is now tripping below its rated 30 mA. Swap it for a fresh 30 mA RCBO and the problem clears; the charger and the rest of the installation are healthy.",
-      "Cumulative leakage from the charger PLUS other appliances on the same shared upstream RCBO, not the charger alone. Clamp the RCBO's L+N with a leakage clamp meter to read steady-state residual current; if it's &gt; 15 mA, the charger needs its own dedicated RCD per Reg 722.531.3.",
+      "Cumulative leakage from the charger PLUS other appliances on the same shared upstream RCBO, not the charger alone. Clamp the RCBO's L+N with a leakage clamp meter to read steady-state residual current; if it's > 15 mA, the charger needs its own dedicated RCD per Reg 722.531.3.",
     ],
     correctAnswer: 3,
     explanation:
@@ -208,7 +208,7 @@ const faqs = [
   {
     question: "What's the boundary between an electrician's repair and a manufacturer's warranty fix?",
     answer:
-      "Three layers. Anything inside the customer's equipment (motors, drivers, control boards, internal wiring of an appliance) is the manufacturer's warranty (if &lt; 2 years on most domestic appliances under the Consumer Rights Act 2015) or a service engineer's job. Anything in the fixed installation (cables, accessories, terminations, switchgear) is your job. The terminal block / plug / SFCU is the boundary. The L3 apprentice diagnoses up to the boundary, documents the test evidence, and hands off the equipment side to the manufacturer or service engineer.",
+      "Three layers. Anything inside the customer's equipment (motors, drivers, control boards, internal wiring of an appliance) is the manufacturer's warranty (if < 2 years on most domestic appliances under the Consumer Rights Act 2015) or a service engineer's job. Anything in the fixed installation (cables, accessories, terminations, switchgear) is your job. The terminal block / plug / SFCU is the boundary. The L3 apprentice diagnoses up to the boundary, documents the test evidence, and hands off the equipment side to the manufacturer or service engineer.",
   },
   {
     question: "Why does the A4:2026 IR-test redraft (Reg 643.3) matter so much for equipment-side faults?",
@@ -228,7 +228,7 @@ const faqs = [
   {
     question: "Cumulative leakage on a shared RCD — how do I prove it's not one specific circuit?",
     answer:
-      "Clamp the L+N together at the RCD with a leakage clamp meter (Fluke 360, Megger DCM340) and read the steady-state residual current. If it's a healthy installation with no faults, you'll typically see 1–8 mA total — that's filter-cap leakage from electronics on the protected circuits. If it's &gt; 15 mA you're close to nuisance trip; if it's &gt; 25 mA you're at imminent trip threshold. Then isolate each protected circuit one at a time and re-clamp — the contribution of each circuit shows as a step-down. The fix is usually to split the loads onto separate RCDs (RCBO per circuit is the A4:2026-aligned best practice) rather than chasing a single 'fault'.",
+      "Clamp the L+N together at the RCD with a leakage clamp meter (Fluke 360, Megger DCM340) and read the steady-state residual current. If it's a healthy installation with no faults, you'll typically see 1–8 mA total — that's filter-cap leakage from electronics on the protected circuits. If it's > 15 mA you're close to nuisance trip; if it's > 25 mA you're at imminent trip threshold. Then isolate each protected circuit one at a time and re-clamp — the contribution of each circuit shows as a step-down. The fix is usually to split the loads onto separate RCDs (RCBO per circuit is the A4:2026-aligned best practice) rather than chasing a single 'fault'.",
   },
 ];
 
@@ -265,7 +265,7 @@ export default function Sub6() {
           <LearningOutcomes
             outcomes={[
               "Distinguish wiring-side faults (cables, accessories, terminations) from equipment-side faults (motors, elements, drivers, internal control boards) using the disconnect-and-retest move.",
-              "Diagnose immersion-element earth fault using IR test L+N to E at 500 V with the element isolated from the wiring; recognise the &lt; 1 MΩ signature and the brass-flange replacement procedure.",
+              "Diagnose immersion-element earth fault using IR test L+N to E at 500 V with the element isolated from the wiring; recognise the < 1 MΩ signature and the brass-flange replacement procedure.",
               "Recognise LED-driver / dimmer compatibility flicker faults and apply the manufacturer's compatibility chart as the diagnostic reference rather than condemning lamps.",
               "Diagnose single-phase motor faults — capacitor failure (most common), bearing seize, centrifugal-switch weld, terminal-block fault — in priority order.",
               "Apply the BS 7671 Reg 643.3 (A4:2026 redraft) two-stage IR test procedure (500 V isolated, 250 V with electronics connected) to fault verification work.",
@@ -281,7 +281,7 @@ export default function Sub6() {
           <ConceptBlock
             title="The disconnect-and-retest move — the L3 fault-localisation discipline"
             plainEnglish="Wiring-side faults live in cables, terminations, accessories and switchgear — the fixed parts of the installation that the customer doesn't unplug. Equipment-side faults live in the appliance — motors, elements, drivers, control boards, internal wiring. The two have different commercial owners (you fix wiring; the manufacturer fixes equipment) and different diagnostic boundaries."
-            onSite="The L3 separator move is to disconnect the equipment at its plug, switched fused connection unit (SFCU), or terminal block, then re-test the fixed wiring. If the wiring tests clean (IR &gt; 1 MΩ, continuity intact, Zs within table) AND the fault re-appears when you reconnect the equipment, the fault is in the equipment. That's the diagnostic certainty you need before telling the customer 'this is your appliance, not my wiring'."
+            onSite="The L3 separator move is to disconnect the equipment at its plug, switched fused connection unit (SFCU), or terminal block, then re-test the fixed wiring. If the wiring tests clean (IR > 1 MΩ, continuity intact, Zs within table) AND the fault re-appears when you reconnect the equipment, the fault is in the equipment. That's the diagnostic certainty you need before telling the customer 'this is your appliance, not my wiring'."
           >
             <p>
               The boundary by category:
@@ -323,8 +323,8 @@ export default function Sub6() {
 
           <ConceptBlock
             title="Element-to-earth is the dominant failure mode on water-immersed elements"
-            plainEnglish="Immersion heaters, towel rails and storage-heater elements are bare resistance wire inside a metal sheath. The sheath develops pinholes from corrosion, scale or thermal cycling; the conductor goes electrically continuous to the metal sheath and through it to the customer's bonded copper pipework. Result: trips the RCD, IR test reads &lt; 1 MΩ at 500 V."
-            onSite="A 3 kW Backer / Heatrae Sadia immersion element on a typical UK cylinder is a £20 part with a 30-minute swap. The fault is so common the L3 apprentice carries elements as standard van stock. Diagnostic: isolate, prove dead, disconnect at SFCU, IR-test the element terminals to its body / to earth at 500 V; if &lt; 1 MΩ replace; recommission and confirm IR &gt; 100 MΩ on the new element."
+            plainEnglish="Immersion heaters, towel rails and storage-heater elements are bare resistance wire inside a metal sheath. The sheath develops pinholes from corrosion, scale or thermal cycling; the conductor goes electrically continuous to the metal sheath and through it to the customer's bonded copper pipework. Result: trips the RCD, IR test reads < 1 MΩ at 500 V."
+            onSite="A 3 kW Backer / Heatrae Sadia immersion element on a typical UK cylinder is a £20 part with a 30-minute swap. The fault is so common the L3 apprentice carries elements as standard van stock. Diagnostic: isolate, prove dead, disconnect at SFCU, IR-test the element terminals to its body / to earth at 500 V; if < 1 MΩ replace; recommission and confirm IR > 100 MΩ on the new element."
           >
             <p>
               The standard L3 element-replacement procedure:
@@ -407,9 +407,9 @@ export default function Sub6() {
           <ContentEyebrow>EV chargers &mdash; the boundary at the AC isolator</ContentEyebrow>
 
           <ConceptBlock
-            title="EV charging faults split three ways &mdash; wiring, charger, vehicle"
+            title="EV charging faults split three ways — wiring, charger, vehicle"
             plainEnglish="An EV that won't charge is one of three things: (a) a wiring / supply fault upstream of the charger (your job), (b) a charger / EVSE fault inside the unit (manufacturer warranty), or (c) a vehicle-side fault that's failing the IEC 61851 / SAE J1772 handshake (the customer's car). The L3 apprentice rules them out in order."
-            onSite="The L3 routine: read the charger's diagnostic LEDs / app fault code; verify supply at the AC isolator (230 V L–N, &lt; 0.5 V N–E, healthy Zs); check the charger's inbuilt RCD-Type-A + 6 mA DC-leakage detection per BS 7671 722.531.3 (A4:2026 reinforces); IR-test the dedicated EV circuit at 500 V; verify with a second known-good vehicle if available. Common UK EV charger brands: Wallbox Pulsar Plus, Ohme Home Pro, EO Mini Pro, Andersen, MyEnergi Zappi."
+            onSite="The L3 routine: read the charger's diagnostic LEDs / app fault code; verify supply at the AC isolator (230 V L–N, < 0.5 V N–E, healthy Zs); check the charger's inbuilt RCD-Type-A + 6 mA DC-leakage detection per BS 7671 722.531.3 (A4:2026 reinforces); IR-test the dedicated EV circuit at 500 V; verify with a second known-good vehicle if available. Common UK EV charger brands: Wallbox Pulsar Plus, Ohme Home Pro, EO Mini Pro, Andersen, MyEnergi Zappi."
           >
             <p>
               The three EV-charging fault categories:
@@ -661,7 +661,7 @@ export default function Sub6() {
           <KeyTakeaways
             points={[
               "Equipment-side faults live INSIDE customer kit (motors, elements, drivers, control boards). Wiring-side faults live in the fixed installation. The disconnect-and-retest move at the SFCU / plug separates them.",
-              "Immersion-element earth fault is the dominant immersion-circuit fault — IR test the element terminals to its body at 500 V; &lt; 1 MΩ confirms; replace, retest, recommission.",
+              "Immersion-element earth fault is the dominant immersion-circuit fault — IR test the element terminals to its body at 500 V; < 1 MΩ confirms; replace, retest, recommission.",
               "Single-phase motor capacitor failure is the dominant motor fault — symptom is 'trips on start, runs OK if kicked over by hand'. Test cap, replace if outside ±10% of rated value.",
               "LED + dimmer compatibility flicker is the dominant lighting fault — bypass dimmer to confirm, check manufacturer's compatibility chart, replace dimmer or driver to a matched pair.",
               "BS 7671 Reg 643.3 (A4:2026 redraft) two-stage IR test — 500 V on isolated wiring, 250 V with electronics reconnected — is the test that catches a degraded driver leakage path the 500 V isolated test misses.",

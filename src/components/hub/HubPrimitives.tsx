@@ -411,6 +411,17 @@ export interface HubTool {
    * never alongside it, so a card is either reporting or inviting — not both.
    */
   description?: string;
+  /**
+   * Quiet footer line, shown IN ADDITION to the value or description.
+   *
+   * The report-or-invite rule above is right for a tool card — a quotes card
+   * showing £6,027 does not also need "Billing, payments and reminders". It is
+   * wrong for a card whose description says who the area is FOR: a course
+   * track that swapped "Level 2, Level 3 and AM2" for "1 section done" the
+   * moment a learner finished one section stopped telling them what the track
+   * was. Put the secondary figure here instead and the description stays.
+   */
+  meta?: string;
   to?: string;
   onClick?: () => void;
   /** Turns the figure volt. Reserve it for work that is actually outstanding. */
@@ -582,6 +593,12 @@ export const HubToolGrid = ({
             )}
 
             <span className="flex-grow" />
+
+            {/* Pinned below the spacer so footers line up across a row rather
+                than floating at whatever height each description ended. */}
+            {card.meta && (
+              <span className="mt-2 text-[11px] leading-snug text-white">{card.meta}</span>
+            )}
           </button>
         ))}
       </motion.div>

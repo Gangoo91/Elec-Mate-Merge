@@ -239,6 +239,7 @@ export const QuoteWizard = ({
     addItem,
     updateItem,
     removeItem,
+    moveItem,
     generateQuote,
     resetQuote,
     isGenerating,
@@ -435,6 +436,27 @@ export const QuoteWizard = ({
 
   const canSave = !!quote.client?.name;
   const itemCount = quote.items?.length ?? 0;
+
+  /*
+   * ELE-1571 — the persistent footer figure.
+   *
+   * It rendered `quote.total` unlabelled, so with a grant applied it sat at
+   * £132.00 while the review step directly above it said "Amount to pay
+   * £82.00". That contradiction is almost certainly what "I don't think it's
+   * deducted from the total" was pointing at (Sean, 21 Aug) — this is the one
+   * number visible on every step of the build.
+   *
+   * The total itself still does not move (VAT stays due on the full value of
+   * the supply); the footer just leads with what the customer actually pays
+   * and carries the total as context, matching every other surface.
+   */
+  const footerGrant =
+    quote.settings?.grantEnabled && Number(quote.settings?.grantAmount) > 0
+      ? Math.min(Number(quote.settings.grantAmount), quote.total || 0)
+      : 0;
+  const footerPayable = Math.max(0, (quote.total || 0) - footerGrant);
+  const gbp2 = (n: number) =>
+    n.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
   // Text the Live Pricing taxonomy classifies to show a market-rate benchmark
   const benchmarkJobText = useMemo(
@@ -645,6 +667,7 @@ export const QuoteWizard = ({
             onAdd={addItem}
             onUpdate={updateItem}
             onRemove={removeItem}
+            onMove={moveItem}
             priceAdjustment={priceAdjustment}
             setPriceAdjustment={setPriceAdjustment}
             calculateAdjustedPrice={calculateAdjustedPrice}
@@ -698,12 +721,13 @@ export const QuoteWizard = ({
                 </span>
               )}
             </div>
-            <span className="text-[20px] font-bold text-elec-yellow tabular-nums tracking-tight">
-              £
-              {(quote.total || 0).toLocaleString('en-GB', {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })}
+            <span className="flex items-baseline gap-1.5 text-[20px] font-bold text-elec-yellow tabular-nums tracking-tight">
+              {footerGrant > 0 && (
+                <span className="text-[11px] font-medium text-white line-through decoration-white/40">
+                  £{gbp2(quote.total || 0)}
+                </span>
+              )}
+              <span>£{gbp2(footerPayable)}</span>
             </span>
           </div>
 
@@ -743,12 +767,13 @@ export const QuoteWizard = ({
               )}
             </div>
             <div className="hidden sm:block flex-1" />
-            <span className="hidden sm:inline text-[20px] font-bold text-elec-yellow tabular-nums tracking-tight">
-              £
-              {(quote.total || 0).toLocaleString('en-GB', {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })}
+            <span className="hidden sm:flex items-baseline gap-1.5 text-[20px] font-bold text-elec-yellow tabular-nums tracking-tight">
+              {footerGrant > 0 && (
+                <span className="text-[11px] font-medium text-white line-through decoration-white/40">
+                  £{gbp2(quote.total || 0)}
+                </span>
+              )}
+              <span>£{gbp2(footerPayable)}</span>
             </span>
             {!isLastStep && canSave && (
               <button

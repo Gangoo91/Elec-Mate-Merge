@@ -599,6 +599,27 @@ export const searchablePages: SearchablePage[] = [
     icon: BookOpen,
     category: 'Apprentice Courses',
   },
+  {
+    name: 'Mock Exams',
+    path: '/mock-exams',
+    keywords: ['mock', 'exam', 'exams', 'practice', 'test', 'paper', '2391', '18th edition', 'am2', 'level 2', 'level 3', 'revision'],
+    icon: ClipboardCheck,
+    category: 'Apprentice Courses',
+  },
+  {
+    name: 'Flashcards',
+    path: '/apprentice/on-job-tools/flashcards',
+    keywords: ['flashcards', 'flash', 'cards', 'revision', 'spaced repetition', 'study', 'revise'],
+    icon: BookOpen,
+    category: 'Apprentice Courses',
+  },
+  {
+    name: 'Quick Revision',
+    path: '/apprentice/revision',
+    keywords: ['revision', 'revise', 'missed', 'questions', 'wrong answers', 'practice'],
+    icon: Sparkles,
+    category: 'Apprentice Courses',
+  },
 
   // ──── Upskilling Courses ────
   {

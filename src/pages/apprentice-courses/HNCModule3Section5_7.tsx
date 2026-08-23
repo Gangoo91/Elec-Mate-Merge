@@ -283,10 +283,10 @@ const HNCModule3Section5_7 = () => {
 
           <TLDR
             points={[
-              'You apply the spectrum: DOL (small motors &lt; 7.5 kW where inrush is acceptable) &rarr; star-delta (legacy) &rarr; soft starter (no speed control) &rarr; VSD (speed + soft start + energy saving).',
-              'You apply the cube affinity law (P &prop; n&sup3;) to fan and pump duty &mdash; running at 80 % speed cuts power demand to 51 %, the headline VSD energy-saving figure.',
+              'You apply the spectrum: DOL (small motors < 7.5 kW where inrush is acceptable) → star-delta (legacy) → soft starter (no speed control) → VSD (speed + soft start + energy saving).',
+              'You apply the cube affinity law (P &prop; n³) to fan and pump duty — running at 80 % speed cuts power demand to 51 %, the headline VSD energy-saving figure.',
               'You specify VSDs to IES2 efficiency (Ecodesign Reg 2019/1781) and add line reactor / EMC filter / harmonic mitigation against G5/5 limits.',
-              'You design out star-delta on new installations &mdash; replaced by soft starter or VSD which are now the BSE default for fan / pump / compressor duties.',
+              'You design out star-delta on new installations — replaced by soft starter or VSD which are now the BSE default for fan / pump / compressor duties.',
             ]}
           />
 
@@ -1050,7 +1050,7 @@ const HNCModule3Section5_7 = () => {
           <SectionRule />
 
           <Scenario
-            title="Constant-speed AHU fan retrofit to VSD &mdash; cube-law saving calculation"
+            title="Constant-speed AHU fan retrofit to VSD — cube-law saving calculation"
             situation={
               <>
                 A 30 kW supply fan in an office AHU runs constantly at full speed via a
@@ -1092,13 +1092,13 @@ const HNCModule3Section5_7 = () => {
 
           <KeyTakeaways
             points={[
-              'DOL: 6&ndash;8&times; FLC inrush, 100 % torque &mdash; small motors only.',
-              'Star-delta: 1/3 inrush, 1/3 torque &mdash; legacy method, replaced by soft starter or VSD.',
-              'Autotransformer starter: variable tap (typically 50/65/80 %) &mdash; mid-size motors where soft starter not available.',
-              'Soft starter: gradual ramp via SCR phase angle &mdash; reduces inrush, no speed control, lowest-cost VSD alternative.',
+              'DOL: 6–8× FLC inrush, 100 % torque — small motors only.',
+              'Star-delta: 1/3 inrush, 1/3 torque — legacy method, replaced by soft starter or VSD.',
+              'Autotransformer starter: variable tap (typically 50/65/80 %) — mid-size motors where soft starter not available.',
+              'Soft starter: gradual ramp via SCR phase angle — reduces inrush, no speed control, lowest-cost VSD alternative.',
               'VSD (variable-frequency drive): full speed control + soft start + energy saving via cube law on fan/pump duty.',
-              'Affinity laws for centrifugal loads: Q &prop; n, P &prop; n&sup3;, H &prop; n&sup2; &mdash; the basis of every VSD energy-saving calculation.',
-              'Ecodesign Reg 2019/1781 &mdash; VSDs IES2 minimum since 2021, declared per IEC 61800-9.',
+              'Affinity laws for centrifugal loads: Q &prop; n, P &prop; n³, H &prop; n² — the basis of every VSD energy-saving calculation.',
+              'Ecodesign Reg 2019/1781 — VSDs IES2 minimum since 2021, declared per IEC 61800-9.',
               'VSDs need harmonic mitigation (line reactor / DC link choke / active filter) against G5/5 limits + EMC filter to BS EN 61800-3.',
             ]}
           />

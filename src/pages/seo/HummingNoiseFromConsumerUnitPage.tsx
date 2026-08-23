@@ -693,7 +693,7 @@ export default function HummingNoiseFromConsumerUnitPage() {
       faqHeading="Frequently Asked Questions About Consumer Unit Humming"
       relatedPages={relatedPages}
       ctaHeading="Inspect and Document Consumer Units on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for AI board scanning, professional EICR certificates, and fault documentation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI board scanning, professional EICR certificates, and fault documentation. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -306,7 +306,7 @@ const HNCModule2Section4_4 = () => {
             points={[
               'You handle the decibel scale fluently — adding sources logarithmically (10 × log₁₀ Σ10^(Lᵢ/10)) rather than arithmetically.',
               'You apply the inverse-square law (6 dB drop per doubling of distance) to plant breakout calculations and BS 4142 assessments.',
-              'You convert between SPL (Lp) and SWL (Lw) using Lp = Lw − 20 log r − 11 (free field, point source) when the manufacturer&rsquo;s data is given as SWL.',
+              'You convert between SPL (Lp) and SWL (Lw) using Lp = Lw − 20 log r − 11 (free field, point source) when the manufacturer’s data is given as SWL.',
               'You apply A-weighting (dBA) for human-response work and C-weighting (dBC) for impulsive/low-frequency plant noise.',
             ]}
           />

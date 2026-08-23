@@ -461,7 +461,7 @@ export default function HotTubElectricalCalculatorPage() {
         },
       ]}
       ctaHeading="Design hot tub supplies with confidence"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for outdoor circuit design, cable sizing, and certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for outdoor circuit design, cable sizing, and certification. 7-day free trial, cancel anytime."
       toolPath="/tools/hot-tub-electrical-calculator"
     />
   );

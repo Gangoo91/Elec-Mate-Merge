@@ -1615,7 +1615,22 @@ serve(async (req) => {
           vatFormatted: vatAmount > 0 ? gbpQ(vatAmount) : null,
           totalFormatted: gbpQ(total),
           cisFormatted: qCisAmount > 0 ? `−${gbpQ(qCisAmount)}` : null,
-          netPayableFormatted: qCisAmount > 0 ? gbpQ(qNetPayable) : null,
+          /*
+           * ELE-1571 — this was `qCisAmount > 0 ? … : null`, a condition that
+           * predates grants and was never widened when they were added.
+           *
+           * The effect on a quote with a grant and no CIS: `grantFormatted`
+           * rendered the −£500 line, but the figure the customer is actually
+           * asked to pay came through null, so the PDF showed the full total
+           * with a deduction beside it and no reduced amount. Reported as "I
+           * don't think it's deducted from the total" (Sean, 21 Aug) — the
+           * arithmetic was right the whole time; the payload withheld it.
+           *
+           * `qNetPayable` already nets off BOTH, so the condition simply has to
+           * admit the grant.
+           */
+          netPayableFormatted:
+            qCisAmount > 0 || qGrantAmount > 0 ? gbpQ(qNetPayable) : null,
           notionalVatFormatted: qReverseCharge ? gbpQ(qNotionalVat) : null,
         },
         // For backwards compatibility with existing templates

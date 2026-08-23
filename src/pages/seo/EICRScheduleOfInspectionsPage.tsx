@@ -443,7 +443,7 @@ const sections = [
           periodic inspection. It is almost always classified as C2 (Potentially Dangerous) because
           the absence of bonding means that metallic services could become live in the event of a
           fault, creating a shock risk. For guidance on earthing systems, see the{' '}
-          <SEOInternalLink href="/earthing-arrangements">
+          <SEOInternalLink href="/guides/earthing-systems-tns-tncs-tt-explained">
             earthing arrangements guide
           </SEOInternalLink>
           .
@@ -800,7 +800,7 @@ export default function EICRScheduleOfInspectionsPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Schedule of Inspections Built Into the App"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EICRs with the full BS 7671 Appendix 6 schedule of inspections. Tick items as you walk the installation. Board scanner pre-populates board details. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EICRs with the full BS 7671 Appendix 6 schedule of inspections. Tick items as you walk the installation. Board scanner pre-populates board details. 7-day free trial."
     />
   );
 }

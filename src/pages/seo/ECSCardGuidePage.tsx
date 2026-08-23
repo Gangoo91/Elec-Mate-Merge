@@ -548,7 +548,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Professional certificate management for ECS cardholders"
-          description="Join 1,000+ UK electricians using Elec-Mate to complete EICRs, Minor Works Certificates, and Electrical Installation Certificates on their phone."
+          description="Join 1,600+ UK electricians using Elec-Mate to complete EICRs, Minor Works Certificates, and Electrical Installation Certificates on their phone."
           icon={FileCheck2}
         />
       </>

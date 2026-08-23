@@ -453,7 +453,7 @@ const HNCModule8Section2_6 = () => {
 
           <SectionRule />
 
-          <ConceptBlock title="Performance Verification and O&amp;M Documentation">
+          <ConceptBlock title="Performance Verification and O&M Documentation">
             <p>Performance verification confirms that the installed and commissioned system meets the design intent and specification requirements. This is documented through commissioning records and compiled into the O&amp;M (Operation and Maintenance) manual for handover to the client.</p>
             <p><strong>Performance Verification Against Design</strong></p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">

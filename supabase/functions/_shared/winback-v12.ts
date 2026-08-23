@@ -106,49 +106,68 @@ function withIdentity(url: string, ctx: WinbackContext): string {
 }
 
 // ─── Shared HTML chrome ──────────────────────────────────────────────────
-// Mobile-safe table layout, dark theme matching the app, single column,
-// preheader (hidden) for the inbox preview line.
-const LOGO_URL = 'https://www.elec-mate.com/logo.jpg';
+// Matches send-welcome-email (the house look): light slate page, 520px white
+// card, navy ink, gold accents. Previously a dark theme — restyled 2026-08-23.
+// The three touch bodies inherit this, so their inline colours were remapped to
+// suit a light background at the same time. NOTE: gold #F3B70A is a background/
+// rule colour only — as TEXT on white it is ~1.4:1, so use #B5840A for gold type.
+const LOGO_URL =
+  'https://jtwygbeceundfgnkirof.supabase.co/storage/v1/object/public/lead-magnets/onboarding/elec-mate-logo.png';
 
 function shell(opts: { preheader: string; bodyHtml: string }): string {
+  const year = new Date().getFullYear();
   return `<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light">
+  <meta name="supported-color-schemes" content="light">
   <title>Elec-Mate</title>
+  <style>
+    body { margin: 0; padding: 0; width: 100%; background-color: #F4F6F9; }
+    a { text-decoration: none; }
+    @media screen and (max-width: 480px) {
+      .pad { padding-left: 24px !important; padding-right: 24px !important; }
+    }
+  </style>
 </head>
-<body style="margin: 0; padding: 0; background-color: #0a0a0a; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #ffffff;">
-  <span style="display:none !important; visibility:hidden; mso-hide:all; font-size:1px; color:#0a0a0a; line-height:1px; max-height:0; max-width:0; opacity:0; overflow:hidden;">
+<body style="margin: 0; padding: 0; background-color: #F4F6F9; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased;">
+  <span style="display:none !important; visibility:hidden; mso-hide:all; font-size:1px; color:#F4F6F9; line-height:1px; max-height:0; max-width:0; opacity:0; overflow:hidden;">
     ${escapeHtml(opts.preheader)}
   </span>
-  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #0a0a0a;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #F4F6F9;">
     <tr>
-      <td align="center" style="padding: 32px 16px;">
-        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width: 560px; background-color: #111111; border-radius: 16px; overflow: hidden; border: 1px solid #262626;">
+      <td align="center" style="padding: 40px 16px;">
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width: 520px; background-color: #FFFFFF; border-radius: 18px; overflow: hidden; border: 1px solid #E6E9EE;">
           <tr>
-            <td style="padding: 32px 28px 12px; text-align: center;">
-              <img src="${LOGO_URL}" alt="Elec-Mate" width="120" style="display: block; margin: 0 auto; max-width: 120px; height: auto; border: 0;" />
+            <td align="left" style="padding: 36px 36px 8px;" class="pad">
+              <img src="${LOGO_URL}" alt="Elec-Mate" width="56" height="56" style="display: block; border-radius: 13px; border: 1px solid #E6E9EE;" />
             </td>
           </tr>
           <tr>
-            <td style="padding: 16px 28px 24px;">
+            <td style="padding: 20px 36px 28px;" class="pad">
               ${opts.bodyHtml}
             </td>
           </tr>
           <tr>
-            <td style="padding: 22px 28px 28px; border-top: 1px solid #1f1f1f;">
-              <p style="margin: 0 0 6px; font-size: 12px; line-height: 1.6; color: #ffffff; text-align: center;">
+            <td style="padding: 22px 36px; background-color: #F8FAFC; border-top: 1px solid #E6E9EE;" class="pad">
+              <p style="margin: 0 0 6px; font-size: 12px; line-height: 1.6; color: #51606F; text-align: center;">
                 You&apos;re getting this because you used to have an Elec-Mate subscription.
               </p>
-              <p style="margin: 0; font-size: 12px; line-height: 1.6; color: #ffffff; text-align: center;">
-                <a href="mailto:founder@elec-mate.com?subject=unsubscribe%20winback" style="color: #ffffff; text-decoration: underline;">Stop these emails</a>
-                &nbsp;·&nbsp;
-                <a href="https://www.elec-mate.com" style="color: #ffffff; text-decoration: underline;">elec-mate.com</a>
+              <p style="margin: 0; font-size: 12px; line-height: 1.6; color: #51606F; text-align: center;">
+                <a href="mailto:founder@elec-mate.com?subject=unsubscribe%20winback" style="color: #51606F; text-decoration: underline;">Stop these emails</a>
+                &nbsp;&middot;&nbsp;
+                <a href="https://www.elec-mate.com" style="color: #51606F; text-decoration: underline;">elec-mate.com</a>
               </p>
             </td>
           </tr>
-        </table>
+          <tr>
+            <td align="center" style="padding: 0 36px 26px; background-color: #F8FAFC;">
+              <p style="margin: 0 0 3px; font-size: 12px; font-weight: 600; color: #0C1B2A;">Your trade. Your app.</p>
+              <p style="margin: 0; font-size: 11px; color: #8B95A3;">&copy; ${year} Elec-Mate &middot; Made in the UK</p>
+            </td>
+          </tr></table>
       </td>
     </tr>
   </table>
@@ -188,21 +207,21 @@ function ctaButton(href: string, label: string): string {
 }
 
 function p(text: string): string {
-  return `<p style="margin: 0 0 16px; font-size: 16px; line-height: 1.65; color: #ffffff;">${text}</p>`;
+  return `<p style="margin: 0 0 16px; font-size: 16px; line-height: 1.65; color: #0C1B2A;">${text}</p>`;
 }
 
 function pSmall(text: string): string {
-  return `<p style="margin: 0 0 14px; font-size: 14px; line-height: 1.6; color: #ffffff;">${text}</p>`;
+  return `<p style="margin: 0 0 14px; font-size: 14px; line-height: 1.6; color: #51606F;">${text}</p>`;
 }
 
 function h1(text: string): string {
-  return `<h1 style="margin: 0 0 18px; font-size: 24px; font-weight: 700; line-height: 1.25; color: #ffffff; letter-spacing: -0.01em;">${text}</h1>`;
+  return `<h1 style="margin: 0 0 18px; font-size: 27px; font-weight: 800; line-height: 1.12; color: #0C1B2A; letter-spacing: -0.5px;">${text}</h1>`;
 }
 
 function sig(): string {
   return `
-<p style="margin: 22px 0 4px; font-size: 16px; line-height: 1.5; color: #ffffff;">Andrew</p>
-<p style="margin: 0; font-size: 14px; line-height: 1.5; color: #ffffff;">Founder, Elec-Mate</p>`;
+<p style="margin: 22px 0 4px; font-size: 16px; font-weight: 600; line-height: 1.5; color: #0C1B2A;">Andrew</p>
+<p style="margin: 0; font-size: 13px; line-height: 1.5; color: #51606F;">Founder, Elec-Mate</p>`;
 }
 
 // ─── Touch 1 — Day +1, sincere check-in, no offer ────────────────────────
@@ -225,30 +244,30 @@ export function winbackTouch1(ctx: WinbackContext): WinbackEmail {
 ${h1(ctx.wasTrial ? `Quick one, ${escapeHtml(name)}.` : `Sorry to see you go, ${escapeHtml(name)}.`)}
 ${p('Andrew here. ' + opening)}
 ${p('No hard feelings — but I&rsquo;d genuinely love to know why. Two reasons:')}
-<ul style="margin: 0 0 16px; padding-left: 22px; font-size: 16px; line-height: 1.7; color: #ffffff;">
+<ul style="margin: 0 0 16px; padding-left: 22px; font-size: 16px; line-height: 1.7; color: #0C1B2A;">
   <li>If something&rsquo;s broken, I want to fix it.</li>
   <li>If something&rsquo;s missing, I want to build it.</li>
 </ul>
 ${p('Just hit reply on this email. One line is plenty. It comes straight to my inbox — I&rsquo;m a working spark too, so I&rsquo;ll know what you mean.')}
 
 <!-- Free GPT — goodwill + share angle -->
-<div style="margin: 26px 0 18px; padding: 22px; background-color: #181818; border: 1px solid #2a2a2a; border-radius: 14px;">
-  <p style="margin: 0 0 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #facc15;">Even if you don&rsquo;t come back</p>
-  <p style="margin: 0 0 10px; font-size: 17px; font-weight: 700; line-height: 1.3; color: #ffffff;">
+<div style="margin: 26px 0 18px; padding: 22px; background-color: #FFFAEC; border: 1px solid #EFD489; border-radius: 14px;">
+  <p style="margin: 0 0 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #B5840A;">Even if you don&rsquo;t come back</p>
+  <p style="margin: 0 0 10px; font-size: 17px; font-weight: 700; line-height: 1.3; color: #0C1B2A;">
     Use the free Elec-Mate AI on ChatGPT.
   </p>
-  <p style="margin: 0 0 14px; font-size: 14px; line-height: 1.6; color: #ffffff;">
+  <p style="margin: 0 0 14px; font-size: 14px; line-height: 1.6; color: #0C1B2A;">
     Custom GPT I built for the trade — BS 7671 lookups, cable calcs, fault-finding, regs questions. Forever free, no Elec-Mate login needed.
   </p>
   <table role="presentation" cellspacing="0" cellpadding="0">
     <tr>
       <td style="padding-right: 8px;">
-        <a href="${attr(GPT_URL)}" style="display: inline-block; padding: 12px 20px; background-color: #facc15; color: #0a0a0a; text-decoration: none; font-weight: 700; font-size: 14px; border-radius: 10px;">
+        <a href="${attr(GPT_URL)}" style="display: inline-block; padding: 12px 20px; background-color: #B5840A; color: #0a0a0a; text-decoration: none; font-weight: 700; font-size: 14px; border-radius: 10px;">
           Open the GPT →
         </a>
       </td>
       <td>
-        <a href="${attr(GPT_WHATSAPP_SHARE)}" style="display: inline-block; padding: 12px 18px; background-color: transparent; color: #facc15; text-decoration: none; font-weight: 600; font-size: 14px; border: 1px solid rgba(250,204,21,0.35); border-radius: 10px;">
+        <a href="${attr(GPT_WHATSAPP_SHARE)}" style="display: inline-block; padding: 12px 18px; background-color: transparent; color: #B5840A; text-decoration: none; font-weight: 600; font-size: 14px; border: 1px solid rgba(250,204,21,0.35); border-radius: 10px;">
           Share with a mate
         </a>
       </td>
@@ -336,7 +355,7 @@ ${sig()}`;
   const valueListHtml =
     ctx.tier === 'apprentice'
       ? `
-<ul style="margin: 0 0 18px; padding-left: 22px; font-size: 15px; line-height: 1.8; color: #ffffff;">
+<ul style="margin: 0 0 18px; padding-left: 22px; font-size: 15px; line-height: 1.8; color: #0C1B2A;">
   <li>Level 2 / 3 / AM2 / HNC mock exams &amp; 500+ practice questions</li>
   <li>75 curated training videos, 29 flashcard sets, BS 7671 study guide</li>
   <li>75 calculators (cable, Zs, voltage drop, three-phase, EV…)</li>
@@ -344,12 +363,12 @@ ${sig()}`;
   <li>Site diary, OJT logbook, portfolio builder, EPA simulator</li>
 </ul>`
       : `
-<ul style="margin: 0 0 18px; padding-left: 22px; font-size: 15px; line-height: 1.8; color: #ffffff;">
-  <li>15 certificate types (EICR, EIC, Minor Works, PAT, solar, fire alarm…)</li>
-  <li>62+ calculators + live materials pricing + price book</li>
+<ul style="margin: 0 0 18px; padding-left: 22px; font-size: 15px; line-height: 1.8; color: #0C1B2A;">
+  <li>19 certificate types (EICR, EIC, Minor Works, PAT, solar, fire alarm…)</li>
+  <li>70+ calculators + live materials pricing + price book</li>
   <li>Quote + invoice builder, customer CRM, photo docs, expenses with OCR</li>
   <li>RAMS generator with 1000+ hazard database</li>
-  <li>9 AI specialists (circuit designer, cost engineer, commissioning…)</li>
+  <li>8 AI specialists (circuit designer, cost engineer, commissioning…)</li>
   <li>Voice-to-form on site + Xero / QuickBooks sync</li>
 </ul>`;
 
@@ -363,19 +382,19 @@ ${h1(`${escapeHtml(name)}, want your old account back at ${escapeHtml(offer.newP
 ${p("It&rsquo;s been a week since you cancelled. I&rsquo;ve been thinking about it.")}
 ${p(`If you want to come back, I&rsquo;ve locked in a price just for you:`)}
 <div style="margin: 4px 0 22px; padding: 22px; background: linear-gradient(135deg, rgba(250,204,21,0.10), rgba(250,204,21,0.02)); border: 1px solid rgba(250,204,21,0.30); border-radius: 14px;">
-  <p style="margin: 0 0 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #facc15;">Your win-back price</p>
-  <p style="margin: 0 0 6px; font-size: 36px; font-weight: 800; line-height: 1; color: #ffffff; letter-spacing: -0.02em;">
-    ${escapeHtml(offer.newPrice)}<span style="font-size: 16px; font-weight: 500; color: #ffffff;">/month</span>
+  <p style="margin: 0 0 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #B5840A;">Your win-back price</p>
+  <p style="margin: 0 0 6px; font-size: 36px; font-weight: 800; line-height: 1; color: #0C1B2A; letter-spacing: -0.02em;">
+    ${escapeHtml(offer.newPrice)}<span style="font-size: 16px; font-weight: 500; color: #0C1B2A;">/month</span>
   </p>
-  <p style="margin: 0; font-size: 13px; color: #ffffff;">
+  <p style="margin: 0; font-size: 13px; color: #0C1B2A;">
     Was <span style="text-decoration: line-through; opacity: 0.7;">${escapeHtml(offer.oldPrice)}</span>
     · Locked in for as long as you stay subscribed
   </p>
 </div>
 
-<p style="margin: 0 0 10px; font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #facc15;">What you get for ${escapeHtml(offer.newPrice)}/month</p>
+<p style="margin: 0 0 10px; font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #B5840A;">What you get for ${escapeHtml(offer.newPrice)}/month</p>
 ${valueListHtml}
-<p style="margin: -4px 0 22px; font-size: 13px; line-height: 1.6; color: #ffffff;">
+<p style="margin: -4px 0 22px; font-size: 13px; line-height: 1.6; color: #0C1B2A;">
   <em style="opacity: 0.9;">${escapeHtml(compareLabel)}.</em>
 </p>
 
@@ -428,8 +447,8 @@ export function winbackTouch3(ctx: WinbackContext): WinbackEmail {
 
   const offerBlock = offer.hasOffer
     ? `<div style="margin: 4px 0 22px; padding: 18px; background-color: rgba(250,204,21,0.06); border-left: 3px solid #facc15; border-radius: 10px;">
-        <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #ffffff;">
-          Your <strong style="color: #facc15;">${escapeHtml(offer.newPrice)}/month forever</strong> price is still good — but only for the next <strong>7 days</strong>.
+        <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #0C1B2A;">
+          Your <strong style="color: #B5840A;">${escapeHtml(offer.newPrice)}/month forever</strong> price is still good — but only for the next <strong>7 days</strong>.
         </p>
       </div>`
     : '';
@@ -438,8 +457,8 @@ export function winbackTouch3(ctx: WinbackContext): WinbackEmail {
 ${h1(offer.hasOffer ? `Last one, ${escapeHtml(name)}.` : `Last one, ${escapeHtml(name)}.`)}
 ${p("This is the last email I&rsquo;ll send about coming back. Promise.")}
 ${p('In the month since you cancelled, the team has shipped:')}
-<ul style="margin: 0 0 18px; padding-left: 22px; font-size: 15px; line-height: 1.75; color: #ffffff;">
-  <li>A <a href="${attr(GPT_URL)}" style="color: #facc15;">free Elec-Mate GPT on ChatGPT</a> for the whole trade — regs, calcs, fault-finding, no login needed</li>
+<ul style="margin: 0 0 18px; padding-left: 22px; font-size: 15px; line-height: 1.75; color: #0C1B2A;">
+  <li>A <a href="${attr(GPT_URL)}" style="color: #B5840A;">free Elec-Mate GPT on ChatGPT</a> for the whole trade — regs, calcs, fault-finding, no login needed</li>
   <li>Faster cert generation with smart pre-fill from previous jobs</li>
   <li>More public calculators (cable sizing, busbar, voltage drop…) now SEO-indexable</li>
   <li>Tighter onboarding — apprentices skip the business setup entirely</li>

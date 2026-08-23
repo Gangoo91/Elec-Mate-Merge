@@ -825,7 +825,7 @@ export default function LockOffLOTOPage() {
       faqHeading="Frequently Asked Questions About Lock Off / LOTO for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Generate Safe Isolation Documentation in Minutes"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate's AI Health and Safety agent to create LOTO-specific risk assessments, method statements, and RAMS packages. Describe the job, get a complete document. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate's AI Health and Safety agent to create LOTO-specific risk assessments, method statements, and RAMS packages. Describe the job, get a complete document. 7-day free trial, cancel anytime."
     />
   );
 }

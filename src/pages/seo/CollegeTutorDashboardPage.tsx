@@ -329,7 +329,7 @@ const sections = [
         <p>
           Custom quizzes let you create shorter, topic-specific assessments. For example, after
           teaching a session on{' '}
-          <SEOInternalLink href="/earthing-arrangements">
+          <SEOInternalLink href="/guides/earthing-systems-tns-tncs-tt-explained">
             earthing arrangements
           </SEOInternalLink>
           , you might assign a 15-question quiz on TN-S, TN-C-S, and TT systems to check

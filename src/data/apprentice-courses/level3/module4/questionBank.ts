@@ -3923,4 +3923,20 @@ export function validateQuestionBank(): {
   };
 }
 
+/**
+ * Section number → readable topic, taken from the section headers above.
+ * Questions here carry only `section: '4.4'` and no `topic`, so without this
+ * the results screen's "what to study next" lists bare outline numbers.
+ */
+export const M4_SECTION_TOPIC: Record<string, string> = {
+  '4.1': 'Fault Types',
+  '4.2': 'Diagnosis Methods',
+  '4.3': 'Test Equipment',
+  '4.4': 'Safe Isolation',
+  '4.5': 'Documentation',
+  '4.6': 'Common Faults',
+  '4.7': 'Repair Procedures',
+  '4.8': 'Fault Finding in Depth',
+};
+
 export default module4Questions;

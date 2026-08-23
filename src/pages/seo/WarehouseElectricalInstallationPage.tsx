@@ -599,7 +599,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage warehouse electrical projects with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site certification, quoting, and project management."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site certification, quoting, and project management."
           icon={FileCheck2}
         />
       </>
@@ -636,7 +636,7 @@ export default function WarehouseElectricalInstallationPage() {
       faqHeading="Frequently Asked Questions — Warehouse Electrical Installation"
       relatedPages={relatedPages}
       ctaHeading="Manage Your Warehouse Electrical Projects with Elec-Mate"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site certification, quoting, and project management. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site certification, quoting, and project management. 7-day free trial, cancel anytime."
     />
   );
 }

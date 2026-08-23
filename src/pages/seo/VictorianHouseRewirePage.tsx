@@ -588,7 +588,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage Victorian house rewires with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, professional quoting, and job management."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion, professional quoting, and job management."
           icon={FileCheck2}
         />
       </>
@@ -625,7 +625,7 @@ export default function VictorianHouseRewirePage() {
       faqHeading="Frequently Asked Questions About Victorian House Rewiring"
       relatedPages={relatedPages}
       ctaHeading="Complete Victorian House EICRs on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

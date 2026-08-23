@@ -81,7 +81,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Section 7 requires employees to take reasonable care for the health and safety of themselves and others who may be affected by their acts or omissions at work.',
     section: 'Module 1',
-    difficulty: 'basic',
+    difficulty: 'advanced',
     topic: 'HSWA 1974',
     category: 'Legislation',
   },
@@ -98,7 +98,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'PASMA stands for the Prefabricated Access Suppliers and Manufacturers Association. It is the recognised trade body for the mobile access tower industry.',
     section: 'Module 1',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'PASMA',
     category: 'Legislation',
   },
@@ -154,7 +154,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'BS EN 1004-1:2020 is the standard for mobile access and working towers made of prefabricated elements. It covers design, materials, dimensions and load classes.',
     section: 'Module 1',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'BS EN 1004',
     category: 'Legislation',
   },
@@ -171,7 +171,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Section 3 of the HSWA 1974 requires employers to conduct their undertaking in such a way as to ensure, so far as is reasonably practicable, that persons not in their employment are not exposed to risks to their health or safety.',
     section: 'Module 1',
-    difficulty: 'basic',
+    difficulty: 'advanced',
     topic: 'HSWA 1974',
     category: 'Legislation',
   },
@@ -206,7 +206,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Section 8 makes it an offence for any person to intentionally or recklessly interfere with or misuse anything provided in the interests of health, safety or welfare.',
     section: 'Module 1',
-    difficulty: 'basic',
+    difficulty: 'advanced',
     topic: 'HSWA 1974',
     category: 'Legislation',
   },
@@ -223,7 +223,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'BS 1139-6 covers metal scaffolding, specifically the specification for prefabricated mobile access and working towers, providing a UK national annex to EN 1004.',
     section: 'Module 1',
-    difficulty: 'basic',
+    difficulty: 'advanced',
     topic: 'BS 1139-6',
     category: 'Legislation',
   },
@@ -252,7 +252,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'EN 1004:2020 was published in 2020 but officially replaced EN 1004:2004 in November 2021 after the coexistence period ended.',
     section: 'Module 1',
-    difficulty: 'basic',
+    difficulty: 'advanced',
     topic: 'BS EN 1004',
     category: 'Legislation',
   },
@@ -264,7 +264,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'PASMA introduced digital training cards from 31 March 2025, allowing operatives to carry proof of competence on their mobile devices.',
     section: 'Module 1',
-    difficulty: 'basic',
+    difficulty: 'advanced',
     topic: 'PASMA',
     category: 'Legislation',
   },
@@ -296,7 +296,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'CDM 2015 identifies 5 duty holders: client, principal designer, principal contractor, designer and contractor. Each has specific duties relating to health and safety on construction projects.',
     section: 'Module 1',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'CDM 2015',
     category: 'Legislation',
   },
@@ -339,7 +339,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'The five CDM 2015 duty holders are client, principal designer, principal contractor, designer and contractor. Site supervisor is not a named duty holder under CDM.',
     section: 'Module 1',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'CDM 2015',
     category: 'Legislation',
   },
@@ -392,7 +392,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Regulation 4 requires that every employer shall ensure that work at height is properly planned, appropriately supervised and carried out in a manner that is, so far as is reasonably practicable, safe.',
     section: 'Module 1',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'WAHR 2005',
     category: 'Legislation',
   },
@@ -410,7 +410,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'PUWER 1998 requires that work equipment is suitable for its intended use, maintained in an efficient state, in efficient working order and good repair, and inspected where appropriate.',
     section: 'Module 1',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'PUWER 1998',
     category: 'Legislation',
   },
@@ -446,7 +446,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'The Health and Safety Executive (HSE) is the primary enforcement body for the HSWA 1974 and its associated regulations in the workplace.',
     section: 'Module 1',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'HSWA 1974',
     category: 'Legislation',
   },
@@ -464,7 +464,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'The PASMA Code of Practice recommends that anyone who assembles, dismantles or alters a mobile access tower should have completed a PASMA-approved training course appropriate to the complexity of the tower.',
     section: 'Module 1',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'PASMA CoP',
     category: 'Legislation',
   },
@@ -523,7 +523,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Regulation 12(1) of CDM 2015 requires the principal contractor to draw up the construction phase plan before the construction phase begins, or where there is only one contractor, that contractor must prepare it.',
     section: 'Module 1',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'CDM 2015',
     category: 'Legislation',
   },
@@ -580,7 +580,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Guardrails and toeboards are collective protection measures because they protect all persons on the platform without requiring individual action. Personal fall protection (harnesses, lanyards, lifelines) requires individual use and is lower in the hierarchy.',
     section: 'Module 1',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'WAHR 2005',
     category: 'Legislation',
   },
@@ -598,7 +598,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'A standard single-width (narrow) mobile access tower has a platform width of 0.74m. This makes it suitable for restricted access areas.',
     section: 'Module 2',
-    difficulty: 'basic',
+    difficulty: 'advanced',
     topic: 'Tower dimensions',
     category: 'Tower Types',
   },
@@ -610,7 +610,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'A standard double-width mobile access tower has a platform width of 1.35m, providing a larger working area than a single-width tower.',
     section: 'Module 2',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Tower dimensions',
     category: 'Tower Types',
   },
@@ -623,7 +623,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'The maximum recommended height for a freestanding mobile access tower used outdoors is 8m. Beyond this height, additional stabilisation measures are required.',
     section: 'Module 2',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Height limits',
     category: 'Tower Types',
   },
@@ -636,7 +636,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'The maximum recommended height for a freestanding mobile access tower used indoors is 12m, as the sheltered environment reduces wind loading.',
     section: 'Module 2',
-    difficulty: 'basic',
+    difficulty: 'advanced',
     topic: 'Height limits',
     category: 'Tower Types',
   },
@@ -666,7 +666,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Outriggers extend the effective base dimensions of a mobile access tower, increasing its stability. They are particularly important when greater heights are required.',
     section: 'Module 2',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Components',
     category: 'Tower Types',
   },
@@ -678,7 +678,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'The vertical members are called standards or uprights. They form the main load-bearing vertical structure of the tower.',
     section: 'Module 2',
-    difficulty: 'basic',
+    difficulty: 'advanced',
     topic: 'Components',
     category: 'Tower Types',
   },
@@ -691,7 +691,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Ledgers (also called horizontals) are the horizontal members that run along the length of the tower, connecting the standards on the same side.',
     section: 'Module 2',
-    difficulty: 'basic',
+    difficulty: 'advanced',
     topic: 'Components',
     category: 'Tower Types',
   },
@@ -704,7 +704,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Transoms are the horizontal members that run across the width of the tower, connecting the standards on opposite sides. Platforms rest on transoms.',
     section: 'Module 2',
-    difficulty: 'basic',
+    difficulty: 'advanced',
     topic: 'Components',
     category: 'Tower Types',
   },
@@ -754,7 +754,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'For indoor use, the maximum height-to-base ratio is 3.5:1. This means for every 1 metre of base width, the tower can be up to 3.5 metres high.',
     section: 'Module 2',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Stability',
     category: 'Tower Types',
   },
@@ -767,7 +767,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'For outdoor use, the maximum height-to-base ratio is 3:1. The reduced ratio compared to indoor use accounts for the effects of wind loading.',
     section: 'Module 2',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Stability',
     category: 'Tower Types',
   },
@@ -784,7 +784,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Adjustable legs allow the base of the tower to be levelled on uneven ground. The tower must always be plumb and level before use.',
     section: 'Module 2',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Components',
     category: 'Tower Types',
   },
@@ -801,7 +801,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'A 3T (through-the-trap) platform has a hinged trapdoor that the user climbs through from below. Once closed, the platform provides a full working area with continuous guardrail protection at all times.',
     section: 'Module 2',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Platform types',
     category: 'Tower Types',
   },
@@ -814,7 +814,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'A cantilever tower has a section that extends beyond the base, allowing the working platform to reach over an obstruction. It requires additional counterweighting or stabilisation.',
     section: 'Module 2',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Tower classifications',
     category: 'Tower Types',
   },
@@ -849,7 +849,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Stairway towers have internal staircases rather than vertical ladders, providing a safer and more comfortable means of access, particularly for frequent use or when carrying tools.',
     section: 'Module 2',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Tower classifications',
     category: 'Tower Types',
   },
@@ -867,7 +867,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'The required working height and load capacity must be determined first to ensure the correct tower is selected. Overloading or using a tower at an excessive height can lead to collapse.',
     section: 'Module 2',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Selection',
     category: 'Tower Types',
   },
@@ -884,7 +884,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Platform height is the vertical distance from the ground (or base of the tower) to the top surface of the working platform where the operative stands.',
     section: 'Module 2',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Tower dimensions',
     category: 'Tower Types',
   },
@@ -901,7 +901,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Working height is the platform height plus approximately 2 metres to account for the standing reach of an average person. It indicates the maximum height at which work can be carried out.',
     section: 'Module 2',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Tower dimensions',
     category: 'Tower Types',
   },
@@ -952,7 +952,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'At 6m height with a 0.74m base, the ratio is 8.1:1 — far exceeding the 3:1 outdoor maximum. Outriggers or stabilisers must be fitted to increase the effective base dimension and bring the ratio within acceptable limits.',
     section: 'Module 2',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Stability',
     category: 'Tower Types',
   },
@@ -969,7 +969,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'A span frame (H-frame) is a pre-welded unit consisting of two vertical standards joined by horizontal transoms. Two span frames positioned at opposite ends form a tower bay.',
     section: 'Module 2',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Components',
     category: 'Tower Types',
   },
@@ -1058,7 +1058,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       "3T stands for 'Through The Trap'. It is an assembly method where the operative works through a trapdoor in the platform, ensuring they are always protected by guardrails during assembly.",
     section: 'Module 3',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: '3T method',
     category: 'Assembly',
   },
@@ -1164,7 +1164,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Base plates (or sole boards) spread the point load of the tower legs over a larger area of ground, reducing the pressure on the surface and helping to prevent the tower from sinking.',
     section: 'Module 3',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Pre-assembly',
     category: 'Assembly',
   },
@@ -1199,7 +1199,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'The first platform should be installed at the lowest level specified by the manufacturer. This provides a stable working area for assembling the next section of the tower.',
     section: 'Module 3',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: '3T method',
     category: 'Assembly',
   },
@@ -1216,7 +1216,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Every working platform must be fitted with guardrails, mid-rails and toeboards to prevent falls of persons and materials from the platform edge.',
     section: 'Module 3',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Stability',
     category: 'Assembly',
   },
@@ -1266,7 +1266,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'The guardrail must be at a minimum height of 950mm above the working platform surface to provide adequate fall protection for operatives.',
     section: 'Module 3',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Stability',
     category: 'Assembly',
   },
@@ -1283,7 +1283,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'The mid-rail should be fitted at approximately 470mm above the working platform, which is roughly halfway between the platform surface and the top guardrail.',
     section: 'Module 3',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Stability',
     category: 'Assembly',
   },
@@ -1313,7 +1313,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Only the adjustable legs (screw jacks) should be used to level the tower. Improvised packing such as bricks, blocks or loose materials is dangerous and must never be used.',
     section: 'Module 3',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Pre-assembly',
     category: 'Assembly',
   },
@@ -1331,7 +1331,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'A full pre-use inspection must be carried out immediately after assembly and before anyone begins work from the tower. This confirms all components are correctly fitted and the tower is safe to use.',
     section: 'Module 3',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Pre-assembly',
     category: 'Assembly',
   },
@@ -1348,7 +1348,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Closing the trapdoor after climbing through creates a full, uninterrupted platform surface and eliminates the fall-through hazard of the open trap. It is a critical safety step in the 3T method.',
     section: 'Module 3',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: '3T method',
     category: 'Assembly',
   },
@@ -1401,7 +1401,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       "Diagonal braces must be fitted exactly as specified in the manufacturer's instruction manual. The pattern and placement are designed to provide the correct structural rigidity for that specific tower configuration.",
     section: 'Module 3',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Stability',
     category: 'Assembly',
   },
@@ -1439,7 +1439,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'At 9m height with 1.35m base, the ratio is 6.67:1, exceeding the 3:1 outdoor limit. The effective base must be extended to at least 3m (9m ÷ 3 = 3m) using outriggers or stabilisers.',
     section: 'Module 3',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Stability',
     category: 'Assembly',
   },
@@ -1457,7 +1457,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'If the AGR mechanism fails to lock, work must stop immediately. The operative must descend to a safe level and report the defect. Assembly must not continue until the mechanism is properly repaired or replaced.',
     section: 'Module 3',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'AGR method',
     category: 'Assembly',
   },
@@ -1492,7 +1492,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       "Castors are fitted first and locked. The base is levelled using adjustable legs. Outriggers are then fitted before the tower exceeds the freestanding height limit for that base dimension, in accordance with the manufacturer's instructions.",
     section: 'Module 3',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Stability',
     category: 'Assembly',
   },
@@ -1510,7 +1510,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Work on mobile access towers, including assembly, should cease when wind reaches Beaufort Force 4 (approximately 17 mph). At Force 5, work should already have stopped. The partially built tower should be secured and the area made safe.',
     section: 'Module 3',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Pre-assembly',
     category: 'Assembly',
   },
@@ -1598,7 +1598,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'General guidance recommends that mobile access towers should not be moved when the platform height exceeds 4m. Above this height, the tower should be partially dismantled before moving.',
     section: 'Module 4',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Moving',
     category: 'Dismantling',
   },
@@ -1650,7 +1650,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Outriggers must be retracted or removed before moving the tower. Extended outriggers can catch on obstructions and cause the tower to overturn during movement.',
     section: 'Module 4',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Moving',
     category: 'Dismantling',
   },
@@ -1702,7 +1702,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'After moving, all castors must be locked and the tower checked for level and stability. If the ground conditions differ from the previous location, adjustable legs may need to be reset.',
     section: 'Module 4',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Moving',
     category: 'Dismantling',
   },
@@ -1722,7 +1722,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Guardrails provide fall protection and must remain in place until the operative has descended to the level below. Removing them too early exposes the operative to an unprotected fall hazard.',
     section: 'Module 4',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Dismantling procedure',
     category: 'Dismantling',
   },
@@ -1757,7 +1757,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Damaged components must be clearly marked or tagged as defective, quarantined from serviceable stock, and reported to the supervisor. They must not be reused until properly assessed and repaired by a competent person.',
     section: 'Module 4',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Post-use inspection',
     category: 'Dismantling',
   },
@@ -1792,7 +1792,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       "The tower should be reduced to a height that complies with the manufacturer's instructions for safe moving, generally no more than 4m platform height. This reduces the overturning risk during movement.",
     section: 'Module 4',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Moving',
     category: 'Dismantling',
   },
@@ -1809,7 +1809,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Tower components should be stored in a dry, secure location on level ground or proper racking. They must be protected from weather, impact damage and unauthorised access to maintain their integrity for future use.',
     section: 'Module 4',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Storage',
     category: 'Dismantling',
   },
@@ -1827,7 +1827,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Work on the tower must cease at Beaufort Force 4 (approximately 17 mph). The operative should secure the partially dismantled tower as far as possible, descend safely and wait for conditions to improve.',
     section: 'Module 4',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Dismantling procedure',
     category: 'Dismantling',
   },
@@ -1845,7 +1845,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Any ties or fixings connecting the tower to a structure must be fully removed before moving. Attempting to move a tied tower can damage the tower, the structure, or cause the tower to overturn.',
     section: 'Module 4',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Moving',
     category: 'Dismantling',
   },
@@ -1862,7 +1862,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Only persons who have completed appropriate PASMA-approved training should dismantle a mobile access tower. Incorrect dismantling can lead to collapse and serious injury.',
     section: 'Module 4',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Dismantling procedure',
     category: 'Dismantling',
   },
@@ -1899,7 +1899,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       "AGR dismantling requires the advance guardrail mechanism to be lowered in the correct sequence as specified by the manufacturer. Each level's AGR system must be retracted before the frame section is removed, maintaining protection for the operative throughout.",
     section: 'Module 4',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Dismantling procedure',
     category: 'Dismantling',
   },
@@ -1917,7 +1917,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'On a downhill slope, gravity will accelerate the tower, making it increasingly difficult to control. This increases both the risk of the tower running away and the risk of overturning when trying to stop it. Additional personnel, a planned route and controlled speed are essential.',
     section: 'Module 4',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Moving',
     category: 'Dismantling',
   },
@@ -1935,7 +1935,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'An impact event such as a vehicle collision could cause hidden damage to joints, welds and locking mechanisms. A competent person must thoroughly inspect the tower, withdraw any suspect components, and confirm the tower is safe before it is returned to service.',
     section: 'Module 4',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Post-use inspection',
     category: 'Dismantling',
   },
@@ -1953,7 +1953,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'A partially dismantled tower must be secured against collapse, the area barricaded to prevent access by unauthorised persons, and clear warning signs displayed. Access points such as ladders should be removed or blocked.',
     section: 'Module 4',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Dismantling procedure',
     category: 'Dismantling',
   },
@@ -1971,7 +1971,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'When aluminium is in direct contact with dissimilar metals such as steel, and moisture is present, galvanic (bimetallic) corrosion can occur. Components should be stored to avoid prolonged contact between different metals in damp conditions.',
     section: 'Module 4',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Storage',
     category: 'Dismantling',
   },
@@ -1989,7 +1989,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'In confined areas, a controlled lowering method such as a rope and pulley (gin wheel) should be used, or components should be passed to an operative at ground level through an access point. This prevents falling-object hazards.',
     section: 'Module 4',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Dismantling procedure',
     category: 'Dismantling',
   },
@@ -2007,7 +2007,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Long-term use can cause flat spots on wheels, bearing wear, brake mechanism deterioration and axle corrosion. All these aspects should be checked to ensure the castors are safe for future use.',
     section: 'Module 4',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Post-use inspection',
     category: 'Dismantling',
   },
@@ -2112,7 +2112,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Guardrails must be at a minimum height of 950mm, properly secured into their sockets, and free from damage or distortion that could reduce their effectiveness as fall protection.',
     section: 'Module 5',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Pre-use checks',
     category: 'Inspection',
   },
@@ -2129,7 +2129,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       "TowerSure is PASMA's recommended inspection recording scheme. It provides a structured approach to recording tower inspections, helping to demonstrate compliance with the WAHR 2005.",
     section: 'Module 5',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'TowerSure',
     category: 'Inspection',
   },
@@ -2200,7 +2200,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'A pre-use inspection should be carried out before every use and at the start of each working period (e.g. each shift). This ensures any changes or deterioration since the last use are identified.',
     section: 'Module 5',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Pre-use checks',
     category: 'Inspection',
   },
@@ -2220,7 +2220,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       "A formal inspection record should include the tower's location and identification, date and time of inspection, name and signature of the competent inspector, details of findings including defects, and any corrective actions taken.",
     section: 'Module 5',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Records',
     category: 'Inspection',
   },
@@ -2290,7 +2290,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'If any defect is found that could compromise safety, the tower must be taken out of use immediately and not used until the defect has been rectified by a competent person and the tower re-inspected.',
     section: 'Module 5',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Pre-use checks',
     category: 'Inspection',
   },
@@ -2308,7 +2308,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'The completed TowerSure tag should be displayed prominently on the tower, typically at the base. This allows anyone approaching the tower to see the current inspection status, date and any conditions of use.',
     section: 'Module 5',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'TowerSure',
     category: 'Inspection',
   },
@@ -2326,7 +2326,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Locking mechanisms must be checked to ensure they engage fully and hold securely. Worn, bent or missing locks can cause components to detach during use, leading to structural failure.',
     section: 'Module 5',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Pre-use checks',
     category: 'Inspection',
   },
@@ -2344,7 +2344,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'The 7-day maximum interval must not be exceeded. The inspection must be carried out on or before the 7th day, regardless of whether the tower is in use over the weekend.',
     section: 'Module 5',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: '7-day inspections',
     category: 'Inspection',
   },
@@ -2399,7 +2399,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'A pre-use check is not the same as a formal inspection. The 7-day inspection must be a thorough, documented examination by a competent person. A pre-use check is a quick visual assessment and does not satisfy the Schedule 5 requirement.',
     section: 'Module 5',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: '7-day inspections',
     category: 'Inspection',
   },
@@ -2417,7 +2417,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'The legal duty to ensure inspections are carried out falls on the person on whose behalf the work is done — typically the employer or the person who controls the work activity. They must ensure a competent person carries out the inspection.',
     section: 'Module 5',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Records',
     category: 'Inspection',
   },
@@ -2435,7 +2435,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Competence for inspection purposes requires a combination of training, knowledge, experience and the practical ability to identify defects and understand their impact on the safe use of the tower. PASMA training contributes to but is not the sole determinant of competence.',
     section: 'Module 5',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: '7-day inspections',
     category: 'Inspection',
   },
@@ -2453,7 +2453,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'A gravity lock that does not fully engage is a structural defect. Even if the brace appears secure, vibration, wind or accidental contact could cause it to release. The tower must be taken out of service and the defective component replaced or repaired.',
     section: 'Module 5',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Pre-use checks',
     category: 'Inspection',
   },
@@ -2471,7 +2471,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Salt-laden air in coastal and marine environments accelerates corrosion of aluminium components. More frequent inspections may be needed, with specific attention to pitting corrosion, white powder deposits (aluminium oxide) and degraded joint connections.',
     section: 'Module 5',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: '7-day inspections',
     category: 'Inspection',
   },
@@ -2489,7 +2489,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Straightening bent aluminium components on site is not acceptable. The process can introduce stress fractures, work-hardened areas and hidden internal damage. The component must be withdrawn from service and assessed or replaced by the manufacturer.',
     section: 'Module 5',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Pre-use checks',
     category: 'Inspection',
   },
@@ -2506,7 +2506,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'A red status on a TowerSure tag indicates that the tower must not be used. It has either failed its inspection, is incomplete, is unsafe, or has been identified as requiring attention before it can be put into service.',
     section: 'Module 5',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'TowerSure',
     category: 'Inspection',
   },
@@ -2560,7 +2560,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Electrocution is the primary hazard. High-voltage electricity can arc across an air gap and does not require direct contact with the conductor. Aluminium towers are excellent conductors, making this extremely dangerous.',
     section: 'Module 6',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Electrocution',
     category: 'Hazards',
   },
@@ -2712,7 +2712,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Work on mobile access towers should cease when the wind reaches Beaufort Force 4 (approximately 13-17 mph / moderate breeze). The tower itself is typically rated to withstand Force 6 when unoccupied.',
     section: 'Module 6',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Collapse',
     category: 'Hazards',
   },
@@ -2742,7 +2742,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Reaching out sideways applies a horizontal force to the tower and shifts the effective centre of gravity. This side-loading can cause the tower to overturn, especially if the operative leans against the guardrail. The tower should be repositioned instead.',
     section: 'Module 6',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Collapse',
     category: 'Hazards',
   },
@@ -2760,7 +2760,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Using a ladder or steps on a tower platform raises the operative above the guardrail protection, increases the fall height, raises the centre of gravity and creates an inherently unstable working position. It must never be done.',
     section: 'Module 6',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Falls',
     category: 'Hazards',
   },
@@ -2795,7 +2795,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       "Towers are designed for uniformly distributed loads on the platform, not concentrated or dynamic loads from hoisting. The forces generated by lifting, lowering and sudden stops can dramatically exceed the tower's rated capacity, causing collapse or overturning.",
     section: 'Module 6',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Collapse',
     category: 'Hazards',
   },
@@ -2813,7 +2813,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       "Sheeting, banners or tarpaulins create a large surface area that catches the wind, dramatically increasing the lateral forces on the tower. This 'sail effect' can cause the tower to overturn even in relatively light winds.",
     section: 'Module 6',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Collapse',
     category: 'Hazards',
   },
@@ -2831,7 +2831,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Improper manual handling of heavy tower components can cause serious musculoskeletal injuries including lower back injuries, herniated discs, shoulder injuries, hernias and repetitive strain injuries.',
     section: 'Module 6',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Manual handling',
     category: 'Hazards',
   },
@@ -2849,7 +2849,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Before installing any ground-penetrating anchors or stabilisers, underground services must be identified using cable avoidance tools (CATs) and service plans. Striking a buried electrical cable or gas main could be fatal.',
     section: 'Module 6',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Electrocution',
     category: 'Hazards',
   },
@@ -2867,7 +2867,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Vehicle impact is a serious hazard. Physical barriers (such as concrete blocks or guardrails), warning signs and traffic management measures should be implemented to prevent vehicles from striking the tower.',
     section: 'Module 6',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Risk assessment',
     category: 'Hazards',
   },
@@ -2885,7 +2885,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'A comprehensive risk assessment must consider all factors: ground conditions, weather, nearby hazards (power lines, traffic, openings), means of access and egress, the nature of the task, the load on the platform and emergency/rescue procedures.',
     section: 'Module 6',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Risk assessment',
     category: 'Hazards',
   },
@@ -2905,7 +2905,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       "If forecast winds exceed the tower's rated capacity (typically Beaufort Force 6 / 28 mph), the tower must be dismantled, reduced in height, or provided with additional stabilisation such as tying to an adjacent structure. Simply locking castors is insufficient.",
     section: 'Module 6',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Collapse',
     category: 'Hazards',
   },
@@ -2922,7 +2922,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Suspension trauma (orthostatic intolerance) occurs when a person hangs motionless in a harness. Blood pools in the legs, reducing venous return to the heart. This can cause loss of consciousness and death within 5-15 minutes. Prompt rescue is critical.',
     section: 'Module 6',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Falls',
     category: 'Hazards',
   },
@@ -2953,7 +2953,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       "Suspended floors have limited load-bearing capacity. The point loads from tower castors can be significant, and the combined weight of tower, operatives and materials may exceed the floor's design capacity. A structural assessment may be required.",
     section: 'Module 6',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Collapse',
     category: 'Hazards',
   },
@@ -2971,7 +2971,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       "Hazards are cumulative. A tower may resist moderate wind, small side-loads or minor bracing deficiencies individually, but the combination of multiple hazards simultaneously can exceed the tower's stability margin and cause sudden failure.",
     section: 'Module 6',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Risk assessment',
     category: 'Hazards',
   },
@@ -2989,7 +2989,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'The hierarchy of control applies: first try to eliminate the ignition source (e.g. use a non-spark method). If not possible, remove or protect flammable materials, install fire-resistant sheeting, and provide fire-watching and extinguishing equipment as additional measures.',
     section: 'Module 6',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Risk assessment',
     category: 'Hazards',
   },
@@ -3206,7 +3206,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Wet conditions make platforms, rungs and handholds slippery, increasing the risk of slips and falls. Non-slip platform surfaces should be used, extra care taken when climbing, and the overall risk assessment reviewed.',
     section: 'Module 7',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Weather',
     category: 'Safety',
   },
@@ -3241,7 +3241,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'A rescue plan must detail the method of rescue, who will carry it out (trained rescue personnel), what equipment is immediately available, how communication will be maintained and emergency contact numbers including ambulance services.',
     section: 'Module 7',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Rescue',
     category: 'Safety',
   },
@@ -3259,7 +3259,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Tool lanyards or tethers should be used to prevent power tools from falling from the platform if dropped. A falling power tool can cause serious injury to anyone below. The operative should never lean over or work outside the guardrails.',
     section: 'Module 7',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Safe working',
     category: 'Safety',
   },
@@ -3277,7 +3277,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'A metal tower in an elevated position is at high risk of lightning strike. The operative must cease work immediately and descend to ground level. Aluminium is an excellent conductor, and a lightning strike through the tower would be fatal.',
     section: 'Module 7',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Weather',
     category: 'Safety',
   },
@@ -3294,7 +3294,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'A method statement is a document that describes the safe system of work, step by step, for the specific task. For tower work, it covers assembly, use, inspection, dismantling, rescue procedures and specific hazard controls.',
     section: 'Module 7',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Safe working',
     category: 'Safety',
   },
@@ -3312,7 +3312,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'When working in areas where there is a risk of objects falling from above (including during dismantling where components are being lowered), a hard hat must be worn to protect against head injuries.',
     section: 'Module 7',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'PPE',
     category: 'Safety',
   },
@@ -3330,7 +3330,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Freezing conditions cause ice to form on climbing rungs, platform surfaces and handholds, creating severe slip hazards. Cold also reduces manual dexterity, making it harder to grip components and operate locking mechanisms safely.',
     section: 'Module 7',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Weather',
     category: 'Safety',
   },
@@ -3348,7 +3348,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'The operative should call for emergency assistance immediately, ensure the area is safe, provide first aid if trained to do so, and initiate the rescue plan. The priority is to get professional medical help and bring the casualty safely to ground level.',
     section: 'Module 7',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Rescue',
     category: 'Safety',
   },
@@ -3368,7 +3368,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'With suspension trauma potentially fatal within 5-15 minutes, the primary rescue method cannot be awaited. The contingency rescue procedure must be implemented immediately — this could include a ladder rescue, rope rescue system, or calling emergency services while keeping the person conscious and moving their legs.',
     section: 'Module 7',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Rescue',
     category: 'Safety',
   },
@@ -3386,7 +3386,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Medication that may cause drowsiness can impair balance, concentration and reaction time — all critical for safe work at height. The operative must obtain medical clearance before working at height while taking such medication.',
     section: 'Module 7',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Fitness',
     category: 'Safety',
   },
@@ -3404,7 +3404,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Night shift tower work requires adequate artificial lighting for safe climbing, working and inspection. Night workers face increased fatigue risk affecting alertness and balance. Visibility for inspections is reduced, and rescue personnel must be available throughout the shift.',
     section: 'Module 7',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Safe working',
     category: 'Safety',
   },
@@ -3440,7 +3440,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Heat exhaustion can rapidly progress to heat stroke, which is life-threatening. The operative must descend while still able to do so safely, be moved to shade, cooled down and given fluids. Medical attention should be sought if symptoms do not improve quickly.',
     section: 'Module 7',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Fitness',
     category: 'Safety',
   },
@@ -3458,7 +3458,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Asbestos removal is a specialist operation requiring licensed contractors, respiratory protective equipment (RPE), decontamination facilities, air monitoring, a detailed plan of work and HSE notification (for licensable work). The tower provides the access, but all asbestos-specific controls must also be fully implemented.',
     section: 'Module 7',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Safe working',
     category: 'Safety',
   },
@@ -3490,7 +3490,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     correctAnswer: 1,
     explanation:
       'A person on the platform raises the centre of gravity and any jolt — a kerb, a drain cover, a change in level — can be enough to overturn the tower. The forces involved cannot be controlled from the ground, which is why the platform must be clear before the tower is moved.',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Moving Towers',
     category: 'Safety',
   },
@@ -3522,7 +3522,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     correctAnswer: 3,
     explanation:
       'A bent component has been overloaded and straightening it on site can leave hidden stress fractures that are not visible. It should be taken out of use and replaced. Relegating it to a lower bay does not help — lower components carry the greatest load.',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Damaged Components',
     category: 'Inspection',
   },
@@ -3538,7 +3538,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     correctAnswer: 0,
     explanation:
       'Inspection must be by a competent person — someone with the practical and theoretical knowledge to identify defects and assess their significance for that type of tower. Having built one before is not the same as being competent to judge whether one is safe.',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Competence',
     category: 'Inspection',
   },
@@ -3554,7 +3554,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     correctAnswer: 1,
     explanation:
       'Stability is governed by the relationship between height and base dimensions. Stabilisers widen the effective base so the tower resists the overturning moment at its working height. They are a stability measure, not a handling aid or an anchor point.',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Stability',
     category: 'Assembly',
   },

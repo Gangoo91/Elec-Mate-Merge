@@ -60,7 +60,7 @@ export default function Module5() {
       backLabel="Level 2 electrical installation"
       moduleNumber={5}
       title="Communicate with others within building services engineering"
-      description="City &amp; Guilds 2365-02 Unit 210 — site roles, information sources, communication methods. The unit that turns a competent electrician into someone who can actually run a job."
+      description="City & Guilds 2365-02 Unit 210 — site roles, information sources, communication methods. The unit that turns a competent electrician into someone who can actually run a job."
       tone="emerald"
       sectionsCount={sections.length}
       prevModuleHref="../module4"

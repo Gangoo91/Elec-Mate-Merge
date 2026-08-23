@@ -785,7 +785,7 @@ export default function ConduitFillCalculatorPage() {
 
       <SEOCTASection
         heading="Size Conduit Correctly Every Time"
-        subheading="Join 1,000+ UK electricians using Elec-Mate for on-site calculations. 7-day free trial, cancel anytime."
+        subheading="Join 1,600+ UK electricians using Elec-Mate for on-site calculations. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

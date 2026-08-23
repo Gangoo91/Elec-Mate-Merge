@@ -320,7 +320,7 @@ export default function EVChargerLoadCalculatorPage() {
                 The Elec-Mate calculator flags PME earthing requirements automatically when you
                 specify a TN-C-S earthing system and an EV charger installation. For more
                 information on{' '}
-                <SEOInternalLink href="/earthing-arrangements">
+                <SEOInternalLink href="/guides/earthing-systems-tns-tncs-tt-explained">
                   earthing arrangements
                 </SEOInternalLink>
                 , see our dedicated guide.
@@ -505,7 +505,7 @@ export default function EVChargerLoadCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/earthing-arrangements',
+          href: '/guides/earthing-systems-tns-tncs-tt-explained',
           title: 'Earthing Arrangements Guide',
           description:
             'TN-S, TN-C-S, and TT earthing systems explained with PME considerations for EV charging.',
@@ -522,7 +522,7 @@ export default function EVChargerLoadCalculatorPage() {
         },
       ]}
       ctaHeading="Design EV charger installations with confidence"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EV charger load assessment and cable sizing. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EV charger load assessment and cable sizing. 7-day free trial, cancel anytime."
       toolPath="/tools/ev-charger-load-calculator"
     />
   );

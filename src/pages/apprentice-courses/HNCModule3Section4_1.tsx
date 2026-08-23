@@ -278,9 +278,9 @@ const HNCModule3Section4_1 = () => {
           <TLDR
             points={[
               'You design every UK distribution board off star-connected secondary windings (TN-S / TN-C-S) — the neutral point gives you 230 V single-phase off a 400 V three-phase system.',
-              'You apply V&#x2097; = &radic;3 &times; V&#x209a; for star, and I&#x2097; = &radic;3 &times; I&#x209a; for delta — these two factors underpin every transformer kVA, motor starting and cable sizing calculation.',
-              'You read transformer vector groups (Dyn11, Yyn0) on every distribution transformer nameplate &mdash; the group decides phase shift, fault behaviour and parallel operation.',
-              'You specify star-delta starters for motors above ~7.5 kW where reduced inrush is needed but adjustable speed isn&rsquo;t — superseded by VSDs on most modern installations.',
+              'You apply V&#x2097; = √3 × V&#x209a; for star, and I&#x2097; = √3 × I&#x209a; for delta — these two factors underpin every transformer kVA, motor starting and cable sizing calculation.',
+              'You read transformer vector groups (Dyn11, Yyn0) on every distribution transformer nameplate — the group decides phase shift, fault behaviour and parallel operation.',
+              'You specify star-delta starters for motors above ~7.5 kW where reduced inrush is needed but adjustable speed isn’t — superseded by VSDs on most modern installations.',
             ]}
           />
 
@@ -967,7 +967,7 @@ const HNCModule3Section4_1 = () => {
           <SectionRule />
 
           <Scenario
-            title="22 kW supply fan motor &mdash; star-delta vs VSD selection"
+            title="22 kW supply fan motor — star-delta vs VSD selection"
             situation={
               <>
                 The mechanical schedule shows a 22 kW air-handling unit supply fan with
@@ -1008,10 +1008,10 @@ const HNCModule3Section4_1 = () => {
 
           <KeyTakeaways
             points={[
-              'Star (Y) connection: V&#x2097; = &radic;3 &times; V&#x209a;, I&#x2097; = I&#x209a; — gives access to neutral, used for distribution.',
-              'Delta (D) connection: V&#x2097; = V&#x209a;, I&#x2097; = &radic;3 &times; I&#x209a; — three-wire only, used for motor running and transformer primary.',
+              'Star (Y) connection: V&#x2097; = √3 × V&#x209a;, I&#x2097; = I&#x209a; — gives access to neutral, used for distribution.',
+              'Delta (D) connection: V&#x2097; = V&#x209a;, I&#x2097; = √3 × I&#x209a; — three-wire only, used for motor running and transformer primary.',
               'UK distribution: 400 V line / 230 V phase derived from a star secondary with neutral brought out.',
-              'Vector groups (Dyn11 etc.): D=delta primary, y=star secondary, n=neutral brought out, 11 = 30&deg; lagging phase shift in clock notation.',
+              'Vector groups (Dyn11 etc.): D=delta primary, y=star secondary, n=neutral brought out, 11 = 30° lagging phase shift in clock notation.',
               'Star-delta starting: motor starts in star (1/3 voltage, 1/3 current, 1/3 torque) then switches to delta for full running power — used on lightly-loaded fan/pump starts.',
               'Star is BS 7671 312.2.1.1 origin for TN-S / TN-C-S earthing — the star-point earth is the system reference.',
               'Delta windings provide a circulating path for triplen harmonics — a key reason transformer primaries are delta on harmonic-rich downstream loads.',

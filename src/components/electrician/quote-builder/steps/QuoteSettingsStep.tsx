@@ -132,16 +132,33 @@ export const QuoteSettingsStep = ({ settings, items, onUpdate }: QuoteSettingsSt
   const isReverseCharge = form.watch('reverseCharge');
   const isCisEnabled = form.watch('cisEnabled');
   const watchedCisRate = form.watch('cisRate');
+  const watchedGrantAmount = form.watch('grantAmount');
+  const watchedGrantLabel = form.watch('grantLabel');
 
-  // Live CIS preview — quotes don't apply O&P (see useQuoteBuilder), so match that.
-  const cisPreview = useMemo(
+  // Quotes don't apply O&P (see useQuoteBuilder), so this matches that.
+  /*
+   * One live preview feeding BOTH the CIS and grant blocks.
+   *
+   * Deliberately a single memo rather than one per deduction: the two share a
+   * `netPayable`, and two sources computing it separately is exactly how they
+   * end up disagreeing on screen.
+   *
+   * Every field the user can change here is overridden from the watched form
+   * values, not read from `settings` — `settings` only updates on submit, so a
+   * preview built from it would lag a step behind whatever they just typed.
+   */
+  const totalsPreview = useMemo(
     () =>
-      computeQuoteTotals(
-        (items || []) as QuoteItem[],
+      computeQuoteTotals((items || []) as QuoteItem[], {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        { ...(settings as any), cisEnabled: isCisEnabled, cisRate: watchedCisRate }
-      ),
-    [items, settings, isCisEnabled, watchedCisRate]
+        ...(settings as any),
+        cisEnabled: isCisEnabled,
+        cisRate: watchedCisRate,
+        grantEnabled: isGrantEnabled,
+        grantAmount: watchedGrantAmount,
+        grantLabel: watchedGrantLabel,
+      }),
+    [items, settings, isCisEnabled, watchedCisRate, isGrantEnabled, watchedGrantAmount, watchedGrantLabel]
   );
 
   const switchField = (name: keyof QuoteSettings, opts?: { onChange?: (checked: boolean) => void; defaultOn?: boolean }) => (
@@ -271,19 +288,19 @@ export const QuoteSettingsStep = ({ settings, items, onUpdate }: QuoteSettingsSt
               </p>
 
               {/* Live preview + guard — makes a silent £0 deduction impossible. */}
-              {cisPreview.labourNet > 0 ? (
+              {totalsPreview.labourNet > 0 ? (
                 <div className="mt-3 rounded-lg border border-white/[0.12] bg-white/[0.04] p-3 space-y-1.5">
                   <div className="flex justify-between text-[12px]">
                     <span className="text-white">Labour (ex-VAT)</span>
-                    <span className="text-white tabular-nums">£{cisPreview.labourNet.toFixed(2)}</span>
+                    <span className="text-white tabular-nums">£{totalsPreview.labourNet.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between text-[12px]">
-                    <span className="text-white">Less CIS ({cisPreview.cisRate}%)</span>
-                    <span className="text-red-300 tabular-nums">−£{cisPreview.cisAmount.toFixed(2)}</span>
+                    <span className="text-white">Less CIS ({totalsPreview.cisRate}%)</span>
+                    <span className="text-red-300 tabular-nums">−£{totalsPreview.cisAmount.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between text-[13px] font-semibold pt-1 border-t border-white/[0.08]">
                     <span className="text-white">Net payable</span>
-                    <span className="text-elec-yellow tabular-nums">£{cisPreview.netPayable.toFixed(2)}</span>
+                    <span className="text-elec-yellow tabular-nums">£{totalsPreview.netPayable.toFixed(2)}</span>
                   </div>
                 </div>
               ) : (
@@ -448,6 +465,53 @@ export const QuoteSettingsStep = ({ settings, items, onUpdate }: QuoteSettingsSt
                   </FormItem>
                 )}
               />
+            </div>
+          )}
+
+          {/* Live preview — the same guard CIS already had, and the reason this
+              was reported as broken. The grant was being calculated correctly
+              all along, but nothing on this screen confirmed it, so entering
+              £500 looked like it did nothing at all (Sean, 21 Aug).
+
+              Also states the VAT position explicitly: the total does NOT fall,
+              because VAT stays due on the full value of the supply when a third
+              party pays part of the bill. Without saying so, "Total unchanged"
+              reads as the bug rather than the rule. */}
+          {isGrantEnabled && (
+            <div className="col-span-2 mt-3">
+              {totalsPreview.grantAmount > 0 ? (
+                <div className="rounded-lg border border-white/[0.12] bg-white/[0.04] p-3 space-y-1.5">
+                  <div className="flex justify-between text-[12px]">
+                    <span className="text-white">Total (inc. VAT)</span>
+                    <span className="text-white tabular-nums">£{totalsPreview.total.toFixed(2)}</span>
+                  </div>
+                  {totalsPreview.cisAmount > 0 && (
+                    <div className="flex justify-between text-[12px]">
+                      <span className="text-white">Less CIS ({totalsPreview.cisRate}%)</span>
+                      <span className="text-red-300 tabular-nums">−£{totalsPreview.cisAmount.toFixed(2)}</span>
+                    </div>
+                  )}
+                  <div className="flex justify-between text-[12px]">
+                    <span className="text-white">Less {totalsPreview.grantLabel}</span>
+                    <span className="text-red-300 tabular-nums">−£{totalsPreview.grantAmount.toFixed(2)}</span>
+                  </div>
+                  <div className="flex justify-between text-[13px] font-semibold pt-1 border-t border-white/[0.08]">
+                    <span className="text-white">Customer pays</span>
+                    <span className="text-elec-yellow tabular-nums">£{totalsPreview.netPayable.toFixed(2)}</span>
+                  </div>
+                  <p className="text-[11px] text-white pt-1 leading-relaxed">
+                    The quote total stays at £{totalsPreview.total.toFixed(2)} — VAT is still due on
+                    the full value of the work. The grant only reduces the customer's share.
+                  </p>
+                </div>
+              ) : (
+                <div className="rounded-lg border border-amber-400/40 bg-amber-400/10 p-3">
+                  <p className="text-[12px] text-amber-200 leading-relaxed">
+                    ⚠️ The grant is on but <span className="font-semibold">nothing will be deducted</span>
+                    {' '}— enter an amount above zero.
+                  </p>
+                </div>
+              )}
             </div>
           )}
         </section>

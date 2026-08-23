@@ -48,7 +48,7 @@ export default function ElectricalMarketingTipsPage() {
           <span className="text-yellow-400">Get More Work in the UK</span>
         </>
       }
-      heroSubtitle="Written by the Elec-Mate editorial team — reviewed by NICEIC-registered electricians. The best electricians in the world still struggle if nobody knows they exist. This guide covers the marketing strategies that actually work for UK electricians, from Google Business Profile and social media to word of mouth, van livery, and review management. No jargon, no fluff, just practical advice that generates enquiries."
+      heroSubtitle="Written by Andrew Moore, founder of Elec-Mate and a qualified electrician. The best electricians in the world still struggle if nobody knows they exist. This guide covers the marketing strategies that actually work for UK electricians, from Google Business Profile and social media to word of mouth, van livery, and review management. No jargon, no fluff, just practical advice that generates enquiries."
       readingTime={15}
       keyTakeaways={[
         'Google Business Profile is the single most important marketing tool for a local electrician. A well-optimised profile with reviews appears in the map pack when homeowners search "electrician near me" — and that is where most domestic work comes from.',
@@ -712,7 +712,7 @@ export default function ElectricalMarketingTipsPage() {
         },
       ]}
       ctaHeading="Look Professional, Get More Work"
-      ctaSubheading="Branded certificates, instant quotes, professional invoices, and AI-powered pricing. Elec-Mate makes you look professional at every customer touchpoint. Join 1,000+ UK electricians. 7-day free trial."
+      ctaSubheading="Branded certificates, instant quotes, professional invoices, and AI-powered pricing. Elec-Mate makes you look professional at every customer touchpoint. Join 1,600+ UK electricians. 7-day free trial."
     />
   );
 }

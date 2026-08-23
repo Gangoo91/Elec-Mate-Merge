@@ -224,7 +224,7 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      'Pre-energisation checks must include: insulation resistance of motor and cables (&gt;1M ohm), all connections tight and correct, earth continuity, motor nameplate data recorded, basic parameters set, and mechanical safety (coupling guards, isolation).',
+      'Pre-energisation checks must include: insulation resistance of motor and cables (>1M ohm), all connections tight and correct, earth continuity, motor nameplate data recorded, basic parameters set, and mechanical safety (coupling guards, isolation).',
   },
   {
     id: 12,

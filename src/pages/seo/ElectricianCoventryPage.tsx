@@ -588,7 +588,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional certification for Coventry electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting."
+          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting."
           icon={MapPin}
         />
       </>
@@ -626,7 +626,7 @@ export default function ElectricianCoventryPage() {
       faqHeading="Frequently Asked Questions About Electrical Work in Coventry"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify Electrical Work in Coventry — On Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting. Rewires, EV chargers, or HMOs — certify it all on site. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting. Rewires, EV chargers, or HMOs — certify it all on site. 7-day free trial."
     />
   );
 }

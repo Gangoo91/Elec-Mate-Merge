@@ -200,7 +200,7 @@ const sections = [
     content: (
       <>
         <p className="text-sm text-muted-foreground italic">
-          Content reviewed by a JIB-registered Approved Electrician and verified against the current
+          Content reviewed by Andrew Moore, founder of Elec-Mate and an Approved Electrician, and verified against the current
           BS 7671:2018+A4:2026 Wiring Regulations.
         </p>
         <p>

@@ -749,6 +749,7 @@ const CheckatradeVsMyBuilderPage = lazyWithRetry(() => import('@/pages/seo/Check
 const UKElectricianReport2026Page = lazyWithRetry(
   () => import('@/pages/seo/UKElectricianReport2026Page')
 );
+const PressKitPage = lazyWithRetry(() => import('@/pages/seo/PressKitPage'));
 const ChristmasLightingSafetyPage = lazyWithRetry(() => import('@/pages/seo/ChristmasLightingSafetyPage'));
 const CircuitBreakerTypesPage = lazyWithRetry(() => import('@/pages/seo/CircuitBreakerTypesPage'));
 const CityGuilds2365GuidePage = lazyWithRetry(() => import('@/pages/seo/CityGuilds2365GuidePage'));
@@ -6344,6 +6345,14 @@ export function getSEORoutes() {
         element={
           <LazyRoute>
             <UKElectricianReport2026Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/press"
+        element={
+          <LazyRoute>
+            <PressKitPage />
           </LazyRoute>
         }
       />

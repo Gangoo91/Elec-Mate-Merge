@@ -284,9 +284,9 @@ const HNCModule3Section4_5 = () => {
 
           <TLDR
             points={[
-              'You apply BS 7671 Appendix 4 mV/A/m tables to every three-phase voltage-drop calculation — the &radic;3 factor is already baked into the table value.',
-              'You stack derating factors multiplicatively (ambient C&#x2090; &times; grouping C&#x2099; &times; thermal insulation C&#x1d62;) to derive the corrected current-carrying capacity Iz.',
-              'You verify Ib &le; In &le; Iz on every protected circuit and document the calculation in the schedule of test results.',
+              'You apply BS 7671 Appendix 4 mV/A/m tables to every three-phase voltage-drop calculation — the √3 factor is already baked into the table value.',
+              'You stack derating factors multiplicatively (ambient C&#x2090; × grouping C&#x2099; × thermal insulation C&#x1d62;) to derive the corrected current-carrying capacity Iz.',
+              'You verify Ib ≤ In ≤ Iz on every protected circuit and document the calculation in the schedule of test results.',
               'You combine voltage-drop and Iz constraints on long submains — the longer the run, the more often voltage drop dominates over Iz and forces a cable upsize.',
             ]}
           />
@@ -305,7 +305,7 @@ const HNCModule3Section4_5 = () => {
                 voltage drop &le; Appendix 4 limit.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026, Reg 524.1 + Reg 525.202 + Appendix 4 Tables 4D&hellip; / 4Aa&hellip;; IET On-Site Guide"
+            cite="Source: BS 7671:2018+A4:2026, Reg 524.1 + Reg 525.202 + Appendix 4 Tables 4D… / 4Aa…; IET On-Site Guide"
           />
 
           <LearningOutcomes
@@ -1110,14 +1110,14 @@ const HNCModule3Section4_5 = () => {
 
           <KeyTakeaways
             points={[
-              'BS 7671 cable-sizing pipeline: Ib &rarr; In &rarr; Iz &rarr; voltage drop &mdash; check all four every time.',
+              'BS 7671 cable-sizing pipeline: Ib → In → Iz → voltage drop — check all four every time.',
               'Voltage drop limits (Appendix 4 &sect;6.4): 3 % lighting, 5 % other (single-phase); 5 % cumulative on three-phase distribution + final circuits.',
-              'Three-phase voltage drop = (mV/A/m &times; I &times; L) / 1000 &mdash; the &radic;3 is already baked into the mV/A/m table value.',
-              'Derating factors stack multiplicatively: Iz = It &times; C&#x2090;(ambient) &times; C&#x2099;(grouping) &times; C&#x1d62;(insulation).',
-              'In &le; Iz at all times &mdash; protective device must not allow current that exceeds the corrected cable capacity (Reg 433.1.1).',
-              'Long submains: voltage drop usually dominates over Iz at runs &gt; 80&ndash;100 m on typical building services loads.',
+              'Three-phase voltage drop = (mV/A/m × I × L) / 1000 — the √3 is already baked into the mV/A/m table value.',
+              'Derating factors stack multiplicatively: Iz = It × C&#x2090;(ambient) × C&#x2099;(grouping) × C&#x1d62;(insulation).',
+              'In ≤ Iz at all times — protective device must not allow current that exceeds the corrected cable capacity (Reg 433.1.1).',
+              'Long submains: voltage drop usually dominates over Iz at runs > 80–100 m on typical building services loads.',
               'Armoured cable (SWA) preferred for submains (mechanical protection + earth-fault path); thermosetting (XLPE/EPR) for higher operating temperature than PVC.',
-              'Always document the calculation on the design submission and on the schedule of test results &mdash; assessors check it.',
+              'Always document the calculation on the design submission and on the schedule of test results — assessors check it.',
             ]}
           />
 

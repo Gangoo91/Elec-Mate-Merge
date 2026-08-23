@@ -546,7 +546,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Caravan & motorhome electrical checks made simple with"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site inspection reporting, test result recording, and instant PDF export."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site inspection reporting, test result recording, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -583,7 +583,7 @@ export default function CaravanMotorHomeElectricalPage() {
       faqHeading="Frequently Asked Questions About Caravan and Motorhome Electrical Systems"
       relatedPages={relatedPages}
       ctaHeading="Complete Leisure Vehicle Electrical Inspections on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site inspection reporting, test result recording, and instant PDF export. Perfect for caravan and motorhome annual electrical checks. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site inspection reporting, test result recording, and instant PDF export. Perfect for caravan and motorhome annual electrical checks. 7-day free trial."
     />
   );
 }

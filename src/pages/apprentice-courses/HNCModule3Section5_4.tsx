@@ -276,10 +276,10 @@ const HNCModule3Section5_4 = () => {
 
           <TLDR
             points={[
-              'You select squirrel-cage induction motors for ~95 % of BSE applications &mdash; supply / extract fans, pumps, lift gear, refrigeration compressors.',
-              'You apply slip s = (n&#x209b; &minus; n&#x1d63;) / n&#x209b; &mdash; typical 2&ndash;5 % at full load, 100 % at standstill (which is why starting current is 6&ndash;8&times; FLC).',
-              'You specify IE3 minimum (IE4 above 75 kW) per Ecodesign Regulation 2019/1781 retained as UK law &mdash; no sub-IE3 motors on new UK installations.',
-              'You combine motor selection with starter / VSD selection &mdash; the right motor on the wrong starter still fails the BSE energy-efficiency objective.',
+              'You select squirrel-cage induction motors for ~95 % of BSE applications — supply / extract fans, pumps, lift gear, refrigeration compressors.',
+              'You apply slip s = (n&#x209b; &minus; n&#x1d63;) / n&#x209b; — typical 2–5 % at full load, 100 % at standstill (which is why starting current is 6–8× FLC).',
+              'You specify IE3 minimum (IE4 above 75 kW) per Ecodesign Regulation 2019/1781 retained as UK law — no sub-IE3 motors on new UK installations.',
+              'You combine motor selection with starter / VSD selection — the right motor on the wrong starter still fails the BSE energy-efficiency objective.',
             ]}
           />
 
@@ -944,7 +944,7 @@ const HNCModule3Section5_4 = () => {
           <SectionRule />
 
           <Scenario
-            title="22 kW supply fan motor &mdash; replacing failed IE2 with IE3 vs IE4"
+            title="22 kW supply fan motor — replacing failed IE2 with IE3 vs IE4"
             situation={
               <>
                 The supply fan AHU motor on a school&rsquo;s main hall has failed after
@@ -985,10 +985,10 @@ const HNCModule3Section5_4 = () => {
           <KeyTakeaways
             points={[
               'Squirrel-cage induction motor is the BSE workhorse: rugged, cheap, low-maintenance, no brushes.',
-              'Slip s = (n&#x209b; &minus; n&#x1d63;) / n&#x209b; — typical 2&ndash;5 % at full load; 100 % at standstill drives the high inrush.',
+              'Slip s = (n&#x209b; &minus; n&#x1d63;) / n&#x209b; — typical 2–5 % at full load; 100 % at standstill drives the high inrush.',
               'Synchronous speed n&#x209b; = 120f/p — 50 Hz / 4-pole = 1500 rpm, full-load ~1430 rpm at 5 % slip.',
-              'Starting current 6&ndash;8&times; FLC for DOL — limits motor size on small busbars; star-delta 1/3 of DOL; VSD soft-start ~1.5&times;.',
-              'IE3 minimum (UK Ecodesign Reg 2019/1781) for new motors 0.75&ndash;1000 kW; IE4 for 75&ndash;200 kW since 2023.',
+              'Starting current 6–8× FLC for DOL — limits motor size on small busbars; star-delta 1/3 of DOL; VSD soft-start ~1.5×.',
+              'IE3 minimum (UK Ecodesign Reg 2019/1781) for new motors 0.75–1000 kW; IE4 for 75–200 kW since 2023.',
               'Power factor poor at light load (~0.5) — improves with loading to ~0.85 at full load. PFC at panel level recovers the difference.',
               'NEMA design codes A/B/C/D — UK mostly Design B (typical fans, pumps); Design D (high slip) for high-inertia / cyclic loads.',
               'Motor + VSD + correctly-sized cable is the integrated BSE design unit — never specify motor in isolation.',

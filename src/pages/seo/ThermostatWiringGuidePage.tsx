@@ -597,7 +597,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Certify thermostat and heating control installations with"
-          description="Join 1,000+ UK electricians using Elec-Mate to issue Minor Works Certificates and Electrical Installation Certificates on site."
+          description="Join 1,600+ UK electricians using Elec-Mate to issue Minor Works Certificates and Electrical Installation Certificates on site."
           icon={FileCheck2}
         />
       </>
@@ -634,7 +634,7 @@ export default function ThermostatWiringGuidePage() {
       faqHeading="Frequently Asked Questions About Thermostat Wiring"
       relatedPages={relatedPages}
       ctaHeading="Issue Heating Control Certificates on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to issue Minor Works Certificates and Electrical Installation Certificates on site. Instant PDF export, Part P compliant, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to issue Minor Works Certificates and Electrical Installation Certificates on site. Instant PDF export, Part P compliant, cancel anytime."
     />
   );
 }

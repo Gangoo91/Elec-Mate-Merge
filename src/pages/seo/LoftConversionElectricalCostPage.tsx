@@ -471,7 +471,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, cable-size, and certify loft conversion electrical"
-          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certificates for loft conversion projects."
+          description="Join 1,600+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certificates for loft conversion projects."
           icon={Home}
         />
       </>

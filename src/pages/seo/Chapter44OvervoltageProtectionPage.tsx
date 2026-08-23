@@ -738,7 +738,7 @@ export default function Chapter44OvervoltageProtectionPage() {
       faqHeading="Frequently Asked Questions About SPDs and Overvoltage Protection"
       relatedPages={relatedPages}
       ctaHeading="Quote SPDs and Document Risk Assessments on Site"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for professional quoting, on-site EIC certificates, and overvoltage risk assessment documentation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for professional quoting, on-site EIC certificates, and overvoltage risk assessment documentation. 7-day free trial, cancel anytime."
     />
   );
 }

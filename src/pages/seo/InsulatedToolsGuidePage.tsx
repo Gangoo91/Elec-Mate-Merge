@@ -715,9 +715,9 @@ const sections = [
     content: (
       <>
         <p className="text-xs text-white/50 mb-4">
-          This guide is written and reviewed by City &amp; Guilds 2382-18 qualified electricians on
-          the Andrew Moore, founder of Elec-Mate,, cross-referenced against BS 7671:2018+A4:2026, IET Guidance
-          Note 3 (9th edition, 2022), and HSG85. Last reviewed May 2026.
+          This guide is written and reviewed by Andrew Moore, founder of Elec-Mate — a qualified
+          electrician — cross-referenced against BS 7671:2018+A4:2026, IET Guidance Note 3 (9th
+          edition, 2022), and HSG85. Last reviewed May 2026.
         </p>
         <p>
           Any live electrical work must be documented in a risk assessment and method statement
@@ -742,7 +742,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional H&S documentation for electrical contractors"
-          description="Join 1,000+ UK electricians using Elec-Mate for RAMS generation, site safety documentation, and health and safety compliance."
+          description="Join 1,600+ UK electricians using Elec-Mate for RAMS generation, site safety documentation, and health and safety compliance."
           icon={HardHat}
         />
       </>

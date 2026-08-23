@@ -774,7 +774,7 @@ const sections = [
             <div className="flex items-start gap-4">
               <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">All 16 Certificate Types</h4>
+                <h4 className="font-bold text-white mb-1">All 19 Certificate Types</h4>
                 <p className="text-white text-sm leading-relaxed">
                   EIC, MEIWC, EICR, Minor Works, Fire Alarm (BS 5839), Emergency Lighting (BS 5266),
                   EV Charger, and PAT Testing. Every certificate a domestic electrician needs,
@@ -832,7 +832,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="One app for every domestic job"
-          description="Join 1,000+ UK electricians using Elec-Mate for domestic certification, calculations, quoting, and invoicing. All on your phone, all on site."
+          description="Join 1,600+ UK electricians using Elec-Mate for domestic certification, calculations, quoting, and invoicing. All on your phone, all on site."
           icon={Zap}
         />
       </>
@@ -869,7 +869,7 @@ export default function DomesticElectricianGuidePage() {
       faqHeading="Frequently Asked Questions About Domestic Electrical Work"
       relatedPages={relatedPages}
       ctaHeading="Every Domestic Cert on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians completing EICs, EICRs, minor works, and more on their phones. AI board scanner, cable sizing, quote builder, and instant delivery. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians completing EICs, EICRs, minor works, and more on their phones. AI board scanner, cable sizing, quote builder, and instant delivery. 7-day free trial."
     />
   );
 }

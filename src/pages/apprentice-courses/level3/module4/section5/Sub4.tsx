@@ -295,7 +295,7 @@ export default function Sub4() {
             source="Environmental Protection Act 1990 — Section 34 (Duty of Care)"
             clause={
               <>
-                "It shall be the duty of any person who imports, produces, carries, keeps, treats, disposes of or, as a dealer, has control of controlled waste, to take all such measures applicable to him in that capacity as are reasonable in the circumstances &mdash; (a) to prevent any contravention by any other person of section 33 above; (b) to prevent the escape of the waste from his control or that of any other person; (c) on the transfer of the waste, to secure that the transfer is only to an authorised person; AND (d) on the transfer of the waste, that there is transferred such a written description of the waste as will enable other persons to comply with the duty under this section as respects the escape of the waste from their control."
+                "It shall be the duty of any person who imports, produces, carries, keeps, treats, disposes of or, as a dealer, has control of controlled waste, to take all such measures applicable to him in that capacity as are reasonable in the circumstances — (a) to prevent any contravention by any other person of section 33 above; (b) to prevent the escape of the waste from his control or that of any other person; (c) on the transfer of the waste, to secure that the transfer is only to an authorised person; AND (d) on the transfer of the waste, that there is transferred such a written description of the waste as will enable other persons to comply with the duty under this section as respects the escape of the waste from their control."
               </>
             }
             meaning={
@@ -388,7 +388,7 @@ export default function Sub4() {
 
           <ConceptBlock
             title="The waste paperwork that comes back at audit time"
-            plainEnglish="Hazardous and electrical waste leaves a documentary trail. The L3 apprentice carries blank consignment notes, knows where the firm&apos;s waste-carrier registration lives, and never hands waste to anyone who can&apos;t produce theirs."
+            plainEnglish="Hazardous and electrical waste leaves a documentary trail. The L3 apprentice carries blank consignment notes, knows where the firm’s waste-carrier registration lives, and never hands waste to anyone who can’t produce theirs."
             onSite="The Environment Agency Waste Carriers Register is searchable online; check before you let an unfamiliar van drive off with a stack of CUs. SEPA in Scotland, NIEA in Northern Ireland, NRW in Wales run equivalent registers."
           >
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -405,7 +405,7 @@ export default function Sub4() {
 
           <ConceptBlock
             title="What the customer needs to know before you drive away"
-            plainEnglish="The closing handover isn&apos;t small talk &mdash; it&apos;s the formal handover that satisfies your duty to inform. Customer keeps the certificate, the receipts, the schedule of any further work, and a clear understanding of what to do if the symptom comes back."
+            plainEnglish="The closing handover isn’t small talk — it’s the formal handover that satisfies your duty to inform. Customer keeps the certificate, the receipts, the schedule of any further work, and a clear understanding of what to do if the symptom comes back."
           >
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li><strong>What was found</strong> &mdash; root cause in plain English, not just &ldquo;sorted it&rdquo;.</li>

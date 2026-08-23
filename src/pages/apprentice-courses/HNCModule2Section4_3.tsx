@@ -302,7 +302,7 @@ const HNCModule2Section4_3 = () => {
           <TLDR
             points={[
               'You compute efficacy in lm/W for any lamp and benchmark LED (130–200 lm/W) against legacy T5 fluorescent (~95 lm/W) and metal halide (~85 lm/W).',
-              'You read L70 (luminaire) and B10/B50 (driver) life ratings to project relamp/replacement intervals over the building&rsquo;s 25-year life.',
+              'You read L70 (luminaire) and B10/B50 (driver) life ratings to project relamp/replacement intervals over the building’s 25-year life.',
               'You match lamp/driver pairs to dimming, control and emergency duty — and verify TM-66 circular-economy credentials when the brief calls for it.',
               'You eliminate fluorescent and HID for new schemes (RoHS phase-out, Part L lm/W minima) and justify any retained legacy lamp on a compliance basis.',
             ]}

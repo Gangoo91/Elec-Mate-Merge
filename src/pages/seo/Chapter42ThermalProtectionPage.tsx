@@ -623,7 +623,7 @@ export default function Chapter42ThermalProtectionPage() {
       faqHeading="Frequently Asked Questions About Chapter 42 and Thermal Effects"
       relatedPages={relatedPages}
       ctaHeading="Size Cables with Correct Derating and Document Fire Protection"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing with Ci derating, on-site EIC/EICR certificates, and professional fire protection documentation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing with Ci derating, on-site EIC/EICR certificates, and professional fire protection documentation. 7-day free trial, cancel anytime."
     />
   );
 }

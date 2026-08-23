@@ -721,7 +721,7 @@ export default function BestMultifunctionTester2026Page() {
       faqHeading="Frequently Asked Questions About Multifunction Testers"
       relatedPages={relatedPages}
       ctaHeading="Enter Test Results and Generate Certificates on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EICR and EIC certificates with on-site test result entry and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EICR and EIC certificates with on-site test result entry and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

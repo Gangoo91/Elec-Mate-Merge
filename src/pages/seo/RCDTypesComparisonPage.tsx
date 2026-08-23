@@ -501,7 +501,7 @@ export default function RCDTypesComparisonPage() {
       faqHeading="Frequently Asked Questions About RCD Types"
       relatedPages={relatedPages}
       ctaHeading="Record RCD Types and Test Results on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site certification with RCD type recording and compliance checking. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site certification with RCD type recording and compliance checking. 7-day free trial, cancel anytime."
     />
   );
 }

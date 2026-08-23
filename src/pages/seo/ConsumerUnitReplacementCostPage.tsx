@@ -818,7 +818,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify CU replacements faster"
-          description="Join 1,000+ UK electricians using Elec-Mate for quoting, cable sizing, and on-site EIC certification. Everything you need for consumer unit replacements."
+          description="Join 1,600+ UK electricians using Elec-Mate for quoting, cable sizing, and on-site EIC certification. Everything you need for consumer unit replacements."
           icon={Wrench}
         />
       </>
@@ -862,7 +862,7 @@ export default function ConsumerUnitReplacementCostPage() {
       faqHeading="Frequently Asked Questions About Consumer Unit Replacement Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Consumer Unit Replacements with Real Trade Pricing"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI board scanning. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI board scanning. 7-day free trial, cancel anytime."
     />
   );
 }

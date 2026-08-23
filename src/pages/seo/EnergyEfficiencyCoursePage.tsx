@@ -478,7 +478,7 @@ export default function EnergyEfficiencyCoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Future-proof your career with energy efficiency skills"
-      ctaSubheading="Join 1,000+ UK electricians training smarter with Elec-Mate. 7 in-depth modules, practical exercises, AI study assistant, and CPD certificate. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians training smarter with Elec-Mate. 7 in-depth modules, practical exercises, AI study assistant, and CPD certificate. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/training/energy-efficiency"
     />

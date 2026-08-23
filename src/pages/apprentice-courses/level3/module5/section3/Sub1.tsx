@@ -526,7 +526,7 @@ export default function Sub1() {
           <ConceptBlock
             title="The dead-test sequence — why the order matters"
             plainEnglish="Continuity first because a broken protective conductor falsifies every later test. Insulation resistance second because a live conductor with degraded insulation fails the test before the energiser current goes near anything connected. Polarity third because reversed polarity will still pass continuity and IR but will deliver a hot neutral. Earth electrode fourth (where applicable) because the electrode resistance can only be measured against a known-good installation earthing system. Each step is a precondition for the next."
-            onSite="Run the steps in the regulation order even when the install &apos;feels obvious&apos;. Fast-and-loose dead testing is one of the leading causes of EICR reissue — the inspector who reads your sheet later spots that you didn&apos;t test in sequence and rejects the certificate."
+            onSite="Run the steps in the regulation order even when the install ’feels obvious’. Fast-and-loose dead testing is one of the leading causes of EICR reissue — the inspector who reads your sheet later spots that you didn’t test in sequence and rejects the certificate."
           >
             <p>The full BS 7671 dead-test order:</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -542,7 +542,7 @@ export default function Sub1() {
           <ConceptBlock
             title="Live tests — earth fault loop impedance and RCD verification"
             plainEnglish="Once dead tests are clean, the installation is energised and live tests follow. Earth fault loop impedance (Zs) measures the actual loop the protective device sees from the test point back to the supply transformer through the earth path. RCD operation verifies the residual-current devices trip within their rated time and current. Voltage and frequency checks confirm the supply is within tolerance. Phase rotation checks (three-phase only) confirm the rotation matches the design intent."
-            onSite="Live tests have a different risk profile — the kit is energised. Use a multifunction tester rated for the prospective fault current. Stand to the side, never directly in front of the consumer unit when running a Zs test. Brief the customer before the RCD trip — kettle / clocks / fridge briefly off — so the RCD trip isn&apos;t a surprise."
+            onSite="Live tests have a different risk profile — the kit is energised. Use a multifunction tester rated for the prospective fault current. Stand to the side, never directly in front of the consumer unit when running a Zs test. Brief the customer before the RCD trip — kettle / clocks / fridge briefly off — so the RCD trip isn’t a surprise."
           >
             <p>Live test sequence:</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">

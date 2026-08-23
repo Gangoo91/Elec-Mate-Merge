@@ -758,7 +758,7 @@ export default function Sub2() {
           </ConceptBlock>
 
           <RegsCallout
-            source="ACAS Code of Practice 1 &mdash; Disciplinary and Grievance Procedures (paraphrased)"
+            source="ACAS Code of Practice 1 — Disciplinary and Grievance Procedures (paraphrased)"
             clause={
               <>
                 <p className="mb-2">
@@ -783,7 +783,7 @@ export default function Sub2() {
                 disputes resolve at stage 1 if you raise them properly in writing.
               </>
             }
-            cite="Source: ACAS Code of Practice 1 on Disciplinary and Grievance Procedures &mdash; paraphrased from acas.org.uk."
+            cite="Source: ACAS Code of Practice 1 on Disciplinary and Grievance Procedures — paraphrased from acas.org.uk."
           />
 
           <SectionRule />

@@ -632,7 +632,7 @@ export default function Regulation418SupplementaryProtectionPage() {
       faqHeading="Frequently Asked Questions About RCD Additional Protection"
       relatedPages={relatedPages}
       ctaHeading="Record RCD Tests and Issue Certificates on Site"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for RCD test recording, automatic validation, and on-site EIC/EICR certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for RCD test recording, automatic validation, and on-site EIC/EICR certificates. 7-day free trial, cancel anytime."
     />
   );
 }

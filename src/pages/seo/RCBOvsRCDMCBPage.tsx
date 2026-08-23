@@ -656,7 +656,7 @@ export default function RCBOvsRCDMCBPage() {
       faqHeading="Frequently Asked Questions About RCBO vs RCD + MCB"
       relatedPages={relatedPages}
       ctaHeading="Scan Any Consumer Unit With AI"
-      ctaSubheading="Whether it is an RCBO board or a split-load, Elec-Mate's AI board scanner reads every device from a photo. Voice test entry records results hands-free. 70+ calculators check every reading. Join 1,000+ UK electricians. 7-day free trial."
+      ctaSubheading="Whether it is an RCBO board or a split-load, Elec-Mate's AI board scanner reads every device from a photo. Voice test entry records results hands-free. 70+ calculators check every reading. Join 1,600+ UK electricians. 7-day free trial."
     />
   );
 }

@@ -635,7 +635,7 @@ const HNCModule4Section6_6 = () => {
               'CDE status (WIP, Shared, Published, Archived) governs review and approval — single source of truth.',
               'Federated coordination (Navisworks) for clash detection — weekly cadence at design stage, daily at construction.',
               'Reg 514.9.2 (A4:2026) compliance for auto-generated diagrams, charts and notices — configure templates to enforce BS EN 61082-1, IEC 60617 and BS 7671 Appendix 6.',
-              'Digital handover = model + COBie + BS 7671 schedules + EIC + O&amp;M, all linked by Tag — the FM team’s start point for asset life management.',
+              'Digital handover = model + COBie + BS 7671 schedules + EIC + O&M, all linked by Tag — the FM team’s start point for asset life management.',
             ]}
           />
 

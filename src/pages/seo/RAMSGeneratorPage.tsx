@@ -674,7 +674,7 @@ export default function RAMSGeneratorPage() {
 
       <SEOCTASection
         heading="Generate Professional RAMS in Seconds"
-        subheading="Join 1,000+ UK electricians using Elec-Mate for AI-powered risk assessments. 7-day free trial, cancel anytime."
+        subheading="Join 1,600+ UK electricians using Elec-Mate for AI-powered risk assessments. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

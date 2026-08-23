@@ -567,7 +567,7 @@ export default function ManualHandlingCoursePage() {
 
       <SEOCTASection
         heading="Protect your back, protect your career"
-        subheading="Join 1,000+ UK electricians training smarter with Elec-Mate. 7-day free trial, cancel anytime."
+        subheading="Join 1,600+ UK electricians training smarter with Elec-Mate. 7-day free trial, cancel anytime."
       />
 
       <div className="h-20 sm:hidden" />

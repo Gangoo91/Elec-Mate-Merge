@@ -117,7 +117,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-systems-tns-tncs-tt-explained',
     title: 'Earthing Arrangements Explained',
     description:
       'TN-S, TN-C-S and TT earthing — and why a PME earth must not reach a boat.',
@@ -1011,7 +1011,7 @@ export default function MarinaElectricalInstallationsPage() {
       faqHeading="Frequently Asked Questions About Marina Electrical Installations"
       relatedPages={relatedPages}
       ctaHeading="Certify Special Installations on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for digital certificates, AI fault diagnosis, and BS 7671 calculators. Handles special installations including marinas. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for digital certificates, AI fault diagnosis, and BS 7671 calculators. Handles special installations including marinas. 7-day free trial."
     />
   );
 }

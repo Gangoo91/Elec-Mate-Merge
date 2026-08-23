@@ -582,7 +582,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote LED upgrades and issue certificates with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate to quote jobs, issue electrical certificates, and manage their business on site."
+          description="Join 1,600+ UK electricians using Elec-Mate to quote jobs, issue electrical certificates, and manage their business on site."
           icon={FileCheck2}
         />
       </>
@@ -619,7 +619,7 @@ export default function LedLightingUpgradePage() {
       faqHeading="Frequently Asked Questions About LED Lighting Upgrades"
       relatedPages={relatedPages}
       ctaHeading="Quote LED Upgrades and Issue Certificates on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to quote LED upgrade projects with energy saving calculations and issue Minor Works Certificates on site. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to quote LED upgrade projects with energy saving calculations and issue Minor Works Certificates on site. 7-day free trial, cancel anytime."
     />
   );
 }

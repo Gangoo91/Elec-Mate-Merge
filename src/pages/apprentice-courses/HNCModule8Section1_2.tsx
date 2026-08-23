@@ -169,7 +169,7 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      'Domestic ASHPs of 8-12kW typically require single-phase 32A supplies or three-phase connections. The electrical demand is approximately 25-35% of heat output due to COP. Larger commercial units (&gt;15kW) usually require three-phase supplies.',
+      'Domestic ASHPs of 8-12kW typically require single-phase 32A supplies or three-phase connections. The electrical demand is approximately 25-35% of heat output due to COP. Larger commercial units (>15kW) usually require three-phase supplies.',
   },
   {
     id: 8,

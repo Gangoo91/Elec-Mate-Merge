@@ -533,7 +533,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Marina inspection work made simple with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, test result recording, and instant PDF export."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion, test result recording, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -570,7 +570,7 @@ export default function MarinaMooringElectricalPage() {
       faqHeading="Frequently Asked Questions About Marina Electrical Installations"
       relatedPages={relatedPages}
       ctaHeading="Complete Marina EICRs on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site inspection reporting, RCD and ELM test entry, and instant PDF export. Perfect for annual marina inspections. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site inspection reporting, RCD and ELM test entry, and instant PDF export. Perfect for annual marina inspections. 7-day free trial."
     />
   );
 }

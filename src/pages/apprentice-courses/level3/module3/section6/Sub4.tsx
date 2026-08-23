@@ -87,7 +87,7 @@ const quizQuestions = [
 ];
 
 const faqs = [
-  { question: 'Why are LED lamps replacing fluorescent in commercial fit-outs?', answer: 'LED efficacy now &gt; 150 lm/W; T5 fluorescent ~85 lm/W. Plus instant on, dimmable, no flicker, longer life, no mercury. Commercial cost-of-ownership over 10 years is 50-70% lower with LED. Almost no new fluorescent installs in 2026.' },
+  { question: 'Why are LED lamps replacing fluorescent in commercial fit-outs?', answer: 'LED efficacy now > 150 lm/W; T5 fluorescent ~85 lm/W. Plus instant on, dimmable, no flicker, longer life, no mercury. Commercial cost-of-ownership over 10 years is 50-70% lower with LED. Almost no new fluorescent installs in 2026.' },
   { question: 'What is "circadian-friendly" lighting?', answer: 'Lighting that varies colour temperature through the day — cool/blueish (5000-6500 K) at midday, warm (2700-3000 K) in evening. Mimics natural daylight cycle, supports human circadian rhythm. Increasingly specified for offices, schools, healthcare.' },
   { question: 'How is glare measured in lighting design?', answer: 'UGR (Unified Glare Rating). BS EN 12464-1 sets max UGR per task: offices ≤19, classrooms ≤19, fine work ≤16. Calculated from luminaire luminance vs background and viewing angle.' },
   { question: 'Why does emergency lighting have to be from a separate source?', answer: 'BS 5266-1: must operate within 5 seconds of mains failure for at least 1 hour (escape routes) or 3 hours (open areas). Either central battery or self-contained luminaires with sealed batteries. Tested monthly per BS 5266-8.' },

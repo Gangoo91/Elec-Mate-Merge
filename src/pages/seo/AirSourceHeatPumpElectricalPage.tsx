@@ -648,7 +648,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify heat pump electrical work"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
+          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
           icon={Wind}
         />
       </>
@@ -685,7 +685,7 @@ export default function AirSourceHeatPumpElectricalPage() {
       faqHeading="Frequently Asked Questions About Heat Pump Electrical Installation"
       relatedPages={relatedPages}
       ctaHeading="Size Cables and Certify Heat Pump Installations on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates for heat pump installations. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates for heat pump installations. 7-day free trial, cancel anytime."
     />
   );
 }

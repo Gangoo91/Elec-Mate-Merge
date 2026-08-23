@@ -104,7 +104,7 @@ export const ElectricalQuoteTemplateUkConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text: 'Elec-Mate generates a fully itemised PDF quote in under two minutes from voice or text input. Includes: your scheme logo, customer details, scope, line items with retail+ pricing, exclusions, variation clause, payment terms, and a one-click acceptance link. Used by 1,000+ UK electricians for every quote.',
+          text: 'Elec-Mate generates a fully itemised PDF quote in under two minutes from voice or text input. Includes: your scheme logo, customer details, scope, line items with retail+ pricing, exclusions, variation clause, payment terms, and a one-click acceptance link. Used by 1,600+ UK electricians for every quote.',
         },
       ],
     },

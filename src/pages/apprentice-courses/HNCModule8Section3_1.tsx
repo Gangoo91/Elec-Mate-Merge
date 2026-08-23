@@ -119,7 +119,7 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      "A2L indicates lower flammability and lower toxicity. The 'A' means lower toxicity (occupational exposure limit &gt;400 ppm), '2' indicates flammable, and 'L' denotes lower flammability (burning velocity &lt;10 cm/s). R32 requires special handling but is safer than A3 (highly flammable) refrigerants like R290.",
+      "A2L indicates lower flammability and lower toxicity. The 'A' means lower toxicity (occupational exposure limit >400 ppm), '2' indicates flammable, and 'L' denotes lower flammability (burning velocity <10 cm/s). R32 requires special handling but is safer than A3 (highly flammable) refrigerants like R290.",
   },
   {
     id: 4,
@@ -152,14 +152,14 @@ const quizQuestions = [
     question:
       'Under the EU F-Gas Regulation phase-down, what is the GWP limit for single split AC systems containing less than 3 kg from 2025?',
     options: [
-      'GWP &lt;2500',
-      'GWP &lt;150',
-      'GWP &lt;750',
+      'GWP <2500',
+      'GWP <150',
+      'GWP <750',
       'No GWP limit applies',
     ],
     correctAnswer: 2,
     explanation:
-      'From January 2025, single split AC systems containing less than 3 kg of refrigerant must use refrigerants with GWP &lt;750. This effectively bans R410A (GWP 2088) in new equipment in this category, pushing the market towards R32 (GWP 675) and other lower-GWP alternatives.',
+      'From January 2025, single split AC systems containing less than 3 kg of refrigerant must use refrigerants with GWP <750. This effectively bans R410A (GWP 2088) in new equipment in this category, pushing the market towards R32 (GWP 675) and other lower-GWP alternatives.',
   },
   {
     id: 7,

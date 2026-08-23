@@ -442,7 +442,7 @@ export default function Sub1() {
 
           <ConceptBlock
             title="Why early defibrillation is the single biggest factor"
-            plainEnglish="Cardiac arrest from electric shock is normally caused by ventricular fibrillation — the heart&apos;s electrical activity becomes chaotic and the muscle stops pumping. CPR maintains some perfusion. Defibrillation (a controlled electric shock from an AED) is what restores normal rhythm. Each minute without defibrillation reduces survival probability by around 10%. Early CPR + early AED is the single biggest factor in survival."
+            plainEnglish="Cardiac arrest from electric shock is normally caused by ventricular fibrillation — the heart’s electrical activity becomes chaotic and the muscle stops pumping. CPR maintains some perfusion. Defibrillation (a controlled electric shock from an AED) is what restores normal rhythm. Each minute without defibrillation reduces survival probability by around 10%. Early CPR + early AED is the single biggest factor in survival."
             onSite="On-site Automated External Defibrillators are increasingly common — at construction sites, in commercial buildings, in many GP surgeries and community spaces. Knowing where the nearest AED is should be part of your dynamic site assessment. The AED talks the rescuer through the procedure; no specialist training is required to operate one (though training improves confidence and effectiveness)."
           >
             <p>The chain of survival, in order:</p>
@@ -478,8 +478,8 @@ export default function Sub1() {
 
           <ConceptBlock
             title="When the casualty is breathing but unresponsive"
-            plainEnglish="A breathing but unresponsive casualty needs to be in the recovery position — on their side, head tilted back to maintain airway, top arm and leg supporting the body. This protects the airway from blockage by tongue or vomit. Don&apos;t move a casualty with suspected spinal injury unless you have to (e.g. to maintain airway or remove from immediate danger)."
-            onSite="The handover to ambulance crew is itself a defined task — it&apos;s where critical information transfers from the first-aider to the paramedic. The structured handover (often taught as ATMIST or SBAR) makes the handover quick and accurate. The L3 reflex is to have this information ready when the ambulance arrives."
+            plainEnglish="A breathing but unresponsive casualty needs to be in the recovery position — on their side, head tilted back to maintain airway, top arm and leg supporting the body. This protects the airway from blockage by tongue or vomit. Don’t move a casualty with suspected spinal injury unless you have to (e.g. to maintain airway or remove from immediate danger)."
+            onSite="The handover to ambulance crew is itself a defined task — it’s where critical information transfers from the first-aider to the paramedic. The structured handover (often taught as ATMIST or SBAR) makes the handover quick and accurate. The L3 reflex is to have this information ready when the ambulance arrives."
           >
             <p>What to hand over to the ambulance crew (ATMIST format):</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -541,7 +541,7 @@ export default function Sub1() {
           <ConceptBlock
             title="The bit nobody talks about — looking after the responders"
             plainEnglish="A serious incident affects the casualty AND the people who responded — the operative who applied CPR, the colleague who isolated the supply, the witness who watched it happen. Acute stress reactions in the hours and days afterwards are normal; some people develop longer-term issues including PTSD. The L3 supervisor responsibility includes recognising the psychological impact and pointing the team at appropriate support."
-            onSite="Practical things firms do well: post-incident debrief (factual, blame-free) within a few days; access to confidential counselling via Employee Assistance Programme; allowing time off for affected operatives without disciplinary penalty; checking in over the following weeks. The HASAWA s.2 duty to ensure health includes mental health — the HSE&apos;s &apos;Working Minds&apos; campaign and HSG265 (managing the causes of work-related stress) are the practitioner references."
+            onSite="Practical things firms do well: post-incident debrief (factual, blame-free) within a few days; access to confidential counselling via Employee Assistance Programme; allowing time off for affected operatives without disciplinary penalty; checking in over the following weeks. The HASAWA s.2 duty to ensure health includes mental health — the HSE’s ’Working Minds’ campaign and HSG265 (managing the causes of work-related stress) are the practitioner references."
           >
             <p>Recognising acute stress reactions in the team:</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">

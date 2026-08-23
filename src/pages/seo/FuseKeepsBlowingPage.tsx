@@ -634,7 +634,7 @@ export default function FuseKeepsBlowingPage() {
       faqHeading="Frequently Asked Questions About Blown Fuses"
       relatedPages={relatedPages}
       ctaHeading="Diagnose and Document Electrical Faults on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for AI fault diagnosis, insulation resistance recording, and professional certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI fault diagnosis, insulation resistance recording, and professional certificates. 7-day free trial, cancel anytime."
     />
   );
 }

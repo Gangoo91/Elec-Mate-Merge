@@ -539,7 +539,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify security lighting installations"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
+          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={Lightbulb}
         />
       </>
@@ -576,7 +576,7 @@ export default function SecurityLightingCostPage() {
       faqHeading="Frequently Asked Questions About Security Lighting Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Security Lighting Installations on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. 7-day free trial, cancel anytime."
     />
   );
 }

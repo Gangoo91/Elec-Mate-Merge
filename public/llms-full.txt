@@ -4,6 +4,8 @@
 
 ## What is Elec-Mate?
 
+Elec-Mate is used by 1,600+ UK electricians (verified against the live platform database, August 2026). Verified facts, original data and media assets for writers: https://www.elec-mate.com/press
+
 Elec-Mate is a UK-built mobile-first web application for electrical professionals. Every tool, certificate and calculation is aligned to BS 7671:2018 Amendment 4 (2026), IET Guidance Note 3 (Inspection & Testing), and the IET On-Site Guide — the current canonical UK electrical standards.
 
 ## Compliance and standards

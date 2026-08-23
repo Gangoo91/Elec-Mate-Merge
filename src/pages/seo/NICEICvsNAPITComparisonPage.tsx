@@ -566,11 +566,11 @@ const sections = [
       <>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4 my-4 flex items-start gap-3">
           <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
-          <p className="text-white/80 text-sm leading-relaxed">
-            <strong className="text-white">Reviewed by a registered electrician.</strong> This guide
-            is written and reviewed by NICEIC and NAPIT registered electricians with experience
-            across domestic, commercial, and industrial sectors. Content is updated to reflect
-            current scheme requirements and BS 7671:2018+A4:2026.
+          <p className="text-white text-sm leading-relaxed">
+            <strong className="text-white">Written and reviewed by Andrew Moore, founder of
+            Elec-Mate</strong> — a qualified electrician (18th Edition, C&amp;G 2391 inspection and
+            testing). Scheme details are taken from each scheme&rsquo;s own published requirements
+            and content reflects BS 7671:2018+A4:2026.
           </p>
         </div>
         <p>

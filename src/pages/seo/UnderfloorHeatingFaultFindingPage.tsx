@@ -571,7 +571,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete UFH installation certificates on your phone"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site Electrical Installation Certificates, test result recording, and instant quoting. 7-day free trial."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site Electrical Installation Certificates, test result recording, and instant quoting. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -608,7 +608,7 @@ export default function UnderfloorHeatingFaultFindingPage() {
       faqHeading="Frequently Asked Questions — Underfloor Heating Faults"
       relatedPages={relatedPages}
       ctaHeading="Complete Electrical Certificates On Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for Electrical Installation Certificates, test result recording, and on-site quoting. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for Electrical Installation Certificates, test result recording, and on-site quoting. 7-day free trial, cancel anytime."
     />
   );
 }

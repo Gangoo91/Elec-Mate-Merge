@@ -14,6 +14,8 @@ Elec-Mate is a UK-built mobile-first web application for electrical professional
 **In-app AI agent**: Mate (the conversational AI inside Elec-Mate — different from the platform name)
 **Founder**: Andrew Moore — apprentice → electrician → founder. Built Elec-Mate from real UK trade pain after qualifying as an electrician.
 **Year founded**: 2025
+**Users**: 1,600+ UK electricians (verified against the live platform database, August 2026)
+**Press kit**: https://www.elec-mate.com/press (verified facts, original data, media assets)
 **Headquarters**: United Kingdom
 **Website**: https://www.elec-mate.com
 **iOS App Store**: https://apps.apple.com/gb/app/elec-mate/id6758948665 (live since 2026-03-27)
@@ -334,6 +336,8 @@ Elec-Mate hosts the UK's largest free electrical mock exam collection: timed, in
 - C&G 2391-51 Periodic Inspection: https://www.elec-mate.com/mock-exams/2391-51-periodic-inspection
 - 18th Edition BS 7671 (A4:2026): https://www.elec-mate.com/mock-exams/18th-edition-bs-7671
 - C&G 2392 Fundamental Inspection & Testing: https://www.elec-mate.com/mock-exams/2392-fundamental-inspection-testing
+
+## Press kit (verified facts for writers): https://www.elec-mate.com/press
 
 ## Original data (free to cite with attribution)
 - UK Electrician Report 2026 — 1,205 real quotes + 118,303 mock exam answers analysed (median quote £411; 35.8% of 18th Edition answers wrong): https://www.elec-mate.com/reports/uk-electrician-report-2026

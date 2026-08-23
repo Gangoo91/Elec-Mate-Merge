@@ -469,7 +469,7 @@ export default function AIInstallationVerificationPage() {
         },
       ]}
       ctaHeading="Verify installations with confidence"
-      ctaSubheading="Join 1,000+ UK electricians using AI-powered verification to catch non-compliances before they reach the certificate. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using AI-powered verification to catch non-compliances before they reach the certificate. 7-day free trial, cancel anytime."
     />
   );
 }

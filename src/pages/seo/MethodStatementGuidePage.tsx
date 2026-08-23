@@ -662,7 +662,7 @@ export default function MethodStatementGuidePage() {
       faqHeading="Frequently Asked Questions About Method Statements for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Generate Method Statements in Minutes"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate's AI RAMS generator to create site-specific method statements for any electrical task. Describe the job, get a professional document. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate's AI RAMS generator to create site-specific method statements for any electrical task. Describe the job, get a professional document. 7-day free trial, cancel anytime."
     />
   );
 }

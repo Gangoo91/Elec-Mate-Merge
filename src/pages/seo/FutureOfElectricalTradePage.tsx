@@ -226,7 +226,7 @@ export default function FutureOfElectricalTradePage() {
                     Battery storage installations are growing rapidly alongside solar PV. The
                     electrical work includes DC connections, hybrid inverter installation, AC
                     coupling, and integration with the existing consumer unit. Understanding of{' '}
-                    <SEOInternalLink href="/earthing-arrangements">
+                    <SEOInternalLink href="/guides/earthing-systems-tns-tncs-tt-explained">
                       earthing arrangements
                     </SEOInternalLink>{' '}
                     for battery systems is essential.

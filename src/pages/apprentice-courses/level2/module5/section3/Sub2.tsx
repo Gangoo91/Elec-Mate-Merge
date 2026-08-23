@@ -626,7 +626,7 @@ export default function Sub2() {
               </li>
               <li>
                 <strong>If unresolved, escalate up the chain</strong> — your supervisor's
-                supervisor, your firm's H&amp;S officer, your training provider's tutor.
+                supervisor, your firm's H&S officer, your training provider's tutor.
               </li>
             </ol>
           </ConceptBlock>

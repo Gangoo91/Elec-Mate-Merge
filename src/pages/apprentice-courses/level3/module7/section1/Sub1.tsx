@@ -495,7 +495,7 @@ export default function Sub1() {
           </ConceptBlock>
 
           <RegsCallout
-            source="Joint Industry Board (JIB) Working Rule Agreement &mdash; grade definitions (paraphrased)"
+            source="Joint Industry Board (JIB) Working Rule Agreement — grade definitions (paraphrased)"
             clause={
               <>
                 <p className="mb-2">
@@ -540,11 +540,11 @@ export default function Sub1() {
                 career-critical.
               </>
             }
-            cite="Source: JIB Working Rule Agreement &mdash; paraphrased and summarised from publicly available JIB guidance at jib.org.uk."
+            cite="Source: JIB Working Rule Agreement — paraphrased and summarised from publicly available JIB guidance at jib.org.uk."
           />
 
           <RegsCallout
-            source="Health and Safety at Work etc Act 1974 &mdash; s.2(3) (employer safety policy)"
+            source="Health and Safety at Work etc Act 1974 — s.2(3) (employer safety policy)"
             clause={
               <>
                 &quot;Except in such cases as may be prescribed, it shall be the duty of every
@@ -571,7 +571,7 @@ export default function Sub1() {
           />
 
           <RegsCallout
-            source="Construction (Design and Management) Regulations 2015 &mdash; r.4 (client duties, paraphrased)"
+            source="Construction (Design and Management) Regulations 2015 — r.4 (client duties, paraphrased)"
             clause={
               <>
                 <p className="mb-2">
@@ -614,7 +614,7 @@ export default function Sub1() {
                 Section 1 Subsection 4.
               </>
             }
-            cite="Source: Construction (Design and Management) Regulations 2015 (SI 2015/51) &mdash; paraphrased from legislation.gov.uk and HSE L153 guidance."
+            cite="Source: Construction (Design and Management) Regulations 2015 (SI 2015/51) — paraphrased from legislation.gov.uk and HSE L153 guidance."
           />
 
           <SectionRule />

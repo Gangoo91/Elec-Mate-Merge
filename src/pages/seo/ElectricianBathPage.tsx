@@ -589,7 +589,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional certification for Bath electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting."
+          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting."
           icon={MapPin}
         />
       </>
@@ -627,7 +627,7 @@ export default function ElectricianBathPage() {
       faqHeading="Frequently Asked Questions About Electrical Work in Bath"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify Electrical Work in Bath — On Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting. Georgian rewires, heritage work, or commercial — certify it all on site. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting. Georgian rewires, heritage work, or commercial — certify it all on site. 7-day free trial."
     />
   );
 }

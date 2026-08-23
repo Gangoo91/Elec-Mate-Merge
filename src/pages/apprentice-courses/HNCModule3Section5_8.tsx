@@ -278,10 +278,10 @@ const HNCModule3Section5_8 = () => {
 
           <TLDR
             points={[
-              'You apply IR (insulation resistance) testing to BS 7671 643.3 / IEEE 43 &mdash; minimum 1 M&Omega; on motor windings at 500 V DC; falling trend over annual tests is the early warning of insulation breakdown.',
-              'You schedule vibration analysis (BS ISO 10816) and thermography (BS EN 13187) on every critical motor &mdash; both detect bearing wear and electrical imbalance before functional failure.',
-              'You apply MCSA (Motor Current Signature Analysis) on critical induction motors &mdash; sideband frequencies around the fundamental reveal broken rotor bars and air-gap eccentricity.',
-              'You document maintenance regimes in the building&rsquo;s log book under Approved Document L 2021 &mdash; a defendable maintenance record is now a regulatory expectation, not just good practice.',
+              'You apply IR (insulation resistance) testing to BS 7671 643.3 / IEEE 43 — minimum 1 MΩ on motor windings at 500 V DC; falling trend over annual tests is the early warning of insulation breakdown.',
+              'You schedule vibration analysis (BS ISO 10816) and thermography (BS EN 13187) on every critical motor — both detect bearing wear and electrical imbalance before functional failure.',
+              'You apply MCSA (Motor Current Signature Analysis) on critical induction motors — sideband frequencies around the fundamental reveal broken rotor bars and air-gap eccentricity.',
+              'You document maintenance regimes in the building’s log book under Approved Document L 2021 — a defendable maintenance record is now a regulatory expectation, not just good practice.',
             ]}
           />
 
@@ -976,7 +976,7 @@ const HNCModule3Section5_8 = () => {
           <SectionRule />
 
           <Scenario
-            title="Critical chiller compressor &mdash; declining IR trend investigation"
+            title="Critical chiller compressor — declining IR trend investigation"
             situation={
               <>
                 A 132 kW chiller compressor motor on a hospital cooling plant shows IR
@@ -1019,14 +1019,14 @@ const HNCModule3Section5_8 = () => {
 
           <KeyTakeaways
             points={[
-              'Insulation resistance: minimum 1 M&Omega; on motors per BS 7671 643.3.3 at 500 V DC; trend matters more than absolute value.',
-              'Polarisation Index (PI): 10-min IR / 1-min IR &mdash; healthy &gt; 2.0; degraded &lt; 1.5.',
+              'Insulation resistance: minimum 1 MΩ on motors per BS 7671 643.3.3 at 500 V DC; trend matters more than absolute value.',
+              'Polarisation Index (PI): 10-min IR / 1-min IR — healthy > 2.0; degraded < 1.5.',
               'Vibration analysis (BS ISO 10816): velocity RMS bands A/B/C/D from acceptable to unacceptable on a given machine class.',
-              'Thermography (BS EN 13187): hot-spot detection on terminals, bearings, windings &mdash; non-contact, fast, no shutdown required.',
-              'Motor Current Signature Analysis (MCSA): sideband frequencies around fundamental indicate broken rotor bars (2 &times; slip frequency sidebands), eccentricity, bearing faults.',
-              'BS 7671 Chapter 65 governs periodic inspection &amp; testing &mdash; motor condition forms part of EICR scope.',
+              'Thermography (BS EN 13187): hot-spot detection on terminals, bearings, windings — non-contact, fast, no shutdown required.',
+              'Motor Current Signature Analysis (MCSA): sideband frequencies around fundamental indicate broken rotor bars (2 × slip frequency sidebands), eccentricity, bearing faults.',
+              'BS 7671 Chapter 65 governs periodic inspection & testing — motor condition forms part of EICR scope.',
               'Approved Document L 2021 expects defendable maintenance records in the building log book.',
-              'Trend-based predictive maintenance always outperforms time-based PPM on critical assets &mdash; and is cheaper over a 25-year service life.',
+              'Trend-based predictive maintenance always outperforms time-based PPM on critical assets — and is cheaper over a 25-year service life.',
             ]}
           />
 

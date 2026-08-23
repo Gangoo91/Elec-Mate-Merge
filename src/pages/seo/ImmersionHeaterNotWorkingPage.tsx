@@ -519,7 +519,7 @@ export default function ImmersionHeaterNotWorkingPage() {
       faqHeading="Frequently Asked Questions About Immersion Heater Problems"
       relatedPages={relatedPages}
       ctaHeading="Diagnose and Document Heating Circuit Faults on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for AI fault diagnosis, test result recording, and professional certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI fault diagnosis, test result recording, and professional certificates. 7-day free trial, cancel anytime."
     />
   );
 }

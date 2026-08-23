@@ -827,7 +827,7 @@ export default function CommercialRewireCostPage() {
       faqHeading="Frequently Asked Questions About Commercial Rewire Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Commercial Rewires with Itemised Pricing"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for commercial quoting with distribution schedules, containment costing, and AI cost engineering. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for commercial quoting with distribution schedules, containment costing, and AI cost engineering. 7-day free trial."
     />
   );
 }

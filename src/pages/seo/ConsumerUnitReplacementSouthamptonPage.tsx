@@ -585,7 +585,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Southampton electrical business with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, instant PDF export, and professional quoting. Eliminate evening paperwork."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion, instant PDF export, and professional quoting. Eliminate evening paperwork."
           icon={FileCheck2}
         />
       </>
@@ -622,7 +622,7 @@ export default function ConsumerUnitReplacementSouthamptonPage() {
       faqHeading="Frequently Asked Questions About Consumer Unit Replacement in Southampton"
       relatedPages={relatedPages}
       ctaHeading="Complete Consumer Unit Certificates on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion with instant PDF export and schedule of test results. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EIC completion with instant PDF export and schedule of test results. 7-day free trial, cancel anytime."
     />
   );
 }

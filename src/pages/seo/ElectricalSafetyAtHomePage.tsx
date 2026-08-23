@@ -549,7 +549,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Are you an electrician? Complete EICRs faster with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Start your 7-day free trial."
+          description="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Start your 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -585,7 +585,7 @@ export default function ElectricalSafetyAtHomePage() {
       faqHeading="Frequently Asked Questions About Home Electrical Safety"
       relatedPages={relatedPages}
       ctaHeading="Are You an Electrician? Try Elec-Mate Free"
-      ctaSubheading="Complete EICRs on your phone with AI board scanning, voice test entry, and instant PDF export. Join 1,000+ UK electricians. 7-day free trial, cancel anytime."
+      ctaSubheading="Complete EICRs on your phone with AI board scanning, voice test entry, and instant PDF export. Join 1,600+ UK electricians. 7-day free trial, cancel anytime."
     />
   );
 }

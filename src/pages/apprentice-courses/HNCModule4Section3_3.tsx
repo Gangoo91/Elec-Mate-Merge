@@ -285,7 +285,7 @@ const HNCModule4Section3_3 = () => {
               'Prospective fault current (PFC) sets the breaking capacity needed for every protective device — Ipf at the origin from the DNO is the worst case.',
               'Calculate PFC from transformer rating: Ipf ≈ kVA × 1000 / (√3 × V × Z%) for three-phase. Add network impedance from the DNO.',
               'PFC reduces along the cable run as cable impedance adds — fault current at the DB is lower than at the supply origin, sometimes much lower.',
-              'Earth fault loop impedance Z_s = Z_e + (R₁ + R₂) — verify against Table 41.3 Z_s_max for the protective device used (current A4:2026 values, e.g. B32 = 1.37&nbsp;Ω).',
+              'Earth fault loop impedance Z_s = Z_e + (R₁ + R₂) — verify against Table 41.3 Z_s_max for the protective device used (current A4:2026 values, e.g. B32 = 1.37 Ω).',
               'BS 7671 Reg 643.7.3.201 makes determination of prospective fault current at origin and other relevant points a mandatory verification activity.',
             ]}
           />
@@ -704,7 +704,7 @@ const HNCModule4Section3_3 = () => {
               'Prospective fault current Ipf at origin: Ipf ≈ kVA × 1000 / (√3 × V × Z%) — drives breaking-capacity selection for the entire downstream installation.',
               'PFC reduces along the cable run as cable impedance adds — fault current at the DB is lower than at the supply origin.',
               'Earth fault loop impedance: Z_s = Z_e + (R₁ + R₂). R values come from BS 7671 Table B1 (Cu) corrected for temperature.',
-              'Verify Z_s ≤ Z_s_max (Table 41.3, current A4:2026 values: B32 = 1.37&nbsp;Ω, C32 = 0.69&nbsp;Ω, B16 = 2.74&nbsp;Ω). Apply 0.8 design margin for warm cables.',
+              'Verify Z_s ≤ Z_s_max (Table 41.3, current A4:2026 values: B32 = 1.37 Ω, C32 = 0.69 Ω, B16 = 2.74 Ω). Apply 0.8 design margin for warm cables.',
               'Reg 643.7.3.201 makes PFC determination at origin AND relevant points a mandatory verification step.',
               'Always use the current A4:2026 Z_s_max values — older editions gave different (more lenient) figures.',
               'For 1×IΔn RCD test (NOT 5×IΔn — that was older guidance) — current rule under A4:2026 is single-shot 1×IΔn.',

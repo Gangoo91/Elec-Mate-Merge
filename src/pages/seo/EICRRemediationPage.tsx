@@ -532,7 +532,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICRs and win remediation work with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate to complete on-site EICRs, quote for remediation work instantly, and produce all required certificates."
+          description="Join 1,600+ UK electricians using Elec-Mate to complete on-site EICRs, quote for remediation work instantly, and produce all required certificates."
           icon={FileCheck2}
         />
       </>
@@ -569,7 +569,7 @@ export default function EICRRemediationPage() {
       faqHeading="Frequently Asked Questions: EICR Remediation"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs and Remediation Certificates on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, instant remediation quotes, and all required certificate documentation. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for on-site EICR completion, instant remediation quotes, and all required certificate documentation. 7-day free trial."
     />
   );
 }

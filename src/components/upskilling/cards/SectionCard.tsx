@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { CheckCircle2 } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { useCourseProgress } from '@/hooks/useCourseProgress';
 import { sectionCompleted } from '@/lib/courseProgressMatch';
 import { cn } from '@/lib/utils';
@@ -10,7 +11,13 @@ interface SectionCardProps {
   sectionNumber: number | string;
   title: string;
   description?: string;
-  icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
+  /**
+   * Every caller passes a lucide icon, which is a ForwardRefExoticComponent
+   * and so was NOT assignable to a plain ComponentType — one type error per
+   * course index page, across dozens of them. `LucideIcon` is the type the
+   * icons actually have.
+   */
+  icon: LucideIcon;
   isCompleted?: boolean;
   index?: number;
 }

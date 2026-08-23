@@ -337,7 +337,7 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>
-                  <SEOInternalLink href="/earthing-arrangements">
+                  <SEOInternalLink href="/guides/earthing-systems-tns-tncs-tt-explained">
                     Earthing arrangements:
                   </SEOInternalLink>
                 </strong>{' '}
@@ -627,7 +627,7 @@ export default function FlashcardsElectricalPage() {
       faqHeading="Frequently Asked Questions About Flashcards for Electrical Exams"
       relatedPages={relatedPages}
       ctaHeading="Study Smarter With Digital Flashcards"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for flashcards, mock exams, and structured revision. Spaced repetition built in. Study anywhere on your phone. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for flashcards, mock exams, and structured revision. Spaced repetition built in. Study anywhere on your phone. 7-day free trial, cancel anytime."
     />
   );
 }

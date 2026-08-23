@@ -577,7 +577,7 @@ export default function NAPICCertificateGuidePage() {
       faqHeading="Frequently Asked Questions About NAPIT Certification"
       relatedPages={relatedPages}
       ctaHeading="Create NAPIT-Ready Certificates"
-      ctaSubheading="Join 1,000+ UK electricians producing scheme-compliant certificates with AI board scanning, voice test entry, and automatic validation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians producing scheme-compliant certificates with AI board scanning, voice test entry, and automatic validation. 7-day free trial, cancel anytime."
     />
   );
 }

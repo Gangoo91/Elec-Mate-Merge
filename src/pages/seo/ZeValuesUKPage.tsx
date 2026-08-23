@@ -222,8 +222,11 @@ const sections = [
     content: (
       <>
         <p>
-          A TN-S (terre neutre separate) earthing arrangement provides a separate earth conductor
-          from the supply transformer to the installation. In practice, this earth return path is
+          A TN-S (terre neutre separate){' '}
+          <SEOInternalLink href="/guides/earthing-systems-tns-tncs-tt-explained">
+            earthing arrangement
+          </SEOInternalLink>{' '}
+          provides a separate earth conductor from the supply transformer to the installation. In practice, this earth return path is
           the metallic sheath or armour of the supply cable — typically lead sheath on older cables
           or steel wire armour on newer ones.
         </p>
@@ -756,7 +759,7 @@ export default function ZeValuesUKPage() {
       faqHeading="Frequently Asked Questions About Ze Values"
       relatedPages={relatedPages}
       ctaHeading="Validate Ze and Every Test Result Automatically"
-      ctaSubheading="Elec-Mate validates Ze against expected values, cross-checks Zs with Ze + R1+R2, and flags any discrepancies. Voice test entry records readings hands-free. 70+ calculators built in. Join 1,000+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate validates Ze against expected values, cross-checks Zs with Ze + R1+R2, and flags any discrepancies. Voice test entry records readings hands-free. 70+ calculators built in. Join 1,600+ UK electricians. 7-day free trial."
     />
   );
 }

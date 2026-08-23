@@ -923,7 +923,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Start earning more from every EICR"
-          description="Join 1,000+ UK electricians completing EICR certificates, generating remedial quotes, and sending invoices — all from their phones, all on site."
+          description="Join 1,600+ UK electricians completing EICR certificates, generating remedial quotes, and sending invoices — all from their phones, all on site."
           icon={PoundSterling}
         />
       </>
@@ -967,7 +967,7 @@ export default function EICRCostUKPage() {
       faqHeading="Frequently Asked Questions About EICR Pricing"
       relatedPages={relatedPages}
       ctaHeading="Turn every EICR into a fully-invoiced job"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to complete EICR certificates, generate remedial quotes, and send invoices — all from site. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to complete EICR certificates, generate remedial quotes, and send invoices — all from site. 7-day free trial, cancel anytime."
     />
   );
 }

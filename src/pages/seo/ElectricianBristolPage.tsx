@@ -580,7 +580,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Bristol electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
+          description="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -617,7 +617,7 @@ export default function ElectricianBristolPage() {
       faqHeading="Frequently Asked Questions About Electricians in Bristol"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Bristol Electricians"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Bristol's Victorian terraces, HMO market, and green energy demand. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Bristol's Victorian terraces, HMO market, and green energy demand. 7-day free trial."
     />
   );
 }

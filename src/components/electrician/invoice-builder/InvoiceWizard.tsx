@@ -369,6 +369,7 @@ export const InvoiceWizard = ({
             onAddItem={invoiceBuilder.addInvoiceItem}
             onUpdateItem={invoiceBuilder.updateInvoiceItem}
             onRemoveItem={invoiceBuilder.removeInvoiceItem}
+            onMoveItem={invoiceBuilder.moveInvoiceItem}
             settings={invoiceBuilder.invoice.settings}
             subtotal={invoiceBuilder.invoice.subtotal || 0}
             vatAmount={invoiceBuilder.invoice.vatAmount || 0}

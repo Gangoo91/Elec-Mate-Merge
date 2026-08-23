@@ -280,10 +280,10 @@ const HNCModule3Section6_6 = () => {
 
           <TLDR
             points={[
-              'You navigate Part L (Building Regs) &harr; BS 7671 &harr; CIBSE Guides &harr; BREEAM in parallel on every commercial BSE design &mdash; they reinforce, not duplicate.',
-              'You produce TER vs BER (Target Emission Rate vs Building Emission Rate) via SBEM/DSM &mdash; SBEM for naturally-ventilated, DSM for AC / mixed-mode.',
-              'You map the obligations through the building lifecycle &mdash; SAP/SBEM at design, commissioning + as-built EPC at handover, in-use DEC and ESOS audit on operation.',
-              'You evidence MEES (Minimum Energy Efficiency Standards) compliance for any commercial leasehold project &mdash; EPC Band E minimum, rising to C by 2027 and B by 2030.',
+              'You navigate Part L (Building Regs) &harr; BS 7671 &harr; CIBSE Guides &harr; BREEAM in parallel on every commercial BSE design — they reinforce, not duplicate.',
+              'You produce TER vs BER (Target Emission Rate vs Building Emission Rate) via SBEM/DSM — SBEM for naturally-ventilated, DSM for AC / mixed-mode.',
+              'You map the obligations through the building lifecycle — SAP/SBEM at design, commissioning + as-built EPC at handover, in-use DEC and ESOS audit on operation.',
+              'You evidence MEES (Minimum Energy Efficiency Standards) compliance for any commercial leasehold project — EPC Band E minimum, rising to C by 2027 and B by 2030.',
             ]}
           />
 
@@ -1036,7 +1036,7 @@ const HNCModule3Section6_6 = () => {
           <SectionRule />
 
           <Scenario
-            title="Office leasehold refurbishment &mdash; MEES C-by-2027 evidence"
+            title="Office leasehold refurbishment — MEES C-by-2027 evidence"
             situation={
               <>
                 A 4500 m&sup2; commercial office on a 10-year lease has an EPC of D
@@ -1079,14 +1079,14 @@ const HNCModule3Section6_6 = () => {
 
           <KeyTakeaways
             points={[
-              'Approved Document L 2021 (Volumes 1 + 2) is the statutory anchor &mdash; SBEM / DSM compliance evidence + commissioning notice to Building Control.',
-              'TER (Target Emission Rate) vs BER (Building Emission Rate) &mdash; BER must &le; TER for compliance; both reported in kgCO&#x2082;/m&sup2;/yr.',
+              'Approved Document L 2021 (Volumes 1 + 2) is the statutory anchor — SBEM / DSM compliance evidence + commissioning notice to Building Control.',
+              'TER (Target Emission Rate) vs BER (Building Emission Rate) — BER must ≤ TER for compliance; both reported in kgCO&#x2082;/m²/yr.',
               'BS 7671 supports Part L via Reg 132.5 (conductor sizing), Reg 311.1 (max demand), and Section 132 generally.',
-              'CIBSE Guide A (environmental design), Guide F (energy efficiency), Guide L (sustainability) &mdash; the three pillars of design methodology.',
-              'BREEAM UK New Construction: voluntary above Building Regs minimum &mdash; Ene credits driven by motor IE class, lighting LENI, BMS controls, sub-metering.',
-              'EPC (Energy Performance Certificate) at sale / let; DEC (Display Energy Certificate) annual on public buildings &gt; 250 m&sup2;.',
-              'MEES (Minimum Energy Efficiency Standards): Band E since 2018, Band C by 2027, Band B by 2030 &mdash; commercial leasehold.',
-              'ESOS Regulations 2014: large enterprise (&gt; 250 staff or &gt; &pound;44m turnover) energy audit every 4 years &mdash; Phase 3 deadline 2023, Phase 4 2027.',
+              'CIBSE Guide A (environmental design), Guide F (energy efficiency), Guide L (sustainability) — the three pillars of design methodology.',
+              'BREEAM UK New Construction: voluntary above Building Regs minimum — Ene credits driven by motor IE class, lighting LENI, BMS controls, sub-metering.',
+              'EPC (Energy Performance Certificate) at sale / let; DEC (Display Energy Certificate) annual on public buildings > 250 m².',
+              'MEES (Minimum Energy Efficiency Standards): Band E since 2018, Band C by 2027, Band B by 2030 — commercial leasehold.',
+              'ESOS Regulations 2014: large enterprise (> 250 staff or > &pound;44m turnover) energy audit every 4 years — Phase 3 deadline 2023, Phase 4 2027.',
             ]}
           />
 

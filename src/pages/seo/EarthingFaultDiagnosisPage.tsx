@@ -105,7 +105,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-systems-tns-tncs-tt-explained',
     title: 'Earthing Arrangements Explained',
     description:
       'TN-S, TN-C-S, and TT systems — understanding earthing is essential for earth fault diagnosis.',
@@ -690,7 +690,7 @@ export default function EarthingFaultDiagnosisPage() {
       faqHeading="Frequently Asked Questions About Earth Fault Diagnosis"
       relatedPages={relatedPages}
       ctaHeading="AI-Powered Fault Diagnosis on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for AI fault diagnosis, voice test entry, and digital EICR certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for AI fault diagnosis, voice test entry, and digital EICR certificates. 7-day free trial, cancel anytime."
     />
   );
 }

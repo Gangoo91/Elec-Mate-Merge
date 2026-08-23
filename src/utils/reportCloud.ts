@@ -681,9 +681,38 @@ export const reportCloud = {
     reportType: ReportType,
     data: Record<string, unknown>,
     customerId?: string,
-    isAutoSync: boolean = false
+    isAutoSync: boolean = false,
+    /**
+     * ELE-1592 — idempotency key. Supply the SAME `report_id` when retrying a
+     * create that may already have landed, and this becomes safe to call twice.
+     *
+     * `report_id` is uniquely indexed (`reports_report_id_key`), so a repeat
+     * insert is rejected by the database rather than producing a second row.
+     * When omitted, one is generated as before.
+     */
+    presetReportId?: string
   ): Promise<{ success: boolean; reportId?: string; error?: unknown }> => {
     try {
+      /*
+       * ELE-1592 — strip the queue's idempotency marker unconditionally.
+       *
+       * `useReportSync` already removes it before calling, so this is a second
+       * line of defence: it guarantees `__createReportId` can never be written
+       * into a certificate's stored data no matter which caller passes it, and
+       * means a future caller cannot leak it by forgetting.
+       */
+      if (
+        Object.prototype.hasOwnProperty.call(data, '__createReportId') ||
+        Object.prototype.hasOwnProperty.call(data, '_clientCertId')
+      ) {
+        const {
+          __createReportId: _ignoredKey,
+          _clientCertId: _ignoredIdentity,
+          ...cleaned
+        } = data as Record<string, unknown>;
+        data = cleaned;
+      }
+
       // Calculate status based on form data - handles all report types
       const status = calculateReportStatus({ data, reportType, isAutoSync });
 
@@ -702,8 +731,12 @@ export const reportCloud = {
        * The old fallback stamped `EICR-1786391571379` (a raw timestamp) whenever
        * the form had not produced a number yet, which is neither the house
        * format nor traceable. Generating on demand keeps every certificate on
-       * the proper sequence, and `generateCertificateNumber` falls back to its
-       * own prefixed random id for types the RPC cannot serve (ELE-1443).
+       * the proper sequence.
+       *
+       * ELE-1542 — there is no longer a set of types "the RPC cannot serve":
+       * `next_certificate_number` takes a prefix rather than a report type, so
+       * every certificate type is numbered by the same per-account counter.
+       * The random-id fallback now only fires when the round-trip itself fails.
        */
       let certificateNumber = (data.certificateNumber as string | undefined) || '';
       if (!certificateNumber) {
@@ -717,7 +750,9 @@ export const reportCloud = {
         user_id: userId,
         report_type: reportType,
         certificate_number: certificateNumber,
-        report_id: `${reportType.toUpperCase()}-${Date.now()}-${Math.random().toString(36).substr(2, 6)}`,
+        report_id:
+          presetReportId ||
+          `${reportType.toUpperCase()}-${Date.now()}-${Math.random().toString(36).substr(2, 6)}`,
         status,
         customer_id: customerId || null,
         client_name: data.clientName || null,
@@ -736,6 +771,37 @@ export const reportCloud = {
         .single();
 
       if (error) {
+        /*
+         * ELE-1592 — the create already landed; this is a retry.
+         *
+         * `report_id` is uniquely indexed, so when the caller supplied one as
+         * an idempotency key a repeat insert lands here instead of creating a
+         * second row. Adopt the existing row and report success: the work is
+         * already saved, and the caller only needs its id.
+         *
+         * ⚠️ Deliberately does NOT write `data` over the existing row. The
+         * retry payload and the stored row are the same certificate by
+         * definition — the id proves it — so there is nothing to merge, and
+         * an update here would risk overwriting a newer autosave with the
+         * stale snapshot that was queued at the moment of failure.
+         *
+         * Checked BEFORE the certificate-number branch below, because this is
+         * the safe, provable case: identity by id, not by a number that two
+         * different certificates can share.
+         */
+        if (
+          error.code === '23505' &&
+          presetReportId &&
+          (error.message.includes('reports_report_id_key') ||
+            error.message.includes('unique_user_report_id'))
+        ) {
+          console.log(
+            '[reportCloud] Create retry — report already exists, adopting:',
+            presetReportId
+          );
+          return { success: true, reportId: presetReportId };
+        }
+
         // Handle duplicate certificate number (unique constraint violation)
         if (error.code === '23505' && error.message.includes('uniq_reports_user_cert_active')) {
           // Find existing report by certificate number
@@ -823,12 +889,42 @@ export const reportCloud = {
         updateData.customer_id = customerId;
       }
 
-      const { error } = await supabase
+      /*
+       * ELE-1598 — verify the update actually MATCHED a row.
+       *
+       * PostgREST does not error when an update matches zero rows; it returns
+       * 204. Checking only `error` therefore reported a save that wrote
+       * nothing as a success — the badge said "Saved" and the work was gone.
+       *
+       * Proven against a non-existent report_id: no error, HTTP 204,
+       * `{ success: true }`. The same call with `.select()` returns 0 rows,
+       * which is the signal that was there all along and unused.
+       *
+       * Reachable when the report was deleted on another device, after a
+       * failed create left a stale id, or — worst — when RLS stops matching
+       * mid-session (a team member's seat removed): the row still exists, is
+       * simply invisible to this user, and every later save silently no-ops.
+       *
+       * ⚠️ `.select()` is safe here, checked against the live policies: for an
+       * owner the SELECT policy (own AND deleted_at IS NULL) matches the
+       * UPDATE USING clause exactly, and for a QS both additionally require
+       * status <> 'auto-draft'. No update in this file sets `deleted_at`, and
+       * a status change to 'auto-draft' only happens for the owner, whose
+       * SELECT does not test status — so the row can never hide from its own
+       * update.
+       */
+      const { data: updatedRows, error } = await supabase
         .from('reports')
         .update(updateData)
-        .eq('report_id', reportId);
+        .eq('report_id', reportId)
+        .select('report_id');
 
       if (error) throw error;
+      if (!updatedRows || updatedRows.length === 0) {
+        throw new Error(
+          `Update matched no rows for ${reportId} — the report is missing, deleted, or not visible to this user.`
+        );
+      }
 
       // If a QS/team member (not the owner) just edited this cert, tell the
       // originator. Fire-and-forget, once per report per session; the RPC no-ops
@@ -1209,13 +1305,43 @@ export const reportCloud = {
         updateData.customer_id = customerId;
       }
 
-      const { error } = await supabase
+      /*
+       * ELE-1598 — verify the update actually MATCHED a row.
+       *
+       * PostgREST does not error when an update matches zero rows; it returns
+       * 204. Checking only `error` therefore reported a save that wrote
+       * nothing as a success — the badge said "Saved" and the work was gone.
+       *
+       * Proven against a non-existent report_id: no error, HTTP 204,
+       * `{ success: true }`. The same call with `.select()` returns 0 rows,
+       * which is the signal that was there all along and unused.
+       *
+       * Reachable when the report was deleted on another device, after a
+       * failed create left a stale id, or — worst — when RLS stops matching
+       * mid-session (a team member's seat removed): the row still exists, is
+       * simply invisible to this user, and every later save silently no-ops.
+       *
+       * ⚠️ `.select()` is safe here, checked against the live policies: for an
+       * owner the SELECT policy (own AND deleted_at IS NULL) matches the
+       * UPDATE USING clause exactly, and for a QS both additionally require
+       * status <> 'auto-draft'. No update in this file sets `deleted_at`, and
+       * a status change to 'auto-draft' only happens for the owner, whose
+       * SELECT does not test status — so the row can never hide from its own
+       * update.
+       */
+      const { data: updatedRows, error } = await supabase
         .from('reports')
         .update(updateData)
         // no user filter — RLS grants owner + team QS (Team Certificates)
-        .eq('report_id', reportId);
+        .eq('report_id', reportId)
+        .select('report_id');
 
       if (error) throw error;
+      if (!updatedRows || updatedRows.length === 0) {
+        throw new Error(
+          `Update matched no rows for ${reportId} — the report is missing, deleted, or not visible to this user.`
+        );
+      }
 
       return { success: true };
     } catch (error) {

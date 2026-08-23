@@ -507,7 +507,7 @@ export default function TroubleshootingHighEarthLeakagePage() {
       faqHeading="Frequently Asked Questions About High Earth Leakage and RCD Tripping"
       relatedPages={relatedPages}
       ctaHeading="Document Earth Leakage Investigations and EICRs on Your Phone"
-      ctaSubheading="Elec-Mate's EICR app captures leakage findings, adds photos, and generates professional reports with coded observations. Join 1,000+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate's EICR app captures leakage findings, adds photos, and generates professional reports with coded observations. Join 1,600+ UK electricians. 7-day free trial."
     />
   );
 }

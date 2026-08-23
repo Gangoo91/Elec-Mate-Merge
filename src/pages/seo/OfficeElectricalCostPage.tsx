@@ -511,7 +511,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify commercial office electrical fit-outs"
-          description="Create professional itemised electrical fit-out quotes, issue EICs on site, and manage multi-phase commercial projects. Join 1,000+ UK electricians."
+          description="Create professional itemised electrical fit-out quotes, issue EICs on site, and manage multi-phase commercial projects. Join 1,600+ UK electricians."
           icon={FileCheck2}
         />
       </>
@@ -548,7 +548,7 @@ export default function OfficeElectricalCostPage() {
       faqHeading="Frequently Asked Questions About Office Electrical Fit-Out Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Your Office Electrical Fit-Out in Minutes"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to create professional commercial electrical fit-out quotes with itemised power, data, emergency lighting, and fire alarm costs. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to create professional commercial electrical fit-out quotes with itemised power, data, emergency lighting, and fire alarm costs. 7-day free trial, cancel anytime."
     />
   );
 }

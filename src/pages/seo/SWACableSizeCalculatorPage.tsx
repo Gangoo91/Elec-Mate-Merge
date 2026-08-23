@@ -480,7 +480,7 @@ export default function SWACableSizeCalculatorPage() {
         },
       ]}
       ctaHeading="Size SWA submains with confidence"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for armoured cable sizing, voltage drop, and certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for armoured cable sizing, voltage drop, and certification. 7-day free trial, cancel anytime."
       toolPath="/tools/swa-cable-size-calculator"
     />
   );

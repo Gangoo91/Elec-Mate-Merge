@@ -468,7 +468,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Certificate heat pump installations with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate to certificate heat pump supply circuits, complete EICRs…"
+          description="Join 1,600+ UK electricians using Elec-Mate to certificate heat pump supply circuits, complete EICRs…"
           icon={Thermometer}
         />
       </>
@@ -505,7 +505,7 @@ export default function HeatPumpElectricalFaultPage() {
       faqHeading="Frequently Asked Questions About Heat Pump Electrical Faults"
       relatedPages={relatedPages}
       ctaHeading="Certificate Heat Pump Installations on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for heat pump installation certificates, EICRs, and BS 7671-compliant documentation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for heat pump installation certificates, EICRs, and BS 7671-compliant documentation. 7-day free trial, cancel anytime."
     />
   );
 }

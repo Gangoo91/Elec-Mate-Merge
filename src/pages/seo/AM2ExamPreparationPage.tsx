@@ -587,9 +587,10 @@ export default function AM2ExamPreparationPage() {
           <div className="mb-6 flex items-start gap-3 px-4 py-3 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
             <p className="text-white text-sm leading-relaxed">
-              <strong>Written by JIB-qualified electricians</strong> who have completed the AM2
-              process. All technical content — test values, procedures, and regulatory references —
-              is grounded in BS 7671:2018+A4:2026 and the IET Guidance Note 3 (9th edition).
+              <strong>Written and reviewed by Andrew Moore, founder of Elec-Mate</strong> — a
+              qualified electrician (18th Edition, C&amp;G 2391 inspection and testing). All
+              technical content — test values, procedures, and regulatory references — is grounded
+              in BS 7671:2018+A4:2026 and the IET Guidance Note 3 (9th edition).
             </p>
           </div>
           <div className="space-y-4 text-white leading-relaxed mb-8">
@@ -781,7 +782,7 @@ export default function AM2ExamPreparationPage() {
 
       <SEOCTASection
         heading="Pass the AM2 first time"
-        subheading="Join 1,000+ UK electricians preparing for assessments and qualifications. 7-day free trial, cancel anytime."
+        subheading="Join 1,600+ UK electricians preparing for assessments and qualifications. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom spacer for mobile sticky CTA */}

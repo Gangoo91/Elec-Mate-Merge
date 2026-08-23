@@ -243,7 +243,7 @@ export default function Sub1() {
           <TLDR
             points={[
               "Six factors: cost, parts availability, reliability, compliance, schedule, warranty / insurance. Each pulls in a direction; right answer depends on which dominate.",
-              "Cost threshold: repair &gt; 60–70% of replacement = lean to replace. Sealed devices (RCBOs, drivers, AFDDs) are typically replacement-only.",
+              "Cost threshold: repair > 60–70% of replacement = lean to replace. Sealed devices (RCBOs, drivers, AFDDs) are typically replacement-only.",
               "Customer makes the COMMERCIAL decision (cost / convenience between compliant options); firm makes the SAFETY / COMPLIANCE decision (which options are compliant).",
             ]}
           />
@@ -356,8 +356,8 @@ export default function Sub1() {
           <ContentEyebrow>Documenting the decision and the reasoning</ContentEyebrow>
 
           <ConceptBlock
-            title="Why the &lsquo;why&rsquo; matters as much as the &lsquo;what&rsquo;"
-            plainEnglish="Every repair-vs-replace call generates a small piece of installation history. A future sparks (or a future you) needs to know not just what was done but why &mdash; especially when the choice was a budget compromise rather than the textbook answer."
+            title="Why the ‘why’ matters as much as the ‘what’"
+            plainEnglish="Every repair-vs-replace call generates a small piece of installation history. A future sparks (or a future you) needs to know not just what was done but why — especially when the choice was a budget compromise rather than the textbook answer."
           >
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li><strong>Job sheet entry</strong> &mdash; identified fault, root cause, options offered, customer choice, work completed, retest results.</li>
@@ -538,7 +538,7 @@ export default function Sub1() {
           <KeyTakeaways
             points={[
               "Six factors for repair-vs-replace: cost, parts availability, reliability, compliance, schedule, warranty / insurance.",
-              "Cost threshold: repair &gt; 60–70% of replacement = lean to replace. Adjust for high-reliability or low-budget contexts.",
+              "Cost threshold: repair > 60–70% of replacement = lean to replace. Adjust for high-reliability or low-budget contexts.",
               "Repairable: terminations, faceplates, switch modules, individual MCBs / RCBOs (within CU), mid-run cable patches.",
               "Replacement-only: consumer units (sealed), drivers, AFDDs, modern moulded accessories, electronic protective devices.",
               "Compliance can force replacement: A4:2026 requirements, Building Regs changes, original device below current spec.",

@@ -115,7 +115,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-systems-tns-tncs-tt-explained',
     title: 'Earthing Arrangements',
     description:
       'TN-S, TN-C-S, and TT earthing systems explained — characteristics, advantages, and BS 7671 requirements.',
@@ -211,7 +211,7 @@ const sections = [
                 <strong>Earthing arrangement.</strong> Identify the type of earthing system — TN-S,
                 TN-C-S (PME), or TT. This is determined by the DNO and fundamentally affects the
                 design of the{' '}
-                <SEOInternalLink href="/earthing-arrangements">
+                <SEOInternalLink href="/guides/earthing-systems-tns-tncs-tt-explained">
                   earthing and bonding
                 </SEOInternalLink>
                 , the selection of protective devices, and the maximum earth fault loop impedance
@@ -487,7 +487,7 @@ const sections = [
       <>
         <p>
           The{' '}
-          <SEOInternalLink href="/earthing-arrangements">
+          <SEOInternalLink href="/guides/earthing-systems-tns-tncs-tt-explained">
             earthing and bonding arrangement
           </SEOInternalLink>{' '}
           is a fundamental part of the design. It provides the path for earth fault current to flow,
@@ -631,7 +631,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Design circuits on your phone with AI"
-          description="Join 1,000+ UK electricians using Elec-Mate's AI Circuit Designer and BS 7671 calculators. Cable sizing, voltage drop…"
+          description="Join 1,600+ UK electricians using Elec-Mate's AI Circuit Designer and BS 7671 calculators. Cable sizing, voltage drop…"
           icon={PenTool}
         />
       </>
@@ -668,7 +668,7 @@ export default function ElectricalDesignGuidePage() {
       faqHeading="Frequently Asked Questions About Electrical Design"
       relatedPages={relatedPages}
       ctaHeading="AI-Powered Electrical Design on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate's AI Circuit Designer, cable sizing calculator, and BS 7671 design tools. Complete the design and certificate on site. 7-day free trial."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate's AI Circuit Designer, cable sizing calculator, and BS 7671 design tools. Complete the design and certificate on site. 7-day free trial."
     />
   );
 }

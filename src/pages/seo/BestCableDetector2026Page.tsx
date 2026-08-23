@@ -755,7 +755,7 @@ export default function BestCableDetector2026Page() {
       faqHeading="Frequently Asked Questions About Cable Detectors"
       relatedPages={relatedPages}
       ctaHeading="Complete Certificates and Document Installations on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EIC and EICR certificates with on-site completion and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EIC and EICR certificates with on-site completion and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

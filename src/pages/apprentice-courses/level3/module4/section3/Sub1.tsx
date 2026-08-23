@@ -63,7 +63,7 @@ const checks = [
       "Continuity between L and N reads OPEN (∞ Ω). The load doesn't operate but the breaker holds in. The user symptom: 'this socket has just gone dead'. This is the meter signature of an open circuit, not a short — there is no current path, so no fault current and no instant trip.",
       "Continuity between L and N reads a moderate elevated value (0.1–5 Ω) above the expected design figure. The breaker holds but the cable runs warm under load. This is the meter signature of a high-resistance joint, not a short — the path is degraded, not bridged at near-zero ohms.",
       "Insulation resistance between L and earth reads below 1 MΩ while L–N is normal. The RCD trips but the MCB does not. This is the meter signature of an earth fault, not an L–N short — the leakage path is to earth via the CPC, not directly between live conductors.",
-      "Continuity between L and N reads near zero (typically &lt;1 Ω). The protective device trips immediately on energisation. The user symptom: 'breaker tripped instantly when I plugged in / switched on'.",
+      "Continuity between L and N reads near zero (typically <1 Ω). The protective device trips immediately on energisation. The user symptom: 'breaker tripped instantly when I plugged in / switched on'.",
     ],
     correctIndex: 3,
     explanation:
@@ -75,7 +75,7 @@ const checks = [
       "What distinguishes a HIGH-RESISTANCE JOINT (HRJ) from a clean termination, and why is it dangerous?",
     options: [
       "An HRJ is a complete break in the conductor — the path reads OPEN on a continuity test. The danger is that the load stops working and the customer is left without supply. It is found by a simple continuity test from end to end, and corrected by re-terminating the broken conductor. This describes an open circuit, not a high-resistance joint — an HRJ is intact but degraded, not broken.",
-      "An HRJ has higher contact resistance than a clean termination (typically 0.05–5 Ω vs &lt;0.001 Ω). Under load it dissipates I²R heat that can char insulation and ignite the enclosure, yet stays below the device's trip threshold — a silent fire risk.",
+      "An HRJ has higher contact resistance than a clean termination (typically 0.05–5 Ω vs <0.001 Ω). Under load it dissipates I²R heat that can char insulation and ignite the enclosure, yet stays below the device's trip threshold — a silent fire risk.",
       "An HRJ is a direct contact between line and neutral with near-zero resistance. The danger is the very high fault current it draws, which trips the protective device instantly. It is found by an insulation-resistance test reading near zero and corrected by replacing the damaged cable. This describes a short circuit, not an HRJ — a short trips the MCB; an HRJ stays below the trip threshold and overheats silently.",
       "An HRJ is a leakage path between a live conductor and earth. The danger is the residual current that flows to earth, tripping the RCD and presenting a shock risk on exposed metalwork. It is found by an insulation-resistance test line-to-earth and corrected by repairing the damaged insulation. This describes an earth fault, not an HRJ — an HRJ is a poor connection in series with the load, not a leakage to earth.",
     ],
@@ -143,7 +143,7 @@ const quizQuestions = [
     question: "What's the difference between an OVERLOAD fault and a SHORT-CIRCUIT fault?",
     options: [
       "OVERLOAD — a sudden direct contact between live conductors drawing thousands of amps, cleared instantly by the magnetic element. SHORT-CIRCUIT — a sustained current slightly above the cable rating, cleared slowly by the thermal element. This has the two definitions swapped: overload is the slow sustained excess current, short-circuit is the sudden high-current fault.",
-      "OVERLOAD — sustained current above the design rating (typically 1.1–5× rated), cleared by the THERMAL element of the MCB (slow trip). SHORT-CIRCUIT — sudden direct connection between live conductors, very low resistance, thousands of amps, cleared by the MAGNETIC element of the MCB (instantaneous, &lt;10 ms).",
+      "OVERLOAD — sustained current above the design rating (typically 1.1–5× rated), cleared by the THERMAL element of the MCB (slow trip). SHORT-CIRCUIT — sudden direct connection between live conductors, very low resistance, thousands of amps, cleared by the MAGNETIC element of the MCB (instantaneous, <10 ms).",
       "OVERLOAD is an earth-leakage fault cleared by the RCD residual element; SHORT-CIRCUIT is an arc fault cleared by the AFDD. Neither is correct: overload and short-circuit are both overcurrent conditions cleared by the MCB's thermal and magnetic elements respectively, not by the RCD or AFDD.",
       "OVERLOAD and SHORT-CIRCUIT are the same fault at different magnitudes, both cleared by the same single element in the MCB; the only difference is how fast the breaker reacts. They are distinct conditions cleared by two separate elements — the thermal element for sustained overload and the magnetic element for the instantaneous short-circuit.",
     ],
@@ -359,7 +359,7 @@ export default function Sub1() {
             source="BS 7671:2018+A4:2026 — Reg 421.1.7"
             clause={
               <>
-                "Regulation 421.1.7 has been redrafted. It is now a requirement to protect final circuits supplying socket-outlets with a rated current not exceeding 32&nbsp;A using arc fault detection devices (AFDD) in Higher Risk Residential Buildings, Houses in Multiple Occupation, Purpose-built student accommodation and Care homes. For all other premises, the regulation recommends AFDDs for single-phase circuits."
+                "Regulation 421.1.7 has been redrafted. It is now a requirement to protect final circuits supplying socket-outlets with a rated current not exceeding 32 A using arc fault detection devices (AFDD) in Higher Risk Residential Buildings, Houses in Multiple Occupation, Purpose-built student accommodation and Care homes. For all other premises, the regulation recommends AFDDs for single-phase circuits."
               </>
             }
             meaning={
@@ -441,7 +441,7 @@ export default function Sub1() {
           <ConceptBlock
             title="The short-circuit fault — L-N or L-L direct contact"
             plainEnglish="Short circuit means line directly contacting neutral (L-N) or line-to-line on three-phase (L-L). Fault current is limited only by source impedance; PSCC of 1-10 kA is typical. The MCB or fuse trips immediately. Symptom: breaker trips on power-up; loud bang on initial fault; possibly visible damage at the fault point (burnt insulation, tripped MCB on closure)."
-            onSite="Common causes: cable nail / staple driven through twin-and-earth, water ingress bridging L and N inside an outdoor accessory, terminal screw clamping insulation between L and N, rodent damage exposing both conductors, faulty appliance with internal short. Diagnosis: insulation resistance test L-N at 500 V on the Megger MFT1741+ — healthy circuit reads &gt;999 MΩ; short reads near zero (&lt;1 MΩ definitely faulty)."
+            onSite="Common causes: cable nail / staple driven through twin-and-earth, water ingress bridging L and N inside an outdoor accessory, terminal screw clamping insulation between L and N, rodent damage exposing both conductors, faulty appliance with internal short. Diagnosis: insulation resistance test L-N at 500 V on the Megger MFT1741+ — healthy circuit reads >999 MΩ; short reads near zero (<1 MΩ definitely faulty)."
           >
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li><strong>IR test L-N</strong> — at 500 V (or 250 V if electronics can't be disconnected). Pass: &gt;1 MΩ minimum, typically &gt;100 MΩ on healthy circuit.</li>
@@ -459,7 +459,7 @@ export default function Sub1() {
           <ConceptBlock
             title="The earth fault — L-E direct contact (the most common fault on modern installations)"
             plainEnglish="Earth fault means line directly contacting CPC or exposed earthed metalwork. Fault current depends on Zs (earth fault loop impedance); on TN-C-S typically 50-500 A; on TT typically 1-5 A. RCD trips at 30 mA residual; MCB trips at instantaneous trip current (typically 5-10× rated)."
-            onSite="Common causes: damaged insulation exposing line conductor near earthed metal, water ingress inside outdoor accessories, faulty heating element shorting to body of appliance, damaged appliance flex with line touching earth. Diagnosis: IR test L-E at 500 V on MFT — healthy &gt;999 MΩ; faulty &lt;1 MΩ. EFLI Zs measurement confirms protection will operate."
+            onSite="Common causes: damaged insulation exposing line conductor near earthed metal, water ingress inside outdoor accessories, faulty heating element shorting to body of appliance, damaged appliance flex with line touching earth. Diagnosis: IR test L-E at 500 V on MFT — healthy >999 MΩ; faulty <1 MΩ. EFLI Zs measurement confirms protection will operate."
           >
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li><strong>IR test L-E</strong> — at 500 V. Identifies the L-E fault if the fault is permanent.</li>

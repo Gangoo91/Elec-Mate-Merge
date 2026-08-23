@@ -97,7 +97,7 @@ const relatedPages = [
     category: 'Calculator' as const,
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-systems-tns-tncs-tt-explained',
     title: 'Earthing Arrangements Guide',
     description: 'TN-S, TN-C-S, and TT earthing systems explained.',
     icon: ShieldCheck,
@@ -184,7 +184,7 @@ const sections = [
           </p>
         </div>
         <p>
-          The <SEOInternalLink href="/earthing-arrangements">earthing arrangement</SEOInternalLink>{' '}
+          The <SEOInternalLink href="/guides/earthing-systems-tns-tncs-tt-explained">earthing arrangement</SEOInternalLink>{' '}
           of an installation directly determines the significance of earth electrode resistance. For
           TN-S and TN-C-S systems, the supply company provides the earth path and RA is not
           relevant. For TT systems, RA is a critical measurement that must be tested and verified.
@@ -681,7 +681,7 @@ export default function HighEarthResistancePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Calculate and Validate Earth Resistance On Site"
-      ctaSubheading="Elec-Mate includes an earth rod calculator, validates RA x IΔn against BS 7671, and captures earth resistance on every certificate. Join 1,000+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate includes an earth rod calculator, validates RA x IΔn against BS 7671, and captures earth resistance on every certificate. Join 1,600+ UK electricians. 7-day free trial."
     />
   );
 }

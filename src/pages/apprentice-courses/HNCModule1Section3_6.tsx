@@ -762,7 +762,7 @@ const HNCModule1Section3_6 = () => {
 
           <KeyTakeaways
             points={[
-              'HSWA s.3 — your duty to non-employees includes every contractor&rsquo;s workforce on your site.',
+              'HSWA s.3 — your duty to non-employees includes every contractor’s workforce on your site.',
               'CDM 2015 Reg 8 (general duties) and Reg 13 (principal contractor) allocate accountability across multi-contractor projects.',
               'Five-stage contractor lifecycle: pre-qualification → selection → induction → monitoring → review.',
               'SSIP schemes (CHAS, SafeContractor, Achilles) are pre-qualification baselines — never the whole picture.',

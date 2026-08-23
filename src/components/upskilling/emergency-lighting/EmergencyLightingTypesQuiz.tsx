@@ -93,7 +93,7 @@ const quizQuestions: QuizQuestionType[] = [
     options: ['0.2 lux', '1 lux', '5 lux', '10 lux'],
     correctAnswer: 1,
     explanation:
-      'Escape route lighting requires a minimum of 1 lux measured at floor level along the centre line of the route, as specified in BS 5266-1.',
+      'Escape route lighting requires a minimum of 1 lux at floor level across the full width of the route (BS EN 1838:2024). The centre-line-only measurement of the 2013 edition no longer satisfies the standard.',
   },
   {
     id: 8,

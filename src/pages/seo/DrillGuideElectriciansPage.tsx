@@ -581,7 +581,7 @@ export default function DrillGuideElectriciansPage() {
       faqHeading="Frequently Asked Questions About Drills for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Quote, Install, and Certify Electrical Work on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for professional quoting, EIC and EICR certification, and AI site support. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for professional quoting, EIC and EICR certification, and AI site support. 7-day free trial, cancel anytime."
     />
   );
 }

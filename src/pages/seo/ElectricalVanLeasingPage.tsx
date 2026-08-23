@@ -522,7 +522,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and schedule jobs with Elec-Mate — built for UK"
-          description="Join 1,000+ UK electricians using Elec-Mate for quoting, invoicing, job scheduling, and electrical certificates."
+          description="Join 1,600+ UK electricians using Elec-Mate for quoting, invoicing, job scheduling, and electrical certificates."
           icon={Truck}
         />
       </>
@@ -559,7 +559,7 @@ export default function ElectricalVanLeasingPage() {
       faqHeading="Frequently Asked Questions About Van Leasing for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Run your electrical business smarter with Elec-Mate"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting, invoicing, job scheduling, and electrical certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting, invoicing, job scheduling, and electrical certificates. 7-day free trial, cancel anytime."
     />
   );
 }

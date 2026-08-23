@@ -67,6 +67,29 @@ const safeHex = (raw: string | null | undefined, fallback = '#0f172a'): string =
   return /^#[0-9a-fA-F]{6}$/.test(v) ? v : fallback;
 };
 
+/**
+ * Readable text colour for a given button background.
+ *
+ * renderButton used to hardcode white text. That is correct on the dark
+ * defaults (#0f172a) but invisible on a light background — the three Elec-Mate
+ * emails that pass the brand yellow (#facc15) rendered white-on-yellow at
+ * roughly 1.5:1, and an electrician whose brand colour is light hit the same
+ * thing on every client-facing email. Pick from relative luminance instead.
+ */
+const readableOn = (hex: string): string => {
+  const h = hex.replace('#', '');
+  const toLin = (v: number) => {
+    const s = v / 255;
+    return s <= 0.03928 ? s / 12.92 : Math.pow((s + 0.055) / 1.055, 2.4);
+  };
+  const r = toLin(parseInt(h.slice(0, 2), 16));
+  const g = toLin(parseInt(h.slice(2, 4), 16));
+  const b = toLin(parseInt(h.slice(4, 6), 16));
+  const lum = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  // Contrast against white vs near-black; pick whichever is higher.
+  return (1.05 / (lum + 0.05)) >= ((lum + 0.05) / 0.05) ? '#ffffff' : '#0a0a0a';
+};
+
 const escapeAttr = (s: string): string =>
   String(s || '')
     .replace(/&/g, '&amp;')
@@ -334,7 +357,7 @@ export function renderButton(opts: ButtonOptions): string {
           <tr>
             <td align="center">
               <a href="${escapeAttr(opts.href)}"
-                style="display:inline-block;background-color:${bg};color:#ffffff;padding:16px 44px;border-radius:10px;text-decoration:none;font-size:16px;font-weight:600;letter-spacing:0.2px;mso-padding-alt:0;">
+                style="display:inline-block;background-color:${bg};color:${readableOn(bg)};padding:16px 44px;border-radius:10px;text-decoration:none;font-size:16px;font-weight:600;letter-spacing:0.2px;mso-padding-alt:0;">
                 ${escapeText(opts.label)}
               </a>
             </td>

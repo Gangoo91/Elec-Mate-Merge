@@ -77,7 +77,7 @@ export default function DisconnectionTimeCalculatorPage() {
               <p>
                 BS 7671:2018+A4:2026 sets specific disconnection time limits based on the type of
                 circuit and the{' '}
-                <SEOInternalLink href="/earthing-arrangements">earthing system</SEOInternalLink> in
+                <SEOInternalLink href="/guides/earthing-systems-tns-tncs-tt-explained">earthing system</SEOInternalLink> in
                 use. The fundamental requirement comes from Regulation 411.3.2, which states that
                 protective devices must disconnect the supply within the times specified in Table
                 41.1. These times are derived from the IEC body current curves — the relationship
@@ -483,7 +483,7 @@ export default function DisconnectionTimeCalculatorPage() {
           category: 'Guides',
         },
         {
-          href: '/earthing-arrangements',
+          href: '/guides/earthing-systems-tns-tncs-tt-explained',
           title: 'Earthing Arrangements Explained',
           description:
             'TN-S, TN-C-S, and TT earthing systems explained with diagrams and fault loop paths.',
@@ -500,7 +500,7 @@ export default function DisconnectionTimeCalculatorPage() {
         },
       ]}
       ctaHeading="Verify disconnection times in seconds"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for BS 7671 compliance checks. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for BS 7671 compliance checks. 7-day free trial, cancel anytime."
       toolPath="/tools/disconnection-time-calculator"
     />
   );

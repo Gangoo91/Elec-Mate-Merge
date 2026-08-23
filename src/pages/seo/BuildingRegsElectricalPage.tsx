@@ -623,7 +623,7 @@ export default function BuildingRegsElectricalPage() {
       faqHeading="Frequently Asked Questions About Building Regulations Electrical"
       relatedPages={relatedPages}
       ctaHeading="Generate Part P Compliant Certificates on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EIC, Minor Works, and EICR certificates. Correct BS 7671 format, instant PDF delivery, and scheme provider ready. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for EIC, Minor Works, and EICR certificates. Correct BS 7671 format, instant PDF delivery, and scheme provider ready. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -5,6 +5,7 @@ import { lazyWithRetry } from '@/utils/lazyWithRetry';
 import { CourseSkeleton } from '@/components/ui/page-skeleton';
 import { useLastStudyLocation } from '@/hooks/useLastStudyLocation';
 import { ApprenticeTabBar } from '@/components/apprentice-hub/ApprenticeTabBar';
+import { ApprenticeSetupGate } from '@/components/onboarding/ApprenticeSetupGate';
 import { useCourseProgress } from '@/hooks/useCourseProgress';
 import { useLearningXP } from '@/hooks/useLearningXP';
 import { useLocalStorageMigration } from '@/hooks/useLocalStorageMigration';
@@ -14,6 +15,8 @@ const StudyCentreIndex = lazyWithRetry(() => import('@/pages/study-centre/StudyC
 const LeaderboardPage = lazyWithRetry(() => import('@/pages/study-centre/LeaderboardPage'));
 const BrowseCoursesPage = lazyWithRetry(() => import('@/pages/study-centre/BrowseCoursesPage'));
 const LearningVideos = lazyWithRetry(() => import('@/pages/apprentice/LearningVideos'));
+const NotFound = lazyWithRetry(() => import('@/pages/apprentice-courses/NotFound'));
+const MockExamsPage = lazyWithRetry(() => import('@/pages/study-centre/MockExamsPage'));
 
 // Import nested route components with retry
 const ApprenticeCourseRoutes = lazyWithRetry(() => import('@/routes/ApprenticeCourseRoutes'));
@@ -347,6 +350,9 @@ export default function StudyCentreRoutes() {
         <Route index element={<StudyCentreIndex />} />
         <Route path="leaderboard" element={<LeaderboardPage />} />
         <Route path="browse" element={<BrowseCoursesPage />} />
+        {/* Every in-app paper in one index. Dashboard has linked here since
+            before the page existed — that link used to render blank. */}
+        <Route path="mock-exams" element={<MockExamsPage />} />
         <Route path="videos" element={<LearningVideos backTo="/study-centre" />} />
         <Route path="apprentice/*" element={<ApprenticeCourseRoutes />} />
         <Route path="upskilling/*" element={<UpskillingRoutes />} />
@@ -357,6 +363,9 @@ export default function StudyCentreRoutes() {
         <Route path="general-upskilling/*" element={<GeneralUpskillingRoutes />} />
         <Route path="multi-trade/*" element={<MultiTradeRoutes />} />
         <Route path="personal-development/*" element={<PersonalDevelopmentRoutes />} />
+        {/* Dead links must land somewhere — the app-level 404 is unreachable
+            from inside this nested <Routes>. */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
 
       {/* Primary apprentice navigation — role-gated inside the component
@@ -364,6 +373,10 @@ export default function StudyCentreRoutes() {
           Centre are unaffected). It renders its own in-flow h-20 spacer
           before the fixed bar so course content clears it. */}
       <ApprenticeTabBar />
+
+      {/* Course / year capture for apprentices who haven't picked one —
+          renders null for everyone else. */}
+      <ApprenticeSetupGate />
     </Suspense>
   );
 }

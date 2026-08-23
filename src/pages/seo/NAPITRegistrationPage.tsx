@@ -707,7 +707,7 @@ const reviewerSchema = {
     '@type': 'Person',
     name: 'Andrew Moore',
     description:
-      'Reviewed by NAPIT-registered electricians with 18th Edition (BS 7671:2018+A4:2026) qualifications and inspection and testing certification.',
+      'Founder of Elec-Mate — a qualified electrician with 18th Edition (BS 7671:2018+A4:2026) and C&G 2391 inspection and testing qualifications.',
   },
 };
 
@@ -728,7 +728,7 @@ export default function NAPITRegistrationPage() {
           <span className="text-yellow-400">How to Join and What to Expect</span>
         </>
       }
-      heroSubtitle="A complete, practical guide to joining NAPIT as a registered electrician. Everything from the application form to the on-site assessment, what it costs, and how NAPIT compares to NICEIC and ELECSA. Reviewed by NAPIT-registered, 18th Edition qualified electricians."
+      heroSubtitle="A complete, practical guide to joining NAPIT as a registered electrician. Everything from the application form to the on-site assessment, what it costs, and how NAPIT compares to NICEIC and ELECSA. Written and reviewed by Andrew Moore, founder of Elec-Mate and a qualified electrician."
       readingTime={15}
       keyTakeaways={keyTakeaways}
       sections={sections}

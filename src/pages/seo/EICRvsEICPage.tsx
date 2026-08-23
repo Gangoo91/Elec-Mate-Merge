@@ -506,7 +506,7 @@ const sections = [
           Alarm, PAT Testing, EV Charger, and Solar PV. One subscription covers everything.
         </p>
         <SEOAppBridge
-          title="16 Certificate Types in One App"
+          title="19 Certificate Types in One App"
           description="Stop carrying multiple paper pads or paying for separate software for each certificate type. Elec-Mate has EIC, EICR, Minor Works…"
           icon={ClipboardCheck}
         />
@@ -539,7 +539,7 @@ export default function EICRvsEICPage() {
       faqHeading="Frequently Asked Questions About EICR vs EIC"
       relatedPages={relatedPages}
       ctaHeading="Both certificates in one app"
-      ctaSubheading="Join 1,000+ UK electricians creating professional EIC and EICR certificates on their phones. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians creating professional EIC and EICR certificates on their phones. 7-day free trial, cancel anytime."
     />
   );
 }

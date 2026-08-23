@@ -7,7 +7,7 @@ import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Surge Protection Devices - MOET Module 2 Section 4.6';
 const DESCRIPTION =
-  'Comprehensive guide to surge protection devices for electrical maintenance technicians: SPD types, transient overvoltages, risk assessment, BS 7671 Amendment 2 requirements and installation practices.';
+  'Comprehensive guide to surge protection devices for electrical maintenance technicians: SPD types, transient overvoltages, risk assessment, BS 7671 A4:2026 requirements and installation practices.';
 
 const quickCheckQuestions = [
   {

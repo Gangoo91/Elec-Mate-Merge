@@ -679,7 +679,7 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Join 1,000+ UK electricians using Elec-Mate"
+          title="Join 1,600+ UK electricians using Elec-Mate"
           description="Cable sizing, professional quoting, and on-site certification. Everything a Sheffield electrician needs for HMOs, conversions, and domestic work."
           icon={MapPin}
         />
@@ -718,7 +718,7 @@ export default function ElectricianSheffieldPage() {
       faqHeading="Frequently Asked Questions About Electricians in Sheffield"
       relatedPages={relatedPages}
       ctaHeading="Quote, Certify, and Grow Your Sheffield Electrical Business"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. 7-day free trial, cancel anytime."
     />
   );
 }

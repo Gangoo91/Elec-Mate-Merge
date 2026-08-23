@@ -726,7 +726,7 @@ const HNCModule4Section5_1 = () => {
               'IK rating from BS EN 62262 — impact resistance for plant rooms and accessible locations.',
               'Spare way provision: 20–30 % at design — retrofitting outgoing circuits into a sealed busbar chamber is painful.',
               'Reg 510.3 ties manufacturer instructions, torque, ambient and IP back to the wider BS 7671 verification.',
-              'Document type-test certificate references, form-of-separation drawing and PFC coordination in the O&amp;M.',
+              'Document type-test certificate references, form-of-separation drawing and PFC coordination in the O&M.',
             ]}
           />
 

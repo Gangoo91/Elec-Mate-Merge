@@ -521,7 +521,7 @@ export default function OutbuildingElectricalCostPage() {
       faqHeading="Frequently Asked Questions About Outbuilding Electrical Installation Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Your Outbuilding Electrical Installation in Minutes"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to create professional outbuilding electrical quotes with armoured cable, trenching, and optional extras clearly priced. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate to create professional outbuilding electrical quotes with armoured cable, trenching, and optional extras clearly priced. 7-day free trial, cancel anytime."
     />
   );
 }

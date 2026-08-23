@@ -631,7 +631,7 @@ const relatedPages = [
     category: 'Troubleshooting',
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-systems-tns-tncs-tt-explained',
     title: 'Earthing Arrangements',
     description: 'TN-S, TN-C-S, and TT earthing systems explained — how they affect Zs values.',
     icon: Globe,
@@ -690,7 +690,7 @@ export default function EarthFaultLoopTooHighPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Verify Zs Compliance on Site with Elec-Mate"
-      ctaSubheading="Zs lookup calculator, R1+R2 calculator, auto-validated schedule of tests, and digital EICR forms. Join 1,000+ UK electricians. 7-day free trial, cancel anytime."
+      ctaSubheading="Zs lookup calculator, R1+R2 calculator, auto-validated schedule of tests, and digital EICR forms. Join 1,600+ UK electricians. 7-day free trial, cancel anytime."
     />
   );
 }

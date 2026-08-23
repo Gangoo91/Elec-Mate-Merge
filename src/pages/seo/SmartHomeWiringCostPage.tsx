@@ -640,7 +640,7 @@ export default function SmartHomeWiringCostPage() {
       faqHeading="Frequently Asked Questions About Smart Home Wiring Renovation Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Smart Home Installations on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. 7-day free trial, cancel anytime."
     />
   );
 }

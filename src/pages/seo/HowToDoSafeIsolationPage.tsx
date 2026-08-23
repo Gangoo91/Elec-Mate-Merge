@@ -108,7 +108,7 @@ const features = [
   },
   {
     icon: ClipboardCheck,
-    title: '16 Certificate Types',
+    title: '19 Certificate Types',
     description:
       'EICR, EIC, Minor Works, EV Charger, Emergency Lighting, Fire Alarm, Solar PV, and PAT Testing. All digitally signed with PDF export.',
   },
@@ -585,7 +585,7 @@ export default function HowToDoSafeIsolationPage() {
 
       <SEOCTASection
         heading="Work Safer with Elec-Mate"
-        subheading="Join 1,000+ UK electricians using Elec-Mate for on-site procedures, testing, and certification. 7-day free trial, cancel anytime."
+        subheading="Join 1,600+ UK electricians using Elec-Mate for on-site procedures, testing, and certification. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

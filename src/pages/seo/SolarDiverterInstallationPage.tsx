@@ -471,7 +471,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Manage solar diverter jobs with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for quoting, job management, and certification. Issue EICs and Minor Works Certificates on your phone."
+          description="Join 1,600+ UK electricians using Elec-Mate for quoting, job management, and certification. Issue EICs and Minor Works Certificates on your phone."
           icon={Zap}
         />
       </>
@@ -508,7 +508,7 @@ export default function SolarDiverterInstallationPage() {
       faqHeading="Frequently Asked Questions About Solar Diverters"
       relatedPages={relatedPages}
       ctaHeading="Quote and Manage Solar Diverter Jobs with Elec-Mate"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting, job management, and certification. Issue installation certificates on your phone. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,600+ UK electricians using Elec-Mate for quoting, job management, and certification. Issue installation certificates on your phone. 7-day free trial, cancel anytime."
     />
   );
 }

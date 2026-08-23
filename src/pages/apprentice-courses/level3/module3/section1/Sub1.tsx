@@ -376,7 +376,7 @@ export default function Sub1() {
 
           <RegsCallout
             source="BS 7671:2018+A4:2026 — Regulation 134.1.1"
-            clause="Good workmanship by one or more skilled or instructed persons and proper materials shall be used in the erection of an electrical installation. The installation of electrical equipment shall take account of manufacturers&apos; instructions."
+            clause="Good workmanship by one or more skilled or instructed persons and proper materials shall be used in the erection of an electrical installation. The installation of electrical equipment shall take account of manufacturers’ instructions."
             meaning={
               <>
                 Reg 134.1.1 is the workmanship rule — the verification step that follows

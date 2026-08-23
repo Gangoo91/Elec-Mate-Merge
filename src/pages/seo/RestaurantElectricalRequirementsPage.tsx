@@ -1085,7 +1085,7 @@ export default function RestaurantElectricalRequirementsPage() {
       faqHeading="Frequently Asked Questions About Restaurant Electrical Requirements"
       relatedPages={relatedPages}
       ctaHeading="Complete Restaurant Certificates on Your Phone"
-      ctaSubheading="EICR, Fire Alarm, Emergency Lighting, PAT Testing — every certificate a restaurant needs, completed on site with AI-powered tools. Join 1,000+ UK electricians using Elec-Mate. 7-day free trial."
+      ctaSubheading="EICR, Fire Alarm, Emergency Lighting, PAT Testing — every certificate a restaurant needs, completed on site with AI-powered tools. Join 1,600+ UK electricians using Elec-Mate. 7-day free trial."
     />
   );
 }
