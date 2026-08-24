@@ -123,10 +123,10 @@ export const bmsModule2Section5QuizData: QuizQuestion[] = [
     question:
       'In the real-world example, what problem was solved by adding an analog input module?',
     options: [
-      'The main controller was damaged and needed replacement',
-      'The existing sensors were providing inaccurate readings',
+      'The main controller had been damaged by a surge and needed full replacement',
+      'The existing sensors were drifting and giving inaccurate temperature readings',
       'Extra CO₂ sensors were added but the main controller had no free analog inputs',
-      'The system needed better communication protocols',
+      'The system needed a faster communication protocol between its controllers',
     ],
     correctAnswer: 2,
     explanation:

@@ -247,9 +247,9 @@ export const ipafQuestionBank: StandardMockQuestion[] = [
       'Under the Work at Height Regulations 2005, who has a duty to plan, supervise and carry out work at height in a safe manner?',
     options: [
       'Every employer and any person who controls the work of others',
-      'Only the principal contractor named on the project',
-      'Only employees who hold a current PASMA card',
-      'Only the Health and Safety Executive and its inspectors',
+      'The principal contractor named in the construction phase plan',
+      'Only the operatives who hold a current PASMA operator card',
+      'The Health and Safety Executive inspector for the local area',
     ],
     correctAnswer: 0,
     explanation:
@@ -337,10 +337,10 @@ export const ipafQuestionBank: StandardMockQuestion[] = [
     question:
       'Under BS EN 1004-1:2020, what is the maximum height for an indoor mobile access tower without additional stabilisation?',
     options: [
-      "A fixed limit of 8 metres platform height for all towers",
+      'The standard sets a fixed limit of 8 metres platform height for indoor towers of any type',
       "The standard does not set a single limit; it depends on the manufacturer's instruction manual",
-      "A fixed limit of 12 metres platform height for all towers",
-      "A fixed limit of 4 metres platform height for all towers",
+      'The standard sets a fixed limit of 12 metres platform height for all tower types and sizes',
+      'The standard sets a fixed limit of 4 metres platform height unless outriggers are fitted',
     ],
     correctAnswer: 1,
     explanation:
@@ -409,10 +409,10 @@ export const ipafQuestionBank: StandardMockQuestion[] = [
     question:
       'Under the Work at Height Regulations 2005, when must a risk assessment for work at height be reviewed?',
     options: [
-      'Only once every twelve months as a fixed annual review',
+      'When twelve months have passed since the assessment was written, as a fixed annual review',
       'When there is reason to believe it is no longer valid or there has been a significant change',
-      'Only when a new employee joins the work team',
-      'Only after an accident or near-miss has been reported',
+      'When a new operative joins the work team, and at no other point in the working week',
+      'When an accident or near-miss occurs, and at no other time during the work on site',
     ],
     correctAnswer: 1,
     explanation:
@@ -680,9 +680,9 @@ export const ipafQuestionBank: StandardMockQuestion[] = [
       'BS EN 1004-1:2020 replaced the previous BS EN 1004:2004. Which key change was introduced in the 2020 revision regarding base dimensions?',
     options: [
       'The standard now recognises a wider range of base plan dimensions rather than fixed sizes',
-      'A single fixed base dimension of 1.5 m was mandated for all towers',
-      'Base dimensions were removed from the standard entirely',
-      'Only single-width base dimensions are now permitted',
+      'The standard now mandates a single base plan dimension of 1.5 m for all tower types',
+      'The standard now removes base plan dimensions entirely and refers only to height',
+      'The standard now permits single-width base dimensions only, with double-width withdrawn',
     ],
     correctAnswer: 0,
     explanation:
@@ -967,9 +967,9 @@ export const ipafQuestionBank: StandardMockQuestion[] = [
     question: 'What is the main advantage of aluminium alloy over steel for mobile access towers?',
     options: [
       'Aluminium is significantly lighter, making towers easier to handle and transport',
-      'Aluminium is electrically non-conductive, unlike steel',
-      'Aluminium is considerably cheaper to manufacture than steel',
-      'Aluminium has a much higher load capacity than steel',
+      'Aluminium is electrically non-conductive, unlike the steel used in older towers',
+      'Aluminium is far cheaper to buy, making towers less costly to hire on site',
+      'Aluminium has a much higher load capacity, allowing heavier platform loads',
     ],
     correctAnswer: 0,
     explanation:
@@ -1056,10 +1056,10 @@ export const ipafQuestionBank: StandardMockQuestion[] = [
     id: 57,
     question: 'What is the purpose of diagonal bracing on a mobile access tower?',
     options: [
-      'To provide edge protection on the working platform',
+      'To provide edge protection for operatives on the working platform',
       'To provide rigidity and prevent the frame from racking (parallelogramming)',
-      'To increase the base width and improve stability',
-      'To act as a ladder for climbing the tower externally',
+      'To increase the effective base width and improve overall stability',
+      'To form the climbing rungs used for internal access to the platform',
     ],
     correctAnswer: 1,
     explanation:
@@ -1143,10 +1143,10 @@ export const ipafQuestionBank: StandardMockQuestion[] = [
     question:
       'Why is it important that all components of a mobile access tower come from the same manufacturer?',
     options: [
-      'It keeps the cost of replacement parts lower',
-      'It ensures the warranty on the tower remains valid',
+      'Mixing manufacturers keeps replacement part costs lower and makes hire agreements simpler to manage',
+      'Components from a single manufacturer keep the tower warranty valid, which is the sole requirement',
       'Components from different manufacturers may not be compatible and could compromise structural integrity',
-      'It makes the tower easier to identify on a busy site',
+      'Components from one manufacturer share a colour, making the tower easier to identify on a busy site',
     ],
     correctAnswer: 2,
     explanation:
@@ -1178,9 +1178,9 @@ export const ipafQuestionBank: StandardMockQuestion[] = [
     question: 'What is the purpose of a trapdoor (hatch) platform on a mobile access tower?',
     options: [
       'To allow safe internal access through the platform whilst maintaining full guardrail protection',
-      'To provide a drainage opening so rainwater does not collect',
-      'To allow tools and materials to be passed up from below',
-      'To reduce the weight of the platform during transport',
+      'To provide a drainage opening so that rainwater cannot collect on the platform surface',
+      'To allow tools and materials to be passed up from the level below without a rope or hoist',
+      'To reduce the weight of the platform so that it can be lifted into place by one person',
     ],
     correctAnswer: 0,
     explanation:
@@ -1194,10 +1194,10 @@ export const ipafQuestionBank: StandardMockQuestion[] = [
     id: 65,
     question: 'When should stabilisers or outriggers be used on a mobile access tower?',
     options: [
-      "Only when the tower is being moved to a new location",
+      'Whenever the tower has to be moved to a new position, but never while it is in use',
       "Whenever specified in the manufacturer's instruction manual for the configuration being erected",
-      "Only on indoor towers where there is no wind loading",
-      "Only when more than two operatives are on the platform",
+      'Whenever the tower is erected indoors, where there is no wind loading to resist at all',
+      'Whenever more than two operatives are to work on the upper platform at any one time',
     ],
     correctAnswer: 1,
     explanation:
@@ -1301,9 +1301,9 @@ export const ipafQuestionBank: StandardMockQuestion[] = [
     question:
       'What factor determines whether a single-width or double-width tower should be selected for a task?',
     options: [
-      'The colour coding specified by the site safety officer for the work area',
-      'Only the maximum height that the finished tower will need to reach on site',
-      'Only the price difference between the single-width and double-width tower types',
+      'The colour coding the site safety officer has set for each work area on site',
+      'The maximum platform height the tower will reach, regardless of the task',
+      'The price difference between single-width and double-width tower hire rates',
       'The space, the nature and duration of the work, and the tools and materials needed',
     ],
     correctAnswer: 3,
@@ -1375,9 +1375,9 @@ export const ipafQuestionBank: StandardMockQuestion[] = [
     question:
       'What effect does attaching sheeting or banners to a mobile access tower have on its stability?',
     options: [
-      'It improves stability by adding weight low down on the tower',
-      'It has no measurable effect on the stability of the tower',
-      'It reduces wind loading by streamlining the tower profile',
+      'It improves stability by adding weight low down and shielding the base frames from the wind',
+      'It has no measurable effect on stability, as sheeting is far too light to affect the tower',
+      'It reduces wind loading by streamlining the tower, lowering the risk of overturning in a gust',
       'It significantly increases the wind loading on the tower, greatly increasing the risk of overturning',
     ],
     correctAnswer: 3,
@@ -1394,9 +1394,9 @@ export const ipafQuestionBank: StandardMockQuestion[] = [
       'For a mobile access tower used on a mezzanine floor or elevated surface, what additional risk must be considered?',
     options: [
       'A fall from the tower could result in a greater total fall distance, and edge protection at the mezzanine edge must be maintained',
-      'The reduced air pressure at height makes the castors lose grip',
-      'Aluminium towers cannot be used above ground-floor level',
-      'The 7-day inspection interval is reduced to every 3 days',
+      'The castors lose grip on a mezzanine deck, and the tower must therefore be tied to the building at each platform level',
+      'Aluminium towers cannot be used above ground-floor level, and only steel towers may be erected on a mezzanine floor',
+      'The 7-day inspection interval is reduced to every 3 days, and the platform load rating is halved on elevated floors',
     ],
     correctAnswer: 0,
     explanation:
@@ -1411,10 +1411,10 @@ export const ipafQuestionBank: StandardMockQuestion[] = [
     question:
       'A tower is to be erected adjacent to an excavation. What is the general guide for the minimum distance from the edge of the excavation to the nearest tower support?',
     options: [
-      'A fixed 1 metre regardless of the depth of the excavation',
+      'A fixed 1 metre from the edge, whatever the depth of the excavation or the soil type',
       'The depth of the excavation multiplied by 1.5, or as determined by a competent person',
-      'Half the depth of the excavation in all ground conditions',
-      'A fixed 500 mm provided the excavation is shored',
+      'Half the depth of the excavation, regardless of the ground conditions on the site',
+      'A fixed 500 mm from the edge, provided the excavation has been shored and battered',
     ],
     correctAnswer: 1,
     explanation:
@@ -1429,10 +1429,10 @@ export const ipafQuestionBank: StandardMockQuestion[] = [
     question:
       'Why must castors on a mobile access tower have a minimum wheel diameter specified by the manufacturer?',
     options: [
-      'Larger wheels make the tower lighter and easier to lift',
-      'Smaller wheels increase the height-to-base ratio of the tower',
+      'Larger wheels make the tower easier to push and remove the need for castor brakes altogether',
+      'Smaller wheels raise the height-to-base ratio of the tower and reduce its rated platform load',
       'Smaller wheels may not distribute the load adequately and could sink into soft ground or damage flooring',
-      'Larger wheels are required to fit the locking brake mechanism',
+      'Larger wheels are needed to fit the locking brake mechanism and the outrigger sockets on the base frames',
     ],
     correctAnswer: 2,
     explanation:
@@ -1465,9 +1465,9 @@ export const ipafQuestionBank: StandardMockQuestion[] = [
       'BS EN 1004-1:2020 permits what maximum castor/wheel deflection under full test load?',
     options: [
       'The standard does not specify a maximum deflection for castors; it specifies overall tower deflection limits',
-      'A maximum castor deflection of exactly 10 mm under test load',
-      'A maximum castor deflection of exactly 25 mm under test load',
-      'A maximum castor deflection of exactly 50 mm under test load',
+      'The standard specifies a maximum castor deflection of 10 mm under the full test load in all cases',
+      'The standard specifies a maximum castor deflection of 25 mm under the full test load in all cases',
+      'The standard specifies a maximum castor deflection of 50 mm under the full test load in all cases',
     ],
     correctAnswer: 0,
     explanation:
@@ -1715,10 +1715,10 @@ export const ipafQuestionBank: StandardMockQuestion[] = [
     question:
       'During assembly, why must the trapdoor in the platform always be closed after climbing through?',
     options: [
-      'To stop rainwater entering the tower structure',
-      'To lock the platform onto the frame below',
+      'To stop rainwater entering the tower and keep the platform surface dry underfoot',
+      'To lock the platform onto the frame below and hold the windlocks firmly closed',
       'To maintain the full platform area for working and prevent falls through the opening',
-      'To prevent the platform from being lifted by the wind',
+      'To prevent the platform being lifted by the wind and to stop tools sliding off',
     ],
     correctAnswer: 2,
     explanation:
@@ -1753,9 +1753,9 @@ export const ipafQuestionBank: StandardMockQuestion[] = [
     question: 'In the 3T assembly method, at what point is the operative most at risk of a fall?',
     options: [
       'When climbing through the trap opening before guardrails at the new level are fully installed',
-      'When standing on the base frames at ground level',
-      'When locking the castors before the first climb',
-      'When passing components up from the level below',
+      'When standing on the base frames at ground level before the castors are locked off',
+      'When locking the castors on the base frames before the first lift is fully assembled',
+      'When passing components up from the level below to the operative on the platform',
     ],
     correctAnswer: 0,
     explanation:
@@ -1786,10 +1786,10 @@ export const ipafQuestionBank: StandardMockQuestion[] = [
     id: 98,
     question: 'When should stabilisers be fitted during the assembly of a mobile access tower?',
     options: [
-      "Only after the operative has reached the top platform",
-      "Only once the tower is fully assembled to its final height",
+      'After the operative has climbed onto the first working platform',
+      'Once the tower is fully assembled to its final working height',
       "At the height specified in the manufacturer's instruction manual",
-      "Only if the tower is to be left unattended overnight",
+      'Only if the tower is to be left standing overnight on site',
     ],
     correctAnswer: 2,
     explanation:
@@ -1839,10 +1839,10 @@ export const ipafQuestionBank: StandardMockQuestion[] = [
     question:
       'During the site survey before tower assembly, which overhead hazard must be specifically assessed?',
     options: [
-      'The grade of aluminium used in the tower frames',
+      'The grade of aluminium used in the tower frames and braces on site',
       'Overhead power lines, cables, beams and any other overhead obstructions',
-      'The colour of the high-visibility clothing worn',
-      'The serial number printed on the tower label',
+      'The colour of the high-visibility clothing worn by the operatives',
+      'The serial number printed on the label fixed to the tower base frame',
     ],
     correctAnswer: 1,
     explanation:
@@ -1875,9 +1875,9 @@ export const ipafQuestionBank: StandardMockQuestion[] = [
     question:
       'When dismantling a tower using the 3T method, what must be done before removing the guardrails at any level?',
     options: [
-      'All castors must be unlocked so the tower can be moved clear',
-      'The platform trapdoor must be removed to give better access',
-      'The stabilisers must be retracted to reduce the footprint',
+      'The castors must be unlocked so the tower can be moved clear before the guardrails at that level come off',
+      'The platform trapdoor must be lifted out to give the operative better access before guardrails are removed',
+      'The stabilisers must be retracted to reduce the tower footprint before the guardrails are taken off first',
       'The operative must be positioned inside the trapdoor opening (protected by the trap sides) before guardrails are removed',
     ],
     correctAnswer: 3,
@@ -2000,10 +2000,10 @@ export const ipafQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the correct procedure if, during assembly, the wind increases to Beaufort Force 4?',
     options: [
-      'Continue assembly but fit additional stabilisers to compensate',
-      'Continue assembly provided the operative wears a harness',
+      'Continue the assembly but fit extra stabilisers and tie the tower to the building to compensate for the wind',
+      'Continue the assembly provided each operative wears a harness clipped to the tower frame above',
       'Cease assembly work, secure the partially built tower if possible, and do not resume until conditions improve',
-      'Speed up the assembly to complete it before the wind increases further',
+      'Speed up the assembly and get the operative down to ground level before the wind rises further',
     ],
     correctAnswer: 2,
     explanation:
@@ -2036,9 +2036,9 @@ export const ipafQuestionBank: StandardMockQuestion[] = [
     question: 'During dismantling, how should components be lowered from the tower?',
     options: [
       'Passed hand-to-hand to a person at the level below or lowered carefully to the ground',
-      'Dropped to the ground onto a soft landing mat below',
-      'Thrown clear of the tower base to avoid striking the frame',
-      'Slid down the external frame to the operative at ground level',
+      'Dropped to the ground onto a soft landing mat inside a cordoned area at the base',
+      'Thrown clear of the tower base so that they do not strike the frames on the way down',
+      'Slid down the outside of the frame to an operative waiting at ground level',
     ],
     correctAnswer: 0,
     explanation:
@@ -2257,9 +2257,9 @@ export const ipafQuestionBank: StandardMockQuestion[] = [
       'When must a mobile access tower be inspected in addition to the regular 7-day cycle?',
     options: [
       'After assembly, after any event affecting stability (wind, impact), and after modification',
-      'Only at the very end of each calendar month that the tower remains erected on site',
-      'Only when a different operative takes over the use of the tower from another worker',
-      'Only when the tower manufacturer issues a formal product recall notice for that model',
+      'At the end of each calendar month for as long as the tower remains erected on site',
+      'Only when a different operative takes over the tower from the previous user on site',
+      'After the manufacturer issues a product recall notice for that make and model of tower',
     ],
     correctAnswer: 0,
     explanation:
@@ -2273,10 +2273,10 @@ export const ipafQuestionBank: StandardMockQuestion[] = [
     id: 125,
     question: 'What is the purpose of a pre-use visual check on a mobile access tower?',
     options: [
-      'To replace the need for a formal 7-day inspection',
+      'To replace the need for the formal 7-day inspection by a competent person on site',
       'To quickly identify any obvious defects, missing components or changes since the last use',
-      'To record the tower configuration for the manufacturer',
-      'To confirm the operative holds a valid PASMA card',
+      'To record the tower configuration so the manufacturer can update its hire records',
+      'To confirm that the operative using the tower holds a current PASMA operator card',
     ],
     correctAnswer: 1,
     explanation:
@@ -2290,10 +2290,10 @@ export const ipafQuestionBank: StandardMockQuestion[] = [
     id: 126,
     question: 'What key information must be recorded in a formal tower inspection report?',
     options: [
-      'Only the date of the inspection and a simple pass or fail result',
-      'Only the name of the operative who will go on to use the tower',
+      'The date of the inspection and a simple pass or fail result alone',
+      'The name of the operative who will next use the tower on site',
       'Location, date, defects found, actions taken, and the competent person',
-      'Only the manufacturer and the model number of the tower inspected',
+      'The manufacturer, the model number and the hire reference number',
     ],
     correctAnswer: 2,
     explanation:
@@ -2343,10 +2343,10 @@ export const ipafQuestionBank: StandardMockQuestion[] = [
     id: 129,
     question: 'What should be checked regarding the castors during a pre-use inspection?',
     options: [
-      'That the castors are the largest diameter available',
+      'That the castors are the largest diameter the manufacturer supplies for that tower',
       'That all castors are present, undamaged, and that the brakes lock and release properly',
-      'That the castors swivel continuously while the tower is in use',
-      'That the castors are greased and free to roll at all times',
+      'That the castors swivel freely and continuously while the tower is in use on site',
+      'That the castors are greased and left free to roll at all times during use',
     ],
     correctAnswer: 1,
     explanation:
@@ -2413,10 +2413,10 @@ export const ipafQuestionBank: StandardMockQuestion[] = [
     id: 133,
     question: 'What must happen if a formal 7-day inspection reveals a significant defect?',
     options: [
-      'The defect should be noted and reviewed at the next 7-day inspection',
+      'The defect should be noted on the record and reviewed at the next 7-day inspection, with work carrying on meanwhile',
       'The tower must be taken out of use, the defect repaired or the component replaced, and the tower re-inspected before use resumes',
-      'The tower may continue in use if the platform height is reduced',
-      'The tower may continue in use provided a warning sign is displayed',
+      'The tower may stay in use if the platform height is reduced and the defective section is left at the top of the tower',
+      'The tower may stay in use provided a warning sign is displayed and the defect is reported at the end of the month',
     ],
     correctAnswer: 1,
     explanation:
@@ -2431,10 +2431,10 @@ export const ipafQuestionBank: StandardMockQuestion[] = [
     question:
       'During a pre-use check, you notice that one outrigger is not in contact with the ground. What should you do?',
     options: [
-      'Use the tower as normal as three outriggers are sufficient',
-      'Place a brick under the outrigger to make up the gap',
+      'Use the tower as normal, as three outriggers in firm contact are enough to keep the tower stable on site',
+      'Place a brick under the outrigger to close the gap and carry on using the tower for the rest of the shift',
       'Do not use the tower; report the issue so that the outrigger can be adjusted to make firm contact with the ground',
-      'Remove the outrigger entirely as it is providing no benefit',
+      'Remove the outrigger completely, as it is giving no support, and use the tower as normal for the task',
     ],
     correctAnswer: 2,
     explanation:
@@ -2485,10 +2485,10 @@ export const ipafQuestionBank: StandardMockQuestion[] = [
     question:
       'During an inspection, what aspects of the guardrail system should be specifically checked?',
     options: [
-      'Only that the top guardrail is present, regardless of its height',
+      'That the top guardrail is present, whatever its height above the platform, and that the toeboards are painted in a bright colour',
       'That top guardrails are at the correct height (950 mm), mid-rails are present, toeboards are in place, and all connections are secure',
-      'Only that the guardrails are painted in a high-visibility colour',
-      'Only that the guardrails bear the manufacturer\'s serial number',
+      'That the guardrails are painted in a high-visibility colour and that the mid-rails carry a hire company label of their own',
+      'That the guardrails bear the manufacturer\'s serial number and that the toeboards are of the same brand and colour as the frames',
     ],
     correctAnswer: 1,
     explanation:
@@ -2520,9 +2520,9 @@ export const ipafQuestionBank: StandardMockQuestion[] = [
     id: 139,
     question: "What should be checked about the tower's bracing during a formal inspection?",
     options: [
-      'Only that the diagonal braces are present, ignoring the horizontal ones',
-      'Only that the braces are painted in a colour that matches the tower frames',
-      'Only that each of the braces carries a current and valid inspection sticker',
+      'That the diagonal braces are present, ignoring the horizontal braces entirely',
+      'That the braces are painted in a colour matching the tower frames exactly',
+      'That every brace carries a current and valid inspection sticker fixed to it',
       'That all braces are present, correctly positioned, undamaged and fully engaged',
     ],
     correctAnswer: 3,
@@ -2555,10 +2555,10 @@ export const ipafQuestionBank: StandardMockQuestion[] = [
     id: 141,
     question: 'A tower has been relocated to a new position on site. What inspection is required?',
     options: [
-      'No new inspection is required, as the tower itself has not been altered',
+      'No new inspection; the tower structure itself has not been altered',
       'A full inspection by a competent person; relocation counts as re-erection',
-      'Only a quick visual check of the castors once at the new position on site',
-      'Only an inspection if the new position happens to be on a different floor',
+      'A quick visual check of the castors; relocation is not re-erection',
+      'An inspection only if the new position is on a different floor level',
     ],
     correctAnswer: 1,
     explanation:
@@ -2609,9 +2609,9 @@ export const ipafQuestionBank: StandardMockQuestion[] = [
     question: 'What should be specifically checked about the platforms during an inspection?',
     options: [
       'Correctly seated, undamaged, windlocks engaged, trapdoors working, not worn or slippery',
-      'Only that the platform is finished in the correct colour for the particular site',
-      'Only that the platform carries the name of the operative who will use it',
-      'Only that the platform was originally supplied within the last twelve months',
+      'Finished in the correct colour for the site, and marked with the hire reference',
+      'Marked with the name of the operative who will use the tower that day on site',
+      'Supplied within the last twelve months and still under the hire warranty period',
     ],
     correctAnswer: 0,
     explanation:
@@ -2662,9 +2662,9 @@ export const ipafQuestionBank: StandardMockQuestion[] = [
     question:
       'What inspection is required after a vehicle has struck a mobile access tower, even if no obvious damage is visible?',
     options: [
-      'No inspection at all, since there is no visible damage to the tower',
-      'Only a check of the castor brakes on the side of the tower that was struck',
-      'Only a brief visual check by the operative before the tower is next used',
+      'No inspection at all, as there is no visible damage to the tower',
+      'A check of the castor brakes on the side struck by the vehicle',
+      'A brief visual check by the operative before the tower is next used',
       'A full inspection by a competent person before the tower is used again',
     ],
     correctAnswer: 3,
@@ -2681,9 +2681,9 @@ export const ipafQuestionBank: StandardMockQuestion[] = [
       'During an inspection, a spring clip on a frame connection is found to be missing. What should happen?',
     options: [
       "The tower must not be used until the clip is replaced with the correct manufacturer's component",
-      "The tower may be used as the connection will hold without the clip",
-      "A cable tie can be used as a temporary replacement for the clip",
-      "A spring clip from a different manufacturer can be fitted instead",
+      'The tower may be used, as the frame connection will hold securely without the clip in place',
+      'The tower may be used once a cable tie has been fitted as a temporary clip replacement',
+      'The tower may be used once a spring clip from another manufacturer is fitted instead',
     ],
     correctAnswer: 0,
     explanation:
@@ -2698,10 +2698,10 @@ export const ipafQuestionBank: StandardMockQuestion[] = [
     question:
       'When inspecting the access route within the tower (internal ladder/climb frames), what should be checked?',
     options: [
-      'Only that the lowest rung sits within easy reach of a person at ground level',
+      'That the lowest rung is within reach of a person standing at ground level',
       'That all rungs are present and undamaged, and the access route is clear and clean',
-      'Only that the climbing rungs are painted in a clear high-visibility colour',
-      'Only that the internal access route is wide enough for two operatives at once',
+      'That the climbing rungs are painted in a bright high-visibility colour',
+      'That the internal access route is wide enough for two operatives at once',
     ],
     correctAnswer: 1,
     explanation:
@@ -2733,9 +2733,9 @@ export const ipafQuestionBank: StandardMockQuestion[] = [
     question:
       'When multiple towers are in use on the same site, how should inspection records be managed?',
     options: [
-      'A single combined record may cover all towers on the site',
-      'Only the tallest tower on the site needs an inspection record',
-      'Records are only needed for towers that have been moved',
+      'A single combined record may cover every tower on the site, provided each one is listed on it by name and location',
+      'Only the tallest tower on the site needs its own inspection record, as the shorter ones are covered by it',
+      'Records are needed only for the towers that have been moved to a new position since the last inspection',
       'Each tower must have its own individual inspection record, clearly identified with its unique location or reference number',
     ],
     correctAnswer: 3,
@@ -2919,10 +2919,10 @@ export const ipafQuestionBank: StandardMockQuestion[] = [
     id: 161,
     question: 'What is the most common cause of fatal accidents involving mobile access towers?',
     options: [
-      'Manual handling injuries during assembly and dismantling',
+      'Manual handling injuries during assembly, dismantling and moving of towers on site',
       'Falls from height (due to collapse, overturning, or falling from an unprotected platform)',
-      'Slips and trips at ground level around the tower base',
-      'Crush injuries from components being dropped during handling',
+      'Slips and trips at ground level around the base and access area of the tower',
+      'Crush injuries from components dropped during assembly and dismantling at ground level',
     ],
     correctAnswer: 1,
     explanation:
@@ -2936,10 +2936,10 @@ export const ipafQuestionBank: StandardMockQuestion[] = [
     id: 162,
     question: "What is the risk assessment '5-step process' recommended by the HSE?",
     options: [
-      'Plan, do, check, act, then review the entire process',
-      'Avoid, prevent, minimise, protect, then rescue if needed',
+      'Plan the work, do the work, check the result, act on findings, then review the plan',
+      'Avoid the risk, prevent falls, minimise the distance, protect the worker, then rescue',
       'Identify hazards, decide who might be harmed, evaluate risks, record findings, review and update',
-      'Assess, isolate, lock off, prove dead, then permit to work',
+      'Assess the job, isolate supplies, lock off, prove dead, then issue a permit to work',
     ],
     correctAnswer: 2,
     explanation:
@@ -2971,9 +2971,9 @@ export const ipafQuestionBank: StandardMockQuestion[] = [
     question: 'What is the main risk of overloading a mobile access tower platform?',
     options: [
       'Structural failure of the platform or tower components, potentially causing collapse',
-      'The castor brakes wearing out more quickly than normal',
-      'The platform surface becoming slippery underfoot',
-      'The tower label becoming difficult to read over time',
+      'Rapid wear of the castor brakes, leading to unwanted movement of the tower',
+      'Slippery platform surfaces, making the working area harder to keep clean',
+      'Excessive wear to the tower label, making the load rating hard to read',
     ],
     correctAnswer: 0,
     explanation:
@@ -3006,10 +3006,10 @@ export const ipafQuestionBank: StandardMockQuestion[] = [
     question:
       'What should you do if you see someone climbing the outside of a mobile access tower?',
     options: [
-      'Allow it if they are only going up one level',
-      'Allow it provided they are wearing a safety harness',
+      'Allow it if they are only climbing up one level to reach the working platform above them',
+      'Allow it provided they are wearing a safety harness clipped to the frame as they climb',
       'Stop them immediately — climbing the outside of a tower is extremely dangerous and is not permitted',
-      'Allow it if the castors are locked and the ground is firm',
+      'Allow it if the castors are locked and the ground beneath the tower is firm and level',
     ],
     correctAnswer: 2,
     explanation:
@@ -3057,10 +3057,10 @@ export const ipafQuestionBank: StandardMockQuestion[] = [
     id: 169,
     question: 'What is the risk of leaving tools and materials unsecured on a tower platform?',
     options: [
-      'They may be stolen by members of the public passing by',
+      'They may be taken by members of the public passing the base of the tower on site',
       'They can fall from the platform and strike persons below, causing serious injury or death',
-      'They could scratch the platform surface and damage it',
-      'They add weight that invalidates the tower\'s inspection record',
+      'They can scratch the platform surface and wear the anti-slip finish away over time',
+      'They add weight that invalidates the inspection record for the tower held on site',
     ],
     correctAnswer: 1,
     explanation:
@@ -3127,10 +3127,10 @@ export const ipafQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the main risk when a tower is erected on a surface that slopes in one direction?',
     options: [
-      'The castors will wear unevenly over the period of use',
+      'The castors will wear unevenly over the period of use, making the tower harder to move around the site',
       'The tower will lean to one side, reducing its stability and increasing the risk of overturning in that direction',
-      'Rainwater will collect on the lower side of the platform',
-      'The tower will be harder to climb on the downhill side',
+      'Rainwater will collect on the lower side of the platform, making the working surface slippery underfoot',
+      'The tower will be harder to climb on the downhill side, so the internal ladder must be moved across',
     ],
     correctAnswer: 1,
     explanation:
@@ -3144,10 +3144,10 @@ export const ipafQuestionBank: StandardMockQuestion[] = [
     id: 174,
     question: 'What is the risk of using a tower with missing or damaged bracing?',
     options: [
-      'The tower becomes slightly heavier and harder to move',
-      'The platform load rating is reduced by a small margin',
+      'The tower becomes slightly heavier and harder to move around the site on castors',
+      'The platform load rating is reduced by a small margin, but the tower stays rigid and safe',
       'The tower loses structural rigidity and could collapse or rack (parallelogram) under load or wind',
-      'The castor brakes become harder to engage and release',
+      'The castor brakes become harder to engage and release when the tower is moved on site',
     ],
     correctAnswer: 2,
     explanation:
@@ -3217,10 +3217,10 @@ export const ipafQuestionBank: StandardMockQuestion[] = [
     id: 178,
     question: 'What additional hazard exists when using a mobile access tower in a public area?',
     options: [
-      'The public may complain about the appearance of the tower',
-      'The tower may need a longer pre-use inspection in public',
+      'Members of the public may complain about the appearance of the tower and the noise of the work',
+      'The tower needs a longer pre-use check in public, and a second operative to hold the base',
       'Members of the public could walk into the tower, attempt to climb it, or be struck by falling objects',
-      'The tower hire cost is higher when used in public areas',
+      'The hire cost of the tower is higher in public areas, and the hire period must be shorter',
     ],
     correctAnswer: 2,
     explanation:
@@ -3254,9 +3254,9 @@ export const ipafQuestionBank: StandardMockQuestion[] = [
       'Under RIDDOR, which of the following incidents involving a mobile access tower must be reported to the HSE?',
     options: [
       'The complete or partial collapse, overturning or failure of any scaffold (including a mobile access tower) more than 5 metres in height',
-      'A minor scratch to the paintwork noticed during inspection',
-      'A castor brake found to be stiff during a pre-use check',
-      'A tower label that has become faded and hard to read',
+      'A minor scratch to the paintwork of any scaffold (including a mobile access tower) noticed during a pre-use check on site',
+      'A castor brake found to be stiff during the pre-use check of a mobile access tower more than 5 metres in height on site',
+      'A tower label that has become faded and hard to read on a mobile access tower more than 5 metres in height when erected',
     ],
     correctAnswer: 0,
     explanation:
@@ -3431,10 +3431,10 @@ export const ipafQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the purpose of a rescue plan before commencing work on a mobile access tower?',
     options: [
-      'To record who assembled the tower in case of a later dispute',
-      'To satisfy the tower hire company\'s documentation requirements',
+      'To record which operative assembled the tower and which competent person inspected it, in case of a later dispute with the client',
+      'To satisfy the tower hire company\'s paperwork requirements and to confirm that the hire period has been agreed in writing beforehand',
       'To ensure that a clear procedure is in place to rescue a person who is stranded or injured on the tower, minimising the time they are at risk',
-      'To set out the order in which the tower will be dismantled',
+      'To set out the order in which the tower will be dismantled and the level at which the stabilisers are removed during the work',
     ],
     correctAnswer: 2,
     explanation:
@@ -3523,9 +3523,9 @@ export const ipafQuestionBank: StandardMockQuestion[] = [
     question:
       'When deciding the safe clearance from a 33 kV overhead line, what must the clearance distance allow for in addition to the tower itself?',
     options: [
-      'Only the overall height of the tower measured at its base frames at ground level',
-      'Only the diameter of the castors that are fitted to the base of the access tower',
-      'Only the combined weight of all the operatives standing on the working platform',
+      'The overall height of the tower measured from the base frames on the ground',
+      'The diameter of the castors fitted to the base of the access tower frames',
+      'The combined weight of the operatives standing on the working platform together',
       'Any tools or materials being raised and the maximum reach of persons on the platform',
     ],
     correctAnswer: 3,

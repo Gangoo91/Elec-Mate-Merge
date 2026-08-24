@@ -90,7 +90,7 @@ const faqs = [
   {
     question: 'What are the emergency lighting requirements for a restaurant?',
     answer:
-      'Emergency lighting in restaurants must comply with BS 5266-1:2016 (Emergency lighting — Code of practice for the emergency lighting of premises). The Regulatory Reform (Fire Safety) Order 2005 requires the responsible person to ensure that emergency routes and exits are provided with adequate emergency lighting. In practice this means illuminated exit signs above all final exit doors, emergency lighting along all escape routes, open-area lighting to prevent panic in rooms larger than 60 square metres, and high-risk task area lighting in the commercial kitchen. The system must provide a minimum 3-hour duration on battery backup, achieve a minimum 1 lux on the centre line of escape routes and 0.5 lux in open areas, and be tested monthly (functional test) and annually (full-duration test). Test records must be maintained in a log book and made available to the Fire and Rescue Service on request.',
+      'Emergency lighting in restaurants must comply with BS 5266-1:2016 (Emergency lighting — Code of practice for the emergency lighting of premises). The Regulatory Reform (Fire Safety) Order 2005 requires the responsible person to ensure that emergency routes and exits are provided with adequate emergency lighting. In practice this means illuminated exit signs above all final exit doors, emergency lighting along all escape routes, open-area lighting to prevent panic in rooms larger than 60 square metres, and high-risk task area lighting in the commercial kitchen. The system must provide a minimum 3-hour duration on battery backup, achieve a minimum 1 lux across the full width of escape routes and 0.5 lux in open areas, and be tested monthly (functional test) and annually (full-duration test). Test records must be maintained in a log book and made available to the Fire and Rescue Service on request.',
   },
   {
     question: 'Is a fire alarm certificate required for a restaurant?',
@@ -701,7 +701,7 @@ const sections = [
             <tbody>
               <tr className="border-t border-white/10">
                 <td className={`${tdCn} font-medium`}>Escape routes</td>
-                <td className={tdCn}>1 lux on the centre line</td>
+                <td className={tdCn}>1 lux across the full width</td>
                 <td className={tdCn}>
                   Uniformity ratio no worse than 40:1 between brightest and darkest points.
                 </td>

@@ -39,7 +39,7 @@ const quickCheckQuestions = [
   {
     id: 'escape-route-lux',
     question:
-      'What is the minimum illuminance required on the centre line of an escape route up to 2m wide?',
+      'What is the minimum illuminance required across the full width of an escape route up to 2m wide?',
     options: [
       '1 lux',
       '0.5 lux',
@@ -48,7 +48,7 @@ const quickCheckQuestions = [
     ],
     correctIndex: 0,
     explanation:
-      'BS 5266-1 requires a minimum of 1 lux at floor level on the centre line of a defined escape route up to 2m wide. The central band must be at least half the route width, with a minimum of 0.5 lux at the edges.',
+      'BS EN 1838:2024 requires a minimum of 1 lux at floor level across the FULL WIDTH of a defined escape route. The 2013 edition required it only along the centre line, with a lower level at the edges; the 2024 revision extended the 1 lux to the whole width, excluding borders (a quarter of the width on routes of 2 m or less).',
   },
   {
     id: 'maintained-definition',
@@ -253,7 +253,7 @@ const faqs = [
   {
     question: 'How do I calculate the number of emergency luminaires required for an escape route?',
     answer:
-      "First, measure the escape route dimensions. For routes up to 2m wide, apply the 4x mounting height spacing rule as a starting point. Then verify using photometric data that 1 lux minimum is achieved on the centre line and 0.5 lux minimum at the edges. Consider luminaire light output, beam angle, and uniformity requirements. Always use manufacturer's spacing tables based on specific luminaire photometrics.",
+      "First, measure the escape route dimensions. For routes up to 2m wide, apply the 4x mounting height spacing rule as a starting point. Then verify using photometric data that 1 lux minimum is achieved across the full width, excluding the border allowance. Consider luminaire light output, beam angle, and uniformity requirements. Always use manufacturer's spacing tables based on specific luminaire photometrics.",
   },
   {
     question: 'What testing regime is required for emergency lighting systems?',
@@ -342,7 +342,7 @@ const HNCModule7Section2_1 = () => {
             <p>BS 5266-1 specifies minimum illuminance levels for different areas based on the risk and nature of evacuation. These levels must be achieved at floor level and maintained throughout the rated duration.</p>
             <p><strong>Escape Routes</strong></p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>1 lux minimum</strong> centre line</li>
+              <li><strong>1 lux minimum</strong> full width</li>
               <li>0.5 lux at edges</li>
               <li>Routes up to 2m wide</li>
               <li>Central band &gt; half width</li>
@@ -459,7 +459,7 @@ const HNCModule7Section2_1 = () => {
             <p><strong>Scenario:</strong> Design emergency lighting for a 1.5m wide corridor, 30m long, with 2.8m ceiling height.</p>
             <p>Step 1: Determine requirements</p>
             <p>Route width: 1.5m (&lt;2m, so standard escape route requirements)</p>
-            <p>Minimum illuminance: 1 lux centre line, 0.5 lux edges</p>
+            <p>Minimum illuminance: 1 lux across the full width, excluding borders</p>
             <p>Step 2: Calculate maximum spacing</p>
             <p>Mounting height: 2.8m</p>
             <p>Maximum spacing = 4 x 2.8m = 11.2m</p>
@@ -517,7 +517,7 @@ const HNCModule7Section2_1 = () => {
               <strong>Key Values to Remember:</strong>
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Escape route centre line: <strong>1 lux minimum</strong></li>
+              <li>Escape route full width: <strong>1 lux minimum</strong></li>
               <li>Open areas: <strong>0.5 lux minimum</strong></li>
               <li>High-risk task: <strong>10% of task illuminance, minimum 15 lux</strong></li>
               <li>Response time: <strong>50% within 5 seconds, 100% within 60 seconds</strong></li>

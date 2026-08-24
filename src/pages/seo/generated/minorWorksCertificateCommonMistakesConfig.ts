@@ -160,7 +160,7 @@ export const minorWorksCertificateCommonMistakesConfig: GeneratedGuideConfig = {
       category: 'Certificate',
     },
     {
-      href: '/tools/electrical-quoting-app',
+      href: '/electrical-quoting-app',
       title: 'Electrical Quoting App',
       description: 'Move from findings to pricing without rewriting the job.',
       icon: 'Calculator',

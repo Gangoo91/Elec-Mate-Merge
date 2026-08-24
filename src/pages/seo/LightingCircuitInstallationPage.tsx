@@ -387,7 +387,7 @@ const sections = [
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Illuminance levels</strong> — escape routes must have a minimum illuminance
-                of 1 lux on the centreline of the escape path and anti-panic areas must achieve a
+                of 1 lux across the full width of the escape path and anti-panic areas must achieve a
                 minimum of 0.5 lux throughout. These are significantly lower than normal working
                 illuminance levels — emergency lighting is for safe evacuation, not for continuing
                 work.

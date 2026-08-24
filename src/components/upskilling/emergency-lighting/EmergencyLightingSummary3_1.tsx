@@ -28,7 +28,7 @@ export const EmergencyLightingSummary3_1 = () => {
                 <li className="flex items-center gap-2">
                   <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0" />
                   <span>
-                    <strong>Escape Routes:</strong> 1 lux minimum (centre line)
+                    <strong>Escape Routes:</strong> 1 lux minimum (full width)
                   </span>
                 </li>
                 <li className="flex items-center gap-2">

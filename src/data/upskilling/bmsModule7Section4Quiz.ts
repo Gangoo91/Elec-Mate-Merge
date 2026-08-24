@@ -97,9 +97,9 @@ export const bmsModule7Section4Quiz: QuizQuestion[] = [
     question: 'What must be tested after upload to verify correct controller setup?',
     options: [
       'All I/O points and safety functions',
-      'Only the power consumption',
-      'Just the network connectivity',
-      'Only the user interface',
+      'The power supply voltage only',
+      'Network connectivity alone',
+      'The user interface screens',
     ],
     correctAnswer: 0,
     explanation:

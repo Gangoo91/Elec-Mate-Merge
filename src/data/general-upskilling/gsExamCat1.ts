@@ -33,10 +33,10 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     id: 2,
     question: 'What is a &ldquo;fixed mindset&rdquo; as defined by Carol Dweck?',
     options: [
-      'The ability to stay focused on a single task',
-      'A mindset focused on fixing problems quickly',
+      'The belief that talent counts for far less than the effort you put in',
+      'The habit of fixing every fault on site as quickly as it appears',
       'The belief that your qualities are carved in stone and cannot be changed',
-      'A preference for routine and predictable work',
+      'The belief that ability improves steadily whenever you practise it',
     ],
     correctAnswer: 2,
     explanation:
@@ -51,9 +51,9 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question:
       'What does the concept of &ldquo;the power of yet&rdquo; mean in growth mindset theory?',
     options: [
-      'Setting a strict deadline by which a skill must be fully mastered',
-      'Accepting that some abilities are simply beyond your reach for now',
-      'Delaying any attempt at a task until you feel completely ready',
+      'Setting a fixed deadline by which every new skill must be completely mastered',
+      'Accepting that certain abilities will always remain permanently out of your reach',
+      'Postponing a difficult task until you feel completely ready to attempt it properly',
       'Adding &ldquo;yet&rdquo; to statements of inability reframes them as learning opportunities',
     ],
     correctAnswer: 3,
@@ -156,10 +156,10 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     id: 9,
     question: 'Why is self-assessment important when setting personal development goals?',
     options: [
-      'It proves to others that you are already skilled',
+      'It proves to your employer that your existing skills need no further work',
       'It establishes your current baseline so you can measure progress accurately',
-      'It eliminates the need for external feedback',
-      'It guarantees you will pass any future assessment',
+      'It replaces the need for any feedback from supervisors or assessors',
+      'It guarantees that any qualification you attempt will be passed first time',
     ],
     correctAnswer: 1,
     explanation:
@@ -190,9 +190,9 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     id: 11,
     question: 'What does Bandura identify as the strongest source of self-efficacy?',
     options: [
-      'Being told you are capable by a manager',
-      'Reading about the theory behind the task',
-      'Watching someone else complete the task',
+      'Verbal persuasion &mdash; being told by a manager that you can do it',
+      'Physiological states &mdash; noticing how calm you feel beforehand',
+      'Vicarious experience &mdash; watching a colleague complete the task',
       'Mastery experiences &mdash; successfully completing a task yourself',
     ],
     correctAnswer: 3,
@@ -260,9 +260,9 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question:
       'Which of the following best describes the &ldquo;growth zone&rdquo; in the comfort zone model?',
     options: [
-      'The zone where tasks feel safe, familiar, and free from any challenge',
-      'The zone where self-doubt and the opinions of others hold you back',
-      'The zone where you steadily acquire new skills through productive struggle',
+      'The zone where every task is familiar, comfortable, and entirely free of any risk of failure',
+      'The zone where fear takes hold, excuses build up, and the opinions of other people stop you',
+      'The zone where you steadily acquire new skills and extend your abilities but feel discomfort',
       'The zone where you set new goals, find purpose, and achieve things you previously thought impossible',
     ],
     correctAnswer: 3,
@@ -298,10 +298,10 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question:
       'Carol Dweck warns about &ldquo;false growth mindset.&rdquo; What does this term describe?',
     options: [
-      'Praising effort even when strategies are clearly ineffective',
+      'A growth mindset that fades away because the employer never reinforces it in practice',
       'Claiming to have a growth mindset without genuinely embracing effort, struggle, and feedback',
-      'A growth mindset that develops too quickly to be sustainable',
-      'The belief that growth mindset theory has been scientifically disproved',
+      'The mistaken view that a growth mindset can only ever be developed during childhood',
+      'The claim that growth mindset theory has been completely disproved by later research',
     ],
     correctAnswer: 1,
     explanation:
@@ -370,10 +370,10 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question:
       'How does the concept of neural plasticity challenge the idea that &ldquo;you can&rsquo;t teach an old dog new tricks&rdquo;?',
     options: [
-      'Neural plasticity only applies to children under the age of 12',
+      'Neural plasticity is present only in children and disappears entirely by adulthood',
       'Research shows the adult brain continues forming new neural connections well into old age',
-      'The brain stops developing at age 25 and cannot change after that',
-      'Neural plasticity means the brain physically grows larger with age',
+      'The brain finishes developing at twenty-five and forms no new connections after that',
+      'Neural plasticity means the brain physically grows larger each time a skill is learnt',
     ],
     correctAnswer: 1,
     explanation:
@@ -388,10 +388,10 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question:
       'Dweck&rsquo;s research found that praising children for intelligence (&ldquo;You&rsquo;re so smart&rdquo;) had what effect when they later faced a difficult task?',
     options: [
-      'They tried harder and persisted longer to prove how clever they were',
-      'They showed no measurable change in their willingness to take on challenges',
+      'They persisted far longer on the harder task in order to prove just how clever they were',
+      'They showed no measurable change at all in the difficulty of the tasks they went on to choose',
       'They were more likely to give up and chose easier tasks to protect their &ldquo;smart&rdquo; label',
-      'They became more accurate at judging their own ability on later tasks',
+      'They became noticeably more accurate at judging their own ability on the tasks that followed',
     ],
     correctAnswer: 2,
     explanation:
@@ -425,9 +425,9 @@ export const gsCat1Questions: StandardMockQuestion[] = [
       'Which of the following statements about self-assessment is supported by educational research?',
     options: [
       'Accurate self-assessment improves when combined with external feedback and clear criteria',
-      'Self-assessment should replace all forms of external assessment',
-      'Beginners are typically the most accurate self-assessors',
-      'Self-assessment is always more accurate than peer assessment',
+      'Self-assessment is accurate enough on its own to replace external assessment entirely',
+      'Beginners judge their own performance more accurately than experienced practitioners',
+      'Self-assessment is consistently more accurate than feedback given by trained peers',
     ],
     correctAnswer: 0,
     explanation:
@@ -442,10 +442,10 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question:
       'A first-year apprentice believes they will never understand three-phase systems because they struggled with basic circuit theory. According to Dweck, what type of belief is this?',
     options: [
-      'A realistic assessment based on objective evidence',
+      'A realistic self-assessment based on objective evidence of their measured ability',
       'A fixed mindset belief that treats current difficulty as evidence of permanent limitation',
-      'A growth mindset belief because they are aware of their weakness',
-      'A healthy level of caution that prevents overconfidence',
+      'A growth mindset belief, because the apprentice has recognised their own weakness',
+      'A healthy degree of caution that protects the apprentice from becoming overconfident',
     ],
     correctAnswer: 1,
     explanation:
@@ -478,9 +478,9 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question:
       'Duckworth&rsquo;s &ldquo;Hard Thing Rule&rdquo; requires family members to do which of the following?',
     options: [
-      'Each person must take on a new hard thing every single week without fail',
-      'Only the children in a family are required to commit to a hard thing',
-      'A person may abandon their hard thing the moment it stops being enjoyable',
+      'Each person must begin an entirely new hard thing at the start of every week without fail',
+      'Only the children in the family must commit to a hard thing, while the adults may opt out',
+      'Anyone may abandon their hard thing the moment it stops feeling enjoyable, with no notice',
       'Each person must commit to one hard thing and cannot quit until a natural stopping point is reached',
     ],
     correctAnswer: 3,
@@ -497,9 +497,9 @@ export const gsCat1Questions: StandardMockQuestion[] = [
       'How do negative belief systems typically affect an electrician&rsquo;s career progression?',
     options: [
       'They create self-limiting behaviour that causes the person to avoid opportunities and underperform',
-      'They have no real effect on progression because skills speak for themselves',
-      'They tend to push people to overwork in order to disprove their own doubts',
-      'They only affect newly qualified electricians, not experienced tradespeople',
+      'They have no real effect on progression, because competence on site always speaks for itself',
+      'They reliably drive people to work far longer hours in order to disprove their own doubts',
+      'They affect only newly qualified electricians and fade once a few years have been served',
     ],
     correctAnswer: 0,
     explanation:
@@ -588,10 +588,10 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question:
       'Dweck&rsquo;s research on &ldquo;false growth mindset&rdquo; identified a particular danger in organisations. What was it?',
     options: [
-      'Organisations that invest too heavily in staff training programmes',
+      'Organisations investing so heavily in training that day-to-day site productivity falls away',
       'Organisations rewarding effort alone without addressing ineffective strategies or poor outcomes',
-      'Leaders who set excessively high standards for their teams',
-      'Companies that hire based on qualifications rather than attitude',
+      'Leaders setting standards so high that nobody on the team can realistically ever meet them',
+      'Companies recruiting on formal qualifications alone rather than on attitude to learning',
     ],
     correctAnswer: 1,
     explanation:
@@ -606,10 +606,10 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question:
       'How does Bandura&rsquo;s concept of &ldquo;reciprocal determinism&rdquo; relate to self-efficacy and growth mindset?',
     options: [
-      'It demonstrates that environment is the only factor that determines success',
-      'It proves that genetics determine mindset and cannot be changed',
+      'It shows that the working environment is the single factor that decides whether a person succeeds at work',
+      'It shows that mindset is inherited genetically and therefore cannot be altered by experience or effort',
       'It shows that behaviour, personal beliefs, and environment continuously influence each other in a dynamic cycle',
-      'It suggests that personal beliefs have no influence on behaviour',
+      'It shows that personal beliefs are simply by-products of behaviour and never influence it in return',
     ],
     correctAnswer: 2,
     explanation:
@@ -624,9 +624,9 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question:
       'Duckworth distinguishes between &ldquo;harmonious passion&rdquo; and &ldquo;obsessive passion.&rdquo; Why is this distinction important for sustained grit?',
     options: [
-      'Harmonious passion produces faster results, while obsessive passion produces more durable results',
-      'Obsessive passion is required for elite performance, while harmonious passion suits hobbies only',
-      'Harmonious passion applies to teams, while obsessive passion applies to individuals',
+      'Harmonious passion delivers faster short-term results, while obsessive passion delivers slower but far more durable ones',
+      'Obsessive passion is essential for elite performance, while harmonious passion suits casual hobbies and pastimes alone',
+      'Harmonious passion applies only to work carried out in teams, while obsessive passion applies to individuals working by themselves',
       'Harmonious passion integrates with your identity and promotes wellbeing, while obsessive passion leads to burnout and rigid persistence',
     ],
     correctAnswer: 3,
@@ -643,9 +643,9 @@ export const gsCat1Questions: StandardMockQuestion[] = [
       'Research by Mangels et al. (2006) used EEG brain scans to study people with different mindsets. What did they find about how growth mindset individuals processed errors?',
     options: [
       'Growth mindset individuals showed greater brain activity when receiving corrective feedback, indicating deeper processing of errors',
-      'Fixed mindset individuals showed more brain activity during error processing',
-      'There was no measurable difference in brain activity between the two groups',
-      'Growth mindset individuals showed less brain activity overall, indicating more efficient processing',
+      'Fixed mindset individuals showed greater brain activity when receiving corrective feedback, indicating deeper processing',
+      'There was no measurable difference in brain activity between the two groups when corrective feedback was presented',
+      'Growth mindset individuals showed markedly less brain activity overall, indicating far more efficient processing of errors',
     ],
     correctAnswer: 0,
     explanation:
@@ -660,10 +660,10 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question:
       'How does Dweck&rsquo;s growth mindset theory intersect with Vygotsky&rsquo;s &ldquo;Zone of Proximal Development&rdquo; (ZPD)?',
     options: [
-      'Both frameworks argue that ability is fixed and learning merely reveals it',
+      'Both frameworks hold that ability is fixed from birth and that learning merely reveals the level a person was always going to reach',
       'Both frameworks suggest that optimal learning occurs when challenges are just beyond current ability but achievable with appropriate support',
-      'Both frameworks claim that learners progress fastest when working entirely without support',
-      'Both frameworks reject the role of mentoring and feedback in skill development',
+      'Both frameworks claim that learners progress fastest when left to work entirely without guidance, feedback or support from others',
+      'Both frameworks reject any role for mentoring or structured feedback, treating skill development as a purely individual process',
     ],
     correctAnswer: 1,
     explanation:
@@ -678,10 +678,10 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question:
       'A contracting firm wants to build a growth mindset culture. According to Dweck&rsquo;s organisational research, which approach is most effective?',
     options: [
-      'Running a single motivational workshop and displaying growth mindset posters',
-      'Rewarding only the highest individual performers to drive everyone else harder',
+      'Running a single motivational workshop each year and displaying growth mindset posters around the site offices',
+      'Rewarding only the highest individual performers each month so that everyone else is driven to work harder',
       'Creating systems where learning from failure is valued, feedback is normalised, and development pathways are transparent',
-      'Discouraging staff from admitting mistakes so confidence stays high across the team',
+      'Discouraging staff from ever admitting mistakes so that confidence across the team is never undermined by failure',
     ],
     correctAnswer: 2,
     explanation:
@@ -696,9 +696,9 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question:
       'What criticism has been levelled at growth mindset research by scholars such as Broer, Bai, and Fonseca (2019)?',
     options: [
-      'Replication studies found mindset interventions actively harmed most students&rsquo; results',
-      'The research relied entirely on self-report surveys with no objective measures',
-      'The theory was shown to apply only to adults and never to school-age learners',
+      'Large-scale replication studies found that mindset interventions actively harmed the results of most students taking part',
+      'The research rested entirely on self-report questionnaires, with no objective measure of attainment ever being recorded',
+      'The theory was shown to apply only to adult learners and to have no measurable bearing at all on school-age pupils in class',
       'Large-scale replication studies found that mindset interventions had very small effect sizes, particularly for disadvantaged students',
     ],
     correctAnswer: 3,
@@ -715,9 +715,9 @@ export const gsCat1Questions: StandardMockQuestion[] = [
       'An experienced electrician with 20 years in domestic work wants to transition into commercial and industrial installations. Applying Bandura&rsquo;s self-efficacy theory, which combination of strategies would most effectively build their confidence?',
     options: [
       'Shadowing commercial electricians (vicarious experience), completing small commercial tasks under supervision (mastery experience), and managing anxiety about the transition (emotional regulation)',
-      'Reading commercial installation textbooks exclusively and attempting large projects unsupervised',
-      'Attending a single motivational seminar about believing in yourself',
-      'Watching online videos about commercial work and immediately bidding on large contracts',
+      'Reading commercial installation textbooks exclusively (theoretical study), attempting large projects unsupervised (untested exposure), and treating nerves as proof of unsuitability (misreading arousal)',
+      'Attending a single motivational seminar on self-belief (verbal persuasion only), avoiding all commercial sites until fully confident (indefinite delay), and comparing themselves with rivals (comparison)',
+      'Watching online videos about commercial work (passive observation), bidding immediately on large contracts (unsupported exposure), and suppressing any anxiety about the change (avoidance of emotion)',
     ],
     correctAnswer: 0,
     explanation:

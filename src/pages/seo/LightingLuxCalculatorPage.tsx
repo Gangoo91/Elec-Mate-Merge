@@ -445,7 +445,7 @@ export default function LightingLuxCalculatorPage() {
         {
           question: 'Can I use the lux calculator for emergency lighting?',
           answer:
-            'The lux calculator can be used to check emergency lighting illuminance levels. BS 5266-1 requires a minimum of 1 lux along escape routes (measured at floor level on the centre line) and 0.5 lux in open areas. For high-risk task areas, the emergency lighting must provide 10% of the normal illuminance or 15 lux, whichever is greater. You would set the target lux to the emergency requirement and use only the emergency luminaires in the calculation. Note also that BS 7671 Reg 740.415.1 (exhibitions, shows and stands) requires all final circuits for lighting to be protected by RCDs — always check which Special Installation chapter applies to the premises you are designing for.',
+            'The lux calculator can be used to check emergency lighting illuminance levels. BS 5266-1 requires a minimum of 1 lux along escape routes (measured at floor level across the full width) and 0.5 lux in open areas. For high-risk task areas, the emergency lighting must provide 10% of the normal illuminance or 15 lux, whichever is greater. You would set the target lux to the emergency requirement and use only the emergency luminaires in the calculation. Note also that BS 7671 Reg 740.415.1 (exhibitions, shows and stands) requires all final circuits for lighting to be protected by RCDs — always check which Special Installation chapter applies to the premises you are designing for.',
         },
         {
           question:

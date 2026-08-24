@@ -375,7 +375,7 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Illuminance requirements:</strong> Escape routes: minimum 1 lux at floor
-                level along the centreline; open areas: minimum 0.5 lux horizontal throughout.
+                level across the full width; open areas: minimum 0.5 lux horizontal throughout.
                 Anti-panic lighting (open areas) must achieve 0.5 lux within five seconds of normal
                 lighting failure.
               </span>

@@ -212,18 +212,30 @@ export const checkZsCompliance = (
   // most permissive of the three — a Type C limit is roughly half the Type B
   // limit at the same rating. Assuming the generous answer is how a
   // non-compliant circuit passes quietly, so ask rather than assume.
-  const looksLikeBreaker = /mcb|rcbo|circuit.?breaker|60898|61009/i.test(deviceType);
+  const looksLikeBreaker = /mcb|rcbo|circuit.?breaker|60898|61009|3871/i.test(deviceType);
+  /*
+   * ELE-1604 — a withdrawn BS 3871 breaker is typed 1/2/3/4, not B/C/D, and
+   * BS 7671 does not tabulate it at all. Asking for "the curve (B, C or D)" on
+   * such a row sends the inspector looking for something that is not moulded on
+   * the device, and citing Table 41.3 for it would be a false citation.
+   */
+  const isBs3871 = /3871/i.test(deviceType);
   if (looksLikeBreaker && !result.protectiveDeviceCurve) {
     warnings.push({
       severity: 'warning',
-      title: 'Device Curve Not Recorded — Zs Not Verified',
+      title: 'Device Type Not Recorded — Zs Not Verified',
       fields: ['protectiveDeviceCurve', 'zs'],
-      description:
-        `Zs of ${result.zs}Ω has not been checked: the breaker curve is missing. Type B, C ` +
-        `and D have different maximum Zs values — a Type C limit is around half the Type B ` +
-        `limit for the same rating.`,
-      regulation: 'BS 7671 Table 41.3',
-      suggestion: 'Record the device curve (B, C or D) so the measured Zs can be verified.',
+      description: isBs3871
+        ? `Zs of ${result.zs}Ω has not been checked: the BS 3871 breaker type is missing. ` +
+          `Types 1, 2, 3 and 4 trip at 4, 7, 10 and 50 times rated current, so their maximum ` +
+          `Zs values differ by more than a factor of ten at the same rating.`
+        : `Zs of ${result.zs}Ω has not been checked: the breaker curve is missing. Type B, C ` +
+          `and D have different maximum Zs values — a Type C limit is around half the Type B ` +
+          `limit for the same rating.`,
+      regulation: isBs3871 ? 'IET On-Site Guide Table B6' : 'BS 7671 Table 41.3',
+      suggestion: isBs3871
+        ? 'Record the BS 3871 type (1, 2, 3 or 4) so the measured Zs can be verified.'
+        : 'Record the device curve (B, C or D) so the measured Zs can be verified.',
     });
   }
 

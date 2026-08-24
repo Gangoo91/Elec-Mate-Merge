@@ -211,7 +211,7 @@ export const howToPriceEicrConfig: GeneratedGuideConfig = {
       category: 'Guide',
     },
     {
-      href: '/tools/electrical-quoting-app',
+      href: '/electrical-quoting-app',
       title: 'Electrical Quoting App',
       description: 'Voice-driven quoting on your phone with materials lookup.',
       icon: 'FileText',

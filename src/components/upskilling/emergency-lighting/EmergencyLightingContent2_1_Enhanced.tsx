@@ -94,7 +94,7 @@ export const EmergencyLightingContent2_1_Enhanced = () => {
               <div className="space-y-2">
                 <p className="font-bold text-lg text-elec-yellow">1 lux minimum</p>
                 <p className="text-sm text-gray-300">
-                  At floor level on centre line of escape route
+                  At floor level across the full width of the escape route
                 </p>
               </div>
             </div>

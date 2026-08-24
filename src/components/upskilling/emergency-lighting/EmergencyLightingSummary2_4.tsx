@@ -4,7 +4,7 @@ import { BookmarkIcon, CheckCircle, AlertTriangle, Route } from 'lucide-react';
 export const EmergencyLightingSummary2_4 = () => {
   const keyPoints = [
     'Escape route lighting ensures safe evacuation by illuminating designated exit paths during mains failure',
-    'BS 5266 requires minimum 1 lux along centre line of escape routes with 0.5 lux minimum anywhere',
+    'BS EN 1838:2024 requires minimum 1 lux across the full width of escape routes — the 2013 edition required it only on the centre line',
     'Luminaires must be positioned at exits, direction changes, intersections, and fire equipment locations',
     'All escape routes including corridors, staircases, and exit doors must have adequate illumination',
     'Monthly functional testing and annual full-duration testing are mandatory for compliance',
@@ -46,7 +46,7 @@ export const EmergencyLightingSummary2_4 = () => {
               Design Essentials
             </h4>
             <ul className="space-y-2 text-foreground text-sm">
-              <li>• 1 lux minimum on escape route centre line</li>
+              <li>• 1 lux minimum across the full width of escape routes</li>
               <li>• Luminaires at all direction changes</li>
               <li>• Enhanced lighting at fire equipment</li>
               <li>• Continuous illumination without dark zones</li>

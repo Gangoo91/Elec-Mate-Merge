@@ -519,7 +519,7 @@ const HNCModule7Section3_3 = () => {
               <strong>Example 3: Emergency Lighting Verification</strong>
             </p>
             <p><strong>Scenario:</strong> Verify that an emergency luminaire (I = 150 cd) at 2.8m provides the required 1 lux minimum at 4m horizontal distance on an escape route.</p>
-            <p>Emergency lighting requires minimum 1 lux on centre line of escape routes</p>
+            <p>Emergency lighting requires minimum 1 lux across the full width of escape routes</p>
             <p>Calculate illuminance at 4m horizontal:</p>
             <p>tan θ = 4/2.8 = 1.429, θ = 55.0°</p>
             <p>cos θ = 0.574, cos³θ = 0.189</p>

@@ -3396,4 +3396,904 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     category: 'Emergency & Rescue Procedures',
     difficulty: 'basic',
   },
+  {
+    id: 201,
+    question:
+      'Which two features must a place have before it counts as a confined space under the Confined Spaces Regulations 1997?',
+    options: [
+      'It must be underground and have a single narrow entry hatch',
+      'It must be substantially enclosed and carry a specified risk',
+      'It must be small enough to restrict movement while working',
+      'It must be unlit and require a ladder to climb into safely',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A confined space has two defining features: it is substantially though not always entirely enclosed, and one or more specified risks is present or reasonably foreseeable. Size is not part of the test, which is why the small and restricted answer is wrong: grain silos and ships holds are enormous yet are still confined spaces.',
+    section: 'Module 1',
+    difficulty: 'basic',
+    topic: 'Definition of a Confined Space',
+    category: 'Legislation & Risk Assessment',
+  },
+  {
+    id: 202,
+    question:
+      'Which of the following is a specified risk within the meaning of the Confined Spaces Regulations 1997?',
+    options: [
+      'Manual handling injury from lifting cable drums in the space',
+      'A fall from height while climbing down the access ladder there',
+      'Loss of consciousness arising from a rise in body temperature',
+      'Hand-arm vibration from using a breaker inside the chamber now',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'The specified risks are serious injury from fire or explosion, loss of consciousness from raised body temperature, loss of consciousness or asphyxiation from gas, fume, vapour or lack of oxygen, drowning from a rising liquid level, and asphyxiation or entrapment by a free flowing solid. Manual handling and falls are real hazards and must still be assessed, but they are not specified risks and cannot on their own make a space confined.',
+    section: 'Module 1',
+    difficulty: 'intermediate',
+    topic: 'Specified Risks',
+    category: 'Legislation & Risk Assessment',
+  },
+  {
+    id: 203,
+    question:
+      'What does regulation 4(1) require a dutyholder to do before anything else?',
+    options: [
+      'Avoid entry if the purpose can reasonably be achieved without it',
+      'Issue a permit to work before anyone breaks the plane of entry',
+      'Test the atmosphere from outside and record the readings taken',
+      'Appoint a top man to watch the opening for the whole of the job',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Regulation 4(1) says no person shall enter a confined space to carry out work unless it is not reasonably practicable to achieve that purpose without such entry, so avoidance comes first. Permits, testing and an attendant are all controls that only become relevant once avoidance has been ruled out; reaching for the permit first skips the primary legal duty.',
+    section: 'Module 1',
+    difficulty: 'intermediate',
+    topic: 'Avoiding Entry',
+    category: 'Legislation & Risk Assessment',
+  },
+  {
+    id: 204,
+    question:
+      'An electrician is sent to work in an unventilated basement switchroom with a gas main running through the void alongside it. Why might the Confined Spaces Regulations bite here?',
+    options: [
+      'Because the room is below ground level and has one way in or out',
+      'Because plant rooms are always listed as confined in the ACOP',
+      'Because the room has no natural light and needs task lighting',
+      'Because a foreseeable specified risk exists in an enclosed space',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'The regulations bite on the combination of substantial enclosure and a reasonably foreseeable specified risk, and a gas main next to an unventilated room makes fire, explosion or asphyxiation foreseeable. The listing answer is wrong because L101 lists some enclosed rooms and plant rooms only as possible examples, and then only where a specified risk is present or foreseeable.',
+    section: 'Module 1',
+    difficulty: 'advanced',
+    topic: 'Recognising Confined Spaces',
+    category: 'Legislation & Risk Assessment',
+  },
+  {
+    id: 205,
+    question:
+      'What does a permit to work actually achieve for a confined space entry?',
+    options: [
+      'It makes the job safe by itself once it has been signed off',
+      'It replaces the safe system of work for short duration tasks',
+      'It supports the safe system and records checks and authority',
+      'It transfers legal duty from the employer to the permit holder',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'L101 describes the permit as an extension of the safe system of work, not a replacement for it: it records findings, authorisations, gas test results and entry time limits, and gives information that may be needed in an emergency. Believing the permit makes the job safe by itself is the classic error, because a signature changes nothing about the atmosphere, the isolation or the rescue plan.',
+    section: 'Module 3',
+    difficulty: 'intermediate',
+    topic: 'Permit to Work',
+    category: 'Safe Entry & Working Procedures',
+  },
+  {
+    id: 206,
+    question:
+      'When must suitable and sufficient arrangements for rescue be in place?',
+    options: [
+      'Before any person at work enters or works in the confined space',
+      'As soon as the first atmospheric test result has been recorded',
+      'Once the permit expires and re-entry becomes necessary again',
+      'Immediately after an incident is reported to the site manager',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Regulation 5 forbids entry or work in a confined space unless suitable and sufficient rescue arrangements have already been prepared, and they must cover any emergency, not only one arising from a specified risk. Arranging rescue after an incident is reported is far too late, because the casualty is already unconscious and the clock has started.',
+    section: 'Module 5',
+    difficulty: 'advanced',
+    topic: 'Emergency Arrangements',
+    category: 'Emergency & Rescue Procedures',
+  },
+  {
+    id: 207,
+    question:
+      'A supervisor says that if anything goes wrong the team will simply dial 999. How should that be judged?',
+    options: [
+      'Acceptable where the fire service is within a short drive away',
+      'Acceptable if the control room holds the site emergency plan',
+      'Sufficient where the permit records the local station number',
+      'Not sufficient alone; arrangements must exist before work starts',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'L101 states plainly that reliance on the emergency services alone will not be sufficient to comply with the Regulations, and that employers must put adequate emergency arrangements in place before work commences. Proximity of a fire station does not help, because a casualty who has been overcome by a lack of oxygen cannot wait for a turnout, mobilisation and a dynamic risk assessment on arrival.',
+    section: 'Module 5',
+    difficulty: 'intermediate',
+    topic: 'Emergency Arrangements',
+    category: 'Emergency & Rescue Procedures',
+  },
+  {
+    id: 208,
+    question:
+      'Why does L101 give a dedicated section to safeguarding those given a rescue role?',
+    options: [
+      'Because rescuers need a separate permit issued by the client',
+      'Because multiple deaths occur when rescuers are also overcome',
+      'Because rescuers must hold a first aid at work certificate',
+      'Because rescue equipment must be inspected every single shift',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Multiple fatalities have repeatedly occurred where rescuers were overcome by the very conditions that felled the person they went in for, so rescuers must know the risks inside and be protected against the cause of the emergency. A first aid certificate is useful but proves nothing about protection from an irrespirable atmosphere, which is what actually kills would-be rescuers.',
+    section: 'Module 5',
+    difficulty: 'advanced',
+    topic: 'Rescue',
+    category: 'Emergency & Rescue Procedures',
+  },
+  {
+    id: 209,
+    question:
+      'What is the purpose of testing the atmosphere of a confined space before entry?',
+    options: [
+      'To decide whether a permit to work is needed for the entry',
+      'To record the temperature and humidity inside the enclosure',
+      'To confirm the space can be signed off as no longer confined',
+      'To check oxygen concentration and for hazardous gas or vapour',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'L101 requires the atmosphere to be tested before entry to check the oxygen concentration and for the presence of hazardous gas, fume or vapour, wherever knowledge of the space suggests contamination or where any doubt exists. A clear test does not by itself declassify the space, because the regulations continue to apply in full even where the specified risk is being controlled.',
+    section: 'Module 4',
+    difficulty: 'intermediate',
+    topic: 'Atmosphere Testing',
+    category: 'Hazards & Atmospheric Monitoring',
+  },
+  {
+    id: 210,
+    question:
+      'In which situation does L101 expect conditions to be monitored continuously rather than tested once?',
+    options: [
+      'Where the entry is expected to last for a full working shift',
+      'Where forced ventilation is in use or the work alters the air',
+      'Where more than two workers are inside the space at one time',
+      'Where the space has been tested clear on the previous visit',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Conditions should be monitored continuously where forced ventilation is being used and where the work activity could itself change the atmosphere, since both introduce the possibility of adverse change during the job. Duration and headcount do not decide the question; a short two-person entry with hot work in progress needs continuous monitoring far more than a long, static one.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'Atmosphere Monitoring',
+    category: 'Hazards & Atmospheric Monitoring',
+  },
+  {
+    id: 211,
+    question:
+      'A gas detector shows the oxygen level in a chamber is below normal. A worker suggests bleeding in oxygen from a cylinder to sweeten the air. What is the correct position?',
+    options: [
+      'Add oxygen slowly if the meter reads below the normal level',
+      'Add oxygen only when a hot work permit has been authorised',
+      'Never add oxygen; enrichment raises fire and combustion risk',
+      'Add oxygen through the exhaust trunking to mix it evenly in',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'L101 says never introduce additional oxygen into a confined space to sweeten the air, because enrichment can make substances such as grease liable to spontaneous combustion and greatly increases the combustibility of other materials. Adding it slowly is no safer, since the hazard comes from the enriched atmosphere itself and not from the rate at which it is created.',
+    section: 'Module 4',
+    difficulty: 'intermediate',
+    topic: 'Oxygen Enrichment',
+    category: 'Hazards & Atmospheric Monitoring',
+  },
+  {
+    id: 212,
+    question:
+      'L101 warns of substantial risk where the oxygen concentration varies significantly from normal. What figure does it give as the normal concentration in air?',
+    options: [
+      'About 20.9 per cent by volume',
+      'About 16.0 per cent by volume',
+      'About 23.5 per cent by volume',
+      'About 18.0 per cent by volume',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'L101 gives the normal oxygen concentration in air as 20.9 per cent and warns that variation in either direction is dangerous: enrichment increases flammability, while even a relatively small reduction can impair mental ability. The effects of a fall in oxygen are very rapid and give no warning to the senses, which is why the atmosphere is measured rather than judged by feel.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'Oxygen Deficiency',
+    category: 'Hazards & Atmospheric Monitoring',
+  },
+  {
+    id: 213,
+    question:
+      'Who should define the exact testing, retesting and monitoring requirements for an entry?',
+    options: [
+      'A competent person, defined within the safe system of work',
+      'The permit issuer at the point the paperwork is countersigned',
+      'The gas detector manufacturer through the instrument manual',
+      'The site principal contractor as part of the site induction',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'L101 requires the testing, retesting and monitoring regime to be defined by a competent person within the safe system of work, informed by the risk assessment for that particular space. The instrument manual is not an answer, because it tells you how to operate the detector but nothing about the previous contents, the surrounding strata or the work being carried out.',
+    section: 'Module 4',
+    difficulty: 'intermediate',
+    topic: 'Atmosphere Testing',
+    category: 'Hazards & Atmospheric Monitoring',
+  },
+  {
+    id: 214,
+    question:
+      'Why is a person often stationed outside the entrance to a confined space while work goes on inside?',
+    options: [
+      'To keep the permit dry and pass tools down when they are asked',
+      'To stop unauthorised visitors from parking near the opening',
+      'To record the start and finish times for the timesheet later',
+      'To watch, keep in contact, raise the alarm and start rescue',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'The person outside keeps watch, maintains communication with those inside, raises the alarm quickly and takes charge of the rescue procedure, which is why the role exists at all. Passing tools is incidental; if that were the only purpose then the post could be left unmanned whenever nothing needed handing down.',
+    section: 'Module 5',
+    difficulty: 'basic',
+    topic: 'Attendant Role',
+    category: 'Emergency & Rescue Procedures',
+  },
+  {
+    id: 215,
+    question:
+      'A colleague leans into a chamber and says a quick look does not count as entry because it will only take a minute. How should this be answered?',
+    options: [
+      'Correct, provided the feet stay outside the plane of the opening',
+      'Wrong, effects can be rapid even with only the head inside',
+      'Correct, provided the atmosphere was tested earlier that day',
+      'Wrong, but only if the space has previously held a flammable gas',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'L101 notes that the effects of oxygen deficiency are very rapid, give no warning to the senses and can occur even where only the head of a person is inside the space. The feet outside argument is dangerous nonsense: it is the head that does the breathing, and a collapse in that posture drops the casualty into the space rather than away from it.',
+    section: 'Module 2',
+    difficulty: 'advanced',
+    topic: 'Entry Definition',
+    category: 'Legislation & Risk Assessment',
+  },
+  {
+    id: 216,
+    question:
+      'What does L101 expect for electrical and mechanical plant supplied from outside a confined space?',
+    options: [
+      'Power may stay on where it is quicker than proving isolation',
+      'Power may stay on if the equipment is guarded and labelled up',
+      'Power should be disconnected, separated and isolation proved',
+      'Power should be reduced to a lower voltage using a transformer',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Unless the risk assessment specifically allows power to remain on for the task or for a vital service such as lighting or pumping, the supply should be disconnected, separated from the equipment, and a check made that the isolation has been effective. Reducing the voltage is not isolation, because the plant can still start and the moving parts can still injure whoever is inside.',
+    section: 'Module 3',
+    difficulty: 'intermediate',
+    topic: 'Isolation',
+    category: 'Safe Entry & Working Procedures',
+  },
+  {
+    id: 217,
+    question:
+      'How does L101 link electrical isolation to the permit to work?',
+    options: [
+      'The permit is stored inside the space with the isolated panel',
+      'The key is formally secured under the permit until entry ends',
+      'The permit allows the lock to be removed for testing purposes',
+      'The key is held by whoever last signed the induction register',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Isolation can include locking off the switch and formally securing the key in accordance with the permit to work until it is no longer necessary to control access, with lock and tag systems giving each operator self-assurance. Letting the lock come off for testing defeats the purpose, because the person inside has no way of knowing the supply has been restored.',
+    section: 'Module 3',
+    difficulty: 'advanced',
+    topic: 'Isolation',
+    category: 'Safe Entry & Working Procedures',
+  },
+  {
+    id: 218,
+    question:
+      'After locking off the supply to plant inside a confined space, what further check does L101 call for?',
+    options: [
+      'Check the plant restarts correctly before anybody goes inside',
+      'Check the earthing arrangement matches the schedule of tests',
+      'Check no stored energy remains that could restart the plant',
+      'Check the isolator rating exceeds the load current it carries',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'L101 requires a check that no stored energy of any kind is left in the system that could activate the equipment inadvertently, which covers capacitors, compressed air, springs and suspended loads. Proving the plant restarts is the opposite of what is wanted, since it re-energises the very equipment that has just been secured.',
+    section: 'Module 3',
+    difficulty: 'intermediate',
+    topic: 'Stored Energy',
+    category: 'Safe Entry & Working Procedures',
+  },
+  {
+    id: 219,
+    question:
+      'Why does L101 warn that a specially designed low voltage handlamp is not automatically safe in a confined space?',
+    options: [
+      'Because it may still be an ignition source in a flammable air',
+      'Because low voltage lamps give poor illumination in dark spaces',
+      'Because low voltage supplies need a transformer left outside',
+      'Because the lamp flex could be damaged by sharp internal edges',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Low voltage lighting protects against electric shock but can still provide an ignition source, so where flammable gas could seep in the equipment must be certified for use in explosive atmospheres. Assuming that low voltage means intrinsically safe conflates two entirely different protection problems, and it is the ignition risk that causes the explosion.',
+    section: 'Module 3',
+    difficulty: 'advanced',
+    topic: 'Equipment Selection',
+    category: 'Safe Entry & Working Procedures',
+  },
+  {
+    id: 220,
+    question:
+      'In what circumstance does L101 accept that a space may cease to be a confined space?',
+    options: [
+      'When a permit to work has been issued and signed by two people',
+      'When mechanical ventilation equipment has been delivered to it',
+      'When the workers inside have completed accredited training',
+      'When the specified risk is removed and the atmosphere is safe',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'L101 gives the example of fumes from chemical cleaning: the space may cease to be confined once the fumes have been removed by ventilation and the atmosphere has been tested as safe, so the specified risk has genuinely gone. Delivering a fan achieves nothing on its own, and the mitigation must be monitored to confirm it keeps working throughout the job.',
+    section: 'Module 1',
+    difficulty: 'intermediate',
+    topic: 'Definition of a Confined Space',
+    category: 'Legislation & Risk Assessment',
+  },
+  {
+    id: 221,
+    question:
+      'A tank has been ventilated and tested clear, and a gas monitor is running. What is the status of the Confined Spaces Regulations for that entry?',
+    options: [
+      'They no longer apply once the test result is recorded as clear',
+      'They apply only to the person who signs the permit as issuer',
+      'They apply in full; control of the risk does not disapply them',
+      'They are replaced by the general duties in the 1974 Act then',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'L101 is explicit that once a space is identified as a confined space the Regulations apply in full, even where the specified risk is controlled. Treating a clear reading as a discharge of the duty is how crews end up entering with no rescue plan, because control measures can fail and the status of a space can change with circumstances.',
+    section: 'Module 1',
+    difficulty: 'advanced',
+    topic: 'Application of the Regulations',
+    category: 'Legislation & Risk Assessment',
+  },
+  {
+    id: 222,
+    question:
+      'Who should carry out the risk assessment for work in a confined space?',
+    options: [
+      'By anyone holding a valid confined space entry permit card',
+      'By the person who will be entering, since they know the job',
+      'By the client representative who controls access to the site',
+      'By someone competent in the processes, plant and equipment',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'The assessment must be carried out by a competent person with the skills, knowledge and experience of, and familiarity with, the relevant processes, plant and equipment so that the risks are understood. Holding an entry card is not the same thing, because it evidences training to work under a system of work rather than the judgement needed to design one.',
+    section: 'Module 2',
+    difficulty: 'advanced',
+    topic: 'Competence',
+    category: 'Legislation & Risk Assessment',
+  },
+  {
+    id: 223,
+    question:
+      'On whom do the duties in the Confined Spaces Regulations 1997 fall?',
+    options: [
+      'On the individual entrant once they accept the permit issued',
+      'On employers and self-employed people acting as dutyholders',
+      'On the manufacturer of the vessel forming the confined space',
+      'On the appointed rescue team leader for the duration of work',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Regulation 3 places duties on every employer for work carried out by employees, and so far as reasonably practicable for others within their control, and on every self-employed person for their own work and that of others. The duty cannot be handed to the entrant by getting them to sign a permit, since accepting a permit is not the same as holding the legal duty.',
+    section: 'Module 1',
+    difficulty: 'intermediate',
+    topic: 'Dutyholders',
+    category: 'Legislation & Risk Assessment',
+  },
+  {
+    id: 224,
+    question:
+      'Which design measure most directly reduces the need to enter a confined space at all?',
+    options: [
+      'Fitting sample points and nozzles for testing from outside',
+      'Fitting a larger access hatch at the top of the structure',
+      'Fitting brighter fixed lighting inside the whole enclosure',
+      'Fitting a fixed ladder with a fall arrest rail down one side',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'L101 asks designers to reduce the need for entry by building in sample points, rodding eyes and nozzles so that testing and routine work can be done from outside the space. Better lighting and ladders make entry more comfortable but they still require someone to go in, so they sit below avoidance in the hierarchy.',
+    section: 'Module 2',
+    difficulty: 'advanced',
+    topic: 'Avoiding Entry',
+    category: 'Legislation & Risk Assessment',
+  },
+  {
+    id: 225,
+    question:
+      'Which of these is an example of a modified working practice that removes the need for entry?',
+    options: [
+      'Sampling the contents from outside with long tools and probes',
+      'Sending in the smallest member of the team to save on time',
+      'Entering in pairs so that one can help the other get back out',
+      'Wearing breathing apparatus for the whole duration of the job',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'L101 gives testing the atmosphere or sampling contents from outside using long tools and probes as an example of a modified working practice that prevents the need for entry. Entering in pairs is not avoidance, and it doubles the exposure: if the atmosphere is irrespirable both people go down and there is nobody left outside to raise the alarm.',
+    section: 'Module 2',
+    difficulty: 'advanced',
+    topic: 'Avoiding Entry',
+    category: 'Safe Entry & Working Procedures',
+  },
+  {
+    id: 226,
+    question:
+      'What must the communication system for a confined space entry be capable of?',
+    options: [
+      'It must be a radio system on a dedicated site channel only',
+      'It must allow contact inside, contact outside and summon help',
+      'It must be recorded so the conversation can be reviewed after',
+      'It must be operated by the supervisor from the site office',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'An adequate system must enable communication between those inside the space, between inside and outside, and to summon help in an emergency, and whatever is used must be reliable and tested frequently. Specifying radio is too narrow, because L101 accepts other reliable means such as a rope tug or a lone worker alarm where they suit the space.',
+    section: 'Module 3',
+    difficulty: 'intermediate',
+    topic: 'Communications',
+    category: 'Safe Entry & Working Procedures',
+  },
+  {
+    id: 227,
+    question:
+      'Why does L101 expect lifelines to be provided alongside lifting equipment?',
+    options: [
+      'Because lifelines wear quickly against the edge of a manhole',
+      'Because a lifting appliance is required by the permit system',
+      'Because the harness must be tested before every single entry',
+      'Because one person cannot raise an unconscious casualty alone',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'L101 notes that even a strong person is unlikely to be able to lift or handle an unconscious person on their own using only a rope, so a lifeline needs a lifting appliance behind it. Believing a rope alone is enough is the reason rescuers end up climbing in, which is exactly how the second casualty is created.',
+    section: 'Module 5',
+    difficulty: 'advanced',
+    topic: 'Rescue Equipment',
+    category: 'Emergency & Rescue Procedures',
+  },
+  {
+    id: 228,
+    question:
+      'A casualty has been overcome by toxic gas in a chamber. What does L101 say about oral resuscitation methods here?',
+    options: [
+      'It is preferred because it needs no equipment to be carried',
+      'It is required whenever a casualty is recovered unconscious',
+      'It is unsuitable because it can expose the rescuer to risk',
+      'It is banned in all confined spaces by the 1997 Regulations',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Where resuscitation is needed as a result of exposure to toxic gases, oral methods are not appropriate because they could put the rescuer at risk, so equipment for artificial respiration should be available instead. It is not banned outright either: for other causes, oral methods with tubes or mouthpieces to avoid direct contact remain acceptable.',
+    section: 'Module 5',
+    difficulty: 'advanced',
+    topic: 'Resuscitation',
+    category: 'Emergency & Rescue Procedures',
+  },
+  {
+    id: 229,
+    question:
+      'Which of these are recognised ways for a worker inside a space to raise the alarm?',
+    options: [
+      'A shout from the entrant which the top man should hear well',
+      'A missed call to the supervisor from a personal mobile phone',
+      'A note left on the permit board at the end of the site day',
+      'A tug on a rope, a radio call or a lone worker alarm device',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'L101 accepts a tug on a rope, a radio or a lone worker alarm among the means of raising the alarm, provided the system chosen is reliable and tested frequently. Shouting is not a system, since noise, distance and bends in a duct can defeat it, and a person losing consciousness cannot shout at all.',
+    section: 'Module 5',
+    difficulty: 'intermediate',
+    topic: 'Raising the Alarm',
+    category: 'Emergency & Rescue Procedures',
+  },
+  {
+    id: 230,
+    question:
+      'Why does L101 urge care when selecting fire extinguishers for use in a confined space?',
+    options: [
+      'Carbon dioxide can displace oxygen that the fire is depleting',
+      'Carbon dioxide horns can build a dangerous static charge up',
+      'Water extinguishers are prohibited by the 1997 Regulations',
+      'Powder extinguishers cannot be used on electrical equipment',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'L101 warns that fire precautions must not create additional risks, giving the example of carbon dioxide extinguishers displacing oxygen that the fire is already depleting. Powder is not the issue here, and in any case advice on fire precautions for the space should be sought from the local fire service.',
+    section: 'Module 6',
+    difficulty: 'advanced',
+    topic: 'Fire Safety',
+    category: 'Emergency & Rescue Procedures',
+  },
+  {
+    id: 231,
+    question:
+      'What rule does L101 give for inert gas flooding of a confined space?',
+    options: [
+      'It may be used to purge flammable gas while workers are inside',
+      'It may be used once the permit has been extended in writing',
+      'It must never take place while people are within the space',
+      'It must be used before any hot work begins inside the space',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Inert gas flooding of a confined space must not take place when people are within the space, because the inert gas removes the oxygen those people are breathing. Extending the permit changes nothing, since a permit cannot authorise a measure that is fatal by design.',
+    section: 'Module 6',
+    difficulty: 'advanced',
+    topic: 'Fire Safety',
+    category: 'Emergency & Rescue Procedures',
+  },
+  {
+    id: 232,
+    question:
+      'Which HSE publication is the approved code of practice and guidance for the Confined Spaces Regulations 1997?',
+    options: [
+      'L113 Safe use of lifting equipment',
+      'L101 Safe work in confined spaces',
+      'HSG150 Health and safety in construction',
+      'INDG258 Confined spaces brief guide',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'L101 Safe work in confined spaces is the approved code of practice, regulations and guidance for the Confined Spaces Regulations 1997. INDG258 is a useful free summary but it is a brief guide rather than an approved code, so it does not carry the special legal status that an ACOP has.',
+    section: 'Module 1',
+    difficulty: 'basic',
+    topic: 'Guidance Documents',
+    category: 'Legislation & Risk Assessment',
+  },
+  {
+    id: 233,
+    question:
+      'Where should the fresh air supply for mechanical ventilation of a confined space be taken from?',
+    options: [
+      'Draw fresh air from the nearest doorway to shorten the duct',
+      'Draw fresh air from a point free of used air and pollutants',
+      'Draw fresh air from above the generator to warm the air up',
+      'Draw fresh air from the exhaust side to balance the flow out',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'L101 requires fresh air to be drawn from a point where it is not contaminated by used air or other pollutants, otherwise the ventilation simply recirculates the hazard. Siting the intake near a generator is the classic fatal error, because engine exhaust carries carbon monoxide straight into the space.',
+    section: 'Module 4',
+    difficulty: 'intermediate',
+    topic: 'Ventilation',
+    category: 'Hazards & Atmospheric Monitoring',
+  },
+  {
+    id: 234,
+    question:
+      'When does L101 suggest natural ventilation may be sufficient for a vessel?',
+    options: [
+      'When the outside wind speed is recorded before entry starts',
+      'When the vessel has been empty for longer than a full week',
+      'When the entrants are wearing breathing apparatus already',
+      'When the vessel has adequate top and bottom openings to it',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Natural ventilation may suffice where there are sufficient top and bottom openings in a vessel to let air circulate through it. Relying on breathing apparatus instead is not ventilation at all; it protects the wearer but leaves the atmosphere in the space untouched for anyone who enters without it.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'Ventilation',
+    category: 'Hazards & Atmospheric Monitoring',
+  },
+  {
+    id: 235,
+    question:
+      'A small tank containing a heavy vapour has a single manhole at the top. Which ventilation arrangement does L101 offer as an example?',
+    options: [
+      'Exhaust from the bottom and let make-up air in at the manhole',
+      'Blow air in at the bottom and seal the manhole to build up flow',
+      'Exhaust from the manhole and seal the bottom of the tank off',
+      'Blow air across the manhole and rely on the draught it makes',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Because the vapour is heavier than air it collects low down, so exhausting through a duct from the bottom of the tank while make-up air enters at the manhole clears it effectively. Extracting from the top manhole leaves the dense vapour sitting in the base of the tank, which is exactly where a person entering will end up.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'Ventilation',
+    category: 'Hazards & Atmospheric Monitoring',
+  },
+  {
+    id: 236,
+    question:
+      'L101 allows purging with air or with an inert gas. When may only an inert gas be used?',
+    options: [
+      'Where contaminants are toxic, only inert gas may be used',
+      'Where the fan has failed, inert gas may replace ventilation',
+      'Where contaminants are flammable, inert gas only may be used',
+      'Where oxygen is deficient, inert gas will restore the air',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Purging can be done with air or an inert gas where toxic contaminants are present, but only with an inert gas where the contaminants are flammable, since introducing air would create an explosive mixture. Inert gas can never restore a breathable atmosphere, because by definition it displaces the oxygen rather than supplying it.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'Gas Purging',
+    category: 'Hazards & Atmospheric Monitoring',
+  },
+  {
+    id: 237,
+    question:
+      'Which information does L101 expect a confined space permit to carry?',
+    options: [
+      'The wage rates of everyone who will be working in the space',
+      'The insurance policy number covering the works being carried',
+      'Time limits on entry and the results of the gas testing done',
+      'The serial number of every hand tool taken into the vessel',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'The permit records time limits on entry, gas testing results and other information that may be required during an emergency, and afterwards it provides a historical record of the original entry conditions. That emergency value is the point: a rescue team arriving at the opening needs to know what was measured and when, not who is insured.',
+    section: 'Module 3',
+    difficulty: 'advanced',
+    topic: 'Permit to Work',
+    category: 'Safe Entry & Working Procedures',
+  },
+  {
+    id: 238,
+    question:
+      'How does a permit to work relate to the safe system of work for a confined space?',
+    options: [
+      'A permit is a substitute for a written safe system of work',
+      'A permit is an extension of the safe system, not a substitute',
+      'A permit is a legal defence if an incident happens on site',
+      'A permit removes the need for breathing apparatus to be worn',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The permit to work procedure is an extension of the safe system of work rather than a replacement for it, and using a permit does not by itself make the job safe. Treating the permit as the whole system is common and dangerous, because the precautions it references still have to be designed, provided and checked.',
+    section: 'Module 3',
+    difficulty: 'intermediate',
+    topic: 'Permit to Work',
+    category: 'Safe Entry & Working Procedures',
+  },
+  {
+    id: 239,
+    question:
+      'What is the role of the supervisor appointed for a confined space entry?',
+    options: [
+      'To carry out the atmospheric testing from within the space',
+      'To sign the risk assessment on behalf of the whole company',
+      'To provide the breathing apparatus from their own equipment',
+      'To operate the permit system and check precautions are taken',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'The supervisor makes sure the permit to work system operates properly, that the necessary precautions are taken, and that anyone in the vicinity is told about the work, and may need to remain present while it is under way. Testing from inside the space is the opposite of the intent, since sampling should be done from outside wherever it can be.',
+    section: 'Module 3',
+    difficulty: 'advanced',
+    topic: 'Supervision',
+    category: 'Safe Entry & Working Procedures',
+  },
+  {
+    id: 240,
+    question:
+      'Which factors should be considered when judging whether an individual is suitable for confined space work?',
+    options: [
+      'Claustrophobia, respiratory conditions and physical ability',
+      'Length of service with the company and current pay grade',
+      'Willingness to work overtime and availability at weekends',
+      'Possession of a driving licence for the site access roads',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'L101 asks dutyholders to consider pre-existing medical conditions such as claustrophobia and asthma, physical strength and abilities including the capacity to wear heavy breathing apparatus, and any medical advice on suitability. Length of service proves familiarity with the site but says nothing about whether the person can physically self-rescue while wearing a set.',
+    section: 'Module 2',
+    difficulty: 'advanced',
+    topic: 'Suitability of Personnel',
+    category: 'Legislation & Risk Assessment',
+  },
+  {
+    id: 241,
+    question:
+      'L101 gives a minimum opening size that experience has shown allows access with full rescue facilities including self-contained breathing apparatus. What is it?',
+    options: [
+      '575 mm diameter',
+      '410 mm diameter',
+      '500 mm diameter',
+      '750 mm diameter',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'L101 gives 575 mm diameter as the minimum opening for access with full rescue facilities including self-contained breathing apparatus, and notes some spaces will need larger openings still. The other figures are real but describe existing narrower plant, with 500 mm common on rail tank wagons and tank containers and 410 mm recognised on road tankers, where airline breathing apparatus offers a more compact alternative.',
+    section: 'Module 6',
+    difficulty: 'advanced',
+    topic: 'Access and Egress',
+    category: 'Safe Entry & Working Procedures',
+  },
+  {
+    id: 242,
+    question:
+      'What does L101 say about the position of access openings on vessels and tanks?',
+    options: [
+      'Top openings are preferred as they are easier to reach fast',
+      'Top openings are required where a tripod is to be set up',
+      'Bottom or low manholes are preferable for access and rescue',
+      'Bottom manholes are prohibited where liquid has been stored',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Top openings should be avoided because of the difficulty of access and rescue through them, and bottom or low manholes are preferable, possibly with access platforms. Easy reach for the entrant is the wrong test: what matters is whether an unconscious casualty can be brought out, and lifting a person vertically through a top hatch is far harder.',
+    section: 'Module 6',
+    difficulty: 'advanced',
+    topic: 'Access and Egress',
+    category: 'Safe Entry & Working Procedures',
+  },
+  {
+    id: 243,
+    question:
+      'When might one or more people be dedicated to a rescue role and required to keep entrants in constant direct visual sight?',
+    options: [
+      'Whenever any entry to a confined space is being carried out',
+      'Where risk or previous incidents justify that extra control',
+      'Where the entry lasts longer than one complete working shift',
+      'Where the client asks for it as a condition of the contract',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'L101 treats constant direct visual sight as an exceptional measure, justified on grounds of risk or by knowledge of previous incidents involving similar work. It is not a blanket requirement for every entry, because for many spaces a reliable communication system and an attendant outside will satisfy the duty.',
+    section: 'Module 5',
+    difficulty: 'intermediate',
+    topic: 'Rescue',
+    category: 'Emergency & Rescue Procedures',
+  },
+  {
+    id: 244,
+    question:
+      'What position does L101 take on notifying the local emergency services before confined space work?',
+    options: [
+      'Advance notice is always required before any confined entry',
+      'Advance notice removes the need for on-site rescue equipment',
+      'Advance notice must be given in writing to the ambulance HQ',
+      'Advance notice may help for prolonged high risk operations',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'L101 says there may be advantage in prior notification, for example where there are prolonged operations and the risks justify it, and that the services should then be consulted about what information helps them prepare. Notification never displaces on-site provision, since reliance on the emergency services alone does not comply with the Regulations.',
+    section: 'Module 5',
+    difficulty: 'advanced',
+    topic: 'Emergency Services',
+    category: 'Emergency & Rescue Procedures',
+  },
+  {
+    id: 245,
+    question:
+      'When the emergency services are called to a confined space incident, what should they be given before they attempt entry?',
+    options: [
+      'A copy of the company health and safety policy statement now',
+      'The names and next of kin details of everyone on the project',
+      'The maintenance records for the plant installed in the space',
+      'All available information on conditions and risks of entering',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'The emergency services should be given all available information about the conditions and the risks of entering or leaving the space so that they can make a dynamic risk assessment at the scene. A policy statement is of no operational use to a crew about to commit to an atmosphere that has already put one person on the floor.',
+    section: 'Module 5',
+    difficulty: 'advanced',
+    topic: 'Emergency Services',
+    category: 'Emergency & Rescue Procedures',
+  },
+  {
+    id: 246,
+    question:
+      'An electrician must climb into a long unventilated service riser to pull cables. What decides whether it is a confined space?',
+    options: [
+      'The height of the riser and how many floors it passes through',
+      'Whether the riser has a fixed ladder fitted for safe climbing',
+      'Whether a specified risk is present or reasonably foreseeable',
+      'The number of cables already installed within the riser shaft',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'The regulations turn on substantial enclosure plus a present or reasonably foreseeable specified risk, and L101 lists ducts, shafts and inadequately ventilated rooms among the places that may qualify. Height and cable count describe the shape and content of the space rather than the risk, and a short riser with a foreseeable build-up of fume is caught while a tall well ventilated one may not be.',
+    section: 'Module 1',
+    difficulty: 'advanced',
+    topic: 'Recognising Confined Spaces',
+    category: 'Legislation & Risk Assessment',
+  },
+  {
+    id: 247,
+    question:
+      'A store room is fully enclosed and has one door, but the risk assessment finds no specified risk. What is its status?',
+    options: [
+      'It is not a confined space under the 1997 Regulations then',
+      'It is a confined space because it is substantially enclosed',
+      'It is a confined space if more than one worker is inside it',
+      'It is not a workplace at all and no duties apply to the work',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'L101 confirms that not all enclosed workplaces are subject to the Regulations, and an enclosed workplace without a specified risk is not a confined space even where other risks are present. That does not leave the work unregulated, because the general duties under the Health and Safety at Work Act and the Management Regulations still apply to those other risks.',
+    section: 'Module 1',
+    difficulty: 'advanced',
+    topic: 'Definition of a Confined Space',
+    category: 'Legislation & Risk Assessment',
+  },
+  {
+    id: 248,
+    question:
+      'A team will leave a space at lunchtime and return afterwards. What governs whether the atmosphere is tested again before re-entry?',
+    options: [
+      'A single clear test at the start covers the whole of the job',
+      'The risk assessment decides whether each re-entry needs a test',
+      'Retesting is needed only after a break of more than one hour',
+      'Retesting is the duty of the emergency services when called',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The findings of the risk assessment should indicate whether testing is carried out on each occasion the space is re-entered, even where the atmosphere was initially found safe to breathe. A single opening test is not enough on its own, because gas can leach in from surrounding strata or adjacent plant while the space stands empty.',
+    section: 'Module 4',
+    difficulty: 'intermediate',
+    topic: 'Retesting',
+    category: 'Hazards & Atmospheric Monitoring',
+  },
+  {
+    id: 249,
+    question:
+      'What status does L101 give to self-rescue emergency breathing apparatus?',
+    options: [
+      'It is a full replacement for respiratory protective equipment',
+      'It suits anticipated emergencies but does not replace RPE',
+      'It is worn by rescuers entering to recover a casualty inside',
+      'It is required by regulation 5 for every confined space entry',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Self-rescue sets may be appropriate where there will be time to react to an anticipated emergency, such as smoke logging in a tunnel or a monitor alarm, but L101 states they are not a substitute for respiratory protective equipment. Treating them as working RPE is dangerous, since they are provided to get a person out rather than to let them stay and work.',
+    section: 'Module 5',
+    difficulty: 'advanced',
+    topic: 'Breathing Apparatus',
+    category: 'Emergency & Rescue Procedures',
+  },
+  {
+    id: 250,
+    question:
+      'What does L101 require in respect of training for emergency rescue?',
+    options: [
+      'Those likely to be involved in rescue must be trained for it',
+      'Rescue training is only needed for the appointed supervisor',
+      'Rescue training may be replaced by a written procedure card',
+      'Rescue training is provided by the fire service on request',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Those likely to be involved in any emergency rescue should be trained for that purpose, and where resuscitation is a likely consequence the training must extend to the resuscitation procedures and equipment. A written card is not a substitute, because an untrained rescuer reading instructions at the opening is the person most likely to become the next casualty.',
+    section: 'Module 7',
+    difficulty: 'advanced',
+    topic: 'Training',
+    category: 'Emergency & Rescue Procedures',
+  },
 ];

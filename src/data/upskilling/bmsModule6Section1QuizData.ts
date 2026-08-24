@@ -57,10 +57,10 @@ export const bmsModule6Section1QuizData: QuizQuestion[] = [
     id: 5,
     question: 'What is escalation logic?',
     options: [
-      'A process that raises an alarm to a higher priority over time',
+      'A process that raises an alarm to a higher priority band the longer it stays active',
       'A process that pushes unacknowledged alarms to higher responsibility levels until resolved',
-      'A process that automatically clears alarms once logged',
-      'A process that groups related alarms into a single notification',
+      'A process that clears alarms automatically once they have been logged by the system',
+      'A process that groups related alarms together into a single operator notification',
     ],
     correctAnswer: 1,
     explanation:
@@ -123,10 +123,10 @@ export const bmsModule6Section1QuizData: QuizQuestion[] = [
     question:
       'In the real-world example, what was the result of misclassifying a boiler fault alarm?',
     options: [
-      'The fault auto-escalated and was resolved before any impact',
-      'Operators raised it immediately, preventing any loss of service',
+      'The fault escalated automatically and was cleared before any service was affected',
+      'Operators raised it immediately, so heating was maintained across all the wards',
       'Operators ignored it, leading to boiler lockout and loss of heating across hospital wards',
-      'The fault was logged correctly but no action was needed',
+      'The fault was logged at the correct priority and required no further action at all',
     ],
     correctAnswer: 2,
     explanation:

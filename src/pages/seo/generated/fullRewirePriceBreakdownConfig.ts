@@ -165,7 +165,7 @@ export const fullRewirePriceBreakdownConfig: GeneratedGuideConfig = {
       category: 'Guide',
     },
     {
-      href: '/tools/electrical-quoting-app',
+      href: '/electrical-quoting-app',
       title: 'Electrical Quoting App',
       description: 'Build and explain the price with the job details in one place.',
       icon: 'Calculator',
@@ -179,7 +179,7 @@ export const fullRewirePriceBreakdownConfig: GeneratedGuideConfig = {
       category: 'Guide',
     },
     {
-      href: '/tools/electrician-invoice-app',
+      href: '/electrician-invoice-app',
       title: 'Electrician Invoice App',
       description: 'Send the invoice against the same scope the customer agreed to.',
       icon: 'FileText',

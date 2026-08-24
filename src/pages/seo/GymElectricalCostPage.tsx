@@ -279,7 +279,7 @@ const sections = [
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Escape Routes</h3>
             <p className="text-white text-sm leading-relaxed">
-              Minimum 1 lux on escape route centre lines to BS 5266-1. Illuminated exit signs at all
+              Minimum 1 lux across the full width of escape routes to BS 5266-1. Illuminated exit signs at all
               exits and changes of direction. 3-hour duration is standard. Self-contained LED
               fittings are the most common choice. A medium gym typically needs 20 to 35 emergency
               fittings. Cost: £2,000 to £5,000 installed.

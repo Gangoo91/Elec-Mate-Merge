@@ -170,9 +170,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 7,
     question: "What is a 'carbon footprint'?",
     options: [
-      'The total amount of carbon dioxide emitted directly by an activity or product, excluding methane, nitrous oxide, and other greenhouse gases',
-      'The physical land area required to absorb the carbon dioxide emissions produced by an individual or organisation over one year',
-      'The proportion of an organisation\'s emissions that arise from electricity use, expressed as a percentage of its total energy consumption',
+      'The total amount of carbon dioxide emitted directly by an activity or product, excluding methane, nitrous oxide and every other greenhouse gas released along the way',
+      'The area of land, measured in global hectares, that would be needed to absorb all of the carbon dioxide emissions an individual or organisation produces in a year',
+      'The share of the emissions of an organisation that arise from purchased electricity, expressed as a percentage of the total energy it consumes across the year',
       'The total amount of greenhouse gases produced directly and indirectly by an activity, individual, organisation, or product, expressed as carbon dioxide equivalent (CO2e)',
     ],
     correctAnswer: 3,
@@ -222,10 +222,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 10,
     question: "What is a 'circular economy'?",
     options: [
-      'An economic model based on continuous growth in which resources are extracted, used once, and then disposed of as efficiently as possible',
-      'A trading system in which businesses buy and sell recycled materials on a circular commodities market to balance supply and demand',
+      'An economic model built on continuous growth in which raw resources are extracted, used once, and then disposed of as cheaply and as efficiently as possible',
+      'A trading system in which businesses buy and sell recovered materials on a commodities market so that supply and demand for recycled content stay in balance',
       'An economic model that aims to keep resources in use for as long as possible, extracting maximum value, then recovering and regenerating products and materials at end of life',
-      'A national framework requiring all manufactured goods to be returned to the original producer within a fixed period after sale',
+      'A national framework requiring every manufactured product to be returned to the original producer for inspection within a fixed period after the date of sale',
     ],
     correctAnswer: 2,
     explanation:
@@ -447,9 +447,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 23,
     question: "What does 'embodied carbon' refer to in the construction industry?",
     options: [
-      'The greenhouse gas emissions resulting from the energy used to heat, cool, and light a building throughout its operational lifetime',
-      'The amount of carbon dioxide that timber and other natural building materials absorb and store within the structure of a building',
-      'The total greenhouse gas emissions produced by the workers and machinery present on a construction site during the build phase',
+      'The greenhouse gas emissions arising from the energy used to heat, cool, ventilate and light a building throughout its whole operational lifetime in use',
+      'The quantity of carbon dioxide that timber, hemp and other natural building materials absorb and lock away within the fabric of a completed building',
+      'The total greenhouse gas emissions produced by the workers, deliveries and site plant present on a construction site during the build phase alone',
       'The total greenhouse gas emissions associated with the manufacture, transport, installation, maintenance, and end-of-life disposal of building materials and components',
     ],
     correctAnswer: 3,
@@ -465,9 +465,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question: "What is a 'lifecycle assessment' (LCA)?",
     options: [
       'A systematic analysis of the environmental impacts of a product or service throughout its entire life, from raw material extraction to disposal',
-      'An estimate of how many years a building material or component will last before it needs to be repaired or replaced',
-      'A financial appraisal of the total purchase, operating, and maintenance costs of a product over its expected service life',
-      'An assessment of the health and safety risks posed to workers handling a material across the stages of construction',
+      'An estimate of how many years a building material or component will last in service before it has to be repaired or replaced',
+      'A financial appraisal of the purchase, operating, maintenance and disposal costs of a product across its expected service life',
+      'An assessment of the health and safety risks posed to the workers who handle a material at each stage of the construction phase',
     ],
     correctAnswer: 0,
     explanation:
@@ -515,9 +515,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 27,
     question: "What is 'carbon offsetting'?",
     options: [
-      'Reducing an organisation\'s own emissions to zero by switching entirely to renewable energy and electric vehicles',
-      'Capturing carbon dioxide directly from an organisation\'s own chimneys and flues and storing it underground on site',
-      'Trading surplus emission allowances with other organisations under the UK Emissions Trading Scheme to recover costs',
+      'Cutting the emissions of an organisation to zero by switching entirely to renewable electricity and to an all-electric vehicle fleet',
+      'Capturing carbon dioxide from the chimneys and flues of a business and storing it permanently in geological formations beneath the site',
+      'Trading surplus emission allowances with other participants in the UK Emissions Trading Scheme in order to recover the cost of compliance',
       'Compensating for greenhouse gas emissions by funding an equivalent carbon dioxide saving elsewhere, such as tree planting or renewable energy projects',
     ],
     correctAnswer: 3,
@@ -584,9 +584,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 31,
     question: "What is the difference between 'Scope 2' and 'Scope 3' greenhouse gas emissions?",
     options: [
-      'Scope 2 covers direct emissions from company vehicles and on-site combustion; Scope 3 covers purchased electricity and heat',
-      'Scope 2 covers emissions from waste disposal; Scope 3 covers emissions from the organisation\'s own buildings and plant',
-      'Scope 2 covers emissions in the upstream supply chain; Scope 3 covers emissions from the organisation\'s direct fuel use',
+      'Scope 2 covers direct emissions from company vehicles and on-site fuel combustion; Scope 3 covers purchased electricity, heat and steam',
+      'Scope 2 covers emissions from waste disposal and water use; Scope 3 covers emissions from the buildings and plant the organisation owns',
+      'Scope 2 covers emissions arising in the upstream supply chain; Scope 3 covers direct emissions from fuel burned in owned vehicles',
       'Scope 2 covers indirect emissions from purchased energy (electricity, heat, steam); Scope 3 covers all other indirect emissions in the value chain',
     ],
     correctAnswer: 3,
@@ -602,9 +602,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question: "What role does the 'precautionary principle' play in environmental decision-making?",
     options: [
       'It states that where there are threats of serious or irreversible environmental damage, lack of full scientific certainty shall not be used as a reason for postponing cost-effective measures to prevent degradation',
-      'It states that no environmental protection measure should be taken unless there is full and conclusive scientific proof that harm will occur',
-      'It states that developers must demonstrate a positive environmental benefit before any project can be granted planning permission',
-      'It states that the costs of environmental protection must always be weighed against, and never exceed, the economic value of a development',
+      'It states that no environmental protection measure should be introduced unless there is full and conclusive scientific proof, accepted by all parties, that serious and irreversible harm would otherwise occur',
+      'It states that developers must demonstrate a measurable positive environmental benefit, verified by an independent expert, before a local planning authority may grant permission for any development',
+      'It states that the cost of any environmental protection measure must always be weighed against, and must never be allowed to exceed, the economic value of the development that is being proposed',
     ],
     correctAnswer: 0,
     explanation:
@@ -652,9 +652,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 35,
     question: 'What is the purpose of the UK Emissions Trading Scheme (UK ETS)?',
     options: [
-      'To impose a fixed carbon tax on every tonne of greenhouse gas emitted by all businesses across the United Kingdom',
-      'To require energy suppliers to source a minimum percentage of their electricity from renewable generation each year',
-      'To provide tradable grants to households that install low-carbon heating and energy efficiency measures',
+      'To impose a fixed rate of carbon tax on every tonne of greenhouse gas emitted by businesses across the United Kingdom each year',
+      'To require every electricity supplier to source a rising minimum percentage of the power it sells from renewable generation',
+      'To provide tradable grants to households and landlords who install low-carbon heating systems and energy efficiency measures',
       'To set a cap on total greenhouse gas emissions from participating sectors, allowing those who emit less to sell allowances to higher emitters',
     ],
     correctAnswer: 3,
@@ -670,9 +670,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question: "What is 'environmental due diligence'?",
     options: [
       'The process of investigating and assessing the environmental risks and liabilities associated with a property, business, or transaction before proceeding',
-      'The legal duty to obtain an environmental permit from the Environment Agency before commencing any construction works',
-      'The ongoing monitoring of an organisation\'s environmental performance against the targets set in its environmental policy',
-      'The process of cleaning up contaminated land to a standard suitable for its intended future use before development begins',
+      'The legal duty to obtain an environmental permit from the Environment Agency before any construction work may lawfully begin on a site',
+      'The continuous monitoring of environmental performance against the objectives and targets set out in the environmental policy of a business',
+      'The process of cleaning up contaminated land to a standard that is suitable for its intended future use before any development begins',
     ],
     correctAnswer: 0,
     explanation:
@@ -738,9 +738,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question: "What is 'operational carbon' in the context of buildings?",
     options: [
       'The greenhouse gas emissions resulting from the energy used to operate a building during its lifetime, including heating, cooling, lighting, and equipment',
-      'The greenhouse gas emissions associated with manufacturing, transporting, and installing a building\'s materials and components',
-      'The greenhouse gas emissions generated by the construction plant and machinery during the building of a structure',
-      'The greenhouse gas emissions released when a building is demolished and its materials are processed and disposed of',
+      'The greenhouse gas emissions associated with extracting, manufacturing, transporting and installing the materials and components of a building',
+      'The greenhouse gas emissions generated by the plant, machinery and deliveries used on site while a new structure is being constructed',
+      'The greenhouse gas emissions released when a building is demolished and its materials are transported, processed and sent for disposal',
     ],
     correctAnswer: 0,
     explanation:
@@ -776,10 +776,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 42,
     question: "What is the 'duty of care' for waste under the Environmental Protection Act 1990?",
     options: [
-      'A legal obligation on employers to protect the health and safety of their employees while they are handling waste at work',
-      'A requirement that all waste must be disposed of at the nearest licensed landfill site to minimise transport emissions',
+      'A legal obligation on employers to protect the health, safety and welfare of every employee who handles, carries or stores controlled waste in the course of their work',
+      'A requirement that all controlled waste be taken to the licensed landfill site nearest to the point of production, so that the transport emissions of each load are kept low',
       'A legal obligation on anyone who produces, imports, carries, keeps, treats, or disposes of controlled waste to ensure it is managed properly and transferred only to authorised persons',
-      'A duty on local authorities to provide free waste collection and recycling facilities to all households and businesses',
+      'A duty on local authorities to provide free collection and recycling facilities for controlled waste to every household and every business within their own district',
     ],
     correctAnswer: 2,
     explanation:
@@ -930,9 +930,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 51,
     question: 'What are European Waste Catalogue (EWC) codes used for?',
     options: [
-      'Pricing waste collection services across Europe',
-      'Rating the environmental performance of waste companies',
-      'Tracking the movement of goods across European borders',
+      'Pricing waste collection contracts against a standardised European tariff scale',
+      'Rating the environmental performance of registered waste carriers and brokers',
+      'Tracking the movement of goods and materials across European member borders',
       'Classifying and identifying waste types using a standardised six-digit coding system',
     ],
     correctAnswer: 3,
@@ -1052,10 +1052,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 58,
     question: 'What is the purpose of waste segregation on a construction site?',
     options: [
-      'To keep waste contained within designated areas so that it does not create a trip hazard or obstruct access routes',
-      'To reduce the total volume of waste produced on site by compacting different materials together before removal',
+      'To keep waste within designated storage areas so that it cannot create a trip hazard or obstruct the access and escape routes around the site',
+      'To cut the overall volume of waste leaving the site by compacting mixed materials tightly together into a single container before removal',
       'To separate different types of waste so they can be reused, recycled, or disposed of appropriately, maximising resource recovery and reducing landfill',
-      'To ensure each waste skip is filled to capacity before it is collected, reducing the number of collections required',
+      'To make sure that every skip is filled to its rated capacity before it is collected, reducing the number of vehicle movements needed',
     ],
     correctAnswer: 2,
     explanation:
@@ -1069,9 +1069,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 59,
     question: "What is 'extended producer responsibility' (EPR)?",
     options: [
-      'A policy principle that requires consumers to pay an additional deposit on products that is refunded when they are recycled',
-      'A scheme that extends the manufacturer\'s warranty obligations so that products can be repaired rather than discarded',
-      'A duty on retailers to take back any product a customer no longer wants, regardless of where it was purchased',
+      'A policy principle that requires consumers to pay a refundable deposit on certain products, returned to them only when the item is handed back for recycling',
+      'A scheme that extends the warranty obligations of a manufacturer so that faulty products must be repaired on request rather than replaced or discarded',
+      'A duty on retailers to accept back any product that a customer no longer wants, regardless of where or when that item was originally purchased',
       'A policy principle that makes producers responsible for the environmental impact of their products throughout the product lifecycle, including end-of-life management',
     ],
     correctAnswer: 3,
@@ -1088,9 +1088,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
       "What does the term 'duty of care' require of a construction company producing waste?",
     options: [
       'That they take all reasonable steps to prevent the unauthorised deposit, treatment, or disposal of waste; store waste safely and securely; transfer waste only to authorised persons; and provide an accurate written description of the waste',
-      'That they dispose of all of their own waste at a licensed landfill site rather than transferring it to a third party',
-      'That they obtain an environmental permit from the Environment Agency before producing any controlled waste on site',
-      'That they reduce the total quantity of waste they produce by a fixed percentage each year and report the figures to Defra',
+      'That they take all of their own waste to a licensed landfill site rather than transferring it to any third party; keep the waste covered while it is stored on site; and record each skip movement in the site diary each week',
+      'That they obtain an environmental permit from the Environment Agency before producing any controlled waste; appoint a named waste manager for the site; and display copies of every permit issued in the site office',
+      'That they reduce the total quantity of waste they produce by a fixed percentage every year; report those figures to Defra at the end of each year; and publish the results within their company environmental policy',
     ],
     correctAnswer: 0,
     explanation:
@@ -1140,9 +1140,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question:
       "What is 'plasterboard' waste and why does it require special handling on construction sites?",
     options: [
-      'It is classified as hazardous waste because the gypsum it contains is toxic and carcinogenic to those who handle it',
-      'It contains asbestos fibres that are released when the board is cut, so it must be removed by a licensed contractor',
-      'It is too heavy and bulky to be accepted at standard landfill sites, so it must always be broken up before disposal',
+      'It is classified as hazardous waste because the gypsum within it is toxic and carcinogenic to anyone who cuts the board, so it must be double bagged before removal',
+      'It contains asbestos fibres that are released whenever the board is cut or broken, so it must be removed from the site by a licensed asbestos contractor',
+      'It is far too heavy and bulky to be accepted at a standard landfill site, so it must always be crushed and broken up before it can be disposed of',
       'It contains gypsum which, when landfilled with biodegradable waste, can produce toxic hydrogen sulphide gas, so it must be segregated and sent to specialist facilities',
     ],
     correctAnswer: 3,
@@ -1174,10 +1174,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 65,
     question: 'What information must be included on a waste transfer note?',
     options: [
-      "Only the description and quantity of the waste, with no requirement to record the parties or the carrier's details",
+      'A description of the waste and the quantity only, together with the date of transfer, with no requirement to record either of the parties or the registration number of the carrier used',
       "A description of the waste, the quantity, the type of container, the date of transfer, the SIC code of the waste producer, details of both parties, and the waste carrier's registration number",
-      "The estimated landfill tax payable on the waste and the name of the landfill site that will receive it",
-      "The specific hazardous properties of the waste and its premises notification number issued by the Environment Agency",
+      'The estimated landfill tax payable on the load, the name and permit number of the landfill site that will receive it, and the weighbridge ticket issued at the site gate on arrival',
+      'The specific hazardous properties of the waste, the premises notification number of the producer, the consignment note code for the movement, and the date of collection',
     ],
     correctAnswer: 1,
     explanation:
@@ -1210,9 +1210,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question:
       'What responsibility does the principal contractor have for waste management under CDM 2015?',
     options: [
-      'The principal contractor must personally hold the waste carrier registration for every load of waste leaving the site',
-      'The principal contractor has no waste responsibilities under CDM, as these fall solely on the individual subcontractors',
-      'The principal contractor must dispose of all site waste at landfill and is not permitted to recycle or recover any materials',
+      'The principal contractor must personally hold the waste carrier registration for every load of waste leaving the site, and must arrange for each load to be weighed at the gate before it goes',
+      'The principal contractor has no waste duties at all under CDM, because responsibility for the segregation, storage and removal of waste rests solely with each individual subcontractor',
+      'The principal contractor must send all site waste directly to landfill and is not permitted to reuse, recycle or recover any of the materials arising from the works on the project',
       'The principal contractor must ensure that waste is managed in accordance with the waste hierarchy, that waste is properly segregated and stored on site, and that waste removal arrangements are in place',
     ],
     correctAnswer: 3,
@@ -1228,9 +1228,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question: "What is 'recovery' in the context of the waste hierarchy?",
     options: [
       'Any waste operation whose principal result is that waste serves a useful purpose by replacing other materials, including energy recovery through incineration',
-      'The reprocessing of waste materials into new products of the same type, such as turning waste glass back into glass',
-      'The retrieval of waste that has been illegally dumped so that it can be returned to a licensed disposal facility',
-      'The collection and separation of different waste materials at source so that each can be managed appropriately',
+      'The reprocessing of waste materials into new products of the same type, such as turning waste container glass back into new glass bottles',
+      'The retrieval of waste that has been fly-tipped on land so that it can be returned to a licensed facility for treatment or disposal',
+      'The collection and separation of different waste materials at the point of production so that each stream can be managed appropriately',
     ],
     correctAnswer: 0,
     explanation:
@@ -1280,9 +1280,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 71,
     question: 'What is the primary risk associated with mixing hazardous and non-hazardous waste?',
     options: [
-      'The non-hazardous waste becomes exempt from the duty of care, so it can be transferred without a waste transfer note',
-      'The hazardous component is automatically neutralised by the larger volume of non-hazardous waste it is mixed with',
-      'The combined load qualifies for the lower rate of landfill tax because it is no longer classed as active waste',
+      'The non-hazardous part of the load becomes exempt from the waste duty of care, so it may be handed to any carrier without a written description of the waste or a transfer note',
+      'The hazardous component is diluted and neutralised by the far larger volume of non-hazardous waste, so the whole load may then be handled and tipped as ordinary controlled waste',
+      'The combined load qualifies for the lower rate of landfill tax, because mixed waste is no longer classified as active waste once it has been weighed in at the landfill gate',
       'The entire waste load becomes classified as hazardous, increasing disposal costs and regulatory requirements, and potentially causing environmental contamination or chemical reactions',
     ],
     correctAnswer: 3,
@@ -1298,9 +1298,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question: 'What happens to fluorescent tubes at the end of their life?',
     options: [
       'They are classified as hazardous waste because they contain mercury, and must be collected, stored, and recycled through specialist WEEE recycling channels',
-      'They are classified as inert waste and can be disposed of with general construction and demolition rubble',
-      'They can be crushed on site and the broken glass recycled with other clean glass waste streams',
-      'They may be placed in the general waste skip provided they are wrapped to prevent breakage in transit',
+      'They are classified as inert waste and may be disposed of alongside general construction and demolition rubble in a mixed skip sent to landfill',
+      'They can be crushed down on site and the broken glass then sent away for recycling with the other clean glass waste arising from the project',
+      'They may be placed in the general waste skip provided that each tube is carefully wrapped to stop it breaking while it is in transit',
     ],
     correctAnswer: 0,
     explanation:
@@ -1314,10 +1314,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 73,
     question: "What is 'waste minimisation' and why is it the top priority in the waste hierarchy?",
     options: [
-      'It means recycling as much waste as possible; it is the top priority because recycling recovers valuable materials for reuse',
+      'It means recycling as much of the waste stream as possible on site; it is the top priority because recycling recovers valuable materials and keeps them out of landfill sites altogether',
       'It means preventing waste from being produced in the first place; it is the top priority because it avoids the environmental impacts of resource extraction, manufacturing, transport, and disposal entirely',
-      'It means compacting waste to reduce its volume; it is the top priority because it lowers the number of skip collections needed',
-      'It means sending waste to energy-from-waste plants; it is the top priority because it recovers energy instead of using landfill',
+      'It means compacting waste so that it takes up far less space in a skip; it is the top priority because it lowers the number of skip collections and the transport emissions that go with them',
+      'It means sending waste to energy-from-waste plants for incineration; it is the top priority because burning waste recovers useful energy and removes the need for landfill capacity',
     ],
     correctAnswer: 1,
     explanation:
@@ -1331,10 +1331,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 74,
     question: "What is 'designing out waste' in construction?",
     options: [
-      'Removing the requirement to record waste on a Site Waste Management Plan once a project reaches the design stage',
-      'Designing a dedicated waste compound on the site layout drawings so that skips and containers are kept tidy',
+      'Removing the requirement to record materials on a Site Waste Management Plan once the design of a project has been formally signed off by the client and the design team',
+      'Setting out a dedicated waste compound on the site layout drawings so that skips and containers are kept tidy and clear of the main access and delivery routes',
       'Using design decisions to reduce or eliminate waste generation during construction, including standardising dimensions, specifying reclaimed materials, and designing for disassembly',
-      'Specifying that all surplus materials be returned to the supplier rather than being treated as construction waste',
+      'Specifying that every surplus material must be returned to the supplier for credit rather than being handled on site as construction or demolition waste',
     ],
     correctAnswer: 2,
     explanation:
@@ -1348,9 +1348,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 75,
     question: "What is a 'hazardous property' code (HP code)?",
     options: [
-      'A six-digit European Waste Catalogue code used to identify the type and origin of a waste stream',
-      'A premises notification number issued by the Environment Agency to producers of hazardous waste',
-      'A rating that indicates how many years a hazardous waste consignment note must be retained for audit',
+      'A six-digit European Waste Catalogue code that identifies the type and origin of a waste stream and is entered on the transfer note accompanying each load that leaves the site',
+      'A premises notification number issued by the Environment Agency to producers of hazardous waste, which must be quoted before any of that waste may be removed from the site',
+      'A rating that sets out how many years a hazardous waste consignment note must be retained on file by the producer of the waste before it may lawfully be destroyed',
       'A classification code assigned to waste based on its hazardous characteristics (e.g., HP1 Explosive, HP3 Flammable, HP5 Toxic, HP14 Ecotoxic) used to determine waste handling requirements',
     ],
     correctAnswer: 3,
@@ -1382,10 +1382,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 77,
     question: "What is 'inert waste' on a construction site?",
     options: [
-      'Waste that decomposes naturally over time without producing any harmful gases or leachate — such as timber, paper, and cardboard',
+      'Waste that decomposes naturally over time within a landfill cell without producing any harmful gases or leachate, and which therefore needs no pre-treatment at all before it is disposed of — such as timber, paper, and cardboard',
       'Waste that does not undergo any significant physical, chemical, or biological transformations, will not dissolve or burn, and does not adversely affect other materials it comes into contact with — such as clean bricks, concrete, and tiles',
-      'Waste that has been treated and rendered harmless so that it no longer needs to be transferred under a consignment note',
-      'Waste that exhibits no hazardous properties but must still be incinerated rather than sent to landfill — such as plastics and rubber',
+      'Waste that has been treated and rendered completely harmless, so that it no longer has to be described in writing or moved under a consignment note and may be mixed with any other load — such as treated soils and dried sludges',
+      'Waste that exhibits none of the hazardous properties listed but must still be incinerated rather than sent to landfill because it will never break down in the ground — such as plastics, rubber, and packaging foam',
     ],
     correctAnswer: 1,
     explanation:
@@ -1417,9 +1417,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 79,
     question: "What is 'waste pre-treatment' and when is it required before landfill disposal?",
     options: [
-      'Compacting and baling unsorted waste to reduce its volume before it is transported to the landfill site',
-      'Applying a chemical sealant to the surface of a landfill cell before any waste is deposited into it',
-      'Obtaining written confirmation from the landfill operator that they hold a permit to accept the waste',
+      'Compacting and baling unsorted waste in order to reduce its volume and cut the number of vehicle movements needed, as required of every waste producer before the load is transported to the landfill site',
+      'Applying a chemical sealant and an impermeable liner to the base of a landfill cell before any waste is deposited into it, as required of the operator of the site by their environmental permit',
+      'Obtaining written confirmation from the landfill operator that they hold an environmental permit allowing them to accept the waste, and keeping that confirmation on file before the load leaves site',
       'Processing waste by sorting, recycling, or treating it before disposal to landfill, as required by the Landfill (England and Wales) Regulations 2002 to ensure only waste that cannot be recovered is landfilled',
     ],
     correctAnswer: 3,
@@ -1436,9 +1436,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
       'What legal obligation does a waste producer have if they suspect their waste carrier may be operating illegally?',
     options: [
       "They must take all reasonable steps to check the carrier's registration, and if they knowingly or carelessly transfer waste to an unauthorised person, they commit an offence under the duty of care",
-      "They have no further obligation once the waste has physically left their premises, as responsibility passes entirely to the carrier",
-      "They must report the carrier to the police but may continue to use them until the police complete their investigation",
-      "They are only liable if the waste is later found to have been fly-tipped; otherwise no offence is committed",
+      'They have no further obligation once the waste has physically left their premises, because legal responsibility for the load passes entirely to the carrier at the point of collection',
+      'They must report the carrier to the police, but they may lawfully continue to use that same carrier for further loads until the police have completed their investigation',
+      'They are liable only where the waste is later found to have been fly-tipped, and commit no offence at all if the load eventually reaches a licensed disposal site',
     ],
     correctAnswer: 0,
     explanation:
@@ -1475,10 +1475,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 82,
     question: "What is a 'carbon footprint' of a construction project?",
     options: [
-      'The total energy in kilowatt-hours consumed by site plant and equipment during the construction phase only',
-      'The physical area of land disturbed by the project, used to calculate the biodiversity net gain required',
+      'The total energy in kilowatt-hours consumed by the site plant, equipment and welfare cabins during the construction phase of the works',
+      'The area of land disturbed by the works, used to calculate the biodiversity net gain that the project is required to deliver on completion',
       'The total greenhouse gas emissions associated with all activities and materials used throughout the project lifecycle, measured in CO2 equivalent',
-      'The proportion of the project budget allocated to carbon offsetting and renewable energy measures',
+      'The share of the project budget that is set aside for carbon offsetting, renewable energy measures and low-carbon materials at tender',
     ],
     correctAnswer: 2,
     explanation:
@@ -1493,9 +1493,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question:
       "What is the key difference between 'embodied carbon' and 'operational carbon' in a building?",
     options: [
-      'Embodied carbon relates to the energy used to run the building; operational carbon relates to the emissions from manufacturing its materials',
-      'Embodied carbon is measured in kilowatt-hours, whereas operational carbon is measured in tonnes of carbon dioxide equivalent',
-      'Embodied carbon applies only to domestic buildings, whereas operational carbon applies only to non-domestic buildings',
+      'Embodied carbon relates to the energy used to heat, cool and light the building in use; operational carbon relates to the emissions from manufacturing and transporting its materials to site',
+      'Embodied carbon is measured in kilowatt-hours of delivered energy each year, whereas operational carbon is measured in tonnes of carbon dioxide equivalent released over the same period',
+      'Embodied carbon applies only to domestic dwellings and their extensions, whereas operational carbon applies solely to non-domestic buildings such as offices, schools and warehouses',
       'Embodied carbon relates to the emissions from manufacturing, transporting, and constructing materials; operational carbon relates to emissions from the energy used to run the building during its lifetime',
     ],
     correctAnswer: 3,
@@ -1527,10 +1527,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 85,
     question: 'What does an Energy Performance Certificate (EPC) show?',
     options: [
-      'A certificate confirming that a building\'s electrical installation has been tested and is safe to use',
+      'A certificate confirming that the electrical installation within a building has been inspected, tested and found safe to use',
       'The energy efficiency rating of a building on a scale from A (most efficient) to G (least efficient), along with recommendations for improvement',
-      'The total amount of energy a building is permitted to use each year before it must pay the Climate Change Levy',
-      'A measure of the embodied carbon in a building\'s materials, expressed as tonnes of carbon dioxide equivalent',
+      'The total amount of energy a building may use each year before its owner becomes liable to pay the Climate Change Levy',
+      'A measure of the embodied carbon within the materials of a building, expressed in tonnes of carbon dioxide equivalent',
     ],
     correctAnswer: 1,
     explanation:
@@ -1562,9 +1562,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 87,
     question: "What is a 'heat pump' and how does it contribute to energy efficiency?",
     options: [
-      'A device that burns natural gas more efficiently than a conventional boiler, achieving efficiencies of around 90%',
-      'An electric immersion heater that stores hot water in an insulated cylinder for use during peak demand periods',
-      'A device that pumps warm air around a building from a central electric heater to provide even space heating',
+      'A device that burns natural gas far more completely than a conventional condensing boiler, reaching seasonal efficiencies of around 90% for space heating and hot water',
+      'An electric immersion heater that stores hot water in a heavily insulated cylinder overnight so that it can be drawn off for washing during periods of peak demand',
+      'A device that pumps warm air around a building from a single central electric heater, giving even space heating in every room without the need for radiators',
       'A device that transfers heat from a low-temperature source (air, ground, or water) to a higher-temperature output for space heating and hot water, achieving efficiencies of 250-400%',
     ],
     correctAnswer: 3,
@@ -1580,9 +1580,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question: "What is 'water conservation' on a construction site?",
     options: [
       'The practice of reducing water consumption on site through efficient use, recycling, and rainwater harvesting, to minimise waste and environmental impact',
-      'The practice of treating all wastewater on site to drinking-water standard before discharging it to a watercourse',
-      'The practice of collecting surface water runoff in attenuation tanks to prevent flooding of neighbouring land',
-      'The practice of pumping groundwater out of excavations and discharging it directly to the public sewer',
+      'The practice of treating all of the wastewater arising on site to drinking-water standard before it is discharged into the nearest watercourse',
+      'The practice of collecting surface water runoff in attenuation tanks so that neighbouring land and property are protected from flooding',
+      'The practice of pumping groundwater out of deep excavations and discharging it directly into the nearest public foul sewer connection',
     ],
     correctAnswer: 0,
     explanation:
@@ -1596,10 +1596,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 89,
     question: "What are 'sustainable materials' in the context of construction?",
     options: [
-      'Materials that are the cheapest available option, as lower cost always indicates a lower environmental impact',
+      'Materials that are the cheapest option available on the market at the time of ordering, on the basis that the lowest purchase price always indicates the lowest environmental impact across the supply chain',
       'Materials that have been sourced, manufactured, and can be used and disposed of in a way that minimises environmental impact, including materials that are renewable, recycled, locally sourced, or have low embodied carbon',
-      'Materials that are imported from overseas because they meet stricter environmental standards than UK-made products',
-      'Materials that are guaranteed to last the entire life of the building and therefore never need to be recycled',
+      'Materials that are imported from overseas suppliers, on the basis that manufacturers working abroad are always held to far stricter environmental standards than any producer based in the United Kingdom',
+      'Materials that are guaranteed to last for the entire life of a building, meaning that they never need to be maintained, replaced, recycled or sent for disposal at any point during the life of the structure',
     ],
     correctAnswer: 1,
     explanation:
@@ -1613,10 +1613,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 90,
     question: 'What is the purpose of Part L of the Building Regulations?',
     options: [
-      'It sets requirements for fire safety, including means of escape, fire detection, and fire resistance of structural elements',
-      'It sets requirements for ventilation, including the provision of fresh air and the extraction of moisture from buildings',
+      'It sets requirements for fire safety, including means of escape, fire detection and alarm, and the fire resistance of structural elements',
+      'It sets requirements for ventilation, including the supply of fresh air to occupied rooms and the extraction of moisture from buildings',
       'It sets requirements for the conservation of fuel and power in buildings, including energy efficiency standards for heating, lighting, and insulation',
-      'It sets requirements for drainage and waste disposal, including foul water, surface water, and rainwater systems',
+      'It sets requirements for drainage and waste disposal, including foul water drainage, rainwater systems and solid waste storage',
     ],
     correctAnswer: 2,
     explanation:
@@ -1649,9 +1649,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question: "What is 'passive design' in building construction?",
     options: [
       "A design approach that uses the building's form, fabric, and orientation to reduce energy demand for heating, cooling, and lighting without relying on mechanical systems",
-      "A design approach that relies on highly efficient mechanical heating, cooling, and ventilation systems to control the internal environment",
-      "A design approach that generates all of a building's energy on site using solar panels, wind turbines, and heat pumps",
-      "A design approach that prioritises low-cost materials and rapid construction over long-term energy performance",
+      'A design approach that relies on highly efficient mechanical heating, cooling and ventilation plant to control the internal environment of a building all year round',
+      'A design approach that generates all of the energy a building needs on site using roof-mounted solar panels, wind turbines and ground source heat pumps',
+      'A design approach that prioritises low-cost materials and rapid construction ahead of long-term energy performance and the running costs of a building',
     ],
     correctAnswer: 0,
     explanation:
@@ -1682,10 +1682,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 94,
     question: "What is 'ISO 50001' and how does it relate to energy management?",
     options: [
-      'An international standard that specifies requirements for an environmental management system, helping organisations manage their environmental impacts',
-      'An international standard that specifies requirements for a quality management system, helping organisations meet customer expectations',
+      'An international standard that specifies requirements for establishing and improving an environmental management system, helping organisations control their environmental impacts',
+      'An international standard that specifies requirements for establishing and improving a quality management system, helping organisations meet customer requirements consistently',
       'An international standard that specifies requirements for establishing, implementing, and improving an energy management system, helping organisations systematically reduce energy consumption',
-      'An international standard that specifies requirements for an occupational health and safety management system in the workplace',
+      'An international standard that specifies requirements for an occupational health and safety management system, helping organisations reduce risk to workers',
     ],
     correctAnswer: 2,
     explanation:
@@ -1699,9 +1699,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 95,
     question: "What role do 'smart meters' play in energy efficiency?",
     options: [
-      'They automatically switch off appliances when a household exceeds its allocated daily energy allowance',
-      'They generate a small amount of electricity from the building\'s mains supply to offset standby power use',
-      'They rate the energy efficiency of a building on a scale from A to G in the same way as an EPC',
+      'They automatically switch off appliances whenever a household exceeds the daily energy allowance that has been allocated to it by the electricity supplier',
+      'They generate a small amount of electricity from the mains supply of a building in order to offset the standby power drawn by appliances left switched on',
+      'They rate the energy efficiency of a building on a scale from A to G in exactly the same way as an Energy Performance Certificate does for a dwelling',
       'They provide real-time information on energy consumption, helping users understand and reduce their energy use, and enabling accurate billing without estimated readings',
     ],
     correctAnswer: 3,
@@ -1717,9 +1717,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question: "What is the 'fabric first' approach to building energy efficiency?",
     options: [
       "Prioritising improvements to the building's thermal envelope (insulation, airtightness, glazing) before adding renewable energy technologies or complex mechanical systems",
-      "Installing renewable energy technologies such as solar panels and heat pumps before improving the building's insulation",
-      "Specifying natural fabric materials such as wool and hemp insulation in preference to synthetic alternatives",
-      "Designing the building's structural frame and cladding before considering its energy performance or services",
+      'Installing renewable energy technologies such as solar panels, battery storage and heat pumps before making any improvement to the insulation of the building',
+      'Specifying natural fabric insulation materials such as sheep wool, hemp and wood fibre in preference to any synthetic alternative available on the market',
+      'Designing the structural frame and the external cladding of a building before giving any consideration at all to its energy performance or its services',
     ],
     correctAnswer: 0,
     explanation:
@@ -1733,10 +1733,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 97,
     question: "What is 'whole-life carbon' assessment in construction?",
     options: [
-      'An assessment that accounts only for the operational carbon emissions of a building during its in-use phase',
+      'An assessment that accounts only for the operational carbon emissions of a building during its in-use phase, covering the energy drawn by heating, cooling, lighting and equipment, but excluding entirely the materials it is built from',
       'A comprehensive assessment that accounts for all greenhouse gas emissions over the entire life of a building, including embodied carbon (materials and construction), operational carbon (energy in use), and end-of-life carbon (demolition and disposal)',
-      'An assessment that measures only the embodied carbon in a building\'s materials at the point of construction',
-      'An assessment that calculates the carbon savings achieved by a building compared with a notional reference building',
+      'An assessment that measures only the embodied carbon within the materials of a building at the point of construction, covering extraction, manufacture, transport and installation, but excluding all of the energy it uses in service',
+      'An assessment that calculates the carbon savings achieved by a completed building compared with a notional reference building of the same size and use, expressed as a percentage improvement on that baseline figure alone',
     ],
     correctAnswer: 1,
     explanation:
@@ -1750,10 +1750,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 98,
     question: "What is 'greywater recycling'?",
     options: [
-      'Collecting rainwater from roofs and gutters and storing it for reuse in toilet flushing and garden irrigation',
-      'Collecting and treating foul wastewater from toilets so that it can be reused for drinking and washing',
+      'Collecting rainwater from the roofs and gutters of a building and storing it for later reuse in non-potable applications such as toilet flushing and garden irrigation',
+      'Collecting and treating foul wastewater from toilets to a very high standard so that it can safely be reused for drinking, cooking and washing within the home',
       'Collecting and treating wastewater from baths, showers, washbasins, and washing machines for reuse in non-potable applications such as toilet flushing and garden irrigation',
-      'Treating contaminated surface water runoff from a construction site before it is discharged to a watercourse',
+      'Collecting and treating contaminated surface water runoff from a construction site so that it can be discharged safely into a nearby watercourse or ditch',
     ],
     correctAnswer: 2,
     explanation:
@@ -1786,9 +1786,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question: "What is 'demand-side response' (DSR) in energy management?",
     options: [
       'Adjusting the timing or level of electricity consumption in response to price signals, grid conditions, or other incentives, to reduce peak demand and support grid stability',
-      'Increasing electricity generation at power stations to match a sudden rise in consumer demand during peak periods',
-      'Supplying surplus renewable electricity back to the grid from domestic solar panels and battery storage systems',
-      'Charging consumers a higher unit rate for electricity used during periods of peak national demand on the grid',
+      'Increasing generation at power stations and imports across the interconnectors in order to match a sudden rise in consumer demand during the evening peak',
+      'Supplying surplus renewable electricity back to the grid from domestic solar panels and from home battery systems that were charged overnight at a low rate',
+      'Charging every consumer a higher unit rate for the electricity they use during periods of peak national demand on the transmission and distribution network',
     ],
     correctAnswer: 0,
     explanation:
@@ -1958,10 +1958,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 110,
     question: 'What is Life Cycle Assessment (LCA)?',
     options: [
-      'An assessment of how long a building component will last before replacement',
-      "A financial appraisal of maintenance costs over a building's lifespan",
+      'An estimate of how long a building component will remain serviceable before replacement',
+      'A financial appraisal of the maintenance costs incurred over the lifespan of a building',
       'A methodology for evaluating the environmental impacts of a product or system across its entire life',
-      'A health and safety risk assessment for the construction phase',
+      'A health and safety risk assessment covering every stage of the construction phase',
     ],
     correctAnswer: 2,
     explanation:
@@ -2133,9 +2133,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question: 'What are the four phases of a Life Cycle Assessment as defined by ISO 14040?',
     options: [
       'Goal and scope definition, inventory analysis, impact assessment, and interpretation',
-      'Design, procurement, installation, and commissioning',
-      'Planning, construction, operation, and demolition',
-      'Extraction, manufacturing, distribution, and disposal',
+      'Design specification, procurement, installation, and final commissioning',
+      'Site planning, construction, operation, refurbishment, and demolition',
+      'Raw material extraction, manufacturing, distribution, use, and disposal',
     ],
     correctAnswer: 0,
     explanation:
@@ -2451,10 +2451,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 138,
     question: "What is 'bioremediation' in the context of contaminated land?",
     options: [
-      'Excavating contaminated soil and transporting it to a licensed landfill site for disposal',
-      'Sealing contaminated soil beneath an impermeable membrane to prevent contact with receptors',
+      'Excavating contaminated soil and transporting it to a licensed landfill site for permanent disposal off site',
+      'Sealing contaminated soil beneath an impermeable capping membrane to prevent any contact with receptors',
       'Using biological organisms (such as bacteria or plants) to break down or remove contaminants from soil or groundwater',
-      'Heating contaminated soil to high temperatures to destroy or volatilise the contaminants',
+      'Heating contaminated soil to a high temperature to destroy or drive off the contaminants it holds',
     ],
     correctAnswer: 2,
     explanation:
@@ -2468,9 +2468,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 139,
     question: "What is a 'remediation strategy' for contaminated land?",
     options: [
-      'A strategy for marketing properties on former industrial sites',
-      'A legal agreement between neighbours about boundary disputes',
-      'A financial plan for insuring against future contamination',
+      'A plan that sets out how homes built on a former industrial site will be marketed and sold',
+      'A legal agreement that settles a boundary dispute between two neighbouring landowners',
+      'A financial plan for insuring a business against claims for future pollution incidents',
       'A plan that sets out how contamination will be addressed to make the land suitable for its intended use',
     ],
     correctAnswer: 3,
@@ -2537,9 +2537,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 143,
     question: "What is an 'attenuation tank' in the context of SuDS?",
     options: [
-      'A device installed in a drainage system to separate and retain oil and fuel from surface water runoff',
-      'A sealed underground tank that collects and stores foul wastewater for periodic removal by tanker',
-      'A vegetated channel that conveys surface water across a site while filtering out sediment and pollutants',
+      'A chamber fitted within a drainage run that separates and retains oil and fuel from surface water runoff',
+      'A sealed underground tank that collects and stores foul wastewater for periodic removal by road tanker',
+      'A shallow vegetated channel that conveys surface water across a site while filtering out silt and pollutants',
       'An underground or surface-level storage system that temporarily holds surface water runoff and releases it at a controlled rate',
     ],
     correctAnswer: 3,
@@ -2572,10 +2572,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the maximum penalty for causing a water pollution offence under the Environmental Permitting Regulations 2016?',
     options: [
-      "A fixed penalty notice of up to £1,000, with no possibility of a custodial sentence",
+      'A fixed penalty notice of up to £1,000 issued on the spot by the Environment Agency, with no possibility of a custodial sentence',
       "Up to 12 months imprisonment and/or an unlimited fine in the magistrates' court, or up to 5 years and/or an unlimited fine in the Crown Court",
-      "A formal caution for a first offence, with prosecution reserved only for repeat offenders",
-      "A maximum fine of £20,000 in the magistrates' court, with no power to imprison the offender",
+      'A formal caution for a first offence, with prosecution reserved for those who offend repeatedly at the same site or premises',
+      'A maximum fine of £20,000 in the magistrates\' court, with no power to imprison the offender in any circumstances at all',
     ],
     correctAnswer: 1,
     explanation:
@@ -2589,10 +2589,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 146,
     question: "What is a 'spill kit' and when should one be available on a construction site?",
     options: [
-      'A set of personal protective equipment issued to workers handling hazardous substances on site',
-      'A drainage system that collects and treats contaminated runoff before it reaches a watercourse',
+      'A set of protective clothing and respiratory equipment issued to workers who handle hazardous substances — required at every storage point on site',
+      'A drainage system that intercepts and treats contaminated surface water runoff — required wherever site runoff could reach a watercourse or drain',
       'A collection of absorbent materials and containment equipment for cleaning up oil, fuel, or chemical spills — required wherever such substances are stored or used',
-      'A bunded storage container designed to hold 110% of the capacity of an oil or fuel tank',
+      'A bunded storage container sized to hold 110% of the capacity of the tank inside it — required wherever oil or fuel is kept on the site',
     ],
     correctAnswer: 2,
     explanation:
@@ -2709,10 +2709,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 153,
     question: "What is a 'Desk Study' in the context of contaminated land investigation?",
     options: [
-      'An intrusive investigation involving trial pits and boreholes to sample and analyse soil and groundwater',
+      'An intrusive site investigation using trial pits and boreholes to sample and analyse the soil and the groundwater beneath a site',
       'A review of historical maps, records, and environmental data to assess the potential for land contamination before any intrusive investigation',
-      'A long-term monitoring programme to confirm that remediation works have been successful over time',
-      'A detailed remediation strategy setting out the methods and objectives for cleaning up contaminated land',
+      'A long-term monitoring programme carried out to confirm that completed remediation works have remained effective over many years',
+      'A detailed strategy setting out the methods, objectives and validation criteria for cleaning up land that is known to be contaminated',
     ],
     correctAnswer: 1,
     explanation:
@@ -2763,9 +2763,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
       'What is the role of the Environment Agency in pollution prevention on construction sites?',
     options: [
       'It is the regulator responsible for protecting the environment, including preventing pollution of water, land, and air, and can take enforcement action',
-      'It is the government adviser on the natural environment, responsible for issuing protected-species licences and designating SSSIs',
-      'It is the body responsible for enforcing occupational health and safety law and investigating workplace accidents on sites',
-      'It is the local authority department responsible for granting planning permission and approving construction phase plans',
+      'It is the government adviser on the natural environment, responsible for issuing species licences and for designating protected sites',
+      'It is the regulator that enforces occupational health and safety law and investigates serious accidents on construction sites',
+      'It is the local authority department that grants planning permission and approves the construction phase plan for a project',
     ],
     correctAnswer: 0,
     explanation:
@@ -2797,10 +2797,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 158,
     question: "What is 'permeable paving' and how does it function as a SuDS feature?",
     options: [
-      'A sealed paved surface that channels all rainwater to a central gully connected to the public sewer',
-      'A vegetated channel laid alongside a paved surface to convey and filter surface water runoff',
+      'A sealed paved surface that channels all of the rainwater falling on it to a central gully connected to the public sewer',
+      'A shallow vegetated channel laid alongside a paved surface to convey and filter the surface water running off it',
       'A paved surface that allows rainwater to drain through the surface into a sub-base where it is stored and gradually released or infiltrated',
-      'An underground tank beneath a paved surface that permanently stores all of the rainwater that falls on it',
+      'An underground tank beneath a paved surface that permanently retains every drop of rainwater falling onto it',
     ],
     correctAnswer: 2,
     explanation:
@@ -2856,10 +2856,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 161,
     question: 'What does the Wildlife and Countryside Act 1981 protect?',
     options: [
-      'Only domesticated animals, farmed livestock, and commercially managed game species',
+      'Farmed livestock, domesticated pets, and commercial game species',
       'Wild birds, certain wild animals and plants, and their habitats',
-      'Only European Protected Species such as bats, otters, and great crested newts',
-      'Only ancient woodland, hedgerows, and trees protected by preservation orders',
+      'Bats, otters, and great crested newts, but no other wild species',
+      'Ancient woodland, hedgerows, and trees under preservation orders',
     ],
     correctAnswer: 1,
     explanation:
@@ -3082,10 +3082,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 174,
     question: 'What is a European Protected Species (EPS) licence?',
     options: [
-      'A licence issued by the Environment Agency permitting the discharge of treated wastewater to a protected watercourse',
-      'A planning consent that allows development to proceed on a Site of Special Scientific Interest without further survey',
+      'A licence issued by the Environment Agency permitting the discharge of treated wastewater into a watercourse near a protected site',
+      'A planning consent allowing development to proceed on a Site of Special Scientific Interest without any further ecological survey',
       'A licence granted by Natural England that allows otherwise prohibited activities affecting European Protected Species, subject to strict conditions',
-      'A registration that permits low-risk ecological survey activities to be carried out without a full ecological appraisal',
+      'A registration allowing low-risk ecological survey work to be carried out without a full preliminary ecological appraisal',
     ],
     correctAnswer: 2,
     explanation:
@@ -3099,9 +3099,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 175,
     question: 'What are the three legal tests that must be satisfied to obtain an EPS licence?',
     options: [
-      "Full ecological survey, an approved mitigation plan, and payment of the appropriate licence fee to Natural England",
-      "Planning permission granted, a biodiversity net gain of at least 10%, and a 30-year management plan in place",
-      "No risk to human health, no breach of the duty of care, and no detriment to controlled waters or air quality",
+      'A completed ecological survey, a written mitigation plan approved by the ecologist, and payment of the correct licence fee',
+      'Planning permission already granted, a biodiversity net gain of at least 10%, and a habitat management plan lasting 30 years',
+      'No risk to human health, no breach of the waste duty of care, and no detriment to controlled waters or to local air quality',
       "No satisfactory alternative, imperative reasons of overriding public interest, and no detriment to the species' favourable conservation status",
     ],
     correctAnswer: 3,
@@ -3152,10 +3152,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 178,
     question: 'What is the District Level Licensing (DLL) scheme for great crested newts?',
     options: [
-      'A requirement for developers to obtain a separate great crested newt licence from each local authority district they work in',
-      'A scheme requiring every pond within 500 metres of a development to be surveyed individually before works begin',
+      'A requirement for developers to obtain a separate great crested newt licence from every local authority district in which they carry out any works',
+      'A scheme requiring every pond lying within 500 metres of a development to be surveyed individually before any works can begin on the site',
       'A strategic licensing approach where developers pay into a fund that delivers habitat compensation at a landscape scale, avoiding the need for individual site surveys',
-      'A blanket exemption that allows great crested newts to be relocated without any licence in participating districts',
+      'A blanket exemption allowing great crested newts to be moved off a development site without any licence at all within participating districts',
     ],
     correctAnswer: 2,
     explanation:
@@ -3203,10 +3203,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 181,
     question: 'What is the purpose of an Ecological Impact Assessment (EcIA)?',
     options: [
-      'To calculate the biodiversity net gain required to satisfy the planning conditions for a development',
+      'To calculate the number of biodiversity units that a development must deliver in order to satisfy its net gain planning condition on completion',
       'To identify, quantify, and evaluate the potential ecological effects of a development, and to recommend avoidance, mitigation, and compensation measures',
-      'To monitor habitats and species populations for at least 30 years after a development is completed',
-      'To assess the risk of land contamination to ecological receptors before any intrusive site investigation',
+      'To monitor the habitats and species populations on a completed development for a period of at least thirty years after practical completion',
+      'To assess the risk that land contamination poses to ecological receptors before any intrusive site investigation is carried out on the site',
     ],
     correctAnswer: 1,
     explanation:
@@ -3271,10 +3271,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 185,
     question: "What is a 'Site of Special Scientific Interest' (SSSI)?",
     options: [
-      'A European designated site protected under the Habitats Regulations for its rare habitats and species',
+      'A site designated under the Habitats Regulations for the rare European habitats and breeding species that it supports',
       'A site designated under the Wildlife and Countryside Act 1981 for its outstanding wildlife, geological, or physiographical features',
-      'A site where habitat is created in advance to generate biodiversity units that developers can purchase',
-      'A privately owned nature reserve managed under a voluntary conservation covenant for at least 30 years',
+      'A site where habitat is created in advance so that biodiversity units can be generated and sold on to developers',
+      'A privately owned nature reserve managed under a voluntary conservation covenant for a minimum of thirty years',
     ],
     correctAnswer: 1,
     explanation:
@@ -3357,10 +3357,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 190,
     question: 'What is the role of Natural England in relation to protected species?',
     options: [
-      "Natural England is the principal regulator responsible for preventing pollution of water, land, and air, and issuing environmental permits",
-      "Natural England is the professional body that sets standards for ecologists and publishes the EcIA guidelines",
+      'Natural England is the principal regulator responsible for preventing the pollution of water, land and air, and for issuing environmental permits to site operators across England',
+      'Natural England is the professional body that sets competence standards for practising ecologists and publishes the guidelines used for ecological impact assessment work',
       "Natural England is the government's statutory adviser on the natural environment, responsible for issuing species licences, designating protected sites, and advising on ecological matters",
-      "Natural England is the government department that sets environmental policy on agriculture, fisheries, and rural affairs",
+      'Natural England is the central government department responsible for setting national policy on agriculture, fisheries, food, forestry, flooding and rural affairs',
     ],
     correctAnswer: 2,
     explanation:
@@ -3375,9 +3375,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question:
       'What type of ecological survey would be required before demolishing an old building that may contain bat roosts?',
     options: [
-      'An eDNA water sample taken from any ponds within 500 metres of the building',
-      'A daytime walkover survey to map the habitats surrounding the building only',
-      'A desk study of historical records with no requirement for any site inspection',
+      'An eDNA water sample taken from each of the ponds lying within 500 metres of the site boundary in spring',
+      'A single daytime walkover survey mapping only the habitats immediately around the building to be demolished',
+      'A desk study of historical biological records alone, with no inspection of the building itself at any stage',
       'A preliminary roost assessment followed by dusk emergence and/or dawn re-entry surveys if potential is identified',
     ],
     correctAnswer: 3,
@@ -3393,9 +3393,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question: "What is an 'Ecological Clerk of Works' (ECoW)?",
     options: [
       'A qualified ecologist appointed to monitor construction works and ensure compliance with ecological mitigation measures and licence conditions',
-      'A local authority officer who inspects completed developments to confirm that biodiversity net gain has been delivered',
-      'A Natural England official who decides whether to grant European Protected Species licences for a development',
-      'An ecologist who carries out the preliminary ecological appraisal of a site before any planning application is made',
+      'A local authority officer who inspects completed developments to confirm that the required biodiversity net gain has been delivered',
+      'A Natural England official who decides whether a European Protected Species licence should be granted for a proposed development',
+      'An ecologist who carries out the preliminary ecological appraisal of a site before any planning application has been submitted',
     ],
     correctAnswer: 0,
     explanation:
@@ -3409,10 +3409,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 193,
     question: 'What is the purpose of wildlife-friendly fencing on a development site?',
     options: [
-      'To exclude all wildlife from a development site during construction to prevent disturbance to protected species',
+      'To exclude all wildlife from a development site for the whole of the construction phase, preventing any disturbance to protected species',
       'To maintain ecological connectivity by including features such as hedgehog gaps (13cm x 13cm) that allow small mammals to move between gardens and habitats',
-      'To provide a visual screen of native planting that improves the amenity value of a development for residents',
-      'To prevent invasive species such as Japanese knotweed from spreading between neighbouring properties',
+      'To provide a visual screen of native planting that improves the amenity value of a completed development for the residents living there',
+      'To stop invasive species such as Japanese knotweed from spreading between neighbouring properties along the boundary of a site',
     ],
     correctAnswer: 1,
     explanation:
@@ -3462,9 +3462,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     question: "What is 'habitat banking' in relation to biodiversity net gain?",
     options: [
       'A system where habitat is created or enhanced in advance, generating biodiversity units that can be sold to developers who need to meet their BNG obligations',
-      'A scheme where developers deposit a financial bond with the local authority that is returned once habitat is created on site',
-      'A register held by Natural England recording the locations of all protected habitats and species in England',
-      'A process where habitats from a development site are translocated and stored at a receptor site for future reinstatement',
+      'A scheme where a developer deposits a financial bond with the local authority that is repaid once the habitat has been created on the development site',
+      'A register held by Natural England that records the location of every protected habitat and species population found across the whole of England',
+      'A process where habitats are lifted from a development site and stored at a receptor site for later reinstatement once the works have finished',
     ],
     correctAnswer: 0,
     explanation:
@@ -3478,10 +3478,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 197,
     question: "What does the 'significant environmental aspects' concept mean in ISO 14001?",
     options: [
-      "The legal and regulatory requirements that an organisation must comply with under environmental legislation",
+      'The legal and regulatory requirements an organisation must comply with under the environmental legislation applying to its sites',
       "Elements of an organisation's activities, products, or services that interact with the environment and have a significant environmental impact",
-      "The objectives and targets an organisation sets for improving its environmental performance over time",
-      "The external factors, such as climate and location, that affect an organisation's environmental performance",
+      'The objectives and targets an organisation sets for itself in order to improve its environmental performance year on year',
+      'The external factors, such as climate, geology and location, that affect the environmental performance of a site',
     ],
     correctAnswer: 1,
     explanation:
@@ -3495,10 +3495,10 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     id: 198,
     question: "What are 'statutory biodiversity credits' under the Environment Act 2021?",
     options: [
-      'Biodiversity units that a developer earns for delivering more than the required 10% net gain on their own site',
-      'Tradable allowances that permit a developer to emit a fixed amount of greenhouse gases during construction',
+      'Biodiversity units that a developer earns for delivering more than the 10% net gain required on their own site, which can then be carried forward',
+      'Tradable allowances issued by the government that permit a developer to emit a fixed tonnage of greenhouse gases during the construction phase',
       'Credits that developers can purchase from the government as a last resort to meet their BNG obligation when on-site and off-site options have been exhausted',
-      'Units that a landowner generates by creating habitat in advance and sells directly to developers on the open market',
+      'Units that a landowner generates by creating habitat in advance and then sells directly to developers on the open market at an agreed price',
     ],
     correctAnswer: 2,
     explanation:
@@ -3532,9 +3532,9 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
       'What is the purpose of ecological monitoring after a development has been completed?',
     options: [
       'To verify that ecological mitigation and compensation measures are effective, that habitats are establishing as planned, and that species populations are being maintained',
-      'To carry out a final preliminary ecological appraisal of the site once the development has been completed',
-      'To calculate the biodiversity net gain that the development will be required to deliver under the Environment Act 2021',
-      'To identify any protected species present so that an EPS licence can be obtained before demolition begins',
+      'To carry out a final preliminary ecological appraisal of the whole site once the development has been completed and formally handed over to the client',
+      'To calculate the biodiversity net gain that the development will be required to deliver under the Environment Act 2021 before any works start on site',
+      'To identify the protected species present on the site so that a European Protected Species licence can be obtained before demolition work begins',
     ],
     correctAnswer: 0,
     explanation:
@@ -3543,5 +3543,902 @@ export const environmentalSustainabilityQuestionBank: StandardMockQuestion[] = [
     difficulty: 'intermediate',
     topic: 'Ecological monitoring',
     category: 'Biodiversity & Best Practice',
+  },
+  {
+    id: 201,
+    question:
+      'When planning a rewire, which stage of the waste hierarchy should be considered before all the others?',
+    options: [
+      'Preventing waste by ordering only what the job needs',
+      'Recycling the offcuts through a licensed contractor',
+      'Recovering energy from the waste at an incinerator',
+      'Disposing of the surplus in a general site skip',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The waste hierarchy runs prevention, preparing for reuse, recycling, other recovery, then disposal. Waste that is never created costs nothing to move, sort or tip, so accurate take-off and ordering sits at the top. Recycling is a good answer but it is lower down the hierarchy: it still needs transport, sorting and reprocessing, so it is only the best option once prevention and reuse have been ruled out.',
+    section: 'environmental-sustainability',
+    difficulty: 'basic',
+    topic: 'Waste Hierarchy',
+    category: 'Waste Management',
+  },
+  {
+    id: 202,
+    question: 'What does the abbreviation WEEE stand for in waste terms?',
+    options: [
+      'Wired Electrical and Engineered Equipment',
+      'Wasted Energy in Electrical Enclosures',
+      'Waste Electrical and Electronic Equipment',
+      'Works Electrical Emissions and Effluent',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'WEEE means Waste Electrical and Electronic Equipment, and it covers anything with a plug, a battery or a circuit that has reached end of life, from luminaires to consumer units to test instruments. The wasted energy option is a common mix-up because electricians meet the word energy so often, but WEEE is a waste stream, not an efficiency measure, and it exists so that materials are recovered rather than landfilled.',
+    section: 'environmental-sustainability',
+    difficulty: 'basic',
+    topic: 'WEEE',
+    category: 'Waste Management',
+  },
+  {
+    id: 203,
+    question:
+      'How should old fluorescent tubes removed during a lighting upgrade be handled on site?',
+    options: [
+      'Broken into the skip so they take up less space',
+      'Kept whole and sent for separate hazardous recycling',
+      'Placed loose in the general construction waste skip',
+      'Left on site for the client to put in the wheelie bin',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Fluorescent tubes contain mercury and phosphor powder, so they are handled as a separate hazardous stream and are kept intact in tube boxes or coffins until a licensed recycler collects them. Breaking them into the skip is the worst choice because it releases mercury vapour and dust straight into the breathing zone of whoever is standing over the skip, and it contaminates the whole load.',
+    section: 'environmental-sustainability',
+    difficulty: 'basic',
+    topic: 'Hazardous Waste',
+    category: 'Waste Management',
+  },
+  {
+    id: 204,
+    question:
+      'A contractor pays a man with a van to clear strip-out waste without checking his details, and the load is later fly-tipped. What is the position of the contractor?',
+    options: [
+      'Responsibility ended the moment the waste left the site',
+      'Responsibility remains because the carrier was not checked',
+      'Responsibility passed to the driver once payment was made',
+      'Responsibility sits with the landowner where it was tipped',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The waste duty of care follows the waste, not the van. The producer must check that the carrier is authorised, describe the waste accurately and keep the paperwork, and failing to do that leaves the producer answerable for where the load ended up. Believing responsibility ends at the gate is the classic error: handing waste over transfers possession, but it does not transfer the duty owed for its safe and lawful destination.',
+    section: 'environmental-sustainability',
+    difficulty: 'advanced',
+    topic: 'Duty of Care',
+    category: 'Waste Management',
+  },
+  {
+    id: 205,
+    question:
+      'Why does a skip of mixed strip-out waste usually cost more and recover less than segregated skips?',
+    options: [
+      'Mixed loads need sorting at the transfer station before recovery',
+      'Mixed loads are always classed as hazardous waste on arrival',
+      'Mixed loads are charged by volume rather than by weight only',
+      'Mixed loads must be weighed twice before they can be accepted',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Once copper, steel, plastic, plasterboard and packaging are tipped together, the operator has to pay people and plant to pull them apart again, and material that has been contaminated by dust or damp gypsum may no longer be worth reprocessing. That handling cost comes back as a higher gate fee. Calling every mixed load hazardous is wrong: mixing does not automatically make waste hazardous, it simply makes it expensive to separate and easy to spoil.',
+    section: 'environmental-sustainability',
+    difficulty: 'advanced',
+    topic: 'Waste Segregation',
+    category: 'Waste Management',
+  },
+  {
+    id: 206,
+    question:
+      'During a commercial strip-out you remove LED panels that are only two years old and fully serviceable. What does the waste hierarchy point to first?',
+    options: [
+      'Offer them for reuse in another installation or a reuse scheme',
+      'Send them straight to a WEEE recycler for material recovery',
+      'Store them until the next general skip is ordered for the site',
+      'Break them down on site to separate the aluminium housings',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Preparing for reuse sits above recycling, so a working luminaire that can go into another job, a charity refit or a reuse scheme keeps its full value and avoids the energy of remanufacture. Sending them to a WEEE recycler feels responsible and is far better than a skip, but it destroys a finished product to win back raw material, which is exactly the step the hierarchy asks you to avoid while the item still works.',
+    section: 'environmental-sustainability',
+    difficulty: 'advanced',
+    topic: 'Reuse Before Recycling',
+    category: 'Waste Management',
+  },
+  {
+    id: 207,
+    question:
+      'Which item removed during a domestic rewire is most likely to be classed as hazardous waste?',
+    options: [
+      'A length of twin and earth cable cut from the old circuits',
+      'An old sealed lead acid battery from an alarm panel',
+      'A plastic consumer unit enclosure with no components',
+      'A cardboard box that the new accessories arrived in',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Lead acid batteries contain lead and sulphuric acid, so they are a hazardous stream and go to a battery recycler rather than a mixed skip. Old cable is the tempting answer because it looks like dirty waste, but copper with PVC insulation is one of the most valuable recyclable streams on any job and is not hazardous, which is why cable is worth stripping into its own container rather than skipping.',
+    section: 'environmental-sustainability',
+    difficulty: 'intermediate',
+    topic: 'Hazardous Waste',
+    category: 'Waste Management',
+  },
+  {
+    id: 208,
+    question:
+      'You are core drilling with water suppression in a plant room. Where should the resulting slurry go?',
+    options: [
+      'Into the nearest surface water drain once it has settled',
+      'Collected and disposed of through the agreed waste route',
+      'Hosed across the yard so that it spreads out and dries off',
+      'Flushed into the foul drain because it is mostly just water',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Cutting slurry is highly alkaline and carries fine cementitious solids, so it is contained at the point of work and removed as a controlled waste. A surface water drain is the trap here because it looks like the obvious place for water, but surface water usually discharges straight to a watercourse with no treatment, so tipping slurry into it is a pollution incident even after the solids have settled.',
+    section: 'environmental-sustainability',
+    difficulty: 'advanced',
+    topic: 'Pollution Prevention',
+    category: 'Pollution Prevention',
+  },
+  {
+    id: 209,
+    question:
+      'In the current edition of BS 7671, where do energy efficiency considerations for an installation now sit?',
+    options: [
+      'In Appendix 17, which remains the informative energy annex',
+      'In Chapter 81 within the new Part 8 on functional aspects',
+      'In Chapter 82, which deals only with prosumer installations',
+      'In Part 6, alongside the requirements for periodic testing',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Appendix 17 has been deleted and its subject matter now appears as Chapter 81, energy efficiency, inside Part 8 on functional aspects. Answering Appendix 17 is understandable if you learned the earlier amendment, but that appendix no longer exists, so a specification or design note that cites it is quoting a withdrawn reference. Chapter 82 in the same part covers prosumer installations, which is a different subject.',
+    section: 'environmental-sustainability',
+    difficulty: 'advanced',
+    topic: 'Energy Efficiency',
+    category: 'Energy & Resource Efficiency',
+  },
+  {
+    id: 210,
+    question:
+      'What does Chapter 81 of BS 7671 mainly do for the designer of an installation?',
+    options: [
+      'Sets mandatory efficiency classes for every final circuit',
+      'Signposts the Building Regulations and BS HD 60364-8-1',
+      'Removes the need to consider lighting controls entirely',
+      'Requires a written energy audit before any work can start',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Chapter 81 is informative and points the reader to the Building Regulations for England and Wales, Scotland and Northern Ireland, and to BS HD 60364-8-1 for the detailed functional requirements on energy efficiency. Reading it as a set of mandatory efficiency classes overstates it: the enforceable efficiency duties for a building come from the Building Regulations, and Chapter 81 exists to make sure the designer goes and looks at them.',
+    section: 'environmental-sustainability',
+    difficulty: 'intermediate',
+    topic: 'Energy Efficiency',
+    category: 'Energy & Resource Efficiency',
+  },
+  {
+    id: 211,
+    question:
+      'A licensed contractor has removed and bagged asbestos insulating board found behind an old distribution board. How must that waste be moved around and off the workplace?',
+    options: [
+      'Double bagged, then carried openly to the yard for collection',
+      'Single bagged and placed with the general construction waste',
+      'Sealed, labelled and moved in a totally enclosed distribution system',
+      'Wrapped in polythene and left outside for the next skip run',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'The asbestos regulations require that raw asbestos and asbestos waste is not stored, received, despatched or distributed within a workplace except in a totally enclosed distribution system, and it must be properly packaged and labelled. Carrying bags openly across the yard fails that test even if the bagging itself is sound, because an unenclosed route allows a split bag to release fibres across ground that other trades then walk over.',
+    section: 'environmental-sustainability',
+    difficulty: 'advanced',
+    topic: 'Hazardous Waste',
+    category: 'Waste Management',
+  },
+  {
+    id: 212,
+    question:
+      'Why is electrical equipment kept out of the general waste stream at the end of its life?',
+    options: [
+      'Because it is bulkier than most other construction waste',
+      'Because it is always classed as clinical waste by weight',
+      'Because it cannot be transported on the public highway',
+      'Because it holds recoverable metals and harmful substances',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Electrical equipment contains copper, aluminium, steel and small quantities of precious metals worth recovering, alongside substances such as mercury, lead and flame retardants that must not be landfilled loose. Bulk is not the reason: plenty of bulky waste goes into a general skip quite lawfully, so it is the material content, not the size of the item, that puts electrical equipment into its own controlled route.',
+    section: 'environmental-sustainability',
+    difficulty: 'intermediate',
+    topic: 'WEEE',
+    category: 'Waste Management',
+  },
+  {
+    id: 213,
+    question:
+      'Why does the waste duty of care require an accurate written description of waste when it is handed over?',
+    options: [
+      'So the next holder can handle, treat and tip it lawfully',
+      'So the skip company can decide which colour skip to send',
+      'So the client can be recharged the correct disposal cost',
+      'So the driver knows which gate to use at the tip entrance',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Everyone in the chain relies on the description to decide whether they are permitted to accept the load, how to store it and where it can lawfully go, which is why a vague entry such as builders waste on a load containing lamps and batteries breaks the chain. Recharging the client is a real commercial benefit, but it is a by-product: the legal purpose of the description is safe and lawful onward handling.',
+    section: 'environmental-sustainability',
+    difficulty: 'advanced',
+    topic: 'Duty of Care',
+    category: 'Waste Management',
+  },
+  {
+    id: 214,
+    question:
+      'Chasing walls with water suppression produces a dust laden run-off. Aside from the breathing risk from crystalline silica, why must that run-off be contained?',
+    options: [
+      'Because fine solids and alkalinity harm drains and watercourses',
+      'Because water used on a site must be metered before it is used',
+      'Because damp dust is heavier and so becomes harder to sweep up',
+      'Because the run-off would otherwise cool the chaser motor down',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Water suppression solves the health problem by wetting the dust, but it converts an airborne hazard into a liquid one: the run-off carries fine cementitious solids and is strongly alkaline, which blocks drains and kills aquatic life if it reaches a watercourse. Treating the wetted dust as merely a housekeeping nuisance is the trap, because the environmental risk starts exactly where the health control ends.',
+    section: 'environmental-sustainability',
+    difficulty: 'advanced',
+    topic: 'Pollution Prevention',
+    category: 'Pollution Prevention',
+  },
+  {
+    id: 215,
+    question:
+      'A wholesaler delivers cable on timber drums and accessories in cardboard cartons. Which handling is most environmentally sound?',
+    options: [
+      'Burn the cardboard on site and keep the drums for benches',
+      'Skip both together to save trips back to the wholesale branch',
+      'Leave the drums with the client and skip all of the cardboard',
+      'Return the drums to the wholesaler and bale up the cardboard',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Cable drums are a returnable asset that the wholesaler reconditions and refills, so sending them back is reuse rather than recycling, and baled clean cardboard is a saleable recyclate instead of a skip charge. Burning cardboard on site is the answer to avoid outright: it releases smoke and particulates, risks fire spread and destroys a material that has a ready recycling route.',
+    section: 'environmental-sustainability',
+    difficulty: 'intermediate',
+    topic: 'Materials and Packaging',
+    category: 'Energy & Resource Efficiency',
+  },
+  {
+    id: 216,
+    question:
+      'A strip-out yields several hundred metres of sound galvanised tray and trunking. Which action best reflects the waste hierarchy?',
+    options: [
+      'Cut it into short lengths so more of it fits into the skip',
+      'Set aside sound lengths for reuse and scrap only the rest',
+      'Send the whole lot to the scrap merchant as mixed metal',
+      'Leave it in place because removal costs more than it saves',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Straight, undamaged containment is a finished product that can be refitted on the next job, so keeping it whole preserves the manufacturing energy already invested and only the bent or corroded sections drop to the scrap route. Sending everything to the scrap merchant looks responsible because the steel is recycled, but melting a usable length back to raw metal is a step down the hierarchy and loses most of its value.',
+    section: 'environmental-sustainability',
+    difficulty: 'advanced',
+    topic: 'Reuse Before Recycling',
+    category: 'Waste Management',
+  },
+  {
+    id: 217,
+    question:
+      'Which measure most directly reduces the energy that an office lighting installation consumes in use?',
+    options: [
+      'Increasing the cable size to cut the volt drop on the run',
+      'Fitting presence detection and zonal control to the circuits',
+      'Replacing the MCBs with devices of a lower rated current',
+      'Moving the distribution board closer to the luminaire rows',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Presence detection and zonal control cut the hours that luminaires burn in empty or daylit areas, and that run time is what drives consumption once efficient lamps are already fitted. Upsizing the cable is the attractive distractor because it genuinely lowers conductor losses, but those losses are a very small fraction of lighting energy, so it can never match switching off lights nobody is using.',
+    section: 'environmental-sustainability',
+    difficulty: 'advanced',
+    topic: 'Energy Efficiency',
+    category: 'Energy & Resource Efficiency',
+  },
+  {
+    id: 218,
+    question: 'Chapter 82 of Part 8 in BS 7671 is concerned with what subject?',
+    options: [
+      'Prosumer installations that both consume and generate energy',
+      'Periodic inspection intervals for commercial installations',
+      'Protective device selection for high fault level supplies',
+      'Special locations such as swimming pools and sauna heaters',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Part 8 covers functional aspects, with Chapter 81 on energy efficiency and Chapter 82 on prosumer electrical installations, meaning premises that both take energy from the network and produce it locally through generation or storage. Periodic inspection is the plausible wrong answer because it sounds like an operational subject, but it belongs to Part 6 on inspection and testing, not to Part 8.',
+    section: 'environmental-sustainability',
+    difficulty: 'intermediate',
+    topic: 'Prosumer Installations',
+    category: 'Energy & Resource Efficiency',
+  },
+  {
+    id: 219,
+    question:
+      'Before a subcontractor removes waste from your site, which check gives the strongest assurance that the duty of care is met?',
+    options: [
+      'That the vehicle is taxed and shows a company name on it',
+      'That the price quoted is in line with other local firms',
+      'That the carrier is registered and the paperwork completed',
+      'That the driver has worked on the site earlier in the week',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Confirming the carrier is registered to move that waste and completing an accurate transfer record is the evidence that the duty of care was discharged, and it is the first thing an enforcement officer asks to see if the load turns up in a lane. Signage on the vehicle proves nothing at all: a name and a phone number can be a magnetic panel, and it says nothing about registration or destination.',
+    section: 'environmental-sustainability',
+    difficulty: 'advanced',
+    topic: 'Duty of Care',
+    category: 'Waste Management',
+  },
+  {
+    id: 220,
+    question:
+      'A site generator supplying temporary power leaks diesel onto hardstanding beside a gully. What is the correct immediate response?',
+    options: [
+      'Wash the spill down with a hose so it disperses in the rain',
+      'Cover the spill with sand and sweep it into the gully later',
+      'Report it at the end of the shift so work is not disrupted',
+      'Stop the leak, block the gully and absorb with a spill kit',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Stopping the source, protecting the drain and soaking up the fuel in that order keeps the oil out of the water, and the used absorbent then leaves site as a contaminated waste. Hosing the spill is the instinctive reaction and the most damaging one, because water does not remove the oil, it simply carries a thin film into the drainage system where a small spill becomes a reportable pollution incident.',
+    section: 'environmental-sustainability',
+    difficulty: 'advanced',
+    topic: 'Pollution Prevention',
+    category: 'Pollution Prevention',
+  },
+  {
+    id: 221,
+    question:
+      'An emergency lighting upgrade fills several boxes with used compact fluorescent lamps. Why are these collected separately from other electrical waste?',
+    options: [
+      'They are lighter and so distort the weight of the load',
+      'They cannot lawfully be moved by a registered waste carrier',
+      'They contain mercury which is released if the glass breaks',
+      'They are made of glass which no recycler is able to process',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Gas discharge lamps rely on a small mercury charge, and mercury is a neurotoxin that affects the central nervous system, so intact collection in dedicated containers keeps the vapour and phosphor powder contained until specialist treatment. The glass answer is wrong in both halves: lamp glass is readily processed once separated, and it is the mercury rather than the glass that drives the separate route.',
+    section: 'environmental-sustainability',
+    difficulty: 'advanced',
+    topic: 'Hazardous Waste',
+    category: 'Waste Management',
+  },
+  {
+    id: 222,
+    question: 'Which sequence sets out the waste hierarchy in the correct order?',
+    options: [
+      'Recycling, prevention, reuse, other recovery, then disposal',
+      'Reuse, prevention, disposal, recycling, then other recovery',
+      'Disposal, recovery, recycling, reuse, then prevention last',
+      'Prevention, reuse, recycling, other recovery, then disposal',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'The hierarchy runs prevention, preparing for reuse, recycling, other recovery such as energy from waste, and disposal as the last resort. Putting recycling at the top is the most common slip because recycling is the step people see and talk about most, but recycling still consumes energy to collect and reprocess, so it only becomes the right answer once the item cannot be avoided or reused.',
+    section: 'environmental-sustainability',
+    difficulty: 'intermediate',
+    topic: 'Waste Hierarchy',
+    category: 'Waste Management',
+  },
+  {
+    id: 223,
+    question:
+      'A labourer tips one box of used lamps into an otherwise clean skip of inert waste. What is the practical consequence?',
+    options: [
+      'The load is unchanged because the quantity is very small',
+      'The load may be rejected or reclassified and charged more',
+      'The load must be weighed again before it leaves the site',
+      'The load becomes exempt from the transfer note paperwork',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A hazardous item contaminates whatever it is mixed with, so a clean inert load can be turned away at the gate or re-graded to a higher charge band, and the recyclable value of the rest is lost. Assuming a small quantity is harmless is the trap, because classification follows what the load contains rather than how much of it there is, and one box is enough to change the description of the whole skip.',
+    section: 'environmental-sustainability',
+    difficulty: 'advanced',
+    topic: 'Waste Segregation',
+    category: 'Waste Management',
+  },
+  {
+    id: 224,
+    question:
+      'BS HD 60364-8-1, referenced by Chapter 81, goes beyond efficient equipment to cover which further aspect of an installation?',
+    options: [
+      'The colour coding used for identifying conductors on site',
+      'The maximum permitted length of a final ring circuit run',
+      'Local production and storage of energy within the premises',
+      'The frequency of insulation resistance tests after handover',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'The harmonised document sets out requirements, measures and recommendations for the design, erection, operation and verification of low voltage installations, expressly including local production and storage of energy, which is why it sits alongside the prosumer material in Part 8. Conductor identification is a tempting pick because it also concerns the whole installation, but it is a safety and identification matter dealt with elsewhere.',
+    section: 'environmental-sustainability',
+    difficulty: 'advanced',
+    topic: 'Energy Efficiency',
+    category: 'Energy & Resource Efficiency',
+  },
+  {
+    id: 225,
+    question:
+      'Which ordering decision does most to cut material waste on a large containment installation?',
+    options: [
+      'Ordering standard lengths and setting out to suit them',
+      'Ordering extra so nobody has to wait for a further call',
+      'Ordering from the branch that offers the deepest discount',
+      'Ordering everything on day one to keep the site tidy later',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Designing the setting out around the lengths that are actually manufactured means fewer cuts, shorter offcuts and less scrap heading for the metal skip, which is prevention at the top of the hierarchy. Ordering extra feels like good site management and does avoid downtime, but surplus that never gets fitted usually ends up damaged, buried in a container or skipped at the end of the job.',
+    section: 'environmental-sustainability',
+    difficulty: 'intermediate',
+    topic: 'Materials and Packaging',
+    category: 'Energy & Resource Efficiency',
+  },
+  {
+    id: 226,
+    question:
+      'Where should water used to wash out tools and buckets on a fit-out be emptied?',
+    options: [
+      'Down the nearest external gully once the solids have sunk',
+      'Into a designated wash-out point or a suitable container',
+      'Onto soft ground away from the building so it soaks away',
+      'Into the site toilet cistern to save on the water charge',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Wash water carries cement, fillers and solvent residues, so it goes to a controlled wash-out point or a container for proper disposal rather than any drain. Soaking it into soft ground is the answer that sounds natural and is still wrong, because contaminants pass through the soil into groundwater, and an unauthorised discharge to ground is treated as seriously as one to a watercourse.',
+    section: 'environmental-sustainability',
+    difficulty: 'advanced',
+    topic: 'Pollution Prevention',
+    category: 'Pollution Prevention',
+  },
+  {
+    id: 227,
+    question:
+      'A site runs a waste segregation plan with separate skips. What is the most useful thing an electrician can do to support it?',
+    options: [
+      'Wait for the site manager to sort the skips at the end',
+      'Use a single skip and let the operator separate it later',
+      'Keep cable, cardboard and lamps in separate labelled bins',
+      'Ask for a bigger skip so nothing has to be compacted down',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Segregation only works at the point where the waste is generated, so small labelled bins at the work face keep each stream clean and make the skip discipline effortless. Relying on the operator to separate the load afterwards is where segregation plans die, because once dust, damp plasterboard and packaging have mixed, the material can no longer be pulled back out at a sensible cost.',
+    section: 'environmental-sustainability',
+    difficulty: 'intermediate',
+    topic: 'Site Waste Practice',
+    category: 'Environmental Awareness',
+  },
+  {
+    id: 228,
+    question:
+      'Sealed batteries removed from a central battery emergency lighting system are stacked on a pallet in the yard. What is the main environmental concern?',
+    options: [
+      'Damaged cells can leak electrolyte onto ground and drains',
+      'The pallet will obstruct the loading area for other trades',
+      'The batteries will lose their remaining charge over time',
+      'The stack may exceed the safe working load of the pallet',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Batteries hold acid or alkaline electrolyte and heavy metals, so a cracked case in an open yard puts a corrosive, metal bearing liquid onto hardstanding that usually drains to a surface water gully. Obstruction and pallet loading are genuine site safety issues, but the question asks about environmental impact, and only the leak places a pollutant into the drainage system.',
+    section: 'environmental-sustainability',
+    difficulty: 'advanced',
+    topic: 'Hazardous Waste',
+    category: 'Waste Management',
+  },
+  {
+    id: 229,
+    question:
+      'Why are the capacitors in some older fluorescent fittings treated as a separate hazardous item rather than as general electrical waste?',
+    options: [
+      'They may hold a residual charge that trips the skip scales',
+      'They are made of aluminium which contaminates steel scrap',
+      'They are sealed units that recyclers will not accept at all',
+      'They may hold PCB fluid which is a persistent pollutant',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Capacitors in older luminaires can be filled with polychlorinated biphenyls, which persist in the environment, accumulate in living tissue and demand specialist destruction rather than ordinary recycling. Residual charge is a real hazard when handling capacitors and it deserves respect, but it is a shock risk to the person working on the fitting, not the reason the item leaves site by a controlled route.',
+    section: 'environmental-sustainability',
+    difficulty: 'advanced',
+    topic: 'Hazardous Waste',
+    category: 'Waste Management',
+  },
+  {
+    id: 230,
+    question:
+      'What does it mean to say an electrician remains a waste producer with duties that continue after collection?',
+    options: [
+      'The producer must store the waste until it is fully recycled',
+      'The producer must take reasonable steps to check where it goes',
+      'The producer must transport all waste in their own vehicle',
+      'The producer must obtain a permit before any work can begin',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The producer has to satisfy themselves that the waste is handed to an authorised person, described properly and bound for a lawful destination, and keep the record that shows it. The idea that everything must be moved in your own vehicle is a misreading: using a carrier is entirely normal, and the duty is about checking that the carrier is authorised rather than about doing the haulage yourself.',
+    section: 'environmental-sustainability',
+    difficulty: 'advanced',
+    topic: 'Duty of Care',
+    category: 'Waste Management',
+  },
+  {
+    id: 231,
+    question:
+      'A three phase distribution board is removed during a strip-out. What is the correct end of life route for it?',
+    options: [
+      'General skip because the enclosure is only painted steel',
+      'Scrap metal skip after the busbars are cut out on site',
+      'A WEEE route so components and metals are recovered',
+      'Left with the client because it remains their property',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'A distribution board is electrical equipment complete with protective devices, so it goes down the WEEE route where the devices, copper busbar and steel are separated and recovered under controlled conditions. The scrap metal skip is the plausible wrong answer because the enclosure really is recyclable steel, but stripping it on site destroys reusable devices and leaves plastics and small components going wherever the metal goes.',
+    section: 'environmental-sustainability',
+    difficulty: 'intermediate',
+    topic: 'WEEE',
+    category: 'Waste Management',
+  },
+  {
+    id: 232,
+    question:
+      'How does a prosumer installation with photovoltaic generation and battery storage reduce the impact of a building?',
+    options: [
+      'It removes the need for any protective devices on supply',
+      'It lowers the current rating needed for every final circuit',
+      'It displaces imported energy and shifts demand off peak',
+      'It guarantees that the building becomes carbon neutral',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Generating on site means less energy is drawn from the network, and storage lets that energy be used when the building needs it rather than when the sun provides it, easing demand at the times when the most carbon intensive plant runs. Claiming carbon neutrality overreaches: the building still imports at times, and the panels, cells and inverter all carry an embodied impact of their own.',
+    section: 'environmental-sustainability',
+    difficulty: 'advanced',
+    topic: 'Prosumer Installations',
+    category: 'Energy & Resource Efficiency',
+  },
+  {
+    id: 233,
+    question:
+      'A ventilation fan runs at full speed all day from a fixed supply. Which change cuts its energy use the most?',
+    options: [
+      'Fitting a larger cable to the fan to reduce the losses',
+      'Fitting a lower rated fuse in the supply to the fan unit',
+      'Fitting an isolator closer to the fan for easier access',
+      'Fitting a variable speed drive matched to actual demand',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'A drive lets the fan run only as fast as the building needs, and because fan power falls steeply as speed drops, even a modest reduction in speed produces a large saving over a year. Fitting a lower rated fuse changes nothing about consumption at all: protective devices limit fault and overload current, they do not throttle the load, and undersizing one simply causes nuisance operation.',
+    section: 'environmental-sustainability',
+    difficulty: 'intermediate',
+    topic: 'Energy Efficiency',
+    category: 'Energy & Resource Efficiency',
+  },
+  {
+    id: 234,
+    question:
+      'When estimating the annual energy use of an installation, which factor is most often overlooked?',
+    options: [
+      'The number of ways available in the distribution board',
+      'The colour of the containment used across the ceiling',
+      'The standing losses of control gear and standby loads',
+      'The height at which the luminaires have been mounted',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Drivers, transformers, controls and equipment left in standby draw small amounts continuously, and continuous small loads add up to a large annual figure precisely because nobody notices them. Board way count is the tempting answer because it feels like a design number, but spare ways consume nothing, so capacity in the board has no bearing on the energy the installation actually uses.',
+    section: 'environmental-sustainability',
+    difficulty: 'advanced',
+    topic: 'Energy Efficiency',
+    category: 'Energy & Resource Efficiency',
+  },
+  {
+    id: 235,
+    question:
+      'Which practice reduces the amount of cable that ends up as unusable offcuts?',
+    options: [
+      'Measuring the run and cutting from the drum to suit',
+      'Pulling generous loops at each end to allow for errors',
+      'Cutting several standard lengths before starting work',
+      'Using the shortest drum in the van whatever the run is',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Measuring first and cutting to the measured run leaves the remainder on the drum where it stays usable for the next circuit, which is prevention rather than recycling. Cutting standard lengths in advance is how short ends are created: any run that does not match the guess leaves a tail too short for the next job, and those tails are exactly what fills the scrap bin.',
+    section: 'environmental-sustainability',
+    difficulty: 'intermediate',
+    topic: 'Materials and Packaging',
+    category: 'Energy & Resource Efficiency',
+  },
+  {
+    id: 236,
+    question:
+      'A job needs several wholesaler collections every week. Which change gives the biggest environmental gain?',
+    options: [
+      'Sending a different operative each time to share the miles',
+      'Collecting at the end of the day so the roads are clearer',
+      'Using a larger van so the load is never close to the limit',
+      'Consolidating orders into fewer planned deliveries to site',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Fewer, fuller journeys cut fuel burn, emissions and lost labour at the same time, and planning materials a week ahead is what makes consolidation possible. A larger van is the seductive answer because payload sounds efficient, but running a bigger vehicle on the same number of trips increases fuel used per journey rather than reducing the number of journeys made.',
+    section: 'environmental-sustainability',
+    difficulty: 'advanced',
+    topic: 'Transport and Logistics',
+    category: 'Energy & Resource Efficiency',
+  },
+  {
+    id: 237,
+    question:
+      'A lithium ion power tool battery has failed on site. How should it be dealt with?',
+    options: [
+      'Put in the general skip once it is fully discharged first',
+      'Taken to a battery collection point for proper recycling',
+      'Kept in the van until it has cooled down and then binned',
+      'Split open so that the cells can be checked before tipping',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Lithium cells go to a battery take back or collection point where the lithium, cobalt and copper are recovered and the fire risk is managed by people equipped for it. Discharging before skipping does not make it safe: a damaged cell can still enter thermal runaway, and crushed batteries in a skip or a refuse vehicle are a recognised cause of waste industry fires.',
+    section: 'environmental-sustainability',
+    difficulty: 'intermediate',
+    topic: 'Hazardous Waste',
+    category: 'Waste Management',
+  },
+  {
+    id: 238,
+    question:
+      'Cutting slurry has reached a surface water drain despite the controls in place. What should happen next?',
+    options: [
+      'Note it in the site diary and continue with the work',
+      'Wash the drain through with clean water to dilute it',
+      'Wait to see whether discolouration appears outside',
+      'Stop work, contain what you can and report it at once',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Stopping the source, containing the spread and reporting immediately gives the site the chance to isolate or block downstream before the discharge reaches open water, and early reporting is treated very differently from a discovery made later. Flushing the drain through is the instinct to resist, because dilution does not remove the pollutant, it simply pushes more of it further along the system.',
+    section: 'environmental-sustainability',
+    difficulty: 'advanced',
+    topic: 'Pollution Prevention',
+    category: 'Pollution Prevention',
+  },
+  {
+    id: 239,
+    question:
+      'Chapter 81 sends the designer to the Building Regulations. Which subject is listed there as relevant to electrical installers?',
+    options: [
+      'Energy efficient lighting within the building being served',
+      'The minimum size of service head for a new connection',
+      'The rating of the cut-out fuse fitted by the distributor',
+      'The interval between periodic inspections of the system',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Energy efficient lighting is one of the items the Building Regulations bring within the scope of the installer, covering lamp efficacy and the controls that limit run time. Service heads and cut-out fuses are the plausible distractors, but that equipment belongs to the distributor and sits on the supply side of the origin, outside both the Building Regulations duty and the installation itself.',
+    section: 'environmental-sustainability',
+    difficulty: 'intermediate',
+    topic: 'Energy Efficiency',
+    category: 'Energy & Resource Efficiency',
+  },
+  {
+    id: 240,
+    question:
+      'A consumer unit change leaves the old unit, a bag of cable offcuts, packaging and two old smoke alarms. Which split applies the hierarchy properly?',
+    options: [
+      'Everything into one skip and let the operator sort it out',
+      'Unit and alarms to WEEE, cable to metal, card to recycling',
+      'Unit to scrap, offcuts to landfill, packaging burnt on site',
+      'Unit stored in the van and all the rest into a general skip',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Each stream has a route that recovers value: the board and the alarms are electrical equipment for the WEEE route, ionisation alarms in particular needing specialist handling, cable is a high value metal recyclate and clean card is straightforward to recycle. One mixed skip is the worst option because it converts four clean streams into a single contaminated load that costs more and recovers least.',
+    section: 'environmental-sustainability',
+    difficulty: 'advanced',
+    topic: 'Waste Segregation',
+    category: 'Waste Management',
+  },
+  {
+    id: 241,
+    question:
+      'What must the written record that accompanies a transfer of waste to a carrier contain?',
+    options: [
+      'An accurate description of the waste and both parties named',
+      'An estimate of the resale value of the metals in the load',
+      'A photograph of the skip taken before it leaves the site',
+      'A copy of the insurance certificate held by the site owner',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The transfer record identifies who handed the waste over, who took it, and exactly what it is, so that every later holder can act lawfully and the trail can be followed if the load goes astray. Resale value has no place on it: the paperwork exists to describe the material and the chain of custody, not to record the commercial worth of what is inside the container.',
+    section: 'environmental-sustainability',
+    difficulty: 'advanced',
+    topic: 'Duty of Care',
+    category: 'Waste Management',
+  },
+  {
+    id: 242,
+    question:
+      'A fit-out arrives with every accessory individually boxed and the pallets shrink wrapped. What is the best first step to cut packaging waste?',
+    options: [
+      'Burn the shrink wrap because it takes up skip volume',
+      'Bag all the packaging together for the general skip',
+      'Ask the supplier for bulk packed items and returnable crates',
+      'Store the packaging in the unit until the job is finished',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Packaging is designed into the supply chain long before it reaches site, so asking the supplier for bulk packs and returnable crates prevents the waste rather than managing it, which is the top of the hierarchy. Bagging everything for the general skip is only tidying: the same volume still leaves site, and clean card and film that could have been recycled are lost inside a mixed load.',
+    section: 'environmental-sustainability',
+    difficulty: 'intermediate',
+    topic: 'Materials and Packaging',
+    category: 'Energy & Resource Efficiency',
+  },
+  {
+    id: 243,
+    question:
+      'Waste that cannot be prevented, reused or recycled is sent for energy recovery rather than landfill. Where does that sit in the hierarchy?',
+    options: [
+      'Above recycling because energy is a more useful output',
+      'At the same level as reuse since the item is consumed',
+      'Outside the hierarchy because the waste is destroyed',
+      'Below recycling but above disposal as other recovery',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Energy from waste counts as other recovery, ranked beneath recycling because burning a material destroys it while recycling keeps it circulating, yet ranked above landfill because at least some useful output is obtained. Placing it above recycling is the classic error made when energy sounds valuable, but combustion is a one way process and the material can never be recovered afterwards.',
+    section: 'environmental-sustainability',
+    difficulty: 'advanced',
+    topic: 'Waste Hierarchy',
+    category: 'Waste Management',
+  },
+  {
+    id: 244,
+    question:
+      'Half used cans of expanding foam and tins of cable lubricant are left at the end of a job. How should they be handled?',
+    options: [
+      'Emptied out on site so the containers can be recycled',
+      'Left in the plant room for the next contractor to use',
+      'Kept for reuse if sound, or disposed of as chemical waste',
+      'Punctured to release the pressure and put in the metal skip',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Sound, labelled product goes back into stock and gets used, and anything spoiled or unlabelled leaves as a chemical waste with its hazard properly declared. Emptying the cans to recycle the tin is the trap: the container is only clean once the contents have gone somewhere, and squirting foam or lubricant onto the ground creates a ground contamination problem to save a skip charge.',
+    section: 'environmental-sustainability',
+    difficulty: 'advanced',
+    topic: 'Hazardous Waste',
+    category: 'Waste Management',
+  },
+  {
+    id: 245,
+    question:
+      'A client asks for a like for like replacement of an ageing lighting scheme. What is the most useful contribution an electrician can make?',
+    options: [
+      'Fit the same equipment because that is what was asked for',
+      'Quote only for the cheapest fittings available that week',
+      'Refuse the work unless the client agrees to full controls',
+      'Set out the running cost and options for efficient fittings',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'The person on site is the one who knows what is fitted and what it costs to run, so presenting the running cost alongside an efficient alternative lets the client make an informed choice and often wins better work. Simply fitting like for like is the passive option that locks in years of unnecessary consumption, and refusing the job outright helps nobody and just sends it to someone less interested.',
+    section: 'environmental-sustainability',
+    difficulty: 'intermediate',
+    topic: 'Reducing Impact',
+    category: 'Environmental Awareness',
+  },
+  {
+    id: 246,
+    question:
+      'On a repeat unit fit-out, which approach designs waste out before anyone lifts a tool?',
+    options: [
+      'Standardising module lengths and prefabricating assemblies',
+      'Ordering ten per cent extra of every item to allow for cuts',
+      'Booking a larger skip so waste can be handled in one go',
+      'Allocating a labourer to sweep and clear the units daily',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Repeating identical modules means the cuts are worked out once, made in controlled conditions and repeated with almost no offcut, which prevents waste rather than collecting it. A bigger skip and a dedicated labourer both improve housekeeping, but neither reduces the quantity of material that becomes waste, and a larger skip simply raises the ceiling on how much can be thrown away.',
+    section: 'environmental-sustainability',
+    difficulty: 'advanced',
+    topic: 'Designing Out Waste',
+    category: 'Energy & Resource Efficiency',
+  },
+  {
+    id: 247,
+    question:
+      'You must cut chases in dense blockwork. Which control best protects both health and the surroundings?',
+    options: [
+      'Dry cutting with a dust mask and sweeping up afterwards',
+      'Dry cutting outdoors so the dust blows away from the work',
+      'On-tool extraction with a suitable class of vacuum unit',
+      'Water suppression with the run-off left to soak into soil',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'On-tool extraction captures the respirable crystalline silica at source and collects it as a dry, contained waste, so it protects the lungs without creating a slurry that has to be caught and disposed of. Water suppression is a legitimate health control and still loses here, because the option described lets the run-off soak into the ground and simply moves the problem from the air to the soil.',
+    section: 'environmental-sustainability',
+    difficulty: 'intermediate',
+    topic: 'Pollution Prevention',
+    category: 'Pollution Prevention',
+  },
+  {
+    id: 248,
+    question:
+      'Fluorescent tubes are waiting for collection in a busy corridor of an occupied building. What is the correct arrangement?',
+    options: [
+      'Bundled and taped together against the corridor wall',
+      'Left in an open bin so it can be topped up each day',
+      'Stood upright in a corner behind a warning notice',
+      'Boxed in a closed container in a controlled storage area',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Hazardous waste is kept in a closed, labelled container in a designated area where the public and other trades cannot knock it over, which keeps the tubes intact until the specialist collection. Bundling them against a corridor wall is the everyday habit worth breaking, because one trolley or ladder tipped into the bundle releases mercury and glass into an occupied space.',
+    section: 'environmental-sustainability',
+    difficulty: 'advanced',
+    topic: 'Hazardous Waste',
+    category: 'Waste Management',
+  },
+  {
+    id: 249,
+    question:
+      'Why does maintaining and repairing existing equipment usually beat replacing it on environmental grounds?',
+    options: [
+      'It keeps the embodied energy of the item in useful service',
+      'It always costs the client less than fitting a new item',
+      'It removes the need to test the circuit after the work',
+      'It transfers the disposal duty back to the manufacturer',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Every item carries the energy and raw material used to make and transport it, and repair keeps that investment working instead of writing it off and starting again with a new product. The cost argument is attractive but not reliable: repair is sometimes dearer than replacement, and a badly worn or obsolete item may be better replaced, which is why the environmental case rests on embodied impact.',
+    section: 'environmental-sustainability',
+    difficulty: 'intermediate',
+    topic: 'Reducing Impact',
+    category: 'Environmental Awareness',
+  },
+  {
+    id: 250,
+    question:
+      'Across a whole project, where does an electrician have the greatest influence on environmental impact?',
+    options: [
+      'In the choice of which skip company collects the waste',
+      'In how neatly the finished installation has been dressed',
+      'In the brand of accessories chosen from the wholesaler',
+      'In design, ordering and segregation decisions made early',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'What gets specified, how much is ordered and how waste is separated at the work face are all settled long before the skip is booked, and those early decisions determine how much material is consumed and how much of it can be recovered. Choosing the skip company matters at the margin, but by the time the skip arrives the quantity and the mix of the waste have already been decided.',
+    section: 'environmental-sustainability',
+    difficulty: 'advanced',
+    topic: 'Reducing Impact',
+    category: 'Environmental Awareness',
   },
 ];

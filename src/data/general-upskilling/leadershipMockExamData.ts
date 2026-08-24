@@ -61,9 +61,9 @@ export const leadershipQuestionBank: StandardMockQuestion[] = [
     id: 3,
     question: 'When delegating a task, a leader should always ensure the team member understands:',
     options: [
-      'Only the deadline, so they can plan their own approach to the work',
-      'Just the technical method, since the reason for the task is not their concern',
-      'Who to report any problems to, with the rest left to their own judgement',
+      'The deadline and nothing else, since planning the approach is entirely their responsibility',
+      'The technical method alone, since the reason behind the task is of no concern to them',
+      'Who to report problems to, with every other decision left to their own judgement',
       'What needs to be done, why it matters, the expected standard, the deadline, and what authority they have',
     ],
     correctAnswer: 3,
@@ -77,9 +77,9 @@ export const leadershipQuestionBank: StandardMockQuestion[] = [
     question: 'The five whys technique is primarily used for:',
     options: [
       'Identifying the root cause of a problem by asking "why" repeatedly',
-      'Writing method statements for complex tasks',
-      'Conducting employee performance reviews',
-      'Planning the weekly programme for the team',
+      'Writing method statements for complex or high-risk site tasks',
+      'Conducting formal employee performance and appraisal reviews',
+      'Planning the weekly work programme and labour for the team',
     ],
     correctAnswer: 0,
     explanation:
@@ -154,10 +154,10 @@ export const leadershipQuestionBank: StandardMockQuestion[] = [
     question:
       'When a team member is consistently underperforming, the first step a leader should take is:',
     options: [
-      'Report them to HR without speaking to them first',
+      'Report the matter straight to HR without speaking to the person concerned first',
       'Have a private, direct conversation to understand the cause and set clear expectations',
-      'Reassign their work to more capable team members',
-      'Begin formal disciplinary proceedings immediately',
+      'Reassign their work to more capable team members without discussing it with them',
+      'Begin formal disciplinary proceedings immediately without any prior warning',
     ],
     correctAnswer: 1,
     explanation:
@@ -200,9 +200,9 @@ export const leadershipQuestionBank: StandardMockQuestion[] = [
     question: 'A well-structured site report should include:',
     options: [
       'What happened, where, when, who was involved, what action was taken, and what follow-up is needed',
-      'Only your personal opinion on who was at fault for the incident',
-      'A detailed costing of the works, with the facts of the event left out',
-      'Just the final outcome, since the background detail is rarely needed',
+      'Your personal opinion on who was at fault, with the factual sequence left out entirely',
+      'A detailed costing of the works affected, with the facts of the event omitted entirely',
+      'The final outcome alone, since the background detail is rarely of any use afterwards',
     ],
     correctAnswer: 0,
     explanation:
@@ -229,10 +229,10 @@ export const leadershipQuestionBank: StandardMockQuestion[] = [
     id: 14,
     question: 'The most effective way to build trust with a new team is:',
     options: [
-      'Assert your authority early by being firm and keeping your distance',
-      'Avoid admitting any gaps in your knowledge so you appear fully competent',
+      'Assert your authority from day one, stay firm at all times, and keep your distance',
+      'Never admit any gap in your knowledge, so that you always appear fully competent',
       'Be consistently fair, follow through on commitments, and admit when you do not know something',
-      'Promise generous rewards quickly to win the team over from the start',
+      'Promise generous rewards immediately, so the team is won over from the very start',
     ],
     correctAnswer: 2,
     explanation:

@@ -1,4 +1,5 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
+import ReferenceMethodCapacityChecker from '@/components/seo/ReferenceMethodCapacityChecker';
 import { CalculatorSurface } from '@/components/calculators/shared';
 import CableDeratingCalculator from '@/components/apprentice/calculators/CableDeratingCalculator';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
@@ -149,7 +150,10 @@ const sections = [
     heading: 'What Are Installation Reference Methods?',
     content: (
       <>
-        <p className="text-white">
+        {/* The long tail of this page's queries is cable current ratings, not
+            the methods themselves — people arrive here chasing a figure. */}
+        <ReferenceMethodCapacityChecker />
+        <p className="mt-6 text-white">
           Already know which method applies and just need the number?{' '}
           <a
             href="#calculator"

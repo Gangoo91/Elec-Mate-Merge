@@ -98,9 +98,9 @@ export const rcdTroubleshootingQuizData: QuizQuestion[] = [
     question: 'How should borrowed neutral circuits be handled during RCD troubleshooting?',
     options: [
       'Isolate all circuits sharing neutrals together',
-      'Test each circuit independently',
-      'Ignore neutral arrangements',
-      'Test neutrals separately from lines',
+      'Test each affected circuit independently',
+      'Isolate only the circuit that is tripping',
+      'Disconnect the neutrals and test lines alone',
     ],
     correctAnswer: 0,
     explanation:

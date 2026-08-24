@@ -368,7 +368,7 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Escape route lighting:</strong> Escape route luminaires must provide a
-                minimum maintained illuminance of 1 lux at floor level along the centreline of the
+                minimum maintained illuminance of 1 lux at floor level across the full width of the
                 escape route, with a uniformity ratio (minimum to average) of not less than 1:40.
                 Luminaires must be positioned at every change of direction, at every exit door, at
                 stairways (at each landing and at each change of direction), and at every fire call

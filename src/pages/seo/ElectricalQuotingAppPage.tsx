@@ -140,7 +140,7 @@ export default function ElectricalQuotingAppPage() {
       'AI quoting app for UK electricians: real trade material prices, labour costs and instant PDF quotes for rewires, CU upgrades, EICRs and EV chargers.',
     breadcrumbs: [
       { name: 'Home', url: '/' },
-      { name: 'Electrical Quoting App', url: '/tools/electrical-quoting-app' },
+      { name: 'Electrical Quoting App', url: '/electrical-quoting-app' },
     ],
     dateModified: '2026-06-10',
     author: 'Andrew Moore',

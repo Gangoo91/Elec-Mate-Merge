@@ -167,7 +167,7 @@ export const eicCommonMistakesConfig: GeneratedGuideConfig = {
       category: 'Certificate',
     },
     {
-      href: '/tools/electrical-quoting-app',
+      href: '/electrical-quoting-app',
       title: 'Electrical Quoting App',
       description: 'Turn follow-on work into a clear price quickly.',
       icon: 'Calculator',

@@ -606,7 +606,7 @@ const sections = [
                 </strong>{' '}
                 Another competent person scheme provider, offering similar registration and
                 self-certification rights to NICEIC. See{' '}
-                <SEOInternalLink href="/guides/niceic-vs-napit">
+                <SEOInternalLink href="/niceic-vs-napit-comparison">
                   NICEIC vs NAPIT comparison
                 </SEOInternalLink>
                 .

@@ -12,11 +12,11 @@ export const EmergencyLightingQuizSection3_1 = () => {
   const questions = [
     {
       id: 1,
-      question: 'What is the minimum illuminance required along the centre line of an escape route?',
+      question: 'What is the minimum illuminance required across the full width of an escape route?',
       options: ['0.5 lux', '1 lux', '2 lux', '5 lux'],
       correctAnswer: 1,
       explanation:
-        'BS 5266-1 requires a minimum of 1 lux along the centre line of an escape route to allow safe movement during evacuation.',
+        'BS EN 1838:2024 requires a minimum of 1 lux across the FULL WIDTH of an escape route to allow safe movement during evacuation — the 2013 edition required it only along the centre line.',
     },
     {
       id: 2,

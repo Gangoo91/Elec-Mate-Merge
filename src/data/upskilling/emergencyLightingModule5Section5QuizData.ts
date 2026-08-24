@@ -5,10 +5,10 @@ export const emergencyLightingModule5Section5QuizData: QuizQuestion[] = [
     id: 1,
     question: 'What is the main purpose of emergency lighting certification?',
     options: [
-      'To record the purchase cost of every luminaire for the client',
+      'To record the purchase cost of every luminaire supplied so that the client can budget for replacements',
       'To provide legal documentation that the system meets recognised standards and establish professional accountability',
-      'To set the routine testing intervals for the building manager',
-      'To confirm the warranty period offered by the luminaire manufacturer',
+      'To set out the routine testing intervals that the building manager is expected to follow from handover',
+      'To confirm the warranty period that the luminaire manufacturer offers on all the equipment supplied',
     ],
     correctAnswer: 1,
     explanation:
@@ -98,9 +98,9 @@ export const emergencyLightingModule5Section5QuizData: QuizQuestion[] = [
     question: 'Why is certification still required even if all tests have been completed?',
     options: [
       'Because testing proves the system works at a specific moment, but certification provides legal documentation of compliance with recognised standards',
-      'Because tests are only valid if witnessed by a building control officer on the day',
-      'Because certification replaces the need for any future periodic testing',
-      'Because the manufacturer warranty is void until certificates are lodged',
+      'Because a test is only valid if it is witnessed by a building control officer on the day it is carried out and countersigned',
+      'Because certification removes the requirement for any further periodic testing of the system once the installation has been signed off',
+      'Because the manufacturer warranty on the luminaires and batteries remains void until the certificates have been lodged with the supplier',
     ],
     correctAnswer: 0,
     explanation:
@@ -110,10 +110,10 @@ export const emergencyLightingModule5Section5QuizData: QuizQuestion[] = [
     id: 9,
     question: 'What can happen if certification documents are missing?',
     options: [
-      'The routine monthly flick test can no longer be carried out',
+      'The routine monthly functional test can no longer be carried out on any of the emergency luminaires in the building',
       'The system is considered non-compliant and non-verified, potentially preventing building occupation and invalidating insurance',
-      'The luminaires automatically revert to maintained operation',
-      'Only the battery duration needs to be re-verified before handover',
+      'Every luminaire automatically reverts to maintained operation until the missing paperwork has been produced',
+      'The battery duration alone needs to be re-verified before the building can be handed over to its occupier',
     ],
     correctAnswer: 1,
     explanation:
@@ -123,10 +123,10 @@ export const emergencyLightingModule5Section5QuizData: QuizQuestion[] = [
     id: 10,
     question: 'In the Birmingham school case study, why was the system considered non-compliant?',
     options: [
-      'Because the battery duration test failed to reach the required three hours',
-      'Because several exit signs did not meet the ISO 7010 pictogram standard',
+      'Because the battery duration test failed to reach the full rated period during the site inspection',
+      'Because several of the exit signs did not carry a recognised pictogram and could not be understood',
       'Because no formal commissioning certificate had been issued, despite the system being physically operational',
-      'Because the wiring had not been protected by fire-rated cabling throughout',
+      'Because the emergency lighting wiring had not been run in fire-rated cable throughout the school',
     ],
     correctAnswer: 2,
     explanation:

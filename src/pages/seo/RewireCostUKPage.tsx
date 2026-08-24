@@ -145,7 +145,7 @@ const sections = [
           rates and operating costs. Rural areas may also command a premium if electricians have to
           travel significant distances. For a personalised quote, contact at least three local
           electricians registered with a{' '}
-          <SEOInternalLink href="/guides/niceic-vs-napit">competent person scheme</SEOInternalLink>.
+          <SEOInternalLink href="/niceic-vs-napit-comparison">competent person scheme</SEOInternalLink>.
         </p>
         <SEOAppBridge
           title="AI Cost Engineer for Rewire Quotes"
@@ -506,7 +506,7 @@ const sections = [
         <p>
           A full rewire is notifiable work under Part P of the Building Regulations in England and
           Wales. This means the work must either be carried out by an electrician registered with a{' '}
-          <SEOInternalLink href="/guides/niceic-vs-napit">competent person scheme</SEOInternalLink>{' '}
+          <SEOInternalLink href="/niceic-vs-napit-comparison">competent person scheme</SEOInternalLink>{' '}
           (who can self-certify the work) or the homeowner must notify the local authority building
           control department before starting and arrange for their inspection.
         </p>

@@ -371,7 +371,7 @@ export const cdm2015ForElectriciansConfig: GeneratedGuideConfig = {
   ],
   relatedPages: [
     {
-      href: '/tools/rams-generator',
+      href: '/rams-generator',
       title: 'RAMS Generator',
       description: 'AI-assisted Risk Assessment and Method Statement builder covering CDM 2015 requirements and the typical electrical task list.',
       icon: 'FileText',

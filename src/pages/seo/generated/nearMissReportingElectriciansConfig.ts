@@ -291,7 +291,7 @@ export const nearMissReportingElectriciansConfig: GeneratedGuideConfig = {
   faqHeading: 'Frequently Asked Questions About Near-Miss Reporting',
   relatedPages: [
     {
-      href: '/tools/rams-generator',
+      href: '/rams-generator',
       title: 'RAMS Generator',
       description:
         'Build site-specific RAMS that embed near-miss reporting as a control measure. AI-assisted, BS 7671 aligned, edit and export to PDF.',

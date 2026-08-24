@@ -75,7 +75,7 @@ const faqs = [
   {
     question: 'What emergency lighting does a restaurant need?',
     answer:
-      'Restaurants must have emergency lighting to BS 5266-1 on all escape routes (corridors, stairways), at each exit door, at changes of direction, at the kitchen (to allow safe shutdown), and covering fire-fighting equipment and first aid points. Minimum maintained illuminance on escape routes is 1 lux on the centreline (floor level); open areas use the anti-panic requirement of 0.5 lux. Duration must be at least 1 hour for new installations, 3 hours for sleeping accommodation.',
+      'Restaurants must have emergency lighting to BS 5266-1 on all escape routes (corridors, stairways), at each exit door, at changes of direction, at the kitchen (to allow safe shutdown), and covering fire-fighting equipment and first aid points. Minimum maintained illuminance on escape routes is 1 lux across the full width (floor level); open areas use the anti-panic requirement of 0.5 lux. Duration must be at least 1 hour for new installations, 3 hours for sleeping accommodation.',
   },
   {
     question: 'Can I install electrical systems in a restaurant without a competent person scheme?',
@@ -317,7 +317,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Escape route lighting</strong> — minimum 1 lux on the centreline of escape
+                <strong>Escape route lighting</strong> — minimum 1 lux across the full width of escape
                 routes (corridors, stairways). Maintained or non-maintained fittings are both
                 acceptable; maintained is more common in restaurants as it doubles as decorative
                 lighting.

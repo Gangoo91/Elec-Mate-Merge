@@ -5,10 +5,10 @@ export const resultsDocumentationQuizData: QuizQuestion[] = [
     id: 1,
     question: 'What is the minimum required information for documenting test results?',
     options: [
-      'Only the final pass or fail outcome for each circuit',
+      'The final pass or fail outcome recorded against each individual circuit',
       'Circuit ID, measured values, maximum permitted values, and pass/fail assessment',
-      'Just the measured values without any reference limits',
-      'The client name and installation address only',
+      'The measured values alone, with no reference limits recorded alongside',
+      'The client\'s name, the installation address, and the date of inspection',
     ],
     correctAnswer: 1,
     explanation:

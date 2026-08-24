@@ -328,7 +328,7 @@ export const lockoutTagoutForElectriciansConfig: GeneratedGuideConfig = {
   faqHeading: 'Lockout Tagout for Electricians — FAQs',
   relatedPages: [
     {
-      href: '/tools/rams-generator',
+      href: '/rams-generator',
       title: 'RAMS Generator',
       description:
         'Generate site-specific risk assessments and method statements that name LOTO as the electrical-energy control. Ready to share in minutes.',

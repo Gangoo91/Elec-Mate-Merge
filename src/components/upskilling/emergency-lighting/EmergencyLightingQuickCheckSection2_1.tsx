@@ -14,7 +14,7 @@ export const EmergencyLightingQuickCheckSection2_1 = () => {
       options: ['0.2 lux', '0.5 lux', '1 lux', '2 lux'],
       correct: '1 lux',
       explanation:
-        'BS 5266 requires a minimum of 1 lux at floor level on the centre line of escape routes.',
+        'BS EN 1838:2024 requires a minimum of 1 lux at floor level across the FULL WIDTH of escape routes — the 2013 edition required it only along the centre line.',
     },
     {
       id: 2,

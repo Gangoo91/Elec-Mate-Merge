@@ -32,9 +32,9 @@ export const section1Questions: QuizQuestion[] = [
     id: 3,
     question: 'How can renewables improve energy security?',
     options: [
-      'By increasing dependence on imports',
-      'By reducing domestic energy production',
-      'By limiting energy storage options',
+      'By increasing the country\'s dependence on imported fuel',
+      'By reducing the amount of domestic generation capacity',
+      'By limiting the storage options available on the grid',
       'By diversifying energy sources and reducing import dependence',
     ],
     correctAnswer: 3,

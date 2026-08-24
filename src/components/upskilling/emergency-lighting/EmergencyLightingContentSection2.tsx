@@ -83,7 +83,7 @@ export const EmergencyLightingContentSection2 = () => {
                   <ul className="space-y-1 text-gray-300">
                     <li>• Corridors and passageways</li>
                     <li>• Open areas forming escape routes</li>
-                    <li>• Minimum 1 lux along centre line</li>
+                    <li>• Minimum 1 lux across the full width</li>
                     <li>• 0.5 lux minimum anywhere on route</li>
                     <li>• Maximum spacing: 3m apart</li>
                   </ul>

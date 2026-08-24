@@ -11,6 +11,12 @@ export interface Question {
   difficulty?: 'basic' | 'intermediate' | 'advanced';
 }
 
+import {
+  drawWeighted,
+  LEVEL3_WEIGHTS,
+  type DifficultyWeights,
+} from '@/utils/apprenticeQuestionDraw';
+
 export const module7Questions: Question[] = [
   // Section 7.1: Industry Roles (Questions 1-30)
   {
@@ -74,7 +80,7 @@ export const module7Questions: Question[] = [
   },
   {
     id: 5,
-    question: 'An approved electrician (under a competent person scheme) can:',
+    question: 'What does the JIB Approved Electrician grade indicate about the holder?',
     options: [
       'Work only on local authority contracts',
       'Self-certify notifiable electrical work',
@@ -472,7 +478,7 @@ export const module7Questions: Question[] = [
   },
   {
     id: 32,
-    question: 'The JIB grading system primarily determines:',
+    question: 'What does an electrician\'s JIB grade primarily determine?',
     options: [
       'Skill level and corresponding pay rates',
       'Minimum age for working on live sites',
@@ -546,7 +552,7 @@ export const module7Questions: Question[] = [
   },
   {
     id: 37,
-    question: 'The difference between Approved and Installation Electrician is:',
+    question: 'What distinguishes the Approved Electrician grade from the Installation Electrician grade?',
     options: [
       'Approved is paid at the JIB rate while Installation is paid at SJIB rate',
       'Approved requires AM2s assessment, Installation requires AM2e',
@@ -591,7 +597,7 @@ export const module7Questions: Question[] = [
   },
   {
     id: 40,
-    question: 'ECS gold card indicates:',
+    question: 'What does a gold ECS card indicate about its holder?',
     options: [
       'Highest level of qualification and competence',
       'Entry-level grade equivalent to a labourer',
@@ -679,7 +685,7 @@ export const module7Questions: Question[] = [
   },
   {
     id: 46,
-    question: 'An Electrical Apprentice at year 4 would typically be at:',
+    question: 'Which grade would an apprentice normally hold in the final year of their apprenticeship?',
     options: [
       'The Labourer Electrical rate in every year',
       'No set structure, agreed with the employer',
@@ -901,7 +907,7 @@ export const module7Questions: Question[] = [
   // Section 7.3: Qualifications (Questions 61-90)
   {
     id: 61,
-    question: 'The main qualification for electrical installation is:',
+    question: 'Which combination of achievements makes someone a qualified electrician in the UK?',
     options: [
       'On-the-job experience with no formal award',
       'Level 3 Diploma in Installing Electrotechnical Systems',
@@ -968,21 +974,6 @@ export const module7Questions: Question[] = [
     ],
     correctAnswer: 1,
     explanation: 'NVQs assess practical competence demonstrated in real workplace situations.',
-    section: '7.3',
-    difficulty: 'basic',
-  },
-  {
-    id: 66,
-    question: 'The AM2s assessment consists of:',
-    options: [
-      'A multiple-choice theory test on the BS 7671 wiring regulations only',
-      'A structured verbal interview with the centre lead assessor',
-      'Practical installation, inspection, and testing scenarios',
-      'An online assessment completed remotely with screen-share invigilation',
-    ],
-    correctAnswer: 2,
-    explanation:
-      'AM2s is a practical assessment covering installation and testing in realistic scenarios.',
     section: '7.3',
     difficulty: 'basic',
   },
@@ -1283,22 +1274,8 @@ export const module7Questions: Question[] = [
     difficulty: 'basic',
   },
   {
-    id: 87,
-    question: 'The TOTUM or NUS card is relevant for electrical students as:',
-    options: [
-      'It carries Level 2 qualification credit',
-      'It replaces the CSCS card on site',
-      'It is used as site access identification',
-      'It provides student discounts during training',
-    ],
-    correctAnswer: 3,
-    explanation: 'TOTUM/NUS provides student benefits and discounts during the learning period.',
-    section: '7.3',
-    difficulty: 'basic',
-  },
-  {
     id: 88,
-    question: 'QCF (Qualifications and Credit Framework) levels indicate:',
+    question: 'What do the levels of the Regulated Qualifications Framework indicate?',
     options: [
       'Complexity and achievement levels of qualifications',
       'The subjective difficulty of an assessment',
@@ -1628,7 +1605,7 @@ export const module7Questions: Question[] = [
   },
   {
     id: 110,
-    question: 'Work-life balance considerations in electrical careers:',
+    question: 'Which working pattern would best suit an electrician who needs predictable hours?',
     options: [
       'Have no bearing on which role or sector an electrician pursues',
       'Apply only to managerial grades and not to on-site operatives',
@@ -1772,7 +1749,7 @@ export const module7Questions: Question[] = [
   },
   {
     id: 120,
-    question: 'Career planning should consider:',
+    question: 'Which factor should be settled first when drawing up a career plan?',
     options: [
       'Personal goals, industry trends, and skill development needs',
       'The current employer’s preferences as the sole basis for planning',
@@ -1832,7 +1809,7 @@ export const module7Questions: Question[] = [
   },
   {
     id: 124,
-    question: 'Valid CPD activities include:',
+    question: 'Which activity would be recorded as continuing professional development?',
     options: [
       'Training, reading, conferences, and practical skill development',
       'Only formal classroom courses delivered by an awarding body',
@@ -2298,7 +2275,7 @@ export const module7Questions: Question[] = [
   },
   {
     id: 156,
-    question: 'ELECSA operates as:',
+    question: 'What does a competent person scheme operator do for its registered businesses?',
     options: [
       'A competent person scheme for electrical work',
       'A trade union for electrical operatives',
@@ -2341,7 +2318,7 @@ export const module7Questions: Question[] = [
   },
   {
     id: 159,
-    question: 'JIB-SJIB relationship with professional registration is:',
+    question: 'How does industry grading relate to registration with a professional institution?',
     options: [
       'JIB grades replace the need for any professional registration',
       'JIB grades and professional registration are mutually exclusive',
@@ -2355,7 +2332,7 @@ export const module7Questions: Question[] = [
   },
   {
     id: 160,
-    question: 'Membership of multiple organisations is:',
+    question: 'Why might an electrician belong to both a trade association and a professional institution?',
     options: [
       'Common and can provide different benefits',
       'Prohibited by professional body codes of conduct',
@@ -2657,7 +2634,7 @@ export const module7Questions: Question[] = [
   },
   {
     id: 181,
-    question: 'Professional appearance and presentation:',
+    question: 'Why does a customer\'s judgement of an electrician start before any work is done?',
     options: [
       'Has no bearing on winning repeat work',
       'Affects customer confidence and professional image',
@@ -2828,7 +2805,7 @@ export const module7Questions: Question[] = [
   },
   {
     id: 193,
-    question: 'Continuous improvement mindset means:',
+    question: 'What does a continuous improvement approach require an electrician to do after a job?',
     options: [
       'Keeping working methods unchanged once established',
       'Always looking for ways to improve work and service',
@@ -2913,7 +2890,7 @@ export const module7Questions: Question[] = [
   },
   {
     id: 199,
-    question: 'Networking and relationship building:',
+    question: 'How does building industry contacts most directly help an electrician find work?',
     options: [
       'Offers no benefit to a self-employed electrician',
       'Is only useful when actively seeking a new job',
@@ -2940,13 +2917,1801 @@ export const module7Questions: Question[] = [
     section: '7.7',
     difficulty: 'intermediate',
   },
+  {
+    id: 201,
+    question:
+      'An electrician registered with a competent person scheme for domestic installation work is asked to change a distribution board in a commercial kitchen. What should be checked first?',
+    options: [
+      'Self-certify it, since a board change is always notifiable work',
+      'Check the scope of the registration covers that work and premises',
+      'Notify building control afterwards and carry on with the work',
+      'Treat the job as exempt because commercial work is not notifiable',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Scheme registration is granted against a defined scope of work types and premises that the assessment actually covered, so the first question is whether this job falls inside it. Self-certification is the attractive wrong answer because the electrician does hold registration, but a domestic scope does not extend to commercial premises, and self-certification exists to satisfy building regulations for dwellings rather than to authorise any job anywhere.',
+    section: '7.3',
+    difficulty: 'advanced',
+  },
+  {
+    id: 202,
+    question:
+      'A time served electrician trades as a sole trader with no employees and subcontracts to a main contractor. Under health and safety law, where do the duties sit?',
+    options: [
+      'The main contractor carries every duty, so the sole trader has none',
+      'Duties fall only on the client because the client owns the premises',
+      'The sole trader holds duties for own safety and for others affected',
+      'No duties apply until the sole trader takes on a first employee',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'The Health and Safety at Work etc Act 1974 places duties on employers and on the self employed to protect themselves and anyone else affected by what they do. The tempting answer is that the main contractor carries everything, because the main contractor does hold coordination duties on site, but those duties sit alongside rather than replace the duty carried personally by the self employed worker.',
+    section: '7.3',
+    difficulty: 'advanced',
+  },
+  {
+    id: 203,
+    question:
+      'A contractor is sued because a design error left a distribution board undersized, causing costly rework but no injury and no damage to property. Which cover is intended for this claim?',
+    options: [
+      'Public liability, which covers injury or damage to third parties',
+      'Employers liability, which covers claims brought by employees',
+      'Contract works cover, which covers damage to work in progress',
+      'Professional indemnity, which covers advice and design failings',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Professional indemnity responds to financial loss caused by professional advice, specification or design that turns out to be wrong. Public liability is the attractive distractor because contractors carry it routinely, but it is triggered by injury to people or damage to property belonging to others, and here the loss is purely the cost of putting a faulty design right.',
+    section: '7.7',
+    difficulty: 'advanced',
+  },
+  {
+    id: 204,
+    question:
+      'A limited company that has always been a one person operation takes on its first apprentice as an employee. Which insurance moves from optional to legally required?',
+    options: [
+      'Professional indemnity insurance, for design and advice claims',
+      'Employers liability insurance, for claims by that employee',
+      'Public liability insurance, for claims by members of the public',
+      'Tool and van insurance, for loss of company owned equipment',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Employers liability insurance becomes a legal requirement once a business employs somebody, because it funds compensation if that worker is injured or made ill by the work. Public liability is the common wrong answer because almost every contractor holds it and clients often insist on it, but that pressure is commercial and contractual rather than a general statutory duty.',
+    section: '7.7',
+    difficulty: 'advanced',
+  },
+  {
+    id: 205,
+    question:
+      'Which description best fits the role of an electrical designer as distinct from an installing electrician?',
+    options: [
+      'Selects and sizes the installation on paper before work starts',
+      'Fixes containment and pulls in cables along the agreed route',
+      'Carries out initial verification testing before energising work',
+      'Supervises apprentices on site and books material deliveries',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The designer decides the arrangement of the installation, including cable sizes, protective devices and earthing arrangements, before anyone lifts a tool. Initial verification is the plausible distractor because it also involves calculation and judgement, but it is a check carried out on completed work rather than the up front design decision.',
+    section: '7.1',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 206,
+    question:
+      'A householder in England wants a new socket circuit run in a kitchen. The electrician is competent but is not registered with any competent person scheme. What is the compliant route?',
+    options: [
+      'Carry out the work and issue an installation certificate only',
+      'Refuse the work because only registered installers may do it',
+      'Notify the local authority building control before starting work',
+      'Ask the customer to notify the electricity supplier in advance',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Registration with a competent person scheme buys the right to self certify notifiable domestic work; without it the same work is still lawful, but it has to be notified to building control instead. Issuing a certificate is the attractive wrong answer because certification is genuinely required, yet a certificate satisfies the wiring standard and says nothing about the separate building regulations notification.',
+    section: '7.3',
+    difficulty: 'advanced',
+  },
+  {
+    id: 207,
+    question:
+      'Which of these jobs is best described as industrial sector work rather than domestic sector work?',
+    options: [
+      'Rewiring a three bedroom house for a private homeowner',
+      'Maintaining motor control panels in a bottling factory',
+      'Adding outside lights to a residential rear garden area',
+      'Replacing a consumer unit in a private rented flat',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Industrial work centres on production plant and process equipment such as motors, control panels and machinery supplies. The rented flat is the distractor that catches people out because it is let commercially, but the sector is judged by the type of premises and installation, and a flat remains a dwelling however it is occupied.',
+    section: '7.1',
+    difficulty: 'basic',
+  },
+  {
+    id: 208,
+    question:
+      'Why does an experienced electrician still need continuing professional development long after qualifying?',
+    options: [
+      'Standards, technology and guidance change after qualification',
+      'Qualifications expire and have to be retaken every single year',
+      'Employers must by law fund a fixed number of training days',
+      'It replaces supervision when working on unfamiliar job types',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Competence is not a fixed possession: wiring standards are amended, new technologies such as storage and charging equipment arrive, and guidance is reissued, so knowledge decays unless it is refreshed. The idea that qualifications expire yearly is superficially attractive because some certificates are dated, but the real driver for development is change in the work itself.',
+    section: '7.6',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 209,
+    question:
+      'What is the main purpose of third party certification of an electrical contracting business?',
+    options: [
+      'It guarantees that every job the contractor does is fault free',
+      'It transfers legal responsibility for the work to the scheme body',
+      'It removes the need to issue certification for completed work',
+      'It gives independent evidence the contractor was assessed as competent',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Third party certification exists so that a customer who cannot judge technical competence can rely on an independent body having assessed it against published criteria. The transfer of responsibility option appeals because scheme bodies do run complaints procedures, but legal responsibility for the work stays with the contractor who carried it out and signed for it.',
+    section: '7.3',
+    difficulty: 'advanced',
+  },
+  {
+    id: 210,
+    question:
+      'A worker invoices weekly, is told exactly when and where to attend, uses the firm van and cannot send a substitute. What does this pattern suggest about employment status?',
+    options: [
+      'Self employed, because invoices are raised instead of payslips',
+      'Self employed, because the trade is a skilled manual trade',
+      'Employed in practice, because control and personal service apply',
+      'Neither, because status depends only on the written contract',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Status is judged on how the relationship actually works, and the classic markers of employment are control over when and how the work is done, personal service with no right of substitution, and equipment provided by the engager. Invoicing is the attractive wrong answer because it looks like self employment on paper, but paperwork does not override the reality of the arrangement.',
+    section: '7.7',
+    difficulty: 'advanced',
+  },
+  {
+    id: 211,
+    question:
+      'An electrician is asked on site to produce an industry grading card. What does holding that card actually demonstrate?',
+    options: [
+      'A legal licence without which electrical work cannot be done',
+      'That every installation the holder signs off will be compliant',
+      'That the holder business is registered as a scheme member',
+      'That the holder qualifications and status have been verified',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'A grading card is a means of confirming that the qualifications, training and status claimed by an individual have been checked by the issuing body, which is why sites ask for it at induction. Calling it a legal licence is the attractive error because many sites refuse entry without one, but that is a site access rule imposed by the contractor rather than a statutory requirement to hold a card before working.',
+    section: '7.3',
+    difficulty: 'advanced',
+  },
+  {
+    id: 212,
+    question:
+      'An electrician has just passed the AM2 and wants to move towards inspection and testing work. What is the most realistic next step?',
+    options: [
+      'Apply straight away to lead periodic inspection on large sites',
+      'Gain a further qualification and supervised testing experience',
+      'Wait until the next edition of the wiring standard is published',
+      'Register a limited company so the work can be self certified',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Competence for inspection and testing is built from underpinning knowledge plus real experience of the work under someone who already holds it, which is why the recognised route pairs a qualification with supervised practice. Registering a company is the tempting shortcut because it changes what can be signed, but forming a business does not create the technical competence that signing an inspection report depends on.',
+    section: '7.2',
+    difficulty: 'advanced',
+  },
+  {
+    id: 213,
+    question:
+      'An electrician is deciding whether to trade as a sole trader or through a limited company. What is the key practical difference?',
+    options: [
+      'A limited company separates business and personal liability',
+      'A sole trader cannot employ anybody or take on an apprentice',
+      'A limited company is exempt from health and safety duties',
+      'A sole trader is unable to register for value added tax',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'A limited company is a separate legal person, so business debts and most claims sit against the company rather than against the owner personally, which is the main reason contractors incorporate. The idea that a sole trader cannot employ people is a common misunderstanding, because a sole trader can take on staff and apprentices and then carries full employer duties for them.',
+    section: '7.7',
+    difficulty: 'advanced',
+  },
+  {
+    id: 214,
+    question:
+      'Midway through a fixed price job a customer verbally asks for two extra sockets. What is the correct commercial practice?',
+    options: [
+      'Add them and mention the extra cost on the final invoice',
+      'Refuse any change once the price has been agreed in writing',
+      'Confirm the change and the revised price in writing first',
+      'Add them free of charge to protect the customer relationship',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'A variation should be recorded and priced before it is carried out, so that both sides agree what has changed and disputes at invoice stage are avoided. Adding the cost to the final invoice is the attractive answer because the work genuinely is extra, but a charge the customer never agreed to in advance is the single most common cause of payment disputes on small works.',
+    section: '7.5',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 215,
+    question:
+      'A client insists a distribution board is changed live because the shop cannot lose trading hours. The electrician judges that safe isolation is entirely practicable. What governs the decision?',
+    options: [
+      'The client instruction, since the client pays for the works',
+      'The contract programme, since delay costs are the priority',
+      'The scheme rules, since registration overrides safety law',
+      'The legal duty, since live work needs isolation to be unreasonable',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Electrical safety law prohibits work on or near live conductors unless it is unreasonable for them to be dead, it is reasonable for the work to proceed live, and suitable precautions have been taken. Commercial pressure is the attractive answer because lost trading is a genuine cost, but inconvenience to the client does not make isolation unreasonable and cannot satisfy that test.',
+    section: '7.3',
+    difficulty: 'advanced',
+  },
+  {
+    id: 216,
+    question:
+      'A homeowner asks why the installer of a new solar photovoltaic system needs to be certified under the microgeneration scheme. The accurate answer is that',
+    options: [
+      'the certification is the only way the work can be notified',
+      'the certification proves the installer never makes any mistakes',
+      'the certification is needed to access certain support schemes',
+      'the certification removes the need for electrical testing on site',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Microgeneration certification is a product and installer standard that customers and funding bodies rely on, and access to certain support and incentive arrangements is conditional on the installation being certified. Treating it as the only notification route is wrong because building regulations notification is a separate matter handled through building control or a competent person scheme.',
+    section: '7.4',
+    difficulty: 'advanced',
+  },
+  {
+    id: 217,
+    question:
+      'A newly employed improver asks what the employer must give them setting out the job they have accepted. The correct answer is',
+    options: [
+      'a written statement setting out the main terms of employment',
+      'a verbal summary given by the supervisor on the first site',
+      'a copy of the health and safety policy and nothing further',
+      'a trade union membership form that covers the terms of work',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Employees are entitled to a written statement of the main particulars of employment, covering matters such as pay, hours, holiday and place of work, so that the terms are not left to memory. The health and safety policy is a genuine document the employer may have to provide, but it addresses safety arrangements rather than the terms on which the person is employed.',
+    section: '7.7',
+    difficulty: 'advanced',
+  },
+  {
+    id: 218,
+    question:
+      'On a construction project, which duty holder is appointed to plan, manage and coordinate health and safety during the construction phase?',
+    options: [
+      'The principal designer appointed for the project',
+      'The principal contractor appointed by the client',
+      'The client who commissions the construction work',
+      'The site electrician who holds the grading card',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The principal contractor is the duty holder responsible for planning, managing, monitoring and coordinating health and safety while the construction work is actually being carried out. The principal designer is the close distractor because the role sounds equivalent, but its focus is the pre construction phase, where design risk is identified and eliminated before work starts.',
+    section: '7.1',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 219,
+    question:
+      'An electrician registered for domestic work self certifies a full rewire. Which of these does that self certification NOT achieve?',
+    options: [
+      'Confirming the work complies with the wiring standard used',
+      'Recording the notification with the local building authority',
+      'Removing the duty to inspect and test the completed work',
+      'Giving the customer written evidence of the completed works',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Self certification is a route for satisfying building regulations notification and issuing certification, but the inspection and testing that supports the declaration still has to be done in full. The notification option looks like the odd one out because building control was never contacted directly, yet the scheme reports the work to the authority on behalf of the member.',
+    section: '7.4',
+    difficulty: 'advanced',
+  },
+  {
+    id: 220,
+    question:
+      'Which activity gives the strongest evidence of continuing professional development for an electrician?',
+    options: [
+      'Attending a structured update course on the current standard',
+      'Working steadily on the same type of job for several years',
+      'Buying a new set of test instruments for the company van',
+      'Reading a manufacturer leaflet found in a consumer unit box',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Development means acquiring knowledge or skill that was not there before, and a structured course produces both new learning and a record that can be shown to an assessor or employer. Long experience is the attractive answer because it plainly builds skill, but repeating familiar work consolidates what is already known rather than closing gaps opened up by change.',
+    section: '7.6',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 221,
+    question:
+      'An apprentice employed by a subcontracting firm suffers a reportable injury while working on a main contractor site. Who carries the duty to make the statutory report?',
+    options: [
+      'The principal contractor who controls the site induction',
+      'The client who owns the premises where the work took place',
+      'The apprentice, who must report the injury personally',
+      'The employer of the injured apprentice who was hurt',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Reporting duties for injuries, diseases and dangerous occurrences fall on employers, on the self employed and on those in control of premises, and for an injured employee the reporting duty belongs to that persons employer. The principal contractor is the attractive answer because the site is under their control, but control of the site does not transfer the employer reporting duty for their own staff.',
+    section: '7.3',
+    difficulty: 'advanced',
+  },
+  {
+    id: 222,
+    question:
+      'A customer accepts a written quotation for a rewire and later argues the final bill is too high. Why does it matter that the document was a quotation and not an estimate?',
+    options: [
+      'A quotation is a fixed price offer that can be accepted',
+      'A quotation is only a rough guide to the likely price',
+      'A quotation can be changed freely once the work begins',
+      'A quotation is legally required before any works start',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'A quotation states a fixed price which, once accepted, forms part of the contract and cannot be raised unless the customer agrees a variation. Confusing it with an estimate is the classic error, because an estimate is a considered guide that can move as the job unfolds, and contractors who use the words interchangeably end up unable to justify their final figure.',
+    section: '7.7',
+    difficulty: 'advanced',
+  },
+  {
+    id: 223,
+    question:
+      'While fault finding, an electrician discovers a dangerous defect plainly left behind by a previous contractor. What is the correct first action?',
+    options: [
+      'Say nothing, as the defect is another firm responsibility',
+      'Make it safe and inform the customer of what was found',
+      'Remove the whole circuit before speaking to the customer',
+      'Report the previous firm to the police as a criminal act',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Danger that is found has to be made safe and communicated to the person responsible for the installation, because knowledge of a hazard creates a duty to act on it. Staying silent because someone else caused it is the tempting response, but the duty attaches to the person who has found the danger, not only to whoever created it.',
+    section: '7.5',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 224,
+    question:
+      'During a periodic inspection an electrician finds a danger present and the customer refuses permission for any remedial work. What must the electrician do?',
+    options: [
+      'Complete the report and leave the danger for the customer',
+      'Carry out the repair anyway without any customer agreement',
+      'Record the danger and warn the responsible person at once',
+      'Abandon the inspection and issue no documentation at all',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Where an immediate danger is identified, it must be recorded and the person responsible for the installation warned without delay, in writing as well as verbally, so that the risk is not left unknown. Carrying out repairs regardless is wrong because work needs the consent of the person who controls the installation, but consent being refused never excuses failing to warn.',
+    section: '7.4',
+    difficulty: 'advanced',
+  },
+  {
+    id: 225,
+    question:
+      'What best distinguishes a maintenance electrician from an installation electrician?',
+    options: [
+      'Works mainly on keeping existing systems running',
+      'Works only on new build projects from first fix',
+      'Works exclusively on design and specification tasks',
+      'Works entirely on testing and certification duties',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Maintenance work centres on keeping installations and plant that already exist in service, through planned servicing, fault finding and repair. The new build option is the natural opposite and therefore attractive, but that describes the installation role, and many maintenance electricians also carry out small installation works as part of the job.',
+    section: '7.1',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 226,
+    question:
+      'An electrician with no experience of electric vehicle charging equipment is offered a charge point installation. What is the professional response?',
+    options: [
+      'Accept and learn from the manufacturer instructions on site',
+      'Accept, because a charge point is only a radial circuit',
+      'Decline all such work permanently as it is a specialism',
+      'Get training first or work with someone already competent',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Competence means having the knowledge, skill and experience for the specific work, and the honest route into unfamiliar work is training or working alongside someone who already holds that competence. Treating a charge point as just a radial circuit is the seductive error, because the supply arrangement and protective measures involved go well beyond a standard final circuit.',
+    section: '7.6',
+    difficulty: 'advanced',
+  },
+  {
+    id: 227,
+    question:
+      'What is a continuing professional development record used for?',
+    options: [
+      'Proving how much a company earned in a trading year',
+      'Showing what training and learning has been undertaken',
+      'Listing the tools and instruments owned by a business',
+      'Recording the hours worked on site during each week',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A development record is evidence of the learning a person has completed, which is what an employer, an assessor or a scheme assessment wants to see. The timesheet option is plausible because both are ongoing records kept over time, but hours worked show only that a person was present, not that their knowledge has moved on.',
+    section: '7.6',
+    difficulty: 'basic',
+  },
+  {
+    id: 228,
+    question:
+      'A self employed electrician starts subcontracting to a builder with nothing at all agreed in writing. Which risk does that create above all others?',
+    options: [
+      'The work cannot be certified without a written contract',
+      'Disputes over scope and payment become hard to resolve',
+      'The electrician automatically becomes an employee at law',
+      'Health and safety duties pass entirely to the builder firm',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Without written terms there is no agreed record of what was to be done or what was to be paid, so any later disagreement comes down to one word against another. The certification option is wrong because a certificate depends on the work and the testing rather than on the commercial paperwork, and it can be issued whatever the contract arrangements.',
+    section: '7.7',
+    difficulty: 'advanced',
+  },
+  {
+    id: 229,
+    question:
+      'An experienced electrician wants to move into training apprentices at a college. What normally has to be added to their trade background?',
+    options: [
+      'A teaching or assessing qualification and current knowledge',
+      'A management qualification in construction site supervision',
+      'Registration with a domestic competent person scheme body',
+      'A further period of time served on large industrial sites',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Teaching and assessing are separate skills from doing the work, so the move into training normally means gaining a teaching or assessor qualification while keeping trade knowledge up to date. Scheme registration is the plausible wrong answer because it signals competence to customers, but it certifies installation work rather than any ability to teach or assess others.',
+    section: '7.2',
+    difficulty: 'advanced',
+  },
+  {
+    id: 230,
+    question:
+      'An electrical installation certificate carries separate declarations for design, construction, and inspection and testing. Why are the three kept separate?',
+    options: [
+      'Because three different people must always be involved',
+      'Because each declaration covers a different responsibility',
+      'Because the customer needs three copies of the document',
+      'Because the scheme body signs one part of the document',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The three declarations exist because design, construction and verification are distinct responsibilities, and whoever signs each one is accepting responsibility for that part of the work. Assuming three people are always needed is the common misreading, since on a small job one competent person may properly sign all three, and the split is about accountability rather than headcount.',
+    section: '7.3',
+    difficulty: 'advanced',
+  },
+  {
+    id: 231,
+    question:
+      'A site electrician is issued with the correct protective clothing for the task but chooses not to wear it. In legal terms, who has failed in a duty?',
+    options: [
+      'The manufacturer, for supplying uncomfortable clothing',
+      'Nobody, since wearing the clothing is a personal choice',
+      'The employee, who must use safety equipment provided',
+      'The employer alone, for not supervising every single task',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Employees are required by law to co-operate with their employer and to use safety equipment fully and correctly, so refusing to wear issued protection is a breach by the worker. Blaming the employer alone is attractive because employers do carry supervision duties, but the duty to provide and the duty to use sit on different people and both apply at once.',
+    section: '7.3',
+    difficulty: 'advanced',
+  },
+  {
+    id: 232,
+    question:
+      'A newly self employed electrician sets an hourly charge by simply copying the hourly pay received in the last employed job. What is wrong with that approach?',
+    options: [
+      'It ignores that customers expect to pay a lower rate',
+      'It ignores that employed rates already include profit',
+      'It ignores the need to charge for materials as well',
+      'It ignores overheads, holidays and unbilled time',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'A charge out rate has to carry van costs, insurance, tools, training, quoting time and unpaid holidays as well as the earnings the person wants, so it is always well above an employed hourly wage. Forgetting materials is the plausible distractor, but materials are normally charged separately and the real gap is the cost of running the business itself.',
+    section: '7.7',
+    difficulty: 'advanced',
+  },
+  {
+    id: 233,
+    question:
+      'An apprentice has completed the college units and the workplace portfolio but has not yet taken the final practical assessment. What is their position?',
+    options: [
+      'They may be graded as a fully qualified electrician now',
+      'They must restart the apprenticeship from the beginning',
+      'They are not yet fully qualified until that assessment',
+      'They can self certify domestic work in the meantime',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'The final practical assessment is the point at which the apprentice demonstrates the whole of the trade under test conditions, so qualified status and the grading that follows it depend on passing it. Claiming full status early is the tempting answer because the coursework is finished, yet the portfolio evidences progress rather than replacing the independent assessment.',
+    section: '7.2',
+    difficulty: 'advanced',
+  },
+  {
+    id: 234,
+    question:
+      'An employer asks an electrician to sign the inspection and testing declaration for work carried out by somebody else, which the electrician has never seen. What should happen?',
+    options: [
+      'Sign it, as the employer carries the legal responsibility',
+      'Sign it, provided the other person confirms it was tested',
+      'Sign it and add a note that the work was not witnessed',
+      'Decline, as the signature confirms personal verification',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Signing the inspection and testing declaration is a personal statement that the signatory has verified the work, so signing for results someone else obtained is false certification whatever the employer says. Adding a caveat is the attractive compromise, but a note does not undo a declaration that the reader will rely on as evidence the installation was actually verified.',
+    section: '7.3',
+    difficulty: 'advanced',
+  },
+  {
+    id: 235,
+    question:
+      'What is the most effective way to explain an inspection outcome to a domestic customer with no technical background?',
+    options: [
+      'Read out the observation codes exactly as recorded',
+      'Say in plain terms what is unsafe and what is needed',
+      'Hand over the report and leave them to read it alone',
+      'List every regulation number that has been breached',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The customer has to make a decision about spending money on remedial work, so the explanation must connect each finding to the risk it creates and the action it calls for. Quoting codes and regulation numbers feels rigorous and is often done, but it transfers no understanding and usually leaves the customer unable to judge what matters most.',
+    section: '7.5',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 236,
+    question:
+      'A new amendment to the wiring standard is published. What is the appropriate response for a practising electrician?',
+    options: [
+      'Wait until an employer arranges formal training on it',
+      'Ignore it until existing installations require rewiring',
+      'Obtain the amended standard and update working practice',
+      'Keep using the previous edition until it is withdrawn',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'New design work is expected to follow the current standard, so an electrician needs the amended document and needs to know what actually changed before the next job is designed or certified. Waiting for the employer to organise training is the passive answer many give, but responsibility for keeping personal competence current rests with the individual as well.',
+    section: '7.6',
+    difficulty: 'advanced',
+  },
+  {
+    id: 237,
+    question:
+      'An employer refuses to interview a suitably qualified applicant purely because of the age shown on the application. How should this be described?',
+    options: [
+      'Acceptable, as employers may choose whoever they wish',
+      'Acceptable, provided the reason is not written anywhere',
+      'A matter only for the trade union to raise internally',
+      'Unlawful discrimination under equality legislation',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Age is a protected characteristic, so rejecting an applicant on that basis is unlawful discrimination regardless of how informally the decision was made. The idea that it is safe if nothing is written down is a widespread and dangerous belief, because a decision can be shown to be discriminatory from the pattern of behaviour and evidence given by witnesses.',
+    section: '7.7',
+    difficulty: 'advanced',
+  },
+  {
+    id: 238,
+    question:
+      'What is the clearest advantage of an apprenticeship route compared with a purely classroom based route into the trade?',
+    options: [
+      'Skills are built on real jobs alongside the underpinning theory',
+      'It removes the need to sit any written examinations at all',
+      'It guarantees a permanent job with the training employer',
+      'It allows the learner to skip the practical assessments',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'An apprenticeship pairs classroom theory with supervised work on live jobs, so the learner builds the practical judgement that employers and assessors are ultimately looking for. The guaranteed job option is attractive because many apprentices are kept on, but employment after training depends on the workload of the business and is never automatic.',
+    section: '7.2',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 239,
+    question:
+      'An electrician must leave a distribution board open in an occupied office while fetching parts from the van. What does that situation require?',
+    options: [
+      'Nothing, provided the job is finished before the day ends',
+      'A verbal warning to the nearest member of office staff',
+      'The board secured or a competent person left in attendance',
+      'A written permit issued by the person managing the office',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Opened electrical equipment must not be left unattended: it is either secured against access or a competent person stays with it, because live parts may be exposed to people who cannot recognise the danger. A verbal warning is the tempting minimum, but a spoken caution to one person does not control access by everyone else who may walk past.',
+    section: '7.3',
+    difficulty: 'advanced',
+  },
+  {
+    id: 240,
+    question:
+      'Which of these is a role within the electrical industry rather than another construction trade or profession?',
+    options: [
+      'Structural engineer designing the building frame',
+      'Quantity surveyor pricing the building materials',
+      'Site joiner fitting the doors and the skirtings',
+      'Approved electrician carrying out installations',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'The approved electrician is an electrical industry role, working on the installation and its associated systems. The others are genuine construction roles and appear on the same sites, which is what makes them plausible, but their work sits with the structure, the commercial side or the joinery rather than the electrical installation.',
+    section: '7.1',
+    difficulty: 'basic',
+  },
+  {
+    id: 241,
+    question:
+      'Which development has most expanded the range of work available to electricians in recent years?',
+    options: [
+      'Growth in renewable generation, storage and vehicle charging',
+      'A general reduction in the number of homes being rewired',
+      'The move from steel conduit to plastic trunking on sites',
+      'The reduction in the number of test instruments needed',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Solar generation, battery storage, heat pumps and vehicle charging have created whole categories of installation, maintenance and certification work that did not exist at this scale before. The containment option describes a real change in materials, but changing what cables run in alters how a job is done rather than creating new markets to work in.',
+    section: '7.1',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 242,
+    question:
+      'Why does a written handover matter when an installation passes from one electrician to another part way through?',
+    options: [
+      'It proves who should be paid for each hour of the job',
+      'It records what is complete, tested and still isolated',
+      'It replaces the need for certification at the handover',
+      'It allows the second electrician to reprice the works',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The incoming electrician has to know what has been finished, what has already been tested and what is left isolated or incomplete, because assumptions at handover are where dangerous mistakes are made. The payment answer is plausible since handovers often coincide with timesheets, but the safety information is what protects both workers and the installation.',
+    section: '7.5',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 243,
+    question:
+      'What is the practical difference between joining a trade association and registering with a competent person scheme?',
+    options: [
+      'A trade association assesses the technical work on site',
+      'A competent person scheme is chosen purely for marketing',
+      'A scheme assesses the work, an association gives support',
+      'A trade association can notify work to building control',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'A competent person scheme carries out technical assessment against defined criteria and is the route to self certifying notifiable work, whereas a trade association mainly offers representation, guidance and business support. Both display a logo on a van, which is exactly why customers and candidates confuse them, but only one involves the work itself being assessed.',
+    section: '7.4',
+    difficulty: 'advanced',
+  },
+  {
+    id: 244,
+    question:
+      'Why must a self employed electrician keep proper records of income and expenditure?',
+    options: [
+      'To satisfy the customer that the price charged was fair',
+      'To prove to a scheme body that testing was carried out',
+      'To let a wholesaler decide what credit limit to allow',
+      'To report earnings correctly and claim allowable costs',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Accurate records are what a tax return is built from, and without them genuine business costs cannot be claimed and declared profit cannot be defended if it is questioned. Wholesale credit is a real use for accounts, but a supplier reference is a by-product of good records rather than the reason the law requires them to be kept.',
+    section: '7.7',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 245,
+    question:
+      'An apprentice is told by a supervisor to work alone inside an energised control panel. What should the apprentice do?',
+    options: [
+      'Refuse and raise it, as the instruction creates danger',
+      'Carry it out, since a supervisor gave the instruction',
+      'Do it, but ask a colleague to watch from a distance',
+      'Do it and record the concern in the site diary later',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'An instruction does not make unsafe work lawful, and an apprentice working alone on live equipment fails both the live working test and the requirement for adequate supervision of someone still training. Having a colleague watch is the tempting halfway house, because accompaniment sounds safer, but it does not address the fact that the work should be done dead.',
+    section: '7.3',
+    difficulty: 'advanced',
+  },
+  {
+    id: 246,
+    question:
+      'An electrician attends manufacturer training on a new range of protective devices. How does that contribute to competence?',
+    options: [
+      'It removes the need to read the wiring standard itself',
+      'It gives product knowledge that supports correct use',
+      'It certifies the electrician to install any brand at all',
+      'It replaces the need for inspection and testing skills',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Manufacturer training gives the detailed product knowledge, such as installation limits and settings, that general standards cannot supply for every device on the market. Treating it as a substitute for the standard is the common error, because the standard sets the requirements the device has to satisfy while the training explains how that particular product meets them.',
+    section: '7.6',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 247,
+    question:
+      'An employed electrician believes they have been disciplined unfairly by a supervisor. What is the appropriate first step?',
+    options: [
+      'Leave the job immediately and look for other work',
+      'Contact the enforcing authority to inspect the site',
+      'Raise it through the employer grievance procedure',
+      'Refuse further instructions until it is put right',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Grievance procedures exist so that a complaint is put in writing, investigated and answered inside the business, and using them first is expected before any external step is taken. Resigning on the spot is the emotional response, but leaving voluntarily weakens any later claim and removes the chance for the matter to be corrected internally.',
+    section: '7.7',
+    difficulty: 'advanced',
+  },
+  {
+    id: 248,
+    question:
+      'What does an estimator do within an electrical contracting business?',
+    options: [
+      'Prices work from drawings and specifications before tender',
+      'Tests completed installations and issues certification',
+      'Supervises the site labour and orders the site materials',
+      'Designs the protective device settings for each circuit',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The estimator works out the labour, materials and preliminaries needed from the drawings and specification so that the business can submit a price it can afford to honour. The supervision answer is attractive because both roles think about resources, but supervision manages work already won rather than pricing work the company is bidding for.',
+    section: '7.1',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 249,
+    question:
+      'A contractor registered under a scheme covering domestic work advertises that all work of every kind is approved and certified. Why can that claim mislead?',
+    options: [
+      'Because certification is never issued for domestic work',
+      'Because approval covers only the tools that are in use',
+      'Because a registration can never be advertised at all',
+      'Because registration covers a defined scope of work',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Registration is granted against the categories of work that were assessed, so advertising it as blanket approval for everything the business does overstates what the assessment covered. Saying registration cannot be advertised is wrong, because schemes actively encourage members to display their status, provided the claim reflects the scope actually held.',
+    section: '7.4',
+    difficulty: 'advanced',
+  },
+  {
+    id: 250,
+    question:
+      'Why should an electrician confirm cable route positions with the other trades before first fix begins?',
+    options: [
+      'To make sure the builder pays for any wasted materials',
+      'To avoid clashes with pipework, ducts and structural parts',
+      'To decide who signs the installation certificate at the end',
+      'To agree which trade will complete the site paperwork',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Routes agreed in advance prevent cables being run where pipework, ductwork or structural members will later need the same space, which is what causes rework and unauthorised notching of timbers. Arguing about wasted materials afterwards is the reactive answer, but coordination before first fix avoids the cost and the programme delay entirely.',
+    section: '7.5',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 251,
+    question: 'What is a curriculum vitae used for when applying for electrical work?',
+    options: [
+      'To set out your experience and qualifications',
+      'To confirm your identity and right to work',
+      'To record the training your employer funded',
+      'To prove the work you claim to have done',
+    ],
+    correctAnswer: 0,
+    explanation: 'A CV presents your background so an employer can judge whether to interview you. Proving the work you carried out is the tempting answer, but that is what a portfolio of evidence signed off by an assessor does; a CV only states a claim.',
+    section: '7.4',
+    difficulty: 'basic',
+  },
+  {
+    id: 252,
+    question: 'What does a job description tell an applicant?',
+    options: [
+      'The qualifications the employer expects',
+      'The duties the post holder will carry out',
+      'The rate of pay for the industry grade',
+      'The hours and holiday that are offered',
+    ],
+    correctAnswer: 1,
+    explanation: 'A job description sets out what the role involves day to day. The qualifications expected are the tempting answer, but those appear in the person specification, which is a separate document written alongside it.',
+    section: '7.4',
+    difficulty: 'basic',
+  },
+  {
+    id: 253,
+    question: 'What is the purpose of writing a goal in the SMART form?',
+    options: [
+      'So it can be added to a training record',
+      'So it can be agreed with your employer',
+      'So progress towards it can be checked',
+      'So it can be achieved without any support',
+    ],
+    correctAnswer: 2,
+    explanation: 'Writing a goal so it is specific, measurable, achievable, relevant and time bound means you can tell whether you are on track. Agreeing it with an employer is the tempting answer because that often happens, but a goal can be SMART whether or not anyone else sees it.',
+    section: '7.4',
+    difficulty: 'basic',
+  },
+  {
+    id: 254,
+    question: 'What does registration with a competent person scheme allow a business to do?',
+    options: [
+      'Employ apprentices without a training agreement',
+      'Carry out electrical work in domestic premises lawfully',
+      'Issue installation certificates for its completed work',
+      'Self-certify that work meets the Building Regulations',
+    ],
+    correctAnswer: 3,
+    explanation: 'Registration lets a business certify its own notifiable work as compliant with the Building Regulations and notify the local authority through the scheme. Being allowed to work in domestic premises is the tempting answer, but anyone competent may do the work; registration changes only how compliance is notified and certified.',
+    section: '7.6',
+    difficulty: 'basic',
+  },
+  {
+    id: 255,
+    question: 'What is a portfolio of evidence built up during an apprenticeship?',
+    options: [
+      'A record of real work with proof it was done',
+      'A summary of the units passed at the college',
+      'A logbook of the hours spent on each site',
+      'A collection of manufacturer training records',
+    ],
+    correctAnswer: 0,
+    explanation: 'The portfolio gathers evidence of workplace tasks actually performed, witnessed and signed off, which is what an assessor judges. A summary of college units is the tempting answer, but those are recorded on certificates and prove classroom achievement rather than site competence.',
+    section: '7.3',
+    difficulty: 'basic',
+  },
+  {
+    id: 256,
+    question: 'Which of these is a short-term goal for a second-year apprentice?',
+    options: [
+      'Become a qualified electrician within four years',
+      'Complete the inspection unit by the end of term',
+      'Run an electrical contracting business one day',
+      'Move into design work later in their career',
+    ],
+    correctAnswer: 1,
+    explanation: 'A short-term goal has a near deadline and a definite finishing point, which the term-end unit has. Qualifying within four years is the tempting answer because it has a timescale, but a multi-year target is a long-term goal that short-term goals build towards.',
+    section: '7.4',
+    difficulty: 'basic',
+  },
+  {
+    id: 257,
+    question: 'What is a reference from a previous employer used for?',
+    options: [
+      'To prove the applicant holds a current ECS card',
+      'To describe the duties of the post being applied for',
+      'To confirm the applicant\'s record of employment',
+      'To set out the pay the applicant last received',
+    ],
+    correctAnswer: 2,
+    explanation: 'A reference lets a new employer confirm that what the applicant says about their previous work is accurate. Proving an ECS card is the tempting answer, but a card is checked directly against the issuing register rather than through a referee.',
+    section: '7.4',
+    difficulty: 'basic',
+  },
+  {
+    id: 258,
+    question: 'Which source gives independent information on routes into the electrical trade?',
+    options: [
+      'A manufacturer\'s approval scheme',
+      'A recruitment advert for a vacancy',
+      'A wholesaler\'s training catalogue',
+      'The National Careers Service',
+    ],
+    correctAnswer: 3,
+    explanation: 'The National Careers Service publishes route, entry requirement and pay information across occupations without an interest in the outcome. A single recruitment advert is the tempting answer because it is about a real job, but it describes one employer\'s vacancy rather than the routes available.',
+    section: '7.4',
+    difficulty: 'basic',
+  },
+  {
+    id: 259,
+    question: 'An applicant wants to know exactly what an employer expects of the person appointed. Which document should they read?',
+    options: [
+      'The person specification',
+      'The job description',
+      'The contract of employment',
+      'The company training policy',
+    ],
+    correctAnswer: 0,
+    explanation: 'The person specification lists the qualifications, experience and attributes the employer is looking for, and it is what the shortlisting is done against. The job description is the tempting answer because it comes in the same pack, but it describes the work rather than the person.',
+    section: '7.4',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 260,
+    question: 'Which source shows an apprentice which electrical roles are in demand in their region?',
+    options: [
+      'The vacancy list on one firm\'s website',
+      'Labour market information for the area',
+      'The college\'s course list for the year',
+      'The industry pay rates published',
+    ],
+    correctAnswer: 1,
+    explanation: 'Labour market information reports what employers in an area are recruiting for and where shortages sit, which is what the question asks. Published pay rates are the tempting answer because they look like market data, but a rate tells you what a job pays, not whether anyone is hiring.',
+    section: '7.4',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 261,
+    question: 'Which of these areas of building services work runs a competent person scheme?',
+    options: [
+      'Removal of asbestos containing materials',
+      'Erection of scaffolding on a construction site',
+      'Installation of heating and hot water systems',
+      'Operation of a mobile elevating work platform',
+    ],
+    correctAnswer: 2,
+    explanation: 'Schemes exist for the building work covered by the Building Regulations, which includes heating and hot water, gas, oil firing, solid fuel, ventilation, microgeneration, plumbing, glazing and electrical work. Asbestos removal is the tempting answer because it is also tightly controlled, but it is licensed under separate health and safety law rather than certified under a scheme.',
+    section: '7.6',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 262,
+    question: 'Who holds the registration when a contracting business joins a competent person scheme?',
+    options: [
+      'The apprentice once they have completed training',
+      'Each electrician the business employs on site',
+      'The individual who signs the certificates',
+      'The business, with a named qualified supervisor',
+    ],
+    correctAnswer: 3,
+    explanation: 'It is the enterprise that is registered, and the scheme requires it to have a nominated qualified supervisor with the technical competence to stand behind the work. Assuming each electrician is registered is the tempting error, because the card an individual carries is a grading, not a scheme registration.',
+    section: '7.6',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 263,
+    question: 'What does a scheme assessor examine when a registered business is reassessed?',
+    options: [
+      'A sample of recent work with its records',
+      'The bank statements for the last year',
+      'The pay rates offered to each operative',
+      'The marketing material it publishes',
+    ],
+    correctAnswer: 0,
+    explanation: 'Reassessment looks at completed jobs, the certification issued for them and the test instruments and records behind them. Checking pay rates is the tempting answer because employment matters do get audited elsewhere, but a scheme assesses technical compliance, not wages.',
+    section: '7.6',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 264,
+    question: 'An apprentice writes the goal \'get better at inspection and testing\'. What is missing from it?',
+    options: [
+      'A reason for wanting to improve at it',
+      'A measure and a date to reach it by',
+      'The agreement of their line supervisor',
+      'The cost of the training that it needs',
+    ],
+    correctAnswer: 1,
+    explanation: 'Without something to measure and a deadline there is no way to tell whether the goal has been met, which is what makes it unusable. The supervisor\'s agreement is the tempting answer because goals are often agreed at review, but agreement does not make a vague goal any more checkable.',
+    section: '7.4',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 265,
+    question: 'Why is a long-term career goal normally broken into smaller steps?',
+    options: [
+      'Each step must be funded by an employer',
+      'Each step earns a separate qualification',
+      'Each step can be reviewed and adjusted',
+      'Each step removes the need for a deadline',
+    ],
+    correctAnswer: 2,
+    explanation: 'Breaking the goal down gives points where progress can be judged and the plan changed before time is wasted. Assuming each step earns a qualification is the tempting error, because many useful steps are experience or responsibility rather than a certificate.',
+    section: '7.4',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 266,
+    question: 'What is the difference between an apprenticeship agreement and a training plan?',
+    options: [
+      'One applies at college, one applies on site',
+      'One is signed by the college, one by the firm',
+      'One covers pay, the other covers holiday',
+      'One is the employment terms, one the programme',
+    ],
+    correctAnswer: 3,
+    explanation: 'The agreement sets out the employment relationship for the apprenticeship, while the training plan sets out what will be learned, where and when. Dividing them by who signs is the tempting answer, because the employer, apprentice and provider are all party to the arrangements.',
+    section: '7.3',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 267,
+    question: 'An electrician wants to progress towards design work. Which step serves that aim most directly?',
+    options: [
+      'Study installation design and verification',
+      'Sit another inspection and testing course',
+      'Take a supervisory qualification',
+      'Attend a manufacturer\'s training day',
+    ],
+    correctAnswer: 0,
+    explanation: 'Design work turns on calculating and specifying installations, which is what the design and verification study covers. Further inspection and testing study is the tempting answer because it is the usual next step after qualifying, but it develops the ability to report on installations rather than to design them.',
+    section: '7.4',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 268,
+    question: 'What does a covering letter add to an application that a CV does not?',
+    options: [
+      'A full history of the applicant\'s employment',
+      'Why this applicant suits this particular role',
+      'A list of the qualifications the applicant holds',
+      'The names of two referees the employer may ask',
+    ],
+    correctAnswer: 1,
+    explanation: 'The covering letter connects the applicant\'s background to the specific vacancy, which a general CV cannot do. Listing qualifications is the tempting answer because letters often mention them, but repeating the CV is exactly what a covering letter should avoid.',
+    section: '7.4',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 269,
+    question: 'Why do many employers insist on their own application form rather than a CV?',
+    options: [
+      'It proves the applicant\'s qualifications are real',
+      'It removes the need to hold an interview',
+      'Every applicant answers the same questions',
+      'It commits the applicant to the terms offered',
+    ],
+    correctAnswer: 2,
+    explanation: 'A common form lets an employer compare applicants against the same information rather than against differently structured CVs. Assuming it proves qualifications is the tempting error, because the form is still the applicant\'s own statement until certificates are checked.',
+    section: '7.4',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 270,
+    question: 'An apprentice asks who decides what work they are given each day on a large site.',
+    options: [
+      'The client\'s representative on site',
+      'The main contractor\'s site manager on the job',
+      'The college assessor when they visit',
+      'The electrical supervisor for their employer',
+    ],
+    correctAnswer: 3,
+    explanation: 'The apprentice takes their instructions through their own employer\'s supervisory line, which is who is answerable for their work and their training. The main contractor\'s site manager is the tempting answer because they run the site, but they coordinate trades rather than direct another firm\'s apprentice.',
+    section: '7.1',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 271,
+    question: 'A learner has completed the classroom diploma but has never worked on site. Are they a qualified electrician?',
+    options: [
+      'No, workplace competence must also be evidenced',
+      'Yes, the diploma is the trade qualification',
+      'Yes, provided they hold a current ECS card',
+      'No, unless they register with a scheme',
+    ],
+    correctAnswer: 0,
+    explanation: 'The classroom diploma proves knowledge and workshop skill, but recognition as a qualified electrician also requires assessed competence on real work and the final practical assessment. Adding an ECS card is the tempting answer because a card looks like proof, but the card is issued on the strength of those achievements rather than instead of them.',
+    section: '7.3',
+    difficulty: 'advanced',
+  },
+  {
+    id: 272,
+    question: 'A registered business loses the person named as its qualified supervisor. What is the immediate effect on the registration?',
+    options: [
+      'The registration lapses at the next renewal',
+      'The scheme must be told and a replacement named',
+      'The registration continues until work ends',
+      'The scheme transfers the role to the owner',
+    ],
+    correctAnswer: 1,
+    explanation: 'Registration rests on having a qualified supervisor in place, so the operator has to be notified and a suitable replacement identified rather than the business carrying on quietly. Waiting until renewal is the tempting answer because that is when paperwork is normally checked, but the condition is a continuing one.',
+    section: '7.6',
+    difficulty: 'advanced',
+  },
+  {
+    id: 273,
+    question: 'A homeowner cannot produce a compliance certificate for a rewire when selling the house. What is the practical consequence?',
+    options: [
+      'The local authority will disconnect the supply',
+      'The sale cannot legally proceed without one',
+      'The buyer\'s solicitor will raise it pre-exchange',
+      'The installer is required to buy the property back',
+    ],
+    correctAnswer: 2,
+    explanation: 'Missing certification surfaces as a conveyancing enquiry, which usually leads to an indemnity policy, a retention or a demand for inspection before completion. Saying the sale cannot proceed is the tempting overstatement, because it is a commercial obstacle rather than a legal bar.',
+    section: '7.6',
+    difficulty: 'advanced',
+  },
+  {
+    id: 274,
+    question: 'An experienced electrician wants professional registration as an engineering technician. How is that achieved?',
+    options: [
+      'Through an employer\'s internal grading committee',
+      'By holding a level three qualification for five years',
+      'By registering with a building regulations scheme',
+      'Through a licensed institution against a standard',
+    ],
+    correctAnswer: 3,
+    explanation: 'Professional registration is awarded by an institution licensed to assess candidates against the national competence standard, on evidence and interview. Assuming a qualification plus time is enough is the tempting error, because registration is assessed on demonstrated competence rather than on years served.',
+    section: '7.6',
+    difficulty: 'advanced',
+  },
+  {
+    id: 275,
+    question: 'An electrician\'s stated goal is \'to be given more responsibility by my employer\'. Why is that a poor goal?',
+    options: [
+      'The outcome depends on someone else\'s decision',
+      'The goal has no financial value attached to it',
+      'The goal cannot be written in a development record',
+      'The goal will not be recognised by the industry',
+    ],
+    correctAnswer: 0,
+    explanation: 'A goal you cannot act on directly leaves you waiting rather than working, so it should be restated as something you control, such as taking on a named task or qualification. Saying it cannot be recorded is the tempting answer, but anything can be written down; the problem is that it cannot be achieved by your own effort.',
+    section: '7.4',
+    difficulty: 'advanced',
+  },
+  {
+    id: 276,
+    question: 'Two apprentices set the same goal but only one achieves it. Which difference in how the goal was written most likely explains that?',
+    options: [
+      'One was written down and the other was spoken',
+      'One had a deadline and a checkpoint set',
+      'One goal was ambitious and the other was modest',
+      'One was shared with a supervisor and one was not',
+    ],
+    correctAnswer: 1,
+    explanation: 'A goal with a date and a point at which progress is reviewed forces action while there is still time to correct course. Writing it down rather than saying it is the tempting answer because recording helps, but a written goal with no deadline drifts just as easily as a spoken one.',
+    section: '7.4',
+    difficulty: 'advanced',
+  },
+  {
+    id: 277,
+    question: 'An apprentice\'s long-term goal is to run their own contracting business. Which medium-term step supports it best?',
+    options: [
+      'Attend as many manufacturer training days as possible',
+      'Buy a van and a full set of installation tools',
+      'Take on estimating and job costing responsibility',
+      'Change employer every year to widen experience',
+    ],
+    correctAnswer: 2,
+    explanation: 'The skill that separates a working electrician from a business owner is pricing and controlling jobs, so learning it inside someone else\'s business is the natural bridge. Buying a van and tools is the tempting answer because it feels like starting up, but equipment does not teach anyone how to price work.',
+    section: '7.4',
+    difficulty: 'advanced',
+  },
+  {
+    id: 278,
+    question: 'A career plan written two years ago no longer matches the work available. What should the electrician do with it?',
+    options: [
+      'Ask the employer to write a replacement plan for them',
+      'Keep to the plan, since changing it wastes the effort',
+      'Abandon planning and take whatever work is offered',
+      'Review the goals and revise them against the market',
+    ],
+    correctAnswer: 3,
+    explanation: 'A plan is a working document, and reviewing it against what employers are actually recruiting for is the step that keeps it useful. Asking the employer to write a new one is the tempting answer because employers do support development, but a career plan that belongs to someone else stops being a career plan.',
+    section: '7.4',
+    difficulty: 'advanced',
+  },
+  {
+    id: 279,
+    question: 'Which document should an apprentice take to a progress review to show what they have achieved on site?',
+    options: [
+      'The portfolio with signed workplace evidence',
+      'The certificates for the units passed at college',
+      'The timesheets submitted to the employer',
+      'The training plan agreed at the start of the year',
+    ],
+    correctAnswer: 0,
+    explanation: 'The portfolio is the record of workplace tasks performed and witnessed, which is what a review of on-site progress turns on. The training plan is the tempting answer because it comes to every review, but it states what was intended rather than what has been achieved.',
+    section: '7.3',
+    difficulty: 'advanced',
+  },
+  {
+    id: 280,
+    question: 'Which career step would suit an electrician whose stated aim is to stop working at height and on site?',
+    options: [
+      'Move into commissioning of building systems',
+      'Move into estimating or technical support work',
+      'Move into installing solar generation equipment',
+      'Move into supervising apprentices on live sites',
+    ],
+    correctAnswer: 1,
+    explanation: 'Estimating and technical support use the same knowledge from an office, which is what the stated aim requires. Supervision is the tempting answer because it sounds like a step up from tools, but a supervisor is still on site and often at height.',
+    section: '7.4',
+    difficulty: 'advanced',
+  },
+  {
+    id: 281,
+    question: 'An electrician wants to specialise in periodic inspection of commercial premises. Which experience matters most to that aim?',
+    options: [
+      'Time spent supervising apprentices',
+      'Time spent installing new distribution',
+      'Time spent testing and reporting on systems',
+      'Time spent estimating refurbishment work',
+    ],
+    correctAnswer: 2,
+    explanation: 'Reporting on existing installations calls for judgement about what is found in service, which is built by doing exactly that work. Installation experience is the tempting answer because it teaches how systems are built, but knowing how something should be built is only half of judging what has degraded.',
+    section: '7.4',
+    difficulty: 'advanced',
+  },
+  {
+    id: 282,
+    question: 'What is a personal statement on a job application used for?',
+    options: [
+      'To confirm the dates of previous employment',
+      'To list every qualification ever gained',
+      'To give contact details for two referees',
+      'To say why you want the role and what you bring',
+    ],
+    correctAnswer: 3,
+    explanation: 'The personal statement is where an applicant argues their case for this particular vacancy in their own words. Listing qualifications is the tempting answer because they often appear there, but the form already collects them and repeating them wastes the one section where you can persuade.',
+    section: '7.4',
+    difficulty: 'basic',
+  },
+  {
+    id: 283,
+    question: 'What is a career action plan?',
+    options: [
+      'A list of steps with dates towards a goal',
+      'A summary of the roles held so far',
+      'A record of the training an employer funds',
+      'A statement of the pay expected each year',
+    ],
+    correctAnswer: 0,
+    explanation: 'An action plan turns an intention into dated steps that can be worked through and reviewed. A summary of roles held is the tempting answer because it also describes a career, but it looks backwards rather than setting out what happens next.',
+    section: '7.4',
+    difficulty: 'basic',
+  },
+  {
+    id: 284,
+    question: 'What does the certificate issued through a competent person scheme state?',
+    options: [
+      'That the installation meets the wiring standard',
+      'That the work complies with the Building Regulations',
+      'That the installer holds a current grading card',
+      'That the business carries insurance cover',
+    ],
+    correctAnswer: 1,
+    explanation: 'The scheme certificate is the notification that the notifiable work meets the Building Regulations, which is why a copy reaches the local authority. Compliance with the wiring standard is the tempting answer because both documents often arrive together, but that declaration belongs on the electrical installation certificate.',
+    section: '7.6',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 285,
+    question: 'When is the local authority told about notifiable work carried out by a registered business?',
+    options: [
+      'At the design stage, by the customer\'s agent',
+      'Before work starts, by the business directly',
+      'After completion, through the scheme',
+      'Only if the customer asks for confirmation',
+    ],
+    correctAnswer: 2,
+    explanation: 'A registered business certifies its own work and the scheme passes the notification to the authority after the job, which is the whole convenience of registration. Notifying before work starts is the tempting answer because that is exactly what an unregistered installer must do.',
+    section: '7.6',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 286,
+    question: 'A ventilation installer asks whether they can certify their own work under a scheme. What is the answer?',
+    options: [
+      'Yes, but only in a new dwelling',
+      'No, only gas and electrical have schemes',
+      'No, ventilation is outside the rules',
+      'Yes, ventilation work has its own scheme',
+    ],
+    correctAnswer: 3,
+    explanation: 'Schemes cover a spread of building services work including ventilation, heating and hot water, oil firing, solid fuel, plumbing, microgeneration and glazing, not only electrical and gas. Restricting them to electrical and gas is the tempting answer because those are the two most people have heard of.',
+    section: '7.6',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 287,
+    question: 'Why does a scheme want to see calibration records for a member\'s test instruments?',
+    options: [
+      'Results are only as reliable as the instrument',
+      'Instruments must be replaced at fixed intervals',
+      'Calibration proves the operative is competent',
+      'Records are needed for the insurance renewal',
+    ],
+    correctAnswer: 0,
+    explanation: 'A certificate rests on measured values, so an instrument reading outside its stated accuracy makes the whole record worthless. Saying calibration proves competence is the tempting answer because both are checked at assessment, but a calibrated instrument in untrained hands proves nothing.',
+    section: '7.6',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 288,
+    question: 'An apprentice is choosing optional units. What should guide the choice most strongly?',
+    options: [
+      'The units their friends in the group have picked',
+      'The work their employer actually carries out',
+      'The units with the smallest amount of coursework',
+      'The tutor\'s opinion of which unit is most useful',
+    ],
+    correctAnswer: 1,
+    explanation: 'Optional units are only worth taking if the apprentice can practise the content on real jobs and gather evidence for it. The tutor\'s opinion is the tempting answer because it is expert, but a tutor cannot know what work is coming through a particular employer.',
+    section: '7.4',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 289,
+    question: 'A person specification lists an inspection qualification as desirable rather than essential. What does that mean for an applicant without it?',
+    options: [
+      'They must obtain it before the interview date',
+      'They will be rejected before the shortlisting stage',
+      'They can still apply and may still be shortlisted',
+      'They should apply for a lower graded post instead',
+    ],
+    correctAnswer: 2,
+    explanation: 'Essential requirements screen applicants out; desirable ones separate the shortlisted candidates from each other. Assuming rejection is the tempting error, and it stops good applicants from applying for roles they could get.',
+    section: '7.4',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 290,
+    question: 'Which evidence at interview best shows that an applicant has worked without supervision?',
+    options: [
+      'A list of the sites they attended',
+      'A reference calling them reliable',
+      'Certificates for the college units',
+      'Signed workplace records naming them',
+    ],
+    correctAnswer: 3,
+    explanation: 'Records that name the applicant as the person responsible for a task tie the claim to identifiable work. A reference describing them as reliable is the tempting answer because it comes from an employer, but a general character comment evidences nothing specific.',
+    section: '7.3',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 291,
+    question: 'Why does an electrician keep a dated record of training completed each year?',
+    options: [
+      'It evidences competence when it is questioned',
+      'It entitles them to a higher rate of pay',
+      'It replaces the need to retake any assessment',
+      'It is required before any job can be certified',
+    ],
+    correctAnswer: 0,
+    explanation: 'When competence is challenged, whether by a scheme, an employer or a client, a dated record of what was learned is the evidence that answers it. Linking it to pay is the tempting answer because development often precedes progression, but the record itself carries no pay entitlement.',
+    section: '7.5',
+    difficulty: 'intermediate',
+  },
+  {
+    id: 292,
+    question: 'A registered business subcontracts a notifiable job to an electrician who is not registered. Who may certify the work?',
+    options: [
+      'The subcontractor, since they carried out the work',
+      'The registered business, if it controlled the work',
+      'Either party, provided the customer is told which',
+      'Neither, so building control must be notified first',
+    ],
+    correctAnswer: 1,
+    explanation: 'A registration reaches work carried out under the registered business\'s own supervision and control, so it can certify a subcontracted job it genuinely managed. Letting the subcontractor certify is the tempting answer because they did the work, but they hold no registration to certify under.',
+    section: '7.6',
+    difficulty: 'advanced',
+  },
+  {
+    id: 293,
+    question: 'A consumer unit was replaced in a dwelling and never notified to anyone. What power does the local authority have?',
+    options: [
+      'It can disconnect the property supply',
+      'It can prosecute the householder',
+      'It can require the work to be put right',
+      'It can order the installer to refund',
+    ],
+    correctAnswer: 2,
+    explanation: 'Where notifiable work has gone through unnotified, the authority can require alteration or removal so that the work complies. Disconnection is the tempting answer because it sounds like the strongest sanction, but supply disconnection is a matter for the network operator on safety grounds.',
+    section: '7.6',
+    difficulty: 'advanced',
+  },
+  {
+    id: 294,
+    question: 'A scheme suspends a member while it investigates a complaint. What can the member no longer do?',
+    options: [
+      'Hold an industry grading card meanwhile',
+      'Carry out any electrical work for customers',
+      'Employ apprentices while suspended',
+      'Certify notifiable work through the scheme',
+    ],
+    correctAnswer: 3,
+    explanation: 'Suspension removes the ability to self-certify, so notifiable jobs have to go to building control in the ordinary way until it is lifted. Assuming all work must stop is the tempting error, because the suspension affects certification rather than the right to trade.',
+    section: '7.6',
+    difficulty: 'advanced',
+  },
+  {
+    id: 295,
+    question: 'A business registered for domestic work is asked to quote for industrial installation. What must it do first?',
+    options: [
+      'Check whether its registration covers it',
+      'Notify the customer that it will not be certifying',
+      'Apply to a second scheme for the same category',
+      'Ask the customer to notify building control instead',
+    ],
+    correctAnswer: 0,
+    explanation: 'Registrations are granted category by category, so the first step is to establish whether the work sits inside the one held and, if not, apply to extend it. Applying to a second operator is the tempting answer because more registrations sound safer, but the extension is made through the existing operator.',
+    section: '7.6',
+    difficulty: 'advanced',
+  },
+  {
+    id: 296,
+    question: 'Which condition must a registered business keep meeting between assessment visits?',
+    options: [
+      'Completing a set number of notifiable jobs a year',
+      'Holding a qualified supervisor and current cover',
+      'Employing at least two graded electricians',
+      'Submitting every certificate for scheme approval',
+    ],
+    correctAnswer: 1,
+    explanation: 'Registration depends on continuing conditions, principally having a qualified supervisor in post and maintaining insurance and calibrated instruments, not just on passing the visit. Submitting every certificate for approval is the tempting answer because schemes do sample them, but sampling is not prior approval.',
+    section: '7.6',
+    difficulty: 'advanced',
+  },
+  {
+    id: 297,
+    question: 'A customer compares two contractors registered with different scheme operators. What actually differs for the customer?',
+    options: [
+      'The regulations the certificate is issued under',
+      'The standard the work is assessed against',
+      'The operator, not the compliance route itself',
+      'The categories of work that can be certified',
+    ],
+    correctAnswer: 2,
+    explanation: 'All operators certify against the same Building Regulations requirement, so the choice of operator does not change what the customer receives in compliance terms. Assuming the standard differs is the tempting error that scheme marketing can encourage.',
+    section: '7.6',
+    difficulty: 'advanced',
+  },
+  {
+    id: 298,
+    question: 'The only microgeneration certified installer in a small firm resigns. What is the effect on future solar installations?',
+    options: [
+      'The certification transfers to the owner',
+      'Existing customers lose export payments',
+      'The firm must stop all electrical work',
+      'The firm cannot offer certified installation',
+    ],
+    correctAnswer: 3,
+    explanation: 'Certification rests on the firm holding the assessed competence, so without it new work cannot be offered as certified and customers cannot access export payments or grant funding for it. Existing customers losing payments is the tempting answer, but their installations were certified when they were completed.',
+    section: '7.6',
+    difficulty: 'advanced',
+  },
+  {
+    id: 299,
+    question: 'What does a scheme expect of the qualified supervisor in a business that carries out periodic inspection?',
+    options: [
+      'Competence in inspection and reporting',
+      'A management qualification at level four',
+      'Ten years of continuous trade experience',
+      'Membership of a professional institution',
+    ],
+    correctAnswer: 0,
+    explanation: 'The supervisor has to be technically competent in the work the registration covers, which for periodic inspection means inspecting, testing and coding what is found. A management qualification is the tempting answer because the title contains the word supervisor, but the role is technical rather than managerial.',
+    section: '7.6',
+    difficulty: 'advanced',
+  },
+  {
+    id: 300,
+    question: 'A customer asks whether scheme registration means their installation is guaranteed. What is the accurate answer?',
+    options: [
+      'Registration guarantees the work for six years',
+      'Registration certifies compliance; cover varies',
+      'Registration transfers all liability to the operator',
+      'Registration replaces the need for any insurance',
+    ],
+    correctAnswer: 1,
+    explanation: 'The registration is about certifying compliance; any workmanship warranty is a separate benefit that differs between operators and has its own conditions. Assuming a fixed guarantee period is the tempting answer because warranties are heavily advertised, but they are not what registration itself provides.',
+    section: '7.6',
+    difficulty: 'advanced',
+  },
+  {
+    id: 301,
+    question: 'An apprentice finds the work they are given no longer matches their training plan. Who should they raise it with first?',
+    options: [
+      'The main contractor running the site they are on',
+      'The awarding body that issues the qualification',
+      'Their employer\'s training contact for the programme',
+      'The scheme operator their employer is registered with',
+    ],
+    correctAnswer: 2,
+    explanation: 'The employer and the training provider own the plan between them, so the employer\'s training contact is the person who can change what work the apprentice is given. Going to the awarding body is the tempting answer because they own the qualification, but they have no say in what an employer allocates.',
+    section: '7.3',
+    difficulty: 'advanced',
+  },
+  {
+    id: 302,
+    question: 'Which source best indicates whether a specialism will provide steady work in an area?',
+    options: [
+      'The pay rate quoted in a single job advert',
+      'A manufacturer\'s sales literature for the equipment',
+      'The number of training courses being advertised',
+      'Regional labour market and vacancy information',
+    ],
+    correctAnswer: 3,
+    explanation: 'Vacancy and skills shortage data show what employers are actually recruiting for over time, which is the question being asked. Course availability is the tempting answer because training providers respond to demand, but courses are also created ahead of demand that never arrives.',
+    section: '7.4',
+    difficulty: 'advanced',
+  },
+  {
+    id: 303,
+    question: 'Why does an employer take up references as well as reading a CV?',
+    options: [
+      'A reference tests the claims independently',
+      'A reference sets out the role\'s duties',
+      'A reference records their training needs',
+      'A reference confirms their card is valid',
+    ],
+    correctAnswer: 0,
+    explanation: 'Everything on a CV is the applicant\'s own account, and a referee is the first independent check on it. Confirming the card is the tempting answer because employers do verify cards, but that is done against the issuing register rather than through a referee.',
+    section: '7.4',
+    difficulty: 'advanced',
+  },
+  {
+    id: 304,
+    question: 'An apprentice sets five career goals all falling due in the same month. What is the flaw in that plan?',
+    options: [
+      'The goals will not be measurable in any way',
+      'Nothing is sequenced, so all five compete',
+      'The goals cannot be recorded in one document',
+      'The employer will not agree to fund all five',
+    ],
+    correctAnswer: 1,
+    explanation: 'Goals that all mature together leave no order of work and no capacity to complete any of them properly, so a plan needs staging as well as deadlines. Saying they are not measurable is the tempting answer, but each one may be perfectly measurable on its own.',
+    section: '7.4',
+    difficulty: 'advanced',
+  },
+  {
+    id: 305,
+    question: 'An electrician aiming for industrial control work books a course on domestic heating controls. Which part of the goal has failed?',
+    options: [
+      'Its achievability within the time allowed',
+      'Its measurability against a clear outcome',
+      'Its relevance to the route being followed',
+      'Its specificity about what will be learned',
+    ],
+    correctAnswer: 2,
+    explanation: 'The course may be specific, measurable, achievable and timed, and still take the electrician away from where they said they were going. Measurability is the tempting answer because it is the element people check first, but nothing about the measurement is at fault here.',
+    section: '7.4',
+    difficulty: 'advanced',
+  },
+  {
+    id: 306,
+    question: 'An electrician reaches a goal they set twelve months ago. What should happen next?',
+    options: [
+      'Remove it from the plan and start again',
+      'Repeat the same goal for the following year',
+      'Wait for the employer to propose a new goal',
+      'Record it and set the next step',
+    ],
+    correctAnswer: 3,
+    explanation: 'A completed goal is both evidence of development and the point from which the next step is set, so it is recorded and built on. Waiting for the employer is the tempting answer because reviews are often employer led, but the plan belongs to the individual.',
+    section: '7.4',
+    difficulty: 'advanced',
+  },
+  {
+    id: 307,
+    question: 'A goal reads \'improve my fault finding by December\'. Which element is still missing?',
+    options: [
+      'A way of telling whether it is met',
+      'A date by which it should be achieved',
+      'A reason for choosing that area of work',
+      'A link to the electrician\'s current role',
+    ],
+    correctAnswer: 0,
+    explanation: 'There is a deadline but nothing to measure against, so in December nobody can say whether the goal was reached. The missing date is the tempting answer because that is the usual fault, but a date is present here.',
+    section: '7.4',
+    difficulty: 'advanced',
+  },
+  {
+    id: 308,
+    question: 'A dispute arises on site over the value of a variation. Which role values it?',
+    options: [
+      'The estimator who priced the tender',
+      'The quantity surveyor for the job',
+      'The site supervisor who ordered it',
+      'The contracts manager for the region',
+    ],
+    correctAnswer: 1,
+    explanation: 'Valuing varied work against the contract is the quantity surveyor\'s function, which is why they hold the measured record. The estimator is the tempting answer because they set the original prices, but their work finished when the tender was submitted.',
+    section: '7.1',
+    difficulty: 'advanced',
+  },
+  {
+    id: 309,
+    question: 'Which progression route suits an electrician who wants to influence what is installed before it is built?',
+    options: [
+      'Site supervision of installation teams',
+      'Commissioning of completed installations',
+      'Design and consultancy work on projects',
+      'Periodic inspection of existing systems',
+    ],
+    correctAnswer: 2,
+    explanation: 'Design and consultancy decide the arrangement, capacity and protection before anything reaches site, which is the influence described. Site supervision is the tempting answer because it carries authority, but a supervisor delivers a design that has already been settled.',
+    section: '7.4',
+    difficulty: 'advanced',
+  },
+  {
+    id: 310,
+    question: 'Which type of work suits an electrician who wants regular indoor hours in occupied buildings?',
+    options: [
+      'Emergency call-out work for a small firm',
+      'New build installation for a main contractor',
+      'External infrastructure and street lighting',
+      'Planned maintenance for a facilities team',
+    ],
+    correctAnswer: 3,
+    explanation: 'Planned maintenance in occupied buildings runs to a schedule, indoors, on predictable hours, which is what the stated aim requires. Emergency call-out work is the tempting answer because it is also away from new build sites, but it is by nature unplanned and out of hours.',
+    section: '7.4',
+    difficulty: 'advanced',
+  },
+  {
+    id: 311,
+    question: 'Who is responsible for making sure an apprentice\'s off-the-job learning actually takes place?',
+    options: [
+      'The employer, with the training provider',
+      'The apprentice, in their own unpaid time',
+      'The awarding body that issues the certificate',
+      'The main contractor controlling the site',
+    ],
+    correctAnswer: 0,
+    explanation: 'Off-the-job learning is part of the apprenticeship the employer signed up to deliver, planned and evidenced jointly with the provider. Placing it on the apprentice\'s own time is the tempting answer because study does spill over, but it is a duty of the employer, not a favour to the apprentice.',
+    section: '7.3',
+    difficulty: 'advanced',
+  },
+  {
+    id: 312,
+    question: 'An experienced worker qualified years ago but never sat the final practical assessment. How can they be graded now?',
+    options: [
+      'By retaking the whole apprenticeship from the start',
+      'Through an experienced worker assessment route',
+      'By producing references from previous employers',
+      'By registering their business with a scheme',
+    ],
+    correctAnswer: 1,
+    explanation: 'Routes exist for experienced workers to have their competence assessed and gaps filled without repeating training they have long since exceeded. References are the tempting answer because they evidence the years worked, but grading turns on assessed competence rather than testimony.',
+    section: '7.2',
+    difficulty: 'advanced',
+  },
+  {
+    id: 313,
+    question: 'An applicant has an eighteen month gap in their employment history. What should the CV do about it?',
+    options: [
+      'Give only the years worked, not the months',
+      'Leave the dates out so the gap is not visible',
+      'State the period and what was done during it',
+      'Explain it only if the employer asks at interview',
+    ],
+    correctAnswer: 2,
+    explanation: 'An accounted-for gap is a fact; an unexplained one invites the reader to imagine the worst, so it is better addressed in the document. Using years only is the tempting answer because it hides the gap, but a reader who notices the technique distrusts the whole CV.',
+    section: '7.4',
+    difficulty: 'advanced',
+  },
+  {
+    id: 314,
+    question: 'Why is a person specification written before a vacancy is advertised?',
+    options: [
+      'It satisfies a requirement of employment law',
+      'It fixes the salary that will be offered',
+      'It records who previously held the post',
+      'It sets what shortlisting is judged against',
+    ],
+    correctAnswer: 3,
+    explanation: 'Writing down the requirements first means every applicant is measured against the same stated standard rather than against each other\'s impressions. Calling it a legal requirement is the tempting answer, because using one does help demonstrate fair recruitment without being compulsory.',
+    section: '7.4',
+    difficulty: 'advanced',
+  },
+  {
+    id: 315,
+    question: 'What distinguishes an apprenticeship progress review from an employer\'s performance appraisal?',
+    options: [
+      'It measures progress against the programme',
+      'It is conducted only when problems have arisen',
+      'It results in a change to the rate of pay',
+      'It replaces the need for any workplace assessment',
+    ],
+    correctAnswer: 0,
+    explanation: 'The progress review checks how far the apprentice has moved through the planned programme, with the employer and provider both present. Linking it to pay is the tempting answer because appraisals often are, but a progress review is about learning rather than reward.',
+    section: '7.3',
+    difficulty: 'advanced',
+  },
+  {
+    id: 316,
+    question: 'An electrician moving from domestic work into industrial work should check what about their existing qualifications?',
+    options: [
+      'Whether they were awarded within the last five years',
+      'Whether they cover the systems and hazards involved',
+      'Whether the awarding body still exists today',
+      'Whether the certificates were issued on paper',
+    ],
+    correctAnswer: 1,
+    explanation: 'Moving sector changes the systems, voltages and hazards encountered, so the honest question is whether existing competence reaches them. Assuming qualifications expire after a period is the tempting error, because a qualification records what was achieved and does not lapse.',
+    section: '7.3',
+    difficulty: 'advanced',
+  },
+  {
+    id: 317,
+    question: 'Why should an apprentice keep personal copies of their certificates and workplace records?',
+    options: [
+      'They must be produced before entering any site',
+      'They are needed to renew an industry card yearly',
+      'Employers and providers may not retain them',
+      'They prove the hours worked on each contract',
+    ],
+    correctAnswer: 2,
+    explanation: 'Firms close, providers archive and records go missing, and an apprentice who cannot produce evidence years later may have to redo work already completed. Site access is the tempting answer because cards are checked at the gate, but certificates are not what the gate asks for.',
+    section: '7.3',
+    difficulty: 'advanced',
+  },
+  {
+    id: 318,
+    question: 'An electrician is told their industry grade will rise automatically with years served. Is that correct?',
+    options: [
+      'No, unless the employer applies for them',
+      'Yes, grades move up on each anniversary',
+      'Yes, once the employer confirms the years',
+      'No, higher grades rest on assessed competence',
+    ],
+    correctAnswer: 3,
+    explanation: 'Grades reflect assessed qualifications and the competence they evidence, so time served alone moves nobody up. Saying the employer must apply is the tempting answer because employers do support applications, but the barrier is the evidence, not who submits it.',
+    section: '7.2',
+    difficulty: 'advanced',
+  },
+  {
+    id: 319,
+    question: 'An electrician wants to move into estimating. Which existing experience counts for most?',
+    options: [
+      'Having taken jobs off drawings and specifications',
+      'Having supervised apprentices on large projects',
+      'Having held a scheme registration for the business',
+      'Having attended manufacturer product training days',
+    ],
+    correctAnswer: 0,
+    explanation: 'Estimating starts with reading drawings and specifications and turning them into quantities, so experience of doing exactly that transfers directly. Supervision is the tempting answer because it shows responsibility, but managing people is a different skill from measuring work.',
+    section: '7.4',
+    difficulty: 'advanced',
+  },
+  {
+    id: 320,
+    question: 'A firm asks an electrician to name their development needs for the coming year. What should the answer be based on?',
+    options: [
+      'The courses the employer funded before',
+      'The gap between current work and the goal',
+      'The subjects found easiest at college',
+      'The technologies in the trade press',
+    ],
+    correctAnswer: 1,
+    explanation: 'Development needs are the distance between where someone is and where they said they were going, which is what makes them worth funding. Trade press coverage is the tempting answer because it signals where the industry is moving, but it says nothing about this individual\'s gap.',
+    section: '7.5',
+    difficulty: 'advanced',
+  },
 ];
 
 // Helper function to get random questions for mock exams
-export const getRandomQuestions = (count: number): Question[] => {
-  const shuffled = [...module7Questions].sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, count);
-};
+/**
+ * Draws a paper honouring the difficulty tags.
+ *
+ * Previously this was a flat `sort(() => Math.random() - 0.5)` slice, which
+ * ignored `difficulty` entirely — the tags were decorative and a paper's
+ * difficulty was pure luck — and used the broken sort-shuffle idiom, which is
+ * not a uniform permutation. See src/utils/apprenticeQuestionDraw.ts.
+ */
+export const getRandomQuestions = (
+  count: number,
+  weights: DifficultyWeights = LEVEL3_WEIGHTS
+): Question[] => drawWeighted(module7Questions, count, weights);
 
 // Helper function to get questions by section
 export const getQuestionsBySection = (section: string): Question[] => {

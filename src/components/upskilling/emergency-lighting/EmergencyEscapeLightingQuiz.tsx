@@ -24,7 +24,7 @@ export const EmergencyEscapeLightingQuiz = () => {
       options: ['0.5 lux', '1 lux', '1.5 lux', '2 lux'],
       correctAnswer: 1,
       explanation:
-        'BS 5266-1 specifies a minimum of 1 lux horizontal illuminance along the centre line of an escape route to allow safe movement during evacuation.',
+        'BS EN 1838:2024 specifies a minimum of 1 lux horizontal illuminance across the FULL WIDTH of an escape route to allow safe movement during evacuation — the 2013 edition required it only along the centre line.',
     },
     {
       id: 2,

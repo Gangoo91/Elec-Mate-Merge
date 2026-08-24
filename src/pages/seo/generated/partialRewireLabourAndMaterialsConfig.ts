@@ -179,14 +179,14 @@ export const partialRewireLabourAndMaterialsConfig: GeneratedGuideConfig = {
       category: 'Guide',
     },
     {
-      href: '/tools/electrical-quoting-app',
+      href: '/electrical-quoting-app',
       title: 'Electrical Quoting App',
       description: 'Build a clear quote from labour, materials, and scope.',
       icon: 'Calculator',
       category: 'Tool',
     },
     {
-      href: '/tools/electrician-invoice-app',
+      href: '/electrician-invoice-app',
       title: 'Electrician Invoice App',
       description: 'Turn the quote into a clean invoice once the work is done.',
       icon: 'FileText',

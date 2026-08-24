@@ -57,7 +57,7 @@ const faqs = [
   {
     question: 'What lux levels are required for emergency escape lighting?',
     answer:
-      'BS 5266-1 and BS EN 1838 specify minimum illuminance levels for emergency escape routes. Along defined escape routes, the minimum horizontal illuminance at floor level must be at least 1 lux on the centre line of the route. The uniformity ratio (maximum to minimum illuminance) must not exceed 40:1 to avoid excessively bright and dark spots. For anti-panic areas (open areas larger than 60 square metres), the minimum illuminance must be 0.5 lux at floor level. High-risk task areas require a minimum of 10% of the normal maintained illuminance or 15 lux, whichever is greater. These requirements ensure people can safely navigate to exits during a power failure.',
+      'BS 5266-1 and BS EN 1838 specify minimum illuminance levels for emergency escape routes. Along defined escape routes, the minimum horizontal illuminance at floor level must be at least 1 lux across the full width of the route (BS EN 1838:2024 extended this from the centre line, excluding borders). The uniformity ratio (maximum to minimum illuminance) must not exceed 40:1 to avoid excessively bright and dark spots. For anti-panic areas (open areas larger than 60 square metres), the minimum illuminance must be 0.5 lux at floor level. High-risk task areas require a minimum of 10% of the normal maintained illuminance or 15 lux, whichever is greater. These requirements ensure people can safely navigate to exits during a power failure.',
   },
 ];
 

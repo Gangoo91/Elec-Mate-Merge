@@ -305,7 +305,7 @@ export const siteInductionElectricalContractorsConfig: GeneratedGuideConfig = {
   ],
   relatedPages: [
     {
-      href: '/tools/rams-generator',
+      href: '/rams-generator',
       title: 'RAMS Generator',
       description:
         'Generate electrical Risk Assessments and Method Statements with site induction appendix in minutes.',

@@ -3626,4 +3626,904 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     topic: 'Investigation Process',
     category: 'Incident Response & Responsibilities',
   },
+  {
+    id: 201,
+    question:
+      'Under the Work at Height Regulations 2005, what counts as work at height?',
+    options: [
+      'Any work carried out above two metres from ground level',
+      'Work anywhere a person could fall a distance liable to cause injury',
+      'Work on a scaffold, tower or mobile elevating work platform',
+      'Any work needing a ladder rather than a step or a hop-up',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The Regulations define work at height as work in any place where, if there were no precautions, a person could fall a distance liable to cause personal injury. That includes falling through a fragile surface or into a hole in a floor, so a low mezzanine edge or a loft hatch counts. The two-metre answer is the common trap: two metres is the threshold at which a construction working platform must have a recorded inspection, not the point at which the Regulations start to apply.',
+    section: 'Module 1',
+    difficulty: 'basic',
+    topic: 'Work at Height',
+    category: 'Understanding Working at Height',
+  },
+  {
+    id: 202,
+    question:
+      'What is the correct order of the three steps in the work at height hierarchy?',
+    options: [
+      'Assess the risk, then issue harnesses, then supervise closely',
+      'Prevent falls first, then avoid the work, then train workers',
+      'Avoid work at height, then prevent falls, then minimise them',
+      'Provide equipment, then write a method statement, then train',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'The Regulations require you to avoid work at height where it is reasonably practicable, then prevent falls using a safe existing place of work or the right equipment, then minimise the distance and consequences of a fall where risk remains. Starting with harnesses or equipment selection is the classic error: it jumps straight to the last step and locks in a risk that could have been designed out, for example by lowering a lighting mast or making off cables at bench level.',
+    section: 'Module 1',
+    difficulty: 'basic',
+    topic: 'Hierarchy of Control',
+    category: 'Understanding Working at Height',
+  },
+  {
+    id: 203,
+    question:
+      'Why must collective protection be considered before personal protection?',
+    options: [
+      'It costs the employer less than issuing harnesses to everyone',
+      'It works without the person at height having to act correctly',
+      'It removes the need to carry out any risk assessment at all',
+      'It is the only option the regulations allow on a flat roof',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Collective protection such as a guard rail protects everyone at risk and does not depend on the individual doing anything, whereas personal protection only works if that person puts the harness on correctly and clips to a sound anchor every single time. Cost is not the legal test and is not why the order exists. Risk assessment is still required whichever measure is chosen, and a flat roof can be protected by several means.',
+    section: 'Module 1',
+    difficulty: 'basic',
+    topic: 'Hierarchy of Control',
+    category: 'Fall Protection & Prevention',
+  },
+  {
+    id: 204,
+    question:
+      'Lamps must be changed in a car park lighting column that can be lowered to ground level, but the team proposes hiring a MEWP. Why does the hierarchy favour lowering the column?',
+    options: [
+      'A MEWP always needs an operator licence that neither man holds',
+      'MEWPs are usable outdoors only where the ground is fully level',
+      'Lowering the column avoids the need for any risk assessment',
+      'Lowering it removes the work at height, so no fall risk remains',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Avoidance sits above every equipment choice because it eliminates the hazard rather than controlling it. HSE guidance gives lowering a lighting mast as a worked example of doing the job from the ground. The MEWP answer is attractive because a MEWP is genuinely safe equipment, but choosing it accepts a fall risk that did not have to exist. A risk assessment is still needed for the lowering operation itself.',
+    section: 'Module 1',
+    difficulty: 'advanced',
+    topic: 'Hierarchy of Control',
+    category: 'Safe Systems of Work',
+  },
+  {
+    id: 205,
+    question:
+      'Why is a work restraint lanyard the preferred personal system for an operative in a boom-type MEWP basket?',
+    options: [
+      'It absorbs more energy than a fall-arrest lanyard would absorb',
+      'It stops the wearer reaching a position from which they could fall',
+      'It removes the need to inspect the basket anchor point at all',
+      'It lets the operative lean out and work beyond the guard rails',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'HSE guidance on MEWPs describes work restraint as a full body harness to BS EN 361 with a lanyard to BS EN 354 clipped to the basket anchor, kept short enough that the wearer cannot reach a fall position. Restraint prevents the fall; arrest only limits the damage after it. The energy-absorption answer confuses the two: a restraint lanyard may include an absorber to BS EN 355 but the system is still restraint, and if it is long enough to let you lean out it has stopped being restraint at all.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'Fall Protection',
+    category: 'Fall Protection & Prevention',
+  },
+  {
+    id: 206,
+    question:
+      'A restraint lanyard has been adjusted long enough for the operative to reach past the basket guard rail. What has that adjustment created?',
+    options: [
+      'A compliant restraint system, because the harness is still worn',
+      'A rescue requirement that the basket guard rail already satisfies',
+      'A fall-arrest situation with no assurance the system will arrest',
+      'An acceptable arrangement provided the work lasts under an hour',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Lengthening the lanyard so the wearer can reach a fall position converts restraint into arrest without any of the checks arrest demands, namely a verified anchor able to take the impact load, an energy absorber, adequate clearance below and a rescue plan. Believing it is still compliant because a harness is worn is the dangerous misreading. Duration is irrelevant; the geometry of the lanyard decides what the system actually is.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'Fall Protection',
+    category: 'Fall Protection & Prevention',
+  },
+  {
+    id: 207,
+    question:
+      'HSG150 restricts the use of inertia reel fall arresters to an overhead anchor within what limit?',
+    options: [
+      'Within a 45-degree cone measured under the anchor point',
+      'Within a 30-degree cone measured under the anchor point',
+      'At any angle provided the line is kept clear of slack',
+      'Directly overhead only, with no sideways movement at all',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'HSG150 states that inertia reels should only be used with an overhead anchor within a 30-degree cone under the anchor. Working outside that cone allows a pendulum or swing fall, where the user swings back into the structure and is injured even though the device locked correctly. Permitting any angle ignores swing fall entirely, and restricting movement to directly under the anchor is stricter than the guidance and would make most work impossible.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'Fall Arrest',
+    category: 'Fall Protection & Prevention',
+  },
+  {
+    id: 208,
+    question:
+      'A safe system of work relies on harnesses. When must the rescue arrangements be in place?',
+    options: [
+      'As soon as a fall happens and the alarm has been raised on site',
+      'Where the emergency services cannot reach the site quickly',
+      'At the next weekly inspection of the fall protection equipment',
+      'Before anyone works at height relying on the harness system',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'HSE guidance is explicit that whenever harnesses are used a method must be available to recover someone left suspended, and that it is not appropriate to rely on the emergency services because they may not arrive in time or carry the right kit. Rescue kits and training are usually available from the harness supplier. Arranging rescue after the fall, or only where response times are poor, leaves a suspended casualty waiting while their condition deteriorates.',
+    section: 'Module 5',
+    difficulty: 'advanced',
+    topic: 'Rescue Planning',
+    category: 'Incident Response & Responsibilities',
+  },
+  {
+    id: 209,
+    question:
+      'Once no safer access can be justified, which three conditions make a ladder acceptable as a place of work?',
+    options: [
+      'A second worker footing it, dry weather, and a hard level floor',
+      'A class 1 ladder, a permit to work, and a signed method statement',
+      'Short-duration work, light work, and a secure handhold available',
+      'Work under three metres, a spotter present, and a harness worn',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'HSG150 allows a ladder or stepladder to be used as a workplace only for short-duration work, taken as 15 to 30 minutes in one position depending on the risk assessment, for light work, and only if a secure handhold is available. Footing is treated as a last resort rather than a qualifying condition, and none of the paperwork or height thresholds in the other options appear in the guidance as the test of acceptability.',
+    section: 'Module 2',
+    difficulty: 'advanced',
+    topic: 'Ladders',
+    category: 'Access Equipment & Selection',
+  },
+  {
+    id: 210,
+    question:
+      'What does HSG150 say about footing a ladder as the means of securing it?',
+    options: [
+      'It is the preferred method wherever tying is not practicable',
+      'It is a last resort and should be avoided by using other access',
+      'It is acceptable for any ladder used for under thirty minutes',
+      'It is required whenever a ladder stands on a public footpath',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'HSG150 lists the securing options in order: tie the ladder with both stiles secured, or where that is not practicable use an effective stability device such as a stay and anti-slip foot, or wedge the base against something solid. Footing comes last and should be designed out by using other access equipment. A person standing on the bottom rung cannot reliably stop a ladder sliding sideways or rotating about a stile, which is why almost half of ladder accidents involve a ladder that was not properly secured.',
+    section: 'Module 2',
+    difficulty: 'intermediate',
+    topic: 'Ladders',
+    category: 'Access Equipment & Selection',
+  },
+  {
+    id: 211,
+    question:
+      'What is the rule of thumb for setting a leaning ladder at the correct angle?',
+    options: [
+      'One metre out from the wall for every two metres of height',
+      'Set the stiles vertical and rely on a stability device instead',
+      'As close to vertical as possible to reduce the risk of sliding',
+      'One metre out from the wall for every four metres of height',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'HSG150 gives the rule of thumb as one out for every four up, the 1 in 4 angle, and HSE guidance for clients repeats it as a 1:4 angle with the ladder tied or footed. Too shallow an angle makes the base slide out; setting the ladder too close to vertical, as two of the distractors suggest, makes it liable to tip backwards as the climber shifts weight and gives no useful reaction into the wall.',
+    section: 'Module 2',
+    difficulty: 'intermediate',
+    topic: 'Ladders',
+    category: 'Access Equipment & Selection',
+  },
+  {
+    id: 212,
+    question:
+      'A ladder is being used to reach a flat roof. What does HSG150 require at the top of that ladder?',
+    options: [
+      'It should be tied and extend at least 1 m above the landing point',
+      'It should be tied level with the landing to avoid an obstruction',
+      'It should rest on the roof covering and be wedged at the base',
+      'It should be footed by a second person at the base while in use',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'A ladder used for access to another level should be tied and should extend at least 1 m above the landing point so there is a secure handhold at the moment of stepping on and off. Stopping level with the landing is the tempting answer because it looks tidy, but it forces the climber to transfer without a handhold, which is when many ladder falls occur. Wedging or footing does not address the handhold problem at the top.',
+    section: 'Module 2',
+    difficulty: 'intermediate',
+    topic: 'Ladders',
+    category: 'Access Equipment & Selection',
+  },
+  {
+    id: 213,
+    question:
+      'Which statement about the top of a ladder or stepladder reflects HSG150 guidance?',
+    options: [
+      'Do not use the top rung alone, provided both feet stay together',
+      'Do not use the top three rungs of a leaning ladder when working',
+      'The top platform of any stepladder may be stood on when it is tied',
+      'Any rung may be used once the stiles are tied at both sides',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'HSG150 says ladders must be long enough that the top three rungs are not used, so the stiles still rise past the worker and provide a handhold. For stepladders the guidance is to avoid the top two steps unless a suitable handrail is available, and to avoid the top three steps of a swing-back or double-sided stepladder where the step forms the very top. Tying the stiles improves stability but does not create the handhold that the unused top rungs provide.',
+    section: 'Module 2',
+    difficulty: 'advanced',
+    topic: 'Ladders',
+    category: 'Access Equipment & Selection',
+  },
+  {
+    id: 214,
+    question:
+      'Why should side-on drilling into masonry be avoided from a stepladder?',
+    options: [
+      'The drill torque will loosen the locking bar and fold the steps',
+      'Side loading voids the manufacturer warranty on most stepladders',
+      'Stepladders are not designed for side loading and overturn easily',
+      'Drilling counts as heavy work so a harness must be worn instead',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'HSG150 warns that stepladders take no appreciable side loading and are relatively easily overturned, so the steps should face the work. Where side-on loading cannot be avoided the steps should be tied to a suitable point or different access equipment chosen. The warranty answer is a commercial issue rather than a safety control, and clipping a harness to nothing solid on a stepladder adds no protection at all.',
+    section: 'Module 2',
+    difficulty: 'advanced',
+    topic: 'Ladders',
+    category: 'Access Equipment & Selection',
+  },
+  {
+    id: 215,
+    question:
+      'What checking regime does HSG150 set for ladders in use on a site?',
+    options: [
+      'A pre-use check each working day plus a recorded detailed inspection',
+      'A recorded inspection every three months carried out by the user',
+      'A single check on delivery to site, logged in the site register',
+      'A weekly check by the user with no record needed at any point',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'HSG150 requires a pre-use check each working day and a current detailed visual inspection carried out in line with the manufacturer instructions and recorded. Ladders forming part of a scaffold system must in addition be inspected every seven days. A quarterly regime is the interval associated with detailed inspection of harnesses in arduous use, not ladders, and a check only on delivery misses damage caused on site.',
+    section: 'Module 6',
+    difficulty: 'intermediate',
+    topic: 'Inspection',
+    category: 'Safe Systems of Work',
+  },
+  {
+    id: 216,
+    question:
+      'A working platform is used for construction work and a person could fall more than 2 m from it. Which inspection regime applies?',
+    options: [
+      'After assembly alone, unless the platform is later dismantled',
+      'Weekly alone, with no further check after severe weather hits',
+      'Before each shift by the user, with no written record required',
+      'After assembly, after any event affecting stability, and weekly',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'HSE guidance is that such a platform must be inspected after assembly in any position, after any event liable to have affected its stability, and at intervals not exceeding seven days, with the inspection recorded. Weekly alone is the attractive wrong answer because it captures the interval but drops the trigger events, so a scaffold hit by a vehicle or a gale would stay in use until the next routine check.',
+    section: 'Module 6',
+    difficulty: 'advanced',
+    topic: 'Inspection',
+    category: 'Safe Systems of Work',
+  },
+  {
+    id: 217,
+    question:
+      'Who is competent to carry out the inspection of a scaffold working platform?',
+    options: [
+      'A person with the skills, experience and knowledge for the task',
+      'Any operative who holds a current site safety awareness card',
+      'The site manager, because the legal duty sits with the employer',
+      'The scaffolder who erected it, as a matter of law in every case',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'A competent person is someone with the necessary skills, experience and knowledge to manage the health and safety of that particular task, judged against the complexity of what is being inspected. Holding a general awareness card proves attendance, not the ability to judge a scaffold. The duty sits with the employer, but holding the duty does not make the manager technically competent, and the erector is one candidate rather than a legal requirement.',
+    section: 'Module 6',
+    difficulty: 'advanced',
+    topic: 'Competence',
+    category: 'Incident Response & Responsibilities',
+  },
+  {
+    id: 218,
+    question:
+      'Why are roof lights singled out as a particular hazard during roof work?',
+    options: [
+      'They carry the roof load so walking on them damages the purlins',
+      'They are usually the one part of a roof that is not fragile',
+      'They are fragile and can be hard to see or hidden under paint',
+      'They can be crossed once the edge protection has been removed',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'HSG150 notes that roof openings and fragile roof lights are a particular hazard because some are difficult to see in certain light and others are obscured by paint, and HSE lists roof lights first among surfaces likely to be fragile. Protection must come from barriers, or covers that are secured and labelled with a warning. Treating a roof light as sound because it looks solid underfoot is exactly the assumption that kills people.',
+    section: 'Module 3',
+    difficulty: 'advanced',
+    topic: 'Fragile Surfaces',
+    category: 'Understanding Working at Height',
+  },
+  {
+    id: 219,
+    question:
+      'Containment must be routed across an ageing profiled metal sheet roof. Which approach matches HSG150?',
+    options: [
+      'Treat the sheets as if they were not there and work off staging',
+      'Walk on the line of fixings above the purlins to spread the load',
+      'Test one sheet with body weight before committing to the route',
+      'Cross quickly at the ridge where the sheets are best supported',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'HSG150 says do not trust any sheeted roof and do not stand directly on one, and that you should approach the roof as if the sheets were not in position. Walking the line of bolts above the purlins or along the ridge is expressly rejected because the sheets can still crack and give way, and steel sheets rust while fibre cement and plastic embrittle with age. Where access cannot be avoided, use staging to spread the load with edge protection at the perimeter, plus nets beneath or a harness system unless all work is from guarded staging.',
+    section: 'Module 3',
+    difficulty: 'advanced',
+    topic: 'Fragile Surfaces',
+    category: 'Safe Systems of Work',
+  },
+  {
+    id: 220,
+    question:
+      'An opening in a floor is to be protected by a cover instead of guard rails. What must that cover be?',
+    options: [
+      'Strong enough for likely loads, fixed in place, and marked as a warning',
+      'Made of plywood painted a bright colour and laid over the opening',
+      'Removable by hand so that services can be dropped through it later',
+      'Left loose so that it can be lifted clear quickly in an emergency',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'HSG150 requires any covering over an opening or fragile material to be strong enough to support the loads likely to be placed on it, including the weight of a person, and fixed to prevent accidental dislodgement, with a warning marking such as hole below do not remove. A loose or hand-removable cover is the dangerous answer because it will be lifted for access and not replaced, and colour alone does nothing once material is stacked on top of it.',
+    section: 'Module 3',
+    difficulty: 'intermediate',
+    topic: 'Edge Protection',
+    category: 'Fall Protection & Prevention',
+  },
+  {
+    id: 221,
+    question:
+      'Why must a safety net be rigged as close as possible to the level where people are working?',
+    options: [
+      'It allows the net to be inspected from the working platform itself',
+      'It removes the need for edge protection around the working area',
+      'It lets the net be signed off by the user rather than an installer',
+      'It keeps the fall distance short and limits the energy of the fall',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'HSG150 requires nets to be positioned as close as possible to the working level to minimise the height of any fall, because the shorter the drop the less energy the net and the body have to absorb. Nets sit in the minimise step of the hierarchy, so they do not displace edge protection where preventing the fall is still practicable, and installation and sign-off remain the job of trained and competent people.',
+    section: 'Module 5',
+    difficulty: 'advanced',
+    topic: 'Fall Arrest',
+    category: 'Fall Protection & Prevention',
+  },
+  {
+    id: 222,
+    question:
+      'What inspection regime applies to an installed safety net system?',
+    options: [
+      'Inspection by a competent person after installation, then weekly',
+      'Inspection by the user before each shift, with no record needed',
+      'Inspection when the net has been used to arrest a fall from above',
+      'Inspection every seven days by whoever is working above the net',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'HSG150 states that safety net systems should be inspected by a competent person after installation, with a handover certificate confirming their safety, and then inspected weekly to confirm they are still fixed correctly and will arrest a fall. The last distractor is close but wrong on who: the person working above is not necessarily competent to judge net fixings. If a net has arrested a fall the installer should be consulted before it is relied on again.',
+    section: 'Module 6',
+    difficulty: 'advanced',
+    topic: 'Inspection',
+    category: 'Safe Systems of Work',
+  },
+  {
+    id: 223,
+    question:
+      'Why is the clearance beneath a safety net a critical part of the design?',
+    options: [
+      'The net deforms as it absorbs the load and needs room to do so',
+      'The net must hang clear so it can be swept out after each shift',
+      'The net needs airflow beneath it to stop the mesh degrading fast',
+      'The clearance lets a rescue team walk directly beneath the net',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'HSG150 explains that when a person falls into a net the material deforms as it absorbs the load, so adequate clearance must exist below for that deformation to happen without the faller striking the ground, a beam or stacked materials. A net rigged tight against an obstruction can still leave a fatal impact. Housekeeping and access underneath matter, but they are not what sets the clearance.',
+    section: 'Module 5',
+    difficulty: 'advanced',
+    topic: 'Fall Arrest',
+    category: 'Fall Protection & Prevention',
+  },
+  {
+    id: 224,
+    question:
+      'A leading edge cannot be guarded. Nets under the work and a personal fall arrest system are both feasible. Which is preferred and why?',
+    options: [
+      'Fall arrest, because it holds the faller at the point of the anchor',
+      'Fall arrest, because it needs no inspection once it has been rigged',
+      'Nets, because they protect everyone at risk without individual action',
+      'Nets, because they remove the need to plan any rescue arrangements',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Both sit in the minimise step, but the guidance ranks collective mitigation such as nets or soft landing systems above personal mitigation, because a net catches anyone who falls without them having to do anything. A fall arrest system only works if that individual dons the harness correctly, clips to a verified anchor and has clearance beneath. Nets do not abolish rescue planning either, since a person in a net still has to be recovered.',
+    section: 'Module 5',
+    difficulty: 'advanced',
+    topic: 'Fall Protection',
+    category: 'Fall Protection & Prevention',
+  },
+  {
+    id: 225,
+    question:
+      'How often should a harness in arduous use receive a detailed inspection?',
+    options: [
+      'At least every three months, on top of the checks before use',
+      'At least every twelve months, on top of the checks before use',
+      'After it has been used to arrest a fall, and at no other point',
+      'When the wearer reports a defect following a period of use',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'HSG150 says harnesses should be subject to a detailed inspection which for arduous use should be carried out at least every three months, and that sits alongside the pre-use check by the wearer. Waiting for a fall or for a reported defect is reactive: webbing damaged by grit, sunlight, battery acid or heat can fail on first loading with no complaint from the user beforehand.',
+    section: 'Module 6',
+    difficulty: 'intermediate',
+    topic: 'Inspection',
+    category: 'Safe Systems of Work',
+  },
+  {
+    id: 226,
+    question:
+      'A worker moving along steelwork uses a twin-tailed lanyard. Where must the unused leg never be clipped?',
+    options: [
+      'Back onto the harness itself while the other leg is anchored',
+      'Onto the same anchor point as the leg already connected there',
+      'Onto a separate anchor point ahead of the wearer on the route',
+      'Onto a fixed eye above head height alongside the walking route',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'HSG150 warns that when one leg is connected to the anchor the second leg must not be attached back to the harness, because that can limit the extension of the energy absorber in a fall and leave the body taking the arrest force. The other options describe normal use of a twin tail, where the free leg is clipped ahead so the worker is never unattached while moving.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'Fall Arrest',
+    category: 'Fall Protection & Prevention',
+  },
+  {
+    id: 227,
+    question:
+      'What must be established about an anchor point before a fall arrest system is relied on?',
+    options: [
+      'That it can take the impact load with an appropriate safety factor',
+      'That it is painted and numbered so it can be found from below',
+      'That it is at waist level so the connector is easy to reach',
+      'That it belongs to the contractor rather than the building owner',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'HSG150 requires any attachment point to be capable of withstanding the impact load generated in a fall with an appropriate factor of safety, and says expert advice may be needed; a harness system should not be used unless a suitably positioned and fully secure anchorage has been specified. The waist-level answer is the dangerous one, since a low anchor increases both the fall distance and the arrest forces, which is why arrest anchors are sited above the head.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'Fall Arrest',
+    category: 'Fall Protection & Prevention',
+  },
+  {
+    id: 228,
+    question:
+      'What does the law require of an employee working at height?',
+    options: [
+      'Report any safety hazard they identify and use the equipment properly',
+      'Carry out the risk assessment for their own work at height task',
+      'Provide their own harness and lanyard for work above two metres',
+      'Set the inspection intervals for the access equipment they use',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Employees must take reasonable care, co-operate with their employer, report hazards they spot, and use the equipment and safety devices supplied in line with their training and instructions, seeking further instruction if following them would be unsafe. Risk assessment, provision of equipment and setting inspection regimes are employer duties, and an employer cannot transfer them to the operative on the ladder.',
+    section: 'Module 1',
+    difficulty: 'intermediate',
+    topic: 'Duties',
+    category: 'Incident Response & Responsibilities',
+  },
+  {
+    id: 229,
+    question:
+      'Which of these is a legal requirement when planning any work at height?',
+    options: [
+      'Check the place where the work will happen every time before use',
+      'Check the place once at the start of the contract and record it',
+      'Check the weather forecast where a MEWP is to be deployed',
+      'Check the access route where members of the public can reach it',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'HSE lists as legal requirements that each place where people will work at height is checked every time before use, that weather conditions which could compromise safety are taken into account for all work at height, that falling objects are prevented or controlled, that materials are stored so they cannot collapse, and that emergency and rescue procedures are planned. A single check at contract start is the trap: roof surfaces, guard rails and openings change day to day.',
+    section: 'Module 1',
+    difficulty: 'advanced',
+    topic: 'Planning',
+    category: 'Understanding Working at Height',
+  },
+  {
+    id: 230,
+    question:
+      'What is the status of brick guards fitted to a scaffold platform?',
+    options: [
+      'They stop materials falling and do not serve as fall protection',
+      'They replace the toe board where materials are stacked at edges',
+      'They count as edge protection once fitted along the whole lift',
+      'They remove the need for an exclusion zone below the scaffold',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'HSG150 is clear that brick guards address falling materials and are not intended to protect against people falling, so they are used in addition to the required guard rails and toe boards rather than instead of them. Where it is not reasonably practicable to stop objects falling, the control is to keep people out of the danger area, for example with exclusion zones or scaffold mesh.',
+    section: 'Module 3',
+    difficulty: 'intermediate',
+    topic: 'Edge Protection',
+    category: 'Fall Protection & Prevention',
+  },
+  {
+    id: 231,
+    question:
+      'An electrician works from a boom MEWP among low steelwork and pipe bridges. Which control does HSE guidance point to for the entrapment risk?',
+    options: [
+      'Rely on the basket guard rails to hold the operator clear of steel',
+      'Reduce the platform height so the operator can jump clear if trapped',
+      'Select a MEWP with secondary guarding and give extra operator training',
+      'Fit a taller guard rail so the operator has to stand further back',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'HSE guidance on MEWPs says that where structures exist against which an operator could be trapped or crushed you should consider selecting a machine fitted with secondary guarding, and assess whether the standard operator training is enough or whether additional training for higher risk environments is needed. Overhead hazards such as power lines, beams, pipe bridges and trees must be identified first. Guard rails stop a fall out of the basket; they do nothing about the operator being pushed onto the controls or crushed against a beam.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'MEWPs',
+    category: 'Safe Systems of Work',
+  },
+  {
+    id: 232,
+    question:
+      'What must the plan cover if an operative in a MEWP basket is injured or trapped while at height?',
+    options: [
+      'A call to the fire and rescue service as the primary means of recovery',
+      'A second MEWP kept on hire for the whole contract as a standby unit',
+      'A note in the risk assessment that the operator can self-lower safely',
+      'A rehearsed means of bringing the person down without outside help',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'HSE guidance requires emergency and rescue procedures to be planned in advance and warns against relying entirely on the emergency services, who may not arrive in time or carry the right equipment. The recovery method has to work when the person at height cannot help themselves, which is exactly why an assumption that the operator will self-lower fails: an unconscious or trapped operator cannot touch the controls.',
+    section: 'Module 5',
+    difficulty: 'advanced',
+    topic: 'Rescue Planning',
+    category: 'Incident Response & Responsibilities',
+  },
+  {
+    id: 233,
+    question:
+      'What checking regime does HSG150 set for a suspended access cradle?',
+    options: [
+      'A visual check by the installer once a month with a written record',
+      'A visual check for obvious faults before each use plus a weekly one',
+      'A visual check at the start of the contract and after any incident',
+      'A visual check by the operator each week with no record required',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'HSG150 requires a thorough visual pre-use check for obvious faults before each use of a cradle, plus a weekly inspection by a competent person which is recorded. Most cradle accidents trace back to poorly secured counterweights, failed pins and bolts, or winches and ropes degraded by poor maintenance, all of which a pre-use look can catch before the cradle leaves the parapet. Monthly or contract-start checks leave far too long a gap.',
+    section: 'Module 6',
+    difficulty: 'intermediate',
+    topic: 'Inspection',
+    category: 'Safe Systems of Work',
+  },
+  {
+    id: 234,
+    question:
+      'Full edge protection is not reasonably practicable for a short job on a sloping roof. What is the minimum HSG150 accepts?',
+    options: [
+      'A colleague watching from the ground and a demarcated area below',
+      'A harness worn but left unclipped so the worker can move freely',
+      'Safe access to roof level and a properly constructed roof ladder',
+      'A ladder set at the correct angle and left untied for a quick exit',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'HSG150 accepts that for short-duration roof work full edge protection may not be reasonably practicable, but something must replace it: a safe means of access to roof level and a safe means of working on the roof, which on a sloping roof means a properly constructed roof ladder. A harness that is worn but not clipped protects nobody, and an untied ladder is the single most common cause of ladder accidents.',
+    section: 'Module 3',
+    difficulty: 'advanced',
+    topic: 'Roof Work',
+    category: 'Safe Systems of Work',
+  },
+  {
+    id: 235,
+    question:
+      'On a flat roof where full edge protection is not practicable for a short job, what does HSG150 give as a safe means of working?',
+    options: [
+      'A painted line set back from the edge and a briefing before starting',
+      'A trailing lanyard clipped to a roof vent near the working position',
+      'A rope tied around the waist and anchored to a colleague below',
+      'A harness on a secure anchorage with as short a lanyard as possible',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'For short-duration flat roof work HSG150 gives the safe means of working as a harness attached to a secure anchorage and fitted with as short a lanyard as possible, so the wearer cannot reach a fall position. A vent or other convenience fixing has not been specified or proved as an anchorage, and a waist rope is not a full body harness and can cause serious injury on arrest.',
+    section: 'Module 3',
+    difficulty: 'intermediate',
+    topic: 'Roof Work',
+    category: 'Safe Systems of Work',
+  },
+  {
+    id: 236,
+    question:
+      'How does the level of competence required for work at height scale with the task?',
+    options: [
+      'Every task at height needs a certificated qualification from a scheme',
+      'Simple ladder work may need only instruction and training on the job',
+      'Competence is proved solely by holding a site safety awareness card',
+      'A supervisor signature can substitute for competence on any task',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'HSE guidance says that for low-risk short-duration ladder tasks, meaning tasks taking less than 30 minutes, competence may be no more than making sure employees receive instruction on using the equipment safely, such as how to tie a ladder, and appropriate training, which often happens on the job. Where a more technical level is needed, such as planning a complex scaffold, industry training and certification schemes are one way to demonstrate it. A card or a signature evidences neither skill nor experience.',
+    section: 'Module 7',
+    difficulty: 'advanced',
+    topic: 'Competence',
+    category: 'Incident Response & Responsibilities',
+  },
+  {
+    id: 237,
+    question:
+      'A supervisor claims the Work at Height Regulations have banned ladders. What is wrong with that claim?',
+    options: [
+      'Ladders are banned only where a job takes longer than 30 minutes',
+      'Ladders are banned for access but permitted as a place of work',
+      'Ladders are not banned and are often the most suitable equipment',
+      'Ladders are permitted where the user wears a harness while climbing',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'HSE calls the ladder ban a common misconception and states there are many situations where a ladder is the most suitable equipment for working at height. What the Regulations require is that the choice be justified through the hierarchy and the risk assessment, and that the job be light and short duration with a secure handhold if the ladder is a workplace. The reversed answer is also wrong: ladders are primarily access equipment, and a workplace only by exception.',
+    section: 'Module 2',
+    difficulty: 'advanced',
+    topic: 'Ladders',
+    category: 'Access Equipment & Selection',
+  },
+  {
+    id: 238,
+    question:
+      'What is the practical test for avoiding overreach when working from a ladder?',
+    options: [
+      'Keep one hand on a rung and step down when the tool is stowed away',
+      'Keep the belt buckle inside the stiles and both feet on one rung',
+      'Keep the shoulders square to the wall and both hands on the stiles',
+      'Keep the ladder within arm reach of a fixed point on the structure',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'HSG150 gives the check as not overloading the ladder and not overreaching, keeping your belt buckle inside the stiles with both feet on the same rung. Once the buckle passes outside a stile the centre of gravity moves beyond the base and the ladder can slide sideways or rotate about a stile. The other answers describe habits that sound careful but give no reference point for when the reach has become unsafe.',
+    section: 'Module 2',
+    difficulty: 'intermediate',
+    topic: 'Ladders',
+    category: 'Access Equipment & Selection',
+  },
+  {
+    id: 239,
+    question:
+      'How should tools and materials be taken up a ladder?',
+    options: [
+      'In one hand, with the other hand sliding up along the ladder stile',
+      'Passed up by a second operative climbing on the rung below you',
+      'In a holster or shoulder bag, with heavy loads raised by gin wheel',
+      'In a rucksack, with the heaviest items packed at the very top',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'HSG150 says light tools should be carried in a shoulder bag or a holster attached to a belt so that both hands are free for climbing, and that heavy or bulky loads should not be carried up or down ladders at all, with a gin wheel or other lifting equipment used instead. Carrying in one hand breaks the handhold that must be maintained while climbing, and two people should never be on a ladder at once.',
+    section: 'Module 2',
+    difficulty: 'intermediate',
+    topic: 'Ladders',
+    category: 'Access Equipment & Selection',
+  },
+  {
+    id: 240,
+    question:
+      'A domestic stepladder bought from a DIY store is offered for use on a commercial fit-out. What is the problem?',
+    options: [
+      'It cannot be used unless a second operative foots it continuously',
+      'It must be re-labelled with the company asset number before any use',
+      'It is acceptable provided the pre-use check finds no visible damage',
+      'Domestic ladders are unlikely to be robust enough for site work',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'HSG150 states that for safe use a ladder must be strong enough for the job and in good condition, and that domestic ladders are unlikely to be robust enough for construction work. Passing a pre-use check is the attractive wrong answer: the check looks for damaged, buckled or warped stiles, cracked or missing rungs and missing feet, but it cannot upgrade the duty rating the product was built to.',
+    section: 'Module 2',
+    difficulty: 'advanced',
+    topic: 'Ladders',
+    category: 'Access Equipment & Selection',
+  },
+  {
+    id: 241,
+    question:
+      'What duty do architects and designers carry in relation to work at height?',
+    options: [
+      'They must supply the harnesses used by trades during the fit-out',
+      'They must consider work at height over the life of the building',
+      'They must inspect the scaffold before each trade starts on site',
+      'They must sign the method statement for every roof-level task',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Under the Construction Design and Management Regulations, designers must consider the need for work to be carried out at height over the lifespan of a building, for cleaning, maintenance and repair, and design out that need where possible. Specifying a lighting column that lowers, or a plant deck with permanent guard rails, removes risk for every visit over decades. Supplying PPE and inspecting scaffolds are duties that sit with the employer and contractor on site.',
+    section: 'Module 7',
+    difficulty: 'advanced',
+    topic: 'Planning',
+    category: 'Incident Response & Responsibilities',
+  },
+  {
+    id: 242,
+    question:
+      'Which of these is an example of doing the work from the ground rather than at height?',
+    options: [
+      'Using a podium step so the working platform is close to the floor',
+      'Tying the ladder so it cannot slide while a luminaire is fitted',
+      'Installing the cable at ground level before the run is lifted up',
+      'Wearing a harness clipped to the structure while the cable is run',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'HSE gives installing cables at ground level, using extendable tools from the ground, lowering a lighting mast and assembling edge protection at ground level as examples of doing as much work as possible from the ground, which is avoidance. A podium step is safer equipment but the person is still at height, and tying a ladder or clipping a harness are controls applied to work at height rather than ways of removing it.',
+    section: 'Module 1',
+    difficulty: 'intermediate',
+    topic: 'Hierarchy of Control',
+    category: 'Understanding Working at Height',
+  },
+  {
+    id: 243,
+    question:
+      'An electrician works on a plant deck on a non-fragile flat roof that has a permanent perimeter guard rail. Where does this sit in the hierarchy?',
+    options: [
+      'It is minimise, because the guard rail limits the fall distance',
+      'It is avoid, because the roof is already part of the building',
+      'It is outside the hierarchy, as the guard rail is permanent',
+      'It is prevent, using an existing place of work that is safe',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'HSE gives a concrete flat roof with existing edge protection as a worked example of collective protection using an existing place of work that is already safe, which is the prevent step. Minimise is the step you reach only when a fall remains possible, and a guard rail is there to stop the fall, not shorten it. Nothing about a permanent installation puts it outside the Regulations.',
+    section: 'Module 1',
+    difficulty: 'advanced',
+    topic: 'Hierarchy of Control',
+    category: 'Understanding Working at Height',
+  },
+  {
+    id: 244,
+    question:
+      'How should falls be prevented while a scaffold is being erected and dismantled?',
+    options: [
+      'By each scaffolder wearing a harness clipped to a nearby standard',
+      'By using an advanced guard rail system wherever it is practicable',
+      'By keeping lift heights low so that any fall is a short one',
+      'By working from a ladder rather than the part-built platform',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'HSG150 says scaffolders should adopt methods of work that prevent falls during erection, achieved by using an advanced guard rail system, and only where that is not practicable should harnesses be worn to provide fall arrest. This is the collective before personal rule applied to the scaffolders themselves. The work must also be done only by competent people under the direction of a competent supervisor.',
+    section: 'Module 3',
+    difficulty: 'advanced',
+    topic: 'Edge Protection',
+    category: 'Safe Systems of Work',
+  },
+  {
+    id: 245,
+    question:
+      'A MEWP arrives on site from a hire company. What must accompany it before it is used?',
+    options: [
+      'A copy of the operator licence held by the person hiring it',
+      'A signed permit from the principal contractor for that lift',
+      'An indication of when the last thorough examination was done',
+      'A statement that the machine has never arrested a fall in use',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'HSE guidance requires that before any equipment such as a MEWP that has come from another business or a rental company is used, it is accompanied by an indication, clear to everyone involved, of when the last thorough examination was carried out. That is what tells you the machine is currently within its examination regime. Permits and licences may be site requirements, but they say nothing about the mechanical condition of the machine.',
+    section: 'Module 6',
+    difficulty: 'intermediate',
+    topic: 'Inspection',
+    category: 'Safe Systems of Work',
+  },
+  {
+    id: 246,
+    question:
+      'A mobile working platform is moved to a new location on the same site. Is a fresh inspection report required?',
+    options: [
+      'Yes, a new written report is needed each time the platform moves',
+      'Yes, but only where the move takes it to a different floor level',
+      'No, because mobile platforms are exempt from inspection entirely',
+      'No, a new report is not required for a move on the same site',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'HSE guidance states that where it is a mobile platform, a new inspection and report is not required every time it is moved to a new location on the same site. That concession is about relocation only: mobile platforms are still subject to inspection after assembly, after any event liable to affect stability, and at intervals not exceeding seven days, so the exempt answer is plainly wrong.',
+    section: 'Module 6',
+    difficulty: 'intermediate',
+    topic: 'Inspection',
+    category: 'Safe Systems of Work',
+  },
+  {
+    id: 247,
+    question:
+      'Wind is gusting and rain has started while a team installs external lighting from a MEWP. What does the law require?',
+    options: [
+      'Continue while the machine stays within its rated wind speed',
+      'Continue but reduce the platform height by one boom section',
+      'Take account of conditions that could compromise worker safety',
+      'Hand the decision to the operative in the basket to make alone',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Taking account of weather conditions that could compromise worker safety is one of the express legal requirements when planning and undertaking work at height, and each place of work must be checked every time before use. The rated wind speed answer is attractive because machines do carry limits, but the duty is wider than one number and covers rain, cold, visibility and how a wet surface behaves. The decision is a planning and supervision duty, not something to leave to the person in the basket.',
+    section: 'Module 7',
+    difficulty: 'advanced',
+    topic: 'Planning',
+    category: 'Safe Systems of Work',
+  },
+  {
+    id: 248,
+    question:
+      'A MEWP is to be used over water. Should the operative wear a harness or a life jacket?',
+    options: [
+      'A harness must always be worn regardless of the water beneath',
+      'A harness and a life jacket must both be worn at all times',
+      'Neither is needed if the basket has a closed gate and rails',
+      'A life jacket where drowning is the greater risk of the two',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'HSE guidance says work next to or over water must be assessed to decide whether the greater risk is falling from the basket or drowning if the machine goes into the water, and that life jackets rather than harnesses should be worn where there is a risk of drowning. Wearing a harness in that situation tethers the operative to a sinking machine, which is why the always-wear-a-harness answer is the dangerous one.',
+    section: 'Module 4',
+    difficulty: 'intermediate',
+    topic: 'MEWPs',
+    category: 'Fall Protection & Prevention',
+  },
+  {
+    id: 249,
+    question:
+      'A working platform is safe once reached, but the only way onto it is a scramble over pipework. Why does this arrangement fail?',
+    options: [
+      'Because the platform must be inspected weekly by a competent person',
+      'Because access to and from the place of work must also be safe',
+      'Because pipework is treated as a fragile surface in every case',
+      'Because a harness must be worn whenever a platform is entered',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'HSE guidance requires employers to ensure workers can get safely to and from where they work at height, and the definition of a working platform covers any platform used as a place of work or as a means of getting to and from work. A safe island reached by an unsafe route is not compliant. The weekly inspection duty is real but separate, and pipework is not automatically a fragile surface.',
+    section: 'Module 1',
+    difficulty: 'intermediate',
+    topic: 'Planning',
+    category: 'Access Equipment & Selection',
+  },
+  {
+    id: 250,
+    question:
+      'A high-level luminaire in a warehouse has failed. Which option best follows the hierarchy?',
+    options: [
+      'Use a leaning ladder tied at the top with a second man footing it',
+      'Use a stepladder from the top of a stillage to gain extra height',
+      'Wear a harness and clip to the roof steel while on the ladder top',
+      'Lower the fitting if it is designed to lower, otherwise use a MEWP',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Avoid comes first: if the luminaire is on a lowering system or can be reached with an extendable tool the work at height disappears. If it cannot, prevention with a platform that has guard rails, such as a MEWP, protects everyone without depending on the individual doing anything. The ladder answers accept a fall risk that better equipment removes, working off a stillage creates an unstable base, and clipping to unverified roof steel from the top of a ladder combines an unproven anchor with an unstable workplace.',
+    section: 'Module 1',
+    difficulty: 'advanced',
+    topic: 'Hierarchy of Control',
+    category: 'Understanding Working at Height',
+  },
 ];

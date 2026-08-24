@@ -44,6 +44,7 @@
     "seo:bump-dates:force": "node scripts/seo-engine/bump-dates.mjs --force",
     "postinstall": "patch-package",
     "check:question-quality": "node scripts/check-question-quality.mjs",
+    "check:question-quality:all": "node scripts/check-question-quality.mjs --all",
     "check:tax": "npx tsx scripts/check-tax-rates.mjs",
     "check:business-planning": "npx tsx scripts/check-business-planning.mjs",
     "check:job-costing": "npx tsx scripts/check-job-costing.mjs",
@@ -53,7 +54,9 @@
     "check:calculators": "node scripts/check-calculator-content.mjs",
     "build:sitemap:mock-exams": "node scripts/generate-mock-exam-sitemap.mjs",
     "check:question-quality:ci": "node scripts/check-question-quality.mjs --ci",
-    "check:key-integrity": "node scripts/verify-key-integrity.mjs"
+    "check:key-integrity": "node scripts/verify-key-integrity.mjs",
+    "check:bank-categories": "node scripts/check-bank-categories.mjs",
+    "check:bank-categories:ci": "node scripts/check-bank-categories.mjs --ci"
   },
   "dependencies": {
     "@capacitor-community/contacts": "^7.2.0",

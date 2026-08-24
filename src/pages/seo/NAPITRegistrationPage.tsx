@@ -603,7 +603,7 @@ const sections = [
               <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>
-                  NAPIT vs <SEOInternalLink href="/guides/niceic-vs-napit">NICEIC</SEOInternalLink>:
+                  NAPIT vs <SEOInternalLink href="/niceic-vs-napit-comparison">NICEIC</SEOInternalLink>:
                 </strong>{' '}
                 NICEIC is the oldest and most recognised scheme. NAPIT is generally cheaper with
                 equally responsive technical support. Both are fully equivalent in regulatory terms.
@@ -638,7 +638,7 @@ const sections = [
           in legal terms. A NAPIT certificate carries the same weight as a NICEIC certificate or an
           ELECSA certificate. Choose the scheme that offers the best combination of cost, service,
           and convenience for your particular situation. For a detailed comparison, see our{' '}
-          <SEOInternalLink href="/guides/niceic-vs-napit">NICEIC vs NAPIT guide</SEOInternalLink>.
+          <SEOInternalLink href="/niceic-vs-napit-comparison">NICEIC vs NAPIT guide</SEOInternalLink>.
         </p>
       </>
     ),
@@ -647,7 +647,7 @@ const sections = [
 
 const relatedPages = [
   {
-    href: '/guides/niceic-vs-napit',
+    href: '/niceic-vs-napit-comparison',
     title: 'NICEIC vs NAPIT',
     description:
       'Detailed comparison of the two leading competent person schemes for electricians.',

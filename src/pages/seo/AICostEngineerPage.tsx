@@ -137,7 +137,7 @@ export default function AICostEngineerPage() {
     description: PAGE_DESCRIPTION,
     breadcrumbs: [
       { name: 'Home', url: '/' },
-      { name: 'AI Cost Engineer', url: '/tools/ai-cost-engineer' },
+      { name: 'AI Cost Engineer', url: '/ai-cost-engineer' },
     ],
     dateModified: '2026-05-18',
     author: 'Andrew Moore',

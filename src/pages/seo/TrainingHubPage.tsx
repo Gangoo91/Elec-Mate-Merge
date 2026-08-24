@@ -18,7 +18,7 @@ const ALL_TRAINING_PAGES = [
   { path: '/training/electrical-science-fundamentals', title: 'Electrical Science Fundamentals' },
   { path: '/training/energy-efficiency', title: 'Energy Efficiency' },
   { path: '/training/environmental-sustainability', title: 'Environmental Sustainability' },
-  { path: '/training/ev-charger-installation', title: 'EV Charger Installation' },
+  { path: '/guides/ev-charger-installation', title: 'EV Charger Installation' },
   { path: '/training/fire-alarm-systems', title: 'Fire Alarm Systems' },
   { path: '/training/fire-safety', title: 'Fire Safety' },
   { path: '/training/first-aid-electrical', title: 'First Aid (Electrical)' },

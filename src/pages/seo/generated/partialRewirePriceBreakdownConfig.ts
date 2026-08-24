@@ -160,14 +160,14 @@ export const partialRewirePriceBreakdownConfig: GeneratedGuideConfig = {
       category: 'Guide',
     },
     {
-      href: '/tools/electrical-quoting-app',
+      href: '/electrical-quoting-app',
       title: 'Electrical Quoting App',
       description: 'Build a clean quote and keep the customer-facing price clear.',
       icon: 'Calculator',
       category: 'Tool',
     },
     {
-      href: '/tools/electrician-invoice-app',
+      href: '/electrician-invoice-app',
       title: 'Electrician Invoice App',
       description: 'Turn the approved job into a clear invoice without rewriting details.',
       icon: 'FileCheck2',

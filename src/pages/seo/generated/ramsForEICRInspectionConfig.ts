@@ -330,7 +330,7 @@ export const ramsForEICRInspectionConfig: GeneratedGuideConfig = {
   ],
   relatedPages: [
     {
-      href: '/tools/rams-generator',
+      href: '/rams-generator',
       title: 'In-App RAMS Generator',
       description:
         'Generate a bespoke EICR RAMS in under five minutes — EICR-specific hazards, Regulation 14 live-testing justification, C1 emergency plan…',

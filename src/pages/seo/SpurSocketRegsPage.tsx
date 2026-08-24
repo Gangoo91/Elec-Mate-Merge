@@ -1,4 +1,5 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
+import SpurDecisionChecker from '@/components/seo/SpurDecisionChecker';
 import { CalculatorSurface } from '@/components/calculators/shared';
 import RingCircuitCalculator from '@/components/apprentice/calculators/RingCircuitCalculator';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
@@ -156,7 +157,12 @@ const sections = [
         >
           Work out if a socket is on the ring or on a spur — free calculator
         </a>
-        <p>
+        {/* Queries on this page are decision-shaped ("unfused spur", "spur off
+            radial circuit"), so the verdict goes above the explanation. */}
+        <div className="mt-5">
+          <SpurDecisionChecker />
+        </div>
+        <p className="mt-6">
           A spur is a branch cable that extends from an existing circuit to supply one or more
           additional outlets or items of equipment. It connects to the main circuit at a socket
           outlet, junction box, or the terminals of a fused connection unit (FCU), and runs to the

@@ -300,7 +300,7 @@ export const loneWorkingElectriciansConfig: GeneratedGuideConfig = {
   ],
   relatedPages: [
     {
-      href: '/tools/rams-generator',
+      href: '/rams-generator',
       title: 'RAMS Generator',
       description:
         'Generate task-specific Risk Assessment & Method Statements for lone working, live work, height work and confined space.',

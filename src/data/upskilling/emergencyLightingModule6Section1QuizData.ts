@@ -5,10 +5,10 @@ export const emergencyLightingModule6Section1QuizData: QuizQuestion[] = [
     id: 1,
     question: 'What is the main purpose of BS 5266-1?',
     options: [
-      'To set the photometric light levels and durations only',
+      'To set only the photometric light levels and the minimum durations for escape routes',
       'To provide a code of practice for emergency lighting design, installation, and maintenance',
-      'To specify the construction standards for luminaire batteries',
-      'To define the wiring colours used for emergency lighting circuits',
+      'To specify the construction standards for the batteries fitted inside luminaires',
+      'To define the wiring colours to be used on all emergency lighting final circuits',
     ],
     correctAnswer: 1,
     explanation:
@@ -83,9 +83,9 @@ export const emergencyLightingModule6Section1QuizData: QuizQuestion[] = [
     id: 7,
     question: 'Why is uniformity important in emergency lighting design?',
     options: [
-      'To allow fewer luminaires to be installed along the route',
-      'To increase the overall average illuminance on the escape route',
-      'To extend the rated battery duration of each luminaire',
+      'To allow fewer luminaires to be installed along the length of the escape route',
+      'To raise the overall average illuminance measured along the whole escape route',
+      'To extend the rated battery duration achieved by every individual luminaire',
       'To avoid large variations between bright and dark areas that could impair visibility',
     ],
     correctAnswer: 3,
@@ -97,9 +97,9 @@ export const emergencyLightingModule6Section1QuizData: QuizQuestion[] = [
     question: 'What type of documentation proves compliance with BS 5266-1?',
     options: [
       'Design calculations, as-built drawings, certificates, and maintenance schedules',
-      'The luminaire purchase invoices and delivery notes',
-      'A signed declaration from the building occupier alone',
-      'The manufacturer data sheets for the batteries used',
+      'Luminaire purchase invoices, delivery notes, and the supplier statements',
+      'A signed declaration from the building occupier and nothing else at all',
+      'Manufacturer data sheets for the batteries and the lamps that were fitted',
     ],
     correctAnswer: 0,
     explanation:

@@ -152,14 +152,14 @@ export const partialRewireCostGuideConfig: GeneratedGuideConfig = {
       category: 'Guide',
     },
     {
-      href: '/tools/electrical-quoting-app',
+      href: '/electrical-quoting-app',
       title: 'Electrical Quoting App',
       description: 'Build the quote from the survey without starting again later.',
       icon: 'Calculator',
       category: 'App',
     },
     {
-      href: '/tools/electrician-invoice-app',
+      href: '/electrician-invoice-app',
       title: 'Electrician Invoice App',
       description: 'Keep the invoice aligned with the agreed scope and quote.',
       icon: 'FileCheck2',

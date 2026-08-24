@@ -199,22 +199,22 @@ const exploreTools = [
     desc: 'Check maximum runs',
   },
   {
-    to: '/tools/minor-works-certificate',
+    to: '/minor-works-certificate',
     label: 'Minor Works Certificate',
     desc: 'Digital EWC forms',
   },
   {
-    to: '/tools/electrical-testing-calculators',
+    to: '/electrical-testing-calculators',
     label: 'Testing Calculators',
     desc: 'Zs, fault current, RCD',
   },
-  { to: '/tools/ai-electrician', label: 'AI Electrician Tools', desc: '5 BS 7671 specialists' },
+  { to: '/ai-electrician-tools', label: 'AI Electrician Tools', desc: '5 BS 7671 specialists' },
   {
-    to: '/training/18th-edition-course',
+    to: '/eighteenth-edition-course',
     label: '18th Edition Course',
     desc: 'BS 7671 + Amendment 3',
   },
-  { to: '/training/electrical-apprentice', label: 'Apprentice Training', desc: 'Level 2, 3 & AM2' },
+  { to: '/apprentice-training', label: 'Apprentice Training', desc: 'Level 2, 3 & AM2' },
 ];
 
 const faqs = [
@@ -1036,12 +1036,12 @@ const LandingPage = () => {
                   Voltage Drop Calculator
                 </Link>
                 <Link
-                  to="/tools/minor-works-certificate"
+                  to="/minor-works-certificate"
                   className="block transition hover:text-white"
                 >
                   Minor Works Certificate
                 </Link>
-                <Link to="/tools/ai-electrician" className="block transition hover:text-white">
+                <Link to="/ai-electrician-tools" className="block transition hover:text-white">
                   AI Electrician Tools
                 </Link>
               </div>
@@ -1051,13 +1051,13 @@ const LandingPage = () => {
               <h4 className="text-[13px] font-semibold text-white">Training</h4>
               <div className="mt-5 space-y-3 text-[14px] text-white">
                 <Link
-                  to="/training/18th-edition-course"
+                  to="/eighteenth-edition-course"
                   className="block transition hover:text-white"
                 >
                   18th Edition Course
                 </Link>
                 <Link
-                  to="/training/electrical-apprentice"
+                  to="/apprentice-training"
                   className="block transition hover:text-white"
                 >
                   Apprentice Training

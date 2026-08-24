@@ -5,6 +5,9 @@ import { ChevronDown, ChevronRight } from 'lucide-react';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { wiringTypeOptions } from '@/types/wiringTypes';
 import { referenceMethodOptions, cableSizeOptions } from '@/types/cableTypes';
+import ScheduleColumnFill from './testing/ScheduleColumnFill';
+import type { ColumnFillMode } from '@/utils/columnFill';
+import type { TestResult } from '@/types/testResult';
 
 interface EnhancedTestResultDesktopTableHeaderProps {
   showRegulationStatus?: boolean;
@@ -33,6 +36,18 @@ interface EnhancedTestResultDesktopTableHeaderProps {
   onFillAllCurve?: (value: string) => void;
   onFillAllPhase?: (value: string) => void;
   onFillAllAfddNA?: () => void;
+  /*
+   * ELE-1605 — generic per-column fill for the reading columns that had none:
+   * the five continuity columns, Zs and the RCD disconnection time.
+   *
+   * One pair of props rather than seven more `onFillAll*` — the existing
+   * one-off props each carry column-specific option lists, but these columns
+   * take a free value and the same N/A / LIM presets, so a generic control is
+   * the honest shape. `columnCounts` reports over the circuits this table is
+   * rendering (one board), which is what makes the popover's counts true.
+   */
+  onFillColumn?: (field: keyof TestResult, value: string, mode: ColumnFillMode) => void;
+  columnCounts?: (field: keyof TestResult) => { blankCount: number; populatedCount: number };
   // ELE-871 — smart RCD per-circuit fill based on bsStandard
   onSmartFillRcd?: () => void;
   // ELE-1494 — select-all. Optional, so surfaces that opt out are unchanged.
@@ -66,6 +81,8 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
   onFillAllCurve,
   onFillAllPhase,
   onFillAllAfddNA,
+  onFillColumn,
+  columnCounts,
   onSmartFillRcd,
   allSelected = false,
   someSelected = false,
@@ -81,6 +98,27 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
   const [polarityPopoverOpen, setPolarityPopoverOpen] = useState(false);
 
   const isGroupCollapsed = (groupName: string) => collapsedGroups.has(groupName);
+
+  /**
+   * ELE-1605 — the fill control for a reading column, or nothing when the
+   * parent has not opted in. Rendered beside the column name in the same
+   * `flex items-center justify-center gap-2` wrapper the existing fills use,
+   * so the header keeps one layout rather than two.
+   */
+  const columnFill = (field: keyof TestResult, label: string, presets?: string[]) => {
+    if (!onFillColumn || !columnCounts) return null;
+    return (
+      <ScheduleColumnFill
+        label={label}
+        presets={presets}
+        // Deliberately passed uncalled — this header is memoised and reads its
+        // circuits through a ref, so counting here would freeze the numbers at
+        // the last header render. See ScheduleColumnFill.
+        getCounts={() => columnCounts(field)}
+        onFill={(value, mode) => onFillColumn(field, value, mode)}
+      />
+    );
+  };
 
   return (
     <TableHeader>
@@ -447,10 +485,17 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                     <PopoverTrigger asChild>
                       <button className="text-[9.5px] font-bold text-elec-yellow touch-manipulation" title="Quick fill all (MCB/RCBO only)">Fill</button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-40 p-2 z-[9999] rounded-xl bg-[hsl(0_0%_16%)] border border-white/[0.14] shadow-[0_16px_40px_rgba(0,0,0,0.55)]" align="center">
+                    <PopoverContent className="w-48 p-2 z-[9999] rounded-xl bg-[hsl(0_0%_16%)] border border-white/[0.14] shadow-[0_16px_40px_rgba(0,0,0,0.55)]" align="center">
                       <p className="text-[10px] text-white mb-2 font-semibold">Fill all curve (MCB/RCBO)</p>
                       {['B', 'C', 'D'].map((v) => (
                         <Button key={v} variant="ghost" size="sm" className="w-full justify-start text-xs h-8 font-medium text-white hover:bg-elec-yellow hover:text-black" onClick={() => onFillAllCurve(v)}>Curve {v}</Button>
+                      ))}
+                      {/* ELE-1604 — a board of withdrawn BS 3871 breakers is
+                          the case this fill is most useful for. Each value only
+                          reaches rows on its own standard. */}
+                      <p className="text-[10px] text-white mb-2 mt-3 border-t border-white/[0.1] pt-2 font-semibold">Fill all type (BS 3871)</p>
+                      {[['1', '4×In'], ['2', '7×In'], ['3', '10×In'], ['4', '50×In']].map(([v, mult]) => (
+                        <Button key={v} variant="ghost" size="sm" className="w-full justify-start text-xs h-8 font-medium text-white hover:bg-elec-yellow hover:text-black" onClick={() => onFillAllCurve(v)}>Type {v} <span className="ml-1 opacity-80">({mult})</span></Button>
                       ))}
                     </PopoverContent>
                   </Popover>
@@ -888,31 +933,46 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
               className="sot-header-cell text-[10.5px] font-semibold text-white w-20 min-w-[75px] max-w-[75px]"
               data-group="continuity"
             >
-              r₁ Ω
+              <div className="flex items-center justify-center gap-2">
+                <span>r₁ Ω</span>
+                {columnFill('ringR1', 'r₁')}
+              </div>
             </TableHead>
             <TableHead
               className="sot-header-cell text-[10.5px] font-semibold text-white w-20 min-w-[75px] max-w-[75px]"
               data-group="continuity"
             >
-              rₙ Ω
+              <div className="flex items-center justify-center gap-2">
+                <span>rₙ Ω</span>
+                {columnFill('ringRn', 'rₙ')}
+              </div>
             </TableHead>
             <TableHead
               className="sot-header-cell text-[10.5px] font-semibold text-white w-20 min-w-[75px] max-w-[75px]"
               data-group="continuity"
             >
-              r₂ Ω
+              <div className="flex items-center justify-center gap-2">
+                <span>r₂ Ω</span>
+                {columnFill('ringR2', 'r₂')}
+              </div>
             </TableHead>
             <TableHead
               className="sot-header-cell text-[10.5px] font-semibold text-white w-32 min-w-[132px] max-w-[132px]"
               data-group="continuity"
             >
-              R₁+R₂ Ω
+              <div className="flex items-center justify-center gap-2">
+                <span>R₁+R₂ Ω</span>
+                {columnFill('r1r2', 'R₁+R₂')}
+              </div>
             </TableHead>
             <TableHead
               className="sot-header-cell text-[10.5px] font-semibold text-white w-20 min-w-[75px] max-w-[75px]"
               data-group="continuity"
             >
-              R₂ Ω
+              <div className="flex items-center justify-center gap-2">
+                <span>R₂ Ω</span>
+                {columnFill('ringContinuityLive', 'R₂')}
+              </div>
             </TableHead>
           </>
         )}
@@ -1147,7 +1207,10 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
               </div>
             </TableHead>
             <TableHead className="sot-header-cell text-[10.5px] font-semibold text-white w-24 min-w-[85px] max-w-[85px]" data-group="zs">
-              Zs Ω
+              <div className="flex items-center justify-center gap-2">
+                <span>Zs Ω</span>
+                {columnFill('zs', 'measured Zs')}
+              </div>
             </TableHead>
           </>
         )}
@@ -1161,7 +1224,10 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
               className="sot-header-cell text-[10.5px] font-semibold text-white w-24 min-w-[90px] max-w-[90px]"
               data-group="rcd-tests"
             >
-              ms
+              <div className="flex items-center justify-center gap-2">
+                <span>ms</span>
+                {columnFill('rcdOneX', 'RCD disconnection time')}
+              </div>
             </TableHead>
             <TableHead
               className="sot-header-cell text-[10.5px] font-semibold text-white w-28 min-w-[100px] max-w-[100px]"

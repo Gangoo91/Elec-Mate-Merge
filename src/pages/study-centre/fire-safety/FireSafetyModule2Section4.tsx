@@ -950,7 +950,7 @@ export default function FireSafetyModule2Section4() {
                     <span>
                       <strong className="text-white">Escape route lighting:</strong> Illuminates
                       defined escape routes to allow safe movement towards and through exits.
-                      Minimum 1 lux at floor level along the centre line of the escape route, with a
+                      Minimum 1 lux at floor level across the full width of the escape route, with a
                       uniformity ratio not exceeding 40:1.
                     </span>
                   </div>

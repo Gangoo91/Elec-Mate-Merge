@@ -127,7 +127,7 @@ export const EighteenthEditionAmendment42026ExamPrepConfig: GeneratedGuideConfig
   ],
   relatedPages: [
     {
-      href: '/guides/am2-module-6-online-knowledge-test',
+      href: '/guides/am2-section-e-online-knowledge-test',
       title: 'AM2 Module 6 — Online Knowledge Test',
       description: 'BS 7671 + electrical science topic coverage for the AM2 online knowledge component.',
       icon: 'BookOpen',

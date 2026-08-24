@@ -8,7 +8,7 @@
  * rate, the 5-7 month service window, and recording of ALL variations.
  */
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
-import { BookOpen } from 'lucide-react';
+import { BookOpen, ShieldCheck, FileCheck2 } from 'lucide-react';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
 
 const breadcrumbs = [
@@ -228,19 +228,33 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
+    href: '/guides/fire-alarm-certificate-requirements',
+    title: 'Fire Alarm Certificate Requirements',
+    description:
+      'Which BS 5839-1 certificate applies at each stage — design, installation, commissioning, verification — and who signs it.',
+    icon: BookOpen,
+    category: 'Guide',
+  },
+  {
     title: 'BS 5839 Fire Alarm Standard',
     description: 'Parts 1 and 6, system categories and grades explained',
     href: '/guides/bs-5839-fire-alarm-standard',
+    icon: ShieldCheck,
+    category: 'Standard',
   },
   {
     title: 'Smoke Alarm Regulations',
     description: 'Domestic smoke and CO alarm requirements across the UK',
     href: '/guides/smoke-alarm-regulations-uk',
+    icon: ShieldCheck,
+    category: 'Guide',
   },
   {
     title: 'Fire Alarm Certificates',
     description: 'Design, commissioning, periodic inspection and modification certificates',
     href: '/electrician/inspection-testing',
+    icon: FileCheck2,
+    category: 'Tool',
   },
 ];
 

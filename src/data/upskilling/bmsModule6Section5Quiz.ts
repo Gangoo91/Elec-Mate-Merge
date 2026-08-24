@@ -5,10 +5,10 @@ export const bmsModule6Section5Quiz: QuizQuestion[] = [
     id: 1,
     question: 'Why must BMS integrate with fire panels?',
     options: [
-      'To provide better comfort control for occupants',
+      'To provide better comfort control for the occupants of the building',
       'To perform critical safety shutdowns and control access during emergencies',
-      'To monitor building temperature more accurately',
-      'To reduce energy consumption during normal operation',
+      'To monitor the building temperature far more accurately than before',
+      'To reduce energy consumption during normal daytime plant operation',
     ],
     correctAnswer: 1,
     explanation:

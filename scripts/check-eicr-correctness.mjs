@@ -75,7 +75,12 @@ writeFileSync(
   `export { checkRegulationCompliance } from '@/utils/regulationChecker';
    export { checkZsCompliance } from '@/utils/regulationChecker/zsValidator';
    export { formatEICRJson } from '@/utils/eicrJsonFormatter';
-   export { useEICRValidation } from '@/hooks/useEICRValidation';`
+   export { useEICRValidation } from '@/hooks/useEICRValidation';
+   export { BS3871_ZS_LIMITS, BS3871_TRIP_MULTIPLES, getBs3871ZsLimit } from '@/data/zsLimits';
+   export { getMaxZsFromDeviceDetails } from '@/utils/zsCalculations';
+   export { getZsLimitFromDeviceString } from '@/data/zsLimits';
+   export { curveFillApplies, getCurveOptionsForStandard, clearOnStandardChange, curveMatchesStandard } from '@/types/protectiveDeviceTypes';
+   export { planColumnFill, describeColumnFill } from '@/utils/columnFill';`
 );
 
 const out = join(tmp, 'bundle.mjs');
@@ -88,8 +93,23 @@ await build({
   logLevel: 'silent',
   alias: { '@/integrations/supabase/client': stub, react: reactStub, '@': './src' },
 });
-const { checkRegulationCompliance, checkZsCompliance, formatEICRJson, useEICRValidation } =
-  await import(pathToFileURL(out).href);
+const {
+  checkRegulationCompliance,
+  checkZsCompliance,
+  formatEICRJson,
+  useEICRValidation,
+  BS3871_ZS_LIMITS,
+  BS3871_TRIP_MULTIPLES,
+  getBs3871ZsLimit,
+  getMaxZsFromDeviceDetails,
+  getZsLimitFromDeviceString,
+  curveFillApplies,
+  getCurveOptionsForStandard,
+  clearOnStandardChange,
+  curveMatchesStandard,
+  planColumnFill,
+  describeColumnFill,
+} = await import(pathToFileURL(out).href);
 
 /** The issue gate, for a certificate that is otherwise complete. */
 const COMPLETE_CERT = {
@@ -554,8 +574,8 @@ check('a malformed client email warns but does not block', () => {
  * the pre-issue sheet read `errors` only. A warning nobody sees is not a check.
  */
 check('advisory warnings are produced and are distinct from blocking errors', () => {
-  // A partially-tested board, not an untested one: with NO readings anywhere the
-  // gate blocks outright, which is right and is a different check.
+  // A partially-tested board. Missing readings are advisory in every case now
+  // (see check 13a) — this check is about warnings reaching a surface at all.
   const g = gate({
     scheduleOfTests: [
       ...COMPLETE_CERT.scheduleOfTests,
@@ -570,6 +590,358 @@ check('advisory warnings are produced and are distinct from blocking errors', ()
   return untabbed.length
     ? `warning has no tab, so the checklist cannot say where to go: "${untabbed[0].message}"`
     : null;
+});
+
+/* ── 13a. A missing test reading must never block issue ─────────────────────
+ * Andrew, 24 Aug 2026: "I don't want this to be a blocker as some circuits
+ * won't be tested." An EICR is routinely carried out with agreed limitations,
+ * so a blank column is a legitimate outcome rather than unfinished work — and
+ * the formatter prints every empty cell as N/A, so the document stays coherent.
+ *
+ * This also pins the bug that caused it. The old check looked at five fields,
+ * one of which (`insulationResistance`) is the legacy consolidated field the
+ * grid never writes — so a properly tested ring final with r₁/rₙ/r₂, insulation
+ * L-L and an RCD time recorded counted as *untested*, and the certificate would
+ * not generate.
+ */
+check('missing test readings warn but never block issue', () => {
+  const fails = [];
+
+  // Nothing measured anywhere — advisory, not blocking.
+  const bare = [
+    { id: 'c1', circuitNumber: '1', circuitDesignation: '1', circuitDescription: 'Lighting' },
+  ];
+  const none = gate({ scheduleOfTests: bare });
+  if (none.errors.length)
+    fails.push(`an untested schedule blocked: ${none.errors.map((e) => e.message).join(', ')}`);
+  if (!none.warnings.some((w) => /No test readings recorded/i.test(w.message)))
+    fails.push('an untested schedule produced no advisory');
+
+  // Every column the schedule can hold a reading in must count as tested. Each
+  // is checked on its own, so a field dropped from the list is caught by name.
+  const columns = [
+    'ringR1', 'ringRn', 'ringR2', 'r1r2', 'r2',
+    'ringContinuityLive', 'ringContinuityNeutral',
+    'insulationTestVoltage', 'insulationLiveNeutral', 'insulationLiveEarth',
+    'insulationNeutralEarth', 'insulationResistance',
+    'polarity', 'zs',
+    'rcdOneX', 'rcdTestButton', 'afddTest', 'rcdHalfX', 'rcdFiveX',
+    'pfc', 'functionalTesting',
+  ];
+  for (const field of columns) {
+    const g = gate({ scheduleOfTests: [{ ...bare[0], [field]: '1' }] });
+    // Both lists: on the old gate an unrecognised column produced a blocking
+    // *error*, so checking warnings alone would have let it pass silently.
+    if ([...g.errors, ...g.warnings].some((x) => /test readings/i.test(x.message)))
+      fails.push(`a reading in "${field}" did not count as tested`);
+  }
+
+  // The real-world case that started this: ring continuity + insulation L-L +
+  // RCD time recorded, Zs / polarity / L-E / R1+R2 left blank.
+  const ringOnly = gate({
+    scheduleOfTests: [
+      { ...bare[0], ringR1: '0.5', ringRn: '0.5', ringR2: '0.8', insulationLiveNeutral: '>999', rcdOneX: '28' },
+    ],
+  });
+  if ([...ringOnly.errors, ...ringOnly.warnings].some((x) => /test readings/i.test(x.message)))
+    fails.push('a ring final tested on continuity/insulation/RCD was still called untested');
+
+  // Spare ways and device rows (an incoming RCD, an SPD, a main switch) have
+  // nothing to test — counting them only inflates the advisory.
+  const withSpares = gate({
+    scheduleOfTests: [
+      ...COMPLETE_CERT.scheduleOfTests,
+      { id: 's1', circuitNumber: '2', circuitDescription: 'Spare', isSpare: true },
+      { id: 'd1', circuitNumber: '3', circuitDescription: 'Incoming RCD', isDeviceRow: true },
+    ],
+  });
+  if (withSpares.warnings.some((w) => /test readings/i.test(w.message)))
+    fails.push('a spare way or device row was counted as an untested circuit');
+
+  // An empty schedule is a different thing and still blocks.
+  if (!gate({ scheduleOfTests: [] }).errors.some((e) => /No circuits/i.test(e.message)))
+    fails.push('an empty schedule of tests no longer blocks');
+
+  return fails.length ? fails.join('; ') : null;
+});
+
+/* ── 13b. BS 3871 Max Zs must match the printed On-Site Guide table ─────────
+ * ELE-1604. BS 7671 dropped the BS 3871 time/current characteristics, so
+ * Table 41.3 has no row for these devices and the values in `zsLimits.ts` are
+ * derived rather than transcribed. That is only safe while the derivation is
+ * checkable — so it is checked here against the figures actually printed in
+ * IET On-Site Guide Appendix B, Table B6(ii), read off the held PDF.
+ *
+ * OSG B6 prints MEASURED impedances at ambient (10 °C); we store the 70 °C
+ * DESIGN figures so the app's existing 100%/80% Zs basis toggle behaves the
+ * same for these devices as for BS EN 60898. The bridge between the two is the
+ * OSG's 0.8 ambient factor, and all 60 cells must reconcile through it. If
+ * someone "tidies" a value here, this fails and names the cell.
+ */
+const OSG_TABLE_B6_II = {
+  // In:            5     6     10    15    16    20    25    30    32    40    45    50    60    63    100
+  type1: [8.74, 7.28, 4.37, 2.91, 2.73, 2.19, 1.75, 1.46, 1.37, 1.09, 0.97, 0.87, 0.73, 0.69, 0.44],
+  type2: [4.99, 4.16, 2.5, 1.66, 1.56, 1.25, 1.0, 0.83, 0.78, 0.62, 0.55, 0.5, 0.42, 0.4, 0.25],
+  type3: [3.5, 2.91, 1.75, 1.17, 1.09, 0.87, 0.7, 0.58, 0.55, 0.44, 0.39, 0.35, 0.29, 0.28, 0.17],
+  type4: [0.7, 0.58, 0.35, 0.23, 0.22, 0.17, 0.14, 0.12, 0.11, 0.09, 0.08, 0.07, 0.06, 0.06, 0.03],
+};
+const BS3871_RATINGS = [5, 6, 10, 15, 16, 20, 25, 30, 32, 40, 45, 50, 60, 63, 100];
+
+check('BS 3871 Max Zs reconciles with the printed On-Site Guide Table B6', () => {
+  const fails = [];
+  const round2 = (n) => Math.round(n * 100) / 100;
+
+  for (const [type, printed] of Object.entries(OSG_TABLE_B6_II)) {
+    const k = BS3871_TRIP_MULTIPLES[type];
+    if (!k) {
+      fails.push(`no trip multiple recorded for ${type}`);
+      continue;
+    }
+    BS3871_RATINGS.forEach((In, i) => {
+      const stored = BS3871_ZS_LIMITS[type]?.[In];
+      if (stored === undefined) {
+        fails.push(`${type} ${In}A missing from BS3871_ZS_LIMITS`);
+        return;
+      }
+      // Stored value must be the Cmin = 0.95 design figure for this multiple…
+      const expected = round2((230 * 0.95) / (k * In));
+      if (Math.abs(stored - expected) > 0.005)
+        fails.push(`${type} ${In}A stored ${stored}, formula gives ${expected}`);
+      // …and the unrounded design figure, at the OSG's 0.8 ambient factor,
+      // must reproduce the printed cell exactly.
+      const measured = round2(((230 * 0.95) / (k * In)) * 0.8);
+      if (Math.abs(measured - printed[i]) > 0.005)
+        fails.push(`${type} ${In}A → ${measured} Ω but OSG B6 prints ${printed[i]} Ω`);
+    });
+  }
+
+  // The multiples themselves are the claim that matters most — a Type 1 read as
+  // a Type B understates its permitted Zs by 20%.
+  const expectedK = { type1: 4, type2: 7, type3: 10, type4: 50 };
+  for (const [type, k] of Object.entries(expectedK))
+    if (BS3871_TRIP_MULTIPLES[type] !== k)
+      fails.push(`${type} trip multiple is ${BS3871_TRIP_MULTIPLES[type]}×In, should be ${k}×In`);
+
+  return fails.length ? fails.slice(0, 4).join('; ') : null;
+});
+
+/* ── 13c. A BS 3871 device must never be judged by the Table 41.3 curves ────
+ * The failure this prevents: a row whose standard says BS 3871 falling through
+ * to the BS EN 60898 lookup and being handed a Type B/C/D limit. A blank Max Zs
+ * is recoverable; a confidently wrong one prints on a signed certificate.
+ */
+check('BS 3871 rows are never given a BS EN 60898 Max Zs', () => {
+  const fails = [];
+
+  // Type 1 at 32 A is 1.71 Ω; the Type B 32 A value is 1.37 Ω. If the lookup
+  // leaks, this is the number that comes back.
+  const t1 = getMaxZsFromDeviceDetails('MCB (BS 3871)', '1', '32', 'Lighting');
+  if (t1 !== 1.71) fails.push(`BS 3871 Type 1 32A returned ${t1}, expected 1.71`);
+  if (t1 === 1.37) fails.push('BS 3871 Type 1 32A returned the Type B value — the lookup leaked');
+
+  // Type 3 shares 10×In with Type C, so the two genuinely coincide (0.68 Ω at
+  // 32 A). That is a real shared formula, not a leak — assert it stays.
+  const t3 = getMaxZsFromDeviceDetails('MCB (BS 3871)', '3', '32', 'Lighting');
+  const c = getMaxZsFromDeviceDetails('MCB (BS EN 60898)', 'C', '32', 'Lighting');
+  if (t3 !== c) fails.push(`BS 3871 Type 3 (${t3}) and Type C (${c}) both use 10×In and must agree`);
+
+  // Ratings that exist only in the BS 3871 series must resolve.
+  for (const In of ['15', '30', '45', '60'])
+    if (getMaxZsFromDeviceDetails('MCB (BS 3871)', '2', In, '') == null)
+      fails.push(`BS 3871 Type 2 ${In}A has no Max Zs — the rating series is incomplete`);
+
+  // No Type selected: refuse rather than guess which breaker it is.
+  if (getMaxZsFromDeviceDetails('MCB (BS 3871)', '', '32', '') !== null)
+    fails.push('a BS 3871 row with no Type returned a Max Zs — it must not guess');
+  // A B/C/D curve on a BS 3871 row is a mis-selection, not a lookup key.
+  if (getMaxZsFromDeviceDetails('MCB (BS 3871)', 'B', '32', '') !== null)
+    fails.push('a BS 3871 row carrying curve "B" returned a value instead of refusing');
+
+  /*
+   * 🔴 The SECOND parser. `zsValidator` and `verificationValidator` do not call
+   * `getMaxZsFromDeviceDetails` — they build a device STRING
+   * ("MCB MCB (BS 3871) Type 1") and hand it to `getZsLimitFromDeviceString`,
+   * whose MCB branch matches the word "mcb" and defaults to Type B. Guarding
+   * only the first parser left every BS 3871 circuit judged against Table 41.3.
+   *
+   * Both directions matter, and the lenient one is the dangerous one: a Type 4
+   * trips at 50x In, so its real 32 A limit is 0.14 Ω. Judged as a Type B it
+   * would have been passed at up to 1.37 Ω — a circuit nearly ten times over
+   * the limit, declared satisfactory.
+   */
+  const viaString = (s, r) => getZsLimitFromDeviceString(s, r, '')?.maxZs ?? null;
+  if (viaString('MCB MCB (BS 3871) Type 1', 32) !== 1.71)
+    fails.push(`validator string parser gave ${viaString('MCB MCB (BS 3871) Type 1', 32)} for BS 3871 Type 1 32A, expected 1.71`);
+  if (viaString('MCB MCB (BS 3871) Type 4', 32) !== 0.14)
+    fails.push(`validator string parser gave ${viaString('MCB MCB (BS 3871) Type 4', 32)} for BS 3871 Type 4 32A, expected 0.14 — a Type B verdict here passes a dangerous circuit`);
+  if (viaString('MCB MCB (BS 3871)', 32) !== null)
+    fails.push('validator string parser guessed a limit for a BS 3871 row with no type');
+  // …and the BS EN path must be untouched by the new branch.
+  if (viaString('MCB MCB (BS EN 60898) Type B', 32) !== 1.37)
+    fails.push('the BS 3871 branch broke the BS EN 60898 Type B lookup');
+  if (viaString('MCB MCB (BS EN 60898) Type D', 32) !== 0.34)
+    fails.push('the BS 3871 branch broke the BS EN 60898 Type D lookup');
+
+  // The Type column must offer the right vocabulary per family…
+  const bs3871Values = getCurveOptionsForStandard('MCB (BS 3871)').map((o) => o.value);
+  const en60898Values = getCurveOptionsForStandard('MCB (BS EN 60898)').map((o) => o.value);
+  if (!['1', '2', '3', '4'].every((v) => bs3871Values.includes(v)))
+    fails.push('the BS 3871 Type column does not offer Types 1–4');
+  if (bs3871Values.some((v) => ['B', 'C', 'D'].includes(v)))
+    fails.push('the BS 3871 Type column offers B/C/D');
+  if (en60898Values.some((v) => ['1', '2', '3', '4'].includes(v)))
+    fails.push('the BS EN 60898 curve column offers BS 3871 types');
+
+  /*
+   * Switching families must not leave the old Type (and its Max Zs) behind.
+   *
+   * 🔴 This is here because it actually happened, in this change: the rule was
+   * added to the desktop cells and the two mobile surfaces were missed, so a
+   * row switched from BS 3871 to BS EN 60898 kept `Type 1` and its 1.71 Ω
+   * while the Type cell rendered blank — a certificate carrying a Max Zs
+   * derived from a device the row no longer claims. Caught by driving the
+   * mobile row in the running app, not by reading the code.
+   */
+  const away = clearOnStandardChange('MCB (BS EN 60898)', '1');
+  if (!away || away.protectiveDeviceCurve !== '' || away.maxZs !== '')
+    fails.push('leaving BS 3871 did not clear the Type 1 curve and its Max Zs');
+  if (!clearOnStandardChange('MCB (BS 3871)', 'B'))
+    fails.push('moving to BS 3871 did not clear a B curve');
+  // A compatible curve, a blank one, and N/A must all survive untouched.
+  if (clearOnStandardChange('MCB (BS EN 60898)', 'C') !== null)
+    fails.push('switching between BS EN standards wrongly cleared a valid curve');
+  if (clearOnStandardChange('MCB (BS 3871)', '') !== null)
+    fails.push('a blank curve was treated as a mismatch');
+  if (clearOnStandardChange('MCB (BS 3871)', 'N/A') !== null)
+    fails.push('an N/A curve was treated as a mismatch');
+  if (!curveMatchesStandard('3', 'MCB (BS 3871)') || curveMatchesStandard('3', 'MCB (BS EN 60898)'))
+    fails.push('curveMatchesStandard does not separate the two families');
+
+  // …and a bulk fill must not cross the boundary.
+  if (curveFillApplies('B', 'MCB (BS 3871)')) fails.push('fill-all wrote curve B onto a BS 3871 row');
+  if (curveFillApplies('1', 'MCB (BS EN 60898)'))
+    fails.push('fill-all wrote Type 1 onto a BS EN 60898 row');
+  if (!curveFillApplies('1', 'MCB (BS 3871)')) fails.push('fill-all skips BS 3871 rows entirely');
+  if (!curveFillApplies('B', 'MCB (BS EN 60898)')) fails.push('fill-all skips BS EN 60898 rows');
+
+  return fails.length ? fails.slice(0, 4).join('; ') : null;
+});
+
+/* ── 13c-ii. A BS 3871 circuit must be JUDGED on its own limit ──────────────
+ * The lookup being right is not the same as the verdict being right. This is
+ * the end of the chain: a real circuit through `checkRegulationCompliance`.
+ *
+ * 1.60 Ω on a Type 1 32 A complies (limit 1.71) but EXCEEDS the Type B limit
+ * of 1.37 — so if anything still resolves this row as a Type B, the
+ * electrician is told a compliant circuit fails.
+ *
+ * 1.80 Ω genuinely exceeds 1.71 and must still be caught, so this cannot pass
+ * by the checker having quietly stopped judging BS 3871 rows at all.
+ */
+check('a BS 3871 circuit is judged on its own limit, not the Type B column', () => {
+  const fails = [];
+  const bs3871 = (over) =>
+    circuit({
+      circuitDescription: 'Lighting',
+      bsStandard: 'MCB (BS 3871)',
+      protectiveDeviceType: 'MCB',
+      protectiveDeviceCurve: '1',
+      protectiveDeviceRating: '32',
+      ...over,
+    });
+  const exceeds = (c) => titles(c).some((t) => /Exceeds|Maximum Zs|Zs/i.test(t) && /Exceed/i.test(t));
+
+  // Complies on its own table, would fail on Type B's.
+  if (exceeds(bs3871({ zs: '1.60' })))
+    fails.push('1.60 Ω on a Type 1 32 A was flagged — it is judged against the Type B limit');
+  // Genuinely over its own limit — must still be caught.
+  if (!exceeds(bs3871({ zs: '1.80' })))
+    fails.push('1.80 Ω on a Type 1 32 A was NOT flagged — BS 3871 rows are no longer judged at all');
+  // Type 4 is the dangerous direction: real limit 0.14 Ω at 32 A.
+  if (!exceeds(bs3871({ protectiveDeviceCurve: '4', zs: '0.90' })))
+    fails.push('0.90 Ω on a Type 4 32 A was NOT flagged — a Type B verdict would pass it');
+
+  // A recorded Max Zs of 1.71 is the correct tabulated figure and must not be
+  // queried back at the electrician.
+  const queried = titles(bs3871({ zs: '1.60', maxZs: '1.71' })).some((t) =>
+    /Recorded Maximum Zs/i.test(t)
+  );
+  if (queried) fails.push('the correct BS 3871 Max Zs of 1.71 Ω was reported as not matching the table');
+
+  // No type recorded: say so rather than guess, and cite the OSG not Table 41.3.
+  const noType = checkRegulationCompliance(
+    bs3871({ protectiveDeviceCurve: '', zs: '1.60' }),
+    'TN-C-S'
+  ).warnings;
+  const notVerified = noType.find((w) => /Not Recorded — Zs Not Verified/i.test(w.title));
+  if (!notVerified) fails.push('a BS 3871 row with no type did not warn that Zs is unverified');
+  else {
+    if (/B, C\s*and D|\(B, C or D\)/i.test(`${notVerified.description} ${notVerified.suggestion}`))
+      fails.push('the BS 3871 "no type" warning asks for a B/C/D curve');
+    if (/Table 41\.3/.test(notVerified.regulation || ''))
+      fails.push('the BS 3871 warning cites BS 7671 Table 41.3, which does not tabulate BS 3871');
+  }
+
+  return fails.length ? fails.slice(0, 4).join('; ') : null;
+});
+
+/* ── 13d. A column fill must not destroy a recorded reading ─────────────────
+ * ELE-1605. The fill exists because Sean was copy-pasting N/A down a column by
+ * hand. The thing that makes it worth having is also the thing that makes it
+ * dangerous: one tap writes every row. On a legal document a fill that
+ * replaces a measured 0.35 Ω with N/A costs far more than the typing it saved.
+ *
+ * Three rules, all asserted here rather than trusted to the component:
+ * scope to the board, skip spare ways, and leave existing readings alone
+ * unless overwrite was explicitly chosen.
+ */
+const FILL_BOARD = [
+  { id: 'a1', circuitDescription: 'Lighting', boardId: 'b1', zs: '0.35' },
+  { id: 'a2', circuitDescription: 'Sockets', boardId: 'b1', zs: '' },
+  { id: 'a3', circuitDescription: 'Spare', boardId: 'b1', zs: '' },
+  { id: 'a4', circuitDescription: 'Cooker', boardId: 'b1', zs: '—' },
+  // A second board — the schedule holds every board in ONE array.
+  { id: 'b1c1', circuitDescription: 'Sub-board lighting', boardId: 'b2', zs: '' },
+];
+const BOARD_ONE = ['a1', 'a2', 'a3', 'a4'];
+
+check('a column fill is board-scoped, skips spares, and spares recorded readings', () => {
+  const fails = [];
+
+  const blank = planColumnFill(FILL_BOARD, 'zs', 'blank', BOARD_ONE);
+  // a2 blank, a4 '—' counts as blank; a1 has a reading; a3 is a spare.
+  if (blank.fillIds.join(',') !== 'a2,a4')
+    fails.push(`blank fill targeted [${blank.fillIds.join(',')}], expected [a2,a4]`);
+  if (blank.fillIds.includes('a1'))
+    fails.push('blank fill would overwrite a recorded Zs of 0.35 Ω');
+  if (blank.fillIds.includes('a3')) fails.push('blank fill would write into a spare way');
+  if (blank.fillIds.includes('b1c1'))
+    fails.push('fill crossed the board boundary — another consumer unit would be rewritten');
+  if (blank.kept !== 1) fails.push(`kept ${blank.kept} readings, expected 1`);
+  if (blank.skipped !== 1) fails.push(`skipped ${blank.skipped} spares, expected 1`);
+
+  // Overwrite reaches the populated cell, and still never the spare or the
+  // other board.
+  const over = planColumnFill(FILL_BOARD, 'zs', 'overwrite', BOARD_ONE);
+  if (!over.fillIds.includes('a1')) fails.push('overwrite did not reach the populated cell');
+  if (over.fillIds.includes('a3')) fails.push('overwrite wrote into a spare way');
+  if (over.fillIds.includes('b1c1')) fails.push('overwrite crossed the board boundary');
+  if (over.kept !== 0) fails.push('overwrite reported readings kept');
+
+  // No scope = every circuit passed in. The desktop table hands over exactly
+  // the board it renders, so "no scope" must not silently mean "all boards"
+  // for a caller that forgot — it means "the list you gave me".
+  const unscoped = planColumnFill(FILL_BOARD.filter((c) => c.boardId === 'b1'), 'zs', 'blank');
+  if (unscoped.fillIds.includes('b1c1')) fails.push('an unscoped fill reached a circuit not passed in');
+
+  // What the user is told must mention anything left untouched — a fill that
+  // wrote 2 of 4 cells reads as a fill that wrote all 4.
+  const message = describeColumnFill(blank, 'N/A');
+  if (!/left unchanged/i.test(message))
+    fails.push(`the toast does not mention untouched readings: "${message}"`);
+  if (!/spare/i.test(message)) fails.push(`the toast does not mention skipped spares: "${message}"`);
+
+  return fails.length ? fails.slice(0, 4).join('; ') : null;
 });
 
 /* ── 14. Observations reach the certificate ─────────────────────────────────

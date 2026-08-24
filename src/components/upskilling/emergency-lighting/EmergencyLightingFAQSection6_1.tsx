@@ -42,7 +42,7 @@ export const EmergencyLightingFAQSection6_1 = () => {
     {
       question: 'How do I calculate how many luminaires I need?',
       answer:
-        'Use photometric software or manufacturer-supplied spacing tables based on luminaire lumen output and mounting height. For escape routes, ensure 1 lux minimum along the centre line. For open areas, achieve 0.5 lux minimum across the floor area with uniformity ratio ≤ 40:1. Luminaires must be placed at every exit, change of direction, stairway, change in floor level, fire equipment location, and first aid point. Spacing depends on luminaire output, mounting height, room dimensions, and surface reflectance. Always verify calculations with lux measurements during commissioning.',
+        'Use photometric software or manufacturer-supplied spacing tables based on luminaire lumen output and mounting height. For escape routes, ensure 1 lux minimum across the full width. For open areas, achieve 0.5 lux minimum across the floor area with uniformity ratio ≤ 40:1. Luminaires must be placed at every exit, change of direction, stairway, change in floor level, fire equipment location, and first aid point. Spacing depends on luminaire output, mounting height, room dimensions, and surface reflectance. Always verify calculations with lux measurements during commissioning.',
     },
     {
       question: 'What happens if I install a non-compliant system?',

@@ -174,7 +174,7 @@ const Level2Module8MockExam3 = () => {
         totalQuestions={60}
         bankSize={module3QuestionBank.length}
         timeLimitMinutes={90}
-        passThreshold={70}
+        passThreshold={60}
         history={history}
         onStart={startExam}
         onExit={() => navigate(examExit.to)}
@@ -204,7 +204,7 @@ const Level2Module8MockExam3 = () => {
         exitLabel={examExit.label}
         questions={examQuestions}
         answers={answersArray}
-        passThreshold={70}
+        passThreshold={60}
         history={history}
         onReview={() => setReviewMode(true)}
         onRetake={startExam}

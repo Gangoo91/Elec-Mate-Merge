@@ -162,7 +162,7 @@ export const FindingAnElectricalApprenticeshipUkConfig: GeneratedGuideConfig = {
       category: 'Guide',
     },
     {
-      href: '/guides/electrician-career-progression-uk',
+      href: '/guides/electrician-career-progression',
       title: 'Electrician Career Progression',
       description: 'Related guide for school leavers, career-changers and parents researching electrical apprenticeships.',
       icon: 'GraduationCap',

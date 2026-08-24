@@ -490,12 +490,12 @@ export default function Sub2() {
 
           <ConceptBlock
             title="Emergency lighting — BS 5266-1 framework"
-            plainEnglish="BS 5266-1 (Emergency lighting — Code of practice for the emergency lighting of premises) sets the design and installation framework. Emergency lighting supports safe evacuation when normal lighting fails. Key elements: escape route illumination minimum 1 lux on the centre line; open area (anti-panic) lighting where occupancy is high; high-risk task area lighting for safety-critical tasks. Duration typically 1 hour for residential, 3 hours for high-risk areas. Testing per BS 5266 Section 11 — monthly functional test, annual full duration test, results logged. On HRRBs the emergency lighting system is safety-case-critical and routine test failures must be addressed promptly."
+            plainEnglish="BS 5266-1 (Emergency lighting — Code of practice for the emergency lighting of premises) sets the design and installation framework. Emergency lighting supports safe evacuation when normal lighting fails. Key elements: escape route illumination minimum 1 lux across the full width; open area (anti-panic) lighting where occupancy is high; high-risk task area lighting for safety-critical tasks. Duration typically 1 hour for residential, 3 hours for high-risk areas. Testing per BS 5266 Section 11 — monthly functional test, annual full duration test, results logged. On HRRBs the emergency lighting system is safety-case-critical and routine test failures must be addressed promptly."
             onSite="L3 supervisor practical implication: emergency lighting on HRRBs is not an after-thought. System design responds to evacuation strategy (simultaneous, phased, stay-put). Battery selection and replacement programme part of long-term maintenance. Test logs part of golden thread. Any system fault flagged to PAP for safety case currency. Where the supervisor finds failed luminaires during routine work, prompt flagging to PAP and remedial action triggered through the firm’s maintenance system."
           >
             <p>BS 5266-1 emergency lighting elements:</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Escape route lighting</strong> — minimum 1 lux on centre line.</li>
+              <li><strong>Escape route lighting</strong> — minimum 1 lux across the full width.</li>
               <li><strong>Open area (anti-panic) lighting</strong> — minimum 0.5 lux on floor.</li>
               <li><strong>High-risk task area lighting</strong> — 10% of normal lighting, 15 lux minimum.</li>
               <li><strong>Duration</strong> — typically 1 hour for residential, 3 hours for high-risk.</li>

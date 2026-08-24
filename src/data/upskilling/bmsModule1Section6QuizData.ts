@@ -58,10 +58,10 @@ export const bmsModule1Section6QuizData: QuizQuestion[] = [
     id: 5,
     question: 'Why do HVAC engineers rely heavily on electricians during BMS projects?',
     options: [
-      'Electricians approve the mechanical design of the HVAC plant',
+      'Electricians approve the mechanical design of the HVAC plant before it is ordered',
       'Electricians install the wiring that connects HVAC equipment to the BMS controllers',
-      'Electricians specify the control algorithms used by the BMS',
-      'Electricians select the refrigerant used in the chillers',
+      'Electricians specify the control algorithms and setpoints used by the BMS software',
+      'Electricians select the refrigerant charge used in the chillers and heat pumps',
     ],
     correctAnswer: 1,
     explanation:
@@ -84,9 +84,9 @@ export const bmsModule1Section6QuizData: QuizQuestion[] = [
     id: 7,
     question: 'Why is proper cable labelling crucial in BMS installations?',
     options: [
-      'It increases the current rating of each labelled cable',
-      'It removes the need to follow manufacturer datasheets',
-      'It allows mains and data cables to share containment',
+      'It increases the current-carrying capacity of every labelled cable in the panel',
+      'It removes the need to follow the manufacturer wiring datasheets on site',
+      'It allows mains and data cables to share the same containment without segregation',
       'It significantly reduces troubleshooting time and prevents errors during maintenance',
     ],
     correctAnswer: 3,

@@ -45,9 +45,9 @@ export const polarityPurposeQuizQuestions: QuizQuestion[] = [
     question: 'When must polarity testing be carried out?',
     options: [
       'Before energising any new installation or circuit',
-      'After the installation has been in use for a month',
-      'Only if there are problems with the installation',
-      'Only on commercial installations',
+      'After the installation has been in service for a month',
+      'Where a fault has already been reported on site',
+      'On commercial and industrial installations only',
     ],
     correctAnswer: 0,
     explanation:
@@ -71,9 +71,9 @@ export const polarityPurposeQuizQuestions: QuizQuestion[] = [
     question: 'According to BS 7671, which conductors must polarity testing verify?',
     options: [
       'All conductors including earth',
-      'Only protective conductors',
+      'Protective conductors only',
       'Line and neutral conductors',
-      'Only the line conductor',
+      'The line conductor only',
     ],
     correctAnswer: 2,
     explanation:

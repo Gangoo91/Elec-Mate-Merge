@@ -65,16 +65,16 @@ const checks = [
   {
     id: 'lux-emergency',
     question:
-      'A common escape route in a small office building requires emergency lighting. What is the typical horizontal lux floor on the centre-line of the route?',
+      'A common escape route in a small office building requires emergency lighting. What is the typical horizontal lux floor across the full width of the route?',
     options: [
-      '0.1 lux on the centre-line of the escape route — just enough for the eye to detect movement in the dark.',
-      '5 lux on the centre-line of the escape route, sustained for 1 hour, with no uniformity requirement.',
-      '1 lux on the centre-line of the escape route, with a uniformity ratio not exceeding 40:1.',
-      '50 lux on the centre-line of the escape route, matching the normal task-lighting level so it looks the same in an emergency.',
+      '0.1 lux across the full width of the escape route — just enough for the eye to detect movement in the dark.',
+      '5 lux across the full width of the escape route, sustained for 1 hour, with no uniformity requirement.',
+      '1 lux across the full width of the escape route, with a uniformity ratio not exceeding 40:1.',
+      '50 lux across the full width of the escape route, matching the normal task-lighting level so it looks the same in an emergency.',
     ],
     correctIndex: 2,
     explanation:
-      "BS 5266-1 (Emergency lighting code of practice) sets 1 lux minimum on the centre-line of an escape route, sustained for 3 hours after mains failure (or 1 hour with controlled re-entry). Uniformity ratio of max-to-min should not exceed 40:1 across the route. Anti-panic lighting in open spaces above 60 m² is 0.5 lux. High-risk task areas (machinery shutdown, plant rooms) need 15 lux or 10 percent of normal task lighting. The accessibility lens then asks: do colours, contrast and the position of luminaires support partially-sighted evacuees?",
+      "BS 5266-1 (Emergency lighting code of practice) sets 1 lux minimum across the full width of an escape route (BS EN 1838:2024 extended this from the centre line), sustained for 3 hours after mains failure (or 1 hour with controlled re-entry). Uniformity ratio of max-to-min should not exceed 40:1 across the route. Anti-panic lighting in open spaces above 60 m² is 0.5 lux. High-risk task areas (machinery shutdown, plant rooms) need 15 lux or 10 percent of normal task lighting. The accessibility lens then asks: do colours, contrast and the position of luminaires support partially-sighted evacuees?",
   },
 ];
 
@@ -133,7 +133,7 @@ const quizQuestions = [
   },
   {
     id: 5,
-    question: 'BS 5266-1 sets emergency lighting floors. The minimum horizontal illuminance on the centre-line of an escape route is:',
+    question: 'BS 5266-1 sets emergency lighting floors. The minimum horizontal illuminance across the full width of an escape route is:',
     options: [
       '0.5 lux for at least 1 hour after supply failure, with no uniformity requirement.',
       '1 lux for at least 3 hours after supply failure, with uniformity max-to-min not exceeding 40:1.',
@@ -142,7 +142,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      "BS 5266-1 escape route: 1 lux minimum centre-line, 40:1 uniformity, 3 hours duration (or 1 hour with controlled re-entry). Anti-panic open areas above 60 m²: 0.5 lux. High-risk task areas: 15 lux or 10 percent of normal. Accessibility considerations layer on top: are exit signs visible to partially-sighted? Are contrast levels at door thresholds adequate? Are luminaires positioned to avoid glare into the line of sight of an evacuee?",
+      "BS 5266-1 escape route: 1 lux minimum across the full width, 40:1 uniformity, 3 hours duration (or 1 hour with controlled re-entry). Anti-panic open areas above 60 m²: 0.5 lux. High-risk task areas: 15 lux or 10 percent of normal. Accessibility considerations layer on top: are exit signs visible to partially-sighted? Are contrast levels at door thresholds adequate? Are luminaires positioned to avoid glare into the line of sight of an evacuee?",
   },
   {
     id: 6,
@@ -244,7 +244,7 @@ export default function Sub4() {
             points={[
               "The Equality Act 2010 imposes an anticipatory duty — design must be inclusive for foreseeable disabled users, not just current ones. Approved Document M (dwellings Vol 1, non-residential Vol 2) is the construction-specific guidance; BS 8300 is the deeper technical standard for non-residential buildings.",
               "Switches and socket-outlets in new dwellings sit between 450 and 1200 mm above finished floor level (the accessible reach range). Cat 3 wheelchair user dwellings add a 350 mm corner setback rule, two-way switching from bed positions, dual-mode doorbells (audible plus visible) and accessible technology provisions.",
-              "Emergency lighting (BS 5266-1) — 1 lux on the centre-line of escape routes for 3 hours, 0.5 lux anti-panic, 15 lux high-risk task. Accessibility lens layers on contrast, viewing angle, signage visibility for partially-sighted evacuees. Hearing loops (BS 7594), accessible WC pull-cord systems, audible-and-visible fire alarms (BS 5839-6) all sit on the L3 designer’s schedule.",
+              "Emergency lighting (BS 5266-1) — 1 lux across the full width of escape routes for 3 hours, 0.5 lux anti-panic, 15 lux high-risk task. Accessibility lens layers on contrast, viewing angle, signage visibility for partially-sighted evacuees. Hearing loops (BS 7594), accessible WC pull-cord systems, audible-and-visible fire alarms (BS 5839-6) all sit on the L3 designer’s schedule.",
             ]}
           />
 
@@ -393,7 +393,7 @@ export default function Sub4() {
 
           <RegsCallout
             source="BS 5266-1:2016+A1:2021 — Emergency lighting code of practice"
-            clause="The minimum maintained illuminance on the centre-line of an escape route should not be less than 1 lux. The uniformity ratio (the ratio of maximum to minimum illuminance) along the centre-line should not exceed 40 to 1. The duration of emergency escape lighting should be sufficient to allow safe evacuation, typically not less than 1 hour where re-entry is controlled, and not less than 3 hours where re-occupation is required after the emergency."
+            clause="The minimum maintained illuminance across the full width of an escape route should not be less than 1 lux. The uniformity ratio (the ratio of maximum to minimum illuminance) should not exceed 40 to 1. The duration of emergency escape lighting should be sufficient to allow safe evacuation, typically not less than 1 hour where re-entry is controlled, and not less than 3 hours where re-occupation is required after the emergency."
             meaning={
               <>
                 The 1 lux escape route floor sounds small but is enough for orientation and safe walking pace if the uniformity is good. The 3-hour duration covers buildings where re-occupation may be required without waiting for full mains restoration. Anti-panic lighting in open areas above 60 m² is 0.5 lux. High-risk task areas (machinery shutdown, plant rooms) need 15 lux or 10 percent of normal task lighting, whichever is higher. Accessibility considerations layer on: are exit signs visible from low (wheelchair) viewing positions, do contrast levels at doorways guide partially-sighted evacuees, are the luminaires positioned to avoid glare into the line of sight?
@@ -652,7 +652,7 @@ export default function Sub4() {
               "Approved Document M Volume 1 covers dwellings (Cat 1 visitable, Cat 2 accessible and adaptable, Cat 3 wheelchair user). The category is set by the local authority planning condition and drives the electrical schedule.",
               "Switches and socket-outlets in new dwellings sit between 450 and 1200 mm above finished floor level. Cat 3 adds a 350 mm corner setback, two-way switching from bed positions, dual-mode doorbells and assistive-technology cabling provision.",
               "Approved Document M Volume 2 and BS 8300 cover non-residential buildings. Switch heights typically 750-1200 mm primary, 400-1000 mm secondary; accessible WC pull-cord alarms; induction loops at counters; lift accessibility; refuge point communications above ground floor.",
-              "BS 5266-1 emergency lighting: 1 lux centre-line on escape routes for 3 hours, 0.5 lux anti-panic above 60 m² open areas, 15 lux high-risk task areas. Accessibility considerations layer on contrast, viewing angle and signage visibility.",
+              "BS 5266-1 emergency lighting: 1 lux across the full width of escape routes for 3 hours, 0.5 lux anti-panic above 60 m² open areas, 15 lux high-risk task areas. Accessibility considerations layer on contrast, viewing angle and signage visibility.",
               "Lighting design with accessibility: hit CIBSE LG07 / SLL lux floors, uniformity above 0.6, UGR below 19 in offices, Ra above 80 minimum (above 90 for healthcare), contrast above 30 percent on accessory trim and door frames.",
               "Accessibility-aid schedule lists every assistive provision with location, type, standard and periodic test routine — induction loops (BS 7594), accessible WC pull-cord systems, visible alarms (BS 5839-6 dwellings, BS 5839-1 commercial), refuge point comms (BS 9999), lift accessibility, assistive-technology cabling.",
               "Document accessibility decisions on the design cover sheet (Equality Act anticipatory-duty statement) and on the layout drawings (per-zone Approved Document M / BS 8300 compliance evidence). Professional clients audit the documentation; the right paperwork wins the work.",

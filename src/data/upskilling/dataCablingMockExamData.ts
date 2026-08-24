@@ -2574,6 +2574,906 @@ export const dataCablingQuestionBank: StandardMockQuestion[] = [
     topic: 'Documentation',
     category: 'Standards & Documentation',
   },
+  {
+    id: 151,
+    question:
+      'Why are the conductors in a data cable arranged as twisted pairs?',
+    options: [
+      'To make the cable easier to coil onto a drum',
+      'To cancel noise picked up equally by both wires',
+      'To increase the copper content for lower resistance',
+      'To allow the cable to carry mains voltage safely',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A twisted pair works by balance. Because the two wires sit in almost the same place along the run, an interfering field induces almost the same voltage in each, and the receiver, which reads only the difference between them, cancels it. Lower resistance is not the reason for twisting, and twisting does nothing for voltage withstand, which is a property of the insulation.',
+    section: 'Module 1',
+    difficulty: 'basic',
+    topic: 'Cable Construction',
+    category: 'Fundamentals & Infrastructure',
+  },
+  {
+    id: 152,
+    question:
+      'A link is terminated to T568A at the outlet and T568B at the patch panel. What happens?',
+    options: [
+      'It creates crossed pairs and fails the wiremap test',
+      'It improves crosstalk because the pairs are swapped',
+      'It has no effect because the colours are only a guide',
+      'It halves the data rate but still passes certification',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The two schemes swap the positions of two pairs, so terminating one end to each produces a crossover and the tester reports crossed pairs on the wiremap. The tempting answer is that the colours do not matter, and it is half true that any consistent scheme works, but the point is consistency: both ends of a link must use the same scheme.',
+    section: 'Module 3',
+    difficulty: 'basic',
+    topic: 'Termination',
+    category: 'Standards & Documentation',
+  },
+  {
+    id: 153,
+    question:
+      'A screened data cable is installed but the screen is left unconnected at both ends. What is the result?',
+    options: [
+      'The screen still works because it surrounds the cores',
+      'The screen improves the balance of the twisted pairs',
+      'The screen gives little or no protection against noise',
+      'The screen becomes a spare conductor for the data pairs',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'A screen only works when interference current it intercepts has somewhere to go, which means a low impedance connection to earth through properly bonded terminations. An unbonded screen is an isolated piece of metal and provides little benefit. The attractive wrong answer is that enclosure alone is enough, but physical coverage without a bonding path does not divert the interference.',
+    section: 'Module 1',
+    difficulty: 'basic',
+    topic: 'Screening',
+    category: 'Cable Types & Specifications',
+  },
+  {
+    id: 154,
+    question:
+      'Data cabling and mains circuits have to share a single trunking run. Which arrangement satisfies Regulation 528.1?',
+    options: [
+      'Cable ties holding the two groups on opposite sides',
+      'A written note on the drawing recording the shared run',
+      'Laying the data cable on top of the mains cable bundle',
+      'A trunking system with a fitted separating compartment',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Regulation 528.1 lists the permitted ways of running Band I and Band II circuits together, and one of them is installing the cables in separate compartments of a trunking or ducting system. Cable ties keeping the groups apart look like separation but provide no barrier and nothing stops later work disturbing them, so they do not meet any of the listed methods.',
+    section: 'Module 2',
+    difficulty: 'intermediate',
+    topic: 'Segregation',
+    category: 'Installation Techniques',
+  },
+  {
+    id: 155,
+    question:
+      'Why should pair untwist be kept to a minimum where a cable is punched down at a module?',
+    options: [
+      'Because untwisted wire loses the balance that rejects noise',
+      'Because untwisted wire raises the DC resistance of the pair',
+      'Because untwisted wire will not fit into the IDC contacts',
+      'Because untwisted wire changes the colour code of the pair',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Noise rejection comes from the two wires of a pair staying close together and swapping positions along the run. Where the twist is opened out the pair stops being balanced, so it both radiates into and picks up from its neighbours, which shows as poor crosstalk performance. Resistance is set by conductor size and length, and a short untwisted section barely changes it.',
+    section: 'Module 3',
+    difficulty: 'intermediate',
+    topic: 'Termination',
+    category: 'Installation Techniques',
+  },
+  {
+    id: 156,
+    question:
+      'Why does a twisted pair cable have a maximum pulling tension in its installation data?',
+    options: [
+      'Excess tension strips the outer sheath from the cable drum',
+      'Excess tension stretches the pairs and alters their geometry',
+      'Excess tension makes the cable too stiff to coil afterwards',
+      'Excess tension changes the colour coding inside the sheath',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The performance of a twisted pair depends on the twist rate and the spacing of the conductors staying uniform. Pulling too hard stretches the cable, opens the lay of the pairs and shifts those dimensions permanently, which the certification tester then sees as degraded performance. Sheath damage is a visible fault but it is a symptom, not the reason the limit exists.',
+    section: 'Module 2',
+    difficulty: 'intermediate',
+    topic: 'Containment',
+    category: 'Installation Techniques',
+  },
+  {
+    id: 157,
+    question:
+      'What is the effect of pulling a data cable tightly around a sharp corner?',
+    options: [
+      'The pairs stay intact because the sheath takes all the strain',
+      'The cable gains noise immunity from the compressed pairs',
+      'The pair spacing is deformed and the link may fail testing',
+      'The conductors anneal and the link resistance falls sharply',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'A tight bend crushes the cable on the inside of the radius and stretches the outside, so the pairs no longer sit at their designed spacing and the impedance changes at that point. The tempting answer is that the sheath protects the cores, but the sheath is thin and flexible and deforms with them rather than shielding them from the bend.',
+    section: 'Module 2',
+    difficulty: 'intermediate',
+    topic: 'Containment',
+    category: 'Installation Techniques',
+  },
+  {
+    id: 158,
+    question:
+      'What is the risk of bonding a cable screen at both ends of a link between two separately earthed buildings?',
+    options: [
+      'The screen loses all noise rejection once it is earthed twice',
+      'The screen becomes a Band II conductor requiring RCD protection',
+      'The screen floats and picks up static from the twisted pairs',
+      'A difference in earth potential drives current along the screen',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Two separate earthing arrangements will not sit at exactly the same potential, so bonding the screen at both ends completes a loop and current flows in the screen, which can inject noise into the data and in a fault condition can be substantial. Bonding at both ends is not wrong in itself within one building on a common earth; the hazard comes from the potential difference between separate systems.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'Screening',
+    category: 'Cable Types & Specifications',
+  },
+  {
+    id: 159,
+    question:
+      'A permanent link passes wiremap cleanly but fails the crosstalk test at both ends. What is the most likely cause?',
+    options: [
+      'The pairs were untwisted excessively at the terminations',
+      'The link is longer than the tester length setting allows',
+      'The patch panel was mounted upside down in the cabinet',
+      'The screen was bonded at the panel end of the run',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Wiremap only proves that each conductor goes to the right pin and is continuous, so a link can be wired perfectly and still perform badly. Crosstalk failing at both ends points at both terminations, and the usual workmanship cause is opening out the twist further than needed. An over length link would show up as a length or attenuation failure rather than a crosstalk one.',
+    section: 'Module 5',
+    difficulty: 'advanced',
+    topic: 'Testing',
+    category: 'Testing & Certification',
+  },
+  {
+    id: 160,
+    question:
+      'Why does carrying power over data cabling matter more in a large bundle than in a single cable?',
+    options: [
+      'The bundle raises the capacitance between adjacent cables',
+      'Cables in the centre cannot shed heat and run hotter',
+      'The bundle forces the pairs to share a common screen',
+      'Cables in a bundle draw more current than a single run',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Current in the conductors produces heat, and a cable in the middle of a tight bundle is surrounded by other heat sources with no path to still air, so it runs hotter than the same cable on its own. Heat raises conductor resistance and increases attenuation. The current drawn is set by the powered device, not by how many cables sit beside it.',
+    section: 'Module 6',
+    difficulty: 'advanced',
+    topic: 'Power over Data',
+    category: 'Network Applications & PoE',
+  },
+  {
+    id: 161,
+    question:
+      'Which conductor construction is normally used for the fixed horizontal cable rather than for patch cords?',
+    options: [
+      'Stranded conductors, which flex without breaking',
+      'Tinned conductors, which resist corrosion in ducts',
+      'Solid conductors, which suit insulation displacement',
+      'Bunched conductors, which lower the pair capacitance',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Fixed cable is installed once and then left alone, so a solid conductor is used because it seats cleanly and reliably in an insulation displacement contact. Stranded conductor is the tempting answer because flexibility sounds desirable, but it belongs in patch cords, which are plugged and unplugged repeatedly and would fatigue if solid.',
+    section: 'Module 1',
+    difficulty: 'intermediate',
+    topic: 'Cable Construction',
+    category: 'Cable Types & Specifications',
+  },
+  {
+    id: 162,
+    question:
+      'Data cabling has been pulled through a fire compartment wall and the existing seal was broken to do it. What does BS 7671 require?',
+    options: [
+      'The wall may stay open while more cables are still to come',
+      'The seal may be replaced with expanding foam of any type',
+      'The opening is exempt because data cabling is extra low voltage',
+      'The disturbed sealing shall be reinstated as soon as practicable',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Regulation 527.2.1.2 requires sealing disturbed during alteration work to be reinstated as soon as practicable, restoring the fire resistance of the element. Leaving the hole open until the last cable arrives is the tempting practical answer, but Regulation 527.2.1.1 anticipates that and calls for temporary sealing during erection rather than nothing at all.',
+    section: 'Module 2',
+    difficulty: 'intermediate',
+    topic: 'Fire Sealing',
+    category: 'Installation Techniques',
+  },
+  {
+    id: 163,
+    question:
+      'What is the practical value of one consistent labelling scheme across outlets, patch panels and test results?',
+    options: [
+      'It lets a fault be traced to one physical link quickly',
+      'It removes the need to test the links before handover',
+      'It allows more links to be fitted into the same panel',
+      'It improves the crosstalk margin recorded on each link',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The label is what ties a certificate result to a piece of copper in the building, so when a user reports a fault the record can be found and the link identified without tracing it out. The tempting wrong answer is that good records replace testing, but a label proves nothing about performance, and results with no matching labels are of little use to whoever maintains the system.',
+    section: 'Module 8',
+    difficulty: 'intermediate',
+    topic: 'Handover',
+    category: 'Standards & Documentation',
+  },
+  {
+    id: 164,
+    question:
+      'Why must every installed link be tested end to end rather than assumed good from the materials used?',
+    options: [
+      'Because the tester recalibrates the cable to its rated class',
+      'Because faults from handling and termination are invisible',
+      'Because untested cable loses performance while it is stored',
+      'Because the results replace the need for any labelling',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Good cable and good components do not guarantee a good link, because damage from a tight pull, a crushed run or an over untwisted termination leaves no visible mark and only shows in the measured results. The tempting wrong answer suggests the tester somehow adjusts the cable, but a tester only measures; it cannot improve what is already installed.',
+    section: 'Module 5',
+    difficulty: 'intermediate',
+    topic: 'Testing',
+    category: 'Testing & Certification',
+  },
+  {
+    id: 165,
+    question:
+      'A cable screen is bonded at one end only. What does this arrangement achieve and what does it not?',
+    options: [
+      'It stops all noise entering and needs no further bonding',
+      'It converts the screen into a functional earth conductor',
+      'It avoids a screen current loop but leaves the far end blind',
+      'It halves the attenuation of the pairs inside the screen',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Bonding one end gives the screen a path to earth without completing a loop between two earthing points, so no circulating current flows. The cost is that interference intercepted near the unbonded end has a long path back to the bond and is diverted far less effectively. The tempting answer is that a bonded screen stops all noise, but a screen only ever reduces coupling and never removes it.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'Screening',
+    category: 'Cable Types & Specifications',
+  },
+  {
+    id: 166,
+    question:
+      'What does a permanent link test result deliberately leave out of the measurement?',
+    options: [
+      'The patch cords that will later connect equipment',
+      'The outlet module at the work area end of the run',
+      'The punch down connections made at the patch panel',
+      'The fixed cable between the panel and the outlet',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The permanent link is the part the installer builds and is responsible for, so it covers the fixed cable and the connections at each end but stops short of the cords the user plugs in afterwards. The other three items are all inside the permanent link. The distinction matters because a poor patch cord can spoil performance without any fault existing in the installed link.',
+    section: 'Module 5',
+    difficulty: 'advanced',
+    topic: 'Testing',
+    category: 'Testing & Certification',
+  },
+  {
+    id: 167,
+    question:
+      'A link is wired using one wire from each of two different pairs to carry a single signal. What will the results show?',
+    options: [
+      'A wiremap failure on every pin plus an open circuit',
+      'Correct pin to pin continuity but very poor crosstalk',
+      'Correct crosstalk results but a length error at both ends',
+      'A short circuit reported between the two affected pairs',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'This is a split pair. Every conductor still runs to the correct pin, so a simple continuity check looks perfect, but the two wires carrying the signal are no longer twisted together, so the balance is lost and crosstalk performance collapses. The tempting answer is a wiremap failure, and that is exactly why a cheap continuity tester is not a substitute for certification.',
+    section: 'Module 5',
+    difficulty: 'advanced',
+    topic: 'Testing',
+    category: 'Testing & Certification',
+  },
+  {
+    id: 168,
+    question:
+      'Why is spare capacity and working access planned into a data containment route at first fix?',
+    options: [
+      'Because later cables added on top can crush the existing run',
+      'Because a wider tray reduces the crosstalk between cables',
+      'Because containment must be earthed along its whole length',
+      'Because empty tray improves the earthing of the cables',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Containment that is full on the day it is installed gets overloaded by the next trade, and cable at the bottom of a deep pile is compressed, which deforms the pairs and degrades links that tested fine originally. Extra width does not change crosstalk, which is governed by the balance of each pair and by the spacing designed into the cable itself.',
+    section: 'Module 2',
+    difficulty: 'advanced',
+    topic: 'Containment',
+    category: 'Installation Techniques',
+  },
+  {
+    id: 169,
+    question:
+      'Mains circuits run in one conduit system and data cabling in a second, entirely separate conduit. How does this stand against Regulation 528.1?',
+    options: [
+      'It does not comply because both conduits are on one wall',
+      'It complies only if both conduits are bonded to each other',
+      'It uses the permitted method of a separate wiring system',
+      'It complies because data cabling is outside the scope of BS 7671',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Regulation 528.1 permits Band I and Band II circuits to be run where a separate conduit, trunking or ducting system is used for each, so two independent conduits satisfy it. The tempting answer is that data cabling escapes BS 7671 altogether, but the regulation applies to the wiring system as installed, and proximity to Band II circuits is precisely what it governs.',
+    section: 'Module 2',
+    difficulty: 'advanced',
+    topic: 'Segregation',
+    category: 'Installation Techniques',
+  },
+  {
+    id: 170,
+    question:
+      'Why should a live link be unplugged with care where power is being carried over the data cabling?',
+    options: [
+      'The cable discharges its stored charge through the screen',
+      'The pairs reverse polarity and damage the outlet module',
+      'The remaining pairs take up the load and overheat quickly',
+      'The connector contacts can arc and pit as the load breaks',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Breaking a current carrying contact draws a small arc, and repeated over many disconnections it erodes and pits the plated contact surfaces, raising resistance in a connector designed for signals rather than switching. The tempting answer about remaining pairs is wrong because the supply is interrupted as the plug leaves, so no pair is left carrying the load.',
+    section: 'Module 6',
+    difficulty: 'advanced',
+    topic: 'Power over Data',
+    category: 'Network Applications & PoE',
+  },
+  {
+    id: 171,
+    question:
+      'A link is built from high specification cable but one outlet module of a lower category. How does the link perform?',
+    options: [
+      'To the rating of the cable because it dominates the link',
+      'To the lowest rated component anywhere in the link',
+      'To an average of the ratings of all the components',
+      'To the rating printed on the patch panel by default',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A link is a chain of cable and connections, and the weakest element sets what the whole thing can be certified to, because the signal has to pass through it. The tempting answer is that the cable dominates since it is the longest part, but a single poor connection creates a reflection and a crosstalk source that the rest of the link cannot make up for.',
+    section: 'Module 1',
+    difficulty: 'intermediate',
+    topic: 'Cable Categories',
+    category: 'Cable Types & Specifications',
+  },
+  {
+    id: 172,
+    question:
+      'What matters most when a data cable is run outdoors between two buildings?',
+    options: [
+      'A standard indoor cable is fine if it is clipped tightly',
+      'The cable must be rated for UV and moisture in that route',
+      'The cable should be doubled up to allow for weathering',
+      'The cable must be unscreened to avoid earth potential',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Sunlight breaks down an ordinary indoor sheath and water wicks along the cable core, so an external route needs cable built for it. The tempting answer is that clipping an indoor cable neatly will do, but no amount of fixing protects the sheath from UV, and once moisture is in the core the electrical performance drifts and cannot be recovered.',
+    section: 'Module 2',
+    difficulty: 'intermediate',
+    topic: 'Cable Construction',
+    category: 'Installation Techniques',
+  },
+  {
+    id: 173,
+    question:
+      'Why is a low smoke halogen free sheath often specified for cable in a protected escape route?',
+    options: [
+      'It burns away cleanly and leaves the containment usable',
+      'It gives the cable a higher category of performance',
+      'It limits dense smoke and corrosive gas during a fire',
+      'It removes the need to seal the wall penetrations',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Escape routes have to stay usable while people leave, and a sheath that produces less smoke and no halogen acid gas keeps visibility and breathing conditions better than an ordinary one. The tempting answer is that it avoids sealing work, but sheath choice and fire stopping are separate duties and a penetration still has to be sealed under Regulation 527.2.1.',
+    section: 'Module 2',
+    difficulty: 'intermediate',
+    topic: 'Cable Construction',
+    category: 'Cable Types & Specifications',
+  },
+  {
+    id: 174,
+    question:
+      'Why is patch cord management inside a cabinet more than a tidiness issue?',
+    options: [
+      'Long trailing cords change the wiremap of the link',
+      'Neat cords raise the crosstalk margin of each link',
+      'Tidy bundles allow the rack to be earthed correctly',
+      'Cords pulled tight over edges get damaged and fail',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Cords dragged around rack edges and pulled taut across a frame get their sheath cut and their pairs stretched, and because cords sit at the ends of the signal path any damage there shows up straight away as intermittent faults. The tempting answer claims tidiness improves crosstalk, but the installed link performance is unchanged; what changes is how long the cords survive.',
+    section: 'Module 3',
+    difficulty: 'intermediate',
+    topic: 'Patching',
+    category: 'Installation Techniques',
+  },
+  {
+    id: 175,
+    question:
+      'A floor of links passed certification at handover but several fail a year later. What is the most likely explanation?',
+    options: [
+      'The cable degraded on its own while sitting unused',
+      'Later work crushed or displaced cable in the ceiling',
+      'The original tester was reading the wrong link class',
+      'The patch panel labels were applied in the wrong order',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Copper cabling that is left alone does not deteriorate on any useful timescale, so a link that was good and is now bad has been physically disturbed, usually by another trade standing on it, adding services on top of it or pulling it aside. The tempting answer blames the original test, but a wrong class setting would have failed or passed every link, not a scattered few.',
+    section: 'Module 7',
+    difficulty: 'advanced',
+    topic: 'Fault Finding',
+    category: 'Testing & Certification',
+  },
+  {
+    id: 176,
+    question:
+      'Why are cable ties pulled hard onto a bundle of data cables a problem?',
+    options: [
+      'They isolate the cables from the earthed containment',
+      'They prevent the bundle being identified at each end',
+      'They indent the sheath and deform the pairs beneath',
+      'They add capacitance between the cables in the bundle',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'A tight tie presses the sheath into the cable core and squeezes the pairs out of their designed geometry at that point, which changes impedance and can push a marginal link into failure. The tempting answer about capacitance sounds technical, but the coupling between separate cables is not what a tie changes; the damage is mechanical and local to the tie.',
+    section: 'Module 2',
+    difficulty: 'advanced',
+    topic: 'Containment',
+    category: 'Installation Techniques',
+  },
+  {
+    id: 177,
+    question:
+      'What has to be true for a screened system to work as intended from the outlet through to the rack?',
+    options: [
+      'Each screened cable needs its own separate earth rod',
+      'The screen path must be continuous and bonded at the rack',
+      'The screen must be cut back clear of every connector',
+      'The screen should be joined to the data pair drain wire',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A screen is only useful if interference current can flow along it to earth, so the metal path has to carry through the module, the connector body and the panel to a bonded rack without a break. The tempting answer is to trim the screen back at terminations, which is what happens with unscreened practice, and it leaves the screen isolated and doing nothing.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'Screening',
+    category: 'Cable Types & Specifications',
+  },
+  {
+    id: 178,
+    question:
+      'Screened cable has been terminated into unscreened modules and an unscreened patch panel. What is the outcome?',
+    options: [
+      'The screen is broken at each end and does little',
+      'The system still works because the cable is screened',
+      'The modules pick up the screen through the pair colours',
+      'The unscreened parts raise the category of the link',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Screened performance depends on the whole path, so unscreened hardware at both ends leaves the screen with no bonded termination and the installation behaves close to an unscreened one while costing more. The tempting answer is that the screened cable still covers most of the run, but an isolated screen has no route for the current it intercepts.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'Screening',
+    category: 'Cable Types & Specifications',
+  },
+  {
+    id: 179,
+    question:
+      'Why does a thinner conductor heat more than a thicker one when the same power current is carried?',
+    options: [
+      'Because thinner copper twists more tightly in the pair',
+      'Because a smaller cross section has higher resistance',
+      'Because thinner copper carries a higher data frequency',
+      'Because a smaller cross section has more insulation',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Heating in a conductor rises with resistance for a given current, and resistance rises as the cross sectional area falls, so a slim cable carrying power runs hotter than a full size one on the same load. The tempting answer links thickness to frequency, but the data rate is set by the equipment and the pair design, not by how much heat the copper produces.',
+    section: 'Module 6',
+    difficulty: 'advanced',
+    topic: 'Power over Data',
+    category: 'Network Applications & PoE',
+  },
+  {
+    id: 180,
+    question:
+      'What should a certification record for a link contain if it is to be meaningful later?',
+    options: [
+      'The name of the installer and the date of first fix',
+      'The number of cables pulled in that ceiling void',
+      'The identity of the link, the result and the test setup',
+      'The make of the outlet and the colour of the sheath',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'A result is only useful if someone can tell which link it belongs to, whether it passed and what configuration was measured, since the same cable tested as a link or as a channel gives different figures. The tempting answer records who did the work and when, which is worth having, but it says nothing about which link was tested or how it performed.',
+    section: 'Module 8',
+    difficulty: 'advanced',
+    topic: 'Certification',
+    category: 'Standards & Documentation',
+  },
+  {
+    id: 181,
+    question:
+      'Into which voltage band do the signalling circuits of a structured cabling system fall?',
+    options: [
+      'Band II, because the outlets are on the same wall plate',
+      'Neither band, because BS 7671 excludes data cabling',
+      'Band II, because power may be carried over the pairs',
+      'Band I, because they are extra low voltage signalling',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Band I covers extra low voltage circuits including telecommunications, signalling, bell and control circuits, which is where structured cabling sits, and that classification is what brings Regulation 528.1 into play against Band II mains circuits. The tempting answer is that power carried over the pairs promotes it to Band II, but the voltage remains extra low and the band does not change.',
+    section: 'Module 2',
+    difficulty: 'intermediate',
+    topic: 'Segregation',
+    category: 'Standards & Documentation',
+  },
+  {
+    id: 182,
+    question:
+      'Why is a metallic equipment rack bonded to the earthing of the installation?',
+    options: [
+      'To give screens and exposed metal a defined earth path',
+      'To let the rack act as the earth electrode for the floor',
+      'To reduce the length of patch cords needed in the rack',
+      'To allow Band II circuits to be run inside the rack',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The rack is the point where screens, panel bodies and equipment metalwork meet, so bonding it gives both a safety earth for exposed conductive parts and the low impedance reference that makes screening effective. The tempting answer treats the rack as an electrode, but a rack sits inside the building and connects to the installation earth rather than establishing one.',
+    section: 'Module 4',
+    difficulty: 'intermediate',
+    topic: 'Earthing',
+    category: 'Installation Techniques',
+  },
+  {
+    id: 183,
+    question:
+      'Why is final certification of links best carried out once building work in the area is finished?',
+    options: [
+      'Because the tester needs the lighting to be energised',
+      'Because results settle only after the cable has aged',
+      'Because the cabling warms up to its working condition',
+      'Because later trades can damage cable already tested',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'A certificate records the condition of a link on the day it was measured, so testing before ceilings, partitions and other services are finished risks certifying links that are then crushed, pulled or cut. The tempting answer suggests results need time to settle, but copper cabling has no settling period and a correctly measured result does not drift on its own.',
+    section: 'Module 5',
+    difficulty: 'intermediate',
+    topic: 'Testing',
+    category: 'Testing & Certification',
+  },
+  {
+    id: 184,
+    question:
+      'Sharing one trunking compartment with a mains circuit is proposed for a data cable. Why does method (a) of Regulation 528.1 not help here?',
+    options: [
+      'Because method (a) applies to bare conductors in trunking',
+      'Because method (a) applies only above a certain voltage',
+      'Because the data cable is not insulated to the mains voltage',
+      'Because trunking is never allowed to carry mixed circuits',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Method (a) permits mixed circuits in one wiring system where every cable or conductor is insulated for the highest voltage present, and ordinary data cable is not built to withstand the mains voltage, so it fails the condition. The tempting answer says trunking can never carry mixed circuits, but Regulation 528.1 expressly allows it where a separating compartment is fitted.',
+    section: 'Module 2',
+    difficulty: 'advanced',
+    topic: 'Segregation',
+    category: 'Installation Techniques',
+  },
+  {
+    id: 185,
+    question:
+      'Data cable has to cross a mains cable at a point where segregated containment is not possible. What reduces the coupling most?',
+    options: [
+      'Crossing the two cables at right angles with separation',
+      'Running the two cables in contact for the shortest length',
+      'Taping the two cables together so they move as one',
+      'Fitting a plastic sleeve over the mains cable at the crossing',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Coupling from a mains cable grows with how far the two run parallel, so a short crossing at right angles gives the field almost no length over which to induce a voltage, and keeping a gap reduces it further. The tempting answer is a plastic sleeve, but insulation does not block a magnetic field; only distance, angle or a proper barrier arrangement helps.',
+    section: 'Module 2',
+    difficulty: 'advanced',
+    topic: 'Segregation',
+    category: 'Installation Techniques',
+  },
+  {
+    id: 186,
+    question:
+      'A newly installed permanent link fails on return loss while wiremap and length are both fine. What should be suspected first?',
+    options: [
+      'The tester adapters were set for a channel measurement',
+      'The two ends were terminated to different colour schemes',
+      'The link is carrying power from a connected switch port',
+      'An impedance discontinuity from damage or mixed cable',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Return loss measures energy reflected back down the link, and reflections come from places where the impedance changes, such as a crushed or kinked section, a badly made termination or a length of the wrong cable spliced into the run. The tempting answer is mismatched colour schemes, but that produces crossed pairs on the wiremap, which in this case has already passed.',
+    section: 'Module 7',
+    difficulty: 'advanced',
+    topic: 'Fault Finding',
+    category: 'Testing & Certification',
+  },
+  {
+    id: 187,
+    question:
+      'A stranded patch cord conductor has been punched into an insulation displacement contact. Why does this fail intermittently?',
+    options: [
+      'The strands carry a lower current than a solid conductor',
+      'The blades cut some strands and grip the rest loosely',
+      'The stranded conductor has the wrong colour insulation',
+      'The strands increase the twist rate inside the module',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'An insulation displacement contact is designed to bite through insulation and clamp a single solid conductor, so presented with a bundle of fine strands it severs some and holds the remainder without real pressure, giving a joint that works until it is knocked. The tempting answer about current capacity misses the point, since the fault is a mechanical connection problem.',
+    section: 'Module 3',
+    difficulty: 'advanced',
+    topic: 'Termination',
+    category: 'Cable Types & Specifications',
+  },
+  {
+    id: 188,
+    question:
+      'What is the practical way to control temperature rise where many links in one route are carrying power?',
+    options: [
+      'Fit a larger patch panel with more ventilation slots',
+      'Run the links at a lower data rate to cut the current',
+      'Use unscreened cable so the pairs can radiate heat',
+      'Split the route into smaller bundles with air around',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Heat builds in the middle of a tight bundle because the inner cables have no path to still air, so breaking the route into smaller groups with space between them lets every cable lose heat. The tempting answer links data rate to current, but the current is set by the powered devices and their demand, not by how fast the link is running.',
+    section: 'Module 6',
+    difficulty: 'advanced',
+    topic: 'Power over Data',
+    category: 'Network Applications & PoE',
+  },
+  {
+    id: 189,
+    question:
+      'Trunking carrying data cabling passes through a fire resisting wall. What does Regulation 527.2.2 require?',
+    options: [
+      'Sealing internally within the trunking and externally too',
+      'Sealing only around the outside of the trunking opening',
+      'Sealing at one face of the wall chosen by the installer',
+      'No sealing where the trunking itself is non combustible',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Regulation 527.2.2 requires the trunking to be internally sealed to the degree of fire resistance of the element it passes through, as well as being externally sealed as required by Regulation 527.2.1. The tempting answer is to seal only around the outside, which leaves the inside of the trunking as an open route for fire and smoke between compartments.',
+    section: 'Module 2',
+    difficulty: 'advanced',
+    topic: 'Fire Sealing',
+    category: 'Installation Techniques',
+  },
+  {
+    id: 190,
+    question:
+      'What belongs in the handover pack so the client can actually maintain the system?',
+    options: [
+      'The delivery notes for the cable drums used on site',
+      'A photograph of the completed rack front elevation',
+      'As built records, test results and the labelling scheme',
+      'The risk assessment produced before work started',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Maintenance needs to know where each link runs, what it was called and how it performed, so as built drawings, the labelling convention and the certification results together let a future fault be traced and compared against the original figures. The tempting answer is the site photograph, which is useful evidence but tells nobody which outlet feeds which port.',
+    section: 'Module 8',
+    difficulty: 'advanced',
+    topic: 'Handover',
+    category: 'Standards & Documentation',
+  },
+  {
+    id: 191,
+    question:
+      'Why is a joint part way along a fixed horizontal data link avoided?',
+    options: [
+      'A joint changes the colour code of the pairs after it',
+      'A joint prevents the link from being labelled at both ends',
+      'A joint stops power being carried along the pairs',
+      'A joint adds a reflection point and an unmanaged termination',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Every connection is a place where the impedance changes and where pairs get untwisted, and a joint buried in a ceiling is one nobody can inspect or maintain, so a link is run as a continuous length between its two terminations. The tempting answer about power is wrong, because a joint conducts perfectly well; the problem is signal quality and access, not continuity.',
+    section: 'Module 3',
+    difficulty: 'intermediate',
+    topic: 'Termination',
+    category: 'Installation Techniques',
+  },
+  {
+    id: 192,
+    question:
+      'What is the correct way to take data cable from a drum or box on site?',
+    options: [
+      'Pay it out along its axis so no turns are added',
+      'Lift loops off the side to speed the pull along',
+      'Coil it on the floor first and then pull it back',
+      'Pull it hard so the drum spins freely as you go',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Taking cable off along the axis of the drum or box keeps the cable straight, whereas flicking loops over the side puts a twist into the cable for every loop removed, and those twists become kinks as soon as tension is applied. The tempting answer is to spin the drum fast, but an over spun drum overruns, tangles and applies snatch loads to the cable.',
+    section: 'Module 2',
+    difficulty: 'intermediate',
+    topic: 'Containment',
+    category: 'Installation Techniques',
+  },
+  {
+    id: 193,
+    question:
+      'Data cable must pass through a plant room containing variable speed drives. What is the sound approach?',
+    options: [
+      'Run it inside the drive enclosure where it is shielded',
+      'Route it away from the drives and use screened cable',
+      'Run it beside the motor cables so both are in one tray',
+      'Fit ferrite rings on the mains supply to the drives',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Drives and their motor cables are strong sources of switching noise, so the first defence is distance and a separate route, backed up by screened cable with the screen properly bonded. The tempting answer is to put the data cable inside the drive enclosure, which sounds like shielding but places the cable at the noisiest point in the whole installation.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'Screening',
+    category: 'Installation Techniques',
+  },
+  {
+    id: 194,
+    question:
+      'Why is a tester referenced with its adapters before a day of certification testing?',
+    options: [
+      'To load the client name into the results file header',
+      'To confirm the batteries will last the working day',
+      'To reset the results already stored in its memory',
+      'To take the test leads and adapters out of the result',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Referencing establishes the contribution of the tester and its cords so that the measurement reported is the link itself rather than the link plus the test equipment. The tempting answer treats it as an administrative step, but a tester that has not been referenced with the adapters in use can report a link as passing or failing on the strength of its own leads.',
+    section: 'Module 5',
+    difficulty: 'advanced',
+    topic: 'Testing',
+    category: 'Testing & Certification',
+  },
+  {
+    id: 195,
+    question:
+      'Copper links between two separately earthed buildings keep suffering noise and equipment damage. What is the sound remedy?',
+    options: [
+      'Bond both screens together at the midpoint of the run',
+      'Increase the cable category so it rejects more noise',
+      'Use an optical fibre link so there is no metal path',
+      'Fit an extra earth electrode at each building end',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'The problem is a conductive path joining two earthing systems that sit at different potentials, and fibre removes it entirely because there is no metal between the buildings. The tempting answer is a higher cable category, but category describes bandwidth performance and does nothing about a potential difference driving current through the interconnecting metalwork.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'Earthing',
+    category: 'Cable Types & Specifications',
+  },
+  {
+    id: 196,
+    question:
+      'Data and mains cables share a cable tray with a partition fitted between them. How does this stand under Regulation 528.1?',
+    options: [
+      'It fails because a tray is not an enclosed wiring system',
+      'It passes because the tray is bonded along its length',
+      'It fails unless the mains cables are also armoured',
+      'It passes as physical separation by a partition is listed',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Regulation 528.1 accepts cables on a cable tray system where physical separation is provided by a partition, so a partitioned tray is a recognised arrangement. The tempting answer is that bonding the tray makes it acceptable, but earthing the containment addresses safety of the metalwork and is not one of the separation methods the regulation lists.',
+    section: 'Module 2',
+    difficulty: 'advanced',
+    topic: 'Segregation',
+    category: 'Installation Techniques',
+  },
+  {
+    id: 197,
+    question:
+      'Why does resistance unbalance between the two wires of a pair matter once power is carried?',
+    options: [
+      'The current divides unevenly and one wire heats more',
+      'The pair loses its twist rate along the whole run',
+      'The wiremap reports the pair as an open circuit',
+      'The data signal changes to a higher frequency band',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Power is fed along both wires of a pair together, so if one wire has more resistance than the other the current splits unevenly, one conductor runs hotter and the pair is also pushed out of balance, which degrades the data it is carrying. The tempting answer is an open circuit reading, but unbalance is a difference in resistance, not a break, so continuity still passes.',
+    section: 'Module 6',
+    difficulty: 'advanced',
+    topic: 'Power over Data',
+    category: 'Network Applications & PoE',
+  },
+  {
+    id: 198,
+    question:
+      'Why can crosstalk arriving from a neighbouring cable in the same bundle not be cancelled by the equipment at each end?',
+    options: [
+      'Because the tester ignores anything outside the link',
+      'Because the noise comes from a link the receiver cannot see',
+      'Because the pairs in a bundle share a common screen',
+      'Because it only appears when the cables are screened',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Cancellation works when the equipment knows the disturbing signal, which it does for the other pairs inside its own cable, but a neighbouring cable belongs to a separate link the receiver has no access to, so there is nothing to subtract. The remedies are physical: spacing the cables, avoiding tight bundles and using cable designed to resist coupling from outside.',
+    section: 'Module 1',
+    difficulty: 'advanced',
+    topic: 'Cable Construction',
+    category: 'Fundamentals & Infrastructure',
+  },
+  {
+    id: 199,
+    question:
+      'Existing cabling of unknown history is to be reused for a higher performing network. What is the right course?',
+    options: [
+      'Assume it is fine because it worked for the old system',
+      'Replace only the patch cords and leave the links alone',
+      'Certify every link and replace what fails to perform',
+      'Judge it by the printing on the sheath of the cable',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Performance has to be measured, because the sheath marking describes what the cable was when it left the factory and says nothing about the terminations, the route or damage done since. The tempting answer is to trust that it worked before, but a slower system tolerates faults that a more demanding one exposes, so past service proves very little.',
+    section: 'Module 7',
+    difficulty: 'advanced',
+    topic: 'Certification',
+    category: 'Testing & Certification',
+  },
+  {
+    id: 200,
+    question:
+      'What demonstration at handover gives the client confidence that the records match the building?',
+    options: [
+      'Showing the unopened boxes of spare outlet modules',
+      'Reading the certification summary aloud in the rack room',
+      'Presenting the drawings signed by the site supervisor',
+      'Proving named outlets connect to the labelled panel ports',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Walking a sample of outlets through to the ports they are recorded against proves that the labels, the drawings and the physical cabling all agree, which is what the client relies on for every future move or fault. The tempting answer is a signed drawing, but a signature confirms who issued the document, not that the numbering on it matches the copper.',
+    section: 'Module 8',
+    difficulty: 'advanced',
+    topic: 'Handover',
+    category: 'Standards & Documentation',
+  },
 ];
 
 /**

@@ -5,6 +5,7 @@ import {
   rcdBsStandardOptions,
   bsStandardOptions,
   protectiveDeviceCurveOptions,
+  bs3871TypeOptions,
 } from '@/types/protectiveDeviceTypes';
 import { rcdTypeOptions, wiringTypeOptions } from '@/types/wiringTypes';
 import { referenceMethodOptions, cableSizeOptions } from '@/types/cableTypes';
@@ -182,6 +183,15 @@ export const MobileHorizontalScrollTableHeader: React.FC<
                     .map((o) => (
                       <SelectItem key={o.value} value={o.value} className="text-xs focus:bg-elec-yellow focus:text-black">
                         Curve {o.label}
+                      </SelectItem>
+                    ))}
+                  {/* ELE-1604 — BS 3871 types, offered alongside B/C/D. The
+                      handler only writes each to rows on its own standard. */}
+                  {bs3871TypeOptions
+                    .filter((o) => o.value !== 'N/A')
+                    .map((o) => (
+                      <SelectItem key={`bs3871-${o.value}`} value={o.value} className="text-xs focus:bg-elec-yellow focus:text-black">
+                        {o.label}
                       </SelectItem>
                     ))}
                 </SelectContent>

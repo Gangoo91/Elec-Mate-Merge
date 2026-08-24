@@ -469,9 +469,9 @@ export const questionsPart4 = [
     id: 403,
     question: 'What is a nearly Zero Energy Building (nZEB)?',
     options: [
-      'A building that uses absolutely no energy at any point in the year',
-      'A building constructed entirely from recycled or reclaimed materials',
-      'A building that exports more energy to the grid than it imports annually',
+      'A building designed to consume no energy at all at any point in the calendar year',
+      'A building constructed entirely from recycled and reclaimed materials with no new stock',
+      'A building that exports more energy to the grid over the year than it imports from it',
       'A building with very high energy performance where remaining energy is largely from renewable sources',
     ],
     correctAnswer: 3,
@@ -520,10 +520,10 @@ export const questionsPart4 = [
     id: 406,
     question: "What does a building's carbon footprint include?",
     options: [
-      'Only the carbon emitted while the building is occupied',
-      'Only the carbon emitted manufacturing the building materials',
+      'Operational carbon emissions only',
+      'Embodied carbon from materials only',
       'Both operational and embodied carbon emissions',
-      'Only the carbon associated with on-site energy generation',
+      'On-site generation emissions only',
     ],
     correctAnswer: 2,
     explanation:
@@ -1185,7 +1185,7 @@ export const questionsPart4 = [
     ],
     correctAnswer: 0,
     explanation:
-      'BS EN 1838 requires a minimum of 1 lux on the centre line of escape routes, with the central band having at least 50% of this value.',
+      'BS EN 1838:2024 requires a minimum of 1 lux across the FULL WIDTH of an escape route. The 2013 edition required it only along the centre line; the 2024 revision extended it to the whole width, excluding borders (0.5 m each side above 2 m width, or a quarter of the width at 2 m or less).',
     section: 'Emergency Lighting',
     difficulty: 'intermediate',
     topic: 'Emergency Lighting',
@@ -1402,10 +1402,10 @@ export const questionsPart4 = [
     id: 457,
     question: 'According to BS 7671, when is SPD protection generally required?',
     options: [
-      'Only on installations supplied via overhead lines in rural areas',
+      'Where the installation is supplied by overhead distribution lines in a rural area',
       'When the consequence of overvoltage affects safety, public services, or valuable equipment',
-      'Only where the prospective fault current exceeds 16 kA',
-      'On every final circuit regardless of the loads connected',
+      'Where the prospective fault current measured at the origin exceeds 16 kA',
+      'On every final circuit in the installation regardless of the load connected',
     ],
     correctAnswer: 1,
     explanation:
@@ -1506,7 +1506,7 @@ export const questionsPart4 = [
     question:
       'What is the minimum illuminance required for high-risk task area emergency lighting?',
     options: [
-      '1 lux measured on the centre line of the route',
+      '1 lux measured across the full width of the route',
       '0.5 lux averaged across the floor area',
       '5% of normal illuminance or 5 lux minimum',
       '10% of normal illuminance or 15 lux minimum',

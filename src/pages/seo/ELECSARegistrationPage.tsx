@@ -82,7 +82,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/niceic-vs-napit',
+    href: '/niceic-vs-napit-comparison',
     title: 'NICEIC vs NAPIT',
     description:
       'Detailed comparison of the two largest competent person schemes — costs, assessments, and reputation.',
@@ -158,7 +158,7 @@ const sections = [
         </p>
         <p>
           While ELECSA is smaller than{' '}
-          <SEOInternalLink href="/guides/niceic-vs-napit">NICEIC or NAPIT</SEOInternalLink> in terms
+          <SEOInternalLink href="/niceic-vs-napit-comparison">NICEIC or NAPIT</SEOInternalLink> in terms
           of registered contractor numbers, it carries exactly the same legal authority. A
           certificate issued by an ELECSA-registered electrician has the same standing as one issued
           by a NICEIC or NAPIT-registered electrician. The choice between schemes comes down to
@@ -498,7 +498,7 @@ const sections = [
           Certificate issued through any of these schemes carries the same weight. The choice comes
           down to cost, service, brand preference, and which scheme's approach best fits your
           business. For a detailed head-to-head comparison of the two largest schemes, see our{' '}
-          <SEOInternalLink href="/guides/niceic-vs-napit">NICEIC vs NAPIT</SEOInternalLink> guide.
+          <SEOInternalLink href="/niceic-vs-napit-comparison">NICEIC vs NAPIT</SEOInternalLink> guide.
         </p>
       </>
     ),

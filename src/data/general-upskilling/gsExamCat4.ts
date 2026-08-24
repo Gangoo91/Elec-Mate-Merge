@@ -481,9 +481,9 @@ export const gsCat4Questions: StandardMockQuestion[] = [
     id: 147,
     question: 'Which of the following is an example of &ldquo;on-the-job&rdquo; CPD activity?',
     options: [
-      'Attending an accredited weekend course on the latest BS 7671 amendment',
-      'Reading a technical article about cable containment over a tea break',
-      'Watching an online webinar about three-phase fault finding at home',
+      'Attending an accredited weekend course covering the latest BS 7671 amendment changes',
+      'Reading a technical article about cable containment at home over a Sunday breakfast',
+      'Watching an online webinar about three-phase fault finding at home in the evening',
       'Learning a new cable containment technique from a senior electrician during an installation',
     ],
     correctAnswer: 3,
@@ -517,10 +517,10 @@ export const gsCat4Questions: StandardMockQuestion[] = [
     question:
       'An electrician counts the number of social media followers on their business page as evidence of professional growth. According to best practice in progress tracking, why might this be misleading?',
     options: [
-      'Follower counts are a lag measure and only lead measures matter for growth',
+      'Follower counts are a lag measure, and lag measures should never be recorded anywhere in a professional development plan',
       'Social media followers are a vanity metric that does not necessarily reflect professional competence or real business growth',
-      'Tracking followers breaches data protection rules for self-employed traders',
-      'Follower counts can only be measured accurately once a year, making them unreliable',
+      'Recording follower numbers breaches the data protection rules that apply to every self-employed sole trader',
+      'Follower counts can only be measured accurately once a year, which makes them far too infrequent to be of any use',
     ],
     correctAnswer: 1,
     explanation:
@@ -553,9 +553,9 @@ export const gsCat4Questions: StandardMockQuestion[] = [
     question:
       'NAPIT member contractors are required to undergo periodic assessment. What is the primary purpose of this assessment?',
     options: [
-      'To set the prices a contractor is allowed to charge customers for work',
-      'To provide free continuing professional development courses to members',
-      'To resolve disputes between contractors and their domestic clients',
+      'To set the maximum prices that a member contractor is allowed to charge its domestic customers',
+      'To provide free continuing professional development courses to every member of the scheme each year',
+      'To resolve contractual disputes that arise between member contractors and their domestic clients',
       'To verify that the contractor&rsquo;s work continues to comply with BS 7671 and other relevant standards',
     ],
     correctAnswer: 3,
@@ -572,9 +572,9 @@ export const gsCat4Questions: StandardMockQuestion[] = [
       'An apprentice electrician compares their wiring speed to that of a qualified electrician with 20 years of experience and feels demoralised. What concept does this illustrate?',
     options: [
       'The comparison trap &mdash; measuring yourself against someone with vastly different experience',
-      'Deliberate practice &mdash; the apprentice is practising deliberately',
-      'The progress principle &mdash; small wins are motivating',
-      'The Seinfeld strategy &mdash; the chain has been broken',
+      'Deliberate practice &mdash; working at the very edge of ability with feedback from a coach',
+      'The progress principle &mdash; small daily wins are the strongest driver of motivation',
+      'The Seinfeld strategy &mdash; marking a calendar each day so the chain is never broken',
     ],
     correctAnswer: 0,
     explanation:
@@ -592,10 +592,10 @@ export const gsCat4Questions: StandardMockQuestion[] = [
     question:
       'A site supervisor wants to improve first-time-right installation rates. Using the lead/lag measure framework, which combination of metrics would be MOST effective?',
     options: [
-      'Lead: number of installations completed per week; Lag: total revenue per month',
+      'Lead: number of installations completed each week; Lag: total revenue invoiced across the month',
       'Lead: hours of pre-installation planning per job; Lag: percentage of installations passing first inspection',
-      'Lead: percentage passing first inspection; Lag: hours of planning per job',
-      'Lead: customer complaints received; Lag: number of warranty claims',
+      'Lead: percentage of installations passing first inspection; Lag: hours of pre-installation planning',
+      'Lead: customer complaints received each month; Lag: number of warranty claims settled each quarter',
     ],
     correctAnswer: 1,
     explanation:
@@ -610,10 +610,10 @@ export const gsCat4Questions: StandardMockQuestion[] = [
     question:
       'A qualified electrician uses Gibbs&rsquo; Reflective Cycle to analyse a near-miss incident where they nearly drilled into a concealed cable. They have completed Description, Feelings, Evaluation, and Analysis. What should the Conclusion and Action Plan stages produce?',
     options: [
-      'Conclusion: accepting that near-misses are inevitable in the trade; Action Plan: no changes needed',
-      'Conclusion: blaming the previous electrician for poor cable routing; Action Plan: filing a complaint with the building owner',
+      'Conclusion: accepting that near-misses like this are simply an inevitable part of the trade (e.g., nothing could realistically have been done); Action Plan: carry on working exactly as before and rely on luck',
+      'Conclusion: blaming the previous electrician for concealing the cable badly (e.g., insufficient routing depth); Action Plan: file a written complaint with the building owner and take no further personal precautions',
       'Conclusion: identifying what they could have done differently (e.g., always use a cable detector); Action Plan: specific steps to prevent recurrence (e.g., purchase a CAT scanner, add pre-drill check to personal checklist)',
-      'Conclusion: summarising what happened in written form; Action Plan: reading the HSE website for general safety tips',
+      'Conclusion: restating what happened in written form without judgement (e.g., a purely factual summary); Action Plan: browse the HSE website occasionally for general safety tips with no fixed steps or dates',
     ],
     correctAnswer: 2,
     explanation:
@@ -647,9 +647,9 @@ export const gsCat4Questions: StandardMockQuestion[] = [
       'The Engineering Council&rsquo;s UK-SPEC requires CPD to be &ldquo;planned, action-oriented, and regularly reviewed.&rdquo; An IET-registered EngTech electrician has completed 30 hours of CPD this year, all in the same narrow topic area. How would this likely be assessed during a professional review?',
     options: [
       'It may be assessed as insufficient because CPD should demonstrate breadth across multiple competence areas, not just volume of hours',
-      'It would automatically pass because 30 hours comfortably exceeds the annual minimum',
-      'It would be rejected because all CPD must be formal, accredited classroom training',
-      'It cannot be assessed at all because UK-SPEC sets no expectations for CPD content',
+      'It would pass automatically, because thirty hours comfortably exceeds the annual minimum expected of an EngTech registrant',
+      'It would be rejected outright, because UK-SPEC accepts only formal accredited classroom training as valid CPD evidence',
+      'It could not be assessed at all, because UK-SPEC sets no expectation whatever about the content or the spread of CPD',
     ],
     correctAnswer: 0,
     explanation:
@@ -664,10 +664,10 @@ export const gsCat4Questions: StandardMockQuestion[] = [
     question:
       'BS 7671 was amended by A1:2020, A2:2022, and A3:2024. An electrical contractor who last updated their knowledge at A1:2020 now encounters a solar PV installation requiring bidirectional overcurrent protection. What is the MOST significant gap in their knowledge?',
     options: [
-      'They will be unaware that solar PV installations are no longer permitted under the current edition of BS 7671',
+      'They will be unaware that A3:2024 withdrew permission for solar PV installations on domestic premises anywhere in the United Kingdom',
       'They will be unaware of Regulation 530.3.201 introduced by A3:2024, which specifically addresses unidirectional and bidirectional protective devices',
-      'They will be unaware that overcurrent protection is no longer required on the DC side of a PV array',
-      'They will be unaware that battery storage systems are exempt from BS 7671 altogether',
+      'They will be unaware that A3:2024 removed the requirement for overcurrent protection on the DC side of every PV array, whatever its rating',
+      'They will be unaware that A3:2024 placed battery storage systems entirely outside the scope of BS 7671, so no design rules now apply',
     ],
     correctAnswer: 1,
     explanation:
@@ -682,10 +682,10 @@ export const gsCat4Questions: StandardMockQuestion[] = [
     question:
       'A training manager wants to integrate Kolb&rsquo;s Experiential Learning Cycle and Sch&ouml;n&rsquo;s reflective practice into a structured apprentice development programme. Which approach BEST combines both frameworks?',
     options: [
-      'Apprentices watch demonstration videos and write summaries',
-      'Apprentices attend classroom lectures and then sit a written examination',
+      'Apprentices watch demonstration videos (Concrete Experience), write a short summary afterwards (Reflective Observation), and are then tested on the video content, with no practical task, no reflection during work, and no chance to apply improvements on a live installation',
+      'Apprentices attend classroom lectures (Abstract Conceptualisation), memorise the theory for a written examination (Reflective Observation), and receive a result at the end of the term, with no practical experience at all, no reflection-in-action, and no active experimentation on site',
       'Apprentices complete practical tasks (Concrete Experience), reflect during the task (reflection-in-action), discuss afterwards (reflection-on-action and Reflective Observation), draw conclusions (Abstract Conceptualisation), and apply improvements on the next task (Active Experimentation)',
-      'Apprentices repeat the same practical task 20 times without any structured reflection',
+      'Apprentices repeat the same practical task twenty times (Concrete Experience) until the movements become automatic, with no discussion afterwards, no reflection-in-action and no reflection-on-action, no conclusions drawn, and no deliberate change made on the next attempt',
     ],
     correctAnswer: 2,
     explanation:
@@ -700,9 +700,9 @@ export const gsCat4Questions: StandardMockQuestion[] = [
     question:
       'An electrician maintains a professional development journal and records: &ldquo;Completed 18th Edition course, learned about RCD selection, plan to apply this on my next domestic rewire.&rdquo; Using Amabile&rsquo;s progress principle and Gibbs&rsquo; framework, how could this journal entry be improved?',
     options: [
-      'Add the course fee and receipt number for tax purposes only',
-      'Keep it brief because detailed entries waste time',
-      'Remove the personal reflection and focus only on listing the course title and date',
+      'Add the course fee, the receipt number and the venue address purely for tax purposes, leaving the learning itself unrecorded, the difficulty unexamined and the planned rewire mentioned only in passing',
+      'Keep the entry as brief as possible, because detailed reflection wastes billable evening time and the only fact that really matters is a record that the course was attended and passed',
+      'Remove the personal reflection entirely and record only the course title, the date attended and the certificate number, since a development portfolio is simply a list of evidence gathered',
       'Add specific details about what was learned, how it felt to overcome challenging concepts, analyse why RCD selection was previously a weakness, and create a concrete action plan with measurable steps',
     ],
     correctAnswer: 3,
@@ -719,9 +719,9 @@ export const gsCat4Questions: StandardMockQuestion[] = [
       'A self-employed electrician is preparing their CPD portfolio for ECS card renewal and IET EngTech professional review simultaneously. They have evidence of formal training (18th Edition update), informal learning (reading technical articles), on-the-job learning (complex commercial installation), and self-directed study (practising inspection and testing techniques). Which aspect of their portfolio MOST demonstrates alignment with both Ericsson&rsquo;s deliberate practice and the Engineering Council&rsquo;s UK-SPEC requirements?',
     options: [
       'The self-directed study where they identified a specific weakness in inspection and testing and systematically practised to improve it',
-      'The formal 18th Edition update course, because accredited training is the only CPD that carries any weight',
-      'The informal reading of technical articles, because breadth of reading matters more than focused practice',
-      'The on-the-job commercial installation, because hours worked are the strongest evidence of competence',
+      'The formal 18th Edition update course, because accredited classroom training is the only CPD that carries any real weight',
+      'The informal reading of technical articles, because breadth of general reading matters far more than any focused practice',
+      'The on-the-job commercial installation, because total hours worked on site are the strongest available proof of real competence',
     ],
     correctAnswer: 0,
     explanation:

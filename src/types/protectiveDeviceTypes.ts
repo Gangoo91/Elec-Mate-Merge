@@ -26,6 +26,10 @@ export const protectiveDeviceRatingOptions = [
   { value: '40', label: '40A' },
   { value: '45', label: '45A' },
   { value: '50', label: '50A' },
+  // 60 A is a BS 3871 / BS 3036 preferred rating with no BS EN 60898
+  // equivalent, and was missing — so an old 60 A breaker could not be
+  // scheduled at all (ELE-1604).
+  { value: '60', label: '60A' },
   { value: '63', label: '63A' },
   { value: '80', label: '80A' },
   { value: '100', label: '100A' },
@@ -38,6 +42,9 @@ export const protectiveDeviceRatingOptions = [
 export const bsStandardOptions = [
   { value: 'N/A', label: 'N/A' },
   { value: 'MCB (BS EN 60898)', label: 'MCB (BS EN 60898)' },
+  // Withdrawn, and present in a great many older boards — an EICR records what
+  // is installed. Superseded by BS EN 60898-1:2019 (ELE-1604).
+  { value: 'MCB (BS 3871)', label: 'MCB (BS 3871)' },
   { value: 'RCBO (BS EN 61009)', label: 'RCBO (BS EN 61009)' },
   { value: 'RCD (BS EN 61008)', label: 'RCD (BS EN 61008)' },
   { value: 'Fuse (BS 88)', label: 'Fuse (BS 88)' },
@@ -68,6 +75,90 @@ export const protectiveDeviceCurveOptions = [
   { value: 'C', label: 'C' },
   { value: 'D', label: 'D' },
 ];
+
+/**
+ * BS 3871-1 breaker types — ELE-1604.
+ *
+ * A different numbering scheme, not a rename of B/C/D. Labels carry the trip
+ * multiple because that is the whole reason the distinction matters: an old
+ * Type 1 (4x In) scheduled as a Type B (5x In) gets a Max Zs 20% too low and
+ * can be failed for a fault it does not have.
+ */
+export const bs3871TypeOptions = [
+  { value: 'N/A', label: 'N/A' },
+  { value: '1', label: 'Type 1 (4×In)' },
+  { value: '2', label: 'Type 2 (7×In)' },
+  { value: '3', label: 'Type 3 (10×In)' },
+  { value: '4', label: 'Type 4 (50×In)' },
+];
+
+/** True when the BS standard on the row is the withdrawn BS 3871-1. */
+export const isBs3871Standard = (bsStandard: string): boolean =>
+  /3871/.test(bsStandard || '');
+
+/**
+ * The Type/curve options valid for a given BS standard. The schedule's Type
+ * column is one control serving both families, and offering B/C/D against a
+ * BS 3871 device (or 1/2/3/4 against a BS EN 60898 one) invites exactly the
+ * mis-selection that produces a wrong Max Zs.
+ */
+export const getCurveOptionsForStandard = (bsStandard: string) =>
+  isBs3871Standard(bsStandard) ? bs3871TypeOptions : protectiveDeviceCurveOptions;
+
+/**
+ * Does a bulk "fill all Type" value apply to a row carrying this BS standard?
+ *
+ * B/C/D belong to BS EN 60898 / 61009 / 60947; 1–4 to BS 3871. Filling across
+ * that boundary writes a Type the device cannot have — and because the cell
+ * only renders options from its own family, the row then shows an empty Type
+ * while the stored data says otherwise.
+ *
+ * Matches on the standard's NUMBER rather than the exact combined label, so
+ * the raw forms the EICR→EIC conversion produces ('BS EN 60898-1') are covered
+ * too — the old exact-string test silently skipped those rows (cf. ELE-1391).
+ */
+/**
+ * Is a Type/curve value valid for the standard on the row?
+ *
+ * B/C/D belong to BS EN 60898/61009/60947; 1–4 to BS 3871. Anything else
+ * (blank, 'N/A') is left alone — those are legitimate states, not mismatches.
+ */
+export const curveMatchesStandard = (curve: string, bsStandard: string): boolean => {
+  const c = (curve || '').trim();
+  if (!c || c === 'N/A') return true;
+  return isBs3871Standard(bsStandard) ? /^[1-4]$/.test(c) : !/^[1-4]$/.test(c);
+};
+
+/**
+ * ELE-1604 — what a BS-standard change must clear on the row.
+ *
+ * The two families use incompatible Type vocabularies, so carrying a 'B'
+ * across to a BS 3871 row leaves the Type cell rendering an empty select while
+ * the data still says 'B' — the same "looks unset, isn't" trap the scheme
+ * picker fell into (ELE-1570). Worse, the Max Zs derived from the old curve
+ * stays on the row and prints on the certificate as a judged value.
+ *
+ * 🔴 This lives here, not in a component, because the schedule has THREE
+ * surfaces that each own a `handleBsStandardChange` — the desktop cells, the
+ * mobile scroll row, and the mobile card. Putting the rule in one of them is
+ * how it ends up applying on one screen and not the others; that is exactly
+ * what happened on the first cut of this fix, caught by testing the mobile
+ * row in the running app after the desktop one was already right.
+ */
+export const clearOnStandardChange = (
+  nextStandard: string,
+  currentCurve: string
+): { protectiveDeviceCurve: string; maxZs: string } | null =>
+  curveMatchesStandard(currentCurve, nextStandard)
+    ? null
+    : { protectiveDeviceCurve: '', maxZs: '' };
+
+export const curveFillApplies = (value: string, bsStandard: string): boolean => {
+  const bs = bsStandard || '';
+  if (isBs3871Standard(bs)) return /^[1-4]$/.test(value);
+  if (/60898|61009|60947/.test(bs)) return /^[BCD]$/.test(value);
+  return false;
+};
 
 // Auto-selection mapping functions
 export const getDefaultBsStandard = (deviceType: string): string => {

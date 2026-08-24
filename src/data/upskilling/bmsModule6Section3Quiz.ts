@@ -3,10 +3,10 @@ export const bmsModule6Section3Quiz = [
     id: 1,
     question: 'What is the main purpose of a BMS dashboard?',
     options: [
-      'To store the building electrical test certificates',
+      'To store the electrical installation certificates for the whole building',
       'To convert technical data into actionable information for decision-making',
-      'To replace the field controllers that run the plant',
-      'To log every keystroke made by maintenance engineers',
+      'To replace the field controllers that run the plant equipment day to day',
+      'To log every keystroke made by the maintenance engineers using the system',
     ],
     correctAnswer: 1,
     explanation:
@@ -29,9 +29,9 @@ export const bmsModule6Section3Quiz = [
     id: 3,
     question: 'Give one example of information displayed on a dashboard floor plan.',
     options: [
-      'The wiring schematic of each distribution board',
-      'The annual electricity bill for the building',
-      'The make and model of every installed controller',
+      'The wiring schematic for each distribution board in the building',
+      'The annual electricity bill and standing charges for the site',
+      'The make and model number of every controller fitted on site',
       'Room temperatures with colour-coded zones showing normal/alarm status',
     ],
     correctAnswer: 3,
@@ -55,10 +55,10 @@ export const bmsModule6Section3Quiz = [
     id: 5,
     question: 'Why is remote access important for modern dashboards?',
     options: [
-      'It removes the need for any on-site maintenance staff',
+      'It removes the need for any on-site maintenance staff at the building',
       'It allows operators to monitor and respond to building issues from anywhere',
-      'It speeds up the field controllers that run the plant',
-      'It stops unauthorised users from viewing building data',
+      'It speeds up the field controllers that run the plant on each floor',
+      'It prevents unauthorised users from ever viewing the building data',
     ],
     correctAnswer: 1,
     explanation:

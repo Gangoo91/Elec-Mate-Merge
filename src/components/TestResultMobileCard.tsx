@@ -17,7 +17,8 @@ import {
   protectiveDeviceTypeOptions,
   protectiveDeviceRatingOptions,
   bsStandardOptions,
-  protectiveDeviceCurveOptions,
+  getCurveOptionsForStandard,
+  clearOnStandardChange,
   rcdBsStandardOptions,
   bsStandardRequiresCurve,
 } from '@/types/protectiveDeviceTypes';
@@ -83,7 +84,19 @@ const TestResultMobileCard: React.FC<TestResultMobileCardProps> = ({
   // Handle BS Standard change
   const handleBsStandardChange = (value: string) => {
     onUpdate(result.id, 'bsStandard', value);
-    autoFillMaxZs(value, result.protectiveDeviceCurve || '', result.protectiveDeviceRating || '');
+    // ELE-1604 — B/C/D and BS 3871 Types 1–4 are not interchangeable; a Type
+    // from the other family must not survive the switch. Shared rule so all
+    // three schedule surfaces behave identically.
+    const stale = clearOnStandardChange(value, result.protectiveDeviceCurve || '');
+    if (stale) {
+      onUpdate(result.id, 'protectiveDeviceCurve', stale.protectiveDeviceCurve);
+      onUpdate(result.id, 'maxZs', stale.maxZs);
+    }
+    autoFillMaxZs(
+      value,
+      stale ? '' : result.protectiveDeviceCurve || '',
+      result.protectiveDeviceRating || ''
+    );
   };
 
   // Handle Curve change
@@ -314,7 +327,7 @@ const TestResultMobileCard: React.FC<TestResultMobileCardProps> = ({
                         <SelectValue placeholder="Select curve type" />
                       </SelectTrigger>
                       <SelectContent>
-                        {protectiveDeviceCurveOptions.map((option) => (
+                        {getCurveOptionsForStandard(result.bsStandard || '').map((option) => (
                           <SelectItem key={option.value} value={option.value}>
                             {option.label}
                           </SelectItem>

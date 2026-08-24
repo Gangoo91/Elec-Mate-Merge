@@ -319,7 +319,7 @@ export const confinedSpaceElectricalWorkConfig: GeneratedGuideConfig = {
   ],
   relatedPages: [
     {
-      href: '/tools/rams-generator',
+      href: '/rams-generator',
       title: 'RAMS Generator',
       description: 'Generate a site-specific RAMS with a confined space module, atmospheric test capture and rescue plan template.',
       icon: 'FileCheck2',

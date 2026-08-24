@@ -56,7 +56,7 @@ const faqs = [
   {
     question: 'What are the emergency lighting requirements for commercial buildings?',
     answer:
-      'Emergency lighting in commercial premises must comply with BS 5266-1 (Code of Practice for Emergency Lighting) and the Regulatory Reform (Fire Safety) Order 2005. The system must provide: (1) at least 1 lux along the centre line of defined escape routes; (2) at least 0.5 lux in open areas (anti-panic lighting); (3) illumination of fire safety signs and fire fighting equipment locations; (4) minimum 3-hour duration from the battery backup; and (5) illumination within 5 seconds of mains failure. Emergency luminaires must be positioned at every change of direction, every exit door, every intersection, at stairway landings, and near fire alarm call points and fire extinguishers. The system requires monthly functional testing (briefly switching to battery mode) and annual 3-hour duration testing, with all tests documented in a log book. A BS 5266 emergency lighting certificate must be issued for new installations and periodic inspections.',
+      'Emergency lighting in commercial premises must comply with BS 5266-1 (Code of Practice for Emergency Lighting) and the Regulatory Reform (Fire Safety) Order 2005. The system must provide: (1) at least 1 lux across the full width of defined escape routes; (2) at least 0.5 lux in open areas (anti-panic lighting); (3) illumination of fire safety signs and fire fighting equipment locations; (4) minimum 3-hour duration from the battery backup; and (5) illumination within 5 seconds of mains failure. Emergency luminaires must be positioned at every change of direction, every exit door, every intersection, at stairway landings, and near fire alarm call points and fire extinguishers. The system requires monthly functional testing (briefly switching to battery mode) and annual 3-hour duration testing, with all tests documented in a log book. A BS 5266 emergency lighting certificate must be issued for new installations and periodic inspections.',
   },
   {
     question: 'How much can LED retrofits save on electricity bills?',
@@ -257,7 +257,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Escape routes:</strong> Minimum 1 lux along the centre line of defined
+                <strong>Escape routes:</strong> Minimum 1 lux across the full width of defined
                 escape routes. Luminaires positioned at every change of direction, every exit door,
                 and every intersection of corridors.
               </span>

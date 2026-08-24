@@ -256,7 +256,7 @@ const sections = [
               <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Luminance and lux levels</strong> — BS 5266-1 specifies minimum illuminance
-                levels (typically 1 lux on the centreline of escape routes, higher in high-risk
+                levels (typically 1 lux across the full width of escape routes, higher in high-risk
                 areas). A fitting with degraded LEDs may illuminate but fail to meet the minimum lux
                 requirement. Annual testing should include lux verification at representative points
                 on the escape route.

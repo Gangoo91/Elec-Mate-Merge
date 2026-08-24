@@ -26,7 +26,7 @@ const navSections = [
     links: [
       { to: '/tools/eicr-certificate', label: 'EICR Certificate' },
       { to: '/eic-certificate', label: 'EIC Certificate' },
-      { to: '/tools/minor-works-certificate', label: 'Minor Works' },
+      { to: '/minor-works-certificate', label: 'Minor Works' },
       { to: '/ev-charger-certificate', label: 'EV Charger' },
     ],
   },
@@ -35,15 +35,15 @@ const navSections = [
     links: [
       { to: '/tools/cable-sizing-calculator', label: 'Cable Sizing' },
       { to: '/tools/voltage-drop-calculator', label: 'Voltage Drop' },
-      { to: '/tools/electrical-testing-calculators', label: 'All Calculators' },
+      { to: '/electrical-testing-calculators', label: 'All Calculators' },
     ],
   },
   {
     label: 'Training',
     links: [
-      { to: '/training/18th-edition-course', label: '18th Edition' },
-      { to: '/training/electrical-apprentice', label: 'Apprentice' },
-      { to: '/training/am2-exam-preparation', label: 'AM2 Prep' },
+      { to: '/eighteenth-edition-course', label: '18th Edition' },
+      { to: '/apprentice-training', label: 'Apprentice' },
+      { to: '/am2-exam-preparation', label: 'AM2 Prep' },
     ],
   },
   /**
@@ -66,12 +66,12 @@ const navSections = [
 const footerCertificates = [
   { to: '/tools/eicr-certificate', label: 'EICR Certificate' },
   { to: '/eic-certificate', label: 'EIC Certificate' },
-  { to: '/tools/minor-works-certificate', label: 'Minor Works' },
-  { to: '/tools/emergency-lighting-certificate', label: 'Emergency Lighting' },
+  { to: '/minor-works-certificate', label: 'Minor Works' },
+  { to: '/emergency-lighting-certificate', label: 'Emergency Lighting' },
   { to: '/fire-alarm-certificate', label: 'Fire Alarm' },
-  { to: '/tools/pat-testing', label: 'PAT Testing' },
+  { to: '/pat-testing', label: 'PAT Testing' },
   { to: '/ev-charger-certificate', label: 'EV Charger' },
-  { to: '/tools/solar-pv-certificate', label: 'Solar PV' },
+  { to: '/solar-pv-certificate', label: 'Solar PV' },
 ];
 
 const footerCalculators = [
@@ -83,22 +83,22 @@ const footerCalculators = [
   { to: '/tools/conduit-fill-calculator', label: 'Conduit Fill' },
   { to: '/tools/trunking-fill-calculator', label: 'Trunking Fill' },
   { to: '/tools/power-factor-calculator', label: 'Power Factor' },
-  { to: '/tools/rcd-testing-guide', label: 'RCD Testing' },
+  { to: '/rcd-testing-guide', label: 'RCD Testing' },
   { to: '/tools/adiabatic-equation-calculator', label: 'Adiabatic Equation' },
   { to: '/tools/ring-circuit-calculator', label: 'Ring Circuit' },
-  { to: '/tools/electrical-testing-calculators', label: 'All 70+ Calculators' },
+  { to: '/electrical-testing-calculators', label: 'All 70+ Calculators' },
 ];
 
 const footerTraining = [
-  { to: '/training/18th-edition-course', label: '18th Edition (BS 7671)' },
-  { to: '/training/electrical-apprentice', label: 'Apprentice Training' },
-  { to: '/training/am2-exam-preparation', label: 'AM2 Exam Preparation' },
-  { to: '/training/inspection-and-testing', label: 'Inspection & Testing' },
-  { to: '/training/city-guilds-2391', label: 'C&G 2391' },
-  { to: '/training/level-2-electrical', label: 'Level 2 Electrical' },
-  { to: '/training/level-3-electrical', label: 'Level 3 Electrical' },
-  { to: '/training/epa-preparation', label: 'EPA Preparation' },
-  { to: '/training/apprentice-portfolio', label: 'Portfolio Guide' },
+  { to: '/eighteenth-edition-course', label: '18th Edition (BS 7671)' },
+  { to: '/apprentice-training', label: 'Apprentice Training' },
+  { to: '/am2-exam-preparation', label: 'AM2 Exam Preparation' },
+  { to: '/inspection-testing-course', label: 'Inspection & Testing' },
+  { to: '/city-guilds2391', label: 'C&G 2391' },
+  { to: '/level2-electrical', label: 'Level 2 Electrical' },
+  { to: '/level3-electrical', label: 'Level 3 Electrical' },
+  { to: '/epa-preparation', label: 'EPA Preparation' },
+  { to: '/apprentice-portfolio-guide', label: 'Portfolio Guide' },
   // Mock exams live in this column rather than a sixth one: the footer grid is
   // 12 wide and already full (4 link columns + a 4-wide brand block), and a
   // fifth column wraps to a second row on desktop.
@@ -109,13 +109,13 @@ const footerTraining = [
 ];
 
 const footerAIAndGuides = [
-  { to: '/tools/ai-electrician', label: 'AI Agents' },
-  { to: '/tools/rams-generator', label: 'RAMS Generator' },
-  { to: '/tools/electrical-quoting-app', label: 'Smart Quoting' },
-  { to: '/tools/electrician-invoice-app', label: 'Invoice Builder' },
+  { to: '/ai-electrician-tools', label: 'AI Agents' },
+  { to: '/rams-generator', label: 'RAMS Generator' },
+  { to: '/electrical-quoting-app', label: 'Smart Quoting' },
+  { to: '/electrician-invoice-app', label: 'Invoice Builder' },
   { to: '/bs7671-observation-codes', label: 'Observation Codes' },
-  { to: '/guides/part-p-building-regulations', label: 'Part P Guide' },
-  { to: '/guides/earthing-arrangements', label: 'Earthing Systems' },
+  { to: '/part-p-building-regulations', label: 'Part P Guide' },
+  { to: '/guides/earthing-systems-tns-tncs-tt-explained', label: 'Earthing Systems' },
   { to: '/consumer-unit-regulations', label: 'Consumer Units' },
   { to: '/guides/testing-sequence-guide', label: 'Testing Sequence' },
 ];

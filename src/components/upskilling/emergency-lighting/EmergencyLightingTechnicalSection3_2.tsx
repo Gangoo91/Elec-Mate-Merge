@@ -37,7 +37,7 @@ export const EmergencyLightingTechnicalSection3_2 = () => {
             <ul className="space-y-2 ml-4">
               <li className="flex items-start gap-2">
                 <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                <span>Minimum 1 lux along the centre line of the route</span>
+                <span>Minimum 1 lux across the full width of the route</span>
               </li>
               <li className="flex items-start gap-2">
                 <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
@@ -64,7 +64,7 @@ export const EmergencyLightingTechnicalSection3_2 = () => {
               {openChecks.includes(0) && (
                 <div className="mt-3 p-3 bg-green-900/20 border border-green-600/30 rounded">
                   <p className="text-green-300">
-                    <strong>Answer:</strong> 1 lux along the centre line of the escape route. This
+                    <strong>Answer:</strong> 1 lux across the full width of the escape route. This
                     ensures adequate visibility for safe navigation during evacuation.
                   </p>
                 </div>

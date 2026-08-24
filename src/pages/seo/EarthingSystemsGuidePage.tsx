@@ -19,7 +19,7 @@ import {
 
 const breadcrumbs = [
   { label: 'Wiring Guides', href: '/guides/bs-7671-18th-edition-guide' },
-  { label: 'UK Earthing Systems Guide', href: '/earthing-systems-guide' },
+  { label: 'UK Earthing Systems Guide', href: '/guides/earthing-systems-tns-tncs-tt-explained' },
 ];
 
 const tocItems = [

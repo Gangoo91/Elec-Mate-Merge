@@ -20,7 +20,9 @@
  * Presentational only — no exam state, no timer logic. Each paper keeps its
  * own state and passes values in.
  */
-import { ArrowLeft, ArrowRight, CheckCircle, Clock, Flag } from 'lucide-react';
+import { useEffect, useMemo, useRef } from 'react';
+import { useSwipeable } from 'react-swipeable';
+import { ArrowLeft, ArrowRight, CheckCircle, Clock, Flag, SkipForward } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useHaptic } from '@/hooks/useHaptic';
 import { CARD_PRIMARY, CARD_SURFACE } from '@/components/ui/card-recipe';
@@ -83,6 +85,46 @@ export function ExamQuestionPanel({
   const haptic = useHaptic();
   const answeredCount = answers.filter(isAnswered).length;
   const isLast = index >= total - 1;
+
+  // ── Phone navigation ──────────────────────────────────────────────────
+  // On a phone the only way through a 40-question paper was the Next button,
+  // because the navigator strip never followed the current question: past
+  // about number eight it sat off-screen to the left, so jumping meant
+  // scrolling a thin row by hand. Three fixes below.
+
+  // 1. Keep the current question centred in the strip.
+  const stripRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = stripRef.current?.querySelector<HTMLElement>(`[data-q="${index}"]`);
+    el?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  }, [index]);
+
+  // 2. Swipe the question body to move between questions.
+  const swipe = useSwipeable({
+    onSwipedLeft: () => {
+      if (!isLast) {
+        haptic.light();
+        onNext();
+      }
+    },
+    onSwipedRight: () => {
+      if (index > 0) {
+        haptic.light();
+        onPrevious();
+      }
+    },
+    trackMouse: false,
+    preventScrollOnSwipe: false,
+    delta: 60,
+  });
+
+  // 3. Skip straight to what's left, rather than stepping past what's done.
+  const nextUnanswered = useMemo(() => {
+    for (let i = index + 1; i < total; i++) if (!isAnswered(answers[i])) return i;
+    for (let i = 0; i < index; i++) if (!isAnswered(answers[i])) return i;
+    return -1;
+  }, [answers, index, total]);
+  const unansweredCount = total - answeredCount;
   const topic = topicLabelOf(question, topicNames);
   const lowTime = timeRemaining !== null && timeRemaining < 300;
   const pct = total ? Math.round((answeredCount / total) * 100) : 0;
@@ -143,7 +185,13 @@ export function ExamQuestionPanel({
               available height instead of stranding it at the top above a large
               gap, and still scrolls from the top once the content is taller
               than the column. */}
-          <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-4 py-5 sm:px-6">
+          {/* Swipe moves between questions on touch. `preventScrollOnSwipe` is
+              off and the threshold is deliberately wide, so a vertical scroll
+              of a long question is never mistaken for a page turn. */}
+          <div
+            {...swipe}
+            className="flex min-h-0 flex-1 flex-col overflow-y-auto px-4 py-5 sm:px-6"
+          >
             <div className="m-auto w-full max-w-4xl">
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
@@ -308,9 +356,45 @@ export function ExamQuestionPanel({
         </aside>
       </div>
 
-      {/* Phone navigator — one scrollable row, so the question keeps the screen. */}
+      {/* Phone navigator — one scrollable row, so the question keeps the screen.
+          Above it, the two moves that a 40-question paper actually needs on a
+          phone: skip to what you have not answered, and finish from anywhere
+          instead of pressing Next to the very end. */}
       <div className="shrink-0 border-t border-white/[0.1] bg-[hsl(0_0%_9%)] px-4 py-2 lg:hidden">
-        <div className="flex gap-1.5 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div className="mb-2 flex items-center gap-2">
+          <span className="text-[12px] tabular-nums text-white">
+            {unansweredCount === 0 ? 'All answered' : `${unansweredCount} left`}
+          </span>
+          <span className="flex-1" />
+          {nextUnanswered !== -1 && (
+            <button
+              type="button"
+              onClick={() => {
+                haptic.light();
+                onJump(nextUnanswered);
+              }}
+              className="flex h-9 items-center gap-1.5 rounded-full border border-elec-yellow/35 px-3 text-[12px] font-semibold text-white touch-manipulation active:scale-[0.97]"
+            >
+              <SkipForward className="h-3.5 w-3.5" />
+              Next unanswered
+            </button>
+          )}
+          <button
+            type="button"
+            onClick={() => {
+              haptic.medium();
+              onSubmit();
+            }}
+            className="flex h-9 items-center gap-1.5 rounded-full border border-elec-yellow bg-elec-yellow px-3.5 text-[12px] font-bold text-black touch-manipulation active:scale-[0.97]"
+          >
+            Finish
+            <CheckCircle className="h-3.5 w-3.5" />
+          </button>
+        </div>
+        <div
+          ref={stripRef}
+          className="flex gap-1.5 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        >
           {Array.from({ length: total }).map((_, i) => {
             const done = isAnswered(answers[i]);
             const isCurrent = i === index;
@@ -318,6 +402,7 @@ export function ExamQuestionPanel({
               <button
                 key={i}
                 type="button"
+                data-q={i}
                 onClick={() => onJump(i)}
                 aria-label={`Question ${i + 1}${done ? ', answered' : ''}`}
                 className={cn(

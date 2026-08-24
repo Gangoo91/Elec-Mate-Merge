@@ -298,7 +298,7 @@ export const electricalMethodStatementTemplateConfig: GeneratedGuideConfig = {
   ],
   relatedPages: [
     {
-      href: '/tools/rams-generator',
+      href: '/rams-generator',
       title: 'RAMS Generator',
       description: 'Generate site-specific UK electrical RAMS in minutes — BS 7671:2018+A4:2026, EAWR 1989 and CDM 2015 aligned.',
       icon: 'Wrench',

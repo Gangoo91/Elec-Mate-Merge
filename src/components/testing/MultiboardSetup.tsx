@@ -30,7 +30,18 @@ const MultiboardSetup: React.FC<MultiboardSetupProps> = ({
   boards,
   onBoardsChange,
   className,
-  maxBoards = 10,
+  /*
+   * ELE-1604 — was 10, and a customer hit it on a real job. Ten is a domestic
+   * number: a commercial or industrial EICR routinely covers an intake, a main
+   * panel and a sub-board per floor or per unit, and there is no reason the
+   * paperwork should stop before the installation does.
+   *
+   * A cap is still worth having as a runaway guard — `scheduleOfTests` holds
+   * every board's circuits in one array, so board count multiplies row count —
+   * but it should sit far beyond any real installation rather than inside the
+   * range of ordinary ones.
+   */
+  maxBoards = 40,
   certType,
 }) => {
   // Ensure we always have at least a main board. Display-only fallback — no

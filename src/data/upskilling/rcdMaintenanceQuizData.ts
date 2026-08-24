@@ -115,10 +115,10 @@ export const rcdMaintenanceQuizData: QuizQuestion[] = [
     id: 9,
     question: 'How should ambient temperature and humidity be recorded during RCD maintenance?',
     options: [
-      'Only when a fault is suspected',
+      'Only if a fault is suspected',
       'As part of routine maintenance records',
-      'Verbally reported but never written down',
-      'Only by the manufacturer at point of sale',
+      'Verbally, but never written down',
+      'By the manufacturer at point of sale',
     ],
     correctAnswer: 1,
     explanation:

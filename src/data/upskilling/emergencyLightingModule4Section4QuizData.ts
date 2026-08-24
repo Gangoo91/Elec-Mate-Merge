@@ -3,10 +3,10 @@ export const circuitSegregationQuizQuestions = [
     id: 1,
     question: 'Why must emergency lighting circuits be segregated from normal power circuits?',
     options: [
-      'To reduce voltage drop on the emergency lighting final circuits',
+      'To reduce the voltage drop measured at the far end of the emergency lighting circuits',
       'To prevent faults in normal circuits from disabling emergency lighting and ensure fire integrity',
-      'To allow a smaller cable size to be used for the emergency circuits',
-      'To avoid electromagnetic interference between lighting and data cabling',
+      'To allow a smaller cable size to be used throughout the emergency lighting circuits',
+      'To avoid electromagnetic interference between the lighting circuits and data cabling',
     ],
     correctAnswer: 1,
     explanation:
@@ -113,10 +113,10 @@ export const circuitSegregationQuizQuestions = [
     id: 9,
     question: 'Why are dedicated distribution boards recommended for emergency lighting systems?',
     options: [
-      'To share neutral conductors between emergency and normal lighting circuits',
+      'To allow neutral conductors to be shared between the emergency and normal lighting circuits',
       'To ensure complete segregation, independent protection, and prevent cross-connection with normal circuits',
-      'To allow emergency lighting to be easily disconnected when not needed',
-      'To reduce the number of circuit breakers required in the installation',
+      'To allow the whole emergency lighting system to be isolated easily when it is not needed',
+      'To reduce the total number of protective devices required throughout the installation',
     ],
     correctAnswer: 1,
     explanation:

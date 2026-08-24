@@ -25,11 +25,72 @@ interface DraftPreview {
 /**
  * Get storage key for a draft
  */
-const getDraftKey = (reportType: string, reportId?: string | null): string => {
+const getDraftKey = (
+  reportType: string,
+  reportId?: string | null,
+  clientCertId?: string | null
+): string => {
   if (reportId) {
     return `${DRAFT_PREFIX}${reportType}-${reportId}`;
   }
+  /*
+   * ELE-1599 — an unsaved certificate is keyed by its own identity.
+   *
+   * This used to return a single `-new` key per report type, so EVERY unsaved
+   * certificate of a type shared one localStorage entry and each new one
+   * destroyed the last. Reproduced: save cert A, save cert B, A is gone.
+   *
+   * Worst for EIC and Minor Works, where `useEICAutoSave` passes a null
+   * reportId on every save — so their drafts landed on the shared key always,
+   * not just while unsaved. Live storage showed 12 correctly-keyed EICR drafts
+   * against exactly one EIC key holding the entire EIC draft store.
+   *
+   * `_clientCertId` is minted per certificate in form state (ELE-1592), so it
+   * is the natural key. Falls back to the bare `-new` key when absent, which
+   * keeps every other draft type (quote, invoice, site visit, designers)
+   * behaving exactly as before.
+   */
+  if (clientCertId) {
+    return `${DRAFT_PREFIX}${reportType}-new-${clientCertId}`;
+  }
   return `${DRAFT_PREFIX}${reportType}-new`;
+};
+
+/**
+ * Does this key suffix denote an UNSAVED draft? Covers the legacy bare `new`
+ * and the per-certificate `new-<id>` form.
+ *
+ * ⚠️ Used to derive `reportId` from a key. Getting this wrong would hand
+ * callers "new-<uuid>" as though it were a real report id.
+ */
+const isNewIdPart = (idPart: string): boolean =>
+  idPart === 'new' || idPart.startsWith('new-');
+
+/** The identity a certificate carries in its own form data (ELE-1592). */
+const certIdOf = (data: Record<string, unknown> | null | undefined): string | null => {
+  const v = data?._clientCertId;
+  return typeof v === 'string' && v ? v : null;
+};
+
+/**
+ * Most recently modified UNSAVED draft for a type, across both key forms.
+ * Recovery used to read the single `-new` key directly; with per-certificate
+ * keys it has to look for the newest one instead.
+ */
+const findLatestNewDraft = (
+  reportType: string
+): { key: string; draft: DraftData } | null => {
+  const prefix = `${DRAFT_PREFIX}${reportType}-`;
+  let best: { key: string; draft: DraftData } | null = null;
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (!key?.startsWith(prefix)) continue;
+    if (!isNewIdPart(key.slice(prefix.length))) continue;
+    const draft = safeGetJSON<DraftData | null>(key, null);
+    if (!draft?.data) continue;
+    if (!best || draft.lastModified > best.draft.lastModified) best = { key, draft };
+  }
+  return best;
 };
 
 /**
@@ -62,8 +123,21 @@ export const draftStorage = {
     data: Record<string, unknown>
   ): boolean => {
     try {
-      const key = getDraftKey(reportType, reportId);
+      /*
+       * ELE-1599 — the per-certificate identity is taken from the payload, so
+       * every existing caller gets the fix without changing. `useEICAutoSave`
+       * passes a null reportId unconditionally and would otherwise keep
+       * writing every EIC and Minor Works draft to one shared key.
+       */
+      const clientCertId = certIdOf(data);
+      const key = getDraftKey(reportType, reportId, clientCertId);
       const existingData = safeGetJSON<DraftData | null>(key, null);
+
+      // Once a certificate has a real report id its unsaved-draft entry is
+      // redundant — drop it so per-certificate keys cannot accumulate.
+      if (reportId && clientCertId) {
+        safeRemove(getDraftKey(reportType, null, clientCertId));
+      }
 
       // Clean up BEFORE saving to free space first
       const keys = getDraftKeys(reportType);
@@ -162,7 +236,8 @@ export const draftStorage = {
         if (isMeaningful && !isMeaningful(draft.data)) continue;
         if (!best || draft.lastModified > best.draft.lastModified) {
           const idPart = key.slice(prefix.length);
-          best = { draft, reportId: idPart === 'new' ? null : idPart };
+          // ELE-1599 — `new-<certId>` is still an unsaved draft, not a report id.
+          best = { draft, reportId: isNewIdPart(idPart) ? null : idPart };
         }
       }
 
@@ -184,8 +259,9 @@ export const draftStorage = {
    */
   hasRecoverableDraft: (reportType: string): boolean => {
     try {
-      const key = getDraftKey(reportType, null);
-      const draft = safeGetJSON<DraftData | null>(key, null);
+      // ELE-1599 — the newest unsaved draft, across legacy and per-cert keys.
+      const found = findLatestNewDraft(reportType);
+      const draft = found?.draft ?? null;
       if (!draft) return false;
 
       // Check if draft has meaningful data
@@ -220,15 +296,23 @@ export const draftStorage = {
   /**
    * Clear draft after successful cloud sync
    */
-  clearDraft: (reportType: string, reportId?: string | null): void => {
+  clearDraft: (
+    reportType: string,
+    reportId?: string | null,
+    clientCertId?: string | null
+  ): void => {
     try {
-      const key = getDraftKey(reportType, reportId);
+      const key = getDraftKey(reportType, reportId, clientCertId);
       safeRemove(key);
 
       // Also clear the "new" draft if we just synced a new report
       if (reportId) {
-        const newKey = getDraftKey(reportType, null);
-        safeRemove(newKey);
+        // ELE-1599 — clear BOTH forms: this certificate's own unsaved key when
+        // we know its identity, and the legacy shared key. Deliberately never
+        // clears every `new-*` key: that would delete a DIFFERENT unsaved
+        // certificate's draft, which is the bug this ticket exists to fix.
+        if (clientCertId) safeRemove(getDraftKey(reportType, null, clientCertId));
+        safeRemove(getDraftKey(reportType, null));
       }
     } catch (error) {
       console.error('[DraftStorage] Failed to clear draft:', error);
@@ -241,8 +325,8 @@ export const draftStorage = {
    */
   getDraftPreview: (reportType: string): DraftPreview | null => {
     try {
-      const key = getDraftKey(reportType, null);
-      const draft = safeGetJSON<DraftData | null>(key, null);
+      // ELE-1599 — preview the newest unsaved draft, whichever key holds it.
+      const draft = findLatestNewDraft(reportType)?.draft ?? null;
       if (!draft) return null;
 
       return {

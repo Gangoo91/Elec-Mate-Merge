@@ -6,6 +6,7 @@ import { MobileHorizontalScrollTableHeader } from './MobileHorizontalScrollTable
 import { MobileHorizontalScrollTableRow } from './MobileHorizontalScrollTableRow';
 import { StickyHorizontalScrollbar } from './StickyHorizontalScrollbar';
 import { toast } from 'sonner';
+import { curveFillApplies } from '@/types/protectiveDeviceTypes';
 
 interface MobileHorizontalScrollTableProps {
   /** ELE-1505 — decides whether TN or TT limits apply. */
@@ -186,20 +187,22 @@ export const MobileHorizontalScrollTable: React.FC<MobileHorizontalScrollTablePr
   };
 
   const handleFillAllCurve = (value: string) => {
-    // Curve only applies to devices that have one (MCB / RCBO / MCCB).
-    const curveApplies = (bs: string) =>
-      bs === 'MCB (BS EN 60898)' || bs === 'RCBO (BS EN 61009)' || bs === 'MCCB (BS EN 60947)';
+    // Curve only applies to devices that have one, and only within its own
+    // family — B/C/D to BS EN 60898/61009/60947, 1–4 to BS 3871 (ELE-1604).
     let count = 0;
     testResults.forEach((result) => {
-      if (curveApplies(result.bsStandard || '')) {
+      if (curveFillApplies(value, result.bsStandard || '')) {
         onUpdate(result.id, 'protectiveDeviceCurve', value);
         count += 1;
       }
     });
+    const isBs3871Value = /^[1-4]$/.test(value);
+    const label = isBs3871Value ? `Type ${value}` : `Curve ${value}`;
+    const family = isBs3871Value ? 'BS 3871' : 'MCB/RCBO';
     toast.success(
       count > 0
-        ? `Curve ${value} applied to ${count} MCB/RCBO circuit${count === 1 ? '' : 's'}`
-        : 'No MCB/RCBO circuits to apply a curve to'
+        ? `${label} applied to ${count} ${family} circuit${count === 1 ? '' : 's'}`
+        : `No ${family} circuits to apply ${label} to`
     );
   };
 

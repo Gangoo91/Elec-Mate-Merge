@@ -535,9 +535,9 @@ export const gsCat2Questions: StandardMockQuestion[] = [
     id: 71,
     question: 'How does an implementation intention differ from a standard goal?',
     options: [
-      'It is always set by an employer rather than the individual',
-      'It removes the need for any measurable outcome',
-      'It applies only to long-term career goals, not daily tasks',
+      'It is written by an employer or assessor rather than chosen by the individual',
+      'It states the desired outcome without committing to any measure of success',
+      'It applies only to long-term career ambitions and never to everyday tasks',
       'It specifies when, where, and how you will act, not just what you want to achieve',
     ],
     correctAnswer: 3,
@@ -554,9 +554,9 @@ export const gsCat2Questions: StandardMockQuestion[] = [
       'What is the primary benefit of setting both outcome goals and process goals together?',
     options: [
       'Outcome goals provide direction while process goals provide daily actionable steps',
-      'It guarantees the goal will be achieved regardless of effort',
-      'It removes the need to set any deadline for the goal',
-      'It means only one goal needs to be tracked at a time',
+      'Outcome goals guarantee the result will be reached whatever effort is applied',
+      'Process goals remove the need to set any deadline against the outcome goal',
+      'Pairing them means only a single measure ever needs to be tracked at a time',
     ],
     correctAnswer: 0,
     explanation:
@@ -591,10 +591,10 @@ export const gsCat2Questions: StandardMockQuestion[] = [
     question:
       'An electrician wants to progress from Approved Electrician to Senior Technician within four years. Using goal cascading, which sequence best represents the correct breakdown?',
     options: [
-      'Year 1: Study independently without sitting exams &rarr; Year 2: Continue studying &rarr; Year 3: Sit all exams at once &rarr; Year 4: Apply for grading',
-      'Year 1: Apply for Senior Technician immediately &rarr; Year 2: Complete any required qualifications &rarr; Year 3: Wait for approval &rarr; Year 4: Receive card',
+      'Year 1: Study alone without sitting any exams &rarr; Year 2: Continue studying with no assessment &rarr; Year 3: Sit every exam in a single week &rarr; Year 4: Apply for grading with no design experience',
+      'Year 1: Apply for Senior Technician grade immediately &rarr; Year 2: Complete whichever qualifications are demanded &rarr; Year 3: Wait for a decision &rarr; Year 4: Collect the ECS card',
       'Year 1: Complete C&amp;G 2396 &amp; 2919 &rarr; Year 2: Gain design experience &amp; register with NICEIC &rarr; Year 3: Begin IET IEng application &rarr; Year 4: Achieve Technician then Senior Technician grade',
-      'Year 1: Change employer &rarr; Year 2: Change employer again &rarr; Year 3: Request a promotion &rarr; Year 4: Demand Senior Technician status',
+      'Year 1: Change employer for a pay rise &rarr; Year 2: Change employer again for a job title &rarr; Year 3: Request promotion without qualifications &rarr; Year 4: Demand Senior Technician status',
     ],
     correctAnswer: 2,
     explanation:
@@ -609,9 +609,9 @@ export const gsCat2Questions: StandardMockQuestion[] = [
     question:
       'According to Gollwitzer&rsquo;s research, why are implementation intentions particularly effective for overcoming habitual barriers to goal pursuit?',
     options: [
-      'They reduce the importance of the goal so it feels less stressful',
-      'They eliminate all obstacles from the environment',
-      'They require a partner to hold you accountable at all times',
+      'They lower the perceived importance of the goal so that pursuing it feels less stressful',
+      'They remove every obstacle from the working environment before the goal is attempted',
+      'They depend on a partner being present to enforce accountability at every stage',
       'They create automatic cue-response links that bypass the need for conscious deliberation',
     ],
     correctAnswer: 3,
@@ -628,9 +628,9 @@ export const gsCat2Questions: StandardMockQuestion[] = [
       'A self-employed electrician consistently underestimates how long jobs take, leading to missed deadlines and financial losses. Which combination of strategies from goal-setting research would best address this?',
     options: [
       'Use reference class forecasting (Kahneman) to estimate durations, set specific time-bound goals (Locke &amp; Latham), and create implementation intentions (Gollwitzer) for schedule reviews',
-      'Set vague &ldquo;do your best&rdquo; goals so there is no pressure to hit a deadline',
-      'Quote more optimistic timescales to win work, then explain overruns afterwards',
-      'Avoid setting deadlines altogether to remove the stress of missing them',
+      'Set vague &ldquo;do your best&rdquo; goals with no deadline attached, avoid tracking how long past jobs actually took, and rely on memory rather than any written schedule review',
+      'Quote deliberately optimistic timescales to win the work, explain the overruns to clients afterwards, and keep no record of actual durations for future estimating',
+      'Remove all deadlines from quotations to avoid the stress of missing them, set only vague effort goals, and review the schedule whenever the workload happens to feel heavy',
     ],
     correctAnswer: 0,
     explanation:
@@ -645,10 +645,10 @@ export const gsCat2Questions: StandardMockQuestion[] = [
     question:
       'Which of the following best explains why Locke &amp; Latham found that goal commitment moderates the goal&ndash;performance relationship?',
     options: [
-      'Commitment only matters for easy goals, not for challenging ones',
+      'Commitment matters only for goals that are easy to reach, because challenging goals generate all of the motivation an individual needs on their own',
       'Without genuine commitment, even well-structured goals fail to direct behaviour because the individual does not invest sufficient effort or persistence',
-      'Commitment automatically follows from setting a specific deadline',
-      'Commitment is irrelevant once an implementation intention has been written',
+      'Commitment follows automatically once a specific deadline has been written down, so it never needs to be considered separately when a goal is set',
+      'Commitment becomes irrelevant as soon as an implementation intention has been written, because the planned cue then drives the behaviour by itself',
     ],
     correctAnswer: 1,
     explanation:
@@ -663,10 +663,10 @@ export const gsCat2Questions: StandardMockQuestion[] = [
     question:
       'An electrician is building a five-year career plan incorporating IET professional registration. Which pathway correctly sequences the EngTech, IEng, and CEng levels with their typical requirements?',
     options: [
-      'IEng and CEng simultaneously (joint application) &rarr; EngTech (honorary title after 10 years)',
-      'CEng first (no requirements) &rarr; IEng (after 2 years) &rarr; EngTech (final step)',
+      'IEng and CEng together as one joint submission &rarr; EngTech awarded afterwards as an honorary title following ten years of service',
+      'CEng first with no qualification requirements &rarr; IEng after a further two years &rarr; EngTech as the final and most senior grade',
       'EngTech (Level 3 quals + competence) &rarr; IEng (BEng or equivalent + competence) &rarr; CEng (MEng or equivalent + leadership evidence)',
-      'EngTech (requires PhD) &rarr; IEng (requires MBA) &rarr; CEng (requires medical degree)',
+      'EngTech (requires a PhD) &rarr; IEng (requires an MBA) &rarr; CEng (requires a medical degree plus ten years of site work)',
     ],
     correctAnswer: 2,
     explanation:
@@ -681,9 +681,9 @@ export const gsCat2Questions: StandardMockQuestion[] = [
     question:
       'How does the concept of "task complexity" function as a moderator in Locke &amp; Latham&rsquo;s Goal Setting Theory?',
     options: [
-      'Task complexity has no measurable effect on the goal&ndash;performance link',
-      'For complex tasks, specific difficult goals always outperform simpler ones',
-      'Complex tasks require easy goals only, with no need for any strategy',
+      'For complex tasks, task complexity has no measurable effect at all on the strength of the goal&ndash;performance relationship',
+      'For complex tasks, specific difficult goals always outperform simpler ones, whatever strategies or learning time the individual happens to hold',
+      'For complex tasks, only easy goals should be set, because strategy and learning time make no difference to eventual performance',
       'For complex tasks, the positive effect of difficult goals is weaker unless individuals are also given adequate strategies and time to learn',
     ],
     correctAnswer: 3,
@@ -700,9 +700,9 @@ export const gsCat2Questions: StandardMockQuestion[] = [
       'An experienced electrician creates a personal mission statement, uses the Eisenhower Matrix daily, and sets implementation intentions for study sessions. Despite this, progress towards their City &amp; Guilds 2396 qualification stalls. Based on goal-setting research, what is the most likely root cause?',
     options: [
       'The goal lacks genuine commitment &mdash; the electrician may not truly value the 2396 or believe they can achieve it, undermining persistence as described by Locke &amp; Latham',
-      'The planning tools are mutually incompatible and cancel each other out',
-      'The Eisenhower Matrix should never be combined with implementation intentions',
-      'A personal mission statement guarantees success on its own, so the others are redundant',
+      'The three planning tools are mutually incompatible and cancel one another out, so combining a matrix with written intentions always stalls progress on a qualification',
+      'The Eisenhower Matrix must never be combined with implementation intentions, because sorting work by urgency overrides every study cue that has been planned in advance',
+      'A personal mission statement guarantees success entirely on its own, so the matrix and the implementation intentions are redundant additions that dilute the effort',
     ],
     correctAnswer: 0,
     explanation:

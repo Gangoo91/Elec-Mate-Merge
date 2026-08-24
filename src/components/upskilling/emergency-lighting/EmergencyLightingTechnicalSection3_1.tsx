@@ -71,7 +71,7 @@ export const EmergencyLightingTechnicalSection3_1 = () => {
               <div className="text-center">
                 <div className="text-3xl font-bold text-blue-400">1 lux</div>
                 <p className="text-sm text-foreground mt-2">
-                  Minimum along the centre line of the escape path
+                  Minimum across the full width of the escape path
                 </p>
               </div>
             </div>
@@ -376,7 +376,7 @@ export const EmergencyLightingTechnicalSection3_1 = () => {
               <div className="bg-lime-500/10 border border-lime-500/20 rounded-lg p-4">
                 <h4 className="font-semibold text-lime-400 mb-3">Measurement Grid Pattern</h4>
                 <ul className="space-y-2 text-sm">
-                  <li>• Centre line of escape routes (every 2m maximum)</li>
+                  <li>• Across the full width of escape routes (every 2m maximum)</li>
                   <li>• Open areas: minimum 2m x 2m grid pattern</li>
                   <li>• Task areas: 0.5m x 0.5m grid for critical zones</li>
                   <li>• Additional points at obstacles and corners</li>

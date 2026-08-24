@@ -67,10 +67,10 @@ export const certificationPurposeQuizData: QuizQuestion[] = [
     id: 5,
     question: 'Who accepts responsibility when signing an Electrical Installation Certificate?',
     options: [
-      'Only the client who ordered and paid for the work',
+      'The client who ordered and paid for the work bears it alone',
       'All parties who sign accept responsibility for their respective roles',
-      'Only the competent person scheme operator overseeing the contractor',
-      'Solely the inspector and tester who completes the final verification',
+      'The competent person scheme operator overseeing the contractor',
+      'Solely the inspector and tester who signs the final verification',
     ],
     correctAnswer: 1,
     explanation:

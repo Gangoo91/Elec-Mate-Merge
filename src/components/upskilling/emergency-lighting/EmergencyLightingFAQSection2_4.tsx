@@ -14,7 +14,7 @@ export const EmergencyLightingFAQSection2_4 = () => {
     {
       question: 'How bright should escape route lighting be?',
       answer:
-        'At least 1 lux along the centre line of the route, with additional brightness at obstacles and equipment. The minimum level anywhere on the escape route should be 0.5 lux, with enhanced illumination at changes of direction and fire equipment locations.',
+        'At least 1 lux across the full width of the route, with additional brightness at obstacles and equipment. The minimum level anywhere on the escape route should be 0.5 lux, with enhanced illumination at changes of direction and fire equipment locations.',
     },
     {
       question: 'Can escape route lighting be combined with normal lighting fittings?',

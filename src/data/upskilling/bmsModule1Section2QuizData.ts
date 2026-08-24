@@ -70,10 +70,10 @@ export const bmsModule1Section2QuizData: QuizQuestion[] = [
     id: 6,
     question: 'How can access control and BMS integration improve security?',
     options: [
-      'By unlocking all doors automatically outside working hours',
-      'By disabling CCTV recording whenever a valid card is used',
+      'By releasing every door lock automatically once the building is unoccupied at night',
+      'By suspending CCTV recording automatically whenever a valid access card is presented',
       'By logging entry events and automatically activating lights and CCTV when access cards are used',
-      'By replacing the need for any access cards or door controls',
+      'By removing the need for access cards, card readers and door controllers entirely',
     ],
     correctAnswer: 2,
     explanation:

@@ -117,10 +117,10 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     id: 6,
     question: 'What are "Big Rocks" in Covey\'s time management framework?',
     options: [
-      'Obstacles preventing productivity',
-      'Difficult problems that cause stress',
+      'Large multi-day projects that must be booked well in advance',
+      'The obstacles and delays that disrupt your planned schedule',
       'Your most important priorities that must be scheduled first',
-      'Large projects that take multiple days',
+      'The stressful admin jobs best cleared before anything else',
     ],
     correctAnswer: 2,
     explanation:
@@ -152,9 +152,9 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     question: 'How should the Pareto Principle be applied to your daily work?',
     options: [
       'Identify the 20% of activities that produce 80% of results',
-      'Do 80% of tasks and delegate the rest',
-      'Work 80% of the day and rest 20%',
-      'Focus on the easiest 80% of tasks',
+      'Complete 80% of your tasks and delegate the other 20%',
+      'Spend 80% of the day on site and 20% on paperwork',
+      'Start with the easiest 80% of jobs before the hard 20%',
     ],
     correctAnswer: 0,
     explanation:
@@ -253,10 +253,10 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     id: 14,
     question: 'What is the main benefit of weekly planning over only doing daily planning?',
     options: [
-      'It removes the need to plan each individual day',
-      'It guarantees no urgent jobs will ever arise',
+      'It removes any need to plan individual days or adjust the plan as you go',
+      'It locks every job into a fixed slot so no urgent call-out can disrupt it',
       'It allows you to see the bigger picture and schedule important non-urgent tasks',
-      'It lets you respond to every request the moment it arrives',
+      'It lets you fill every hour of the week, leaving no slack for overruns',
     ],
     correctAnswer: 2,
     explanation:
@@ -357,9 +357,9 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     question: 'What is "attention residue"?',
     options: [
       'The mental lingering of a previous task when switching to a new one',
-      'Fatigue from long periods of concentration',
-      'Difficulty focusing at the end of the day',
-      'Distraction from noise on construction sites',
+      'The build-up of tiredness after several hours of concentration',
+      'The drop in concentration that happens late in the working day',
+      'The loss of focus caused by background noise on a busy site',
     ],
     correctAnswer: 0,
     explanation:
@@ -442,10 +442,10 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     id: 25,
     question: 'What is the primary purpose of identifying your MITs each day?',
     options: [
-      'To fill your whole day with as many tasks as possible',
+      'To pack the day with as many small tasks as you can possibly fit',
       'To ensure the most impactful work gets done even if the day becomes chaotic',
-      'To delegate your least enjoyable tasks to others',
-      'To make sure easy tasks are completed before hard ones',
+      'To hand your least enjoyable jobs to someone else on the team',
+      'To get every quick, easy task finished before starting the hard ones',
     ],
     correctAnswer: 1,
     explanation:
@@ -495,9 +495,9 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     question: 'Which statement best describes the planning fallacy in electrical work?',
     options: [
       'You systematically underestimate job duration despite past experience',
-      'Plans are useless because every job is different',
-      'Planning takes longer than doing the work',
-      'Clients always change their requirements',
+      'You cannot plan at all because no two electrical jobs are alike',
+      'You spend longer planning the job than actually carrying it out',
+      'You allow for delays that clients cause by changing their minds',
     ],
     correctAnswer: 0,
     explanation:
@@ -666,10 +666,10 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     id: 38,
     question: "How can you apply Parkinson's Law positively to your work?",
     options: [
-      'Always work to the deadline regardless of when you could finish',
-      'Expand work to fill time for higher quality',
+      'Work right up to every deadline to maximise quality',
+      'Allow each task to expand and fill the time given',
       'Set artificial earlier deadlines to increase efficiency',
-      'Ignore deadlines entirely',
+      'Set the latest deadline the client will accept',
     ],
     correctAnswer: 2,
     explanation:
@@ -752,9 +752,9 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     id: 43,
     question: 'What is the GTD "2-minute rule"?',
     options: [
-      'Spend no more than 2 minutes planning any single task',
-      'Take a 2-minute break between every task you complete',
-      'Defer any task that will take longer than 2 minutes',
+      'If planning a task takes over 2 minutes, break it into smaller steps',
+      'If you have worked for 2 minutes, pause briefly before the next task',
+      'If a task takes more than 2 minutes, defer it to your weekly review',
       'If a task takes less than 2 minutes, do it immediately when you capture it',
     ],
     correctAnswer: 3,
@@ -803,10 +803,10 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     id: 46,
     question: 'What does "mind like water" mean in GTD?',
     options: [
-      'Letting tasks flow past without ever acting on them',
-      'Staying permanently calm by ignoring incoming demands',
+      'Letting every request flow past untouched so your list stays empty',
+      'Staying permanently calm by refusing to acknowledge any new demand',
       'Responding appropriately to whatever comes your way, then returning to calm',
-      'Reacting instantly and strongly to every interruption',
+      'Reacting instantly and at full force to every minor interruption',
     ],
     correctAnswer: 2,
     explanation:
@@ -854,10 +854,10 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     id: 49,
     question: 'Why is buffer time essential in electrical contracting?',
     options: [
-      'To allow you to take on as many jobs as possible',
+      'To let you book in as many jobs each week as your diary will hold',
       'To account for unexpected site conditions, part delays, and client changes',
-      'To make each quote appear more competitive to clients',
-      'To avoid ever having to plan materials in advance',
+      'To make your quoted price look cheaper than every competing quote',
+      'To remove any need to order materials or plan deliveries in advance',
     ],
     correctAnswer: 1,
     explanation:
@@ -888,9 +888,9 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     id: 51,
     question: 'What is a "job pipeline" in contracting?',
     options: [
-      'The cable route running through a building',
-      'The list of tools you carry for a typical job',
-      'The order in which you visit suppliers each week',
+      'The route the main cable takes through a building from the intake',
+      'The standard set of tools and materials you keep loaded in the van',
+      'The order in which you visit wholesalers and suppliers each week',
       'The sequence of stages a job moves through from enquiry to completion',
     ],
     correctAnswer: 3,
@@ -922,10 +922,10 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     id: 53,
     question: 'What is "scope creep"?',
     options: [
-      'When a job is completed faster than originally quoted',
+      'When a job is completed well ahead of the hours you originally allowed for',
       'When the project expands beyond the original agreement without proper change control',
-      'When a client pays late for completed work',
-      'When materials cost more than allowed for in the quote',
+      'When a client delays payment long after the agreed invoice date has passed',
+      'When material prices rise well above the allowance built into your quote',
     ],
     correctAnswer: 1,
     explanation:
@@ -939,10 +939,10 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     id: 54,
     question: 'How should you handle scope creep when it occurs?',
     options: [
-      'Quietly absorb the extra work to keep the client happy',
-      'Refuse to discuss it and continue with the original plan',
+      'Absorb the extra work quietly, say nothing to the client, and finish the job',
+      'Refuse to discuss it, stick to the original spec, and finish exactly as quoted',
       'Document the change, get written approval, and issue a variation or change order',
-      'Stop the job entirely until a new contract is signed',
+      'Down tools, leave site, and return only once an entirely new contract is signed',
     ],
     correctAnswer: 2,
     explanation:
@@ -974,9 +974,9 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     question: 'Why are WIP limits beneficial for sole traders?',
     options: [
       'They prevent overcommitment and ensure each job receives proper attention',
-      'They guarantee a higher profit margin on every job',
-      'They remove the need to schedule work in advance',
-      'They allow you to take on unlimited concurrent jobs',
+      'They guarantee a higher profit margin on every job you agree to take on',
+      'They remove any need to schedule or sequence your work in advance',
+      'They let you run unlimited jobs at once without any loss of quality',
     ],
     correctAnswer: 0,
     explanation:
@@ -1042,9 +1042,9 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     question: 'When quoting, what risk factors should increase your price?',
     options: [
       'Site access issues, working at height, unknown existing conditions, tight timelines',
-      'A straightforward job for a long-standing, reliable client',
-      'A nearby site with easy parking and ample storage',
-      'Standard materials you keep in regular stock',
+      'Familiar client, repeat specification, flexible dates, straightforward layout',
+      'Nearby site, easy parking, ample on-site storage, generous programme dates',
+      'Standard materials in van stock, single trade on site, ground-floor work',
     ],
     correctAnswer: 0,
     explanation:
@@ -1075,10 +1075,10 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     id: 62,
     question: 'In GTD, what is a "next action"?',
     options: [
-      'The overall goal you are working towards on a project',
-      'The most urgent task across all of your projects',
+      'The overall outcome you are aiming for once the whole project is done',
+      'The single most urgent item drawn from across all of your projects',
       'The very next physical, visible activity required to move something forward',
-      'A reminder to think about the project again later',
+      'The reminder you set to think about the project again at a later date',
     ],
     correctAnswer: 2,
     explanation:
@@ -1092,9 +1092,9 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     id: 63,
     question: 'What should a GTD Weekly Review include?',
     options: [
-      'Only the single most urgent task for the coming week',
-      'Just your calendar appointments for the next seven days',
-      'Only the projects that are currently overdue',
+      'Checking only the single most urgent task for the coming week and nothing more',
+      'Reviewing next week\'s calendar appointments only, leaving your lists untouched',
+      'Listing the projects that are already overdue and deferring all the rest again',
       'Reviewing all projects, next actions, calendar, waiting-for items, and someday/maybe lists',
     ],
     correctAnswer: 3,
@@ -1160,9 +1160,9 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     id: 67,
     question: 'How should you handle a client request for additional work mid-job?',
     options: [
-      'Carry out the extra work immediately at no extra charge',
-      'Ignore the request and finish the original job first',
-      'Verbally agree a higher price and carry on working',
+      'Carry out the extra work at once and absorb the cost yourself',
+      'Add the extra work as you go and adjust the final invoice',
+      'Agree a new price verbally and carry on without a record',
       'Stop work and document the change request before proceeding',
     ],
     correctAnswer: 3,
@@ -1211,10 +1211,10 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     id: 70,
     question: 'What happens when you exceed your WIP limit?',
     options: [
-      'Each job is completed faster due to the extra workload',
-      'Profit per job rises because overheads are spread wider',
+      'Each job finishes sooner, because the extra pressure keeps you moving quickly',
+      'Profit per job rises, because your fixed overheads are spread across more work',
       'Quality drops, deadlines slip, and stress increases as you context-switch between jobs',
-      'Clients receive more attention because you are busier',
+      'Clients get more attention, because you are on site somewhere every single day',
     ],
     correctAnswer: 2,
     explanation:
@@ -1347,10 +1347,10 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     id: 78,
     question: "What is the main difference between GTD and Covey's approach?",
     options: [
-      'GTD is about long-term goals; Covey is about daily to-do lists',
-      'GTD ignores priorities; Covey ignores capturing tasks',
+      'GTD focuses on long-term life goals; Covey focuses on daily to-do list writing',
+      'GTD ignores prioritising entirely; Covey ignores capturing and organising tasks',
       'GTD focuses on workflow management; Covey focuses on principle-centred priority setting',
-      'They are different names for exactly the same method',
+      'GTD applies only to large firms; Covey applies only to individual sole traders',
     ],
     correctAnswer: 2,
     explanation:
@@ -1382,9 +1382,9 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     question: 'Why is achieving "mind like water" valuable for contractors?',
     options: [
       'It allows appropriate response to the unexpected while maintaining focus on priorities',
-      'It means you can take on far more concurrent jobs',
-      'It removes the need to keep any written records',
-      'It guarantees no interruptions will ever occur',
+      'It lets you accept far more concurrent jobs without any drop in work quality',
+      'It removes any need for written lists, because nothing will ever be forgotten',
+      'It guarantees that call-outs and other interruptions will stop reaching you',
     ],
     correctAnswer: 0,
     explanation:
@@ -1416,10 +1416,10 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     id: 82,
     question: 'What is "deep work" according to Cal Newport?',
     options: [
-      'Physically demanding work carried out over long hours',
-      'Routine administrative tasks done while multitasking',
+      'Physically demanding site work carried out over unusually long hours',
+      'Routine administrative tasks completed while answering calls and emails',
       'Professional activities performed in a state of distraction-free concentration',
-      'Working late into the evening to clear a backlog',
+      'Evening catch-up work done at home to clear a backlog of job paperwork',
     ],
     correctAnswer: 2,
     explanation:
@@ -1433,9 +1433,9 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     id: 83,
     question: 'What is "attention residue" according to Sophie Leroy\'s 2009 research?',
     options: [
-      'The fatigue that builds up after long periods of focus',
-      'The boost in focus you get immediately after a break',
-      'The traces left in your notes when capturing tasks quickly',
+      'Your concentration fades gradually after several hours of sustained focus',
+      'Your focus improves sharply for a while immediately after taking a break',
+      'Your notes hold only fragments of a task when you capture it in a hurry',
       'Your attention remains partially on a previous task when switching to a new one',
     ],
     correctAnswer: 3,
@@ -1536,10 +1536,10 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     id: 89,
     question: 'What is "task batching"?',
     options: [
-      'Doing your hardest task first thing each morning',
+      'Tackling your single hardest task first thing every morning without fail',
       'Grouping similar tasks together and completing them in a dedicated time block',
-      'Switching between different tasks to stay fresh',
-      'Allocating a fixed time limit to each individual task',
+      'Alternating between very different tasks all day to keep your mind fresh',
+      'Allocating a strict, fixed time limit to each individual task you do',
     ],
     correctAnswer: 1,
     explanation:
@@ -1672,10 +1672,10 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     id: 97,
     question: 'What conditions are necessary to achieve flow state?',
     options: [
-      'Frequent interruptions to keep the work varied',
+      'Frequent interruptions, varied tasks, and a constantly changing focus',
       'Clear goals, immediate feedback, and task difficulty matching skill level',
-      'A task far beyond your current skill level',
-      'A very easy task that requires little thought',
+      'Vague goals, delayed feedback, and work far beyond your skill level',
+      'Simple repetitive work, no deadline, and very little thought required',
     ],
     correctAnswer: 1,
     explanation:
@@ -1689,10 +1689,10 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     id: 98,
     question: 'Why is flow state valuable for productivity?',
     options: [
-      'It lets you work indefinitely without ever needing breaks',
-      'It removes the need for any planning or goal-setting',
+      'You can keep working indefinitely without ever needing rest breaks or food',
+      'You no longer need to plan the day, set goals or prioritise work at all',
       'You produce higher quality work with less perceived effort and greater satisfaction',
-      'It guarantees you will finish every task much faster',
+      'You are guaranteed to finish every task on your list far ahead of time',
     ],
     correctAnswer: 2,
     explanation:
@@ -1741,10 +1741,10 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     id: 101,
     question: 'What is the optimal approach to managing interruptions?',
     options: [
-      'Respond to every message the instant it arrives',
+      'Answer every call and message the instant it arrives on site',
       'Batch check-ins at specific times rather than constant availability',
-      'Ignore all communications until the end of the week',
-      'Keep notifications on so nothing is ever missed',
+      'Return every call while driving between jobs to save working time',
+      'Keep every notification switched on so that nothing is missed',
     ],
     correctAnswer: 1,
     explanation:
@@ -1826,10 +1826,10 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     id: 106,
     question: 'What is "shallow work" according to Cal Newport?',
     options: [
-      'Demanding tasks done in distraction-free concentration',
-      'Work that requires deep creativity and problem-solving',
+      'Cognitively demanding tasks performed in distraction-free concentration',
+      'Creative problem-solving work that needs long, uninterrupted attention',
       'Non-cognitively demanding, logistical tasks often performed while distracted',
-      'Tasks that build new skills and expertise over time',
+      'Skill-building tasks that steadily extend your professional expertise',
     ],
     correctAnswer: 2,
     explanation:
@@ -1912,9 +1912,9 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     question:
       'How should you apply energy management principles when scheduling a day of mixed tasks?',
     options: [
-      'Save the hardest tasks for the end of the day',
-      'Tackle tasks in whatever order they come in',
-      'Do routine tasks first to warm up for the hard ones',
+      'Routine/administrative during peak energy; complex/creative during low energy',
+      'Whatever arrives first during peak energy; whatever remains during low energy',
+      'Easy warm-up tasks during peak energy; the hardest jobs left until the evening',
       'Complex/creative tasks during peak energy; routine/administrative during low energy',
     ],
     correctAnswer: 3,
@@ -2031,10 +2031,10 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     id: 118,
     question: 'What is the optimal batch size for similar tasks?',
     options: [
-      'As many tasks as you can possibly fit in one block',
-      'A single task at a time to maintain quality',
+      'As many as will physically fit into a single working block (typically 40+)',
+      'A single task at a time, never grouped together, to protect quality (just 1)',
       'Enough to justify the setup cost without causing fatigue (typically 5-10)',
-      'Exactly the number that fills a full working day',
+      'Exactly the number that fills a full eight-hour working day (typically 20)',
     ],
     correctAnswer: 2,
     explanation:
@@ -2066,9 +2066,9 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     question: 'What is the primary benefit of achieving flow state regularly?',
     options: [
       'Sustainable high performance with intrinsic satisfaction and skill growth',
-      'The ability to work without ever taking breaks',
-      'A way to avoid difficult or challenging tasks',
-      'Guaranteed completion of every task on your list',
+      'Unbroken daily output with no need for rest breaks or recovery time',
+      'A dependable way of avoiding the hardest and least enjoyable work',
+      'Guaranteed completion of every task listed in your diary each day',
     ],
     correctAnswer: 0,
     explanation:
@@ -2152,10 +2152,10 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     id: 125,
     question: 'What is the 5S methodology?',
     options: [
-      'A five-step electrical testing sequence',
+      'A five-stage testing sequence: continuity, insulation, polarity, Zs, RCD',
       'A workplace organisation method: Sort, Set in order, Shine, Standardise, Sustain',
-      'A safety checklist with five required steps',
-      'A pricing model based on five cost factors',
+      'A site safety checklist: isolate, prove dead, lock off, label, sign off',
+      'A pricing model: labour, materials, overheads, travel, contingency, profit',
     ],
     correctAnswer: 1,
     explanation:
@@ -2204,9 +2204,9 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     question: 'How should you organise your van using 5S principles?',
     options: [
       'Most-used tools accessible; everything with a designated place; regular cleaning',
-      'Fill every space so no capacity is wasted',
-      'Keep all tools loose so they are quick to grab',
-      'Store rarely used items at the front for easy access',
+      'Every space filled to capacity; nothing left empty; stock topped up weekly',
+      'All tools loose in one large bin; fast to grab; sorted out at the weekend',
+      'Rarely used items at the front; daily tools at the back; no fixed places',
     ],
     correctAnswer: 0,
     explanation:
@@ -2322,9 +2322,9 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     id: 135,
     question: 'When should you send payment reminders for overdue invoices?',
     options: [
-      'Only once the invoice is six months overdue',
-      'A single firm demand the day after it is due',
-      'Never chase, to avoid upsetting the client',
+      'A first reminder at three months overdue, a second at six, court action at twelve',
+      'A formal demand the day after it falls due, then immediate court action at 7 days',
+      'A single reminder only when that client next asks you for work, and never before',
       'Polite reminder at 7 days overdue, firmer follow-up at 14 days, formal action at 30 days',
     ],
     correctAnswer: 3,
@@ -2441,10 +2441,10 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     id: 142,
     question: 'What is the benefit of maintaining organised job files?',
     options: [
-      'It removes the need to issue certificates at all',
-      'It guarantees clients will always pay on time',
+      'Freedom from ever issuing certificates, because the job file records the work instead',
+      'A guarantee that every client will settle each invoice on or before the agreed date',
       'Quick access to quotes, specifications, certificates, photos for warranty claims or disputes',
-      'It allows you to charge a higher price for every job',
+      'Grounds to charge a premium rate on every job, whatever work the job actually involves',
     ],
     correctAnswer: 2,
     explanation:
@@ -2476,9 +2476,9 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     question: 'How can 5S methodology improve tool efficiency?',
     options: [
       'Tools are where you expect them, reducing search time and forgotten tools',
-      'It means you can carry fewer tools to every job',
-      'It removes the need to maintain or replace tools',
-      'It lets you buy cheaper tools without consequence',
+      'Tools can be carried in smaller numbers, cutting what you take to site',
+      'Tools no longer need servicing, calibration or replacement over time',
+      'Tools can be bought far cheaper, since organised storage protects them',
     ],
     correctAnswer: 0,
     explanation:
@@ -2645,10 +2645,10 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     id: 154,
     question: 'What is the purpose of keeping photographic records of installations?',
     options: [
-      'They replace the need to issue test certificates',
-      'They are required before any quote can be sent',
+      'A substitute for test certificates, schedules of results and EIC paperwork',
+      'A legal requirement before any quotation can be issued to a domestic client',
       'Evidence of work standard, concealed work documentation, dispute protection',
-      'They reduce the amount of testing you need to do',
+      'A means of reducing the number of circuits you need to test and record',
     ],
     correctAnswer: 2,
     explanation:
@@ -2662,9 +2662,9 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     id: 155,
     question: 'How should you organise digital photographs of jobs?',
     options: [
-      'All in one folder named by the date taken',
-      'Only keep the final photos and delete the rest',
-      'Store them only on the camera until needed',
+      'By the date they were taken, with every photo kept in one folder',
+      'By keeping only the finished-work photos and deleting all the rest',
+      'By leaving them on the camera or phone until somebody asks for them',
       'By job/client with subfolders for before, during, after, certificates',
     ],
     correctAnswer: 3,
@@ -2680,9 +2680,9 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     question: 'What is the main risk of poor administrative organisation?',
     options: [
       'Lost income from unbilled work, late filing penalties, inability to defend disputes',
-      'Slightly more time spent filing paperwork each week',
-      'A tidier van but a more cluttered office',
-      'Having to buy slightly more storage folders',
+      'Extra hours spent filing paperwork each week, a cluttered desk, a full inbox',
+      'A tidy van but an untidy office, and more time spent hunting for a pen',
+      'The cost of buying extra storage folders and a slightly larger cabinet',
     ],
     correctAnswer: 0,
     explanation:
@@ -2713,10 +2713,10 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     id: 158,
     question: 'What is the relationship between Part P notification and Competent Person Schemes?',
     options: [
-      'Scheme members are exempt from Part P entirely',
-      'Scheme members must always notify Building Control in advance',
+      'Competent Person Scheme members are exempt from Part P requirements entirely',
+      'Competent Person Scheme members must notify Building Control before starting',
       'Competent Person Scheme members can self-certify instead of notifying Building Control',
-      'Only Building Control, never a contractor, can certify the work',
+      'Building Control alone can certify notifiable work, never a scheme member',
     ],
     correctAnswer: 2,
     explanation:
@@ -2730,9 +2730,9 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     id: 159,
     question: 'Why is regular "Shine" (5S cleaning) important beyond appearance?',
     options: [
-      'It impresses clients enough to justify higher prices',
-      'It removes the need to maintain tools separately',
-      'It guarantees no tools will ever be lost on site',
+      'Cleaning is marketing - a smart van lets you charge a higher day rate',
+      'Cleaning is maintenance - it replaces servicing, testing and calibration',
+      'Cleaning is security - tools can never be lost or left behind on site',
       'Cleaning is inspection - you identify tool damage, wear, and missing items',
     ],
     correctAnswer: 3,
@@ -2851,10 +2851,10 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     id: 166,
     question: 'What is an "identity-based habit"?',
     options: [
-      'Habits driven purely by an external reward',
-      'Habits based on a fixed daily timetable',
+      'Habits driven entirely by an external reward, such as money, praise or time off',
+      'Habits fixed to a rigid daily timetable, carried out at the same clock time',
       'Habits that align with who you want to become, not just what you want to achieve',
-      'Habits you copy directly from someone you admire',
+      'Habits copied directly from someone you admire and follow week by week',
     ],
     correctAnswer: 2,
     explanation:
@@ -2886,9 +2886,9 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     question: 'What causes procrastination according to Pychyl and Sirois?',
     options: [
       'Emotion regulation failure - avoiding negative feelings associated with the task',
-      'Simple laziness and a lack of willpower',
-      'Poor time-management skills that can be taught away',
-      'Not having enough hours in the working day',
+      'Simple laziness - a straightforward lack of willpower and self-discipline',
+      'Weak time-management skills - a technique problem solved by better planning',
+      'Too little time - a working day with far too few hours for the workload',
     ],
     correctAnswer: 0,
     explanation:
@@ -2919,10 +2919,10 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     id: 170,
     question: 'What is the "just-5-minutes" rule for overcoming procrastination?',
     options: [
-      'Take a 5-minute break before tackling any hard task',
-      'Limit every task to a maximum of 5 minutes',
+      'Take a 5-minute break before you begin any task that you are dreading',
+      'Limit every task on your list to a strict maximum of 5 minutes each',
       'Commit to just 5 minutes of the task; often starting breaks procrastination',
-      'Wait 5 minutes before deciding whether to start',
+      'Wait 5 minutes before deciding whether the task is worth starting',
     ],
     correctAnswer: 2,
     explanation:
@@ -2970,10 +2970,10 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     id: 173,
     question: 'How do routines combat decision fatigue?',
     options: [
-      'They add more decisions to keep your mind sharp',
+      'They add a few extra small decisions to each morning, which keeps your judgement sharp',
       'They eliminate the need to decide what to do, preserving mental energy for important decisions',
-      'They remove the need to make any decisions at all',
-      'They make every decision feel more important',
+      'They remove every decision from the working day, so nothing at all has to be judged',
+      'They make each remaining choice feel far weightier, so every decision takes longer',
     ],
     correctAnswer: 1,
     explanation:
@@ -2987,10 +2987,10 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     id: 174,
     question: 'What is an effective morning routine for productivity?',
     options: [
-      'A different sequence each day to stay flexible',
-      'Clearing all your emails before anything else',
+      'A different sequence daily: whatever feels urgent first, then whatever is left',
+      'Emails first: clear the whole inbox, answer every message, then start work',
       'Same sequence daily: brief planning, MIT identification, most important work first',
-      'Saving your hardest task until after lunch',
+      'Easy start: quick admin jobs, van tidy, hardest work saved until after lunch',
     ],
     correctAnswer: 2,
     explanation:
@@ -3004,9 +3004,9 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     id: 175,
     question: 'What is the purpose of an evening routine for time management?',
     options: [
-      'Start the most demanding work of the day',
-      'Avoid thinking about work until the next morning',
-      'Catch up on tasks you skipped earlier in the day',
+      'Open the next job: begin the most demanding work late in the evening',
+      'Switch off fully: avoid all thought of work until the following morning',
+      'Catch up late: work through every task you skipped earlier in the day',
       'Close the day: review completed work, capture loose ends, preview tomorrow',
     ],
     correctAnswer: 3,
@@ -3090,9 +3090,9 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     question: 'How do you apply "Make it Satisfying" to build a new habit?',
     options: [
       'Create immediate positive feedback or rewards after completing the habit',
-      'Place an obvious visual cue in your environment',
-      'Reduce the effort needed to begin the habit',
-      'Pair the habit with an activity you enjoy',
+      'Place an obvious visual cue in your working environment beforehand',
+      'Reduce the effort and friction needed to begin the habit each time',
+      'Attach the new habit to an existing routine you already follow daily',
     ],
     correctAnswer: 0,
     explanation:
@@ -3123,10 +3123,10 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     id: 182,
     question: 'What is a good example of habit stacking for weekly planning?',
     options: [
-      '"I will try to plan my week whenever I get the chance"',
-      '"I should really do some planning at some point each week"',
+      '"I will try to fit my weekly planning in whenever I get a spare half hour"',
+      '"I should really sit down and plan out the week at some point every Friday"',
       '"After I finish my last job on Friday, I will spend 30 minutes on weekly planning"',
-      '"Weekly planning is important and I must remember to do it"',
+      '"Weekly planning matters, so I must remember to make proper time for it soon"',
     ],
     correctAnswer: 2,
     explanation:
@@ -3140,9 +3140,9 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     id: 183,
     question: 'Why are identity-based habits more powerful than outcome-based habits?',
     options: [
-      'Outcome goals are easier to measure than identity goals',
-      'Identity habits require no effort once chosen',
-      'Outcome habits always fail within the first week',
+      'Outcomes drive behaviour; hitting a target is far easier to measure than changing who you are',
+      'Identity habits need no effort; once you choose the label the behaviour follows automatically',
+      'Outcome habits always fail; any goal with a number attached collapses within the first week',
       'Identity drives behaviour; becoming the type of person who does X is more sustainable than achieving X',
     ],
     correctAnswer: 3,
@@ -3191,10 +3191,10 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     id: 186,
     question: 'Why is starting very small important for new habits?',
     options: [
-      'Big changes are the only way to see real results',
-      'Small habits never grow into anything meaningful',
+      'The goal is dramatic change; only large, immediate changes produce any real result',
+      'The goal is comfort; small habits stay small and never grow into anything useful',
       'The goal is showing up consistently; you can scale up once the habit is established',
-      'Starting small guarantees the habit will form within 21 days',
+      'The goal is speed; starting small guarantees the habit forms within 21 days flat',
     ],
     correctAnswer: 2,
     explanation:
@@ -3226,9 +3226,9 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     question: 'How does procrastination create a negative cycle?',
     options: [
       "Avoiding the task provides short-term relief but increases anxiety and the task's difficulty",
-      "Delaying a task always makes it easier to complete later",
-      "Procrastination has no lasting effect on the work itself",
-      "Putting work off frees up energy for more important tasks",
+      'Delaying the task provides thinking time and always makes it far easier to do later',
+      'Delaying the task changes your mood briefly but has no lasting effect on the work',
+      'Avoiding the task frees up energy and attention for more important work elsewhere',
     ],
     correctAnswer: 0,
     explanation:
@@ -3242,10 +3242,10 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     id: 189,
     question: 'What is the best strategy to overcome procrastination?',
     options: [
-      'Wait until you feel motivated before starting',
+      'Wait until motivation arrives before starting anything you find difficult',
       'Combine "eat the frog" with "just-5-minutes" rule to reduce starting resistance',
-      'Tackle the easiest tasks first to build confidence',
-      'Set a very distant deadline to reduce the pressure',
+      'Clear all the easiest tasks first and leave the hardest one until last',
+      'Set a far more distant deadline so the pressure to start is reduced',
     ],
     correctAnswer: 1,
     explanation:
@@ -3276,9 +3276,9 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     id: 191,
     question: 'Why do SMART goals work better than vague goals?',
     options: [
-      "They make goals sound more impressive to others",
-      "They allow you to change the goal whenever you like",
-      "They remove the need to track your progress",
+      'Specific wording makes the goal sound far more impressive when shared',
+      'Measurable targets let you revise the goal whenever progress feels slow',
+      'Clear deadlines remove the need to track your progress along the way',
       "Specificity eliminates ambiguity about what to do and when you've succeeded",
     ],
     correctAnswer: 3,
@@ -3310,10 +3310,10 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     id: 193,
     question: 'What should an effective morning routine include for time management?',
     options: [
-      'Clearing your entire email inbox before anything else',
+      'Email first: full inbox clearance, then replies, then whatever remains',
       'Same sequence: brief plan review, MIT identification, high-value work first',
-      'Starting with the easiest, least important tasks',
-      'Leaving the day unplanned to stay spontaneous',
+      'Easy start: the smallest, least important jobs cleared before anything',
+      'No fixed plan: stay spontaneous and react to whatever arrives first',
     ],
     correctAnswer: 1,
     explanation:
@@ -3327,10 +3327,10 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     id: 194,
     question: 'What should an effective evening routine include for time management?',
     options: [
-      "Starting the most demanding job of the day",
-      "Avoiding any thought of work to switch off fully",
+      'Begin the most demanding job of the day, work late, and finish the paperwork',
+      'Avoid all thought of work, leave the van as it is, and plan again on Monday',
       "Review completed work, capture loose ends, prepare tomorrow's priorities and materials",
-      "Replying to every outstanding email and message",
+      'Reply to every outstanding email and message, then keep working until midnight',
     ],
     correctAnswer: 2,
     explanation:
@@ -3344,9 +3344,9 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     id: 195,
     question: 'How can you create accountability for new time management habits?',
     options: [
-      'Keep your goals entirely to yourself to avoid pressure',
-      'Rely only on motivation to keep yourself going',
-      'Set vague goals so you can never really fail',
+      'Private effort: keep every goal to yourself, avoid pressure, tell nobody at all',
+      'Pure motivation: rely on willpower alone, with no records, reminders or reviews',
+      'Loose targets: set vague goals with no dates, so nothing can be judged a failure',
       'External tracking: colleague check-ins, public commitment, tracking apps, or coach',
     ],
     correctAnswer: 3,
@@ -3430,9 +3430,9 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
     question: 'What is the most important principle for building lasting time management habits?',
     options: [
       'Start small, focus on consistency, compound over time through 1% improvements',
-      'Rely on bursts of motivation to drive big changes',
-      'Adopt as many new habits as possible all at once',
-      'Aim for perfection from the very first day',
+      'Wait for motivation, act in bursts, and drive large changes all at once',
+      'Adopt many habits at once, change everything today, rely on sheer effort',
+      'Aim for perfection immediately, and abandon any habit after one missed day',
     ],
     correctAnswer: 0,
     explanation:

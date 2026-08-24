@@ -329,7 +329,7 @@ export const howToWriteElectricalMethodStatementConfig: GeneratedGuideConfig = {
   ],
   relatedPages: [
     {
-      href: '/tools/rams-generator',
+      href: '/rams-generator',
       title: 'RAMS Generator',
       description: 'Produce a compliant method statement and risk assessment in under two minutes — fully structured, BS 7671:2018+A4:2026 referenced…',
       icon: 'FileText',

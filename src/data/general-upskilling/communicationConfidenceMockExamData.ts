@@ -3566,4 +3566,904 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     topic: 'principled negotiation',
     category: 'Negotiation, Persuasion & Difficult Conversations' as const,
   },
+  {
+    id: 201,
+    question:
+      'You are due to finish a kitchen job today. While testing you find a borrowed neutral shared with the upstairs lighting, and the customer is asking you to switch everything back on before guests arrive tonight. What do you do?',
+    options: [
+      'Energise now and note the defect on the certificate for later attention',
+      'Tell the customer the job is done and book a return visit next week',
+      'Explain the fault in plain terms, leave it isolated, and confirm in writing',
+      'Ask the customer to sign a disclaimer accepting the risk of energising',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'A borrowed neutral means isolating one circuit does not make the other one dead, so the safe answer is to keep it off, say plainly why, and put it in writing. Energising on a promise to return looks helpful today but leaves a live hazard behind you with your name on the paperwork.',
+    section: 'Speaking with Confidence',
+    difficulty: 'advanced',
+    topic: 'Assertiveness and Safety',
+    category: 'Speaking with Confidence',
+  },
+  {
+    id: 202,
+    question:
+      'You quoted a fixed price for a rewire. Once the floorboards are up you find rubber cable, no earths to the lighting, and a second consumer unit nobody mentioned. The customer is out at work. What is the right move?',
+    options: [
+      'Stop, show the customer what you found, and issue a priced variation',
+      'Absorb the extra work quietly so the price stays exactly as quoted',
+      'Carry on and add the extra cost to the final invoice at the end',
+      'Complete only what the quote covered and leave the rest disconnected',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Extra work found after opening up needs to be seen, priced and agreed before it is done, so the customer keeps control of the spend. Carrying on and billing at the end feels efficient but turns a fair charge into a dispute, because the customer never got the chance to say yes.',
+    section: 'Negotiation, Persuasion & Difficult Conversations',
+    difficulty: 'advanced',
+    topic: 'Quoting and Expectations',
+    category: 'Negotiation, Persuasion & Difficult Conversations',
+  },
+  {
+    id: 203,
+    question:
+      'On a new build you find a SWA you installed yesterday cut through by a groundworker. The groundworker denies going near it and the site is busy. What is the most professional response?',
+    options: [
+      'Repair it quietly and swallow the cost to avoid a site argument',
+      'Raise it loudly at the next site meeting so everyone hears it',
+      'Tell the client the other trade is lying and refuse to continue',
+      'Photograph it, report it to the site manager, and price the repair',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Damage on a shared site is settled with evidence and the site manager, not with an argument between two trades. Absorbing the cost quietly protects the peace once, but it sets a precedent that your work can be damaged for free and leaves no record when it happens again.',
+    section: 'Listening & Understanding Others',
+    difficulty: 'advanced',
+    topic: 'Site Communication',
+    category: 'Listening & Understanding Others',
+  },
+  {
+    id: 204,
+    question:
+      'You have coded a damaged cable in a loft as C2 on an EICR. The landlord says the property has been fine for years and accuses you of inventing work to win the repair. How do you handle it?',
+    options: [
+      'Point at the wiring regulations and state that the code is not negotiable',
+      'Explain what could happen in plain terms and offer a second opinion',
+      'Downgrade it to a C3 so the report reads better and keeps the peace',
+      'Suggest they get quotes elsewhere and leave the report unexplained',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Describing the actual risk in everyday language, and being relaxed about another electrician looking, removes the suspicion that you are selling rather than reporting. Quoting regulation numbers back at a sceptical client sounds authoritative but usually hardens the belief that you are hiding behind jargon.',
+    section: 'Negotiation, Persuasion & Difficult Conversations',
+    difficulty: 'advanced',
+    topic: 'Complaints and Bad News',
+    category: 'Negotiation, Persuasion & Difficult Conversations',
+  },
+  {
+    id: 205,
+    question:
+      'Your apprentice has wired a socket with the line and neutral crossed and you spot it while the client is standing in the room watching. What is the best way to deal with it?',
+    options: [
+      'Correct the apprentice sharply so the client sees standards are held',
+      'Say nothing now and let the client assume the work is finished',
+      'Tell the client it will be put right, then coach the apprentice apart',
+      'Ask the apprentice to explain the mistake to the client directly',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'The client needs to know it is caught and being fixed, and the apprentice needs teaching without an audience, so you split the two conversations. Dressing the apprentice down in front of the client may look rigorous but it damages confidence and makes the client doubt the whole job.',
+    section: 'Listening & Understanding Others',
+    difficulty: 'advanced',
+    topic: 'Site Communication',
+    category: 'Listening & Understanding Others',
+  },
+  {
+    id: 206,
+    question:
+      'A domestic customer points at the consumer unit and asks what the RCD actually does. Which explanation is pitched correctly for someone with no electrical background?',
+    options: [
+      'It cuts the power fast if electricity finds a path through a person',
+      'It is a residual current device that detects an earth fault current',
+      'It measures the impedance of the earth fault loop at the board',
+      'It protects the cable from overload by limiting the current drawn',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Plain language that names the danger and the outcome gives the customer something they can actually use and remember. Expanding the abbreviation into more technical words feels like an answer but leaves the customer none the wiser and less likely to ask the next question.',
+    section: 'Understanding Communication',
+    difficulty: 'intermediate',
+    topic: 'Customer Communication',
+    category: 'Understanding Communication',
+  },
+  {
+    id: 207,
+    question:
+      'A customer asks how long a fault find will take. You genuinely do not know until you have opened the board and tested. What is the best answer to give at the door?',
+    options: [
+      'Give the shortest possible time so the customer stays happy',
+      'Give a realistic range and say when you will confirm the date',
+      'Avoid the question and say it depends on how the work goes',
+      'Promise a fixed finish time and adjust it quietly later',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A range plus a promise to firm it up is honest and still gives the customer something to plan around. Quoting the best case to keep the mood pleasant simply moves the disappointment to the afternoon, when it costs you more.',
+    section: 'Negotiation, Persuasion & Difficult Conversations',
+    difficulty: 'basic',
+    topic: 'Quoting and Expectations',
+    category: 'Negotiation, Persuasion & Difficult Conversations',
+  },
+  {
+    id: 208,
+    question:
+      'By mid afternoon it is clear the consumer unit change will run into a second day because the tails need replacing. The customer took the day off work for this. When and how do you tell them?',
+    options: [
+      'Send a text at the end of the day once the overrun is certain',
+      'Work late without telling them and hope the job still finishes',
+      'Wait until the morning so the customer has a full night to rest',
+      'Ring as soon as you know, explain why, and agree the new plan',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Bad news given early, by voice, with a reason and a plan, still leaves the customer time to make their own arrangements. Holding it until the end of the day removes their options and makes a genuine technical reason look like an excuse.',
+    section: 'Negotiation, Persuasion & Difficult Conversations',
+    difficulty: 'advanced',
+    topic: 'Complaints and Bad News',
+    category: 'Negotiation, Persuasion & Difficult Conversations',
+  },
+  {
+    id: 209,
+    question:
+      'You have to leave site with two circuits reconnected but not yet fully tested, and you are back on Thursday. What is the right thing to do before you drive off?',
+    options: [
+      'Verbally tell the customer which circuits are still live and unfinished',
+      'Leave the board unlabelled so nobody assumes the work is complete',
+      'Label the board, write down what is incomplete, and give a copy',
+      'Rely on the certificate at the end of the job to record the detail',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'A label at the board plus a written note the customer keeps survives after you leave and after they forget the conversation. A verbal handover is fine as well, but on its own it leaves no evidence of what state you left the installation in.',
+    section: 'Professional Writing & Digital Communication',
+    difficulty: 'intermediate',
+    topic: 'Records and Handover',
+    category: 'Professional Writing & Digital Communication',
+  },
+  {
+    id: 210,
+    question:
+      'A main contractor tells you to make a final connection with the distribution board still live because shutting down would delay another trade. How should you respond?',
+    options: [
+      'State plainly why it will not be done live and offer a shutdown slot',
+      'Do it live but wear extra PPE and keep a second person watching',
+      'Refuse without explanation and let the contractor find someone else',
+      'Ask the contractor to confirm in writing that live work is required',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Refusing while offering a workable alternative keeps you safe and keeps the programme moving, which is what makes the refusal stick. Asking for it in writing feels like protection but a signature from someone else does not make the work any safer for you.',
+    section: 'Speaking with Confidence',
+    difficulty: 'advanced',
+    topic: 'Assertiveness and Safety',
+    category: 'Speaking with Confidence',
+  },
+  {
+    id: 211,
+    question:
+      'A customer shows you a poorly done consumer unit change by another electrician and invites you to say how bad it is. You need the remedial work but you also have to keep this professional. What do you say?',
+    options: [
+      'Agree that the previous work is poor so the customer trusts you',
+      'Describe what you found and what it needs, without naming blame',
+      'Say nothing about it and quietly correct the faults you can see',
+      'Advise the customer to complain to the previous electrician first',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Sticking to what you can see and what it needs gives the customer the facts and keeps you out of a dispute you were not part of. Joining in the criticism wins a moment of trust but tells the customer that you talk about other jobs, and they will wonder what you say about theirs.',
+    section: 'Understanding Communication',
+    difficulty: 'advanced',
+    topic: 'Customer Communication',
+    category: 'Understanding Communication',
+  },
+  {
+    id: 212,
+    question:
+      'A caller wants a price for a consumer unit change over the phone and says other electricians managed it without visiting. You have not seen the earthing arrangement or the tails. What is the best response?',
+    options: [
+      'Give a firm price now and adjust it on the day if needed',
+      'Refuse to discuss any figure until you have inspected the board',
+      'Quote high so there is room to come down after you have looked',
+      'Give a typical range and explain what could change the final price',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'A range with the reasons it could move answers the real question, which is affordability, without committing you to a price for an installation you have not seen. Refusing to say any number at all sounds careful but usually loses the call to someone less careful.',
+    section: 'Negotiation, Persuasion & Difficult Conversations',
+    difficulty: 'advanced',
+    topic: 'Quoting and Expectations',
+    category: 'Negotiation, Persuasion & Difficult Conversations',
+  },
+  {
+    id: 213,
+    question:
+      'You walk back onto a refurbishment and the plasterer is about to board a wall where your first fix is not yet complete. What is the most effective thing to do first?',
+    options: [
+      'Speak to the plasterer now and mark the areas that must stay open',
+      'Let it happen and cut the boards back once you return to site',
+      'Email the site manager and carry on with your own work',
+      'Put your own tape across the wall and say nothing further',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'A direct word plus a physical mark stops the problem in the next five minutes, which is the only window that matters here. Escalating by email is the right thing later but on its own it arrives long after the boards are on and someone is paying to cut them off.',
+    section: 'Listening & Understanding Others',
+    difficulty: 'intermediate',
+    topic: 'Site Communication',
+    category: 'Listening & Understanding Others',
+  },
+  {
+    id: 214,
+    question:
+      'An EICR comes back unsatisfactory. The owner says they cannot afford the remedial work this year and asks you to leave things as they are. How do you close the job out?',
+    options: [
+      'Carry out the work anyway since it is clearly needed for safety',
+      'Mark the report satisfactory so the customer can rent it out',
+      'Record the refusal in writing and give them the report as found',
+      'Withdraw and tell them you will not issue any report at all',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'The report records what you found, and a written note that the remedial work was declined protects both of you and leaves the decision where it belongs. Softening the outcome to help someone who is short of money puts your name against a document that is simply untrue.',
+    section: 'Professional Writing & Digital Communication',
+    difficulty: 'advanced',
+    topic: 'Records and Handover',
+    category: 'Professional Writing & Digital Communication',
+  },
+  {
+    id: 215,
+    question:
+      'A builder asks you to certify a first fix installed by someone who has since left the job. He says it is all standard work and the sale depends on the paperwork. What do you offer?',
+    options: [
+      'Sign it on the basis that the other electrician seemed competent',
+      'Sign it but add a note that you did not carry out the work',
+      'Refuse and tell the client the other electrician was at fault',
+      'Offer to inspect and test it yourself and certify what you verify',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Offering to inspect and test turns a request you must refuse into a service you can actually provide, which is what assertiveness looks like in practice. A signature with a disclaimer attached is still your signature, and the caveat will not help you when the installation is questioned.',
+    section: 'Speaking with Confidence',
+    difficulty: 'advanced',
+    topic: 'Assertiveness and Safety',
+    category: 'Speaking with Confidence',
+  },
+  {
+    id: 216,
+    question:
+      'On site the project manager stops you in a corridor and verbally changes the position of six sockets. Everyone is busy and nothing is written down. What should you do?',
+    options: [
+      'Trust your memory and mention it at the next site meeting',
+      'Confirm the instruction by email the same day and keep the reply',
+      'Write it in your diary so you have your own private record',
+      'Ask for a formal variation order before doing anything else',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A short email the same day turns a corridor conversation into a shared record that the other side has seen and can correct. A private diary entry proves only that you wrote something down, and it carries no weight when the manager remembers the instruction differently.',
+    section: 'Professional Writing & Digital Communication',
+    difficulty: 'intermediate',
+    topic: 'Records and Handover',
+    category: 'Professional Writing & Digital Communication',
+  },
+  {
+    id: 217,
+    question:
+      'A customer rings shouting that the lights you worked on last week have tripped again and that you have wasted their money. What is the best opening approach on that call?',
+    options: [
+      'Explain immediately that the fault is unrelated to your work',
+      'Offer a refund straight away to stop the complaint escalating',
+      'Let them finish, repeat the problem back, then agree a next step',
+      'Ask them to put the complaint in writing before you respond',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Letting the customer finish and playing the problem back shows you heard it and gets you the detail you need to diagnose anything. Defending your work in the first sentence, even when you are right, tells the customer you are not listening and the call gets louder.',
+    section: 'Negotiation, Persuasion & Difficult Conversations',
+    difficulty: 'advanced',
+    topic: 'Complaints and Bad News',
+    category: 'Negotiation, Persuasion & Difficult Conversations',
+  },
+  {
+    id: 218,
+    question:
+      'You are talking a homeowner through an EICR observation about the absence of RCD protection on the socket circuits. Which wording is most likely to be understood?',
+    options: [
+      'Older boards do not have the switch that trips if someone is shocked',
+      'The installation lacks 30 mA additional protection to current standards',
+      'The circuits are not compliant with the latest amendment requirements',
+      'The board is out of date and the whole thing should be replaced',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Naming the protective device by what it does for a person makes the risk concrete and the recommendation obvious. Compliance language is accurate but abstract, and customers who cannot picture the harm tend to file the report and do nothing.',
+    section: 'Understanding Communication',
+    difficulty: 'intermediate',
+    topic: 'Customer Communication',
+    category: 'Understanding Communication',
+  },
+  {
+    id: 219,
+    question:
+      'After chasing walls for a rewire the customer expects the plaster to be made good, and your quote covered only the electrical work. They are visibly upset. What do you do?',
+    options: [
+      'Make good anyway to keep the customer happy and protect reviews',
+      'Point at the quote wording and tell them it was never included',
+      'Do a rough patch and mention that decorating is not your trade',
+      'Show what the quote covered and price making good as an option',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Walking the customer through the quote and then offering a priced way to solve the problem keeps the relationship and the margin. Quoting the small print at someone who is upset may be technically correct but it ends the goodwill and often the referral.',
+    section: 'Negotiation, Persuasion & Difficult Conversations',
+    difficulty: 'advanced',
+    topic: 'Quoting and Expectations',
+    category: 'Negotiation, Persuasion & Difficult Conversations',
+  },
+  {
+    id: 220,
+    question:
+      'You are stuck on an earlier job and will be about ninety minutes late to a domestic appointment. What is the best thing to do?',
+    options: [
+      'Arrive and apologise once you are at the door',
+      'Ring ahead as soon as you know you will be late',
+      'Send a message once you have finished the earlier job',
+      'Say nothing since a short delay is normal in the trade',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Telling the customer as soon as you know gives them their morning back and costs you nothing but a phone call. Waiting until you are free means they have already sat in waiting for you, which is the part people remember and mention in reviews.',
+    section: 'Understanding Communication',
+    difficulty: 'basic',
+    topic: 'Customer Communication',
+    category: 'Understanding Communication',
+  },
+  {
+    id: 221,
+    question:
+      'You have just completed an EICR today. The landlord asks you to date the report three months earlier so there is no gap between certificates for the letting agent. How do you handle the request?',
+    options: [
+      'Date it from the day the tenancy actually started instead',
+      'Date it as asked since the inspection itself was genuine',
+      'Date it today and explain why the date has to match the visit',
+      'Issue it undated and let the landlord fill the date in',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'The date on a report is a statement about when you were there, so it stays today and you say so calmly rather than apologetically. Moving it to fill a gap seems like a small favour, but it makes the document evidence of something that did not happen and the gap is still there anyway.',
+    section: 'Professional Writing & Digital Communication',
+    difficulty: 'advanced',
+    topic: 'Records and Handover',
+    category: 'Professional Writing & Digital Communication',
+  },
+  {
+    id: 222,
+    question:
+      'Your apprentice tells you that a scaffolder has been shouting at them and moving their tools. The apprentice is embarrassed and asks you not to make a fuss. What is the right action?',
+    options: [
+      'Tell the apprentice to toughen up since sites are like that',
+      'Confront the other trade on the spot in front of everyone',
+      'Move the apprentice to another area and say nothing more',
+      'Get the detail from the apprentice and raise it with the manager',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Taking the account properly and routing it through the site manager deals with the behaviour without putting the apprentice in the middle of a confrontation. Squaring up to the scaffolder there and then may feel like support but it usually makes the apprentice a target once you are off site.',
+    section: 'Listening & Understanding Others',
+    difficulty: 'advanced',
+    topic: 'Site Communication',
+    category: 'Listening & Understanding Others',
+  },
+  {
+    id: 223,
+    question:
+      'You are finishing a small commercial installation and the facilities manager will be responsible for it afterwards. What makes the strongest handover?',
+    options: [
+      'Hand over the certificate and answer questions if they ring',
+      'Give certificates, schedules, a board chart and who to call',
+      'Email everything later once the office has typed it up',
+      'Leave the paperwork in the riser with the drawings',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A handover that includes the schedules, a board chart and a named contact lets the next person work on the installation safely without ringing you first. Certificates alone tell them the work was done but nothing about what is where, which is what they will actually need at seven in the morning.',
+    section: 'Professional Writing & Digital Communication',
+    difficulty: 'intermediate',
+    topic: 'Records and Handover',
+    category: 'Professional Writing & Digital Communication',
+  },
+  {
+    id: 224,
+    question:
+      'A shop owner needs a new supply to a display unit but says the tills cannot go down during trading hours, and suggests you find a way around the shutdown. What do you propose?',
+    options: [
+      'Agree an early or late slot so the isolation can be done properly',
+      'Work on it live and keep customers away with barriers',
+      'Do the work during trading and isolate only the final connection',
+      'Turn the job down and suggest they find another electrician',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Offering a time when the shutdown costs the business nothing removes the reason for the pressure and lets you work dead. Isolating only part of the job is a compromise that leaves you working next to live conductors, which is exactly the risk you were trying to design out.',
+    section: 'Speaking with Confidence',
+    difficulty: 'advanced',
+    topic: 'Assertiveness and Safety',
+    category: 'Speaking with Confidence',
+  },
+  {
+    id: 225,
+    question:
+      'While fixing a back box you drill through a copper pipe in the wall. There is no leak yet because the supply is off, but there will be. The customer is downstairs. What do you do?',
+    options: [
+      'Fix the pipe quietly before the customer notices the damp',
+      'Point out that the pipe was buried without any protection',
+      'Tell the customer straight away and explain how it gets fixed',
+      'Ring your insurer first and say nothing until they reply',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Telling the customer immediately, with a plan for putting it right, keeps you in charge of the story and usually costs far less than the alternative. A quiet repair is found eventually, and at that point the damage to trust is bigger than the hole in the pipe.',
+    section: 'Negotiation, Persuasion & Difficult Conversations',
+    difficulty: 'advanced',
+    topic: 'Complaints and Bad News',
+    category: 'Negotiation, Persuasion & Difficult Conversations',
+  },
+  {
+    id: 226,
+    question:
+      'You have finished a consumer unit replacement in an occupied house and are handing back to the owner, who has never had a modern board. What is the most useful thing to cover?',
+    options: [
+      'Hand over the keys and leave the labels for the customer',
+      'Walk them through the labels and show how to reset a trip',
+      'Explain the test results in full so nothing is left out',
+      'Tell them to ring you whenever anything trips in future',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Showing which switch does what and how to reset one turns the board into something the owner can use rather than something they are afraid of. A full recital of test results is thorough but it is aimed at another electrician, not at the person who will be standing there in the dark.',
+    section: 'Professional Writing & Digital Communication',
+    difficulty: 'intermediate',
+    topic: 'Records and Handover',
+    category: 'Professional Writing & Digital Communication',
+  },
+  {
+    id: 227,
+    question:
+      'A customer offers to pay in full today if you knock the price down and skip the certificate, saying they will never need it. How should you answer?',
+    options: [
+      'Give the discount and issue the paperwork later if they ask',
+      'Decline the job outright and tell them why it looks dodgy',
+      'Give the discount and record the job in your own diary only',
+      'Explain the paperwork comes with the job and price it as normal',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Treating certification as part of the job rather than an add on keeps the price honest and removes the negotiation entirely. Agreeing to send it later is the version most people fall for, and it ends with an unissued certificate for work you can no longer inspect.',
+    section: 'Negotiation, Persuasion & Difficult Conversations',
+    difficulty: 'advanced',
+    topic: 'Quoting and Expectations',
+    category: 'Negotiation, Persuasion & Difficult Conversations',
+  },
+  {
+    id: 228,
+    question:
+      'You arrive at a domestic address for a booked appointment and an elderly customer opens the door. What is the best way to start?',
+    options: [
+      'Introduce yourself, show ID, and explain what you will do',
+      'Get straight to the board so the job starts on time',
+      'Ask where the tea things are and start unloading tools',
+      'Wait for the customer to ask who you are before speaking',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'A name, identification and a short outline of the work settles any doubt about who you are and what is about to happen in the house. Heading straight for the board saves two minutes but leaves an anxious customer following you round wondering what you are doing.',
+    section: 'Understanding Communication',
+    difficulty: 'basic',
+    topic: 'Customer Communication',
+    category: 'Understanding Communication',
+  },
+  {
+    id: 229,
+    question:
+      'The wholesaler tells you at half eight that the replacement RCBO will not arrive until tomorrow. The customer has a circuit off and expects it back on today. What do you do?',
+    options: [
+      'Fit a similar device from the van and mention it afterwards',
+      'Wait until the delivery slot passes before telling them',
+      'Tell them now, give the new date, and leave things safe',
+      'Blame the wholesaler and let the customer chase the order',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Early news with a firm date and the installation left in a safe state gives the customer something to work with and keeps you credible. Substituting a device that happens to be in the van solves your day but may not suit the board, and it becomes your problem permanently.',
+    section: 'Negotiation, Persuasion & Difficult Conversations',
+    difficulty: 'advanced',
+    topic: 'Complaints and Bad News',
+    category: 'Negotiation, Persuasion & Difficult Conversations',
+  },
+  {
+    id: 230,
+    question:
+      'Your dead testing needs the supply off for about two hours, which will stop the tilers and the joiners working on the same floor. What is the best way to arrange it?',
+    options: [
+      'Take the shutdown when you are ready and inform people after',
+      'Skip the test that needs the supply off and note it later',
+      'Ask the site manager to make everyone else stop work now',
+      'Agree a shutdown window in advance and post it on the board',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Booking the window ahead and posting it lets other trades plan round you, which is what stops someone switching the supply back on mid test. Taking the isolation when it suits you gets the testing done once and buys you an argument every time you need to do it again.',
+    section: 'Listening & Understanding Others',
+    difficulty: 'advanced',
+    topic: 'Site Communication',
+    category: 'Listening & Understanding Others',
+  },
+  {
+    id: 231,
+    question:
+      'A customer on a two week rewire is ringing you three or four times a day for updates, and the calls are costing you working time. What is the best way to manage it?',
+    options: [
+      'Agree a set update time each day and stick to it',
+      'Answer every call so the customer never feels ignored',
+      'Let calls go to voicemail and reply when the job allows',
+      'Ask them to email instead so you can work uninterrupted',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'A predictable daily update removes the anxiety that is driving the calls, because the customer knows information is coming. Taking every call is generous but it trains the customer to ring whenever they wonder something, and the rewire takes longer.',
+    section: 'Understanding Communication',
+    difficulty: 'intermediate',
+    topic: 'Customer Communication',
+    category: 'Understanding Communication',
+  },
+  {
+    id: 232,
+    question:
+      'An EICR notes undersized main protective bonding. The homeowner says the house has been like that for thirty years without incident and does not see the point of changing it. What is your best explanation?',
+    options: [
+      'Tell them nothing happening does not mean it is compliant',
+      'Explain what the bonding does and when it would matter',
+      'Show them the table in the regulations and the required size',
+      'Say it is a minor item and they can leave it if they want',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Explaining that bonding only does its job during a fault answers the real objection, which is that nothing has gone wrong yet. Producing the table proves you are right about the size but says nothing about why it matters, so the customer still declines the work.',
+    section: 'Understanding Communication',
+    difficulty: 'advanced',
+    topic: 'Customer Communication',
+    category: 'Understanding Communication',
+  },
+  {
+    id: 233,
+    question:
+      'During a phone call a landlord declines the SPD upgrade you recommended and says to leave it. The call ends and you are back on site. What should you do about the decision?',
+    options: [
+      'Note the decision, the date, and confirm it back by message',
+      'Trust the customer to remember what they turned down',
+      'Write it on the job sheet you keep in the van',
+      'Mention it when you next visit the property',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'A dated note plus a short confirmation message means both sides hold the same version of what was decided. Relying on the customer to remember is how a declined recommendation becomes an accusation that you never mentioned it.',
+    section: 'Professional Writing & Digital Communication',
+    difficulty: 'intermediate',
+    topic: 'Records and Handover',
+    category: 'Professional Writing & Digital Communication',
+  },
+  {
+    id: 234,
+    question:
+      'It is Friday afternoon, a circuit is part dismantled, and you are back on Monday. The customer wants the room usable over the weekend and suggests an extension lead through the doorway. What do you do?',
+    options: [
+      'Leave the extension lead run but tape it down carefully',
+      'Leave it as it is and return first thing on Monday',
+      'Make it safe or leave it isolated and say why in writing',
+      'Ask the customer to accept responsibility for the weekend',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'You either leave the installation in a safe usable state or you leave it isolated, and either way the customer gets a written note of what was done and why. Handing the risk over verbally, or dressing up a trailing lead as a solution, leaves a hazard in a house you are responsible for having worked in.',
+    section: 'Speaking with Confidence',
+    difficulty: 'advanced',
+    topic: 'Assertiveness and Safety',
+    category: 'Speaking with Confidence',
+  },
+  {
+    id: 235,
+    question:
+      'A client has changed the socket positions twice and now wants downlights added in two rooms, all after the quote was accepted. How do you keep the job profitable without souring the relationship?',
+    options: [
+      'Absorb the changes to avoid looking difficult about money',
+      'Refuse any further changes until the job is finished',
+      'Make the changes and settle the extra cost at the end',
+      'Price each change as it comes and get it agreed in writing',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Pricing each change at the moment it is raised keeps the client in control and stops small additions quietly eating the margin. Absorbing them to seem easy going teaches the client that changes are free, and the final invoice conversation gets much harder.',
+    section: 'Negotiation, Persuasion & Difficult Conversations',
+    difficulty: 'advanced',
+    topic: 'Quoting and Expectations',
+    category: 'Negotiation, Persuasion & Difficult Conversations',
+  },
+  {
+    id: 236,
+    question:
+      'A customer wants a supply to a garden office at the end of a long garden and asks why you have priced a much bigger cable than the one in the house. Which answer lands best?',
+    options: [
+      'The cable has to carry the current over a long distance safely',
+      'A longer run loses more power, so a thicker cable is needed',
+      'The impedance rises with length so the volt drop is excessive',
+      'Regulations require a larger conductor for that circuit length',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Losing power over distance is an idea the customer already understands from hosepipes and extension leads, so the price makes sense to them. Talking about impedance and volt drop is precise but it sounds like justification, which is exactly what a suspicious customer is listening for.',
+    section: 'Understanding Communication',
+    difficulty: 'intermediate',
+    topic: 'Customer Communication',
+    category: 'Understanding Communication',
+  },
+  {
+    id: 237,
+    question:
+      'A customer says the lights in one room sometimes flicker but not always, and there is nothing happening while you are there. What is the most useful first move?',
+    options: [
+      'Ask when it happens, what is on, and write the answers down',
+      'Start testing immediately since the customer cannot diagnose it',
+      'Ask them to keep a note and ring you when it happens again',
+      'Explain that intermittent faults are very hard to find',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The customer has been watching the fault for weeks, so their observations narrow the search far faster than testing blind. Going straight to the instruments respects your skill but wastes the one source of evidence you cannot recreate on demand.',
+    section: 'Understanding Communication',
+    difficulty: 'intermediate',
+    topic: 'Customer Communication',
+    category: 'Understanding Communication',
+  },
+  {
+    id: 238,
+    question:
+      'You had a tense conversation with a client about an extra charge and agreed to follow it up in writing. What makes the most effective email?',
+    options: [
+      'Set out who was at fault so the record is clear',
+      'State the facts, the next step, and keep it short',
+      'Copy in everyone on site so nothing is missed',
+      'Wait a few days until the client has calmed down',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A short factual email with a clear next step is easy to agree to and reads the same in six months as it does today. Rehearsing who was at fault feels satisfying to write but it invites a reply in the same tone and turns a disagreement into a dispute.',
+    section: 'Negotiation, Persuasion & Difficult Conversations',
+    difficulty: 'intermediate',
+    topic: 'Complaints and Bad News',
+    category: 'Negotiation, Persuasion & Difficult Conversations',
+  },
+  {
+    id: 239,
+    question:
+      'You overhear your apprentice on the phone telling a customer that the fault is definitely the shower, when you have not finished testing. What do you do?',
+    options: [
+      'Take the phone off them straight away and take over',
+      'Let them finish and correct the customer afterwards',
+      'Step in politely, correct it, then debrief them after',
+      'Tell the customer the apprentice was mistaken later',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Correcting the information while the customer is still on the phone stops a wrong expectation forming, and the coaching happens privately afterwards. Letting it run and correcting later means the customer has already decided what the fault is and will resist anything you find instead.',
+    section: 'Listening & Understanding Others',
+    difficulty: 'advanced',
+    topic: 'Site Communication',
+    category: 'Listening & Understanding Others',
+  },
+  {
+    id: 240,
+    question:
+      'Midway through an EICR you find exposed live conductors in a damaged junction box in a cupboard, which is a C1. The customer wants the power left on until the weekend. What do you do?',
+    options: [
+      'Leave it live and write the C1 clearly on the report',
+      'Isolate the whole property until the repair is done',
+      'Repair it now and add the cost without discussing it',
+      'Isolate the affected part, explain why, and record it',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'A C1 means danger is present now, so the affected part comes off, the customer is told plainly why, and it goes on the report. Recording it while leaving it energised documents the hazard without removing it, which helps nobody standing in that cupboard.',
+    section: 'Speaking with Confidence',
+    difficulty: 'advanced',
+    topic: 'Assertiveness and Safety',
+    category: 'Speaking with Confidence',
+  },
+  {
+    id: 241,
+    question:
+      'You attend a callout for a tripping circuit, spend two hours testing and find nothing wrong on the day. The customer objects to paying because nothing was repaired. How do you handle it?',
+    options: [
+      'Waive the fee since nothing was actually repaired today',
+      'Insist the fee stands because your time was booked out',
+      'Explain what you tested and why the visit is still chargeable',
+      'Offer to return free of charge the next time it happens',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Setting out what you tested and what it has ruled out shows the customer they bought information, not nothing, which is what makes the fee defensible. Simply insisting on the price is true but it gives the customer no reason to agree, and that is the call that becomes a review.',
+    section: 'Negotiation, Persuasion & Difficult Conversations',
+    difficulty: 'advanced',
+    topic: 'Complaints and Bad News',
+    category: 'Negotiation, Persuasion & Difficult Conversations',
+  },
+  {
+    id: 242,
+    question:
+      'You are carrying out an EICR at a rented flat. The tenant let you in and is asking what you found, but the landlord instructed and pays for the work. What is the right approach?',
+    options: [
+      'Report findings to the landlord and tell the tenant what is safe',
+      'Give the tenant the full report since they live in the property',
+      'Report only to the landlord and say nothing to the tenant',
+      'Ask the tenant to pass your findings on to the landlord',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The report goes to the person who instructed you, while the tenant is told anything they need for their own safety in the flat that day. Saying nothing at all to someone who lives there is defensible on paper but leaves a person living beside a hazard you know about.',
+    section: 'Understanding Communication',
+    difficulty: 'intermediate',
+    topic: 'Customer Communication',
+    category: 'Understanding Communication',
+  },
+  {
+    id: 243,
+    question:
+      'A joiner on site asks to borrow your voltage indicator so he can move a socket himself, saying he has done it plenty of times before. What do you say?',
+    options: [
+      'Lend the tester and let them prove dead themselves',
+      'Isolate it for them so at least it is done properly',
+      'Tell them to find their own electrician for the work',
+      'Explain the work needs an electrician and offer to quote',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'A clear no with an offer to do the work yourself keeps the site safe and keeps the relationship, which is why it holds up better than a flat refusal. Isolating it for him looks like a safe compromise but you have now made yourself part of work you are not going to inspect or certify.',
+    section: 'Speaking with Confidence',
+    difficulty: 'advanced',
+    topic: 'Assertiveness and Safety',
+    category: 'Speaking with Confidence',
+  },
+  {
+    id: 244,
+    question:
+      'A customer leaves a public review saying you were late and left a mess. You were held up by an earlier emergency and you did sweep up. What is the best response?',
+    options: [
+      'Reply pointing out the parts of the review that are wrong',
+      'Reply briefly, offer to talk it through, and stay polite',
+      'Leave it unanswered so it drops down the page',
+      'Ask the customer privately to take the review down',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A short courteous reply offering to sort it out is written for the hundreds of people who will read it later, not for the reviewer. Correcting the review point by point may be accurate but every future customer sees an argument, which does more damage than the original complaint.',
+    section: 'Negotiation, Persuasion & Difficult Conversations',
+    difficulty: 'intermediate',
+    topic: 'Complaints and Bad News',
+    category: 'Negotiation, Persuasion & Difficult Conversations',
+  },
+  {
+    id: 245,
+    question:
+      'You arrive to continue work on a distribution board that a colleague isolated and locked off before going home. He has texted you that it is definitely dead. What do you do?',
+    options: [
+      'Work on it since a colleague you trust applied the lock',
+      'Ask the colleague to confirm verbally that it is dead',
+      'Prove it dead yourself and apply your own lock and label',
+      'Check the board is off and start work on that basis',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'You prove dead for yourself and put your own lock on, because the only isolation you can rely on is the one you control. Accepting a text from someone you trust is the version that catches people out, since you have no way of knowing what happened on site after he left.',
+    section: 'Speaking with Confidence',
+    difficulty: 'advanced',
+    topic: 'Assertiveness and Safety',
+    category: 'Speaking with Confidence',
+  },
+  {
+    id: 246,
+    question:
+      'You have finished a domestic job but the certificate will be issued from the office rather than on the day. The customer asks for their paperwork before you leave. What is the best thing to say?',
+    options: [
+      'Say when the certificate will arrive and how it is sent',
+      'Tell them it will be with them as soon as possible',
+      'Hand over a handwritten note until the real one is ready',
+      'Explain that paperwork usually follows within a few weeks',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'A specific date and method turns an open question into something the customer can hold you to, and most complaints about paperwork are really complaints about not knowing. As soon as possible sounds reassuring but it means nothing, so the customer starts chasing you within days.',
+    section: 'Professional Writing & Digital Communication',
+    difficulty: 'intermediate',
+    topic: 'Records and Handover',
+    category: 'Professional Writing & Digital Communication',
+  },
+  {
+    id: 247,
+    question:
+      'You are due to start chasing walls in a furnished living room tomorrow. The customer has not mentioned clearing anything and there is a large glass cabinet against the wall. What do you do?',
+    options: [
+      'Work around the furniture and be careful with the dust',
+      'Agree before the day what will be moved and by whom',
+      'Move the furniture yourself and charge for the time',
+      'Refuse to start until the rooms are completely empty',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Settling who moves what before the day means nobody is improvising around a glass cabinet with a wall chaser running. Working around it to avoid an awkward conversation is how expensive items get damaged, and the argument afterwards is always worse than the one you avoided.',
+    section: 'Negotiation, Persuasion & Difficult Conversations',
+    difficulty: 'advanced',
+    topic: 'Quoting and Expectations',
+    category: 'Negotiation, Persuasion & Difficult Conversations',
+  },
+  {
+    id: 248,
+    question:
+      'You are off next week and another electrician is taking over a part completed installation for you. What is the most important thing to leave behind?',
+    options: [
+      'Ring them on the way and describe what is left to do',
+      'Leave the drawings out so they can work it out',
+      'Tell the customer to explain the position to them',
+      'Leave a written note of what is done, tested and left',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'A written note of what is complete, what has been tested and what state things were left in is the only thing that survives you being unavailable. A phone call covers most of it but the detail fades within a day, and the person on site cannot check it against anything.',
+    section: 'Professional Writing & Digital Communication',
+    difficulty: 'intermediate',
+    topic: 'Records and Handover',
+    category: 'Professional Writing & Digital Communication',
+  },
+  {
+    id: 249,
+    question:
+      'A commercial client sees how young you are and says out loud that he expected someone with more experience to be doing the work. How do you respond?',
+    options: [
+      'List your qualifications until the client is satisfied',
+      'Say nothing and let the finished work speak for itself',
+      'Answer calmly, explain your plan, and let the work follow',
+      'Point out that experience does not guarantee good work',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'A calm answer followed by a clear plan for the job shows competence in the only way that actually reassures somebody. Reeling off qualifications sounds defensive, and saying nothing leaves the client watching you all morning waiting to be proved right.',
+    section: 'Understanding Communication',
+    difficulty: 'intermediate',
+    topic: 'Customer Communication',
+    category: 'Understanding Communication',
+  },
+  {
+    id: 250,
+    question:
+      'A client is withholding the final payment because two accessories are the wrong colour and a light is not centred. The rest of the installation is complete and tested. What is the best move?',
+    options: [
+      'Agree the snag list, fix it, and set a payment date',
+      'Hold the certificate back until the invoice is paid',
+      'Send a formal demand and stop attending the site',
+      'Reduce the invoice by the value of the outstanding snag',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Writing down the snags, fixing them and agreeing when payment follows turns a stand off into a short list with an end date. Holding the certificate hostage feels like leverage but it withholds a safety document over a decorative complaint and it damages you more than the client.',
+    section: 'Negotiation, Persuasion & Difficult Conversations',
+    difficulty: 'advanced',
+    topic: 'Complaints and Bad News',
+    category: 'Negotiation, Persuasion & Difficult Conversations',
+  },
 ];

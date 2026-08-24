@@ -11,9 +11,9 @@ export const rcdInstallationQuizData: QuizQuestion[] = [
     id: 1,
     question: 'Under BS 7671, additional protection by a 30 mA RCD is required for which socket-outlets?',
     options: [
-      'Only socket-outlets installed within bathroom zones 1 and 2',
+      'Socket-outlets installed within bathroom zones 1 and 2',
       'Socket-outlets with a rated current not exceeding 32 A',
-      'Only socket-outlets supplying portable equipment used outdoors',
+      'Socket-outlets supplying portable equipment used outdoors',
       'Socket-outlets with a rated current exceeding 32 A',
     ],
     correctAnswer: 1,
@@ -78,10 +78,10 @@ export const rcdInstallationQuizData: QuizQuestion[] = [
     id: 6,
     question: 'Which circuits require RCD protection in bathroom installations?',
     options: [
-      'Only circuits in zones 1 and 2',
-      'Only lighting circuits',
+      'Circuits in zones 1 and 2 only',
+      'Lighting circuits only',
       'All low voltage circuits',
-      'Only socket outlet circuits',
+      'Socket-outlet circuits only',
     ],
     correctAnswer: 2,
     explanation:

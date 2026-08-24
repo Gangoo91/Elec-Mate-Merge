@@ -1,10 +1,20 @@
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, Flame } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { CARD_BASE, CARD_PRIMARY } from '@/components/ui/card-recipe';
 
 interface DueTodayCardProps {
   dueCount: number;
   onStart: () => void;
 }
 
+/**
+ * The one thing on the flashcards hub worth doing right now.
+ *
+ * Was `bg-elec-yellow/[0.04]` under a `/20` edge — a translucent volt wash,
+ * which mixes with the near-black ground into sludge and made the page's
+ * primary action the dimmest thing on it. Solid volt is the recipe's primary
+ * and the only treatment that reads as "do this".
+ */
 const DueTodayCard = ({ dueCount, onStart }: DueTodayCardProps) => {
   if (dueCount === 0) return null;
 
@@ -12,22 +22,18 @@ const DueTodayCard = ({ dueCount, onStart }: DueTodayCardProps) => {
     <button
       type="button"
       onClick={onStart}
-      className="
-        w-full flex items-center gap-3 p-4
-        bg-elec-yellow/[0.04] border border-elec-yellow/20 rounded-xl
-        touch-manipulation active:scale-[0.98] transition-transform
-        text-left
-      "
+      className={cn(CARD_BASE, CARD_PRIMARY, 'w-full !flex-row items-center gap-3 p-4 text-black')}
     >
-      <div className="flex-1 min-w-0 space-y-1">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
+      <Flame className="h-5 w-5 shrink-0 text-black" />
+      <div className="min-w-0 flex-1 space-y-0.5">
+        <span className="block text-[10px] font-bold uppercase tracking-[0.18em] text-black/70">
           Due today
         </span>
-        <p className="text-[14px] text-white/85 leading-relaxed">
-          {dueCount} {dueCount === 1 ? 'card' : 'cards'} ready for spaced repetition review
+        <p className="text-[14.5px] font-bold leading-snug text-black">
+          Review {dueCount} {dueCount === 1 ? 'card' : 'cards'}
         </p>
       </div>
-      <ChevronRight className="h-5 w-5 text-elec-yellow flex-shrink-0" />
+      <ChevronRight className="h-5 w-5 shrink-0 text-black" />
     </button>
   );
 };

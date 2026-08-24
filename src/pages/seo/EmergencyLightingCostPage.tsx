@@ -75,7 +75,7 @@ const faqs = [
   {
     question: 'What luminance levels does emergency lighting need to provide?',
     answer:
-      'BS 5266 Part 1 (referencing BS EN 1838) specifies minimum illuminance levels. For escape routes: a minimum of 1 lux along the centre line of the escape route, with a minimum of 0.5 lux over the central band (half the route width). For open areas (anti-panic areas): a minimum of 0.5 lux over the floor area, excluding a 0.5m border band. For high-risk task areas: a minimum of 10% of the normal maintained illuminance or 15 lux, whichever is greater. Emergency exit signs must be clearly legible from the maximum viewing distance. These are minimum values — good design typically exceeds them.',
+      'BS 5266 Part 1 (referencing BS EN 1838) specifies minimum illuminance levels. For escape routes: a minimum of 1 lux across the full width of the escape route (BS EN 1838:2024 extended this from the centre line to the whole width, excluding borders). For open areas (anti-panic areas): a minimum of 0.5 lux over the floor area, excluding a 0.5m border band. For high-risk task areas: a minimum of 10% of the normal maintained illuminance or 15 lux, whichever is greater. Emergency exit signs must be clearly legible from the maximum viewing distance. These are minimum values — good design typically exceeds them.',
   },
   {
     question: 'Do all commercial premises need emergency lighting?',

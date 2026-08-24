@@ -43,9 +43,9 @@ export const emergencyLightingModule5Section2QuizQuestions = [
     question: 'What is the purpose of the annual 3-hour duration test?',
     options: [
       'To verify battery capacity and ensure escape routes remain illuminated for the full evacuation period',
-      'To confirm the charging circuit restores the battery within 24 hours',
-      'To check that each luminaire switches across to emergency mode quickly',
-      'To recalibrate the photocells that control the maintained lighting',
+      'To confirm the charging circuit restores each battery to a full charge within 24 hours',
+      'To check that every luminaire switches across into emergency mode quickly enough on failure',
+      'To recalibrate the photocells that control the maintained lighting throughout the building',
     ],
     correctAnswer: 0,
     explanation:
@@ -55,10 +55,10 @@ export const emergencyLightingModule5Section2QuizQuestions = [
     id: 5,
     question: 'When must a 3-hour duration test also be completed besides annually?',
     options: [
-      'Only when an insurer specifically requests it',
+      'Whenever an insurer specifically asks for one',
       'At commissioning and after any system modifications',
-      'After every monthly functional test',
-      'Only when a luminaire is reported as faulty',
+      'After every monthly functional test of the system',
+      'When a single luminaire is reported to be faulty',
     ],
     correctAnswer: 1,
     explanation:
@@ -120,10 +120,10 @@ export const emergencyLightingModule5Section2QuizQuestions = [
     id: 10,
     question: 'What happened in the Leeds care home case study?',
     options: [
-      'Lights stayed on for the full three hours with no issues found',
-      'A wiring fault tripped the emergency circuit during the test',
+      'The lights stayed on for the full rated duration during the drill, and the visiting fire officer found no defects of any kind',
+      'A wiring fault tripped the emergency lighting circuit part-way through the drill, so no luminaire operated at all',
       'Lights failed after 40 minutes during a drill because batteries were over 7 years old and annual duration tests had been neglected',
-      'The system passed but the logbook had been lost in an office move',
+      'The system passed the drill without fault, but the logbook had been lost during an office move some years earlier',
     ],
     correctAnswer: 2,
     explanation:

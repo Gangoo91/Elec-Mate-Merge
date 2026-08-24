@@ -356,7 +356,6 @@ const NICEICCertificateRequirementsPage = lazyWithRetry(
   () => import('@/pages/seo/NICEICCertificateRequirementsPage')
 );
 const NICEICRegistrationPage = lazyWithRetry(() => import('@/pages/seo/NICEICRegistrationPage'));
-const NICEICvsNAPICPage = lazyWithRetry(() => import('@/pages/seo/NICEICvsNAPICPage'));
 const NoPowerToSocketsPage = lazyWithRetry(() => import('@/pages/seo/NoPowerToSocketsPage'));
 const NonNotifiableWorkPage = lazyWithRetry(() => import('@/pages/seo/NonNotifiableWorkPage'));
 const NotifiableWorkGuidePage = lazyWithRetry(() => import('@/pages/seo/NotifiableWorkGuidePage'));
@@ -1747,12 +1746,6 @@ const StartingAnElectricalBusinessUkPage = lazyWithRetry(
 );
 const HowToHireAnElectricalApprenticePage = lazyWithRetry(
   () => import('@/pages/seo/HowToHireAnElectricalApprenticePage')
-);
-const NiceicVsNapitRegistrationPage = lazyWithRetry(
-  () => import('@/pages/seo/NiceicVsNapitRegistrationPage')
-);
-const ElectricianInsuranceBusinessUkPage = lazyWithRetry(
-  () => import('@/pages/seo/ElectricianInsuranceBusinessUkPage')
 );
 const ElectricalContractorMarketingGuidePage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalContractorMarketingGuidePage')
@@ -4191,14 +4184,6 @@ export function getSEORoutes() {
         element={
           <LazyRoute>
             <NICEICRegistrationPage />
-          </LazyRoute>
-        }
-      />
-      <Route
-        path="/guides/niceic-vs-napit"
-        element={
-          <LazyRoute>
-            <NICEICvsNAPICPage />
           </LazyRoute>
         }
       />
@@ -13281,22 +13266,6 @@ export function getSEORoutes() {
         element={
           <LazyRoute>
             <HowToHireAnElectricalApprenticePage />
-          </LazyRoute>
-        }
-      />
-      <Route
-        path="/guides/niceic-vs-napit-registration"
-        element={
-          <LazyRoute>
-            <NiceicVsNapitRegistrationPage />
-          </LazyRoute>
-        }
-      />
-      <Route
-        path="/guides/electrician-insurance-business-uk"
-        element={
-          <LazyRoute>
-            <ElectricianInsuranceBusinessUkPage />
           </LazyRoute>
         }
       />

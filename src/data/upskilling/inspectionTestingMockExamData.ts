@@ -110,7 +110,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'The recommended maximum interval for periodic inspection of domestic installations is 10 years, or at change of occupancy.',
     section: 'Introduction',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Inspection Intervals',
     category: 'Introduction & Fundamentals',
   },
@@ -726,7 +726,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Safe isolation procedures should be used for any voltage that could cause injury, typically above 50V AC.',
     section: 'Safe Isolation',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Voltage Levels',
     category: 'Safe Isolation',
   },
@@ -1884,15 +1884,16 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   {
     id: 109,
     question:
-      'IET Guidance Note 3 quotes a typical maximum stable value of Ze for a TT system. What is it?',
+      'On a TT system, above what earth electrode resistance does BS 7671 advise the value may not be stable?',
     options: [
-      '0.35Ω',
-      '21Ω',
-      '0.8Ω',
-      '1667Ω',
+      '200 Ω, above which soil drying and freezing make the value unreliable',
+      '21 Ω, above which the electrode cannot satisfy the disconnection time',
+      '1667 Ω, above which a 30 mA RCD can no longer provide protection',
+      '50 Ω, above which the touch voltage limit is exceeded on a fault',
     ],
-    correctAnswer: 1,
-    explanation: 'IET Guidance Note 3 gives a typical maximum stable Ze of 21Ω for a TT system; BS 7671 itself relies on the RCD condition Ra × IΔn ≤ 50V (Table 41.5), and an RCD is required on a TT system.',
+    correctAnswer: 0,
+    explanation:
+      'Note 2 to Table 41.5 advises that earth electrode resistance values above 200 Ω may not be stable, because soil conditions change with drying and freezing — GN3 repeats this. 1667 Ω is a different figure: it is the maximum Ra that still satisfies Ra x IdeltaN <= 50 V for a 30 mA RCD, a theoretical ceiling rather than a stable working value.',
     section: 'Earth Fault Loop Impedance',
     difficulty: 'advanced',
     topic: 'System Values',
@@ -2112,7 +2113,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     correctAnswer: 2,
     explanation: 'An RCD must not trip at 50% of its rated residual current (non-trip test).',
     section: 'RCD Testing',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Test Parameters',
     category: 'RCD Testing',
   },
@@ -2277,15 +2278,16 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   {
     id: 133,
     question:
-      'What is the maximum permissible standing earth leakage for a 30mA RCD protected circuit?',
+      'To avoid unwanted tripping, what is the maximum accumulation of protective conductor and earth leakage currents downstream of a 30 mA RCD?',
     options: [
-      '30mA (equal to the rating)',
-      '10mA (one-third of rating)',
-      '15mA (one-half of rating)',
-      '3mA (one-tenth of rating)',
+      '9 mA (30% of the rated residual operating current)',
+      '15 mA (50% of the rated residual operating current)',
+      '3 mA (10% of the rated residual operating current)',
+      '30 mA (100% of the rated residual operating current)',
     ],
-    correctAnswer: 1,
-    explanation: 'Standing leakage should not exceed one-third of the RCD rating.',
+    correctAnswer: 0,
+    explanation:
+      'Regulation 531.3.1.202 requires the accumulation of protective conductor and/or earth leakage currents downstream of the RCD to be not more than 30% of the rated residual operating current — 9 mA on a 30 mA device. The often-repeated "one-third" is not the figure in BS 7671.',
     section: 'RCD Testing',
     difficulty: 'advanced',
     topic: 'Earth Leakage',
@@ -2642,7 +2644,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Verify correct polarity, switch in phase conductor, and if a socket is fitted, its polarity too.',
     section: 'Polarity & Functional Testing',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Cooker Controls',
     category: 'Polarity & Functional Testing',
   },
@@ -3143,7 +3145,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 184,
-    question: 'What is the minimum test current for continuity testing as per BS 7671?',
+    question:
+      'IET Guidance Note 3 specifies the source for a low-resistance continuity test. What short-circuit current must the instrument be able to supply?',
     options: [
       '200mA',
       '100mA',
@@ -3151,7 +3154,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
       '1A',
     ],
     correctAnswer: 0,
-    explanation: 'BS 7671 specifies a minimum test current of 200mA for continuity testing.',
+    explanation:
+      'GN3 requires a source with a no-load voltage between 4 V and 24 V and a short-circuit current of not less than 200 mA. Note what the figure actually is: the current the instrument must be CAPABLE of supplying, not the current delivered into a given conductor — and it is GN3 guidance on instrument selection rather than a BS 7671 regulation.',
     section: 'Continuity Testing',
     difficulty: 'advanced',
     topic: 'Test Parameters',
@@ -3524,7 +3528,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'For a 40A Type B MCB, maximum Zs is 1.09Ω per Table 41.3 (includes the Cmin factor of 0.95). 1.15Ω is the old pre-Cmin figure.',
     section: 'Earth Fault Loop Impedance',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Maximum Values',
     category: 'Earth Fault Loop Impedance',
   },
@@ -3661,7 +3665,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     correctAnswer: 2,
     explanation: 'Discrimination ensures the protective device nearest the fault operates first.',
     section: 'Introduction',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Discrimination',
     category: 'Introduction & Fundamentals',
   },
@@ -4328,7 +4332,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'EMC stands for Electromagnetic Compatibility - ensuring equipment operates without causing or being affected by interference.',
     section: 'Introduction',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'EMC',
     category: 'Introduction & Fundamentals',
   },
@@ -4703,7 +4707,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Regulation 421.1.7 uses the wording "recommending the installation of arc fault detection devices (AFDDs)" to mitigate the risk of fire in AC final circuits of a fixed installation. It is advisory, not a "shall", and it names no premises types — the widely repeated list of HRRBs, HMOs, student accommodation and care homes does not appear in the regulation.',
     section: 'Introduction',
-    difficulty: 'basic',
+    difficulty: 'advanced',
     topic: 'AFDD',
     category: 'Introduction & Fundamentals',
   },
@@ -5051,7 +5055,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   {
     id: 296,
     question:
-      'A supplementary bonding conductor connecting two exposed-conductive-parts has no mechanical protection. What is the minimum cross-sectional area?',
+      'A supplementary bonding conductor connecting two extraneous-conductive-parts has no mechanical protection. What is the minimum cross-sectional area?',
     options: [
       '4mm²',
       '2.5mm²',
@@ -5060,7 +5064,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     ],
     correctAnswer: 0,
     explanation:
-      'Regulation 544.2.1: where mechanical protection is not provided, the cross-sectional area shall be not less than 4mm². Where the conductor IS sheathed or otherwise mechanically protected, the regulation sets no fixed CSA — it requires conductance not less than that of the smaller protective conductor connected to the exposed-conductive-parts.',
+      'Regulation 544.2.3: a supplementary bonding conductor connecting two extraneous-conductive-parts shall be not less than 4mm² where mechanical protection is not provided, or 2.5mm² where it is sheathed or otherwise mechanically protected. Note the neighbouring rules use a different basis entirely — 544.2.2 (exposed to extraneous) requires conductance of at least half the protective conductor connected to the exposed-conductive-part, not a fixed CSA.',
     section: 'Continuity Testing',
     difficulty: 'advanced',
     topic: 'Bonding',
@@ -5272,16 +5276,16 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 309,
-    question: 'What does Regulation 421.1.7 say about arc fault detection devices?',
+    question: 'How does Regulation 421.1.7 treat arc fault detection devices?',
     options: [
-      'They shall be provided on socket-outlet circuits up to 32 A in HMOs and care homes',
-      'It recommends them in AC final circuits of a fixed installation',
-      'They shall be provided on all AC final circuits in domestic premises',
-      'It recommends them only where the installation is supplied from a TT system',
+      'Mandatory on socket-outlet circuits up to 32 A in the named higher-risk premises, recommended elsewhere',
+      'Recommended in all AC final circuits, with no premises type where it is ever mandatory',
+      'Mandatory on every AC final circuit in all domestic premises, with no exceptions permitted',
+      'Applicable only where the installation is supplied from a TT earthing arrangement',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'The wording is \'recommending the installation of arc fault detection devices (AFDDs)\' to mitigate the risk of fire in AC final circuits of a fixed installation. It is advisory, not a \'shall\', and it names no premises types — the widely repeated list of higher-risk residential buildings, HMOs, student accommodation and care homes does not appear in the regulation. Those buildings are higher risk in practice, but do not present AFDDs there as a BS 7671 requirement.',
+      'The regulation has two limbs and candidates who know only one of them get it wrong. AFDD protection is REQUIRED for final circuits supplying socket-outlets not exceeding 32 A in Higher Risk Residential Buildings, Houses in Multiple Occupation, purpose-built student accommodation and care homes. For other premises, including an ordinary dwelling, the same regulation RECOMMENDS AFDDs in AC final circuits of a fixed installation, which is advisory and left to the designer. A4:2026 amended 421.1.7(a) to read "High rise residential buildings" — it revised the premises list rather than removing it.',
     section: 'A4:2026',
     difficulty: 'advanced',
     topic: 'A4:2026 Changes',
@@ -5453,7 +5457,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Zs is Ze plus R1+R2, and the circuit must meet its disconnection time at the least favourable point. Recording an average, or the value at the board, understates the worst-case loop impedance and can pass a circuit that would fail at the furthest outlet.',
     section: 'A4:2026',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Ring Final Circuits',
     category: 'Earth Fault Loop Impedance',
   },
@@ -5470,7 +5474,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'The upstream device is time-delayed so a downstream 30 mA RCBO clears a final circuit fault first, leaving the rest of the installation live. The 100 mA device is not providing additional protection — that requires a non-delayed 30 mA device.',
     section: 'A4:2026',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Discrimination',
     category: 'RCD Testing',
   },
@@ -5487,7 +5491,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Earth electrode resistance is one of the dead tests, carried out before energising, so the earthing arrangement is proven before any live testing relies on it. The loop impedance method at a socket can give a working value later but is not the initial verification test.',
     section: 'A4:2026',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'TT Systems',
     category: 'Earth Fault Loop Impedance',
   },
@@ -5504,7 +5508,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Satisfactory means no C1 (danger present) and no C2 (potentially dangerous) items. C3 improvement-recommended observations may be present and the report remains satisfactory. An older installation can be satisfactory without complying with every requirement of the current edition.',
     section: 'A4:2026',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'EICR Outcomes',
     category: 'Visual Inspection & Documentation',
   },
@@ -5521,7 +5525,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'C1 means danger is present and immediate action is required — exposed live parts that can be touched is the classic case. The others are C2 or C3 depending on circumstances. A C1 also requires the responsible person to be told at once, with the danger made safe before you leave.',
     section: 'A4:2026',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'EICR Coding',
     category: 'Visual Inspection & Documentation',
   },
@@ -5538,7 +5542,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       '443.4.1 requires protection where the consequences of a transient overvoltage could result in serious injury or loss of human life, failure of a safety service, or damage with significant consequences. Note that limb (b) of the earlier wording was deleted by the A2:2022 Corrigendum and remains absent in A4:2026.',
     section: 'A4:2026',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Overvoltage Protection',
     category: 'Visual Inspection & Documentation',
   },
@@ -5555,7 +5559,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'The long lead, or wander lead, method confirms the protective conductor is continuous from the distribution board to each point on the circuit. It proves continuity and gives R2; it says nothing about whether the conductor is adequately sized, which is a design check.',
     section: 'A4:2026',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Continuity',
     category: 'Continuity Testing',
   },
@@ -5613,7 +5617,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Regulation 644.4 places the duty on the person or persons responsible for the design, construction and verification of the installation, who issue the certificate to the person ordering the work, taking account of their respective responsibilities.',
     section: 'Certification',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Certification',
     category: 'Visual Inspection & Documentation',
   },
@@ -5715,7 +5719,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Regulation 644.4.202 addresses the permitted formats for Electrical Installation Certificates and Minor Electrical Installation Works Certificates, covering the media, written or electronic, used for original certificates or their copies.',
     section: 'Certification',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Documentation',
     category: 'Visual Inspection & Documentation',
   },
@@ -5749,7 +5753,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'When the initial verification is made, the documentation concerning the selection of devices for coordination is added to the design documentation in accordance with Regulation 132.13, making the coordination evidence part of the formal design record.',
     section: 'Certification',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Documentation',
     category: 'Visual Inspection & Documentation',
   },
@@ -5789,7 +5793,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Regulation 643.1 states that where the installation incorporates an earth electrode, the test of Regulation 643.7.2 (earth electrode resistance) shall also be carried out before the installation is energised.',
     section: 'Introduction',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Test Sequence',
     category: 'Introduction & Fundamentals',
   },
@@ -5823,7 +5827,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Regulation 643.1 requires measuring instruments and monitoring equipment and methods to be chosen in accordance with the relevant parts of BS EN 61557. Where other measuring equipment is used, it must provide no lesser degree of performance and safety.',
     section: 'Introduction',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Test Instruments',
     category: 'Introduction & Fundamentals',
   },
@@ -5840,7 +5844,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Regulation 643.1 states that when undertaking testing in a potentially explosive atmosphere, appropriate safety precautions in accordance with BS EN 60079-17 are necessary.',
     section: 'Introduction',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Test Instruments',
     category: 'Introduction & Fundamentals',
   },
@@ -5891,7 +5895,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Verification for a TT system requires measurement of the resistance of the earth electrode for exposed-conductive-parts. A note to the regulation states that where a measurement of RA is not practicable, the measured value of external earth fault loop impedance may be used.',
     section: 'Earth Fault Loop Impedance',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Earth Fault Loop Impedance',
     category: 'Earth Fault Loop Impedance',
   },

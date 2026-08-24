@@ -32,7 +32,7 @@ const quickCheckQuestions = [
   {
     id: 'escape-route-lux',
     question:
-      'What is the minimum illuminance required on the centre line of an escape route to BS 5266?',
+      'What is the minimum illuminance required across the full width of an escape route to BS EN 1838:2024?',
     options: [
       '0.2 lux',
       '0.5 lux',
@@ -41,7 +41,7 @@ const quickCheckQuestions = [
     ],
     correctIndex: 2,
     explanation:
-      'BS 5266 requires a minimum of 1 lux on the centre line of escape routes up to 2m wide. For wider routes, 50% of the route width must be illuminated to at least 1 lux.',
+      'BS EN 1838:2024 requires a minimum of 1 lux across the FULL WIDTH of an escape route. The 2013 edition required it only along the centre line; the 2024 revision extended it to the whole width, excluding borders (0.5 m each side above 2 m width, or a quarter of the width at 2 m or less).',
   },
   {
     id: 'standard-duration',
@@ -110,7 +110,7 @@ const quizQuestions = [
     ],
     correctAnswer: 2,
     explanation:
-      "Spacing depends on the luminaire's emergency output and distribution. Manufacturers provide spacing tables for their products. Maximum spacing is determined by maintaining 1 lux minimum on the centre line throughout the route.",
+      "Spacing depends on the luminaire's emergency output and distribution. Manufacturers provide spacing tables for their products. Maximum spacing is determined by maintaining 1 lux minimum across the full width throughout the route.",
   },
   {
     id: 3,
@@ -168,7 +168,7 @@ const quizQuestions = [
     id: 7,
     question: 'What minimum illuminance is required for high-risk task area emergency lighting?',
     options: [
-      '1 lux on the centre line of the route',
+      '1 lux across the full width of the route',
       '0.5 lux at floor level across the area',
       '5% of normal illuminance, minimum 10 lux',
       '10% of normal illuminance, minimum 15 lux',
@@ -287,7 +287,7 @@ const HNCModule4Section4_3 = () => {
 
           <TLDR
             points={[
-              'Escape route minimum 1 lx along the centre line, 0.5 lx across the full route width — at floor level, with the maintenance factor applied. BS 5266 numbers are not optional.',
+              'Escape route minimum 1 lx across the full route width at floor level, with the maintenance factor applied — BS EN 1838:2024 extended this from the centre line. These numbers are not optional.',
               'Open (anti-panic) areas: 0.5 lx minimum over the empty floor (excluding a 0.5 m perimeter band). High-risk task areas: 10 % of the maintained task value, never less than 15 lx.',
               'Duration: 1 h for premises evacuated immediately; 3 h where occupants might re-enter or where evacuation could be delayed. Most commercial designs go to 3 h by default.',
               'Self-contained luminaires are simpler to install but harder to manage at scale; central battery (BS EN 50171) is the choice when you’ve got hundreds of points across multiple floors.',
@@ -324,7 +324,7 @@ const HNCModule4Section4_3 = () => {
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>
-                <strong>Illuminance:</strong> minimum 1 lux on centre line of route
+                <strong>Illuminance:</strong> minimum 1 lux across the full width of route
               </li>
               <li>
                 <strong>Uniformity:</strong> maximum 40:1 ratio (Emax/Emin)
@@ -340,7 +340,7 @@ const HNCModule4Section4_3 = () => {
               <strong>Locations requiring escape route lighting (location / requirement):</strong>
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Corridors — 1 lux on centre line, luminaires at direction changes</li>
+              <li>Corridors — 1 lux across the full width, luminaires at direction changes</li>
               <li>Stairways — 1 lux on treads, each flight illuminated</li>
               <li>Exit doors — illuminated exit sign, 1 lux at door position</li>
               <li>Changes of direction — luminaire within 2m of change</li>
@@ -387,7 +387,7 @@ const HNCModule4Section4_3 = () => {
               <strong>Emergency lighting summary (type / illuminance / uniformity / response):</strong>
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Escape route — 1 lux (centre line) — 40:1 max — 5s (50%), 60s (100%)</li>
+              <li>Escape route — 1 lux (full width) — 40:1 max — 5s (50%), 60s (100%)</li>
               <li>Open area — 0.5 lux (floor) — 40:1 max — 5s (50%), 60s (100%)</li>
               <li>
                 High-risk task — 10% of normal, min 15 lux — 10:1 max — 0.5s (100%)
@@ -534,7 +534,7 @@ const HNCModule4Section4_3 = () => {
               corridor, 2m wide, with exit at one end and a change of direction midway.
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Requirements (BS 5266): minimum 1 lux on centre line</li>
+              <li>Requirements (BS EN 1838:2024): minimum 1 lux across the full width</li>
               <li>Uniformity maximum 40:1</li>
               <li>Luminaire at each end (exits)</li>
               <li>Luminaire within 2m of direction change</li>
@@ -587,7 +587,7 @@ const HNCModule4Section4_3 = () => {
               <strong>Design summary:</strong>
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Escape routes: 1 lux centre line, uniformity 40:1</li>
+              <li>Escape routes: 1 lux full width, uniformity 40:1</li>
               <li>Open areas (&gt;60m²): 0.5 lux, uniformity 40:1</li>
               <li>High-risk: 10% of normal, min 15 lux, 10:1 uniformity</li>
               <li>Standard duration: 3 hours</li>
@@ -671,7 +671,7 @@ const HNCModule4Section4_3 = () => {
 
           <KeyTakeaways
             points={[
-              'Escape route 1 lx centre line / 0.5 lx full width at floor, with MF applied — the BS 5266 floor.',
+              'Escape route 1 lx across the full width at floor, with MF applied — the BS EN 1838:2024 floor.',
               'Open (anti-panic) area 0.5 lx minimum, high-risk task 10 % of task / 15 lx minimum.',
               '1 h duration for immediate-evacuate premises; 3 h is the commercial default for offices, retail, hospitality.',
               'Self-contained vs central battery is a maintenance and scale decision — both are recognised under Reg 560.6.1.',

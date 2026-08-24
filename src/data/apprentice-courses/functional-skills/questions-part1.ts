@@ -858,9 +858,9 @@ export const questionsPart1: StandardMockQuestion[] = [
       'According to the Electricity at Work Regulations 1989, who has a duty to ensure electrical safety in the workplace?',
     options: [
       'All persons at work who may be affected by electrical danger',
-      'Only the qualified electrician who carries out the installation work',
-      'Only the employer or company director who owns the business',
-      'Only the client or building owner where the work is carried out',
+      'Only the qualified electrician carrying out the work on site',
+      'The employer alone, since employees have no legal duties',
+      'The Health and Safety Executive, which enforces the Regulations',
     ],
     correctAnswer: 0,
     explanation:
@@ -893,10 +893,10 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'In BS 7671, Part 1 covers "Scope, Object and Fundamental Principles". What is the main purpose of this part?',
     options: [
-      'To list every type of cable and accessory approved for use in the UK',
-      'To provide the detailed wiring methods and test procedures for each circuit',
+      'To list every type of cable, accessory and enclosure that may lawfully be used in the UK',
+      'To provide the detailed wiring methods and test procedures required for every circuit',
       'To define what the regulations cover and the basic safety principles that underpin all requirements',
-      'To set out the certification forms and model schedules used for inspection',
+      'To set out the certification forms and model schedules used to record inspection results',
     ],
     correctAnswer: 2,
     explanation:
@@ -985,9 +985,9 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'An EIC (Electrical Installation Certificate) requires a "Description of the Installation". Which of the following is most appropriate?',
     options: [
-      '"Some new wiring and a few sockets fitted in the house as requested"',
-      '"Electrical work carried out to a good standard as per the customer\'s wishes"',
-      '"Rewire job completed, everything tested and working, certificate enclosed"',
+      '"Some new wiring installed throughout the property along with several extra sockets and lights fitted where the customer asked for them"',
+      '"Electrical work carried out to a good standard throughout, fully in line with the customer\'s wishes and the wiring regulations currently in force"',
+      '"Rewire job completed at the above address, everything tested and left in full working order, certificate to follow by email shortly"',
       '"New domestic single-phase installation comprising consumer unit, 6 lighting circuits, 4 ring final circuits, cooker circuit, and shower circuit"',
     ],
     correctAnswer: 3,
@@ -1056,9 +1056,9 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'When completing an EICR, observations must be recorded using specific classification codes. Which response best demonstrates correct technical writing?',
     options: [
-      '"The board looked a bit dodgy and the earthing did not seem right to me."',
-      '"There is a problem at the distribution board that needs sorting out soon."',
-      '"Distribution board not great — earthing issue, customer should get it fixed."',
+      '"The board looked a bit dodgy to me and the earthing did not seem right, so I would get someone to have a proper look at the distribution board soon."',
+      '"There is a problem with the earthing at the distribution board that will need sorting out fairly soon before it causes any trouble for the customer."',
+      '"Distribution board earthing is not great and needs looking at, I have told the customer to get it properly fixed by someone as soon as they can."',
       '"C2 — Lack of earthing to exposed-conductive-parts at distribution board. Remedial action: install main earthing conductor to meet Regulation 411.3.1.1."',
     ],
     correctAnswer: 3,
@@ -1095,10 +1095,10 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'A homeowner asks you to explain why their lights keep flickering. Which response is most professional?',
     options: [
-      '"It is probably nothing serious, I would not worry about it too much if I were you."',
+      '"It is probably nothing serious, most houses do that now and then and it usually settles down on its own, so I would not worry about it too much if I were you."',
       '"There could be several causes, such as a loose connection or a faulty switch. I\'ll carry out some tests to identify the exact issue and let you know what I find."',
-      '"Honestly, flickering lights could be anything — these things are very hard to predict."',
-      '"That will be the old wiring, the whole house probably needs a full rewire doing."',
+      '"Honestly, flickering lights could be caused by almost anything at all and these things are very hard to predict, so it is really difficult for me to say."',
+      '"That will be the old wiring, they all go like that eventually, so the whole house probably needs a full rewire doing before anything else is looked at."',
     ],
     correctAnswer: 1,
     explanation:
@@ -1113,10 +1113,10 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       "During a site meeting, you disagree with the main contractor's proposed cable route. What is the most appropriate way to raise your concern?",
     options: [
-      'Say nothing in the meeting but install the cable your own way regardless',
-      'Wait until after the meeting and complain about the route to the other trades',
+      'Say nothing during the meeting, then quietly install the cable your own way once work starts on site',
+      'Wait until after the meeting has finished and complain about the route to the other trades on site',
       'Clearly explain your technical reasoning and suggest an alternative route, referencing relevant regulations',
-      'Refuse to continue with the job until the contractor changes the route',
+      'Refuse to carry on with the installation until the main contractor agrees to change the cable route',
     ],
     correctAnswer: 2,
     explanation:
@@ -1131,9 +1131,9 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'Which of the following demonstrates good professional practice when communicating with a client?',
     options: [
-      'Using complex technical jargon to show your expertise',
-      'Avoiding all technical detail and just stating the price',
-      'Telling the client only what they want to hear to win the job',
+      'Using complex technical jargon at every opportunity to show off your expertise',
+      'Avoiding all technical detail and simply quoting a price with no explanation',
+      'Telling the client only what they want to hear in order to win the job quickly',
       'Explaining work in clear, simple terms while being honest about costs and timescales',
     ],
     correctAnswer: 3,
@@ -1150,9 +1150,9 @@ export const questionsPart1: StandardMockQuestion[] = [
       'A client phones to complain that a socket outlet you installed yesterday has stopped working. What is the best initial response?',
     options: [
       "\"I'm sorry to hear that. I'll come back at the earliest opportunity to investigate and resolve the issue for you.\"",
-      '"That socket was working perfectly when I left, so you must have done something to it."',
-      '"It is out of my hands now the job is signed off — you will need to book a new visit."',
-      '"These things happen with electrics, there is not really much I can do about it."',
+      '"That socket was working perfectly well when I left yesterday, so somebody there must have done something to it."',
+      '"The job is signed off now so it is out of my hands, you will need to ring the office and book a fresh visit."',
+      '"These things do happen with electrics from time to time, there is not really very much I can do about it now."',
     ],
     correctAnswer: 0,
     explanation:
@@ -1166,10 +1166,10 @@ export const questionsPart1: StandardMockQuestion[] = [
     id: 65,
     question: 'What is the purpose of a toolbox talk on a construction site?',
     options: [
-      'To agree the prices and payment terms for the work with the client',
+      'To agree the prices, payment terms and completion dates for the work with the client',
       "To give a brief, focused safety briefing on a specific hazard relevant to the day's work",
-      'To record the test results from the circuits completed that day',
-      'To formally discipline workers who have breached site safety rules',
+      'To record the inspection and test results from the circuits completed during the day',
+      'To formally discipline any workers who have breached the site safety rules that week',
     ],
     correctAnswer: 1,
     explanation:
@@ -1184,10 +1184,10 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       "You discover that a previous electrician's work does not comply with current regulations. How should you communicate this to the client?",
     options: [
-      '"Whoever did this last time has made a real mess and clearly had no idea what they were doing."',
-      'Say nothing to avoid embarrassing the client and simply correct the work yourself',
+      '"Honestly, whoever wired this last time has made a real mess of it and clearly had no idea what they were doing, I would not let them near the place again if I were you."',
+      '"I have spotted a few areas of the installation that are not up to standard, but there is no need to put anything in writing, I will just sort them out while I am here today."',
       "\"I've identified some areas of the installation that do not meet current safety standards. I can provide a written report detailing the issues and recommended remedial work.\"",
-      'Tell the client the installation is dangerous and must be completely rewired immediately',
+      '"I am afraid the whole installation is dangerous and the entire property will have to be completely rewired straight away before anyone in the house uses it again."',
     ],
     correctAnswer: 2,
     explanation:
@@ -1202,9 +1202,9 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'When attending a progress meeting with the main contractor and other trades, what should you prepare in advance?',
     options: [
-      'A detailed price for all the remaining work to hand to the client',
-      'A list of complaints about the other trades to raise in front of everyone',
-      'Nothing in particular, as these meetings are mainly informal catch-ups',
+      'A detailed price for all of the remaining work, ready to hand straight to the client at the end of the meeting',
+      'A list of complaints about the other trades on site, to be raised in front of everyone present at the meeting',
+      'Nothing in particular, since these progress meetings are mainly informal catch-ups between trades',
       'An update on your progress, any issues or delays, upcoming requirements, and coordination needs with other trades',
     ],
     correctAnswer: 3,
@@ -1221,9 +1221,9 @@ export const questionsPart1: StandardMockQuestion[] = [
       'An apprentice on site tells you they are struggling to understand a wiring diagram. What is the most appropriate response?',
     options: [
       '"Let me take some time to walk you through it. Understanding these diagrams is an important skill we can develop together."',
-      '"You should already know this by now, just figure it out for yourself."',
-      '"Do not worry about the diagram, just copy what I do and you will be fine."',
-      '"That is not really my job to teach you, ask the college about it instead."',
+      '"You really should know all this by now, just have another look at it and figure it out for yourself before we start."',
+      '"Do not worry about the diagram at all, just watch what I do on site and copy it exactly, you will be fine on the job."',
+      '"That is not really my job to teach you, you are better off asking your college tutor about it when you are next in."',
     ],
     correctAnswer: 0,
     explanation:
@@ -1238,10 +1238,10 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'A client requests work that you believe is unsafe and non-compliant with BS 7671. What should you do?',
     options: [
-      'Carry out the work as requested, as the client is paying and it is their property',
+      'Carry out the work exactly as requested, since the client is paying for it and it is their own property to do as they wish with',
       "Explain clearly why the request is unsafe, reference the relevant regulation, and offer a compliant alternative that meets the client's needs",
-      'Do the work but leave it off the certificate so you are not held responsible',
-      'Walk off the job immediately without explaining why to the client',
+      'Do the work as asked but leave it off the certificate afterwards so that you cannot be held responsible if anything goes wrong later',
+      'Walk off the job straight away and refuse to return, without explaining your reasons to the client or the main contractor',
     ],
     correctAnswer: 1,
     explanation:
@@ -1256,10 +1256,10 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'During a handover meeting with a facilities manager, you need to explain the operation of a new lighting control system. Which approach is best?',
     options: [
-      'Hand over the manufacturer manuals and let the manager read them on their own',
-      'Give a quick verbal explanation only, as written notes are rarely needed',
+      'Hand over the manufacturer manuals at the panel and leave the manager to read through them alone later on',
+      'Give a quick verbal explanation at the panel only, as written notes are rarely needed afterwards',
       'Provide a verbal walkthrough at the panel, a written operating guide, and offer to answer any follow-up questions',
-      'Email a link to the manufacturer website and assume the manager can work it out',
+      'Email a link to the manufacturer website and assume the manager will work the system out for themselves',
     ],
     correctAnswer: 2,
     explanation:
@@ -1456,10 +1456,10 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'When saving an electrical test certificate as a PDF, which file naming convention is most professional and organised?',
     options: [
-      '"document1.pdf"',
+      '"final test certificate copy 2.pdf"',
       '"EICR_2024_Thompson_42-High-Street.pdf"',
-      '"test cert.pdf"',
-      '"scan20240115.pdf"',
+      '"eicr scan latest version final.pdf"',
+      '"scan20240115_untitled_copy(2).pdf"',
     ],
     correctAnswer: 1,
     explanation:
@@ -1544,10 +1544,10 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'You need to find a specific EICR you completed last year. The file is somewhere on your computer. What is the fastest way to locate it?',
     options: [
-      'Open every folder one by one until you happen to find the right file',
-      'Reinstall the application you used to create the certificate last year',
+      'Open every folder on the computer one by one until you happen to come across the right file in the end',
+      'Reinstall the certification software you used last year and hope the missing file reappears on its own',
       "Use the operating system's search function (Windows Search or Spotlight) and type the client name or address",
-      'Restart the computer and check whether the file appears on the desktop',
+      'Restart the computer and then check whether the missing file has appeared on the desktop',
     ],
     correctAnswer: 2,
     explanation:
@@ -1597,10 +1597,10 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'You receive an email claiming to be from your electrical wholesaler asking you to "verify your account" by clicking a link. What should you do?',
     options: [
-      'Click the link and enter your account details so your account is not suspended',
+      'Click the link and enter your account details straight away so that the account is not suspended',
       'Do not click the link. Contact the wholesaler directly using their known phone number to verify the request',
-      'Reply to the email asking the sender to confirm that they are genuine',
-      'Forward the email to all your contacts to warn them about the message',
+      'Reply to the email and ask the sender to confirm that the request is genuine before you click',
+      'Forward the email to all of your contacts so that they are warned about the message as well',
     ],
     correctAnswer: 1,
     explanation:
@@ -1615,10 +1615,10 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'You need to share a cloud folder containing sensitive client data (personal addresses, electrical certificates) with a colleague. What is the safest approach?',
     options: [
-      'Create a public link to the folder and post it so the colleague can find it',
-      'Email the certificates as attachments to the whole company distribution list',
+      'Create a public link to the folder and post it where the colleague will be able to find it',
+      'Email the certificates as attachments to the whole company distribution list so nobody misses them',
       "Share the folder with specific permission settings, granting access only to your colleague's email address",
-      'Set the folder so that anyone with the link can edit the contents',
+      'Set the folder so that anyone on the internet with the link can view and edit the contents',
     ],
     correctAnswer: 2,
     explanation:
@@ -1780,9 +1780,9 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'You are entering data into a shared spreadsheet for a project. Another team member is entering data at the same time. What should you be aware of?',
     options: [
-      'Only one person can ever have the spreadsheet open at any one time',
-      'Your changes will not be saved until the other person closes the file',
-      'The spreadsheet will automatically lock you out until they have finished',
+      'Only one person at a time can have a shared spreadsheet open for editing, so you must wait your turn',
+      'Your changes will not be saved at all until the other person closes the file on their own computer',
+      'The spreadsheet will automatically lock you out of the file until they have finished editing',
       "Changes may conflict if you edit the same cell simultaneously — communicate to avoid overwriting each other's work",
     ],
     correctAnswer: 3,

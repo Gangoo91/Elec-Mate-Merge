@@ -947,6 +947,21 @@
       "source": "/earthing-systems-guide",
       "destination": "/guides/earthing-systems-tns-tncs-tt-explained",
       "permanent": true
+    },
+    {
+      "source": "/guides/niceic-vs-napit",
+      "destination": "/niceic-vs-napit-comparison",
+      "statusCode": 301
+    },
+    {
+      "source": "/guides/niceic-vs-napit-registration",
+      "destination": "/niceic-vs-napit-comparison",
+      "statusCode": 301
+    },
+    {
+      "source": "/guides/electrician-insurance-business-uk",
+      "destination": "/guides/electrician-insurance-uk",
+      "statusCode": 301
     }
   ],
   "rewrites": [

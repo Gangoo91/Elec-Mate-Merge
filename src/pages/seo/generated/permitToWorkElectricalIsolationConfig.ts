@@ -323,7 +323,7 @@ export const permitToWorkElectricalIsolationConfig: GeneratedGuideConfig = {
   ],
   relatedPages: [
     {
-      href: '/tools/rams-generator',
+      href: '/rams-generator',
       title: 'RAMS Generator',
       description: 'Generate a full RAMS pack — risk assessment, method statement, safe isolation procedure — that your site Authorised Person can use to open the PTW.',
       icon: 'FileText',

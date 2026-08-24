@@ -770,7 +770,6 @@ Every indexable SEO page on elec-mate.com, grouped by page type. 1149 pages.
 - [Napit Registration](https://www.elec-mate.com/guides/napit-registration) — NAPIT Registration Guide
 - [Niceic Certificate Requirements](https://www.elec-mate.com/guides/niceic-certificate-requirements) — NICEIC Certificate Requirements 2026
 - [Niceic Registration](https://www.elec-mate.com/guides/niceic-registration) — NICEIC Registration 2026
-- [Niceic Vs Napit](https://www.elec-mate.com/guides/niceic-vs-napit) — NICEIC vs NAPIT
 - [Niceic Vs Napit Vs Elecsa Comparison](https://www.elec-mate.com/guides/niceic-vs-napit-vs-elecsa-comparison) — NICEIC vs NAPIT vs ELECSA vs STROMA
 - [Nvq Level 2 Electrical Portfolio](https://www.elec-mate.com/guides/nvq-level-2-electrical-portfolio) — NVQ Level 2 Electrical Portfolio Guide
 - [Nvq Level 3 Electrical](https://www.elec-mate.com/guides/nvq-level-3-electrical) — NVQ Level 3 Electrical Installation UK

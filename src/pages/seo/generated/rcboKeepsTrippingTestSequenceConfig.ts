@@ -172,7 +172,7 @@ export const rcboKeepsTrippingTestSequenceConfig: GeneratedGuideConfig = {
       category: 'Certificate',
     },
     {
-      href: '/tools/electrical-quoting-app',
+      href: '/electrical-quoting-app',
       title: 'Electrical Quoting App',
       description: 'Turn the fault into a clean quote without rewriting the job.',
       icon: 'Calculator',

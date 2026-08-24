@@ -310,7 +310,7 @@ export const ramsForFullRewireConfig: GeneratedGuideConfig = {
   faqHeading: 'Frequently asked questions',
   relatedPages: [
     {
-      href: '/tools/rams-generator',
+      href: '/rams-generator',
       title: 'RAMS Generator',
       description:
         'Build a project-specific RAMS for a full rewire in under ten minutes, with hazard library, CDM 2015 framework and A4:2026 design points baked in.',

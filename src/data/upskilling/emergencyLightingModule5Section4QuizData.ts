@@ -5,10 +5,10 @@ export const emergencyLightingModule5Section4QuizQuestions: QuizQuestion[] = [
     id: 1,
     question: 'Why is labelling important in emergency lighting installations?',
     options: [
-      'To identify the manufacturer of the equipment',
+      'To identify the manufacturer and model of the fitted equipment',
       'To ensure safe isolation, rapid testing, and efficient inspections',
-      'To make the installation look professional',
-      'To meet building aesthetics requirements',
+      'To make the finished installation look neat and professional',
+      'To satisfy the building’s interior design and aesthetic brief',
     ],
     correctAnswer: 1,
     explanation:
@@ -122,10 +122,10 @@ export const emergencyLightingModule5Section4QuizQuestions: QuizQuestion[] = [
     id: 10,
     question: 'What compliance issue was found in the London leisure centre case study?',
     options: [
-      'Luminaires sited too far apart to meet escape route lux levels',
-      'Battery durations falling short of the required three hours',
+      'Luminaires spaced too far apart to achieve the required lux levels along the escape route',
+      'Battery durations falling well short of the rated figure when the system was discharge tested',
       'No circuit labelling, unlabelled luminaires, incomplete logbook, and missing commissioning records',
-      'Maintained fittings wired as non-maintained throughout',
+      'Maintained fittings wired as non-maintained luminaires throughout the entire building',
     ],
     correctAnswer: 2,
     explanation:

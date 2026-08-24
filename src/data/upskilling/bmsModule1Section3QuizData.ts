@@ -70,10 +70,10 @@ export const bmsModule1Section3QuizData: QuizQuestion[] = [
     id: 6,
     question: 'What is one advantage of centralised monitoring?',
     options: [
-      'It removes the need for any on-site maintenance staff',
-      'It eliminates the need for individual room sensors',
+      'Removes the need for any on-site maintenance staff to attend the building at all',
+      'Eliminates the need for individual room sensors in each separately controlled zone',
       'Provides a single dashboard for all building systems enabling quick issue identification',
-      'It guarantees the building can never lose mains power',
+      'Guarantees the building can never lose its incoming mains supply at any time',
     ],
     correctAnswer: 2,
     explanation:

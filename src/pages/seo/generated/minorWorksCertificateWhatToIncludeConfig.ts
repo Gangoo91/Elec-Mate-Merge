@@ -173,7 +173,7 @@ export const minorWorksCertificateWhatToIncludeConfig: GeneratedGuideConfig = {
       category: 'Certificate',
     },
     {
-      href: '/tools/electrical-quoting-app',
+      href: '/electrical-quoting-app',
       title: 'Electrical Quoting App',
       description: 'Move from minor works into pricing and follow-on jobs.',
       icon: 'Calculator',

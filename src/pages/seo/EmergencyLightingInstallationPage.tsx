@@ -39,7 +39,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'BS 5266 Part 1 is the UK standard governing emergency lighting design, installation, and testing. Compliance is a legal requirement for most non-domestic buildings under the Regulatory Reform (Fire Safety) Order 2005.',
-  'Escape route lighting must achieve a minimum of 1 lux along the centre line of the escape route. Open area (anti-panic) lighting requires a minimum of 0.5 lux across the core area.',
+  'Escape route lighting must achieve a minimum of 1 lux across the full width of the escape route. Open area (anti-panic) lighting requires a minimum of 0.5 lux across the core area.',
   'High-risk task areas require emergency lighting at a minimum of 10% of the normal working illuminance, or 15 lux, whichever is greater.',
   'Emergency luminaires must reach full rated illuminance within 5 seconds (or 0.5 seconds for high-risk task areas) and sustain it for the rated duration — typically 1, 2, or 3 hours.',
   'Monthly function tests and annual full-rated-duration discharge tests are mandatory. All results must be recorded in a BS 5266-1 compliant logbook.',
@@ -54,7 +54,7 @@ const faqs = [
   {
     question: 'What is the minimum lux level for escape route emergency lighting?',
     answer:
-      'Under BS 5266-1, escape route emergency lighting must provide a minimum horizontal illuminance of 1 lux along the centre line of the escape route. The ratio of maximum to minimum illuminance along the centre line must not exceed 40:1. For escape routes up to 2 metres wide, this 1 lux requirement applies. For wider escape routes, anti-panic lighting provisions apply instead.',
+      'Under BS 5266-1, escape route emergency lighting must provide a minimum horizontal illuminance of 1 lux across the full width of the escape route — BS EN 1838:2024 extended this from the centre line, excluding borders (0.5 m each side above 2 m width, or a quarter of the width at 2 m or less). The ratio of maximum to minimum illuminance must not exceed 40:1.',
   },
   {
     question: 'What is the difference between maintained and non-maintained emergency lighting?',
@@ -199,7 +199,7 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Escape route lighting</strong> — illuminates designated escape routes to
-                allow safe evacuation. Must achieve 1 lux minimum along the centre line of the route
+                allow safe evacuation. Must achieve 1 lux minimum across the full width of the route
                 and illuminate exit signs and fire safety equipment.
               </span>
             </li>
@@ -295,9 +295,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Escape routes (corridors, stairways)</strong> — minimum 1 lux along the
-                centre line. Maximum-to-minimum ratio along the centre line must not exceed 40:1.
-                Stairways must be lit so that each tread receives direct light.
+                <strong>Escape routes (corridors, stairways)</strong> — minimum 1 lux across the
+                full width. Maximum-to-minimum ratio must not exceed 40:1. Stairways must be lit so
+                that each tread receives direct light.
               </span>
             </li>
             <li className="flex items-start gap-3">

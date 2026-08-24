@@ -19,6 +19,13 @@ export const STANDARD_TO_DEVICE_TYPES: Record<string, string[]> = {
   // MCBs - BS EN 60898
   'BS EN 60898': ['mcb-type-a', 'mcb-type-b', 'mcb-type-c', 'mcb-type-d'],
 
+  // NOTE: BS 3871 is deliberately ABSENT here. These mappings are consumed only
+  // by Minor Works (`MWCircuitTab`), whose BS EN list does not offer BS 3871 —
+  // adding entries for it would be config nothing reads. BS 3871 support landed
+  // on the EICR/EIC schedule of tests under ELE-1604; extending it to Minor
+  // Works needs that form's own device list and Max Zs path, which is a
+  // separate piece of work.
+
   // RCBOs - BS EN 61009
   'BS EN 61009': ['rcbo-type-ac', 'rcbo-type-a', 'rcbo-type-f', 'rcbo-type-b'],
 

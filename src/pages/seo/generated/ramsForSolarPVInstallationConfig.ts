@@ -315,7 +315,7 @@ export const ramsForSolarPVInstallationConfig: GeneratedGuideConfig = {
   ],
   relatedPages: [
     {
-      href: '/tools/rams-generator',
+      href: '/rams-generator',
       title: 'RAMS Generator',
       description:
         'Build a UK-compliant Risk Assessment and Method Statement for solar PV (or any electrical job) with templates aligned to CDM 2015 and BS 7671.',
@@ -323,7 +323,7 @@ export const ramsForSolarPVInstallationConfig: GeneratedGuideConfig = {
       category: 'Tool',
     },
     {
-      href: '/tools/solar-pv-certificate',
+      href: '/solar-pv-certificate',
       title: 'Solar PV Certificate',
       description:
         'Digital solar PV commissioning and handover document — string test results, inverter detail, anti-islanding record, customer pack.',

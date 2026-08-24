@@ -8,7 +8,7 @@ const published = '2026-05-18';
 const modified = '2026-05-18';
 
 export const StartingAnElectricalBusinessUkConfig: GeneratedGuideConfig = {
-  pagePath: '/guides/starting-an-electrical-business-uk',
+  pagePath: '/guides/starting-an-electrical-business',
   title: 'Starting an Electrical Business in the UK 2026',
   description: 'A practical step-by-step guide to starting your own UK electrical business in 2026. Covers sole trader vs limited company, registering with HMRC…',
   datePublished: published,
@@ -156,7 +156,7 @@ export const StartingAnElectricalBusinessUkConfig: GeneratedGuideConfig = {
     { href: '/guides/how-to-price-consumer-unit-replacement-as-an-electrician', title: 'How to Price CU Replacement', description: 'Fair-margin pricing for consumer unit swaps.', icon: 'PoundSterling', category: 'Guide' },
     { href: '/guides/electrician-insurance-uk', title: 'Electrician Insurance UK', description: 'PL, PI, EL, Tools-in-Van — what you need.', icon: 'ShieldCheck', category: 'Guide' },
     { href: '/guides/competent-person-scheme-electrical', title: 'Competent Person Scheme', description: 'How NICEIC / NAPIT / ELECSA / Stroma membership works.', icon: 'FileCheck2', category: 'Guide' },
-    { href: '/tools/electrical-quoting-app', title: 'Electrical Quoting App', description: 'Voice-driven quoting from your phone.', icon: 'FileText', category: 'Tool' },
+    { href: '/electrical-quoting-app', title: 'Electrical Quoting App', description: 'Voice-driven quoting from your phone.', icon: 'FileText', category: 'Tool' },
     { href: '/eic-certificate', title: 'EIC Certificate App', description: 'Issue Electrical Installation Certificates on your phone.', icon: 'FileCheck2', category: 'Tool' },
   ],
   ctaHeading: 'For Electrical Business Owners: Run Your Business on Elec-Mate',

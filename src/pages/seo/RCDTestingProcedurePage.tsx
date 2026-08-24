@@ -1,4 +1,5 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
+import RcdTripTimeChecker from '@/components/seo/RcdTripTimeChecker';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import { CalculatorSurface } from '@/components/calculators/shared';
@@ -130,7 +131,11 @@ const sections = [
     heading: 'What Is RCD Testing?',
     content: (
       <>
-        <p>
+        {/* Sits above the prose: the query set for this page is almost entirely
+            per-rating trip-time lookups, so the answer has to be reachable
+            without reading. */}
+        <RcdTripTimeChecker />
+        <p className="mt-6">
           RCD (Residual Current Device) testing verifies that every RCD in an electrical
           installation — whether RCCB (Residual Current Circuit Breaker), RCBO (Residual Current
           Breaker with Overcurrent protection), or socket-outlet RCD — operates correctly at the

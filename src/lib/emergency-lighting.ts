@@ -289,7 +289,7 @@ export function calculateEmergencyLighting(
   const commissioningChecklist = [
     'Verify all luminaires illuminate on mains failure',
     'Check changeover time <0.5s (escape routes) or <5s (open areas)',
-    'Measure illuminance on escape routes (min 1 lux centreline)',
+    'Measure illuminance on escape routes (min 1 lux across the full width)',
     'Verify uniformity ratio does not exceed 40:1',
     'Confirm battery duration meets specified requirement',
     'Test all exit signs for visibility and correct orientation',

@@ -71,7 +71,7 @@ const faqs = [
   {
     question: 'What is the minimum emergency lighting requirement for a warehouse?',
     answer:
-      'Emergency lighting in warehouses must comply with BS 5266-1 (Emergency Lighting) and Regulation 560.7 of BS 7671. Escape route lighting must provide a minimum horizontal illuminance of 1 lux at floor level along the centreline of the escape route, with a minimum uniformity ratio of 1:40. Anti-panic lighting in open areas must provide a minimum of 0.5 lux at floor level. The duration of emergency lighting must be a minimum of 1 hour for escape routes and 3 hours for high-risk task areas. In large warehouses, the route to exits can be long and complex, requiring careful emergency luminaire placement to ensure all escape routes are adequately lit.',
+      'Emergency lighting in warehouses must comply with BS 5266-1 (Emergency Lighting) and Regulation 560.7 of BS 7671. Escape route lighting must provide a minimum horizontal illuminance of 1 lux at floor level across the full width of the escape route, with a minimum uniformity ratio of 1:40. Anti-panic lighting in open areas must provide a minimum of 0.5 lux at floor level. The duration of emergency lighting must be a minimum of 1 hour for escape routes and 3 hours for high-risk task areas. In large warehouses, the route to exits can be long and complex, requiring careful emergency luminaire placement to ensure all escape routes are adequately lit.',
   },
   {
     question: 'What energy metering is required for UK warehouses?',
@@ -473,7 +473,7 @@ const sections = [
                 <strong>BS 5266-1 requirements:</strong> Emergency luminaires must be positioned at
                 all changes of direction, at every exit door, at stairways, and to illuminate every
                 exit sign. The minimum maintained illuminance on escape routes is 1 lux at floor
-                level along the centreline. Anti-panic lighting in the body of the warehouse
+                level across the full width. Anti-panic lighting in the body of the warehouse
                 requires 0.5 lux minimum.
               </span>
             </li>

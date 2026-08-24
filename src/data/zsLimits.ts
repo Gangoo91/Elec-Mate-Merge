@@ -128,6 +128,70 @@ export const MCB_RCBO_ZS_LIMITS = {
 } as const;
 
 // =============================================================================
+// BS 3871-1 CIRCUIT-BREAKERS — Types 1, 2, 3 and 4 (230V)
+// =============================================================================
+//
+// ELE-1604. BS 3871-1 is WITHDRAWN, replaced by BS EN 60898-1:2019 — which is
+// exactly why an EICR needs it. The On-Site Guide says so in as many words:
+// "BS 3871-1 has been withdrawn and is replaced by BS EN 60898-1:2019; however,
+// these devices are likely to be present in older installations." An EICR
+// surveys what is there, not what would be installed today.
+//
+// 🔴 These curves are NOT interchangeable with B/C/D. Type 1 trips at 4x In
+// where a Type B trips at 5x — so scheduling an old Type 1 as a "Type B"
+// understates its permitted Zs by 20% and can fail a circuit that complies.
+// Type 4 is 50x In, an order of magnitude away from anything in Table 41.3.
+//
+// ── Provenance ────────────────────────────────────────────────────────────────
+// BS 7671 dropped the BS 3871 time/current characteristics, so Table 41.3 has
+// no row for these devices. The IET On-Site Guide keeps them in **Appendix B,
+// Table B6(ii)** — "Circuit-breakers. Maximum measured earth fault loop
+// impedance (in ohms) at ambient temperature where the overcurrent device is a
+// circuit-breaker to BS 3871". GN3 Table A5 is the equivalent (confirmed in
+// bs7671_facets), but GN3 is not held; the OSG is.
+//
+// The values BELOW are the 70 °C DESIGN figures, not the OSG's measured ones,
+// so that they sit on the same footing as MCB_RCBO_ZS_LIMITS and the app's
+// existing 100%/80% Zs basis toggle behaves identically for a BS 3871 device.
+// Storing the OSG's measured figures here would apply the 0.8 factor twice.
+//
+// Derived as 230 x 0.95 / (k x In), the same Cmin = 0.95 formula the printed
+// Table 41.3 uses. VERIFIED, not assumed: multiplying each value below by the
+// OSG's 0.8 ambient factor reproduces **all 60 printed figures of Table B6(ii)
+// exactly**, which is what pins k for each type. `npm run check:eicr` asserts
+// that reconciliation so a hand-edit here cannot drift from the printed table.
+//
+//   Type 1 -> k = 4      Type 2 -> k = 7      Type 3 -> k = 10     Type 4 -> k = 50
+//
+// Ratings are the BS 3871 preferred values printed in Table B6(ii) — note 15,
+// 30, 45 and 60 A, which have no BS EN 60898 equivalent.
+//
+// One row, not two: Table B6(ii) covers "0.1 to 5 s" for every type, so unlike
+// Type D there is no separate 5 s column to hold.
+
+export const BS3871_ZS_LIMITS = {
+  type1: {
+    5: 10.93, 6: 9.1, 10: 5.46, 15: 3.64, 16: 3.41, 20: 2.73, 25: 2.19, 30: 1.82,
+    32: 1.71, 40: 1.37, 45: 1.21, 50: 1.09, 60: 0.91, 63: 0.87, 100: 0.55,
+  },
+  type2: {
+    5: 6.24, 6: 5.2, 10: 3.12, 15: 2.08, 16: 1.95, 20: 1.56, 25: 1.25, 30: 1.04,
+    32: 0.98, 40: 0.78, 45: 0.69, 50: 0.62, 60: 0.52, 63: 0.5, 100: 0.31,
+  },
+  type3: {
+    5: 4.37, 6: 3.64, 10: 2.19, 15: 1.46, 16: 1.37, 20: 1.09, 25: 0.87, 30: 0.73,
+    32: 0.68, 40: 0.55, 45: 0.49, 50: 0.44, 60: 0.36, 63: 0.35, 100: 0.22,
+  },
+  type4: {
+    5: 0.87, 6: 0.73, 10: 0.44, 15: 0.29, 16: 0.27, 20: 0.22, 25: 0.17, 30: 0.15,
+    32: 0.14, 40: 0.11, 45: 0.1, 50: 0.09, 60: 0.07, 63: 0.07, 100: 0.04,
+  },
+} as const;
+
+/** Instantaneous trip multiples of In, by BS 3871 type — the reason the table exists. */
+export const BS3871_TRIP_MULTIPLES = { type1: 4, type2: 7, type3: 10, type4: 50 } as const;
+
+// =============================================================================
 // TABLE 41.2 - Fuses at 0.4s Disconnection Time (230V)
 // =============================================================================
 
@@ -387,6 +451,7 @@ export const REDUCED_VOLTAGE_ZS_LIMITS = {
 
 export type DisconnectionTime = '0.4s' | '5s';
 export type MCBCurve = 'typeB' | 'typeC' | 'typeD';
+export type BS3871Type = 'type1' | 'type2' | 'type3' | 'type4';
 export type FuseType = 'bs88_2' | 'bs88_3' | 'bs3036' | 'bs1362';
 export type RcdRating = 30 | 100 | 300 | 500;
 
@@ -422,6 +487,35 @@ export function getMcbZsLimit(
     source: `BS 7671 Table 41.3 (${curve.replace('type', 'Type ')})`,
     disconnectionTime,
     notes: `Cmin = 0.95 applied`,
+  };
+}
+
+/**
+ * Get maximum Zs for a circuit-breaker to BS 3871-1 (Types 1, 2, 3, 4).
+ *
+ * `disconnectionTime` is accepted for signature parity with `getMcbZsLimit`,
+ * but is deliberately unused: OSG Table B6(ii) prints a single "0.1 to 5 s"
+ * row per type, so the same value serves both 0.4 s and 5 s. Returning a
+ * different figure for 5 s would be inventing data the table does not hold.
+ */
+export function getBs3871ZsLimit(
+  type: BS3871Type,
+  rating: number,
+  disconnectionTime: DisconnectionTime = '0.4s'
+): ZsLookupResult | null {
+  const typeData = BS3871_ZS_LIMITS[type];
+  if (!typeData) return null;
+
+  const maxZs = typeData[rating as keyof typeof typeData];
+  if (maxZs === undefined) return null;
+
+  return {
+    maxZs,
+    source: `IET On-Site Guide Table B6 (BS 3871 ${type.replace('type', 'Type ')})`,
+    disconnectionTime,
+    notes:
+      `Withdrawn standard — trips at ${BS3871_TRIP_MULTIPLES[type]}x In. ` +
+      `BS 7671 Table 41.3 does not cover BS 3871; do not substitute a Type B/C/D value.`,
   };
 }
 
@@ -519,6 +613,30 @@ export function getZsLimitFromDeviceString(
       result.notes = 'MCCB - verify instantaneous trip setting matches assumed curve';
     }
     return result;
+  }
+
+  /*
+   * BS 3871-1 circuit-breakers — ELE-1604.
+   *
+   * 🔴 MUST precede the MCB branch below. That branch matches on the word
+   * "mcb" and DEFAULTS to Type B, so a device string like
+   * "MCB MCB (BS 3871) Type 1" — which is exactly what the schedule's
+   * validators build — fell straight through to the Table 41.3 Type B column.
+   *
+   * Both directions of that are bad. A Type 1 (4x In) judged at the Type B
+   * limit is failed for a fault it does not have (1.37 Ω against a real
+   * 1.71 Ω). A Type 4 (50x In) judged at the Type B limit is the dangerous
+   * one: its real limit at 32 A is 0.14 Ω, so a circuit ten times over would
+   * have been passed silently.
+   *
+   * Returns null when no type is recorded rather than guessing — the caller
+   * (`zsValidator`) already treats a missing curve as "not verified" and says
+   * so, which is the honest outcome.
+   */
+  if (device.includes('3871')) {
+    const typeMatch = device.match(/type\s*([1-4])\b/) || device.match(/\b([1-4])\b(?!\s*a)/);
+    if (!typeMatch) return null;
+    return getBs3871ZsLimit(`type${typeMatch[1]}` as BS3871Type, rating, disconnectionTime);
   }
 
   // MCB/RCBO detection

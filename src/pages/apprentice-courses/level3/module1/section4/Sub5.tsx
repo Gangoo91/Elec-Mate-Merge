@@ -240,7 +240,7 @@ export default function Sub5() {
           <ConceptBlock title="Emergency lighting — BS 5266" plainEnglish="Emergency lighting illuminates escape routes when normal supply fails. BS 5266-1 sets standards: minimum illumination 1 lux on escape routes, 0.5 lux open area, 3 hours duration, periodic testing (monthly function, annual full discharge), recorded results. The standard covers both self-contained fittings (each fitting with its own battery, charger and inverter) and central battery systems (a single battery cabinet serving multiple fittings). The current BS 5266-1:2016+A1:2022 is harmonised with the European standards EN 1838 (lighting applications — emergency lighting) and EN 50172 (emergency escape lighting systems)." onSite="The L3 supervisor on any commercial install verifies emergency lighting design meets BS 5266 and the test regime is set up. After any electrical works affecting EM lighting circuits, post-works function test before handover. The L3 supervisor doing periodic inspection (EICR) on commercial premises checks the EM lighting test log — monthly entries showing brief test events, annual entries showing 3-hour discharge tests. Missing test log is itself a sign that the system isn’t being maintained. Coordinated with the responsible person under RRFSO Article 17.">
             <p>Emergency lighting requirements:</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Escape route</strong> — 1 lux minimum on the route centreline.</li>
+              <li><strong>Escape route</strong> — 1 lux minimum across the full width of the route.</li>
               <li><strong>Open area</strong> — 0.5 lux minimum.</li>
               <li><strong>High-risk task area</strong> — 10% of normal task lighting (BS 5266-7).</li>
               <li><strong>Duration</strong> — 3 hours typical commercial / public.</li>
@@ -757,7 +757,7 @@ export default function Sub5() {
             "L3 supervisor makes the fight-vs-evacuate call calmly and clearly; default conservative.",
             "RRFSO 2005 Articles 9 / 11 / 13 / 14 / 17 / 21 — responsible-person duties for FRA, arrangements, equipment, escape routes, maintenance, training.",
             "Fire compartmentation under Building Regs Part B — penetrations through compartment lines must be fire-stopped to the same rating.",
-            "Emergency lighting BS 5266 — 1 lux on escape route centreline, 3-hour duration, monthly function test, annual 3-hour discharge.",
+            "Emergency lighting BS 5266 — 1 lux across the full width of escape routes, 3-hour duration, monthly function test, annual 3-hour discharge.",
             "AFDD under BS 7671 Reg 421.1.7 — mandatory in specific higher-risk residential occupancies; recommended more widely.",
             "Impairment notice + fire watch where work disables fire systems during occupied periods.",
           ]} />

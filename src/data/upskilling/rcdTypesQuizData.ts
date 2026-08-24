@@ -58,10 +58,10 @@ export const rcdTypesQuizData: QuizQuestion[] = [
     id: 5,
     question: 'What is the main application for Type F RCDs?',
     options: [
-      'Final circuits supplying only fixed resistive heating loads',
+      'Final circuits supplying fixed resistive heating loads only, such as immersion heaters',
       'Single-phase equipment with frequency converters, such as inverter-drive appliances',
-      'Three-phase motor circuits on a TN-C-S supply',
-      'Socket-outlet circuits in domestic bathrooms',
+      'Three-phase motor starter circuits on a TN-C-S supply, such as workshop machines',
+      'Socket-outlet circuits in domestic bathrooms, such as shaver supply unit points',
     ],
     correctAnswer: 1,
     explanation:

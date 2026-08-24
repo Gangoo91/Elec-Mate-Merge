@@ -47,9 +47,9 @@ export const eicrQuizQuestions: QuizQuestion[] = [
     question: 'How frequently must EICRs be conducted in private rental properties in England?',
     options: [
       'At least every 5 years, or sooner if specified on the report',
-      'Only once at the start of the very first tenancy',
-      'Every 12 months without exception',
-      'Only when a tenant reports an electrical fault',
+      'Once only, at the start of the very first tenancy agreement',
+      'Every 12 months without exception, whatever the property',
+      'Whenever a tenant reports an electrical fault or defect',
     ],
     correctAnswer: 0,
     explanation:
@@ -93,7 +93,7 @@ export const eicrQuizQuestions: QuizQuestion[] = [
     ],
     correctAnswer: 3,
     explanation:
-      'RCD operating time at 1×IΔn must be ≤300ms. At 5×IΔn for socket circuits, the maximum is 40ms.',
+      'RCD operating time at 1xIdn must be not more than 300 ms — that is the BS 7671 criterion. 40 ms at 5xIdn is the BS EN 61008/61009 PRODUCT-STANDARD figure — it describes the device, not the BS 7671 verification. Amendment 4 deleted Table 3A of Appendix 3, and effectiveness is now verified by an AC test at the rated residual operating current: 300 ms maximum for a general non-delay type, or between 130 ms and 500 ms for a delay Type S (Reg 643.7.3).',
   },
   {
     id: 8,

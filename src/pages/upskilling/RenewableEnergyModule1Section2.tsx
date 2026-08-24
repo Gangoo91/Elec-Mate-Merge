@@ -23,7 +23,7 @@ const inlineChecks = [
   {
     id: 'm1s2-historical-fragmentation',
     question:
-      'BS 7671 splits low-carbon technology across multiple sections and chapters (551, 712, 722, Chapter 57, 715, 730, 753, Appendix 17). What is the most accurate diagnosis of why?',
+      'BS 7671 splits low-carbon technology across multiple sections and chapters (551, 712, 722, Chapter 57, 715, 730, 753, Chapter 81). What is the most accurate diagnosis of why?',
     options: [
       'Architectural intent — each chapter was deliberately scoped to one technology',
       'Historical accretion — sections and chapters were added as each LCT technology emerged, without a master plan',
@@ -93,12 +93,12 @@ const inlineChecks = [
   {
     id: 'm1s2-appendix-17-trajectory',
     question:
-      'A4:2026 introduced Appendix 17 on energy efficiency recommendations. What is the intended trajectory?',
+      'What did A4:2026 do with Appendix 17, the energy-efficiency appendix?',
     options: [
-      'It will remain an appendix indefinitely',
-      'It is informational only and will be deleted in the 19th Edition',
-      'It is intended to be developed into a new Part 8 of BS 7671 in a future amendment',
-      'It will be replaced by an IET Code of Practice',
+      'Left it in place as an informative appendix, unchanged from A2:2022',
+      'Deleted it, removing energy efficiency from BS 7671 entirely',
+      'Deleted it and introduced Chapter 81 in the new Part 8, in the body of the standard',
+      'Renumbered it as Appendix 18 alongside the prosumer content',
     ],
     correctIndex: 2,
     explanation:
@@ -128,12 +128,12 @@ const quizQuestions = [
     options: [
       'Section 712 only, since the PV array is the dominant generating source in the project',
       'Chapter 57 only, on the basis that the BESS governs the whole multi-source design',
-      'Sections 712, 722, 551 and Chapter 57 — plus Appendix 17 and the relevant IET Codes of Practice',
+      'Sections 712, 722, 551 and Chapter 57 — plus Chapter 81 and the relevant IET Codes of Practice',
       'Section 826 alone, treating the combined system as a single prosumer electrical installation',
     ],
     correctAnswer: 2,
     explanation:
-      'PV is governed by Section 712, EV charging by Section 722 and the BESS by Chapter 57. As sources of supply with bidirectional flow they also engage Section 551 (551.7.2.1 treats the BESS as a generating set). Appendix 17 informs efficiency choices and the IET Codes of Practice are the operational references.',
+      'PV is governed by Section 712, EV charging by Section 722 and the BESS by Chapter 57. As sources of supply with bidirectional flow they also engage Section 551 (551.7.2.1 treats the BESS as a generating set). Chapter 81 informs efficiency choices — A4:2026 deleted the old Appendix 17 — and the IET Codes of Practice are the operational references.',
   },
   {
     id: 2,
@@ -299,7 +299,7 @@ export default function RenewableEnergyModule1Section2() {
     title:
       'The LCT chapter map in BS 7671:2018+A4:2026 | Renewable Energy 1.2 | Elec-Mate',
     description:
-      'Sections 551, 712, 722, 730, 753, 715, Chapter 57 and Appendix 17 — how BS 7671:2018+A4:2026 splits low-carbon technology across chapters, how they interlock on hybrid installs, and where the IET Codes of Practice fill the gaps.',
+      'Sections 551, 712, 722, 730, 753, 715, Chapter 57 and Chapter 81 — how BS 7671:2018+A4:2026 splits low-carbon technology across chapters, how they interlock on hybrid installs, and where the IET Codes of Practice fill the gaps.',
   });
 
   return (
@@ -317,7 +317,7 @@ export default function RenewableEnergyModule1Section2() {
           <PageHero
             eyebrow="Module 1 · Section 2 · BS 7671:2018+A4:2026"
             title="The LCT chapter map in BS 7671:2018+A4:2026"
-            description="How BS 7671 splits low-carbon technology across Sections 551, 712, 715, 722, 730, 753, Chapter 57 and Appendix 17 — how the chapters interlock on hybrid installs, and where the IET Codes of Practice slot in."
+            description="How BS 7671 splits low-carbon technology across Sections 551, 712, 715, 722, 730, 753, Chapter 57 and Chapter 81 — how the chapters interlock on hybrid installs, and where the IET Codes of Practice slot in."
             tone="yellow"
           />
 
@@ -384,8 +384,9 @@ export default function RenewableEnergyModule1Section2() {
                 separate per-technology installs.
               </li>
               <li>
-                <strong className="text-white">Appendix 17</strong> (energy efficiency) is
-                the latest addition, planned to become Part 8 in the 19th Edition.
+                <strong className="text-white">Chapter 81</strong> (energy efficiency) is
+                the latest addition — A4:2026 deleted the old Appendix 17 and moved the
+                subject into the body of the standard as Part 8-1.
               </li>
             </ul>
             <p>
@@ -658,7 +659,7 @@ export default function RenewableEnergyModule1Section2() {
           <ConceptBlock
             title="Appendix 17 is the trail to Part 8 — read it as the trajectory"
             plainEnglish="A4 deleted Appendix 17 and introduced Chapter 81 in its place, inside a new Part 8. The content is the same subject — energy efficiency recommendations — but it now sits in the body of the standard rather than in an appendix. It is still marked (Informative), so it is recommendations, not requirements."
-            onSite="On commercial and industrial designs Appendix 17 considerations already affect cable sizing for loss minimisation, transformer efficiency class selection, motor efficiency class, and VSD specification. On domestic installs the appendix mostly does not apply."
+            onSite="On commercial and industrial designs Chapter 81 considerations already affect cable sizing for loss minimisation, transformer efficiency class selection, motor efficiency class, and VSD specification. On domestic installs the chapter mostly does not apply."
           >
             <p>
               Chapter 81 is the new energy efficiency chapter introduced in A4:2026, replacing the deleted Appendix 17. The
@@ -676,7 +677,7 @@ export default function RenewableEnergyModule1Section2() {
               The implication for the LCT designer is that the cert workflow built today
               should accommodate the energy-efficiency design decisions that will become
               recordable on Part 6 certs as the trajectory plays out. A4\'s Reg 133.1.3
-              equipment-usage recording change and Appendix 17 are part of the same
+              equipment-usage recording change and Chapter 81 are part of the same
               direction.
             </p>
           </ConceptBlock>
@@ -767,7 +768,7 @@ export default function RenewableEnergyModule1Section2() {
           <Scenario
             title="Hybrid PV + BESS + EV with V2G capability on a TN-C-S domestic property"
             situation="A homeowner wants a 6 kWp grid-tied PV array, a 10 kWh AC-coupled battery, and a 7.4 kW EV chargepoint with V2G. Existing supply TN-C-S (PME), single-phase 100 A, CU with three spare ways, EPC C with planned heat pump retrofit in the following 12 months."
-            whatToDo="Map the chapter set first. Section 712 governs the PV-side. Chapter 57 governs the BESS — chemistry, BMS interface, ventilation, isolation. Section 722 governs the EV chargepoint, including the A4 deletion of the 'reasonably practicable' PME exception. Section 551 governs the supply-boundary interface for all three sources — bidirectional protective device (551.7.1(c)), supply-side installation (551.7.2.1, with the BESS treated as a generating set), automatic disconnection (551.7.4), prevention of reconnection (551.7.5), isolation (551.7.6). The forthcoming heat pump retrofit may engage Section 753 if electric UFH is paired with it. Appendix 17 design considerations may apply to cable sizing. The IET Codes of Practice (PV, EESS, EV) are the operational references. G99 notification applies because the aggregate inverter capacity is likely above the G98 16 A per-phase threshold."
+            whatToDo="Map the chapter set first. Section 712 governs the PV-side. Chapter 57 governs the BESS — chemistry, BMS interface, ventilation, isolation. Section 722 governs the EV chargepoint, including the A4 deletion of the 'reasonably practicable' PME exception. Section 551 governs the supply-boundary interface for all three sources — bidirectional protective device (551.7.1(c)), supply-side installation (551.7.2.1, with the BESS treated as a generating set), automatic disconnection (551.7.4), prevention of reconnection (551.7.5), isolation (551.7.6). The forthcoming heat pump retrofit may engage Section 753 if electric UFH is paired with it. Chapter 81 design considerations may apply to cable sizing. The IET Codes of Practice (PV, EESS, EV) are the operational references. G99 notification applies because the aggregate inverter capacity is likely above the G98 16 A per-phase threshold."
             whyItMatters="The single most expensive design failure on hybrid installs is reading only the 'dominant' chapter. A designer who reads Section 712 and treats the BESS as a load downstream of the PV inverter has missed Reg 551.7.2.1 — the BESS is a generating set under Section 551 rules, and the bidirectional protective device under 551.7.1(c) is required at the BESS interface as well as at the PV interface. The corrected design typically requires additional protective devices and additional commissioning evidence — much cheaper to design in than to retrofit after the EICR observation."
           />
 
@@ -854,8 +855,8 @@ export default function RenewableEnergyModule1Section2() {
             </ul>
             <p>Expected direction of the 19th Edition:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>Consolidation of LCT chapters (551, 712, 715, 722, 730, 753, Chapter 57, Appendix 17) into a clearer Part 7 framework</li>
-              <li>Appendix 17 promoted into a new Part 8 on energy efficiency</li>
+              <li>Consolidation of LCT chapters (551, 712, 715, 722, 730, 753, Chapter 57, Chapter 81) into a clearer Part 7 framework</li>
+              <li>Chapter 81 built out further — A4:2026 already promoted energy efficiency out of Appendix 17 into Part 8</li>
               <li>Deeper integration with the international BS EN 60364 series</li>
               <li>A4 recordkeeping trajectory (Reg 133.1.3, 551.7.1(c)) extended</li>
             </ul>
@@ -869,7 +870,7 @@ export default function RenewableEnergyModule1Section2() {
 
           <KeyTakeaways
             points={[
-              'BS 7671\'s LCT content is fragmented across Sections 551, 712, 715, 722, 730, 753, Chapter 57, Chapter 82 and Appendix 17. Historical accretion, not architectural intent.',
+              'BS 7671\'s LCT content is fragmented across Sections 551, 712, 715, 722, 730, 753, Chapter 57, Chapter 81 and Chapter 82. Historical accretion, not architectural intent.',
               'Section 551 is the spine of grid-tied LCT design — touched by every grid-tied LCT install.',
               'Reg 551.7.2.1 explicitly classifies stationary batteries (Chapter 57) as generating sets, not loads — reshaping how Chapter 57 interlocks with Section 551 on hybrid designs.',
               'Chapter 57 (new in A4) is the dedicated stationary secondary battery chapter; Reg 551.8 was deleted, content moved into Chapter 57. Pluggable UPS, fire and emergency lighting batteries are explicitly excluded.',

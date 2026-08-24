@@ -31,9 +31,9 @@ export const emergencyLightingModule6Section2QuizData: QuizQuestion[] = [
     id: 3,
     question: 'Why must emergency lighting activate independently of the fire alarm system?',
     options: [
-      'Because the fire alarm panel draws too much current to also power luminaires',
-      'Because emergency luminaires are tested annually while alarms are tested weekly',
-      'Because building control only certifies the two systems when they are separated',
+      'Because the fire alarm panel draws far too much current to power the emergency luminaires as well',
+      'Because emergency luminaires are tested annually while the fire alarm system is tested weekly',
+      'Because building control will only certify the two systems when they are kept fully separated',
       'Because power failure may occur without fire, and fire may occur without triggering alarms immediately',
     ],
     correctAnswer: 3,
@@ -85,9 +85,9 @@ export const emergencyLightingModule6Section2QuizData: QuizQuestion[] = [
     id: 7,
     question: 'Which three records will fire inspectors typically request during an audit?',
     options: [
-      'Employee contracts, payroll records, and business insurance',
-      'Architectural drawings, furniture layouts, and colour schemes',
-      'Supplier invoices, product warranties, and delivery notes',
+      'Employee contracts, payroll records, and the current business insurance schedule',
+      'Architectural drawings, furniture layouts, and the agreed interior colour schemes',
+      'Supplier invoices, product warranty cards, and all the signed delivery notes',
       'Fire risk assessment, emergency lighting test records, and installation certificates',
     ],
     correctAnswer: 3,
@@ -111,10 +111,10 @@ export const emergencyLightingModule6Section2QuizData: QuizQuestion[] = [
     id: 9,
     question: 'What penalty can occur for failing to maintain compliant emergency lighting?',
     options: [
-      'A written improvement notice only, with no financial or custodial penalty',
+      'A written improvement notice only, carrying no financial penalty and no possibility of imprisonment',
       'Unlimited fines, imprisonment up to 2 years, Prohibition Notices closing premises, and potential corporate manslaughter charges',
-      'Suspension of the building insurance until remedial works are completed',
-      'A fixed civil penalty capped at £1,000 per affected luminaire',
+      'Suspension of the building insurance policy until every item of remedial work has been completed and formally signed off',
+      'A fixed civil penalty capped at £1,000 for each affected luminaire, with no other legal consequences',
     ],
     correctAnswer: 1,
     explanation:
@@ -124,10 +124,10 @@ export const emergencyLightingModule6Section2QuizData: QuizQuestion[] = [
     id: 10,
     question: 'What was the compliance issue in the Manchester retail complex case study?',
     options: [
-      "The luminaires failed the annual three-hour discharge duration test",
-      "Escape route illuminance fell below the 1 lux minimum across the route width",
+      'The luminaires failed the annual discharge duration test carried out during the site inspection',
+      'Escape route illuminance fell below the required minimum across the full width of every route',
       "The system achieved adequate lighting but documentation wasn't integrated with the fire safety strategy",
-      "Emergency luminaires were wired to the same circuit as the fire alarm",
+      'The emergency luminaires had been wired onto the same final circuit as the fire alarm panel',
     ],
     correctAnswer: 2,
     explanation:

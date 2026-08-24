@@ -457,7 +457,7 @@ export const section710MedicalLocationsConfig: GeneratedGuideConfig = {
       category: 'Guide',
     },
     {
-      href: '/tools/electrical-testing-calculators',
+      href: '/electrical-testing-calculators',
       title: 'All 70 Electrical Calculators',
       description:
         'Voltage drop, cable sizing, Zs, fault current, adiabatic, RCD — every calc free to use.',

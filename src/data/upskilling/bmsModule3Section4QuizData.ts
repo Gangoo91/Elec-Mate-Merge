@@ -123,10 +123,10 @@ export const bmsModule3Section4QuizData: QuizQuestion[] = [
     question:
       'In the real-world example, how did load shedding protect the data centre from penalties?',
     options: [
-      'By switching to on-site generators whenever grid demand peaked',
-      'By renegotiating its contracted demand limit upward with the utility',
+      'By transferring the whole site onto standby generators whenever grid demand peaked',
+      'By renegotiating its contracted demand limit upward with the electricity supplier',
       'By cutting non-critical circuits when power demand peaked, avoiding utility demand charges',
-      'By shutting down the critical cooling plant during the peak period',
+      'By shutting down the critical cooling plant for the duration of the peak period',
     ],
     correctAnswer: 2,
     explanation:

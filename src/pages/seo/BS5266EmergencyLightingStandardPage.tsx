@@ -47,7 +47,7 @@ const keyTakeaways = [
   'BS 5266-1:2025 is the current UK code of practice for emergency lighting (revised from the 2016 edition), covering escape route lighting, open area lighting, high-risk task area lighting, and standby lighting.',
   'Emergency lighting is a legal requirement under the Regulatory Reform (Fire Safety) Order 2005, the Health and Safety at Work Act 1974, and Building Regulations Approved Document B.',
   'BS 7671 Reg 560.9 requires emergency lighting systems to comply with BS 5266-1:2025, BS EN 1838:2024, and BS EN 50172 — three standards that must be read together.',
-  'Emergency luminaires must provide a minimum of 1 lux along the centre line of an escape route, with a minimum duration of 3 hours for most commercial premises.',
+  'Emergency luminaires must provide a minimum of 1 lux across the full width of an escape route, with a minimum duration of 3 hours for most commercial premises.',
   'Testing intervals are defined as: monthly functional tests (flick test), annually a full rated duration test (3-hour battery discharge), and daily visual checks where practicable.',
   'A BS 5266-1:2025 certificate is only valid when accompanied by a current signed checklist/report, photometric design data in an accepted format, and the site test log book.',
   'Elec-Mate includes emergency lighting certificate templates, AI-powered defect coding, and training courses covering BS 5266 design, installation, and testing requirements.',
@@ -320,9 +320,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Minimum 1 lux</strong> along the centre line of the escape route at floor
-                level. The centre band (half the width of the route) must achieve at least 1 lux.
-                The edge bands must achieve at least 0.5 lux (50% of the centre line value).
+                <strong>Minimum 1 lux</strong> across the full width of the escape route at floor
+                level. BS EN 1838:2024 extended this from the centre line to the whole width;
+                borders are excluded (0.5 m each side above 2 m width, or a quarter of the width
+                at 2 m or less).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -337,8 +338,8 @@ const sections = [
               <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>50% of required illuminance within 5 seconds.</strong> The emergency
-                luminaire must achieve at least 50% of the required illuminance (0.5 lux on the
-                centre line) within 5 seconds of the mains supply failing. Full illuminance (1 lux)
+                luminaire must achieve at least 50% of the required illuminance (0.5 lux across the
+                route) within 5 seconds of the mains supply failing. Full illuminance (1 lux)
                 must be achieved within 60 seconds.
               </span>
             </li>

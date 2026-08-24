@@ -221,7 +221,7 @@ export const eicWhatToIncludeConfig: GeneratedGuideConfig = {
       category: 'Certificate',
     },
     {
-      href: '/tools/electrical-quoting-app',
+      href: '/electrical-quoting-app',
       title: 'Electrical Quoting App',
       description: 'Keep the quote and the certificate aligned on the same job.',
       icon: 'Calculator',

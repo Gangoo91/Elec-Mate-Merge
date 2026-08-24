@@ -125,7 +125,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Business',
   },
   {
-    href: '/guides/niceic-vs-napit',
+    href: '/niceic-vs-napit-comparison',
     title: 'NICEIC vs NAPIT',
     description:
       'Which scheme best supports your specialisation? Compare costs, coverage, and assessment.',

@@ -16,7 +16,8 @@ import { cableSizeOptions } from '@/types/cableTypes';
 import {
   protectiveDeviceRatingOptions,
   bsStandardOptions,
-  protectiveDeviceCurveOptions,
+  getCurveOptionsForStandard,
+  clearOnStandardChange,
   rcdBsStandardOptions,
   bsStandardRequiresCurve,
 } from '@/types/protectiveDeviceTypes';
@@ -158,7 +159,23 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
   // Handle BS Standard change
   const handleBsStandardChange = (value: string) => {
     onUpdate(result.id, 'bsStandard', value);
-    autoFillMaxZs(value, result.protectiveDeviceCurve || '', result.protectiveDeviceRating || '');
+    /*
+     * ELE-1604 — a Type from the other family (B/C/D vs 1–4) cannot survive
+     * the switch. Without this the row kept 'Type 1' and its 1.71 Ω Max Zs
+     * after moving to BS EN 60898, while the Type cell rendered blank because
+     * '1' is not one of the options it offers. Found by testing this surface
+     * in the running app after the desktop cells were already fixed.
+     */
+    const stale = clearOnStandardChange(value, result.protectiveDeviceCurve || '');
+    if (stale) {
+      onUpdate(result.id, 'protectiveDeviceCurve', stale.protectiveDeviceCurve);
+      onUpdate(result.id, 'maxZs', stale.maxZs);
+    }
+    autoFillMaxZs(
+      value,
+      stale ? '' : result.protectiveDeviceCurve || '',
+      result.protectiveDeviceRating || ''
+    );
   };
 
   // Handle Curve change
@@ -319,7 +336,7 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
             <SelectValue placeholder="Ty">{result.protectiveDeviceCurve || 'Ty'}</SelectValue>
           </SelectTrigger>
           <SelectContent className="z-[100] bg-background border border-border">
-            {protectiveDeviceCurveOptions.map((option) => (
+            {getCurveOptionsForStandard(result.bsStandard || '').map((option) => (
               <SelectItem key={option.value} value={option.value} className="text-xs py-2">
                 {option.label}
               </SelectItem>

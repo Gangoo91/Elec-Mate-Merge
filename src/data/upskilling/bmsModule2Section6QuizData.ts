@@ -5,10 +5,10 @@ export const bmsModule2Section6QuizData: QuizQuestion[] = [
     id: 1,
     question: 'Why are BMS analogue signals more sensitive to interference than digital signals?',
     options: [
-      'Analogue signals always operate at a much higher voltage than digital signals',
+      'Analogue signals always operate at a much higher voltage than any digital signal on the bus',
       'Analogue signal values are directly affected by any noise, while digital signals have switching thresholds',
-      'Analogue signals travel over longer cable runs and so pick up more resistance',
-      'Analogue signals use a higher frequency that couples more readily with earth',
+      'Analogue signals always travel over longer cable runs and so pick up far more resistance',
+      'Analogue signals use a much higher frequency, which couples more readily into the earthing',
     ],
     correctAnswer: 1,
     explanation:
@@ -31,9 +31,9 @@ export const bmsModule2Section6QuizData: QuizQuestion[] = [
     id: 3,
     question: 'Why should power and control cables be kept separated within an installation?',
     options: [
-      'To keep the control cables at a lower operating temperature',
-      'To make the power cables easier to disconnect during isolation',
-      'To balance the current loading equally across both containment routes',
+      'To keep the control cables running at a lower operating temperature in the trunking',
+      'To make the power cables easier to disconnect when isolating plant for maintenance',
+      'To balance the current loading equally across both containment routes in the riser',
       'To prevent electromagnetic fields from power cables inducing interference in control cables',
     ],
     correctAnswer: 3,

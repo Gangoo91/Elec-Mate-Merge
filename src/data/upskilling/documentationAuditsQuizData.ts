@@ -5,10 +5,10 @@ export const documentationAuditsQuizQuestions: QuizQuestion[] = [
     id: 1,
     question: 'Why is documentation considered part of compliance for emergency lighting systems?',
     options: [
-      'It is only needed when the building changes ownership or use',
+      'It is needed only when the building changes ownership or when its use class alters',
       'It provides legal evidence that the system was designed, installed, tested, and maintained correctly',
-      'It replaces the need for physical testing of the luminaires',
-      'It is required solely by the system manufacturer, not by law',
+      'It removes the need for any physical testing of the luminaires once they are installed',
+      'It is required by the system manufacturer as a condition of warranty, not by law',
     ],
     correctAnswer: 1,
     explanation:
@@ -57,10 +57,10 @@ export const documentationAuditsQuizQuestions: QuizQuestion[] = [
     id: 5,
     question: 'Where should emergency lighting records be stored on-site?',
     options: [
-      'Off-site at the maintenance contractor’s head office only',
+      'Off-site at the maintenance contractor’s head office, away from the building',
       'Near the main fire alarm panel or security office for easy access during inspections',
-      'In a locked archive accessible only to senior management',
-      'With the local Fire and Rescue Authority for safekeeping',
+      'In a locked archive room that only the senior management team can access',
+      'With the local fire and rescue authority, who retain them for safekeeping',
     ],
     correctAnswer: 1,
     explanation:
@@ -83,9 +83,9 @@ export const documentationAuditsQuizQuestions: QuizQuestion[] = [
     id: 7,
     question: 'What is the main purpose of an emergency lighting logbook?',
     options: [
-      'To list the manufacturer’s warranty terms for each luminaire',
-      'To record the building’s energy consumption for the lighting',
-      'To hold the original system design calculations only',
+      'To list the manufacturer’s warranty terms and conditions for each luminaire',
+      'To record the building’s annual energy consumption for the lighting circuits',
+      'To hold the original system design calculations and the lux level drawings',
       'To show all monthly and annual test entries, remedial work, and component replacements',
     ],
     correctAnswer: 3,
@@ -97,9 +97,9 @@ export const documentationAuditsQuizQuestions: QuizQuestion[] = [
     question: 'Which of the following are common documentation errors that cause compliance failures?',
     options: [
       'Missing or incomplete logbook entries and certificates not signed or incorrectly dated',
-      'Using black ink instead of blue when signing the logbook',
-      'Storing the logbook digitally rather than on paper',
-      'Recording test results more frequently than required',
+      'Using black ink rather than blue ink when signing the entries in the logbook',
+      'Storing the logbook digitally on a tablet instead of keeping printed paper',
+      'Recording the test results more often than the maintenance schedule requires',
     ],
     correctAnswer: 0,
     explanation:
@@ -122,10 +122,10 @@ export const documentationAuditsQuizQuestions: QuizQuestion[] = [
     id: 10,
     question: 'What happened during the Liverpool hotel case study?',
     options: [
-      "The emergency luminaires failed their three-hour duration test during the audit",
-      "The wrong type of luminaire had been installed throughout the building",
+      'The emergency luminaires failed their annual duration test part-way through the fire officer’s inspection',
+      'The wrong type of luminaire had been fitted throughout the building and every one of them had to be replaced',
       "The logbook hadn't been updated for nine months and certificates were missing, resulting in a £6,000 enforcement notice",
-      "The system had never been commissioned after installation",
+      'The system had never been commissioned after installation, so no certificate had ever been issued for it',
     ],
     correctAnswer: 2,
     explanation:

@@ -7,7 +7,7 @@ const published = '2026-05-18';
 const modified = '2026-05-18';
 
 export const ElectricianCareerProgressionUkConfig: GeneratedGuideConfig = {
-  pagePath: '/guides/electrician-career-progression-uk',
+  pagePath: '/guides/electrician-career-progression',
   title: 'Electrician Career Progression UK: 2026',
   description: 'A practical map of UK electrician career progression — the recognised roles, what they pay, how to move between them…',
   datePublished: published,
@@ -155,7 +155,7 @@ export const ElectricianCareerProgressionUkConfig: GeneratedGuideConfig = {
       category: 'Guide',
     },
     {
-      href: '/guides/starting-an-electrical-business-uk',
+      href: '/guides/starting-an-electrical-business',
       title: 'Starting an Electrical Business',
       description: 'Related guide for qualified electricians thinking about their next career step.',
       icon: 'Briefcase',

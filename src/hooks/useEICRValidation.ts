@@ -94,9 +94,47 @@ export const useEICRValidation = (formData: any): EICRValidationResult => {
     // ── Testing tab ────────────────────────────────────────────
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const scheduleOfTests: any[] = formData.scheduleOfTests || [];
-    const testedCircuits = scheduleOfTests.filter(
-      (t) => t.zs || t.polarity || t.insulationResistance || t.insulationLiveEarth || t.r1r2
-    );
+
+    /*
+     * Every column the schedule of tests can hold a reading in.
+     *
+     * The old check looked at five fields — `zs`, `polarity`,
+     * `insulationResistance`, `insulationLiveEarth`, `r1r2` — and one of those
+     * five can never be true: `insulationResistance` is the legacy consolidated
+     * field on `TestResult`, and the grid does not write it. `InsulationCells`
+     * writes `insulationTestVoltage` / `insulationLiveNeutral` /
+     * `insulationLiveEarth`.
+     *
+     * So a properly tested ring final — r₁, rₙ, r₂, insulation L-L and the RCD
+     * disconnection time all recorded — counted as untested purely because Zs,
+     * polarity, L-E and R1+R2 happened to be blank.
+     */
+    const READING_FIELDS = [
+      // Continuity
+      'ringR1', 'ringRn', 'ringR2', 'r1r2', 'r2',
+      'ringContinuityLive', 'ringContinuityNeutral',
+      // Insulation resistance
+      'insulationTestVoltage', 'insulationLiveNeutral', 'insulationLiveEarth',
+      'insulationNeutralEarth', 'insulationResistance',
+      // Polarity / earth fault loop impedance
+      'polarity', 'zs',
+      // RCD + AFDD
+      'rcdOneX', 'rcdTestButton', 'afddTest', 'rcdHalfX', 'rcdFiveX',
+      // Other
+      'pfc', 'functionalTesting',
+    ] as const;
+
+    const hasReading = (t: Record<string, unknown>): boolean =>
+      READING_FIELDS.some((f) => String(t[f] ?? '').trim() !== '');
+
+    /*
+     * A spare way has no circuit in it and an RCD/SPD/main-switch row protects
+     * other ways rather than occupying one — neither has anything to test, so
+     * counting them as "untested" only inflates the advisory.
+     */
+    const testableCircuits = scheduleOfTests.filter((t) => !t.isSpare && !t.isDeviceRow);
+    const untested = testableCircuits.filter((t) => !hasReading(t));
+
     if (scheduleOfTests.length === 0) {
       errors.push({
         field: 'scheduleOfTests',
@@ -104,18 +142,27 @@ export const useEICRValidation = (formData: any): EICRValidationResult => {
         severity: 'error',
         tab: 'testing',
       });
-    } else if (testedCircuits.length === 0) {
-      errors.push({
-        field: 'scheduleOfTests',
-        message: 'No test readings recorded',
-        severity: 'error',
-        tab: 'testing',
-      });
-    } else if (testedCircuits.length < scheduleOfTests.length) {
-      const remaining = scheduleOfTests.length - testedCircuits.length;
+    } else if (untested.length > 0) {
+      /*
+       * Advisory, never blocking (Andrew, 24 Aug 2026).
+       *
+       * Missing readings must not stop a certificate being issued. Not every
+       * circuit gets tested — an EICR is routinely carried out with agreed
+       * limitations, and a blank column is a legitimate outcome rather than
+       * unfinished work. The certificate stays coherent either way because
+       * `eicrJsonFormatter` prints every empty cell as N/A, so what reaches the
+       * PDF says "not applicable / not recorded" rather than sitting blank.
+       *
+       * It is still surfaced — the pre-issue sheet lists warnings under "Worth
+       * checking — these do not stop you issuing" — so an electrician who
+       * simply forgot a column is told before signing. Told, not stopped.
+       */
       warnings.push({
         field: 'scheduleOfTests',
-        message: `${remaining} circuit${remaining === 1 ? '' : 's'} without test readings`,
+        message:
+          untested.length === testableCircuits.length
+            ? 'No test readings recorded'
+            : `${untested.length} circuit${untested.length === 1 ? '' : 's'} without test readings`,
         severity: 'warning',
         tab: 'testing',
       });
@@ -359,7 +406,7 @@ export const useEICRValidation = (formData: any): EICRValidationResult => {
     }).length;
     // bonus completion for having inspection + tests
     if (inspectedItems.length > 0) filled++;
-    if (testedCircuits.length > 0) filled++;
+    if (testableCircuits.length > untested.length) filled++;
     const total = REQUIRED.length + 2;
     const completionPercentage = Math.round((filled / total) * 100);
 

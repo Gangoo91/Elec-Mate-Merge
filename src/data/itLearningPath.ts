@@ -148,7 +148,7 @@ export const TEST_SEQUENCE: LearningStep[] = [
     purpose: 'Proves the RCD trips fast enough to protect against electric shock',
     instrument: 'RCD tester — 1× and 5× IΔn, both polarities',
     expect:
-      'No trip at half rated current, within 300 ms at rated current, within 40 ms at five times. Tested on both polarities.',
+      'No trip at half rated current, and within 300 ms at rated current — the BS 7671 criterion since Amendment 4 deleted Table 3A. The 40 ms at five times rated current is the BS EN 61008/61009 product-standard figure, still useful for fault finding. Tested on both polarities.',
     watchOut:
       'Testing one polarity only, or accepting the integral test button as evidence — it proves the mechanism moves, not that it trips fast enough.',
   },

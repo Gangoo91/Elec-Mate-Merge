@@ -395,7 +395,7 @@ export const electricalRamsTemplateConfig: GeneratedGuideConfig = {
   ],
   relatedPages: [
     {
-      href: '/tools/rams-generator',
+      href: '/rams-generator',
       title: 'RAMS Generator (In-App)',
       description: 'Produce a 30-page CDM 2015-compliant electrical RAMS in under two minutes — job-specific, site-specific, ready for principal contractor sign-off.',
       icon: 'ShieldCheck',

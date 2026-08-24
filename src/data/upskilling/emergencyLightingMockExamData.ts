@@ -4966,6 +4966,904 @@ export const emergencyLightingQuestionBank: StandardMockQuestion[] = [
     topic: 'Testing',
     category: 'Compliance',
   },
+  {
+    id: 301,
+    question:
+      'In a non-maintained emergency luminaire, when do the lamps operate?',
+    options: [
+      'They light only when the normal lighting supply fails',
+      'They stay lit continuously on both mains and battery',
+      'They light whenever the fire alarm panel is in alarm',
+      'They light whenever the local light switch is switched on',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'A non-maintained luminaire holds its battery on charge and energises the lamp only when the normal lighting supply to that area is lost. The tempting wrong answer is the continuously lit one, but that describes a maintained luminaire, which burns from the mains and rides through to battery on failure. Triggering from the fire alarm is wrong because emergency lighting must respond to loss of the local lighting supply, which can happen with no fire at all.',
+    section: 'Module 1',
+    difficulty: 'basic',
+    topic: 'Maintained and Non-Maintained',
+    category: 'System Types',
+  },
+  {
+    id: 302,
+    question:
+      'Why is a maintained luminaire normally specified for a cinema auditorium?',
+    options: [
+      'It draws no current from the mains while the film is running',
+      'It removes any need for a battery inside the luminaire itself',
+      'It stays lit during the show and rides through a mains failure',
+      'It doubles as the general room lighting used by the cleaners',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'In a darkened auditorium the escape route must be visible while the normal lighting is deliberately switched off, so the emergency lamp has to be lit all the time and simply carry on when the supply fails. That is the maintained mode. The answer about no mains current is wrong because a maintained luminaire draws mains power continuously, and the no-battery answer is wrong because a self-contained maintained luminaire still needs its battery to survive the failure.',
+    section: 'Module 1',
+    difficulty: 'basic',
+    topic: 'Maintained and Non-Maintained',
+    category: 'System Types',
+  },
+  {
+    id: 303,
+    question:
+      'What does the routine monthly function test on emergency luminaires prove?',
+    options: [
+      'That the changeover works and each lamp lights on battery',
+      'That the battery still holds its full rated duration',
+      'That the illuminance on the floor still meets the design',
+      'That the charging circuit draws the correct mains current',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The monthly test simulates loss of the normal supply for a short period, which confirms the changeover operates and that every lamp actually strikes on battery. It deliberately does not run long enough to prove capacity. The duration answer is the attractive trap, because proving the battery still lasts its rated period is the job of the annual full duration test, not the brief monthly check.',
+    section: 'Module 4',
+    difficulty: 'basic',
+    topic: 'Function Testing',
+    category: 'Testing & Maintenance',
+  },
+  {
+    id: 304,
+    question:
+      'For an escape route 1.8 m wide, where must the 1 lux minimum be achieved?',
+    options: [
+      'Along the centre line of the route, with the edges disregarded',
+      'Across the full width, less a border a quarter of the width each side',
+      'Across the full width, less a border of 0.5 m on each side of it',
+      'Along the two edges of the route, with the centre disregarded',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Current practice measures escape route illuminance across the full width of the route, not on a single line. Borders are excluded, and on a route of 2 m or less the excluded border is a quarter of the width at each side, so a 1.8 m route is assessed over its central portion after removing 0.45 m each side. The centre line answer is the strong distractor because it was the older framing that has since been superseded, and the 0.5 m border only applies to routes wider than 2 m.',
+    section: 'Module 3',
+    difficulty: 'advanced',
+    topic: 'Escape Route Illuminance',
+    category: 'Design',
+  },
+  {
+    id: 305,
+    question:
+      'A corridor 3 m wide is treated as an escape route. Which border may be excluded from assessment?',
+    options: [
+      'A border of a quarter of the width at each side of the corridor',
+      'A border of 1 m at each side, leaving 1 m to be assessed',
+      'No border at all, since the corridor exceeds two metres wide',
+      'A border of 0.5 m at each side, leaving 2 m to be assessed',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'The full width of the route is assessed, but a border may be discounted at each side. Above 2 m wide that border is fixed at 0.5 m, so a 3 m corridor is judged over the central 2 m. The quarter-of-the-width answer is the trap, because that rule belongs to routes of 2 m or less; applying it here would wrongly discount 0.75 m each side and flatter the design.',
+    section: 'Module 3',
+    difficulty: 'advanced',
+    topic: 'Escape Route Illuminance',
+    category: 'Design',
+  },
+  {
+    id: 306,
+    question:
+      'An open plan office floor is treated as an open area. What horizontal illuminance applies?',
+    options: [
+      '1 lux over the whole floor including the perimeter border',
+      '0.5 lux over the empty floor, excluding a perimeter border',
+      '15 lux over the empty floor, excluding a perimeter border',
+      '0.2 lux over the whole floor including the perimeter border',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Open area or anti-panic lighting exists so that occupants can see well enough to reach an escape route, and the figure is 0.5 lux on the empty floor with a perimeter border discounted. The 1 lux answer is the common confusion, because 1 lux is the escape route figure and open areas sit below it; 15 lux belongs to high risk task areas where work must be made safe before it is abandoned.',
+    section: 'Module 3',
+    difficulty: 'advanced',
+    topic: 'Open Area Lighting',
+    category: 'Design',
+  },
+  {
+    id: 307,
+    question:
+      'Normal maintained illuminance at a machine is 400 lux. What emergency illuminance is required at that task?',
+    options: [
+      '40 lux, the greater of 10 per cent of 400 lux and 15 lux',
+      '15 lux, since that fixed value always governs task areas',
+      '4 lux, being 1 per cent of the normal maintained value',
+      '1 lux, the same figure as is used for the escape routes',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'High risk task area lighting takes the greater of 10 per cent of the normal maintained illuminance or 15 lux. Ten per cent of 400 lux is 40 lux, which beats the 15 lux floor, so 40 lux governs. The 15 lux answer is attractive because that number is quoted so often, but it is only a minimum that applies when 10 per cent of the normal level falls below it, for example where the normal level is 100 lux or less.',
+    section: 'Module 3',
+    difficulty: 'advanced',
+    topic: 'High Risk Task Areas',
+    category: 'Design',
+  },
+  {
+    id: 308,
+    question:
+      'How quickly must escape route emergency lighting reach its required illuminance?',
+    options: [
+      'Full illuminance within 5 s and half of it within 60 s',
+      'Half the illuminance within 5 s and full within 60 s',
+      'Full illuminance within 15 s in every occupancy type',
+      'Half within 30 s and full within 120 s of the failure',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The staged requirement is 50 per cent of the required illuminance within 5 seconds and the full value within 60 seconds. The first option simply reverses the two figures, which is the classic exam trap, and it would demand far more of a discharge lamp than the standard actually asks. The staging exists because some light sources need time to run up, so an immediate partial level is required to stop people being left in darkness.',
+    section: 'Module 3',
+    difficulty: 'advanced',
+    topic: 'Response Times',
+    category: 'Design',
+  },
+  {
+    id: 309,
+    question:
+      'When may a 1 hour rated duration be accepted instead of the usual 3 hours?',
+    options: [
+      'Where the premises are evacuated and re-occupation is controlled',
+      'Where the building has a sprinkler system fitted throughout it',
+      'Where the building is single storey and has two final exits',
+      'Where the luminaires are of the maintained type in every area',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Three hours is the normal design duration, and the shorter 1 hour rating is only defensible where the building is emptied on evacuation and nobody returns until the supply has been restored and the batteries recharged. Sprinklers are the attractive wrong answer because they reduce fire growth, but they do nothing about how long people need light for, and maintained operation describes the mode of the luminaire rather than its capacity.',
+    section: 'Module 3',
+    difficulty: 'intermediate',
+    topic: 'Duration',
+    category: 'Design',
+  },
+  {
+    id: 310,
+    question:
+      'Why should the fire risk assessment be completed before the emergency lighting is designed?',
+    options: [
+      'It fixes the escape strategy and risks the lighting must serve',
+      'It sets the cable sizes and the protective devices to be used',
+      'It is needed only to confirm the luminaires already installed',
+      'It removes the need to record the design on the certificate',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The risk assessment identifies the escape routes, the occupancy, the special risks and the evacuation strategy, and those outputs are the inputs the lighting designer needs before choosing modes, durations and points of emphasis. The cable sizing answer is wrong because that comes from BS 7671 design once loads are known, and treating the assessment as an after-the-fact check reverses the process and usually leaves risks unlit.',
+    section: 'Module 2',
+    difficulty: 'advanced',
+    topic: 'Risk Assessment',
+    category: 'Compliance',
+  },
+  {
+    id: 311,
+    question:
+      'Why must each flight of stairs have a luminaire positioned to light the treads directly?',
+    options: [
+      'So that the stair can be used as a high risk task area',
+      'So that the stair luminaire can be fed from the local circuit',
+      'So that each tread receives direct light and shadow is avoided',
+      'So that the handrail is illuminated to at least 15 lux',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Stairs are a point of emphasis because a missed step is a serious hazard during evacuation. A luminaire sited so that light falls directly on the treads stops the nosings casting shadows that hide the edge of each step. The high risk task answer is the plausible one, but that classification is about work that must be made safe before it is left, not about circulation, and it would impose a far higher illuminance than a stair needs.',
+    section: 'Module 3',
+    difficulty: 'advanced',
+    topic: 'Points of Emphasis',
+    category: 'Design',
+  },
+  {
+    id: 312,
+    question:
+      'Which of these is a point of emphasis requiring a luminaire in the vicinity?',
+    options: [
+      'Each socket outlet used by cleaning staff on the escape route',
+      'Each fire alarm call point and each piece of firefighting equipment',
+      'Each window that overlooks the external area of the building',
+      'Each luminaire forming part of the normal lighting installation',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Points of emphasis are places where something must be seen or done in an emergency, and call points and firefighting equipment are squarely in that list along with final exits, stairs, changes of level and direction, and first aid points. The normal lighting answer is the trap, since emergency luminaires are placed by risk and geometry rather than mirrored one for one against the normal installation.',
+    section: 'Module 3',
+    difficulty: 'advanced',
+    topic: 'Points of Emphasis',
+    category: 'Design',
+  },
+  {
+    id: 313,
+    question: 'What is a sustained emergency luminaire?',
+    options: [
+      'One whose battery is charged from a separate central inverter',
+      'One that runs for longer than three hours on its own battery',
+      'One that is switched on only by a signal from the fire panel',
+      'One with two lamps, one on mains and one on the battery supply',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'A sustained luminaire carries two light sources, one fed from the mains for normal use and a second fed from the battery on failure of the supply. It looks maintained in use but the emergency lamp is separate. The long duration answer is a distractor built on the word sustained; duration is a battery rating expressed in hours and has nothing to do with the number of lamps in the fitting.',
+    section: 'Module 1',
+    difficulty: 'intermediate',
+    topic: 'Luminaire Classification',
+    category: 'System Types',
+  },
+  {
+    id: 314,
+    question:
+      'Which is a genuine advantage of a central battery system over self-contained luminaires?',
+    options: [
+      'The final circuits no longer need any fire resisting cable at all',
+      'No monthly function testing of the installation is then required',
+      'Battery maintenance and replacement are at one accessible location',
+      'Luminaires can be sited without regard to the ambient temperature',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Concentrating the battery in a plant room means one set of cells to inspect, monitor, temperature control and eventually replace, instead of hundreds of small packs spread through a building. The cabling answer is exactly backwards and is the reason people get caught out: because the sub-circuits from a central battery now carry the emergency supply, they become safety circuits and need cable with the required resistance to fire, which is a cost self-contained systems avoid.',
+    section: 'Module 1',
+    difficulty: 'advanced',
+    topic: 'Central Battery Systems',
+    category: 'System Types',
+  },
+  {
+    id: 315,
+    question:
+      'A cable supplies a safety circuit and no building regulation or British Standard fixes a resistance to fire time. What does BS 7671 require?',
+    options: [
+      'Thirty minutes, taken from the cable manufacturer data sheet',
+      'One hour, the default where no other time has been specified',
+      'Two hours, applied to every safety circuit without exception',
+      'No specific time, provided the cable is low smoke and halogen free',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Regulation 560.8 requires cables supplying safety circuits to have a resistance to fire rating equal to the time authorised by regulations for building elements or specified by the relevant British Standard, and in the absence of either, one hour. The low smoke answer is the attractive one because such cables are commonly specified, but low smoke and zero halogen describes what the cable gives off in a fire, not how long the circuit keeps working in one.',
+    section: 'Module 5',
+    difficulty: 'advanced',
+    topic: 'Cable Fire Resistance',
+    category: 'Cabling & Batteries',
+  },
+  {
+    id: 316,
+    question:
+      'Which of the following is a recognised electrical source for safety services in BS 7671?',
+    options: [
+      'A socket outlet circuit reserved for a portable generator set',
+      'The final circuit of the normal lighting in the same area',
+      'A plug in extension lead run from an adjacent building unit',
+      'A stationary secondary battery provided for that purpose',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Regulation 560.6 recognises primary batteries, stationary secondary batteries, generating sets independent of the normal supply, and a separate feeder of the supply network that is effectively independent of the normal feeder. The normal lighting circuit is the plausible wrong answer, but a source that fails at the same moment as the supply it is meant to back up gives no independence at all, which is the whole point of the clause.',
+    section: 'Module 5',
+    difficulty: 'advanced',
+    topic: 'Sources for Safety Services',
+    category: 'Cabling & Batteries',
+  },
+  {
+    id: 317,
+    question:
+      'A generator can supply safety services alongside the normal supply. What does BS 7671 require of that arrangement?',
+    options: [
+      'Precautions to avoid paralleling of sources, such as mechanical interlocking',
+      'The two sources to be permanently paralleled through a common busbar',
+      'The generator to be connected by a plug and socket arrangement only',
+      'The changeover contactor to be fitted with an RCD on each of its poles',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Regulation 560.6.8.1 requires adequate precautions to avoid paralleling of sources, and the note offers mechanical interlocking as an acceptable means. Permanent paralleling is the tempting answer because it appears to guarantee continuity, but it risks back feeding the distributor network and exposes the generator to the full prospective fault level of the supply. Where sources are designed to run in parallel, fault and short circuit protection must remain effective on either source alone or on both together.',
+    section: 'Module 5',
+    difficulty: 'advanced',
+    topic: 'Changeover and Sources',
+    category: 'Cabling & Batteries',
+  },
+  {
+    id: 318,
+    question:
+      'When may protection against overload be omitted from a circuit supplying a safety service?',
+    options: [
+      'Where the circuit is wired in mineral insulated cable throughout',
+      'Where the designer records the omission on the schedule of results',
+      'Where loss of supply may cause a greater hazard, with overload monitored',
+      'Where the circuit is fed from a self-contained luminaire battery',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Regulation 560.7.3, following 433.3.3, permits omission of overload protection only where losing the supply would create a greater hazard than the overload itself, and it then makes monitoring of overload occurrence mandatory. The paperwork answer is the trap: recording a decision does not create the technical justification for it, and without monitoring the omission is not compliant no matter how well documented.',
+    section: 'Module 5',
+    difficulty: 'advanced',
+    topic: 'Overload Protection',
+    category: 'Cabling & Batteries',
+  },
+  {
+    id: 319,
+    question:
+      'Why must inrush current be considered when selecting the protective device for an emergency lighting circuit?',
+    options: [
+      'To ensure the device disconnects within 0.4 s on that circuit',
+      'To allow the circuit cable to be reduced by one standard size',
+      'To keep the prospective fault current below the 16 kA mark',
+      'To avoid nuisance operation that would impair the safety service',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Regulation 560.7.4 requires the effects of starting inrush and normal overloads to be taken into account so that the device does not operate unnecessarily and take the safety service out of use. A row of luminaires with switch mode drivers and charging batteries can draw a large momentary current at energisation. The disconnection time answer is plausible but addresses fault protection, which is a separate calculation and does not explain why the device must tolerate a legitimate transient.',
+    section: 'Module 5',
+    difficulty: 'advanced',
+    topic: 'Protective Devices',
+    category: 'Cabling & Batteries',
+  },
+  {
+    id: 320,
+    question:
+      'Under BS 7671, why may surge protection be required on an emergency lighting supply?',
+    options: [
+      'Because the battery charger is a source of transient overvoltages',
+      'Because a transient overvoltage could cause failure of a safety service',
+      'Because emergency luminaires are all Class II and need extra care',
+      'Because the escape route is classed as a special location by Part 7',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Regulation 443.4.1 requires protection against transient overvoltages where the consequence could be serious injury, loss of life or failure of a safety service, and emergency lighting is a safety service. The charger answer inverts the logic: the concern is a surge arriving from outside and destroying the electronics, not the equipment generating one. Part 7 does not classify escape routes as special locations, although A4:2026 does give them separate treatment in Regulation 422.2.',
+    section: 'Module 5',
+    difficulty: 'advanced',
+    topic: 'Surge Protection',
+    category: 'Cabling & Batteries',
+  },
+  {
+    id: 321,
+    question:
+      'How often is the full rated duration test carried out on an emergency lighting system?',
+    options: [
+      'Every month, immediately after the short function test',
+      'Every three years, in line with the periodic inspection',
+      'Every year, at a time agreed to suit the occupancy',
+      'Every five years, alongside the photometric verification',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'The full duration test is an annual exercise, run for the rated period of the system, and the date is chosen to suit the building rather than fixed to a calendar month. The monthly answer is the common error, because the monthly check is only a brief function test; discharging every battery flat once a month would shorten cell life considerably and leave the premises without cover far too often.',
+    section: 'Module 4',
+    difficulty: 'intermediate',
+    topic: 'Duration Testing',
+    category: 'Testing & Maintenance',
+  },
+  {
+    id: 322,
+    question:
+      'Why is the annual full duration test scheduled for a period of low occupancy or low risk?',
+    options: [
+      'Because the whole normal lighting installation must be switched off too',
+      'Because the batteries are left discharged and cover is reduced until recharged',
+      'Because the luminaires must be taken down from the ceiling to be tested',
+      'Because the fire alarm system has to be disabled while it is running',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'At the end of a full duration test the batteries are flat, and until they have recharged the premises have reduced or no emergency lighting cover, which is why the test is placed where the consequence of that gap is smallest. The normal lighting answer is plausible because the supply to the emergency luminaires is indeed interrupted, but that is a short-lived inconvenience rather than the safety reason for choosing the timing.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'Duration Testing',
+    category: 'Testing & Maintenance',
+  },
+  {
+    id: 323,
+    question:
+      'What must be recorded in the emergency lighting log book after each test?',
+    options: [
+      'The measured illuminance at every point on the route',
+      'The serial number of every battery in the installation',
+      'The insulation resistance of the final circuit in megohms',
+      'The date, the result and any defect found and remedied',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'The log book is the running history of the system, so each entry needs the date, what was tested, the outcome and any defect together with the action taken to clear it. The illuminance answer is attractive because light levels matter, but routine tests are functional checks; measured illuminance belongs to the original commissioning record and to any later photometric verification, not to every monthly entry.',
+    section: 'Module 4',
+    difficulty: 'intermediate',
+    topic: 'Records',
+    category: 'Testing & Maintenance',
+  },
+  {
+    id: 324,
+    question:
+      'What is the main limitation of an automatic self test emergency lighting system?',
+    options: [
+      'It reports lamp and battery status but cannot see an obscured luminaire',
+      'It cannot carry out the monthly function test without an engineer there',
+      'It removes the need for any log book or record of the system results',
+      'It will only test luminaires that are wired in the maintained mode',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Automatic testing proves the electrical health of each fitting, but it cannot tell you that a new partition, a stacked pallet or a fresh coat of dark paint has ruined the light on the route. A physical inspection is still needed. The log book answer is the trap: automatic systems generate the results for you, but the record still has to exist and still has to be available to the responsible person and the enforcing authority.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'Automatic Test Systems',
+    category: 'Testing & Maintenance',
+  },
+  {
+    id: 325,
+    question:
+      'What should be handed over at completion of a new emergency lighting installation?',
+    options: [
+      'A completion certificate only, since the rest is optional extra',
+      'An electrical installation certificate and nothing beyond that',
+      'A completion certificate, log book and as fitted drawings',
+      'A manufacturer warranty card for each luminaire that is supplied',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Handover has to give the responsible person everything needed to operate and prove the system: the completion certificate for design, installation and verification, a log book to start recording tests in, and drawings showing what was actually installed and where. The electrical installation certificate answer is tempting and that document is still required for the wiring, but on its own it says nothing about escape route coverage or duration.',
+    section: 'Module 6',
+    difficulty: 'intermediate',
+    topic: 'Handover',
+    category: 'Compliance',
+  },
+  {
+    id: 326,
+    question:
+      'Which design fault most often shows up only when the system is first commissioned at night?',
+    options: [
+      'A battery rated for three hours instead of one hour of duration',
+      'A luminaire wired in maintained mode rather than non-maintained',
+      'A final circuit protected by a type C device instead of a type B',
+      'A luminaire mounted so a beam or duct throws a shadow on a stair',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Obstructions such as downstand beams, ductwork, signage and high racking are frequently missing or wrong on the drawing, and the resulting dark patch is invisible until the normal lighting is killed with the building dark. The maintained mode answer is a real fault but it is obvious on any daytime walk round, since the lamp is either lit or it is not, so it does not depend on a night commissioning visit to find.',
+    section: 'Module 6',
+    difficulty: 'advanced',
+    topic: 'Commissioning Faults',
+    category: 'Compliance',
+  },
+  {
+    id: 327,
+    question:
+      'From which supply should a non-maintained self contained luminaire be fed?',
+    options: [
+      'A dedicated circuit from the main switchboard with its own RCD',
+      'The lighting circuit of the area it protects, ahead of switching',
+      'The socket outlet circuit serving the same area of the building',
+      'The supply to the fire alarm panel so that both fail together',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A non-maintained luminaire has to detect loss of the local lighting supply, so it is connected to the unswitched side of the lighting circuit for the area it covers. The dedicated circuit answer sounds like better engineering, but a separate feed would stay healthy when the local lighting circuit trips, leaving the area dark with the emergency luminaire sitting on charge and doing nothing.',
+    section: 'Module 5',
+    difficulty: 'intermediate',
+    topic: 'Circuit Arrangement',
+    category: 'Cabling & Batteries',
+  },
+  {
+    id: 328,
+    question:
+      'What changed for escape routes in Regulation 422.2 of BS 7671:2018+A4:2026?',
+    options: [
+      'Escape routes were removed from Chapter 42 and placed into Part 7',
+      'Escape routes now require arc fault detection devices in every case',
+      'Separate requirements now apply and protected escape routes appear',
+      'Escape route wiring must now be mineral insulated cable throughout',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'A4:2026 gives escape routes their own requirements within 422.2 and introduces the concept of a protected escape route, while the earlier conditional references to BD2, BD3 and BD4 have been removed, so those old classifications should no longer be used to interpret the clause. The mineral insulated answer overstates it: cable fire performance for safety circuits is dealt with by 560.8, and it is a resistance to fire rating rather than one named cable type.',
+    section: 'Module 5',
+    difficulty: 'advanced',
+    topic: 'Escape Route Wiring',
+    category: 'Cabling & Batteries',
+  },
+  {
+    id: 329,
+    question:
+      'Under fire safety legislation, who is responsible for keeping emergency lighting maintained?',
+    options: [
+      'The electrical contractor who first installed the luminaires',
+      'The local authority building control body for that district',
+      'The manufacturer of the luminaires for their warranty period',
+      'The responsible person for the premises, usually the occupier',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'The duty sits with the responsible person for the premises, in most cases the employer or the person in control of the building, and it continues for as long as the premises are occupied. The installer answer is the popular one, but a contractor discharges a contract and leaves; the ongoing duty to test, record and remedy cannot be transferred away with the final invoice.',
+    section: 'Module 2',
+    difficulty: 'intermediate',
+    topic: 'Legal Duties',
+    category: 'Compliance',
+  },
+  {
+    id: 330,
+    question:
+      'Along an escape route, what is the maximum ratio of highest to lowest illuminance permitted?',
+    options: [
+      '40 to 1, so that dark gaps between luminaires are avoided',
+      '5 to 1, matching the ratio used for normal office lighting',
+      '100 to 1, which allows very wide spacing of the luminaires',
+      '1 to 1, requiring a perfectly even level along the route',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The diversity limit of 40 to 1 stops a designer meeting the minimum on paper by putting one very bright fitting on a long route and leaving deep pools of darkness between. The 5 to 1 answer is the trap for anyone thinking of normal lighting uniformity, which is far tighter because it is about visual comfort at work rather than about being able to find the way out.',
+    section: 'Module 3',
+    difficulty: 'advanced',
+    topic: 'Uniformity',
+    category: 'Design',
+  },
+  {
+    id: 331,
+    question:
+      'Why are emergency exit signs normally maintained rather than non-maintained?',
+    options: [
+      'So the sign draws power only when the normal supply has failed',
+      'So the sign is visible and legible whenever the premises are occupied',
+      'So the sign can share the battery fitted in an adjacent unit',
+      'So the sign need not be included in the monthly function test',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A sign that is only lit after a power failure teaches nobody where the exit is. Keeping it lit whenever people are present means occupants have already registered the route before anything goes wrong, and the sign simply carries on when the supply drops. The non-maintained answer is the trap; it saves energy but defeats the purpose of signage, which is wayfinding rather than illumination.',
+    section: 'Module 1',
+    difficulty: 'intermediate',
+    topic: 'Exit Signage',
+    category: 'System Types',
+  },
+  {
+    id: 332,
+    question:
+      'A luminaire fails to light during the monthly test. What is the correct action?',
+    options: [
+      'Record the defect and leave it for the next annual duration test',
+      'Remove the luminaire from the log book so it is not tested again',
+      'Record the defect, repair it and record the remedial action taken',
+      'Extend the next test interval to let the battery recover fully',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'A failure has to be logged, put right as soon as reasonably practicable and the remedy logged in turn, so the record shows the system was returned to full cover. Deferring to the annual test is the plausible wrong answer, but it leaves a known dark spot on an escape route for up to a year, which no risk assessment would accept and which the enforcing authority would read straight from the log book.',
+    section: 'Module 4',
+    difficulty: 'intermediate',
+    topic: 'Defect Handling',
+    category: 'Testing & Maintenance',
+  },
+  {
+    id: 333,
+    question:
+      'A luminaire strikes on the monthly test but lasts only 20 minutes on the annual duration test. What is the most likely cause?',
+    options: [
+      'A charging circuit that has failed completely and gone open circuit',
+      'A lamp of the wrong wattage fitted during the last maintenance visit',
+      'A supply cable of too small a cross sectional area to the fitting',
+      'A battery near the end of its life with reduced usable capacity',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'An ageing cell still has enough charge to strike the lamp for a brief function test but has lost most of its usable capacity, which is exactly why the short monthly test cannot substitute for the annual one. The failed charger answer is the attractive alternative, but a completely dead charging circuit would leave the battery flat and the luminaire would not have lit on the monthly test at all.',
+    section: 'Module 7',
+    difficulty: 'advanced',
+    topic: 'Battery Faults',
+    category: 'Testing & Maintenance',
+  },
+  {
+    id: 334,
+    question:
+      'Every emergency luminaire in one wing is dead but the normal lighting works. Where should you look first?',
+    options: [
+      'The supply to those luminaires taken from the local lighting circuit',
+      'The battery inside each individual luminaire in that wing of the site',
+      'The fire alarm panel, since it powers the emergency lighting there',
+      'The main earthing conductor serving that part of the installation',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Self contained luminaires are fed from an unswitched supply, and a lost neutral, a tripped device or a disconnected permanent live on that feed takes out a whole wing at once while leaving the switched normal lighting working. Individual batteries is the tempting answer, but every cell in one area failing on the same day is implausible; look for the single common cause before touching any fitting.',
+    section: 'Module 7',
+    difficulty: 'advanced',
+    topic: 'Systematic Fault Finding',
+    category: 'Testing & Maintenance',
+  },
+  {
+    id: 335,
+    question:
+      'What manufacturer information is needed to set out spacing for escape route luminaires?',
+    options: [
+      'The rated wattage of the lamp and the colour of the diffuser',
+      'The spacing data or photometric file for the mounting height',
+      'The weight of the luminaire and its ingress protection rating',
+      'The warranty period offered on the battery inside the luminaire',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Spacing tables and photometric files describe how the light is actually distributed at a given mounting height, which is what determines whether the required level is achieved across the full width of the route. The wattage answer is the classic shortcut; two fittings of identical wattage can produce completely different patterns on the floor depending on optics and diffuser.',
+    section: 'Module 3',
+    difficulty: 'intermediate',
+    topic: 'Luminaire Spacing',
+    category: 'Design',
+  },
+  {
+    id: 336,
+    question:
+      'What is the purpose of a photometric verification carried out at five yearly intervals?',
+    options: [
+      'To confirm the batteries still deliver their rated duration in service',
+      'To confirm the wiring still complies with the current BS 7671 edition',
+      'To confirm the light on the floor still meets the design after ageing',
+      'To confirm every luminaire carries a current UKCA marking on its label',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Lamps depreciate, diffusers yellow and collect dirt, walls get repainted in darker colours and layouts get repartitioned, so the light reaching the floor drifts away from the design in ways no functional test can reveal. Measuring it periodically catches that drift. The battery answer describes the annual duration test, which proves the system runs for its rated time but says nothing about how much light it produces.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'Photometric Verification',
+    category: 'Testing & Maintenance',
+  },
+  {
+    id: 337,
+    question:
+      'An emergency luminaire is fitted outside a final exit door. What must be considered?',
+    options: [
+      'The colour rendering index of the lamp used in the luminaire',
+      'The glare rating of the fitting seen from inside the doorway',
+      'The maintained or non-maintained mode of the adjacent signage',
+      'The ingress protection rating and the ambient temperature range',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Outside the door the fitting is exposed to water and dust, so it needs a suitable ingress protection rating, and it is exposed to cold and heat, both of which matter because usable battery capacity falls in the cold and battery life shortens in sustained heat. Colour rendering is the tempting answer for anyone thinking about lighting quality, but it plays no part in whether people can find and use the exit.',
+    section: 'Module 1',
+    difficulty: 'intermediate',
+    topic: 'Luminaire Selection',
+    category: 'System Types',
+  },
+  {
+    id: 338,
+    question:
+      'Why should wiring for a central battery emergency lighting system be kept separate from other circuits?',
+    options: [
+      'To reduce the chance that a fault elsewhere disables the safety service',
+      'To keep the volt drop on the emergency circuits below three per cent',
+      'To allow the emergency circuits to be tested with the building live',
+      'To let a smaller cable size be used for the emergency final circuits',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Separation and segregation exist so that damage, overheating or a fault on an unrelated circuit cannot take the safety service with it, and so that the emergency wiring can be identified and worked on without disturbing it. Volt drop is the plausible distractor: it does have to be controlled on a central battery system, especially at the low end of the discharge curve, but it is a design calculation rather than the reason for physical separation.',
+    section: 'Module 5',
+    difficulty: 'advanced',
+    topic: 'Segregation',
+    category: 'Cabling & Batteries',
+  },
+  {
+    id: 339,
+    question:
+      'Which pair of standards is normally quoted for a UK emergency lighting design?',
+    options: [
+      'BS 7671 for the code of practice and BS 5839 for lighting levels',
+      'BS 5266-1 for the code of practice and BS EN 1838 for the levels',
+      'BS EN 62305 for the code of practice and BS 7430 for the levels',
+      'BS EN 60598 for the code of practice and BS 7671 for the levels',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'BS 5266-1 is the code of practice covering how emergency lighting is applied to premises, and BS EN 1838 sets the lighting requirements such as illuminance, response times and duration. The first option mixes up neighbouring disciplines: BS 7671 covers the electrical installation and BS 5839 covers fire detection and alarm, so neither sets emergency lighting levels.',
+    section: 'Module 2',
+    difficulty: 'intermediate',
+    topic: 'Applicable Standards',
+    category: 'Compliance',
+  },
+  {
+    id: 340,
+    question:
+      'On a central battery system, a fault trips the device protecting one sub-circuit. What is the consequence?',
+    options: [
+      'Each affected luminaire falls back on its own internal battery pack',
+      'The central battery automatically re-routes supply to a spare way',
+      'Every luminaire on that sub-circuit loses its emergency supply at once',
+      'Only the maintained luminaires on that sub-circuit stay in service',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'This is the structural weakness of central battery systems: one protective device controls many fittings, so a single fault creates a large dark area. Designers manage it by limiting how much of a route sits on one sub-circuit and by interleaving adjacent luminaires across different ways. The internal battery answer is the trap, because central battery luminaires have no local cells to fall back on.',
+    section: 'Module 7',
+    difficulty: 'advanced',
+    topic: 'Central Battery Faults',
+    category: 'Testing & Maintenance',
+  },
+  {
+    id: 341,
+    question:
+      'Why is emergency lighting provided in an accessible toilet even though it is not an escape route?',
+    options: [
+      'Because a person alone there could be trapped in total darkness',
+      'Because the room is classed as a high risk task area by default',
+      'Because the extract fan must keep running during a power failure',
+      'Because the alarm pull cord needs power drawn from the luminaire',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'A windowless toilet goes completely black when the supply fails, and someone using it alone, possibly with reduced mobility, may be unable to find the door or the alarm cord. That is why it is a recognised point of emphasis. The high risk task answer is the plausible one, but that classification applies to dangerous work that must be shut down safely, and it would demand a far higher illuminance than this situation calls for.',
+    section: 'Module 3',
+    difficulty: 'intermediate',
+    topic: 'Points of Emphasis',
+    category: 'Design',
+  },
+  {
+    id: 342,
+    question: 'Why should a lift car be provided with emergency lighting?',
+    options: [
+      'Because the lift is treated as part of the protected escape route',
+      'Because occupants may be held in the car until they are released',
+      'Because the lift motor room must be lit for maintenance at night',
+      'Because the lift will be used to evacuate the building in a fire',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A lift stops when the supply fails and the people inside stay there until someone releases them, which can take a long time, so light inside the car is about preventing panic during confinement rather than about escape. The escape route answer is the trap: an ordinary passenger lift is not part of the escape route and should not be used in a fire, which is precisely why occupants can end up stranded in it.',
+    section: 'Module 3',
+    difficulty: 'advanced',
+    topic: 'Points of Emphasis',
+    category: 'Design',
+  },
+  {
+    id: 343,
+    question:
+      'A small shop has a windowless stockroom with one door. What does this require?',
+    options: [
+      'No emergency lighting, as the room is not an escape route itself',
+      'A high risk task area level of lighting throughout the stockroom',
+      'Emergency lighting in the stockroom as well as on the escape route',
+      'Only a maintained exit sign fitted on the outside of the doorway',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'A windowless room with a single exit leaves anyone inside in absolute darkness if the supply fails, so it needs enough light for them to find the door and join the escape route. The answer that no lighting is needed because it is not an escape route is the classic mistake; the design follows where people can be caught out, not just the marked route through the building.',
+    section: 'Module 2',
+    difficulty: 'intermediate',
+    topic: 'Scope of Provision',
+    category: 'Compliance',
+  },
+  {
+    id: 344,
+    question:
+      'What distinguishes standby lighting from emergency escape lighting?',
+    options: [
+      'Standby lighting is always fed from a central battery installation',
+      'Standby lighting must reach full output within five seconds always',
+      'Standby lighting has a duration of three hours in every building',
+      'Standby lighting lets normal activity continue and is not for escape',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Standby lighting exists so that work can carry on after a supply failure, for example in an operating theatre or a control room, and it is specified by the operational need rather than by life safety. Emergency escape lighting is the part concerned with getting people out safely. The response time answer is the trap: the five second and sixty second staging belongs to escape lighting, not to standby provision.',
+    section: 'Module 1',
+    difficulty: 'advanced',
+    topic: 'Standby Lighting',
+    category: 'System Types',
+  },
+  {
+    id: 345,
+    question:
+      'What must be checked about an emergency exit sign at commissioning?',
+    options: [
+      'That it is visible from the positions people will approach it from',
+      'That its luminance is measured and recorded against a lux meter',
+      'That its wattage matches the value shown on the design drawing',
+      'That it is wired on the same circuit as the fire alarm sounders',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'A sign only works if it can actually be seen from where people will be standing when they need it, so commissioning has to include walking the approaches and checking for obstruction by doors, columns, racking and hanging displays. The lux meter answer confuses two things: a lux meter measures light falling on a surface, whereas a sign is judged on how it appears to the eye at the distance it must be read from.',
+    section: 'Module 6',
+    difficulty: 'intermediate',
+    topic: 'Sign Verification',
+    category: 'Compliance',
+  },
+  {
+    id: 346,
+    question:
+      'Do the Chapter 57 requirements for stationary secondary batteries apply to emergency lighting batteries?',
+    options: [
+      'Yes, every stationary secondary battery falls within Chapter 57 always',
+      'No, batteries within conforming emergency lighting systems are excluded',
+      'Yes, but only where the battery sits inside a dedicated plant room',
+      'No, because Chapter 57 applies only to batteries in domestic premises',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Chapter 57, introduced by A4:2026, expressly excludes stationary secondary batteries incorporated in fire and emergency lighting systems and central safety power supply systems where those systems conform to their appropriate standards. The blanket yes answer is tempting because the chapter title sounds all embracing, but the exclusion exists so that these batteries stay governed by the emergency lighting and fire standards that already cover them.',
+    section: 'Module 5',
+    difficulty: 'advanced',
+    topic: 'Chapter 57 Scope',
+    category: 'Cabling & Batteries',
+  },
+  {
+    id: 347,
+    question:
+      'Who should carry out the annual full duration test on an emergency lighting system?',
+    options: [
+      'Any member of staff who has been shown where the test key is kept',
+      'The manufacturer of the luminaires or their appointed agent only',
+      'A competent person with knowledge of the system and its records',
+      'An electrician holding a current inspection and testing qualification',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Competence here means understanding the system installed, knowing what a pass and a fail look like, and being able to interpret and complete the records, which is a broader requirement than any single ticket. The inspection and testing qualification answer is attractive but it certifies ability to test a wiring installation; it does not by itself demonstrate knowledge of emergency lighting duration, modes and record keeping.',
+    section: 'Module 4',
+    difficulty: 'intermediate',
+    topic: 'Competence',
+    category: 'Testing & Maintenance',
+  },
+  {
+    id: 348,
+    question:
+      'A warehouse is repartitioned into offices. What does that mean for the emergency lighting?',
+    options: [
+      'Nothing, provided the existing luminaires all pass the annual test',
+      'Only the exit signage needs moving to suit the new door positions',
+      'The duration must be increased from three hours to a longer period',
+      'The risk assessment and the lighting design must both be revisited',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'New partitions change the escape routes, the occupancy and the risks, so the fire risk assessment is reworked first and the lighting design then follows from it, which usually means relocating luminaires and signs and re-verifying the levels. The answer about passing the annual test is the dangerous one, because a luminaire can test perfectly while now shining at a blank wall on the wrong side of a new partition.',
+    section: 'Module 6',
+    difficulty: 'advanced',
+    topic: 'Change of Use',
+    category: 'Compliance',
+  },
+  {
+    id: 349,
+    question:
+      'At commissioning the measured level fails at the far end of a corridor. Which remedy is sound?',
+    options: [
+      'Add a luminaire at the failing end to lift the level on that stretch',
+      'Measure only along the centre line, where the level will pass easily',
+      'Reduce the width of the route on the drawing so less area is judged',
+      'Accept the reading because the average along the corridor still passes',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'A shortfall at commissioning is a design shortfall, and the honest fix is more or better placed light where the level fails. The centre line answer is the one to watch for: reverting to a single line of measurement was the older approach, and current practice assesses the full width of the route less the excluded border, so it cannot be used to rescue a failing design. Averaging is equally wrong, since the requirement is a minimum, not a mean.',
+    section: 'Module 7',
+    difficulty: 'advanced',
+    topic: 'Commissioning Shortfalls',
+    category: 'Testing & Maintenance',
+  },
+  {
+    id: 350,
+    question:
+      'What electrical verification is needed for a new emergency lighting final circuit?',
+    options: [
+      'A functional test of the luminaires alone with no electrical testing',
+      'The usual inspection and testing sequence with results on a schedule',
+      'Insulation resistance only, as the circuit carries extra low voltage',
+      'A duration test in place of the continuity and earth loop measurements',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The circuit is a normal low voltage final circuit and gets the full Part 6 treatment, with continuity, insulation resistance, polarity, earth fault loop impedance and any RCD checks recorded on a schedule of test results, in addition to the emergency lighting commissioning. The functional test answer is the common shortcut on site: proving a lamp lights on battery says nothing about whether the wiring is safe when it is running on the mains.',
+    section: 'Module 6',
+    difficulty: 'intermediate',
+    topic: 'Inspection and Testing',
+    category: 'Compliance',
+  },
 ];
 
 // Function to get random questions for mock exam with balanced difficulty

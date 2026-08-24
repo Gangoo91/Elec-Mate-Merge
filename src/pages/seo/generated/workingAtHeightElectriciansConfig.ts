@@ -294,7 +294,7 @@ export const workingAtHeightElectriciansConfig: GeneratedGuideConfig = {
   ],
   relatedPages: [
     {
-      href: '/tools/rams-generator',
+      href: '/rams-generator',
       title: 'RAMS Generator',
       description: 'Generate a site-ready risk assessment and method statement with a built-in working-at-height module, signed and timestamped.',
       icon: 'Wrench',

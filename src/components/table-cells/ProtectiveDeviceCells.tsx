@@ -12,7 +12,8 @@ import type { CellWarning } from '@/utils/cellWarnings';
 import { CellWarningMarker } from './CellWarningMarker';
 import {
   protectiveDeviceRatingOptions,
-  protectiveDeviceCurveOptions,
+  getCurveOptionsForStandard,
+  clearOnStandardChange,
   bsStandardOptions,
   bsStandardRequiresCurve,
 } from '@/types/protectiveDeviceTypes';
@@ -40,6 +41,8 @@ const ProtectiveDeviceCellsComponent: React.FC<ProtectiveDeviceCellsProps> = ({
 }) => {
   // Show curve selector only for MCB/RCBO types (based on BS Standard)
   const showCurveSelector = bsStandardRequiresCurve(result.bsStandard || '');
+  // BS 3871 uses Types 1–4, BS EN 60898/61009 use B/C/D — ELE-1604.
+  const curveOptions = getCurveOptionsForStandard(result.bsStandard || '');
 
   // Handle BS Standard change
   const handleBsStandardChange = useCallback(
@@ -54,11 +57,17 @@ const ProtectiveDeviceCellsComponent: React.FC<ProtectiveDeviceCellsProps> = ({
         updates.protectiveDeviceCurve = '';
       }
 
+      // ELE-1604 — a Type from the other family cannot survive the switch.
+      // Shared rule; see `clearOnStandardChange`.
+      const stale = clearOnStandardChange(value, result.protectiveDeviceCurve || '');
+      if (stale) Object.assign(updates, stale);
+      const familyChanged = stale !== null;
+
       // Auto-fill maxZs — RCD-aware. If the circuit has any RCD (own RCD,
       // RCBO, or upstream), the UL/IΔn limit wins (Reg 411.5.3).
       const rating = result.protectiveDeviceRating || '';
-      const curve = needsCurve ? result.protectiveDeviceCurve || '' : '';
-      if (rating && (needsCurve ? curve : true)) {
+      const curve = familyChanged ? '' : result.protectiveDeviceCurve || '';
+      if (rating && (needsCurve && !familyChanged ? curve : true)) {
         const lookup = getMaxZsWithRcd({
           bsStandard: value,
           curve,
@@ -195,7 +204,7 @@ const ProtectiveDeviceCellsComponent: React.FC<ProtectiveDeviceCellsProps> = ({
             sideOffset={5}
             className="bg-background border border-border rounded-md z-[9999] min-w-[160px]"
           >
-            {protectiveDeviceCurveOptions.map((option) => (
+            {curveOptions.map((option) => (
               <SelectItem
                 key={option.value}
                 value={option.value}

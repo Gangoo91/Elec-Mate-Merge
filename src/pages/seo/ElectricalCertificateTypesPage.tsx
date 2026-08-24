@@ -458,7 +458,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <Lightbulb className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Illumination:</strong> Minimum 1 lux on the centre line of escape routes,
+                <strong>Illumination:</strong> Minimum 1 lux across the full width of escape routes,
                 0.5 lux minimum on the central band
               </span>
             </li>

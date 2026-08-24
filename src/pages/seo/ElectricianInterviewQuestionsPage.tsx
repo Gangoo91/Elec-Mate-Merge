@@ -152,7 +152,7 @@ const sections = [
           Before the interview, do your research. Understand what the company does — domestic,
           commercial, industrial, maintenance, or a mix. Look at their website and recent projects.
           Check whether they are registered with{' '}
-          <SEOInternalLink href="/guides/niceic-vs-napit">NICEIC, NAPIT, or ELECSA</SEOInternalLink>
+          <SEOInternalLink href="/niceic-vs-napit-comparison">NICEIC, NAPIT, or ELECSA</SEOInternalLink>
           . Know what the role involves so you can tailor your answers. An interview for a domestic
           rewire specialist is very different from one for a commercial maintenance electrician.
         </p>

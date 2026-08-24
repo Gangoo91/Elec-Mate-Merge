@@ -5,14 +5,14 @@ export const escapeRouteCoverageQuizData: QuizQuestion[] = [
     id: 1,
     question: 'What is the minimum lux requirement for escape routes?',
     options: [
-      '5 lux along the centre line',
-      '1 lux along the centre line',
-      '0.5 lux along the centre line',
-      '2 lux along the centre line',
+      '5 lux across the full width',
+      '1 lux across the full width',
+      '0.5 lux across the full width',
+      '2 lux across the full width',
     ],
     correctAnswer: 1,
     explanation:
-      'BS 5266 requires a minimum of 1 lux along the centre line of escape routes to ensure adequate visibility for safe navigation during evacuation.',
+      'BS EN 1838:2024 requires a minimum of 1 lux across the FULL WIDTH of an escape route. The 2013 edition required it only along the centre line; the 2024 revision extended it to the whole width, excluding borders (0.5 m each side above 2 m width, or a quarter of the width at 2 m or less).',
   },
   {
     id: 2,
@@ -45,9 +45,9 @@ export const escapeRouteCoverageQuizData: QuizQuestion[] = [
     question: 'Where should luminaires be positioned in stairways?',
     options: [
       'At each flight and landing',
-      'Only at the bottom of each staircase',
-      'Only at the top of each staircase',
-      'Every third step only',
+      'At the foot of each staircase',
+      'At the head of each staircase',
+      'On every third step',
     ],
     correctAnswer: 0,
     explanation:

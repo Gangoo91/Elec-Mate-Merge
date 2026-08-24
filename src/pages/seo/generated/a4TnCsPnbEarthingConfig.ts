@@ -265,7 +265,7 @@ export const a4TnCsPnbEarthingConfig: GeneratedGuideConfig = {
       category: 'Tool',
     },
     {
-      href: '/guides/earthing-arrangements',
+      href: '/guides/earthing-systems-tns-tncs-tt-explained',
       title: 'Earthing Arrangements Overview',
       description: 'TN-C, TN-S, TN-C-S, TT, IT — every UK earthing arrangement compared.',
       icon: 'ShieldCheck',

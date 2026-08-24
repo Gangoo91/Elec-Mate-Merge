@@ -109,10 +109,10 @@ export const bmsModule1Section4QuizQuestions: QuizQuestion[] = [
     id: 9,
     question: 'Why must electricians be aware of sector-specific requirements?',
     options: [
-      'Because the same BMS controller is fitted in every type of building',
+      'Because the same BMS controller is fitted in every type of building regardless of use',
       'Because regulations and priorities differ between healthcare, retail, and commercial environments',
-      'Because only healthcare sites are covered by BS 7671',
-      'Because cable colours change depending on the building sector',
+      'Because healthcare sites are the only buildings covered by BS 7671 requirements',
+      'Because cable colour coding changes depending on the sector the building serves',
     ],
     correctAnswer: 1,
     explanation:

@@ -321,7 +321,7 @@ export const ramsForConsumerUnitReplacementConfig: GeneratedGuideConfig = {
   ],
   relatedPages: [
     {
-      href: '/tools/rams-generator',
+      href: '/rams-generator',
       title: 'RAMS Generator',
       description:
         'Build a CU-specific Risk Assessment & Method Statement in two minutes — pre-filled hazards, control measures and PPE, exported as a signed PDF.',

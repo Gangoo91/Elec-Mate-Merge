@@ -483,7 +483,7 @@ export const cableReactionToFireCcaA4Config: GeneratedGuideConfig = {
       category: 'Guide',
     },
     {
-      href: '/guides/wiring-colours-uk',
+      href: '/guides/cable-colour-codes-uk',
       title: 'UK Wiring Colours Reference',
       description: 'The complete UK wiring colours reference for single-phase, three-phase and protective conductors under BS 7671:2018+A4:2026.',
       icon: 'Cable',

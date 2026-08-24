@@ -5,10 +5,10 @@ export const bmsModule3Section6QuizData: QuizQuestion[] = [
     id: 1,
     question: 'What is the difference between an alarm response and a safety shutdown?',
     options: [
-      'An alarm response shuts plant down immediately; a safety shutdown only logs the event for later review',
+      'An alarm response shuts the plant down immediately, while a safety shutdown only records the event in the log for review later',
       'Alarm responses notify and may trigger corrective actions; safety shutdowns override normal operation to protect life and property',
-      'There is no difference; the two terms describe the same BMS action',
-      'An alarm response is hard-wired; a safety shutdown is always actioned manually by the operator',
+      'The two terms describe the same BMS action, as both raise a notification to the operator without ever stopping any plant',
+      'An alarm response is always hard-wired, whereas a safety shutdown is actioned manually by the operator on site',
     ],
     correctAnswer: 1,
     explanation:

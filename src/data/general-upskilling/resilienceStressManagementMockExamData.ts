@@ -1766,9 +1766,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     id: 113,
     question: 'Lazarus and Folkman identified that most effective copers use:',
     options: [
-      'Only problem-focused coping, applied regardless of the situation they face',
+      'Problem-focused coping alone, applied in the same way whatever the situation',
       'A flexible mix of problem-focused and emotion-focused coping, matched to the situation',
-      'Only emotion-focused coping, applied regardless of the situation they face',
+      'Emotion-focused coping alone, applied in the same way whatever the situation',
       'Avoidant coping whenever a particular stressor begins to feel overwhelming',
     ],
     correctAnswer: 1,
@@ -1781,10 +1781,10 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     id: 114,
     question: 'In the ABC Model, the "C" (Consequences) includes:',
     options: [
-      'Only the physical symptoms produced directly by the activating event',
-      'Only the thoughts and beliefs a person holds about the activating event',
+      'The physical symptoms produced directly by the activating event alone',
+      'The thoughts and beliefs a person holds about the activating event',
       'Both emotional consequences (how you feel) and behavioural ones (what you do)',
-      'Only the long-term physical health effects of repeated chronic stress',
+      'The long-term physical health effects of repeated chronic stress',
     ],
     correctAnswer: 2,
     explanation:
@@ -2478,9 +2478,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     question:
       "When a self-employed electrician's income drops unexpectedly, resilience-building financial advice would be to:",
     options: [
-      'Take out a high-interest payday loan to cover the income shortfall quickly',
-      'Ignore the problem and simply hope the next contract arrives just in time',
-      'Withdraw from all available support services to avoid sharing personal details',
+      'Take out a high-interest payday loan to cover the shortfall quickly',
+      'Delay contacting HMRC until the next contract arrives and cut nothing',
+      'Withdraw from support services to avoid disclosing personal details',
       'Assess calmly, contact HMRC about Time to Pay, get advice, and cut spending',
     ],
     correctAnswer: 3,

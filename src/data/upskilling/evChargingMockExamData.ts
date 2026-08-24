@@ -121,7 +121,7 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Rapid DC chargers typically start at 50kW, with ultra-rapid units delivering 150kW to 350kW or more.',
     section: 'EVSE Types',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Power Ratings',
     category: 'EVSE Types',
   },
@@ -173,7 +173,7 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'IP54 is a common minimum for outdoor EV charging enclosures, giving protection against dust and splashing water; many units exceed this.',
     section: 'Electrical Design',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'IP Ratings',
     category: 'Electrical Design',
   },
@@ -294,7 +294,7 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'A Type B RCD must be ramp-tested with a superimposed DC residual current to confirm it trips at its rated smooth DC threshold; the push-button only proves the mechanical trip.',
     section: 'Testing',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'RCD Testing',
     category: 'Testing',
   },
@@ -347,7 +347,7 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Around 1.2m is a typical recommended height for the connector to support accessible use and keep the equipment clear of standing water and impact.',
     section: 'Electrical Design',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Installation Requirements',
     category: 'Electrical Design',
   },
@@ -432,7 +432,7 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'The Control Pilot state and connector lock interlock with the vehicle so that drive is inhibited while a cable is connected, preventing the vehicle moving off mid-charge.',
     section: 'EVSE Types',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Safety Interlocks',
     category: 'EVSE Types',
   },
@@ -691,7 +691,7 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Charger designs typically target current THD below 5% to limit harmonic pollution of the supply, in line with common power quality requirements.',
     section: 'Electrical Design',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Power Quality',
     category: 'Electrical Design',
   },
@@ -725,7 +725,7 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Around 2m between charge points is a common minimum to allow cables to reach vehicle inlets and to permit safe manoeuvring between bays.',
     section: 'Electrical Design',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Installation Spacing',
     category: 'Electrical Design',
   },
@@ -742,7 +742,7 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'A cold battery has reduced charge acceptance, so the BMS limits current at low temperatures to avoid lithium plating, slowing fast charging until the pack warms.',
     section: 'Introduction',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Battery Charging',
     category: 'Introduction',
   },
@@ -845,7 +845,7 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Public charge points most commonly authorise sessions via RFID cards or smartphone apps linked to a user account and payment method.',
     section: 'Smart Charging',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Access Control',
     category: 'Smart Charging',
   },
@@ -862,7 +862,7 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Dynamic load management monitors total site demand and throttles charge points so simultaneous sessions never overload the incoming supply.',
     section: 'Smart Charging',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Load Management',
     category: 'Smart Charging',
   },
@@ -930,7 +930,7 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Temperature sensing in the connector detects high-resistance or overheating contacts so the EVSE can derate or halt charging before damage occurs.',
     section: 'EVSE Types',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Safety Monitoring',
     category: 'EVSE Types',
   },
@@ -1049,7 +1049,7 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'The Control Pilot circuit relies on a sound earth reference; loss of protective conductor continuity changes the pilot state and inhibits charging.',
     section: 'EVSE Types',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Safety Systems',
     category: 'EVSE Types',
   },
@@ -1066,7 +1066,7 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'A minimum bend radius of roughly 8 times the cable diameter is typical for flexible charging leads to avoid stressing the conductors and insulation.',
     section: 'Electrical Design',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Cable Installation',
     category: 'Electrical Design',
   },
@@ -1100,7 +1100,7 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'With maintenance, charge point hardware typically has a service life of around 10-15 years before obsolescence or wear warrants replacement.',
     section: 'Compliance',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Equipment Lifespan',
     category: 'Compliance',
   },
@@ -1117,7 +1117,7 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'An AFDD detects the signature of dangerous series and parallel arc faults and disconnects the circuit, addressing a fire risk that MCBs and RCDs do not cover.',
     section: 'Earthing & Protection',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Arc Fault Protection',
     category: 'Earthing & Protection',
   },
@@ -1168,7 +1168,7 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Users are advised to operate the RCD test button periodically (commonly quarterly) to confirm the mechanism trips; full instrument testing remains part of periodic inspection.',
     section: 'Testing',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'RCD Testing',
     category: 'Testing',
   },
@@ -1185,7 +1185,7 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'IEC 62196 (BS EN 62196) specifies the dimensions and interchangeability of plugs, socket-outlets, vehicle connectors and inlets for conductive charging.',
     section: 'Compliance',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Interface Standards',
     category: 'Compliance',
   },
@@ -1202,7 +1202,7 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Because DC charging applies high voltage between conductors and earth, insulation monitoring detects degraded insulation and shuts down to protect against electric shock.',
     section: 'Earthing & Protection',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Fault Monitoring',
     category: 'Earthing & Protection',
   },
@@ -1270,7 +1270,7 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'A mated EV connector is commonly required to achieve at least IP44, giving protection against solid objects and splashing water during outdoor charging.',
     section: 'Electrical Design',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'IP Ratings',
     category: 'Electrical Design',
   },
@@ -1338,7 +1338,7 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Around 1m of working clearance is commonly provided so an engineer can safely access and maintain the unit without obstruction.',
     section: 'Electrical Design',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Installation Requirements',
     category: 'Electrical Design',
   },
@@ -1389,7 +1389,7 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'A networked load-management controller meters the site supply and coordinates the charge points so their combined demand stays within capacity.',
     section: 'Smart Charging',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Load Management',
     category: 'Smart Charging',
   },
@@ -1423,7 +1423,7 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'CCS Combo 2 supports the highest DC charging power in Europe, with ultra-rapid units delivering 350kW and beyond.',
     section: 'EVSE Types',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Connector Types',
     category: 'EVSE Types',
   },
@@ -1508,7 +1508,7 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Active power factor correction keeps the power factor close to unity, so the reactive power demand varies modestly with load rather than being heavily inductive or capacitive.',
     section: 'Electrical Design',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Power Quality',
     category: 'Electrical Design',
   },
@@ -1525,7 +1525,7 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Predictive maintenance relies on remotely collected operating data and trend analysis to flag developing faults before they cause an outage.',
     section: 'Testing',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Maintenance Systems',
     category: 'Testing',
   },
@@ -1542,7 +1542,7 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Equipment in 230/400V installations is commonly rated to withstand impulse voltages of the order of 4kV (overvoltage category III), with SPDs limiting let-through below this.',
     section: 'Earthing & Protection',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Surge Protection',
     category: 'Earthing & Protection',
   },
@@ -1559,7 +1559,7 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'OpenADR is an open standard for automated demand-response signalling, allowing utilities or aggregators to curtail or shift EV charging load.',
     section: 'Smart Charging',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Renewable Integration',
     category: 'Smart Charging',
   },
@@ -1593,7 +1593,7 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Coincident evening charging at full power creates a sharp demand peak; spreading or time-shifting the load (smart charging) reduces the grid impact.',
     section: 'Electrical Design',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Grid Impact',
     category: 'Electrical Design',
   },
@@ -1627,7 +1627,7 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'A bi-directional inverter/converter can both rectify (charge) and invert (export), enabling controlled two-way power flow in vehicle-to-grid systems.',
     section: 'Smart Charging',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'V2G Technology',
     category: 'Smart Charging',
   },
@@ -1661,7 +1661,7 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'The CP and PP signals must indicate a fully engaged, undamaged connection before the EVSE will energise the contacts and begin charging.',
     section: 'EVSE Types',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Safety Systems',
     category: 'EVSE Types',
   },
@@ -1899,7 +1899,7 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'An RCBO for an EV circuit must give both overcurrent and residual current protection suited to EV charging, including the required DC fault detection (Type B, or Type A with an RDC-DD).',
     section: 'Earthing & Protection',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Protection Devices',
     category: 'Earthing & Protection',
   },
@@ -2002,7 +2002,7 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'In the UK, BS 7671 Section 722 sets the installation safety requirements for EV charging equipment; NEC and UL standards apply in North America.',
     section: 'Compliance',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Regional Standards',
     category: 'Compliance',
   },
@@ -2036,7 +2036,7 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Identifying the vehicle/user (plug-and-charge) and combining that with time-of-use scheduling lets the system charge during the cheapest tariff windows automatically.',
     section: 'Smart Charging',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Tariff Management',
     category: 'Smart Charging',
   },
@@ -2053,7 +2053,7 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Full commissioning validates the complete installation, including protection, earthing, polarity, Zs, RCD operation and functional charging, not just power-up.',
     section: 'Testing',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Commissioning',
     category: 'Testing',
   },
@@ -2104,7 +2104,7 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Public charging increasingly requires open, contactless payment so any driver, including occasional and overseas users, can pay without a network-specific account.',
     section: 'Smart Charging',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Payment Systems',
     category: 'Smart Charging',
   },
@@ -2223,7 +2223,7 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Continuous automated monitoring that raises alarms to the operator detects faults far sooner than periodic visits or user reports, reducing downtime.',
     section: 'Testing',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Monitoring Systems',
     category: 'Testing',
   },
@@ -2274,7 +2274,7 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Predictive fault detection analyses streamed and historical operating data to identify abnormal trends that precede a failure, allowing pre-emptive action.',
     section: 'Testing',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Predictive Maintenance',
     category: 'Testing',
   },
@@ -2308,7 +2308,7 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'In the UK the Equality Act 2010, supported by accessibility guidance such as PAS 1899, drives accessible public charge point design; the ADA applies in the US.',
     section: 'Compliance',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Accessibility Standards',
     category: 'Compliance',
   },
@@ -2325,7 +2325,7 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Thermal management keeps cells within their safe window so high charge currents can be accepted without overheating, protecting capacity and life.',
     section: 'Introduction',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Battery Management',
     category: 'Introduction',
   },
@@ -2359,7 +2359,7 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Strong cyber security relies on encrypted communications, changed default credentials and prompt firmware patching to close known vulnerabilities.',
     section: 'Compliance',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Cybersecurity',
     category: 'Compliance',
   },
@@ -2512,7 +2512,7 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Available grid capacity caps how many rapid charge points can run simultaneously; beyond it, storage, load management or reinforcement is required.',
     section: 'Electrical Design',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Site Planning',
     category: 'Electrical Design',
   },
@@ -2566,6 +2566,910 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     difficulty: 'basic',
     topic: 'Industry Goals',
     category: 'Introduction',
+  },
+  // ── Section 722 in depth (A4:2026) — questions 151-200 ──────────────
+  // Authored against bs7671_facets (Reg 722.411.4, 722.421.1.7.201,
+  // 722.511.1, 722.531.3.101). Weighted to advanced: the bank measured only
+  // 6% advanced against observed answers, so it could not draw a hard paper.
+  {
+    id: 151,
+    question:
+      'Reg 722.411.4.1 restricts the use of a PME earthing facility at a charging point. To which charging points does the restriction apply?',
+    options: [
+      'To any charging point rated above 32 A, wherever in the installation it is sited',
+      'Those located outdoors, or that might reasonably be expected to charge a vehicle outdoors',
+      'To charging points fitted with a socket-outlet, but not to those with a tethered lead',
+      'All charging points on a TN-C-S supply, including those wholly inside a building',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The scope is locational, not electrical: 722.411.4 applies where a PME earthing facility would otherwise earth the protective conductor contacts of a charging point outdoors, or one that might reasonably be expected to be used to charge a vehicle outdoors. A garage charger on a lead long enough to reach the drive is caught by the second limb.',
+    section: 'Earthing & Protection',
+    difficulty: 'advanced',
+    topic: 'PME Restriction',
+    category: 'Earthing & Protection',
+  },
+  {
+    id: 152,
+    question:
+      'Under Reg 722.411.4(c), a device must disconnect the vehicle within 5 s if the voltage between the circuit protective conductor and Earth exceeds which value?',
+    options: [
+      '50 V',
+      '70 V',
+      '120 V',
+      '230 V',
+    ],
+    correctAnswer: 1,
+    explanation:
+      '722.411.4(c) sets the threshold at 70 V between the circuit protective conductor and Earth, with disconnection from both the live conductors and protective earth within 5 s. 50 V is the conventional touch-voltage limit elsewhere in BS 7671 and is the common wrong answer here.',
+    section: 'Earthing & Protection',
+    difficulty: 'advanced',
+    topic: 'PEN Fault Detection',
+    category: 'Earthing & Protection',
+  },
+  {
+    id: 153,
+    question:
+      'Reg 722.411.4(d) requires disconnection within 5 s if the line-to-neutral utilisation voltage at the charging point falls outside which range?',
+    options: [
+      '216 V to 244 V',
+      '207 V to 253 V',
+      '195 V to 265 V',
+      '184 V to 276 V',
+    ],
+    correctAnswer: 1,
+    explanation:
+      '207 V to 253 V is the window in 722.411.4(d) — it corresponds to 230 V with the -10%/+10% supply tolerance. A device monitoring this window infers a PEN failure from the voltage excursion it produces.',
+    section: 'Earthing & Protection',
+    difficulty: 'advanced',
+    topic: 'PEN Fault Detection',
+    category: 'Earthing & Protection',
+  },
+  {
+    id: 154,
+    question:
+      'Why is a device that measures voltage between the circuit protective conductor and the neutral unsuitable for detecting an open PEN conductor?',
+    options: [
+      'Because harmonic distortion on the neutral conductor corrupts the voltage measurement',
+      'On a PEN failure the neutral is no longer reliably earthed, so both points rise together',
+      'Because BS 7671 prohibits neutral-to-earth measurements anywhere on a TN-C-S supply',
+      'Because the voltage is too small to measure without a dedicated instrument',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'During a PEN failure the neutral of a TN-C-S supply is no longer reliably connected to Earth. A device measuring cpc-to-neutral, or cpc-to-main-earthing-terminal, sees both references rise together and reads near zero while the installation is at a dangerous potential. Detection has to reference true Earth.',
+    section: 'Earthing & Protection',
+    difficulty: 'advanced',
+    topic: 'PEN Fault Detection',
+    category: 'Earthing & Protection',
+  },
+  {
+    id: 155,
+    question:
+      'A designer proposes a 30 mA Type A RCD as the sole means of protecting against a broken PEN conductor at a domestic charging point. Why does this fail?',
+    options: [
+      'A Type A RCD is too slow to operate within the required 5 s',
+      'An open PEN produces no residual current, so there is nothing for an RCD to detect',
+      'The RCD would need to be rated at 10 mA to detect the imbalance',
+      'RCDs are not permitted on final circuits supplying charging equipment',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'An RCD operates on the imbalance between line and neutral. A lost PEN raises the potential of the whole earthing system without creating any imbalance in the final circuit, so the RCD never sees a residual current and never trips. This is why 722.411.4 calls for a device that monitors voltage, or an alternative means of earthing.',
+    section: 'Earthing & Protection',
+    difficulty: 'advanced',
+    topic: 'PEN Fault Detection',
+    category: 'Earthing & Protection',
+  },
+  {
+    id: 156,
+    question:
+      'In the separated-system arrangement of Figure A722, what makes protective conductor monitoring necessary?',
+    options: [
+      'The transformer removes the earth reference, so a broken protective conductor goes unnoticed',
+      'The transformer introduces a DC component that a Type A RCD cannot clear',
+      'Separated systems are installed outdoors, so the protective conductor corrodes faster',
+      'The monitoring replaces the need for any residual current device on the circuit',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'A separated supply derived from an isolating transformer has no inherent connection to Earth on its secondary, so continuity of the protective conductor cannot be assumed from the supply side. Monitoring proves that conductor is intact. A 30 mA RCD is still provided — the monitoring adds to it rather than replacing it.',
+    section: 'Earthing & Protection',
+    difficulty: 'advanced',
+    topic: 'Separated Systems',
+    category: 'Earthing & Protection',
+  },
+  {
+    id: 157,
+    question:
+      'Reg 722.421.1.7.201 allows AFDD provision to be omitted for EV charging equipment. What must be satisfied for the exemption to apply?',
+    options: [
+      'The equipment conforms to the BS EN 61851 series, or alternatively the connectors conform to BS EN IEC 62196-2',
+      'The equipment conforms to BS EN 61851 AND the socket-outlets or vehicle connectors conform to BS EN IEC 62196-2',
+      'The charging point is rated at 7.4 kW or less and is supplied through a dedicated RCBO',
+      'The installation is domestic and the charging point is fitted with a tethered lead',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The exemption is conjunctive — both limbs must hold. Conformity to the BS EN 61851 series alone is not enough; the socket-outlets or vehicle connectors must also conform to BS EN IEC 62196-2. Where the product documentation does not clearly show both, the exemption should not be claimed.',
+    section: 'Compliance',
+    difficulty: 'advanced',
+    topic: 'AFDD Exemption',
+    category: 'Compliance',
+  },
+  {
+    id: 158,
+    question:
+      'NOTE 2 to Reg 722.531.3.101 limits how many charging points may be supplied by each transformer in a separated system?',
+    options: [
+      'One',
+      'Two',
+      'Four',
+      'No limit, provided the transformer is not overloaded',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Only one charging point may be supplied by each transformer. Sharing a transformer between two points would couple them, defeating the separation that the arrangement exists to provide. The transformer should also be sited as close as possible to the equipment it supplies.',
+    section: 'Earthing & Protection',
+    difficulty: 'advanced',
+    topic: 'Separated Systems',
+    category: 'Earthing & Protection',
+  },
+  {
+    id: 159,
+    question:
+      'Reg 722.411.4(e) permits an alternative device to those described in (c) and (d). What is the test it must meet?',
+    options: [
+      'It must be listed by name in an appendix to BS 7671',
+      'It must not result in a lesser degree of safety than the devices in (c) or (d)',
+      'It must operate within 0.4 s rather than 5 s',
+      'It must be approved in writing by the distribution network operator',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The regulation is written in terms of outcome, not product: an alternative is permitted provided it does not give a lesser degree of safety, and it must still disconnect the vehicle from both the live conductors and protective earth. That leaves room for new technology without naming products.',
+    section: 'Earthing & Protection',
+    difficulty: 'advanced',
+    topic: 'Alternative Devices',
+    category: 'Earthing & Protection',
+  },
+  {
+    id: 160,
+    question:
+      'A charge point is supplied from an assembly built on site. Which standard series does Reg 722.511.1 direct the designer to for its design and construction?',
+    options: [
+      'The BS EN 61439 series',
+      'The BS EN 60947 series',
+      'The BS EN 62196 series',
+      'The BS EN 61008 series',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The relevant part of the BS EN 61439 series applies, covering mechanical strength, clearances and creepage, busbar current-carrying capacity, conductor sizing, insulation coordination and enclosure protection. 62196 covers connectors, 60947 switchgear, 61008 RCCBs.',
+    section: 'Compliance',
+    difficulty: 'intermediate',
+    topic: 'Assemblies',
+    category: 'Compliance',
+  },
+  {
+    id: 161,
+    question:
+      'NOTE 1 to Reg 722.411.4 addresses equipment not covered by a British or Harmonized Standard. Where does responsibility sit?',
+    options: [
+      'With the manufacturer, who must obtain a standard before the product is sold',
+      'With the electrical installation designer, or whoever is responsible for specifying the installation',
+      'With the distribution network operator, imposed as a condition of the connection agreement',
+      'With the certifying body that issues the installation certificate',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Where no British or Harmonized Standard covers the equipment, or none covers the particular functionality being relied on, the designer or specifier carries the responsibility for satisfying themselves that it provides an equivalent degree of safety. Novel EV products routinely fall into this gap.',
+    section: 'Compliance',
+    difficulty: 'advanced',
+    topic: 'Designer Responsibility',
+    category: 'Compliance',
+  },
+  {
+    id: 162,
+    question:
+      'An installer measures 0 V between the cpc and the main earthing terminal at a charging point and concludes the PME earthing arrangement is healthy. What is wrong with that conclusion?',
+    options: [
+      'The measurement should have been taken with the supply energised',
+      'A reading of 0 V is expected whether the PEN is intact or open, so it proves nothing',
+      'The instrument should have been set to measure current rather than voltage',
+      'The cpc and main earthing terminal are never connected, so 0 V indicates a fault',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Both points are bonded together, so they sit at the same potential in normal service and continue to do so when the PEN opens — the whole earthing system simply rises together. The measurement cannot distinguish the two states, which is exactly why 722.411.4 references voltage to Earth rather than to the installation.',
+    section: 'Testing',
+    difficulty: 'advanced',
+    topic: 'PEN Fault Detection',
+    category: 'Testing',
+  },
+  {
+    id: 163,
+    question:
+      'A 7.4 kW charge point is fed by 25 m of SWA on a 32 A circuit. Which conductor operating temperature should be used when checking voltage drop from the tabulated mV/A/m figures?',
+    options: [
+      '70 degC, as for thermoplastic (PVC) insulated cable',
+      '90 degC, because the armoured cable is XLPE (thermosetting) insulated',
+      '60 degC, the ambient-corrected figure for buried cable',
+      '105 degC, the short-circuit limit for the conductor',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Standard SWA to BS 5467 is XLPE insulated and rated at 90 degC, not 70 degC. Reading the voltage-drop column for 70 degC thermoplastic cable understates the drop, and on a long EV run that is exactly the circuit where the error shows up.',
+    section: 'Electrical Design',
+    difficulty: 'advanced',
+    topic: 'Voltage Drop',
+    category: 'Electrical Design',
+  },
+  {
+    id: 164,
+    question:
+      'A charging circuit is protected by a 30 mA RCD. What additional fault current type must the arrangement handle for Mode 3 charging?',
+    options: [
+      'Smooth DC residual current, which can blind a Type AC or Type A device',
+      'High-frequency switching current above 20 kHz only',
+      'Third-harmonic current in the neutral conductor',
+      'Transient overvoltage from the vehicle traction battery',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Vehicle on-board electronics can produce smooth DC residual current, which saturates the core of a Type AC or Type A device and stops it responding to subsequent AC faults. Protection is achieved either by a Type B RCD or by a Type A used with equipment providing DC fault detection.',
+    section: 'Earthing & Protection',
+    difficulty: 'advanced',
+    topic: 'RCD Types',
+    category: 'Earthing & Protection',
+  },
+  {
+    id: 165,
+    question:
+      'What distinguishes Mode 3 from Mode 2 charging?',
+    options: [
+      'Mode 3 uses DC at the vehicle inlet, Mode 2 uses AC',
+      'Mode 3 is fixed EVSE with a control pilot; Mode 2 is an in-cable box on a standard socket',
+      'Mode 3 is limited to 3.7 kW at the vehicle inlet, whereas Mode 2 carries no power limit',
+      'Mode 3 requires a tethered lead, Mode 2 requires a socket-outlet',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Mode 2 is the in-cable control and protection device you get with a granny lead plugged into a standard socket-outlet. Mode 3 is dedicated fixed EVSE with control pilot communication. Both are AC at the inlet; DC supply to the vehicle is Mode 4.',
+    section: 'EVSE Types',
+    difficulty: 'intermediate',
+    topic: 'Charging Modes',
+    category: 'EVSE Types',
+  },
+  {
+    id: 166,
+    question:
+      'What is the function of the control pilot conductor in a Mode 3 installation?',
+    options: [
+      'It carries the earth reference that the vehicle chassis is bonded to during charging',
+      'It carries a PWM signal giving the available current and confirming correct connection',
+      'It supplies auxiliary power to the vehicle telematics unit',
+      'It provides the metering pulse output used for billing and back-office reconciliation',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The control pilot carries a pulse-width-modulated signal whose duty cycle tells the vehicle how much current the supply equipment can offer, and whose voltage states confirm connection and readiness. No energy is transferred until that handshake completes.',
+    section: 'EVSE Types',
+    difficulty: 'intermediate',
+    topic: 'Control Pilot',
+    category: 'EVSE Types',
+  },
+  {
+    id: 167,
+    question:
+      'A domestic installation has a maximum demand close to the supply capacity and the client wants a 32 A charge point. Which approach does BS 7671 support?',
+    options: [
+      'Fit the charge point anyway and rely on the main fuse to manage overload',
+      'Apply load curtailment so the charging current is reduced when the rest of the installation demands it',
+      'Uprate the meter tails to 35 mm2, which raises the capacity enough to need no further action',
+      'Split the charge point across two 16 A circuits to halve the demand',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Load curtailment (dynamic load management) monitors total demand and reduces the current offered to the vehicle so the supply capacity is not exceeded. Relying on the main fuse is not a design; splitting the supply does not reduce total demand.',
+    section: 'Electrical Design',
+    difficulty: 'advanced',
+    topic: 'Load Management',
+    category: 'Electrical Design',
+  },
+  {
+    id: 168,
+    question:
+      'On a TT installation supplying a charge point, what is the practical consequence of the earth electrode resistance for the design?',
+    options: [
+      'The electrode must be below 1 ohm to satisfy Chapter 72',
+      'Disconnection relies on the RCD, and the electrode must be low and stable enough to satisfy Ra x IdeltaN <= 50 V',
+      'An electrode is not required, because the charging equipment establishes its own earth reference',
+      'The electrode resistance only matters for lightning protection',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'On TT the overcurrent device cannot be relied on for earth fault disconnection, so the RCD does the work and the electrode must satisfy Ra x IdeltaN <= 50 V. BS 7671 also warns that electrode values above 200 ohms may not be stable as soil conditions change.',
+    section: 'Earthing & Protection',
+    difficulty: 'advanced',
+    topic: 'TT Systems',
+    category: 'Earthing & Protection',
+  },
+  {
+    id: 169,
+    question:
+      'Converting a PME-supplied property to a TT island for the charge point only. What must be verified about the electrode position?',
+    options: [
+      'It must sit within 1 m of the charge point so the earthing conductor is as short as possible',
+      'It must sit outside the zone of influence of any buried PME-connected metalwork',
+      'It must be bonded to the existing main earthing terminal to equalise potential',
+      'It must be installed inside the building to protect it from frost',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The whole point of the TT island is to give the charge point an earth reference independent of the PME system. If the electrode sits inside the zone of influence of PME-connected buried metalwork it will rise with it during a PEN failure, and the separation is defeated. Bonding it back to the MET would defeat it outright.',
+    section: 'Earthing & Protection',
+    difficulty: 'advanced',
+    topic: 'TT Systems',
+    category: 'Earthing & Protection',
+  },
+  {
+    id: 170,
+    question:
+      'What does the proximity requirement in Reg 722.531.3.101 for siting the transformer aim to limit?',
+    options: [
+      'The cost of the installation',
+      'Supply conductor length, and with it voltage drop, fault level and maintenance access problems',
+      'The audible transformer noise reaching habitable rooms elsewhere in the building',
+      'The number of joints permitted in the protective conductor of the separated circuit',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Siting the transformer as close as possible to the equipment it supplies keeps the separated conductors short. A demonstrable minimisation of conductor length and the hazards that come with it — voltage drop, fault level, impeded access — is what satisfies this qualitative requirement.',
+    section: 'Electrical Design',
+    difficulty: 'advanced',
+    topic: 'Separated Systems',
+    category: 'Electrical Design',
+  },
+  {
+    id: 171,
+    question:
+      'A three-phase 22 kW charge point is installed. Which consideration applies to the RCD arrangement that does not arise on a single-phase unit?',
+    options: [
+      'A four-pole device is needed so the neutral is switched with the lines',
+      'Three separate single-phase RCDs may be used in place of one device',
+      'The residual current rating must be increased to 100 mA',
+      'RCD protection is not required on three-phase charging equipment',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'A three-phase supply needs a four-pole device so that the neutral is disconnected with the lines. Splitting into three single-phase RCDs leaves the shared neutral unswitched and the residual current sensing incoherent. The 30 mA rating does not change.',
+    section: 'Earthing & Protection',
+    difficulty: 'advanced',
+    topic: 'Three-Phase',
+    category: 'Earthing & Protection',
+  },
+  {
+    id: 172,
+    question:
+      'During initial verification of a charge point, which test confirms that the protective conductor contact in the vehicle connector is continuous?',
+    options: [
+      'Insulation resistance at 500 V DC between line and earth',
+      'Continuity of the protective conductor measured to the connector earth pin, using the appropriate adaptor',
+      'Earth fault loop impedance measured at the origin of the installation with the supply live',
+      'Polarity confirmed at the consumer unit with the charging circuit isolated and locked off',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Continuity must be proved right through to the earth contact the vehicle will actually connect to, which needs a test adaptor that presents the vehicle side of the connector. Testing only as far as the enclosure leaves the last and most mechanically stressed part of the path unverified.',
+    section: 'Testing',
+    difficulty: 'advanced',
+    topic: 'Initial Verification',
+    category: 'Testing',
+  },
+  {
+    id: 173,
+    question:
+      'Why can an insulation resistance test on a charge point circuit give a misleadingly low reading if carried out without preparation?',
+    options: [
+      'The steel wire armour behaves as a capacitor and stores charge during the applied test voltage',
+      'Electronic components inside the charging equipment provide parallel paths and may be damaged by the test voltage',
+      'The control pilot conductor is always bonded to earth',
+      'The test is invalid on any circuit longer than 20 m because of distributed cable capacitance',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Charging equipment contains electronics, surge protection and filtering that present parallel paths to the 500 V test and can be damaged by it. The equipment is disconnected, or the manufacturer instructions followed, before testing — otherwise the reading describes the electronics rather than the wiring.',
+    section: 'Testing',
+    difficulty: 'advanced',
+    topic: 'Insulation Resistance',
+    category: 'Testing',
+  },
+  {
+    id: 174,
+    question:
+      'What is the purpose of the proximity pilot conductor in a Type 2 charging cable?',
+    options: [
+      'It signals the current-carrying capacity of the cable assembly and detects that the plug is latched',
+      'It carries the residual current signal back to the RCD',
+      'It provides the protective earth path that the vehicle body relies on while connected',
+      'It transmits session and billing data from the charging point to the back office',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Proximity pilot encodes the cable rating through a resistor so the system never offers more current than the lead can carry, and it detects that the connector is latched so charging stops before the plug can be withdrawn under load.',
+    section: 'EVSE Types',
+    difficulty: 'intermediate',
+    topic: 'Control Pilot',
+    category: 'EVSE Types',
+  },
+  {
+    id: 175,
+    question:
+      'A charge point installed in 2023 relied on the former exception permitting PME earthing where an alternative was not reasonably practicable. What is the position under A4:2026?',
+    options: [
+      'The exception remains available where a TT island is impractical',
+      'That route has been removed, so the design must satisfy the current requirements of 722.411.4',
+      'The exception has been narrowed so that it now applies to three-phase installations alone',
+      'Existing installations must be disconnected from supply until they have been modified',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A4 removed the reasonably-practicable escape route, so a new design cannot lean on it. That does not make existing compliant-at-the-time installations unsafe or notifiable on its own — an EICR records the departure against current standards and assesses actual risk.',
+    section: 'Compliance',
+    difficulty: 'advanced',
+    topic: 'PME Restriction',
+    category: 'Compliance',
+  },
+  {
+    id: 176,
+    question:
+      'A 32 A charge point circuit is run in 6 mm2 twin and earth clipped direct, grouped with four other circuits in a loft void at 45 degC. What has most likely been overlooked?',
+    options: [
+      'The correction factors for grouping and ambient temperature reduce Iz below the design current',
+      'The circuit protective conductor is undersized for the adiabatic equation at that length',
+      'The cable colour code does not satisfy the requirements for a dedicated supply',
+      'The voltage drop limit for a final circuit is 3% rather than the 5% commonly applied',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'EV charging draws close to full load continuously, so derating matters more than on an intermittent circuit. Grouping and a 45 degC ambient both cut Iz, and 6 mm2 that passes in free air can fall below 32 A once both factors are applied.',
+    section: 'Electrical Design',
+    difficulty: 'advanced',
+    topic: 'Cable Sizing',
+    category: 'Electrical Design',
+  },
+  {
+    id: 177,
+    question:
+      'Why is diversity not normally applied to a dedicated EV charging circuit?',
+    options: [
+      'Because the load is continuous at close to its rated value for hours at a time',
+      'Because diversity may only be applied to circuits supplying fixed current-using equipment',
+      'Because the charging equipment already applies an internal diversity factor itself',
+      'Because BS 7671 prohibits diversity on any circuit protected by a residual current device',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Diversity assumes loads are not all on together at full value. A vehicle charging draws its rated current steadily until the battery is full, so the circuit and the supply must be assessed at the full figure.',
+    section: 'Electrical Design',
+    difficulty: 'advanced',
+    topic: 'Diversity',
+    category: 'Electrical Design',
+  },
+  {
+    id: 178,
+    question:
+      'What is the main risk of connecting a charge point to a ring final circuit?',
+    options: [
+      'The continuous load can exceed what the ring is designed to carry and overload one leg',
+      'The ring topology prevents any residual current device from operating correctly',
+      'Polarity cannot be verified reliably on a circuit wired as a ring',
+      'The control pilot signal is distorted by the parallel conductor paths',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'A ring shares its load across two legs on the assumption of diverse, distributed use. A charge point drawing a sustained high current can load one leg beyond its capacity, particularly if it is connected near one end. EV points get a dedicated radial.',
+    section: 'Electrical Design',
+    difficulty: 'advanced',
+    topic: 'Circuit Design',
+    category: 'Electrical Design',
+  },
+  {
+    id: 179,
+    question:
+      'A surge protective device is being specified for an installation with an outdoor charge point on a long buried run. What most influences the decision?',
+    options: [
+      'The consequences of transient overvoltage reaching the equipment, and the exposure of the run',
+      'The colour of the sheath on the buried armoured cable feeding the equipment',
+      'Whether the charging equipment is tethered or fitted with a socket-outlet',
+      'The number of vehicles the client expects to charge each week on the point',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Risk assessment for surge protection turns on the consequences of an overvoltage and the exposure of the wiring. A long external buried run to expensive electronic equipment scores badly on both, which usually drives SPD provision.',
+    section: 'Electrical Design',
+    difficulty: 'advanced',
+    topic: 'Surge Protection',
+    category: 'Electrical Design',
+  },
+  {
+    id: 180,
+    question:
+      'What does the vehicle do if the control pilot signal is lost part-way through a charging session?',
+    options: [
+      'It stops drawing current, because the handshake is what authorises energy transfer',
+      'It continues at the last commanded current until the driver intervenes manually',
+      'It switches automatically to the proximity pilot for its current limit',
+      'It reduces to a default 6 A trickle and continues charging indefinitely',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The control pilot is a continuous handshake, not a one-off instruction. If it is lost the vehicle has no authorised current limit and stops. That behaviour is why an intermittent pilot conductor shows up as sessions that keep dropping out.',
+    section: 'EVSE Types',
+    difficulty: 'advanced',
+    topic: 'Control Pilot',
+    category: 'EVSE Types',
+  },
+  {
+    id: 181,
+    question:
+      'A customer reports that charging stops a few minutes after starting, every time. Which fault is most consistent with that pattern?',
+    options: [
+      'A high-resistance connection heating up and tripping the thermal protection',
+      'An open circuit protective conductor at the origin of the final circuit',
+      'A reversed line and neutral at the charging equipment terminals',
+      'An undersized main earthing conductor between the MET and the electrode',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The delay is the clue. A loose or high-resistance joint passes current initially, then heats until a thermal cut-out or the equipment protection responds. A dead short or open conductor would prevent the session starting at all rather than ending it partway.',
+    section: 'Testing',
+    difficulty: 'advanced',
+    topic: 'Fault Finding',
+    category: 'Testing',
+  },
+  {
+    id: 182,
+    question:
+      'Which record should be handed to the client on completion of a charge point installation, in addition to the certificate?',
+    options: [
+      'Manufacturer documentation, plus details of any earthing arrangement provided for the point',
+      'A copy of the electrician competent person scheme registration certificate',
+      'The distribution network operator internal design drawings for the local network',
+      'A signed statement that the vehicle manufacturer has approved the equipment',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The client needs the equipment documentation and a clear record of how the charging point is earthed, because a TT island or an in-built PEN detection device changes what any future electrician must not disturb. Scheme registration is not part of the handover pack.',
+    section: 'Compliance',
+    difficulty: 'intermediate',
+    topic: 'Handover',
+    category: 'Compliance',
+  },
+  {
+    id: 183,
+    question:
+      'On a three-phase supply feeding several single-phase charge points, why does the phase allocation matter?',
+    options: [
+      'Unbalanced loading raises neutral current and can push one phase over its capacity',
+      'Charge points on different phases cannot share a common protective conductor',
+      'The control pilot frequency changes according to which phase is connected',
+      'Single-phase equipment must always be connected to the same phase as the supply',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Several single-phase points all landed on one phase produce a badly unbalanced load. That drives neutral current up and can take one phase beyond capacity while the other two sit lightly loaded, so the points are distributed deliberately.',
+    section: 'Electrical Design',
+    difficulty: 'advanced',
+    topic: 'Three-Phase',
+    category: 'Electrical Design',
+  },
+  {
+    id: 184,
+    question:
+      'A V2G capable charge point exports from the vehicle battery to the installation. What does this change about the protective arrangements?',
+    options: [
+      'The point becomes a source of supply, so bidirectional flow and disconnection on loss of mains apply',
+      'The residual current device must be uprated to 100 mA to allow for export current',
+      'The circuit no longer requires overcurrent protection because flow is controlled electronically',
+      'The earthing arrangement may revert to the PME facility once export capability is fitted',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Exporting makes the vehicle a generator behind the charging equipment. The design then engages the requirements for a source of supply — bidirectional protective devices, automatic disconnection on loss of mains, and prevention of reconnection out of synchronism.',
+    section: 'Smart Charging',
+    difficulty: 'advanced',
+    topic: 'V2G',
+    category: 'Smart Charging',
+  },
+  {
+    id: 185,
+    question:
+      'What is the practical reason a randomised start delay is built into smart charging equipment?',
+    options: [
+      'To stop many vehicles starting simultaneously at the same off-peak boundary',
+      'To allow the residual current device time to settle before load is applied',
+      'To give the vehicle battery management system time to warm the cells',
+      'To let the metering equipment complete its half-hourly reconciliation cycle',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Without a delay every smart charger on a street would switch on at the same instant an off-peak tariff begins, producing a step change in demand the local network has to absorb. A short randomised offset spreads that step out.',
+    section: 'Smart Charging',
+    difficulty: 'intermediate',
+    topic: 'Load Management',
+    category: 'Smart Charging',
+  },
+  {
+    id: 186,
+    question:
+      'Which measurement is used by a dynamic load management system to decide how much current to offer the vehicle?',
+    options: [
+      'Total incoming supply current measured by a CT at the origin',
+      'The temperature of the charging cable measured at the connector',
+      'The state of charge reported by the vehicle battery management system',
+      'The voltage at the charge point terminals compared against nominal',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Dynamic load management needs to know what the rest of the installation is drawing, which means a current transformer on the incoming supply. It then offers the vehicle whatever headroom is left below the supply capacity.',
+    section: 'Smart Charging',
+    difficulty: 'advanced',
+    topic: 'Load Management',
+    category: 'Smart Charging',
+  },
+  {
+    id: 187,
+    question:
+      'An EICR is carried out on a property with a charge point installed before A4:2026 using the former PME exception. How should this be recorded?',
+    options: [
+      'As a departure from the current standard, coded on the assessed risk rather than automatically C2',
+      'As a C1 danger present, because the exception no longer exists in the current edition',
+      'It is not recorded, because an EICR only assesses against the edition in force at installation',
+      'As a C3 in every case, because all pre-A4 charging installations are improvement recommended',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'An EICR is written against the current edition, so the departure is recorded — but the code follows the assessed risk on that installation, not the mere fact that the rules changed. Automatic coding in either direction is the error.',
+    section: 'Compliance',
+    difficulty: 'advanced',
+    topic: 'EICR Coding',
+    category: 'Compliance',
+  },
+  {
+    id: 188,
+    question:
+      'Why must the earthing arrangement of a charge point be clearly labelled at the consumer unit?',
+    options: [
+      'So a later electrician does not couple a separate earth back to the PME system unknowingly',
+      'Because BS 7671 requires every final circuit to carry a label stating its earthing type',
+      'To satisfy the distribution network operator condition for a domestic connection',
+      'So the client can confirm the correct tariff is applied to the charging circuit',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'A TT island only works while it stays separate. The realistic failure is somebody adding a bond or replacing a board months later and joining the two earthing systems, which silently undoes the protection. The label is what prevents that.',
+    section: 'Earthing & Protection',
+    difficulty: 'advanced',
+    topic: 'Labelling',
+    category: 'Earthing & Protection',
+  },
+  {
+    id: 189,
+    question:
+      'What does an IP rating of IP54 on outdoor charging equipment tell you?',
+    options: [
+      'Dust protected and protected against water splashing from any direction',
+      'Totally dust tight and protected against temporary immersion in water',
+      'Protected against solid objects over 1 mm and against jets of water',
+      'Protected against fingers only, with no defined protection against water',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The 5 is dust protected — ingress is not fully prevented but not in a quantity that interferes. The 4 is splashing water from any direction. IP65 would be dust tight with jets; IP67 adds temporary immersion.',
+    section: 'EVSE Types',
+    difficulty: 'intermediate',
+    topic: 'IP Ratings',
+    category: 'EVSE Types',
+  },
+  {
+    id: 190,
+    question:
+      'A charge point is fed from a submain that already supplies a detached garage. What must be confirmed before adding the load?',
+    options: [
+      'That the submain and its protective device still comply once the continuous EV load is added',
+      'That the garage circuits are converted to a TT arrangement to match the charge point',
+      'That the submain is re-labelled to show it now supplies two separate buildings',
+      'That the existing garage circuits are all moved onto residual current devices',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Adding a sustained 32 A to an existing submain changes its design current, its voltage drop and possibly its disconnection times. The assessment is of the whole submain, not just the new final circuit hung off the end of it.',
+    section: 'Electrical Design',
+    difficulty: 'advanced',
+    topic: 'Submains',
+    category: 'Electrical Design',
+  },
+  {
+    id: 191,
+    question:
+      'Which characteristic of DC rapid charging creates a hazard that AC charging does not?',
+    options: [
+      'A DC arc has no natural current zero, so it does not self-extinguish',
+      'DC charging always uses a higher current than any AC charging mode',
+      'DC supplies cannot be protected by any form of residual current device',
+      'DC connectors are not mechanically latched during the charging session',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'An AC arc extinguishes as the waveform passes through zero a hundred times a second. A DC arc has no such zero crossing, so once struck it sustains itself. That is why DC switching and arc detection are engineered differently.',
+    section: 'EVSE Types',
+    difficulty: 'advanced',
+    topic: 'DC Charging',
+    category: 'EVSE Types',
+  },
+  {
+    id: 192,
+    question:
+      'What determines the maximum current a Mode 3 charging cable assembly may carry?',
+    options: [
+      'A coding resistor in the plug, read through the proximity pilot conductor',
+      'The duty cycle of the control pilot signal generated by the vehicle',
+      'The rating of the protective device supplying the charging equipment',
+      'The cross-sectional area declared on the label of the charging equipment',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The cable assembly identifies its own rating through a coding resistor read on the proximity pilot. The system then offers the lower of that and what the supply equipment can provide, so a thin lead cannot be driven at a heavy charger current.',
+    section: 'EVSE Types',
+    difficulty: 'advanced',
+    topic: 'Control Pilot',
+    category: 'EVSE Types',
+  },
+  {
+    id: 193,
+    question:
+      'Why is the disconnection requirement in Reg 722.411.4 expressed as removing the vehicle from protective earth as well as the live conductors?',
+    options: [
+      'Because on a lost PEN the protective conductor itself is the hazardous part',
+      'Because the vehicle body must be allowed to float to dissipate static charge',
+      'Because the protective conductor carries the charging return current',
+      'Because otherwise the residual current device would not reset afterwards',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'A broken PEN raises the whole earthing system, including the protective conductor going to the vehicle, to a dangerous potential. Opening only the line and neutral would leave the car connected to that live earth, so the earth contact is opened too.',
+    section: 'Earthing & Protection',
+    difficulty: 'advanced',
+    topic: 'PEN Fault Detection',
+    category: 'Earthing & Protection',
+  },
+  {
+    id: 194,
+    question:
+      'What is the significance of a charging point being described as untethered?',
+    options: [
+      'It has a socket-outlet, so the cable is supplied by the driver and its rating varies',
+      'It has no permanent connection to the fixed wiring of the installation',
+      'It operates without any communication between the vehicle and the equipment',
+      'It is not fixed to the building structure and can be relocated by the user',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Untethered means a socket-outlet rather than a fixed lead. The consequence for the installer is that the cable is outside their control, which is exactly why the proximity pilot coding exists to cap current at whatever the lead can carry.',
+    section: 'EVSE Types',
+    difficulty: 'intermediate',
+    topic: 'EVSE Configuration',
+    category: 'EVSE Types',
+  },
+  {
+    id: 195,
+    question:
+      'During periodic inspection of a charge point, the PEN fault detection device cannot be functionally tested. What is the appropriate response?',
+    options: [
+      'Record the limitation and follow the manufacturer procedure for proving the device',
+      'Code the installation C1 because a protective device cannot be proved to operate',
+      'Replace the charging equipment, since an untestable device cannot be relied upon',
+      'Omit reference to the device, as it falls outside the scope of an EICR',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Built-in PEN detection is usually proved by the manufacturer test routine rather than by a conventional instrument. The inspector follows that procedure and records any limitation, rather than inventing a code for a device they simply have not tested.',
+    section: 'Testing',
+    difficulty: 'advanced',
+    topic: 'Periodic Inspection',
+    category: 'Testing',
+  },
+  {
+    id: 196,
+    question:
+      'Why does prospective fault current need to be established at the charge point position, not only at the origin?',
+    options: [
+      'The protective device at the point must have adequate breaking capacity where it sits',
+      'The value changes the required cross-sectional area of the control pilot conductor',
+      'The charging equipment adjusts its output current according to the fault level',
+      'The distribution network operator sets the tariff using the measured fault level',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Any device must be able to break the fault current that can actually flow at its own location. On a short, heavy submain the level at the charge point can remain high enough to matter, so it is established rather than assumed to have fallen.',
+    section: 'Testing',
+    difficulty: 'advanced',
+    topic: 'Fault Current',
+    category: 'Testing',
+  },
+  {
+    id: 197,
+    question:
+      'An installer proposes to omit the 30 mA RCD because the charging equipment has integral DC fault protection. Is that acceptable?',
+    options: [
+      'No, the integral protection addresses DC fault current and does not replace the required RCD',
+      'Yes, provided the manufacturer declares the equipment suitable for direct connection',
+      'Yes, where the circuit is fed from a dedicated way in the consumer unit',
+      'No, unless the supply to the installation is a TT rather than a TN-C-S arrangement',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The two do different jobs. Integral DC detection exists so a Type A device is not blinded by smooth DC; it is what makes the Type A acceptable, not a substitute for it. Additional protection at 30 mA is still required.',
+    section: 'Earthing & Protection',
+    difficulty: 'advanced',
+    topic: 'RCD Types',
+    category: 'Earthing & Protection',
+  },
+  {
+    id: 198,
+    question:
+      'Which factor most often drives the choice between a 7 kW single-phase and a 22 kW three-phase charge point at a domestic property?',
+    options: [
+      'Whether a three-phase supply exists, and what the vehicle onboard charger can accept',
+      'The distance between the consumer unit and the intended charging position',
+      'The preference of the client for a tethered rather than untethered unit',
+      'The IP rating required for the position in which the unit will be mounted',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Most homes have only single phase, and even with three phase available many vehicles have an onboard AC charger limited to around 7 kW. Fitting 22 kW where either constraint bites spends money for no additional charging speed.',
+    section: 'Electrical Design',
+    difficulty: 'intermediate',
+    topic: 'Equipment Selection',
+    category: 'Electrical Design',
+  },
+  {
+    id: 199,
+    question:
+      'What is the consequence of installing a charge point on a circuit shared with a heat pump on the same protective device?',
+    options: [
+      'The two continuous loads together can exceed the device rating and cause nuisance operation',
+      'The heat pump inverter will distort the control pilot signal to the vehicle',
+      'The residual currents of the two appliances cancel and the RCD fails to operate',
+      'The charge point cannot establish a connection while the heat pump is running',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Both are sustained loads that can run for hours and often at the same time overnight. Sharing a device means the sum is what the protection sees, so it trips or the cable is overloaded. Each gets its own way and the total is assessed at the supply.',
+    section: 'Electrical Design',
+    difficulty: 'advanced',
+    topic: 'Circuit Design',
+    category: 'Electrical Design',
+  },
+  {
+    id: 200,
+    question:
+      'A charging point is installed at a rented property. Who is responsible for ensuring the installation remains safe over time?',
+    options: [
+      'The duty holder for the premises, informed by the periodic inspection interval set at installation',
+      'The installer, for the full lifetime of the equipment they originally commissioned',
+      'The vehicle owner, as the person operating the equipment day to day',
+      'The distribution network operator, as owner of the incoming supply and its earthing',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Ongoing safety sits with whoever controls the premises, working to the inspection interval recommended on the certificate. The installer is responsible for the work as left; the network operator is responsible only up to their equipment.',
+    section: 'Compliance',
+    difficulty: 'intermediate',
+    topic: 'Responsibility',
+    category: 'Compliance',
   },
 ];
 

@@ -63,7 +63,7 @@ const faqs = [
   {
     question: 'Do warehouses need emergency lighting?',
     answer:
-      'Yes. Emergency lighting is required in all workplaces under the Regulatory Reform (Fire Safety) Order 2005 and must comply with BS 5266-1. In warehouses, emergency lighting must illuminate escape routes (minimum 1 lux on the centre line), exit signs, changes of direction, stairways, and areas of high risk (e.g. racking aisles where being stranded in darkness could be dangerous). Self-contained emergency luminaires are the most common choice for warehouses, with 3-hour duration being standard.',
+      'Yes. Emergency lighting is required in all workplaces under the Regulatory Reform (Fire Safety) Order 2005 and must comply with BS 5266-1. In warehouses, emergency lighting must illuminate escape routes (minimum 1 lux across the full width), exit signs, changes of direction, stairways, and areas of high risk (e.g. racking aisles where being stranded in darkness could be dangerous). Self-contained emergency luminaires are the most common choice for warehouses, with 3-hour duration being standard.',
   },
   {
     question: 'What lighting controls should be used in a warehouse?',

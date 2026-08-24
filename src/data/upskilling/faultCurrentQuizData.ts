@@ -98,9 +98,9 @@ export const faultCurrentQuizData: QuizQuestion[] = [
     question: 'Where should prospective fault current be tested in an installation?',
     options: [
       'At origin, distribution boards, and where device ratings change',
-      'Only at the final socket-outlet on each circuit',
-      'At a single midpoint of the longest cable run',
-      'Only at points where an RCD is installed',
+      'At the final socket-outlet on each final circuit only',
+      'At a single midpoint on the longest cable run only',
+      'At each point where an RCD has been installed',
     ],
     correctAnswer: 0,
     explanation:

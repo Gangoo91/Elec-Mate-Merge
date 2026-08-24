@@ -34,10 +34,10 @@ export const crQuestionBank: StandardMockQuestion[] = [
     id: 1,
     question: 'According to ACAS, what is the definition of workplace conflict?',
     options: [
-      'Any disagreement between colleagues, regardless of whether it affects work or wellbeing',
+      'Any difference of opinion between colleagues, however minor, whether or not it affects the work or anyone\'s wellbeing',
       'A breakdown in relationships including disputes, grievances, and dissatisfaction that affects productivity and wellbeing',
-      'A formal complaint that has been escalated to a written grievance or tribunal',
-      'A clash of personalities that resolves itself once tempers have cooled',
+      'A formal written grievance that has been lodged with an employer and referred onwards to an employment tribunal',
+      'A clash of personalities that always settles itself once tempers have cooled and the parties return to work',
     ],
     correctAnswer: 1,
     explanation:
@@ -207,9 +207,9 @@ export const crQuestionBank: StandardMockQuestion[] = [
     id: 11,
     question: 'What is the "fight, flight, freeze" response in the context of conflict?',
     options: [
-      'A strategic framework for handling disagreements',
-      'A negotiation tactic used in commercial disputes',
-      'A training programme for construction site managers',
+      'A structured framework used to grade disagreements by severity',
+      'A negotiation tactic used to unsettle the other party in a dispute',
+      'A training programme run for site managers on handling aggression',
       'An automatic physiological stress response triggered by perceived threats',
     ],
     correctAnswer: 3,
@@ -294,9 +294,9 @@ export const crQuestionBank: StandardMockQuestion[] = [
     question: 'What is "catastrophising" as a cognitive distortion in conflict situations?',
     options: [
       'Imagining the worst-case scenario and treating it as certain or likely',
-      'Responding to conflict with extreme emotions',
-      'Accurately predicting the worst possible outcome',
-      'Deliberately creating a crisis to gain attention',
+      'Reacting to a minor setback by shouting or storming off the site',
+      'Accurately forecasting the worst outcome from reliable evidence',
+      'Deliberately provoking a crisis on site to draw attention to a grievance',
     ],
     correctAnswer: 0,
     explanation:
@@ -364,9 +364,9 @@ export const crQuestionBank: StandardMockQuestion[] = [
       'Chris Argyris developed the Ladder of Inference in 1990. What does this model describe?',
     options: [
       'How we unconsciously move from observing data to making assumptions and taking action',
-      'The steps required to formally escalate a workplace grievance',
-      'A physical ladder safety protocol for construction sites',
-      'The hierarchy of authority on a construction project',
+      'How a grievance is escalated formally from supervisor to manager to tribunal',
+      'How ladders must be inspected, footed and tied before use on a construction site',
+      'How authority flows from client to main contractor and down to subcontractors',
     ],
     correctAnswer: 0,
     explanation:
@@ -467,10 +467,10 @@ export const crQuestionBank: StandardMockQuestion[] = [
     id: 26,
     question: 'Which of the following best describes "personalising" as a cognitive distortion?',
     options: [
-      'Making the conversation more personal and friendly',
-      'Tailoring your communication style to each individual',
+      'Adapting your tone and wording so a difficult conversation feels friendlier',
+      'Tailoring your communication style to suit the personality of each individual',
       'Assuming that negative events are specifically directed at you when they may not be',
-      'Taking personal responsibility for resolving all conflicts',
+      'Taking personal responsibility for resolving every conflict that arises in your team',
     ],
     correctAnswer: 2,
     explanation:
@@ -572,9 +572,9 @@ export const crQuestionBank: StandardMockQuestion[] = [
     question: 'How does the Ladder of Inference create a "reflexive loop"?',
     options: [
       'Our beliefs formed at the top of the ladder influence which data we select at the bottom, reinforcing existing biases',
-      'Each person climbs the ladder at a different speed, so they reach conclusions at different times',
-      'The ladder must be climbed in reverse before any conclusion can be reached',
-      'Two people observing the same data will always reach the same conclusion',
+      'Each person climbs the ladder at a different speed, so conclusions are reached at different points in the argument',
+      'The ladder has to be climbed in reverse, from action back down to data, before any conclusion can be tested',
+      'Two people who observe the same data will always climb to the same conclusion, so the loop closes itself',
     ],
     correctAnswer: 0,
     explanation:
@@ -697,9 +697,9 @@ export const crQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the relationship between unmanaged cognitive distortions and conflict escalation in the construction workplace?',
     options: [
-      'Cognitive distortions only affect the person who holds them and never reach the other party',
-      'Distortions make people calmer because they simplify a complex situation into a clear story',
-      'Distortions have no measurable effect on conflict once people are trained to spot them',
+      'Distortions stay inside the head of the person holding them and never influence how the other party is treated',
+      'Distortions calm people down because they reduce a complicated situation to one simple and reassuring story',
+      'Distortions stop having any measurable effect on a dispute as soon as someone is trained to spot them',
       'Distortions amplify perceived threats and misread intentions, provoking defensive reactions that escalate the conflict',
     ],
     correctAnswer: 3,
@@ -841,9 +841,9 @@ export const crQuestionBank: StandardMockQuestion[] = [
     question:
       'In Nonviolent Communication, what is the difference between an observation and an evaluation?',
     options: [
-      'An observation is spoken aloud; an evaluation is kept to yourself',
-      'An observation is about the future; an evaluation is about the past',
-      'An observation includes your feelings; an evaluation sticks to the facts',
+      'An observation is spoken aloud to the other party; an evaluation is written down afterwards',
+      'An observation concerns what may happen next; an evaluation reviews what has already happened',
+      'An observation includes how you felt at the time; an evaluation sticks strictly to the facts',
       'An observation describes what happened factually; an evaluation adds judgement or interpretation',
     ],
     correctAnswer: 3,
@@ -910,9 +910,9 @@ export const crQuestionBank: StandardMockQuestion[] = [
     id: 51,
     question: 'What is an I-statement and how does it differ from a You-statement?',
     options: [
-      'An I-statement is more polite; a You-statement is simply more direct and honest',
-      'An I-statement is used in writing; a You-statement is used in conversation',
-      'An I-statement avoids the issue; a You-statement confronts it head-on',
+      'An I-statement softens the message with polite wording; a You-statement makes the same point more honestly and directly',
+      'An I-statement belongs in written records such as emails; a You-statement belongs in a face-to-face conversation',
+      'An I-statement sidesteps the real issue to keep the peace; a You-statement confronts the problem head-on and settles it',
       'An I-statement expresses your own feelings and needs ("I feel concerned when..."); a You-statement assigns blame ("You always...")',
     ],
     correctAnswer: 3,
@@ -1030,10 +1030,10 @@ export const crQuestionBank: StandardMockQuestion[] = [
     id: 58,
     question: 'In NVC, what is the difference between a feeling and a thought?',
     options: [
-      'A feeling is something you say aloud; a thought is something you keep private',
-      'A feeling is always negative; a thought can be either positive or negative',
+      'A feeling is something you say out loud on site; a thought is something you deliberately keep private',
+      'A feeling is always negative in nature; a thought can be either positive or negative in its content',
       'A feeling is an emotion (frustrated, anxious); a thought is an interpretation disguised as a feeling',
-      'A feeling is based on facts; a thought is based on emotion',
+      'A feeling is grounded in observable facts; a thought is driven by emotion and cannot be evidenced',
     ],
     correctAnswer: 2,
     explanation:
@@ -1066,9 +1066,9 @@ export const crQuestionBank: StandardMockQuestion[] = [
       'What are "Mutual Purpose" and "Mutual Respect" in the Crucial Conversations framework?',
     options: [
       'The two conditions that must be present for people to feel safe enough to engage in honest dialogue',
-      'The two outcomes a successful conversation should always produce',
-      'The two questions you should ask before starting a difficult conversation',
-      'The two roles a mediator must play when facilitating a dispute',
+      'The two outcomes that every successful conversation is expected to produce before it can be closed',
+      'The two questions you must put to the other person before beginning any difficult conversation',
+      'The two separate roles a mediator must switch between when facilitating a dispute on site',
     ],
     correctAnswer: 0,
     explanation:
@@ -1082,10 +1082,10 @@ export const crQuestionBank: StandardMockQuestion[] = [
     id: 61,
     question: 'What is the "contrasting" technique in Crucial Conversations?',
     options: [
-      "Comparing the other person's behaviour with how a reasonable person would act",
+      'A comparison of the other person\'s behaviour with how a reasonable colleague would have acted',
       "A don't/do statement that addresses concerns about your intentions and confirms your actual purpose",
-      "Highlighting the difference between what was agreed and what was delivered",
-      "Presenting two options and asking the other person to choose between them",
+      'A statement highlighting the gap between what was agreed at the outset and what was delivered',
+      'A choice of two options put to the other person so they can pick the outcome they prefer',
     ],
     correctAnswer: 1,
     explanation:
@@ -1099,10 +1099,10 @@ export const crQuestionBank: StandardMockQuestion[] = [
     id: 62,
     question: 'In the STATE model, what does the "T" for "Tell your story" mean?',
     options: [
-      'Recount the full history of the dispute from the very beginning',
-      'Describe how a similar situation was resolved on a previous job',
+      'Recount the full history of the dispute from the beginning so nothing important is left out',
+      'Describe how a similar problem was settled on a previous job so the same fix can be used',
       'Share your interpretation, conclusion, or theory about the facts — tentatively, not as absolute truth',
-      'State your conclusion firmly so the other person knows exactly where you stand',
+      'State your conclusion firmly and without hedging so the other person knows where you stand',
     ],
     correctAnswer: 2,
     explanation:
@@ -1116,9 +1116,9 @@ export const crQuestionBank: StandardMockQuestion[] = [
     id: 63,
     question: 'What does "Talk tentatively" mean in the STATE model?',
     options: [
-      'Speak softly and slowly so the other person stays calm throughout',
-      'Avoid stating any opinion at all until the other person has finished speaking',
-      'Hint at your concern indirectly so the other person works it out for themselves',
+      'Speak softly and slowly throughout the conversation, keeping your voice low so the other person stays calm',
+      'Hold back every opinion of your own until the other person has finished speaking and asks you for yours',
+      'Hint at the concern indirectly and leave the other person to work out for themselves what you are getting at',
       'Express your views as opinions rather than disguised facts, using language like "I\'m wondering..." or "It seems to me..."',
     ],
     correctAnswer: 3,
@@ -1135,9 +1135,9 @@ export const crQuestionBank: StandardMockQuestion[] = [
       'An electrician needs to tell a long-standing client that the price for a rewire has increased significantly. Which approach best applies the Positive No technique?',
     options: [
       '"I really value our working relationship and want to continue working with you (Yes). I can\'t do this at the old price because material costs have risen 30% (No). I can offer you a phased approach to spread the cost if that helps (Yes)."',
-      '"I\'m really sorry, but prices have gone up and there is nothing I can do about it — that\'s just how it is now."',
-      '"Other electricians would charge you far more than this, so you are actually getting a very good deal from me."',
-      '"If you don\'t accept the new price, I\'m afraid I won\'t be able to take on the job at all."',
+      '"I\'m really sorry, but material prices have gone up right across the board and there is honestly nothing at all I can do about it. I know that isn\'t what you wanted to hear, but that is simply how the market is at the moment."',
+      '"Other electricians round here would charge you a good deal more than this for the same rewire, so you are still getting a very good deal out of me. I would take it now, because prices are only going one way."',
+      '"The price has gone up and I need you to accept the new figure in full. If you are not willing to pay it, I\'m afraid I won\'t be able to take the job on at all and you will need to find somebody else to do the rewire."',
     ],
     correctAnswer: 0,
     explanation:
@@ -1240,10 +1240,10 @@ export const crQuestionBank: StandardMockQuestion[] = [
     question:
       'The "E" in the STATE model stands for "Encourage testing." What does this mean in practice?',
     options: [
-      'Encourage the other person to test electrical circuits',
-      'Encourage them to take a test to prove their competence',
+      'Invite the other person to re-test the circuits before you discuss the fault further',
+      'Require them to sit a competence assessment so their qualifications can be verified',
       'Actively invite disagreement and alternative views to ensure your understanding is complete',
-      "Test the other person's patience to see how they react",
+      'Push the other person\'s patience deliberately to see how they behave under pressure',
     ],
     correctAnswer: 2,
     explanation:
@@ -1294,10 +1294,10 @@ export const crQuestionBank: StandardMockQuestion[] = [
     question:
       'How does the Crucial Conversations concept of "masking" manifest in a construction context?',
     options: [
-      'Cutting another person off mid-sentence to make your own point',
+      'Cutting another trade off mid-sentence so that your own point is heard first on site',
       'Understating your true opinion, using sarcasm, or sugarcoating to avoid speaking directly',
-      'Overstating the facts to win an argument with another trade',
-      'Refusing to engage with a conversation at all and walking away',
+      'Overstating the facts and exaggerating the damage to win an argument with another trade',
+      'Refusing to engage with the conversation at all and walking off the job without a word',
     ],
     correctAnswer: 1,
     explanation:
@@ -1312,10 +1312,10 @@ export const crQuestionBank: StandardMockQuestion[] = [
     question:
       'An NVC-trained electrician needs to address an apprentice who has repeatedly left tools out on site, creating a trip hazard. Which response best applies all four NVC steps?',
     options: [
-      '"You\'re always leaving your tools lying around — it\'s lazy and someone is going to get hurt because of you."',
-      '"I feel that you don\'t take site safety as seriously as the rest of the team do."',
+      '"You\'re always leaving tools lying about the place. It\'s lazy, and sooner or later somebody on this site is going to get badly hurt."',
+      '"I feel that you don\'t take site safety as seriously as the rest of the team do, and it is starting to reflect badly on all of us."',
       '"I\'ve seen tools on the walkway three times this week. I\'m worried someone could trip. Would you return them to the kit bag after each use?"',
-      '"The other apprentices manage to keep their area tidy, so I don\'t see why you can\'t do the same."',
+      '"The other apprentices manage to keep their areas clear, so I don\'t see any reason at all why you can\'t do exactly the same."',
     ],
     correctAnswer: 2,
     explanation:
@@ -1330,9 +1330,9 @@ export const crQuestionBank: StandardMockQuestion[] = [
     question:
       'In a crucial conversation where a site manager has moved to "controlling" behaviour (a form of violence), the most effective immediate response is to:',
     options: [
-      'Match their assertiveness so they know you will not be controlled',
-      'Stay silent and let them have their say to avoid escalating things',
-      'Concede the point quickly so the conversation can move on',
+      'Match their assertiveness point for point so they know that you will not be controlled by them',
+      'Stay silent and let them finish having their say, then carry on with the work',
+      'Concede the disputed point quickly so the conversation can move on to the job',
       'Step out of the content, restore safety through Mutual Purpose and Respect, then return to the issue',
     ],
     correctAnswer: 3,
@@ -1421,9 +1421,9 @@ export const crQuestionBank: StandardMockQuestion[] = [
       'An electrician is in a heated discussion with a client where Mutual Respect has broken down. The client says, "You electricians are all the same — just out to rip people off." How should the electrician restore Mutual Respect using Crucial Conversations principles?',
     options: [
       "Pause the content, acknowledge the frustration, reaffirm respect, then use contrasting to separate the real concern from the generalisation",
-      "Defend the trade by pointing out how many electricians do excellent, honest work every day",
-      "End the conversation politely and arrange to return once the client has calmed down",
-      "Match the client's frustration to show that the accusation is unfair and out of order",
+      'Defend the trade by setting out how many electricians do honest work, then take the client back through the priced quotation',
+      'End the conversation politely, leave site, and arrange to return once the client has had time to calm down and reconsider',
+      'Match the client\'s frustration so they understand the accusation is unfair, then insist on an apology before continuing',
     ],
     correctAnswer: 0,
     explanation:
@@ -1512,10 +1512,10 @@ export const crQuestionBank: StandardMockQuestion[] = [
     id: 85,
     question: 'The "while you\'re here" syndrome refers to:',
     options: [
-      'A client asking you to return at a more convenient time for them',
+      'Clients asking you to come back at a time that suits them better, often at short notice and outside working hours',
       'Clients requesting additional work beyond the original scope, often phrased casually to avoid formal pricing',
-      'A client expecting you to remain on site even after the work is finished',
-      'A client insisting that you complete the whole job in a single visit',
+      'Clients expecting you to stay on site after the work is finished, tidying up and answering questions about it',
+      'Clients insisting the whole job is completed in a single visit, even where second-fix work must wait',
     ],
     correctAnswer: 1,
     explanation:
@@ -1635,9 +1635,9 @@ export const crQuestionBank: StandardMockQuestion[] = [
     question: 'Why is proactive communication with clients important during a project?',
     options: [
       'Regular updates prevent anxiety, build trust, and reduce the likelihood of complaints and disputes',
-      'It removes the need to put anything about the project in writing',
-      'It allows you to charge the client for the time spent communicating',
-      'It transfers responsibility for any delays onto the client',
+      'Regular updates remove the need to put the scope, variations or costs in writing at all',
+      'Regular updates can be billed to the client as chargeable time on top of the agreed price',
+      'Regular updates transfer responsibility for any delay from the electrician onto the client',
     ],
     correctAnswer: 0,
     explanation:
@@ -1721,10 +1721,10 @@ export const crQuestionBank: StandardMockQuestion[] = [
     id: 97,
     question: 'What is the service recovery paradox, as identified by Tax and Brown in 1998?',
     options: [
-      'The finding that most customers who complain never return regardless of how the issue is handled',
+      'A customer who complains once will rarely use the same contractor again, however well the problem is put right',
       'A customer who has a problem resolved exceptionally well may become more loyal than one who never experienced a problem',
-      'The observation that resolving a complaint costs more than the original job was worth',
-      'The tendency for one unhappy customer to tell far more people than a happy one',
+      'A complaint costs more to put right than the original job ever earned, so recovery is rarely worth attempting',
+      'A customer who is unhappy tells roughly ten times more people about it than a satisfied one ever does',
     ],
     correctAnswer: 1,
     explanation:
@@ -1757,9 +1757,9 @@ export const crQuestionBank: StandardMockQuestion[] = [
     question:
       'What information must a letter before action contain under the Pre-Action Protocol for Debt Claims?',
     options: [
-      'Only the total amount owed and the date by which it must be paid',
-      'A threat of immediate court action with no opportunity to respond',
-      'The debtor\'s credit history and a demand for a personal guarantee',
+      'The total amount owed and a payment deadline, with no breakdown, interest or advice details',
+      'A demand for immediate payment, a threat of court action, and no opportunity to respond',
+      'The debtor\'s credit history, a demand for a personal guarantee, and a copy of the contract',
       'The amount owed, how it was calculated, interest details, free-advice info, and a response deadline',
     ],
     correctAnswer: 3,
@@ -1792,10 +1792,10 @@ export const crQuestionBank: StandardMockQuestion[] = [
     question:
       'An electrician completed a bathroom rewire. The client now claims the socket positions are wrong, but the positions match the agreed plan that the client signed. How should the electrician handle this?',
     options: [
-      'Move the sockets free of charge to keep the client happy and avoid an argument',
+      'Move the sockets free of charge straight away, then say nothing about the extra cost to protect the relationship',
       'Show the client the signed plan, empathise with their frustration, and offer to move the sockets as priced additional work',
-      'Refuse to discuss the matter further and point out that the client signed the plan',
-      'Threaten legal action to recover the full payment before doing any more work',
+      'Refuse to discuss it any further, point out that the plan was signed, and send the final invoice as issued',
+      'Threaten legal action for the outstanding balance and refuse to return to site until it has been paid in full',
     ],
     correctAnswer: 1,
     explanation:
@@ -1809,10 +1809,10 @@ export const crQuestionBank: StandardMockQuestion[] = [
     id: 102,
     question: 'How should an electrician manage the "while you\'re here" syndrome assertively?',
     options: [
-      'Refuse the request outright so the client learns not to ask for extras',
-      'Quietly do the extra work to avoid an awkward conversation about money',
+      'Refuse the request outright and explain that you never take on extras, so the client learns not to ask again',
+      'Quietly carry out the extra work at your own cost so that you can avoid an awkward conversation about money',
       'Acknowledge the request positively, explain it falls outside the original scope, and offer to price it as additional work',
-      'Do the work now and add an unexplained charge to the final invoice',
+      'Carry out the extra work now and add an unexplained lump sum to the final invoice without mentioning it',
     ],
     correctAnswer: 2,
     explanation:
@@ -1826,9 +1826,9 @@ export const crQuestionBank: StandardMockQuestion[] = [
     id: 103,
     question: 'In the HEARD framework, why is the "Do follow up" step important?',
     options: [
-      'It allows you to invoice the client for the additional time spent resolving the issue',
-      'It creates a written record that protects you against any future legal claim',
-      'It gives you a chance to point out that the original fault was the client\'s own doing',
+      'Following up lets you record the extra hours spent putting the fault right and invoice the client for them',
+      'Following up creates a written record of the complaint that protects you against any future legal claim',
+      'Following up gives you the chance to explain that the original fault was caused by the client\'s own actions on site',
       'Following up shows genuine care, confirms the resolution was satisfactory, and can transform a complaint into lasting loyalty',
     ],
     correctAnswer: 3,
@@ -1845,9 +1845,9 @@ export const crQuestionBank: StandardMockQuestion[] = [
       'When a client claims work is substandard but the electrician believes it meets all relevant standards, the best first step is to:',
     options: [
       'Listen fully to understand the specific concern, then offer an independent inspection if agreement cannot be reached',
-      'State firmly that the work meets all standards and there is nothing to discuss',
-      'Offer to redo the work for free to bring the dispute to a quick end',
-      'Refer the client straight to your professional body or insurer',
+      'State firmly that the work meets every relevant standard and that there is nothing further to discuss',
+      'Offer to strip out and redo the whole installation free of charge so the dispute is settled quickly',
+      'Refer the client straight to your professional body and your insurer before discussing it with them',
     ],
     correctAnswer: 0,
     explanation:
@@ -1861,10 +1861,10 @@ export const crQuestionBank: StandardMockQuestion[] = [
     id: 105,
     question: 'What is the purpose of managing client expectations at each stage of a project?',
     options: [
-      'To give the client opportunities to add extra work at each stage of the job',
+      'To create an opening at each stage of the job where extra work can be sold to the client',
       'To align expectations on progress, disruption, and finish, closing the gap that causes complaints',
-      'To justify increasing the price as the project moves forward',
-      'To reduce the amount of contact you need to have with the client overall',
+      'To justify raising the agreed price as the project moves from one stage to the next',
+      'To cut down the contact needed with the client once work has started on site',
     ],
     correctAnswer: 1,
     explanation:
@@ -1897,9 +1897,9 @@ export const crQuestionBank: StandardMockQuestion[] = [
     question:
       'Why should an electrician give an estimate rather than a quote for a rewire in a property they have not fully surveyed?',
     options: [
-      'An estimate is quicker to produce, so the client can make a decision sooner',
-      'An estimate looks more professional to a domestic client than a fixed quote',
-      'An estimate is not legally binding, so the client cannot hold you to any figure',
+      'An estimate takes far less time to prepare, whereas a quote delays the client\'s decision',
+      'An estimate looks more professional to a domestic client, whereas a quote suggests inexperience',
+      'An estimate carries no legal weight at all, whereas a quote binds the client to accept your figure',
       'An estimate allows for unforeseen work such as hidden junction boxes or asbestos, whereas a quote locks the price',
     ],
     correctAnswer: 3,
@@ -1916,9 +1916,9 @@ export const crQuestionBank: StandardMockQuestion[] = [
       'A domestic client wants to withhold the final payment because they are unhappy with the position of one light fitting, even though all other work is completed to a high standard. What are their rights under the Consumer Rights Act 2015?',
     options: [
       'They can request the light fitting be repositioned (right to repair) but cannot withhold a disproportionate amount relative to the defect',
-      'They can withhold the entire final payment until every item is exactly as they wish',
-      'They have no rights at all because the bulk of the work was done to a high standard',
-      'They are entitled to a full refund of the whole job because of the single defect',
+      'They can withhold the whole of the final payment indefinitely until every last detail of the installation is exactly as they want it',
+      'They have no rights at all in this situation, because the remainder of the installation was finished to a high standard',
+      'They are entitled to a full refund covering the entire job, including all labour and materials, because of the one defect',
     ],
     correctAnswer: 0,
     explanation:
@@ -1933,10 +1933,10 @@ export const crQuestionBank: StandardMockQuestion[] = [
     question:
       'An electrician discovers mid-project that the existing consumer unit contains asbestos. The client refuses to pay for the additional cost of licensed asbestos removal. How should this be handled?',
     options: [
-      "Carefully remove the asbestos yourself to keep the cost down and the job on programme",
+      'Remove the asbestos yourself using RPE and a sealed bag, to keep the cost down and the job on programme',
       "Explain the legal need for licensed removal, raise it as a priced variation, and pause that work if the client refuses",
-      "Work around the asbestos and continue with the rest of the installation as planned",
-      "Absorb the cost of licensed removal yourself rather than risk losing the client",
+      'Work around the asbestos, leave the old unit in place, and continue with the rest of the installation',
+      'Absorb the whole cost of licensed removal yourself rather than risk losing a long-standing client',
     ],
     correctAnswer: 1,
     explanation:
@@ -1951,10 +1951,10 @@ export const crQuestionBank: StandardMockQuestion[] = [
     question:
       'How does the service recovery paradox apply specifically to electrical contracting, and what are its limits?',
     options: [
-      'It applies to every complaint equally, so any well-handled fix will strengthen loyalty',
-      'It works only for commercial clients, who value efficient recovery more than domestic clients',
+      'It applies to every complaint equally, so any fault that is put right well will always strengthen loyalty',
+      'It works only for commercial clients, because they value a swift recovery far more than domestic clients',
       'It works best when the failure was not negligent and recovery is swift, but not for repeated failures or safety breaches',
-      'It works best when the recovery is offered as a discount rather than a quality fix',
+      'It works best when the recovery takes the form of a discount or goodwill payment rather than a proper fix',
     ],
     correctAnswer: 2,
     explanation:
@@ -1969,9 +1969,9 @@ export const crQuestionBank: StandardMockQuestion[] = [
     question:
       'A client has not paid a £4,500 invoice that is now 60 days overdue. The electrician has sent a friendly reminder and a formal reminder with no response. What should the next step be before issuing a letter before action?',
     options: [
-      'Issue the letter before action immediately, as two reminders are already enough',
-      'Stop work on any other jobs for the client until the invoice is settled',
-      'Add statutory interest to the invoice and reissue it without further contact',
+      'Issue the letter before action straight away, since two written reminders already satisfy the protocol',
+      'Stop work on every other job for that client until the outstanding invoice has been settled in full',
+      'Add statutory interest to the invoice and reissue it, then wait for payment without further contact',
       'Make a phone call to discuss the situation, check for any dispute about the work, and attempt to agree a payment plan',
     ],
     correctAnswer: 3,
@@ -1988,9 +1988,9 @@ export const crQuestionBank: StandardMockQuestion[] = [
       'A client claims the Consumer Rights Act 2015 entitles them to a full refund because they changed their mind about the colour of the sockets after installation. Is this claim valid?',
     options: [
       'No — the Consumer Rights Act covers failure to perform with reasonable care and skill, not change of mind; the sockets were installed as agreed and meet the required standard',
-      'Yes — the Consumer Rights Act gives consumers a 14-day cooling-off period for any installed goods',
-      'Yes — the Consumer Rights Act allows a full refund whenever the consumer is dissatisfied for any reason',
-      'Partly — the consumer is entitled to a 50% refund whenever they change their mind about a finish',
+      'Yes — the Consumer Rights Act gives every consumer a 14-day cooling-off period once goods have been installed, so the sockets must be changed at the electrician\'s own cost',
+      'Yes — the Consumer Rights Act allows a consumer a full refund whenever they are dissatisfied for any reason at all, including a simple change of mind about the colour',
+      'Partly — the consumer is entitled to a 50% refund whenever they change their mind about a finish, with the electrician bearing the cost of replacing the sockets',
     ],
     correctAnswer: 0,
     explanation:
@@ -2023,10 +2023,10 @@ export const crQuestionBank: StandardMockQuestion[] = [
     question:
       'How should an electrician respond to a client who makes a legitimate complaint about a genuine defect?',
     options: [
-      'Acknowledge the defect briefly, fix it, and avoid further contact so the matter is closed quickly',
-      'Refer the client to your terms and conditions and let them know the warranty position',
+      'Acknowledge the defect briefly, put it right on your next visit, then avoid any further contact so the matter is closed off quickly and without inviting more comment',
+      'Refer the client to your terms and conditions, set out the warranty position in writing, and ask them to submit the complaint formally before you return to site',
       'Apply the HEARD framework: listen fully, empathise genuinely, apologise for the inconvenience, resolve the defect promptly and thoroughly, and follow up to ensure satisfaction',
-      'Offer a small discount on a future job in exchange for the client dropping the complaint',
+      'Offer a small discount on a future job in exchange for the client dropping the complaint, then close the file without returning to inspect or repair the defect',
     ],
     correctAnswer: 2,
     explanation:
@@ -2041,9 +2041,9 @@ export const crQuestionBank: StandardMockQuestion[] = [
     question:
       'An electrician quotes £3,200 for a kitchen rewire. During the work, they discover the existing ring final circuit is in far worse condition than visible during the survey, requiring an additional £800 of work. The client says "A quote is a quote — you should honour it." Who is correct?',
     options: [
-      'The client is correct — a quote is binding in all circumstances and must be honoured in full',
-      'The electrician is correct — any quote can be increased once work has started',
-      'Neither is correct — the dispute can only be settled by a third-party adjudicator',
+      'The client is correct — a quote is binding in every circumstance and must be honoured in full whatever is later found',
+      'The electrician is correct — any quote can be revised upwards once the work has started and the job is opened up',
+      'Neither is correct — a dispute of this kind can only ever be settled by an independent third-party adjudicator',
       'Both have valid positions — a quote is generally fixed, but genuinely unforeseeable work can be a valid variation if agreed first',
     ],
     correctAnswer: 3,
@@ -2060,9 +2060,9 @@ export const crQuestionBank: StandardMockQuestion[] = [
       'How can the Late Payment of Commercial Debts Act 1998 be used strategically without damaging commercial relationships?',
     options: [
       'Put the entitlement in your terms, reference it factually in reminders, and only formally claim it after the letter before action',
-      'Apply the maximum interest to every invoice from day one so clients always pay early',
-      'Threaten to apply statutory interest in your very first reminder to make the point firmly',
-      'Waive the statutory interest entirely to keep the commercial relationship as warm as possible',
+      'Apply the maximum statutory interest to every invoice from day one so that clients get into the habit of paying early',
+      'Threaten to apply statutory interest in your very first reminder so that the client knows you are serious about it',
+      'Waive the statutory interest entirely and never mention it, keeping the commercial relationship as warm as possible',
     ],
     correctAnswer: 0,
     explanation:
@@ -2077,10 +2077,10 @@ export const crQuestionBank: StandardMockQuestion[] = [
     question:
       'A client makes an unreasonable complaint and threatens to leave a negative online review unless the electrician provides free additional work. How should this be handled?',
     options: [
-      "Give in to the demand quietly so that no negative review is ever posted",
+      'Agree to the free work quietly and quickly so that no negative review is ever posted about the business',
       "Acknowledge the concern, explain what was agreed and delivered, hold professional boundaries, and document the threat",
-      "Threaten the client with legal action to deter them from leaving any review at all",
-      "Ignore the client completely and refuse to respond to any further messages",
+      'Warn the client that a review of that kind is defamatory and that you will instruct a solicitor over it',
+      'Post a public reply naming the client and setting out your side of the dispute on every review site',
     ],
     correctAnswer: 1,
     explanation:
@@ -2132,9 +2132,9 @@ export const crQuestionBank: StandardMockQuestion[] = [
       'What are the benefits of providing proactive updates at the end of each day during a domestic rewire?',
     options: [
       "It keeps the client informed, builds trust, prevents anxiety-driven complaints, and creates a record of communication",
-      "It allows you to charge the client for the time spent giving the update",
-      "It transfers responsibility for any delays from you onto the client",
-      "It removes the need for a written contract or any other documentation",
+      'It lets you bill the client for the time spent giving the updates as chargeable site supervision hours',
+      'It transfers responsibility for any delay from you onto the client, since they have been kept informed',
+      'It removes the need for a written contract, a schedule of works or any other project documentation',
     ],
     correctAnswer: 0,
     explanation:
@@ -2241,10 +2241,10 @@ export const crQuestionBank: StandardMockQuestion[] = [
     id: 126,
     question: 'What is a "back-charge" in construction?',
     options: [
-      'A payment made in advance of work to secure a subcontractor\'s services',
-      'A discount applied to an invoice for early settlement by the client',
+      'A payment made to a subcontractor in advance of work starting, to secure their labour for the programme',
+      'A discount applied to an invoice when the client settles the account earlier than the agreed terms',
       'A charge from one contractor to another for rectifying damage or work the other party was responsible for',
-      'A deduction made from a worker\'s wages for damaged company tools',
+      'A deduction taken from a worker\'s wages to cover company tools that were damaged or lost on site',
     ],
     correctAnswer: 2,
     explanation:
@@ -2259,9 +2259,9 @@ export const crQuestionBank: StandardMockQuestion[] = [
     question:
       'What does the Construction Act 1996 ban regarding payment terms in construction contracts?',
     options: [
-      'Interim payments being made more frequently than every 30 days',
-      'Retention sums being held for longer than the defects liability period',
-      'Pay-less notices being served after the final date for payment',
+      'Interim payment clauses, which set valuations more frequently than every thirty days',
+      'Retention clauses, which allow sums to be held beyond the defects liability period',
+      'Pay-less notice clauses, which allow a notice after the final date for payment',
       '"Pay when paid" clauses, which make paying a subcontractor conditional on the client paying first',
     ],
     correctAnswer: 3,
@@ -2312,10 +2312,10 @@ export const crQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the "feedback sandwich" and why is it now considered less effective than direct feedback?',
     options: [
-      'A questioning technique that draws out the other person\'s underlying concerns',
-      'A method of giving feedback only in writing so there is a clear record',
+      'Opening with questions that draw out the other person\'s underlying concerns, now seen as too slow for site use',
+      'Putting all feedback in writing so there is a clear record, now seen as too formal for day-to-day work',
       'Placing negative feedback between two positives, now seen as insincere and as training people to brace for criticism',
-      'A structured format for documenting a workplace grievance',
+      'Recording the issue on a grievance form before any conversation, now seen as needlessly adversarial',
     ],
     correctAnswer: 2,
     explanation:
@@ -2330,9 +2330,9 @@ export const crQuestionBank: StandardMockQuestion[] = [
     question:
       'Under HSWA 1974, what duty do employees have regarding cooperation on a construction site?',
     options: [
-      'A duty to report any unsafe act by another trade directly to the HSE',
-      'A duty to complete a daily risk assessment before starting work',
-      'A duty to provide their own personal protective equipment on site',
+      'A duty to report any unsafe act by another trade directly to the Health and Safety Executive',
+      'A duty to carry out and record a written risk assessment before starting work on site each day',
+      'A duty to provide their own personal protective equipment and to pay for replacing it',
       'A duty to cooperate with their employer and others so far as needed for health and safety compliance',
     ],
     correctAnswer: 3,
@@ -2382,10 +2382,10 @@ export const crQuestionBank: StandardMockQuestion[] = [
     id: 134,
     question: 'What is the JIB grievance procedure for?',
     options: [
-      'Setting the agreed wage rates and grading structure for electrical workers',
-      'Providing a fund to compensate electricians for unpaid invoices',
+      'Setting the agreed wage rates, grading structure and travel allowances for electrical workers',
+      'Providing a fund that compensates electrical contractors for invoices left unpaid by clients',
       'Providing a structured process for resolving grievances between electrical workers and their employers',
-      'Issuing the qualifications required to work in the electrical industry',
+      'Issuing the qualifications and competence cards required to work on electrical installations',
     ],
     correctAnswer: 2,
     explanation:
@@ -2399,9 +2399,9 @@ export const crQuestionBank: StandardMockQuestion[] = [
     id: 135,
     question: 'What constitutes bullying in the workplace according to ACAS guidance?',
     options: [
-      'Any firm instruction or honest criticism that a worker finds unwelcome',
-      'A single isolated disagreement between two workers of equal standing',
-      'Any reasonable request about the quality or pace of someone\'s work',
+      'Any firm instruction or honest criticism about a worker\'s performance that the worker finds unwelcome',
+      'A single isolated disagreement between two workers of equal standing that is settled the same day',
+      'Any reasonable request about the quality, pace or standard of someone\'s work made by a supervisor',
       'Offensive, intimidating, or malicious behaviour, or an abuse of power, that undermines or humiliates someone',
     ],
     correctAnswer: 3,
@@ -2418,9 +2418,9 @@ export const crQuestionBank: StandardMockQuestion[] = [
       'What is the "power imbalance" between a main contractor and a subcontractor, and why does it matter for conflict resolution?',
     options: [
       'The main contractor controls access, programme, payment, and future work, making subcontractors reluctant to raise disputes',
-      'The subcontractor can dictate the programme because they hold specialist skills',
-      'Both parties have exactly equal bargaining power under the contract',
-      'The client controls all decisions, leaving the main contractor powerless',
+      'The subcontractor dictates the programme because they hold specialist skills, leaving the main contractor exposed',
+      'Both parties hold exactly equal bargaining power under the contract, so neither can influence the other\'s decisions',
+      'The client controls every decision on the project, leaving the main contractor powerless to resolve any dispute',
     ],
     correctAnswer: 0,
     explanation:
@@ -2434,10 +2434,10 @@ export const crQuestionBank: StandardMockQuestion[] = [
     id: 137,
     question: 'Under the Construction Act 1996, what is the right to adjudication?',
     options: [
-      'The right to take any payment dispute straight to the Small Claims Court',
+      'The right to take any payment dispute straight to the Small Claims Court without notice to the payer',
       'The right to refer a contract dispute to an independent adjudicator for a binding decision within 28 days',
-      'The right to walk off site immediately if a single invoice is late',
-      'The right to have all disputes decided by the principal contractor',
+      'The right to walk off site immediately and without notice whenever a single invoice is paid late',
+      'The right to have every contractual dispute decided by the principal contractor\'s commercial team',
     ],
     correctAnswer: 1,
     explanation:
@@ -2487,9 +2487,9 @@ export const crQuestionBank: StandardMockQuestion[] = [
     question: 'What is a "pay-less notice" and when must it be served?',
     options: [
       'A notice the payer serves before the final date for payment, intending to pay less than the notified sum and why',
-      'A notice the payee serves to confirm the sum they expect to be paid',
-      'A notice that automatically increases the payment if work is delayed',
-      'A notice that suspends the contract until a dispute is resolved',
+      'A notice the payee serves after the valuation date, setting out the sum they expect to be paid and when',
+      'A notice the payer serves that automatically increases the sum due when the works are delayed by others',
+      'A notice either party serves to suspend the contract entirely until an ongoing dispute is resolved',
     ],
     correctAnswer: 0,
     explanation:
@@ -2521,10 +2521,10 @@ export const crQuestionBank: StandardMockQuestion[] = [
     id: 142,
     question: 'What is the Scheme for Construction Contracts 1998?',
     options: [
-      'A government grant scheme that funds small construction subcontractors',
-      'A voluntary code of practice for fair payment in the construction sector',
+      'A government grant scheme that funds cash-flow and training support for small subcontracting firms',
+      'A voluntary code of practice that sets fair payment targets across the construction supply chain',
       'A statutory fallback that implies payment and adjudication terms into non-compliant construction contracts',
-      'An insurance scheme that pays subcontractors if a main contractor becomes insolvent',
+      'An insurance scheme that pays subcontractors their retention if a main contractor becomes insolvent',
     ],
     correctAnswer: 2,
     explanation:
@@ -2556,9 +2556,9 @@ export const crQuestionBank: StandardMockQuestion[] = [
     question: 'What is the practical escalation ladder for disputes on a construction site?',
     options: [
       'Direct conversation with the individual, then their supervisor, then site manager, then formal written complaint, then contractual dispute mechanism (adjudication)',
-      'Adjudication, then mediation, then a direct conversation, then a written complaint',
-      'A written complaint, then a direct conversation, then the site manager, then adjudication',
-      'The site manager, then adjudication, then a direct conversation, then a written complaint',
+      'Adjudication first, then mediation, then a direct conversation with the individual, then their supervisor, and finally a formal written complaint',
+      'A formal written complaint, then a direct conversation with the individual, then their supervisor, then the site manager, and finally adjudication',
+      'The site manager first, then adjudication, then their supervisor, then a direct conversation with the individual, and finally a formal written complaint',
     ],
     correctAnswer: 0,
     explanation:
@@ -2573,10 +2573,10 @@ export const crQuestionBank: StandardMockQuestion[] = [
     question:
       "An electrician's cable containment has been damaged by a dry-liner. What documentation should be created?",
     options: [
-      'A verbal report to the site manager and a note in your own diary only',
+      'A verbal report to the site manager, a note in your own diary, and a mention at the next site meeting',
       'Timestamped photographs, a written description of the damage, the repair cost, and a record of the conversation held',
-      'A single photograph of the area and a quick word with the dry-liner',
-      'An email to the client explaining that another trade caused a delay',
+      'A single photograph of the damaged area, a quick word with the dry-liner, and a verbal estimate of cost',
+      'An email to the client explaining that another trade caused the delay, with a revised completion date',
     ],
     correctAnswer: 1,
     explanation:
@@ -2591,10 +2591,10 @@ export const crQuestionBank: StandardMockQuestion[] = [
     question:
       'How should an electrician handle a situation where the main contractor changes the programme without notice, affecting the electrical installation sequence?',
     options: [
-      'Accept the change silently to avoid being seen as difficult by the main contractor',
-      'Stop all work immediately until the original programme is reinstated',
+      'Accept the revised programme without comment, so the main contractor does not see you as being difficult',
+      'Stop all work on site immediately and wait until the original programme has been reinstated in full',
       'Document the change and its impact, notify the main contractor in writing, and follow up with a formal variation',
-      'Issue a pay-less notice to the main contractor for the lost time',
+      'Issue a pay-less notice to the main contractor for the time lost, then work to the new sequence',
     ],
     correctAnswer: 2,
     explanation:
@@ -2609,9 +2609,9 @@ export const crQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the role of a mediator in resolving team conflicts between electricians on the same project?',
     options: [
-      'To decide which party is at fault and impose a binding ruling on them',
-      'To represent one party\'s interests and argue their case for them',
-      'To investigate the dispute and report the findings to the principal contractor',
+      'To decide which of the two parties is at fault and then impose a binding ruling on both of them',
+      'To represent one party\'s interests and put their case to the other on their behalf in the meeting',
+      'To investigate the dispute and report the findings to the principal contractor for a decision',
       "To facilitate a structured conversation that helps the parties reach a mutually acceptable resolution",
     ],
     correctAnswer: 3,
@@ -2628,9 +2628,9 @@ export const crQuestionBank: StandardMockQuestion[] = [
       'When giving feedback to an apprentice about a safety issue, which approach is most effective?',
     options: [
       'Use the SBI model privately: state the situation, behaviour, and safety impact, then agree corrective action',
-      'Raise the issue at the next toolbox talk so the whole team can learn from it',
-      'Wait until the apprentice\'s formal review to discuss the safety concern',
-      'Correct the apprentice firmly in front of the team to reinforce the point',
+      'Raise the issue at the next toolbox talk so the whole team can learn from the apprentice\'s mistake',
+      'Wait until the apprentice\'s next formal review so the safety concern can be recorded on their file',
+      'Correct the apprentice firmly in front of the team so that the seriousness of it is understood',
     ],
     correctAnswer: 0,
     explanation:
@@ -2663,10 +2663,10 @@ export const crQuestionBank: StandardMockQuestion[] = [
     question:
       'How does the JIB National Working Rules apply to resolving disputes about working conditions on site?',
     options: [
-      'Setting out the disciplinary steps for dismissing an electrical worker',
-      'Providing a fund to cover an electrician\'s legal costs in a dispute',
+      'They set out the disciplinary and dismissal steps an employer must follow before ending a contract',
+      'They provide a fund that covers an electrician\'s legal costs where a site dispute reaches a tribunal',
       'They set agreed terms on wages, hours, overtime, and travel, giving a framework for resolving disputes about these',
-      'Defining the technical standards to which electrical work must be carried out',
+      'They define the technical standards to which electrical installation work must be designed and tested',
     ],
     correctAnswer: 2,
     explanation:
@@ -2681,9 +2681,9 @@ export const crQuestionBank: StandardMockQuestion[] = [
     question:
       'What should an electrician do if they witness bullying of an apprentice by a colleague on site?',
     options: [
-      'Ignore the situation, as it is a matter for the apprentice\'s employer alone',
-      'Confront the colleague aggressively in front of the rest of the team',
-      'Wait until the next site meeting to raise it as a general concern',
+      'Report it straight to the HSE as a workplace safety matter and say nothing to the apprentice',
+      'Confront the colleague aggressively in front of the whole team so that the behaviour stops at once',
+      'Wait until the next site meeting and raise it there as a general concern about behaviour on site',
       'Stop the behaviour if safe to do so, support the apprentice, and report it through the proper channels',
     ],
     correctAnswer: 3,
@@ -2700,9 +2700,9 @@ export const crQuestionBank: StandardMockQuestion[] = [
       'What are the key elements that must be included in a valid notice to suspend performance under the Construction Act 1996?',
     options: [
       'It must be in writing, state the ground for suspension (non-payment), and allow at least 7 days before it takes effect',
-      'The notice must be approved by the principal contractor before it can take effect',
-      'The notice must allow at least 28 days before suspension takes effect',
-      'The notice can be given verbally provided it is later confirmed in writing',
+      'It must be approved by the principal contractor and the client in writing before suspension can begin',
+      'It must be in writing, state the ground for suspension, and allow at least 28 days before taking effect',
+      'It may be given verbally at the time, provided the payee confirms it in writing within seven days',
     ],
     correctAnswer: 0,
     explanation:
@@ -2717,10 +2717,10 @@ export const crQuestionBank: StandardMockQuestion[] = [
     question:
       "An electrical subcontractor has not received payment for 45 days despite the contract specifying 30-day payment terms. The main contractor says they have not been paid by the client. Does this affect the subcontractor's right to payment?",
     options: [
-      'Yes — the main contractor can lawfully withhold payment until the client pays them',
+      'Yes — the main contractor may lawfully withhold payment until the client has settled their account',
       'No — "pay when paid" clauses are banned by the Construction Act 1996, so the subcontractor must still be paid',
-      'Yes — but only if the contract was for less than £10,000 in value',
-      'Partly — the main contractor may withhold half the sum until they are paid',
+      'Yes — but only where the subcontract is worth less than £10,000 and has no adjudication clause',
+      'Partly — the main contractor may withhold half the sum until the client\'s payment comes through',
     ],
     correctAnswer: 1,
     explanation:
@@ -2735,10 +2735,10 @@ export const crQuestionBank: StandardMockQuestion[] = [
     question:
       "A main contractor issues a back-charge to an electrical subcontractor for £3,500, claiming the electrician's containment was in the wrong position and had to be moved by another trade. The electrician believes they installed to the agreed drawings. How should they respond?",
     options: [
-      'Accept the back-charge and deduct the cost from their next application for payment',
-      'Refuse to discuss the matter and simply leave the back-charge unpaid',
+      'Accept the back-charge in full and let the main contractor deduct the cost from your next payment application',
+      'Refuse to discuss the matter, leave the back-charge unpaid, and carry on with the remaining works',
       'Gather the drawings and photographs, dispute the back-charge formally in writing, and object under the contract terms',
-      'Move the containment again free of charge to keep the relationship intact',
+      'Move the containment again free of charge without comment, so the working relationship stays intact',
     ],
     correctAnswer: 2,
     explanation:
@@ -2753,9 +2753,9 @@ export const crQuestionBank: StandardMockQuestion[] = [
     question:
       'An electrician wants to refer a payment dispute worth £6,000 to adjudication. What practical steps must they take to initiate the process?',
     options: [
-      'Issue a Small Claims Court application and wait for a hearing date to be set',
-      'Send a final written reminder and allow 30 days before taking any further action',
-      'Suspend all work on site immediately and wait for the main contractor to respond',
+      'Issue a Small Claims Court application for the disputed sum, then wait for the court to list a hearing',
+      'Send a final written reminder with statutory interest added, then allow a further 30 days before taking any action',
+      'Suspend all works on site straight away, then wait for the main contractor to respond to the shortfall',
       'Issue a notice of adjudication identifying the dispute, then refer it to the nominated adjudicator within 7 days with evidence',
     ],
     correctAnswer: 3,
@@ -2772,9 +2772,9 @@ export const crQuestionBank: StandardMockQuestion[] = [
       'How should a supervising electrician handle a persistent personality clash between two team members that is affecting productivity and morale?',
     options: [
       'Meet each individually with the SBI model, then mediate a joint conversation to agree behavioural expectations and follow up',
-      'Move one of the team members to another part of the site to keep them apart',
-      'Issue a written warning to both team members to make them stop',
-      'Ignore the clash and hope it resolves itself as the project progresses',
+      'Move one of the two to another floor of the site so that their paths do not cross during the working day',
+      'Issue a written warning to both team members and place it on their files so the behaviour stops quickly',
+      'Raise it with both of them at the morning briefing in front of the whole team and tell them to sort it out themselves',
     ],
     correctAnswer: 0,
     explanation:
@@ -2789,10 +2789,10 @@ export const crQuestionBank: StandardMockQuestion[] = [
     question:
       'What specific amendments did the Local Democracy, Economic Development and Construction Act 2009 (LDECA) make to the Construction Act 1996 regarding payment?',
     options: [
-      'It abolished the right to adjudication for contracts under a certain value',
+      'It abolished the right to adjudication for contracts below a set value and replaced it with compulsory mediation',
       "It made the payee's application the default notice if the payer issues none, strengthened adjudication, and allowed oral contracts",
-      'It introduced a fixed 14-day payment period for all construction contracts',
-      'It removed the right of subcontractors to suspend work for non-payment',
+      'It introduced a fixed 14-day payment period for all construction contracts and banned retention entirely',
+      'It removed the subcontractor\'s right to suspend work for non-payment and required all contracts in writing',
     ],
     correctAnswer: 1,
     explanation:
@@ -2825,9 +2825,9 @@ export const crQuestionBank: StandardMockQuestion[] = [
     question:
       'A main contractor has issued a valid payment notice for £12,000 but then serves a pay-less notice reducing the amount to £4,000, citing defective work. The electrician disputes the alleged defects. What are the immediate legal consequences and options?',
     options: [
-      'The main contractor must pay the full £12,000 because a pay-less notice has no legal effect',
-      'The electrician must accept the £4,000 and has no route to challenge the deduction',
-      'The electrician can suspend all work immediately because the deduction is disputed',
+      'The full £12,000 remains payable now, because a pay-less notice has no effect once a payment notice is served',
+      'The electrician must accept the £4,000 in full settlement and has no route to challenge the deduction made',
+      'The electrician may suspend all works immediately, without notice, because the deduction is disputed',
       'Only £4,000 is payable now, but the electrician can refer the disputed deduction to adjudication to recover the rest',
     ],
     correctAnswer: 3,
@@ -2844,9 +2844,9 @@ export const crQuestionBank: StandardMockQuestion[] = [
       'An electrician is leading a team of four on a commercial fit-out. Two team members have a dispute about who should perform the more skilled second-fix work versus the less desirable containment runs. How should the lead electrician apply the SBI model and mediation principles to resolve this?',
     options: [
       "Meet each individually with the SBI model, then mediate a joint discussion to surface their interests and agree a fair allocation",
-      'Allocate the second-fix work to whoever is more senior and the containment to the junior',
-      'Rotate the tasks weekly without discussion so neither person can claim unfairness',
-      'Let the two team members settle the matter between themselves without involvement',
+      'Allocate the second-fix work to whichever of the two is more senior, then give the containment runs to the other and move on',
+      'Rotate the two tasks on a weekly basis without any discussion, so that neither of them can claim it is unfair',
+      'Leave the two team members to settle the allocation between themselves and step in only if the programme slips',
     ],
     correctAnswer: 0,
     explanation:
@@ -3005,10 +3005,10 @@ export const crQuestionBank: StandardMockQuestion[] = [
     question:
       'When reviewing a commercial subcontract, which clause should an electrician pay particular attention to for preventing payment disputes?',
     options: [
-      'The clause setting out which colour of cable must be used throughout',
+      'Materials clauses covering cable colours, containment finishes and accessory types',
       'Payment terms including application deadlines, valuation dates, and pay-less notice provisions',
-      'The clause naming the architect responsible for the design',
-      'The clause specifying the brand of consumer unit to be installed',
+      'Design clauses naming the architect and consultant responsible for the layout',
+      'Specification clauses setting the brand of consumer unit and accessories used',
     ],
     correctAnswer: 1,
     explanation:
@@ -3023,10 +3023,10 @@ export const crQuestionBank: StandardMockQuestion[] = [
     question:
       'A subcontract contains a "pay-when-paid" clause. What is the legal position on this in the UK?',
     options: [
-      'It is fully enforceable provided the clause was clearly set out and agreed by both parties in writing',
-      'It is permitted only where the subcontract is worth less than £10,000 in total value',
+      'It is fully enforceable provided the clause was clearly worded and both parties agreed to it in writing before work began on site',
+      'It is permitted only where the subcontract is worth under £10,000 in total value and contains no adjudication clause of any kind at all',
       'It is generally prohibited under the Housing Grants, Construction and Regeneration Act 1996 (as amended), except in cases of upstream insolvency',
-      'It is enforceable for the first interim payment only, after which it becomes void',
+      'It is enforceable for the first interim payment only, after which the clause becomes void for the remainder of the contract',
     ],
     correctAnswer: 2,
     explanation:
@@ -3093,10 +3093,10 @@ export const crQuestionBank: StandardMockQuestion[] = [
     question:
       'What does it mean to "acknowledge emotions without agreement" during a de-escalation?',
     options: [
-      'Telling the person their feelings are wrong but you understand',
-      'Agreeing with everything they say to calm them down',
+      'Telling the person their reaction is out of proportion but that you can see why',
+      'Agreeing with every point they make so that the conversation calms down quickly',
       'Validating that the person is upset without conceding that their position is correct',
-      'Ignoring their emotions entirely and focusing only on facts',
+      'Ignoring how they feel altogether and steering the conversation back to the facts',
     ],
     correctAnswer: 2,
     explanation:
@@ -3200,9 +3200,9 @@ export const crQuestionBank: StandardMockQuestion[] = [
       'A site manager uses aggressive and demeaning language towards you in front of other trades. After de-escalating the immediate situation using controlled breathing and a calm voice, what should your follow-up action be?',
     options: [
       'Document the incident in writing — date, time, witnesses, language used — and raise it through the proper channels',
-      'Apologise to the site manager so the working relationship is preserved',
-      'Raise your concern loudly at the time so the other trades can support you',
-      'Say nothing and accept that this is simply how some site managers behave',
+      'Apologise to the site manager afterwards in front of the others, so the working relationship is preserved',
+      'Raise your objection loudly at the time so the other trades who were present can back you up later',
+      'Say nothing further and accept that this is simply how some site managers speak when under pressure',
     ],
     correctAnswer: 0,
     explanation:
@@ -3235,10 +3235,10 @@ export const crQuestionBank: StandardMockQuestion[] = [
     question:
       'In the Trust Equation (Trust = (Credibility + Reliability + Intimacy) / Self-orientation), what does "Intimacy" refer to in a professional context?',
     options: [
-      'Personal romantic relationships with clients',
-      "How closely you live to your client's property",
+      'The closeness of your personal friendships and social life with clients',
+      'The travelling distance between your base and the client\'s property',
       'The degree to which people feel safe sharing concerns and information with you',
-      'The number of times you have worked for the same client',
+      'The number of separate jobs you have carried out for the same client',
     ],
     correctAnswer: 2,
     explanation:
@@ -3288,10 +3288,10 @@ export const crQuestionBank: StandardMockQuestion[] = [
     question:
       'Why is the "lifetime value" of a trusted client relationship important for an electrician\'s business?',
     options: [
-      'Because a single satisfied client legally obliges you to offer them discounts',
+      'Because a client you have worked for before is legally obliged to give you first refusal on future work',
       'Because one satisfied client can generate years of repeat business and referrals worth far more than the job itself',
-      'Because long-standing clients are exempt from the usual payment terms',
-      'Because regular clients allow you to skip the quoting process entirely',
+      'Because long-standing clients are exempt from the usual payment terms and can settle whenever suits them',
+      'Because regular clients let you skip quoting and pricing, so later jobs can simply be billed at cost',
     ],
     correctAnswer: 1,
     explanation:
@@ -3396,9 +3396,9 @@ export const crQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the purpose of a self-assessment of conflict style in a personal action plan?',
     options: [
-      'To prove to clients that you have completed formal mediation training',
-      'To label your colleagues by their conflict style so you know what to expect',
-      'To eliminate conflict from your working life altogether',
+      'To demonstrate to clients and insurers that you hold a recognised mediation qualification',
+      'To label each of your colleagues with a conflict style so you know what to expect from them',
+      'To remove conflict from your working life altogether by avoiding all difficult colleagues',
       'To identify your default tendencies in conflict so you can consciously choose more effective responses',
     ],
     correctAnswer: 3,
@@ -3414,9 +3414,9 @@ export const crQuestionBank: StandardMockQuestion[] = [
     question: 'Which of the following is part of a communication toolkit for conflict resolution?',
     options: [
       'Non-Violent Communication (NVC), the STATE model, and the assertiveness formula',
-      'Aggressive voicemail messages to chase unpaid invoices',
-      'Social media posts criticising difficult clients',
-      'Legal jargon designed to intimidate the other party',
+      'Firmly worded voicemails, repeated chasing calls, and doorstep visits',
+      'Social media posts, group chats, and reviews criticising difficult clients',
+      'Legal jargon, formal warnings, and threats of court to unsettle the other party',
     ],
     correctAnswer: 0,
     explanation:
@@ -3447,10 +3447,10 @@ export const crQuestionBank: StandardMockQuestion[] = [
     id: 194,
     question: 'What is the ACAS helpline number, and what kind of support do they provide?',
     options: [
-      '101 — non-emergency police reports about workplace theft',
-      '999 — emergency assistance for workplace injuries',
+      '101 — non-emergency police reporting of theft, damage and threats on site',
+      '999 — emergency assistance for workplace injuries and dangerous incidents',
       '0300 123 1100 — free advice on workplace rights, disputes, and employment law',
-      '0800 555 111 — anonymous reporting of workplace fraud',
+      '0800 555 111 — anonymous reporting of fraud and unsafe practice at work',
     ],
     correctAnswer: 2,
     explanation:
@@ -3500,10 +3500,10 @@ export const crQuestionBank: StandardMockQuestion[] = [
     question:
       'A sole trader electrician has a dispute with a domestic client over a £3,500 invoice. After attempting to self-resolve and mediate without success, what is the most appropriate next step on the escalation ladder?',
     options: [
-      'Post the details of the dispute on social media to pressure the client',
+      'Publish the details of the dispute online so that other clients see how you were treated',
       'Issue a claim through the Small Claims Court (part of the County Court) for the disputed amount',
-      'Refer the matter to building control for an independent ruling',
-      'Write the debt off immediately to avoid the stress of pursuing it',
+      'Refer the matter to your local building control team for an independent ruling on the sum',
+      'Write the debt off in full and record it as a bad debt to avoid the stress of a claim',
     ],
     correctAnswer: 1,
     explanation:
@@ -3518,10 +3518,10 @@ export const crQuestionBank: StandardMockQuestion[] = [
     question:
       'How do Citizens Advice and the Federation of Small Businesses (FSB) support electricians in dispute situations?',
     options: [
-      'They send a representative to attend court hearings on your behalf',
-      'They resolve the dispute directly and recover the money for you',
+      'Citizens Advice attends court hearings for you, while the FSB instructs a solicitor on your behalf',
+      'Citizens Advice recovers the debt directly, while the FSB negotiates the settlement with the client',
       'Citizens Advice gives free rights guidance, while the FSB offers members legal advice and mediation support',
-      'They issue binding rulings that both parties must comply with',
+      'Citizens Advice issues binding rulings on disputes, while the FSB enforces them against the client',
     ],
     correctAnswer: 2,
     explanation:
@@ -3536,9 +3536,9 @@ export const crQuestionBank: StandardMockQuestion[] = [
     question:
       'An electrician\'s action plan includes the assertiveness formula: "When [behaviour], I feel [emotion], because [reason], and I would like [request]." In which scenario is this formula most effectively applied?',
     options: [
-      'When responding to a written complaint from a domestic client',
-      'When negotiating a payment dispute with a main contractor',
-      'When de-escalating an angry client who is shouting at you',
+      'When replying to a written complaint from a domestic client about the standard of the work',
+      'When negotiating a disputed payment application with a main contractor\'s quantity surveyor',
+      'When de-escalating an angry client who is shouting at you on site about a missed deadline',
       'When a colleague repeatedly borrows your tools without asking and you need to address it directly',
     ],
     correctAnswer: 3,
@@ -3555,9 +3555,9 @@ export const crQuestionBank: StandardMockQuestion[] = [
       'An electrician is developing a comprehensive conflict resolution action plan. They have identified their default conflict style as "avoiding," built a communication toolkit including NVC and the STATE model, and created a prevention checklist. What critical element are they still missing to make the plan complete?',
     options: [
       'A clear escalation ladder with defined trigger points for moving between self-resolution, mediation, and formal processes',
-      'A signed copy of the company\'s anti-bullying and grievance policy',
-      'A list of recommended mediators and solicitors in the local area',
-      'A template letter before action ready to send to any non-paying client',
+      'A signed copy of the company\'s anti-bullying and grievance policy, kept on file with the site paperwork',
+      'A list of approved local mediators and solicitors, with their hourly fees and their typical response times',
+      'A template letter before action, ready to issue to any client whose invoice falls more than 30 days overdue',
     ],
     correctAnswer: 0,
     explanation:

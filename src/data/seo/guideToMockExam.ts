@@ -69,7 +69,7 @@ export const GUIDE_TO_MOCK_EXAM: Record<string, MockExamPairing> = {
       ['/guides/prospective-fault-current-explained', 'prospective fault current and breaking capacity'],
       ['/guides/max-demand-calculation-guide', 'maximum demand and diversity'],
       ['/guides/electrical-regulations-timeline-uk', 'what actually changed in the current amendment'],
-      ['/guides/part-p-building-regulations', 'notifiable work and the wider regulatory framework'],
+      ['/part-p-building-regulations', 'notifiable work and the wider regulatory framework'],
       ['/guides/electrical-symbols-chart', 'the regulations these symbols appear on drawings for'],
       ['/tools/cable-derating-calculator', 'correction factors and cable selection'],
       ['/tools/cable-sizing-calculator', 'cable selection start to finish'],
@@ -97,8 +97,13 @@ export const GUIDE_TO_MOCK_EXAM: Record<string, MockExamPairing> = {
   // ── 18th Edition (BS 7671) ──
   ...Object.fromEntries(
     [
-      ['/guides/earthing-arrangements', 'the earthing arrangements and their maximum Ze values'],
-      ['/guides/earthing-systems-tns-tncs-tt-explained', 'TN-S, TN-C-S and TT and how each affects the installation'],
+      // Was two entries — /guides/earthing-arrangements now 301s here, and this is
+      // an Object.fromEntries map keyed by guide URL, so keeping both would have
+      // silently dropped one. Merged into the single surviving pairing.
+      [
+        '/guides/earthing-systems-tns-tncs-tt-explained',
+        'TN-S, TN-C-S and TT, and the maximum Ze values for each arrangement',
+      ],
       ['/guides/protective-earthing-bonding', 'protective earthing and bonding requirements'],
       ['/guides/ring-vs-radial-circuits', 'final circuit design and the rules for each arrangement'],
       ['/armoured-cable-installation', 'cable selection, glanding and containment'],

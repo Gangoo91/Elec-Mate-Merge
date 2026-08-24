@@ -1,4 +1,5 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
+import FireAlarmCertificateChooser from '@/components/seo/FireAlarmCertificateChooser';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
@@ -145,7 +146,11 @@ const sections = [
     heading: 'Fire Alarm Certificate Requirements: Overview',
     content: (
       <>
-        <p>
+        {/* This page already ranks well for the specific certificate names
+            (design 3.7, commissioning 8.4) but poorly for the generic head
+            term — so let people find their certificate in one tap. */}
+        <FireAlarmCertificateChooser />
+        <p className="mt-6">
           A fire alarm system is not simply installed and forgotten. BS 5839-1 defines a
           certification framework that spans the entire lifecycle of the system, from initial design
           through to ongoing annual servicing. Each stage requires specific documentation to

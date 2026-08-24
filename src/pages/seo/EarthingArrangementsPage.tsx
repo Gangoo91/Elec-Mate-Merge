@@ -696,7 +696,7 @@ export default function EarthingArrangementsPage() {
           <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
             <SEOInternalLink href="/guides/ac-vs-dc-earthing-solar-ev">AC vs DC Earthing for Solar PV and EV Charging</SEOInternalLink>
-            <SEOInternalLink href="/earthing-systems-guide">UK Earthing Systems Guide</SEOInternalLink>
+            <SEOInternalLink href="/guides/earthing-systems-tns-tncs-tt-explained">UK Earthing Systems Guide</SEOInternalLink>
             <SEOInternalLink href="/guides/what-is-earthing">What Is Earthing?</SEOInternalLink>
             <SEOInternalLink href="/guides/earthing-fault-diagnosis">Earthing Fault Diagnosis</SEOInternalLink>
             <SEOInternalLink href="/industrial-earthing-systems">Industrial Earthing Systems UK</SEOInternalLink>

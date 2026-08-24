@@ -61,7 +61,7 @@ const faqs = [
   {
     question: 'Do I need professional indemnity insurance as an electrician?',
     answer:
-      'Professional indemnity (PI) insurance covers claims arising from professional advice, design work, or certification errors. As an electrician, you issue electrical certificates (EICs, EICRs, Minor Works) that certify the safety of an installation. If a certificate contains an error — for example, you certify an installation as satisfactory when it has a defect that later causes injury or damage — the affected party could bring a professional negligence claim against you. PI insurance covers the legal costs and any damages awarded. While PI insurance is not a legal requirement for electricians, it is increasingly recommended — particularly if you carry out inspection and testing work, design electrical installations, or issue certificates that other parties rely on. Many competent person schemes now recommend or require PI cover. Typical cover levels are £100,000 to £500,000.',
+      'Professional indemnity (PI) insurance covers claims arising from professional advice, design work, or certification errors. As an electrician, you issue electrical certificates (EICs, EICRs, Minor Works) that certify the safety of an installation. If a certificate contains an error — for example, you certify an installation as satisfactory when it has a defect that later causes injury or damage — the affected party could bring a professional negligence claim against you. PI insurance covers the legal costs and any damages awarded. PI insurance is not a legal requirement for electricians, but it is a scheme requirement in specific circumstances. NICEIC requires professional indemnity cover where the scope of work you undertake includes periodic inspection and testing — so if you issue EICRs, PI is not optional for you. It is also worth carrying if you design electrical installations or issue certificates that other parties rely on. NICEIC publishes no minimum figure for PI, unlike the £2 million it sets for public liability; typical cover levels bought are £100,000 to £500,000. Check your own scheme rules, as the trigger and the required level vary between schemes.',
   },
   {
     question: 'Is employers liability insurance a legal requirement?',
@@ -406,9 +406,11 @@ const sections = [
         </div>
         <p>
           Membership of a competent persons scheme is the most straightforward way to handle
-          notifiable work — and most schemes require both public liability and, increasingly,
-          professional indemnity insurance as conditions of registration. Ensure your PI policy
-          covers certification and regulatory compliance work, not just physical property damage.
+          notifiable work — and schemes attach insurance conditions to registration. NICEIC sets a
+          minimum of £2 million public liability, held in the registered trading name, and requires
+          professional indemnity cover where the scope of work undertaken includes periodic
+          inspection and testing. Ensure your PI policy covers certification and regulatory
+          compliance work, not just physical property damage.
         </p>
       </>
     ),
@@ -723,10 +725,10 @@ export default function ElectricianInsurancePage() {
   return (
     <GuideTemplate
       localArea="Insurance Uk"
-      title="Electrician Insurance UK: Public Liability & PI"
-      description="NICEIC public liability and professional indemnity: schemes require £2m cover, typically £150–£400 a year. Tools, van and employers liability compared."
+      title="Electrician Insurance UK: £2m Cover, £150–£400 a Year"
+      description="Scheme registration needs £2m public liability — typically £150–£400 a year. When professional indemnity becomes compulsory, and what tools, van and employers liability actually cost."
       datePublished="2026-01-18"
-      dateModified="2026-06-10"
+      dateModified="2026-08-24"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Insurance Guide"

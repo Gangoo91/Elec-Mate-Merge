@@ -7,8 +7,8 @@ export const insulationTestMethodsQuizQuestions: QuizQuestion[] = [
     options: [
       'L–N and N–E only',
       'L–N, L–E, and N–E',
-      'Only L–N and L–E',
-      'Only L+N to E',
+      'L–N and L–E only',
+      'L–E and N–E only',
     ],
     correctAnswer: 1,
     explanation:

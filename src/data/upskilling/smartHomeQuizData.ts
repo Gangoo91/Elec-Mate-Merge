@@ -5,10 +5,10 @@ export const smartHomeQuizQuestions: QuizQuestion[] = [
     id: 1,
     question: 'What is the definition of a smart home according to modern standards?',
     options: [
-      'Any home fitted with a broadband internet connection',
+      'Any home that has been fitted with a broadband connection and a wireless network router',
       'A residence that uses interconnected devices and systems to automate, monitor, and control functions',
-      'A home where all appliances are controlled by physical switches',
-      'A property built to the latest energy efficiency building regulations',
+      'A home in which every appliance is operated by physical wall switches and mechanical timers',
+      'A property constructed to satisfy the latest energy efficiency building regulations',
     ],
     correctAnswer: 1,
     explanation:
@@ -46,9 +46,9 @@ export const smartHomeQuizQuestions: QuizQuestion[] = [
     question: 'What is the primary energy management benefit of smart home systems?',
     options: [
       'Optimised energy use through intelligent automation and scheduling',
-      'Manual control of all electrical devices',
-      'Increased energy consumption monitoring',
-      'Higher electricity consumption tracking',
+      'Manual control of every electrical device from a single app',
+      'Increased energy consumption caused by always-on devices',
+      'Higher electricity use from continuous background tracking',
     ],
     correctAnswer: 0,
     explanation:

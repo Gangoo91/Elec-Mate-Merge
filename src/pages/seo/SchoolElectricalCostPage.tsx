@@ -66,7 +66,7 @@ const faqs = [
   {
     question: 'What emergency lighting standard applies to schools?',
     answer:
-      'Emergency lighting in schools is governed by BS 5266-1 (Emergency Lighting). All escape routes, assembly areas, stairwells, and internal rooms without natural light must have emergency lighting. Schools serving more than 300 pupils are generally expected to have maintained emergency lighting (fittings that operate continuously during occupied hours) rather than non-maintained (fittings that operate only on mains failure). Emergency lighting must achieve minimum 1 lux on escape route centrelines.',
+      'Emergency lighting in schools is governed by BS 5266-1 (Emergency Lighting). All escape routes, assembly areas, stairwells, and internal rooms without natural light must have emergency lighting. Schools serving more than 300 pupils are generally expected to have maintained emergency lighting (fittings that operate continuously during occupied hours) rather than non-maintained (fittings that operate only on mains failure). Emergency lighting must achieve minimum 1 lux across the full width of escape routes.',
   },
   {
     question: 'Do schools need solar PV?',
@@ -308,7 +308,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Escape route lighting</strong> — minimum 1 lux on the centreline of all
+                <strong>Escape route lighting</strong> — minimum 1 lux across the full width of all
                 corridors, stairwells, and escape routes. Exit signs (internally illuminated,
                 compliant with BS EN ISO 7010 sign E001) above all final exits.
               </span>

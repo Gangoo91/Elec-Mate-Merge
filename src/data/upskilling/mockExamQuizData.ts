@@ -221,14 +221,14 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 17,
     question: 'What is the correct sequence for safe isolation?',
     options: [
-      'Test, Isolate, Prove dead, Lock off',
-      'Isolate, Test, Prove dead, Lock off',
-      'Prove dead, Isolate, Test, Lock off',
-      'Isolate, Lock off, Test, Prove dead',
+      'Identify, isolate, secure the isolation, then prove dead with a tester proved before and after',
+      'Identify, isolate, prove dead, then secure the isolation once the circuit is confirmed dead',
+      'Isolate, prove dead, start work, then secure the isolation before leaving the area',
+      'Prove dead, identify the circuit, isolate it, then secure the isolation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Safe isolation requires: Isolate, Test dead, Prove tester working, then Lock off if required.',
+      'Regulation 462.1 requires the means of isolation to allow the full sequence: identify the supply, isolate it, SECURE IT AGAINST RE-CONNECTION, then prove dead. Securing comes BEFORE proving dead — lock off after testing and the circuit can be re-energised in the gap between the two, which is the exact scenario the procedure exists to prevent. The voltage indicator is proved on a known source before AND after the test, so a tester that failed mid-check cannot read as a dead circuit.',
     category: 'Safe Isolation',
     difficulty: 'advanced'
   },

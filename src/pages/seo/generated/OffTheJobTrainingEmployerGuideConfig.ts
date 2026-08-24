@@ -141,7 +141,7 @@ export const OffTheJobTrainingEmployerGuideConfig: GeneratedGuideConfig = {
       category: 'Guide',
     },
     {
-      href: '/guides/starting-an-electrical-business-uk',
+      href: '/guides/starting-an-electrical-business',
       title: 'Starting an Electrical Business',
       description: 'Related guide for electrical contractors and small business owners managing apprentice OTJ requirements.',
       icon: 'Briefcase',

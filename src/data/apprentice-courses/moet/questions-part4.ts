@@ -122,9 +122,9 @@ export const questionsPart4: StandardMockQuestion[] = [
     id: 127,
     question: 'What is the purpose of the portfolio of evidence in the MOET EPA?',
     options: [
-      'To replace the practical assessment so that no observed task is required',
-      'To record the apprentice\'s attendance throughout the on-programme period',
-      'To act as a personal scrapbook that the assessor does not review',
+      'To replace the practical observation, so that no assessed task needs to be carried out',
+      'To record the attendance, timekeeping and shift pattern of the apprentice through the on-programme period',
+      'To gather personal notes for the apprentice alone, which the assessor never sees or marks',
       'To collect structured evidence of competence across the standard, supporting the professional discussion',
     ],
     correctAnswer: 3,
@@ -175,10 +175,10 @@ export const questionsPart4: StandardMockQuestion[] = [
     question:
       "In the professional discussion, how should an apprentice demonstrate the behaviour 'taking responsibility for own professional development'?",
     options: [
-      'State that all training is arranged by the employer and outside their control',
-      'Explain that professional development only begins once the apprenticeship is complete',
+      'State that all training is arranged and funded by the employer and is therefore outside their control',
+      'Explain that professional development begins only after the apprenticeship has been completed and signed off by the employer',
       'Give examples of self-directed learning and CPD undertaken on their own initiative and applied to improve their practice',
-      'List the mandatory courses the employer required them to attend on programme',
+      'List the mandatory courses the employer required them to attend during the on-programme period',
     ],
     correctAnswer: 2,
     explanation:
@@ -212,9 +212,9 @@ export const questionsPart4: StandardMockQuestion[] = [
       'What is the maximum timeframe typically allowed to complete all EPA components once the first assessment has been taken?',
     options: [
       'Typically three to six months, as set by the assessment plan',
-      'Up to two years from the gateway date',
-      'No time limit applies once started',
-      'One week from the first activity',
+      'Up to two years from the date of the gateway meeting',
+      'No limit applies once the first assessment is taken',
+      'One calendar week from the first assessment activity',
     ],
     correctAnswer: 0,
     explanation:
@@ -253,10 +253,10 @@ export const questionsPart4: StandardMockQuestion[] = [
     question:
       'A planned shutdown is scheduled for an 11 kV/400 V substation to replace a transformer. What planning documents and safety systems are required?',
     options: [
-      'A verbal briefing to the team on the morning of the shutdown, with no written records',
-      'A single risk assessment, with switching carried out from memory by the senior engineer',
+      'A verbal briefing on the morning of the shutdown, a switching plan agreed on site, and no written records',
+      'A single risk assessment covering the whole shutdown, with the switching carried out from memory by the engineer',
       'Method statement, risk assessment, switching schedule, permit to work, LOTO, proof of competence and a communication plan',
-      'The transformer manufacturer\'s data sheet, with switching arranged informally on the day',
+      'The transformer data sheet, a toolbox talk, and switching arranged informally between the team on the day itself',
     ],
     correctAnswer: 2,
     explanation:
@@ -271,9 +271,9 @@ export const questionsPart4: StandardMockQuestion[] = [
     question:
       'During a routine PPM visit, a thermographic survey of a motor control centre reveals a hot spot at 85 degrees C on one contactor connection (normal operating temperature is 40 degrees C). What actions should be taken?',
     options: [
-      'Ignore the hot spot as 85 degrees C is within the normal range for a contactor',
-      'Immediately tighten the connection while the circuit remains live and loaded',
-      'Switch the whole motor control centre off at once without informing anyone',
+      'Leave the connection until the next annual survey, as 85 degrees C is a normal reading',
+      'Tighten the connection immediately while the circuit is still live and fully loaded',
+      'Trip the whole motor control centre out at once without informing the operators',
       'Record it, raise a priority work order, assess the risk and report to the duty engineer',
     ],
     correctAnswer: 3,
@@ -399,10 +399,10 @@ export const questionsPart4: StandardMockQuestion[] = [
     question:
       'When interpreting a motor control schematic to fault-find a star-delta starter that fails to change from star to delta, which components and connections should be checked?',
     options: [
-      'The motor overload relay and the main isolator only',
-      'The supply fuses and the incoming cable terminations only',
+      'The overload relay, the main isolator and the three incoming supply terminals',
+      'The supply fuses, the incoming cable terminations and the motor terminal box',
       'The timer KT1, the KM3 and KM2 contactors, their interlock and the control wiring',
-      'The motor windings and the driven load coupling only',
+      'The motor windings, the driven load coupling and the shaft alignment settings',
     ],
     correctAnswer: 2,
     explanation:

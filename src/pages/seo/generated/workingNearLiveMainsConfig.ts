@@ -322,7 +322,7 @@ export const workingNearLiveMainsConfig: GeneratedGuideConfig = {
   ],
   relatedPages: [
     {
-      href: '/tools/rams-generator',
+      href: '/rams-generator',
       title: 'RAMS Generator',
       description:
         'Produce a site-specific Risk Assessment and Method Statement for proximity work, isolation, excavation or live tasks.',

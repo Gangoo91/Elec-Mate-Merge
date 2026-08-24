@@ -16,10 +16,10 @@ export const bmsModule5Section4QuizData = [
     id: 2,
     question: 'Why is KNX considered vendor-neutral?',
     options: [
-      'It can only be installed by manufacturer-approved contractors',
-      'It is owned and licensed exclusively by a single company',
+      'Installation is restricted to contractors approved by the device manufacturer',
+      'The protocol is owned and licensed exclusively by one manufacturer worldwide',
       'Hundreds of manufacturers produce KNX-compatible devices following the same standard',
-      'It works only with devices from the original system designer',
+      'Devices will only operate alongside products from the original system designer',
     ],
     correctAnswer: 2,
     explanation:

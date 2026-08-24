@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Career',
   },
   {
-    href: '/guides/niceic-vs-napit',
+    href: '/niceic-vs-napit-comparison',
     title: 'NICEIC vs NAPIT',
     description:
       'Compare the two largest competent person schemes — costs, assessment, reputation, and switching.',

@@ -455,7 +455,7 @@ export default function Sub2() {
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li><strong>BS EN 12464-1 task illuminance</strong> — minimum maintained lux per task type. Office writing 500 lux, retail 300 lux, warehouse aisle 100 to 200 lux, kitchen prep 500 lux. The schedule lumen totals divided by zone area give the design average.</li>
-              <li><strong>BS 5266 emergency lighting</strong> — escape route minimum 1 lux on the centre line, anti-panic open area 0.5 lux average, high-risk task area 10 percent of normal lighting. Duration 3 hours minimum for most premises. The schedule emergency function and lumen entries are the input to the BS 5266 calc.</li>
+              <li><strong>BS 5266 emergency lighting</strong> — escape route minimum 1 lux across the full width, anti-panic open area 0.5 lux average, high-risk task area 10 percent of normal lighting. Duration 3 hours minimum for most premises. The schedule emergency function and lumen entries are the input to the BS 5266 calc.</li>
               <li><strong>BREEAM and Part L energy efficiency</strong> — luminous efficacy in lumens per circuit watt. The schedule wattage and lumen totals feed the Part L 2 calculation that fits non-domestic energy compliance.</li>
             </ul>
             <p>

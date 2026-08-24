@@ -186,13 +186,19 @@ const AM2Module8 = () => {
         totalQuestions={30}
         bankSize={am2QuestionBank.length}
         timeLimitMinutes={60}
-        passThreshold={60}
-        topics={['H&S', 'BS 7671', 'Building Regs', 'Safe isolation']}
+        // 21 of 30, per NET's published Section E specification. Deliberately
+        // NOT the 60% used across the C&G 2365 papers: this paper mimics a real
+        // assessment that publishes its own pass mark, and matching reality
+        // beats matching our other papers.
+        passThreshold={70}
+        topics={['Health & Safety', 'BS 7671', 'Building Regulations']}
         history={history}
         // Restored — this was on the original start screen and was lost when
         // the paper moved to the shared panel. It matters: the real assessment
         // is open-book, so drilling this closed-book practises the wrong exam.
-        note="Reference materials are allowed in the real AM2 — practise with BS 7671 to hand."
+        // The four permitted documents are named because "open book" alone
+        // leads people to revise with the wrong things to hand.
+        note="Open book, like the real Section E. Practise with BS 7671, Guidance Note 3, the On-Site Guide and a short guide to the Building Regulations — nothing else is allowed."
         onStart={startExam}
         onExit={() => navigate(examExit.to)}
       />
@@ -209,7 +215,8 @@ const AM2Module8 = () => {
         exitLabel={examExit.label}
         questions={examQuestions}
         answers={answersArray}
-        passThreshold={60}
+        // Must match the start screen — 21 of 30 per NET's Section E spec.
+        passThreshold={70}
         history={history}
         // This bank's `topic` is per-question granular ("Notification"), so the
         // default grouping gave 23 one-question rows. `category` is the broad

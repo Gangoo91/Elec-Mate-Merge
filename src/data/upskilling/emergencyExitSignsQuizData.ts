@@ -55,10 +55,10 @@ export const emergencyExitSignsQuizData = [
     id: 5,
     question: 'Why must maintained exit signs remain illuminated even when the mains is healthy?',
     options: [
-      'To reduce the standby load on the central battery system',
+      'To reduce the standby load placed on the central battery system during the day',
       'To ensure they are visible to occupants at all times, including the moment mains fails',
-      'To keep the sign batteries permanently in a discharged state',
-      'To allow the photoluminescent backing to recharge continuously',
+      'To keep the sign batteries permanently in a partly discharged state ready for use',
+      'To allow the photoluminescent backing to recharge continuously from the lamp',
     ],
     correctAnswer: 1,
     explanation:
@@ -120,10 +120,10 @@ export const emergencyExitSignsQuizData = [
     id: 10,
     question: 'What must be recorded in the emergency lighting logbook regarding exit signage?',
     options: [
-      'The purchase price and supplier of each individual sign',
-      'The wattage rating and colour temperature of every lamp',
+      'Purchase price, supplier details, and delivery date for each individual sign',
+      'Lamp wattage ratings, colour temperature, and beam angle of every sign fitted',
       'Test results, illumination status, legibility checks, and any maintenance performed',
-      'The manufacturer warranty start date for each luminaire',
+      'Warranty start dates, serial numbers, and the installer’s original order number',
     ],
     correctAnswer: 2,
     explanation:

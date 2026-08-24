@@ -529,13 +529,13 @@ export const questionsPart3 = [
       'When designing emergency lighting circuits, what is the minimum maintained illuminance on escape routes?',
     options: [
       '5 lux across the full width',
-      '1 lux along the centre line',
+      '1 lux across the full width',
       '15 lux at all points',
       '50 lux at exits only',
     ],
     correctAnswer: 1,
     explanation:
-      'BS 5266 requires a minimum of 1 lux along the centre line of escape routes up to 2m wide. Higher illuminance is required for wider routes and specific areas.',
+      'BS EN 1838:2024 requires a minimum of 1 lux across the FULL WIDTH of an escape route. The 2013 edition required it only along the centre line; the 2024 revision extended it to the whole width, excluding borders (0.5 m each side above 2 m width, or a quarter of the width at 2 m or less).',
     section: 'Emergency Systems',
     difficulty: 'advanced',
     topic: 'Emergency Lighting',
@@ -1028,9 +1028,9 @@ export const questionsPart3 = [
     id: 315,
     question: 'Under CDM 2015, who has duties when a project is notifiable?',
     options: [
-      'Only the principal contractor and the HSE inspector',
-      'Only the client and the principal designer',
-      'Only the designers and the site workers',
+      'Principal contractor, HSE inspector, and the site safety supervisor',
+      'Client and principal designer, with no duties falling on contractors',
+      'Designers, contractors, and site workers, but not the client',
       'Client, principal designer, principal contractor, designers, and contractors',
     ],
     correctAnswer: 3,
@@ -1046,9 +1046,9 @@ export const questionsPart3 = [
     question: "When does a project become 'notifiable' under CDM 2015?",
     options: [
       'When it lasts more than 30 working days with more than 20 workers, or exceeds 500 person days',
-      'When the contract value exceeds £100,000 regardless of duration',
-      'When more than two contractors are appointed to the project',
-      'When any high-risk work listed in Schedule 3 is involved',
+      'When it lasts more than 20 working days, or involves more than 30 workers on site',
+      'When the total contract value exceeds £100,000, regardless of duration or workers',
+      'When more than two contractors are appointed, whatever the duration of the work',
     ],
     correctAnswer: 0,
     explanation:
@@ -1079,10 +1079,10 @@ export const questionsPart3 = [
     id: 318,
     question: "What is 'float' or 'slack' in project scheduling?",
     options: [
-      'The extra resources allocated to a task to speed it up',
-      'The amount of time a task is ahead of its baseline date',
+      'The extra labour and plant allocated to a task in order to speed it up',
+      'The amount of time a task is running ahead of its planned baseline date',
       'The amount of time a task can be delayed without affecting the project end date',
-      'The buffer added to the budget to cover unforeseen costs',
+      'The money held back in the budget to cover unforeseen construction costs',
     ],
     correctAnswer: 2,
     explanation:
@@ -1432,9 +1432,9 @@ export const questionsPart3 = [
     id: 339,
     question: 'Under CDM 2015, what is the health and safety file?',
     options: [
-      'A record of accidents and near misses during construction',
-      'A plan setting out how risks are managed during the build',
-      'A register of all variations and their cost implications',
+      'A record of all accidents and near misses reported during construction',
+      'A plan setting out how significant risks are managed during the build',
+      'A register of all variations issued and their agreed cost implications',
       'A document containing information for future maintenance and construction work',
     ],
     correctAnswer: 3,
@@ -1450,9 +1450,9 @@ export const questionsPart3 = [
     question: 'What is the difference between predecessor and successor activities?',
     options: [
       'A predecessor must complete before its successor can start (with FS relationship)',
-      'A predecessor always runs in parallel with its successor',
-      'A successor must complete before its predecessor can start',
-      'A predecessor is any task that lies off the critical path',
+      'A predecessor always runs in parallel with its successor throughout the task',
+      'A successor must complete before its predecessor can start (with FS logic)',
+      'A predecessor is any task that lies off the critical path of the programme',
     ],
     correctAnswer: 0,
     explanation:
@@ -1483,10 +1483,10 @@ export const questionsPart3 = [
     id: 342,
     question: 'What is the purpose of a project progress report?',
     options: [
-      'To define who receives which information and how often',
-      'To record the final account at the end of the project',
+      'To define who receives which information and how often they receive it',
+      'To record the final account and settle retention at the end of the job',
       'To communicate project status, achievements, issues, and forecasts to stakeholders',
-      'To set out the health and safety arrangements for the site',
+      'To set out the health and safety arrangements agreed for the site works',
     ],
     correctAnswer: 2,
     explanation:

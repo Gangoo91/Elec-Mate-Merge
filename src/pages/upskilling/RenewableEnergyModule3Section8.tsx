@@ -860,7 +860,7 @@ export default function RenewableEnergyModule3Section8() {
                 with more integrated cross-references and design workflows
               </li>
               <li>
-                <strong className="text-white">Energy efficiency — Appendix 17 → Part 8</strong> —
+                <strong className="text-white">Energy efficiency — Appendix 17 deleted, now Chapter 81 in Part 8</strong> —
                 A4:2026 deleted Appendix 17 and introduced Chapter 81 in the new Part 8.
                 Energy-efficiency design requirements will become more prominent
               </li>

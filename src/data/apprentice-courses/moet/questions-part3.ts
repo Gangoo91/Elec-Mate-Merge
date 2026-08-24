@@ -157,10 +157,10 @@ export const questionsPart3: StandardMockQuestion[] = [
     id: 89,
     question: 'What is the PLC scan cycle?',
     options: [
-      'The one-off sequence the PLC runs only at power-up to load its program into memory',
+      'The one-off sequence a PLC runs at power-up to copy its stored program into its working memory',
       'The repetitive cycle where the PLC reads all inputs, executes the program logic, and updates all outputs',
-      'The process of downloading a new program from the laptop into the PLC CPU',
-      'The diagnostic routine that scans the I/O modules for hardware faults on demand',
+      'The process of downloading a revised program from a laptop into the memory of the PLC processor',
+      'The diagnostic routine that checks every I/O module for hardware faults when the engineer requests it',
     ],
     correctAnswer: 1,
     explanation:
@@ -300,10 +300,10 @@ export const questionsPart3: StandardMockQuestion[] = [
     question:
       'What is the purpose of an HMI (Human Machine Interface) on an industrial control panel?',
     options: [
-      'To supply the regulated DC control voltage required by the PLC and field devices',
+      'To supply the regulated DC control voltage needed by the PLC processor and the connected field devices',
       'To provide a graphical interface for operators to monitor process variables, view alarms, and control equipment',
-      'To execute the ladder logic program that controls the connected machinery',
-      'To convert analogue sensor signals into the digital format used by the network',
+      'To execute the ladder logic program that controls the machinery wired to the output modules of the panel',
+      'To convert the analogue signals from the field sensors into the digital form used on the control network',
     ],
     correctAnswer: 1,
     explanation:
@@ -354,9 +354,9 @@ export const questionsPart3: StandardMockQuestion[] = [
     question: 'What is Modbus RTU and how does it differ from Modbus TCP?',
     options: [
       'Modbus RTU uses serial communication (RS-485/RS-232) with binary encoding, while Modbus TCP uses Ethernet with TCP/IP encapsulation of the Modbus protocol',
-      'Modbus RTU is a wireless protocol, while Modbus TCP requires a fibre-optic connection',
-      'Modbus RTU is used only between PLCs, while Modbus TCP is used only for HMI displays',
-      'Modbus RTU carries analogue signals, while Modbus TCP carries only digital on/off signals',
+      'Modbus RTU is a wireless radio protocol used for field devices, while Modbus TCP requires a dedicated fibre-optic link between master and slave',
+      'Modbus RTU can be used only between two PLCs in the same panel, while Modbus TCP can be used only to drive an HMI display on a machine front',
+      'Modbus RTU carries analogue process signals directly on the wire, while Modbus TCP carries only digital on and off states between devices',
     ],
     correctAnswer: 0,
     explanation:
@@ -394,10 +394,10 @@ export const questionsPart3: StandardMockQuestion[] = [
     id: 102,
     question: 'What is the difference between a schematic diagram and a wiring diagram?',
     options: [
-      'A schematic is always drawn to scale, whereas a wiring diagram is never drawn to scale',
-      'A schematic is used only for AC circuits, whereas a wiring diagram is used only for DC circuits',
+      'A schematic is always drawn to scale so that cable lengths can be measured directly from it, whereas a wiring diagram is never drawn to scale and uses symbols only',
+      'A schematic may be used only for alternating current circuits, whereas a wiring diagram may be used only for direct current circuits and low voltage control wiring',
       'A schematic shows the functional relationship between components using standard symbols, while a wiring diagram shows the physical routing and connections of cables and conductors',
-      'A schematic is produced by the manufacturer, whereas a wiring diagram is produced only on site',
+      'A schematic is issued by the equipment manufacturer and cannot be altered on site, while a wiring diagram is drawn only by the installer once the work has been finished',
     ],
     correctAnswer: 2,
     explanation:
@@ -446,10 +446,10 @@ export const questionsPart3: StandardMockQuestion[] = [
     id: 105,
     question: 'What is the purpose of cross-referencing on a multi-page control schematic?',
     options: [
-      'To list the revision history of the drawing so the latest version can be identified',
+      'To list the revision history of the whole drawing set so that the technician can confirm which issue is the latest approved version',
       'To show where a relay coil on one page has its associated contacts shown on other pages, enabling the technician to trace the complete circuit',
-      'To indicate the physical cable route between two components on different floors',
-      'To record the torque settings required for each terminal connection on the page',
+      'To indicate the physical route taken by each cable between panels on different floors so that the cable run can be traced on site',
+      'To record the tightening torque required at every terminal shown on the page so that no connection is left slack in service',
     ],
     correctAnswer: 1,
     explanation:
@@ -535,10 +535,10 @@ export const questionsPart3: StandardMockQuestion[] = [
     id: 110,
     question: 'What information should a maintenance work order contain upon completion?',
     options: [
-      'Only the date the work order was raised and the name of the technician assigned',
-      'Only confirmation that the equipment is now running, with no further detail required',
+      'Date raised, name of the technician assigned and nothing further recorded',
+      'Confirmation that the equipment is running again, with no other detail',
       'Work performed, parts used, time taken, fault found and any follow-up required',
-      'Only the purchase cost of the replacement parts used during the repair',
+      'The purchase cost of any replacement parts drawn from the stores',
     ],
     correctAnswer: 2,
     explanation:
@@ -604,10 +604,10 @@ export const questionsPart3: StandardMockQuestion[] = [
     question:
       'Under the Electricity at Work Regulations 1989, what records should be kept for electrical maintenance and testing?',
     options: [
-      'Only the dates on which electrical equipment was purchased and first installed',
-      'Only a copy of the manufacturer&rsquo;s instructions supplied with each item of equipment',
+      'Purchase and installation dates for every item of electrical equipment on site',
+      'Copies of the handbooks supplied by the manufacturer with each item of plant',
       'Maintenance, inspection and test records with results, dates and the competent person',
-      'Only the names of staff who hold an electrical qualification, with no test data',
+      'Names of staff who hold an electrical qualification, with no test results',
     ],
     correctAnswer: 2,
     explanation:
@@ -643,9 +643,9 @@ export const questionsPart3: StandardMockQuestion[] = [
       'After completing a maintenance task on a safety-critical system, what documentation should be provided during the handover back to operations?',
     options: [
       'Completed work order, test records, permit cancellation and interlock confirmation',
-      'A verbal confirmation to the operator that the work is finished, with no paperwork',
-      'Only the updated asset register entry, which operations can review at a later date',
-      'Only the supplier&rsquo;s invoice for any replacement parts used during the maintenance',
+      'Verbal confirmation to the shift operator, with no written paperwork at all',
+      'The updated asset register entry, for operations to review at a later date',
+      'The supplier invoice covering all replacement parts used during the job',
     ],
     correctAnswer: 0,
     explanation:

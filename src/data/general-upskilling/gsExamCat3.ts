@@ -254,9 +254,9 @@ export const gsCat3Questions: StandardMockQuestion[] = [
     id: 95,
     question: 'What is the primary reason the &ldquo;21-day habit myth&rdquo; is inaccurate?',
     options: [
-      'The original study was conducted on animals, not humans',
-      'It was originally about breaking habits, not forming them',
-      'It only applies to physical habits, not mental ones',
+      'The original figure came from a study of animals rather than of human behaviour',
+      'The original claim concerned breaking existing habits rather than forming new ones',
+      'The twenty-one day figure applies only to physical habits and not to mental ones',
       'Research by Phillippa Lally showed it takes 18 to 254 days depending on the behaviour',
     ],
     correctAnswer: 3,
@@ -309,10 +309,10 @@ export const gsCat3Questions: StandardMockQuestion[] = [
     question:
       'According to Roy Baumeister&rsquo;s research, what is the &ldquo;ego depletion&rdquo; theory of willpower?',
     options: [
-      'Willpower increases the more you use it in a single day',
-      'Your ego prevents you from forming new habits',
+      'Willpower grows steadily stronger the more decisions you make in a single day',
+      'Ego depletion describes how pride prevents people from forming any new habits',
       'Willpower is a limited resource that gets depleted through use during the day',
-      'Ego depletion only affects people with low self-esteem',
+      'Ego depletion affects only people who already have low self-esteem at work',
     ],
     correctAnswer: 2,
     explanation:
@@ -398,9 +398,9 @@ export const gsCat3Questions: StandardMockQuestion[] = [
     id: 103,
     question: 'How does the 20-second rule apply to building a CPD study habit for an electrician?',
     options: [
-      'Set a 20-second timer to make studying feel urgent',
-      'Study for a minimum of 20 seconds each evening',
-      'Wait 20 seconds before deciding whether to study',
+      'Set a twenty-second timer before each session so that studying feels urgent',
+      'Study for a minimum of twenty seconds every evening to keep the chain going',
+      'Wait twenty seconds before deciding whether you are in the mood to study',
       'Keep your study materials out and open so starting requires 20 seconds less effort',
     ],
     correctAnswer: 3,
@@ -488,9 +488,9 @@ export const gsCat3Questions: StandardMockQuestion[] = [
     question: 'How does temptation bundling differ from simple reward-based habit formation?',
     options: [
       'Temptation bundling pairs the habit with a simultaneous pleasure, not a delayed reward',
-      'Temptation bundling only works with habits you already enjoy',
-      'There is no meaningful difference between the two approaches',
-      'Temptation bundling removes all rewards from the process',
+      'Temptation bundling works only with habits the person already finds enjoyable',
+      'Temptation bundling delays the pleasure until the whole habit streak is complete',
+      'Temptation bundling strips every reward out of the process to build discipline',
     ],
     correctAnswer: 0,
     explanation:
@@ -579,10 +579,10 @@ export const gsCat3Questions: StandardMockQuestion[] = [
     question:
       'A site manager notices that electricians on their team rarely wear eye protection despite regular reminders. Using all four inversions of Clear&rsquo;s Laws, which combined strategy would be most effective?',
     options: [
-      'Lock the safety glasses away in the site office, issue them only on request, and rely on weekly verbal reminders at the morning briefing',
+      'Lock the safety glasses away in the site office, issue them only on request, keep the sign-out book in the cabin, and rely on a verbal reminder each Monday morning',
       'Store safety glasses at eye level in every work area, display photos of eye injuries, make the glasses ultra-lightweight, and publicly recognise compliant workers daily',
-      'Issue a disciplinary warning to anyone seen without glasses and post the rule in the company handbook',
-      'Increase motivation by explaining the long-term risk of eye injuries in a one-off toolbox talk',
+      'Issue a written disciplinary warning to anyone seen without glasses, print the rule in the company handbook, and store the glasses in the stores container',
+      'Explain the long-term risk of eye injury in a single toolbox talk, keep the glasses in a locked cabinet, and leave workers to remember to ask for a pair',
     ],
     correctAnswer: 1,
     explanation:
@@ -634,9 +634,9 @@ export const gsCat3Questions: StandardMockQuestion[] = [
       'How does Baumeister&rsquo;s ego depletion theory interact with Duhigg&rsquo;s habit loop in explaining why tradespeople may abandon good habits by Friday afternoon?',
     options: [
       'Accumulated decision fatigue throughout the week depletes willpower, making it harder to maintain routines that have not yet become automatic habits',
-      'Willpower grows stronger through the week, so by Friday workers deliberately choose to abandon habits they no longer value',
-      'The habit loop resets every Friday, erasing the cue and reward built up during the week',
-      'Ego depletion only affects motivation in the mornings, so afternoon habits are unaffected by the time of week',
+      'Willpower accumulates across the week, so by Friday workers have ample self-control and deliberately abandon the habits they no longer value',
+      'The habit loop resets completely every Friday, erasing the cue and the reward that were carefully established earlier in the working week',
+      'Ego depletion affects motivation only in the mornings, so afternoon routines are unaffected by whichever day of the week it happens to be',
     ],
     correctAnswer: 0,
     explanation:
@@ -669,10 +669,10 @@ export const gsCat3Questions: StandardMockQuestion[] = [
     question:
       'An electrical contractor wants to create a company-wide safety culture shift. Using Duhigg&rsquo;s keystone habits concept and Clear&rsquo;s identity-based approach, which strategy is most likely to succeed?',
     options: [
-      'Roll out a long checklist covering every possible safety behaviour at once and require sign-off on all of them daily',
-      'Set an annual outcome target of zero incidents and review progress only at the year-end company meeting',
+      'Roll out a long checklist covering every possible safety behaviour at once and require every operative on site to sign off each separate item at the end of the day',
+      'Set an annual outcome target of zero reportable incidents and review progress only once, at the year-end company meeting held with the directors and supervisors',
       'Identify one high-visibility safety behaviour, implement it consistently, and frame it as &ldquo;who we are as a company&rdquo; rather than &ldquo;what we have to do&rdquo;',
-      'Offer a one-off cash bonus to the site with the fewest reported incidents each quarter',
+      'Offer a one-off cash bonus each quarter to whichever site reports the fewest incidents, leaving the day-to-day behaviours entirely to individual supervisors',
     ],
     correctAnswer: 2,
     explanation:
@@ -687,9 +687,9 @@ export const gsCat3Questions: StandardMockQuestion[] = [
     question:
       'Considering Wendy Wood&rsquo;s research on context-dependent memory and BJ Fogg&rsquo;s prompt design, how should a multi-site electrician structure their end-of-day admin habit?',
     options: [
-      'Tie the admin to a fixed location such as the home office desk, completing it only after returning home each evening',
-      'Rely on a willpower-based decision to do the admin whenever the working day happens to finish',
-      'Schedule a fixed clock-time reminder at 5pm regardless of which site the electrician is on that day',
+      'Tie the admin to a fixed location such as the home office desk, completing it only after returning home at the end of each working evening',
+      'Rely on a willpower-based decision each day to tackle the admin whenever the working day happens to finish on that particular site',
+      'Schedule a fixed clock-time reminder at five o&rsquo;clock regardless of which site the electrician is working on that day',
       'Anchor it to a consistent portable cue such as starting the van engine, with the admin app pre-loaded and a tiny first step like logging one item',
     ],
     correctAnswer: 3,

@@ -25,10 +25,10 @@ export const questionsPart1: HNCQuestion[] = [
     question:
       'Under Section 2(2)(a) of HASAWA 1974, what specific duty does an employer have regarding plant and systems of work?',
     options: [
-      'To carry out the work themselves rather than delegate it to a competent contractor',
+      'To carry out all work on plant and systems personally rather than delegating any of it to a suitably competent contractor',
       'To provide and maintain plant and systems of work that are, so far as is reasonably practicable, safe and without risks to health',
-      'To ensure plant and systems of work meet the requirements only where employees specifically request it',
-      'To provide plant and systems that are absolutely safe regardless of cost or practicability',
+      'To ensure plant and systems of work are made safe only where employees have specifically requested it in writing beforehand',
+      'To provide plant and systems of work that are absolutely safe in every circumstance, whatever the cost or practicability',
     ],
     correctAnswer: 1,
     explanation:
@@ -61,9 +61,9 @@ export const questionsPart1: HNCQuestion[] = [
     question:
       'Under Section 6 of HASAWA, who has duties regarding articles and substances for use at work?',
     options: [
-      'Only the employer who purchases the articles for use at work',
-      'Only the end user who operates the articles or handles the substances',
-      'The Health and Safety Executive as the body that approves such articles',
+      'Employers and self-employed persons exclusively',
+      'End users, operators, and premises occupiers',
+      'Health and Safety Executive approval inspectors',
       'Designers, manufacturers, importers, and suppliers',
     ],
     correctAnswer: 3,
@@ -96,10 +96,10 @@ export const questionsPart1: HNCQuestion[] = [
     question:
       'Under Section 37 of HASAWA, when can a director or senior manager be personally prosecuted?',
     options: [
-      'Only when the company itself has already been convicted of the same offence',
+      'When the company itself has already been convicted of the same offence at an earlier hearing',
       'When an offence is committed with their consent, connivance, or is attributable to their neglect',
-      'Only when the director personally carried out the unsafe act that caused the offence',
-      'When any employee under their authority breaches a health and safety requirement',
+      'When the director personally carried out the unsafe act on site that caused the offence',
+      'When any employee under their direct authority breaches a health and safety requirement',
     ],
     correctAnswer: 1,
     explanation:
@@ -238,10 +238,10 @@ export const questionsPart1: HNCQuestion[] = [
     id: 13,
     question: 'Under CDM 2015, when must a principal designer be appointed?',
     options: [
-      'On every construction project regardless of size, duration, or number of contractors',
+      'On every construction project, whatever its size, duration or contractor count',
       'When there is more than one contractor or the project involves particular risks',
-      'Only on projects that are notifiable to the HSE under the 30-day or 500-person-day threshold',
-      'Only when the client specifically requests one in the pre-construction information',
+      'Only on projects notifiable to the HSE under the 30-day or 500-person-day rule',
+      'When the client specifically requests one in the pre-construction information',
     ],
     correctAnswer: 1,
     explanation:
@@ -255,10 +255,10 @@ export const questionsPart1: HNCQuestion[] = [
     id: 14,
     question: "What is the principal contractor's primary duty under CDM 2015 Regulation 13?",
     options: [
-      'To prepare the pre-construction information and issue it to the design team',
-      'To approve the final design before any construction work may begin on site',
+      'To prepare the pre-construction information and issue it to each designer and contractor before design begins',
+      'To review and approve the final design, confirming its adequacy, before any construction work begins on site',
       'To plan, manage, and monitor the construction phase to ensure work is carried out without risks to health and safety',
-      'To compile and hand the completed health and safety file directly to the building owner',
+      'To compile the completed health and safety file and hand it to the building owner at practical completion',
     ],
     correctAnswer: 2,
     explanation:
@@ -290,9 +290,9 @@ export const questionsPart1: HNCQuestion[] = [
     question: 'What information must be included in the health and safety file under CDM 2015?',
     options: [
       'Information likely to be needed during future construction work, including cleaning, maintenance, and demolition',
-      'A daily record of attendance and hours worked by every operative on the site',
-      'The minutes of all site safety meetings held during the construction phase',
-      'Copies of all invoices and payment certificates issued during the project',
+      'A daily record of the attendance and hours worked by every operative present on site during the build',
+      'The signed minutes of every site safety meeting and toolbox talk held throughout the construction phase',
+      'Copies of all invoices, payment certificates, and variation orders issued over the course of the project',
     ],
     correctAnswer: 0,
     explanation:
@@ -323,10 +323,10 @@ export const questionsPart1: HNCQuestion[] = [
     id: 18,
     question: 'What triggers the requirement for a project to be notifiable under CDM 2015?',
     options: [
-      'Any project where the construction work will cost more than £100,000 in total',
-      'Any project involving more than one contractor, irrespective of its duration',
+      'Projects where the value of the construction work will exceed £100,000, or where the site area exceeds one hectare',
+      'Projects involving more than one contractor, irrespective of duration, worker numbers, or total person days',
       'Projects lasting more than 30 working days with more than 20 workers working simultaneously, or exceeding 500 person days',
-      'Any project that involves work at height or excavation deeper than two metres',
+      'Projects involving work at height above two metres, excavation deeper than 1.2 metres, or any demolition work',
     ],
     correctAnswer: 2,
     explanation:
@@ -359,9 +359,9 @@ export const questionsPart1: HNCQuestion[] = [
     question: "What is a 'particular risk' under Schedule 3 of CDM 2015?",
     options: [
       'Risks arising from work that involves specific hazards such as work near high voltage power lines, in cofferdams, or involving diving',
-      'Any work that requires the use of personal protective equipment by operatives',
-      'Routine maintenance tasks carried out by a single competent contractor',
-      'Risks that arise only after the project has been handed over to the client',
+      'Risks arising from any activity where operatives are required to wear personal protective equipment such as gloves or goggles',
+      'Risks arising from routine planned maintenance carried out by a single competent contractor working alone on the premises',
+      'Risks arising only after the completed project is handed over to the client and the finished building is brought into use',
     ],
     correctAnswer: 0,
     explanation:
@@ -375,10 +375,10 @@ export const questionsPart1: HNCQuestion[] = [
     id: 21,
     question: 'Under CDM 2015, what duty does Regulation 15 place on contractors?',
     options: [
-      'To appoint the principal designer on behalf of the client for the project',
+      'To appoint the principal designer and the principal contractor on behalf of the client for the project',
       'To not employ or appoint a person unless satisfied they have the necessary skills, knowledge, and experience',
-      'To prepare and maintain the health and safety file throughout the project',
-      'To notify the HSE directly of any project lasting more than 30 working days',
+      'To prepare and maintain the health and safety file and issue it to the client at the end of the project',
+      'To notify the HSE directly of every project lasting more than 30 working days on the client\'s behalf',
     ],
     correctAnswer: 1,
     explanation:
@@ -393,10 +393,10 @@ export const questionsPart1: HNCQuestion[] = [
     question:
       "What is the principal designer's key responsibility during the pre-construction phase?",
     options: [
-      'To supervise the day-to-day construction activities once work begins on site',
-      'To approve payment applications submitted by the principal contractor',
+      'To supervise the day-to-day construction activities on site once work begins, inducting the operatives and chairing the weekly site safety meetings',
+      'To check and approve the payment applications submitted by the principal contractor and certify the value of the work completed in each month',
       'To plan, manage, and coordinate health and safety during the pre-construction phase, including identifying and eliminating or controlling foreseeable risks',
-      'To carry out the structural and architectural design of the building itself',
+      'To carry out the structural and architectural design of the building itself and produce all of the working drawings issued to the contractor',
     ],
     correctAnswer: 2,
     explanation:
@@ -482,9 +482,9 @@ export const questionsPart1: HNCQuestion[] = [
     id: 27,
     question: 'Under RIDDOR 2013, what is the reporting threshold for over-7-day incapacitation?',
     options: [
-      'An injury that keeps the worker off work for any period, however short',
-      'An injury that results in the worker being incapacitated for more than 3 consecutive days',
-      'An injury that requires the worker to attend hospital but causes no absence from work',
+      'An injury that keeps the worker away from their normal duties for any period at all, however short, including the day of injury',
+      'An injury that results in the worker being incapacitated for more than 3 consecutive days, including the day of the injury',
+      'An injury that requires the worker to attend hospital for treatment but which causes no absence from normal work at all',
       'An injury that results in the worker being incapacitated for more than 7 consecutive days, not counting the day of the injury',
     ],
     correctAnswer: 3,
@@ -517,10 +517,10 @@ export const questionsPart1: HNCQuestion[] = [
     id: 29,
     question: "Under RIDDOR, what constitutes a 'dangerous occurrence' that must be reported?",
     options: [
-      'Any near miss observed on site, regardless of its potential to cause harm',
+      'Any near miss observed on site, such as a dropped tool or a slip, regardless of its potential to cause harm',
       'Events specified in Schedule 2, such as collapse of scaffolding, electrical incidents causing fire, or explosion',
-      'Any incident that results in an employee taking a single day off work',
-      'Any breach of a site rule recorded by the principal contractor',
+      'Any incident that causes an employee to take even a single day off work, whether or not they attend hospital',
+      'Any breach of a site rule recorded by the principal contractor in the site diary, such as missing head protection',
     ],
     correctAnswer: 1,
     explanation:
@@ -570,9 +570,9 @@ export const questionsPart1: HNCQuestion[] = [
       'What is the reporting requirement for a non-fatal accident to a non-worker (member of the public) on premises under RIDDOR?',
     options: [
       'Only if the person is taken directly from the site to hospital for treatment',
-      'Only if the injured member of the public makes a formal complaint to the HSE',
-      'All such accidents must be reported regardless of the severity of the injury',
-      'Only if the person is absent from their own work for more than seven days',
+      'Only where the injured member of the public complains in writing to the HSE',
+      'All such accidents must be reported, whatever the severity of the injury caused',
+      'Where the person is unable to attend their own work for more than seven days',
     ],
     correctAnswer: 0,
     explanation:
@@ -606,10 +606,10 @@ export const questionsPart1: HNCQuestion[] = [
     id: 34,
     question: 'What is the key difference between a hazard and a risk?',
     options: [
-      'A hazard is a minor concern; a risk is always a serious and immediate danger',
-      'A hazard applies only to people, whereas a risk applies only to equipment',
+      'A hazard is a minor concern that can be tolerated; a risk is always a serious and immediate danger that must be removed',
+      'A hazard applies only to people and their health; a risk applies only to equipment, property, and the building itself',
       'A hazard is something with potential to cause harm; risk is the likelihood of that harm occurring combined with its severity',
-      'A hazard is the likelihood of harm; a risk is the source that could cause the harm',
+      'A hazard is the likelihood of harm occurring; a risk is the source or situation that could actually cause that harm',
     ],
     correctAnswer: 2,
     explanation:
@@ -659,10 +659,10 @@ export const questionsPart1: HNCQuestion[] = [
     question:
       'Under Regulation 3 of the Management Regulations, when must a risk assessment be reviewed?',
     options: [
-      'Only once every five years, regardless of any change in working conditions',
+      'Once every five years as a matter of routine, whatever changes occur in working conditions',
       'When there is reason to suspect it is no longer valid or there has been a significant change',
-      'Only after an accident or dangerous occurrence has already taken place',
-      'Only when a new employee joins the team carrying out the work',
+      'Only after an accident or a reportable dangerous occurrence has already happened on site',
+      'Whenever a new employee joins the team that carries out the work being assessed on site',
     ],
     correctAnswer: 1,
     explanation:
@@ -676,10 +676,10 @@ export const questionsPart1: HNCQuestion[] = [
     id: 38,
     question: 'What is a dynamic risk assessment?',
     options: [
-      'A formal written assessment completed in the office before work begins on site',
-      'An assessment carried out solely by the HSE during an unannounced inspection',
+      'A formal written assessment completed in the office before work begins and left unchanged for the duration of the job',
+      'An assessment carried out solely by an HSE inspector during an unannounced visit while the work is in progress',
       'A continuous process of identifying hazards, assessing risks, and implementing controls on site as circumstances change',
-      'A computer-generated assessment that automatically updates from sensor data',
+      'A computer-generated assessment that updates itself automatically from sensor data without input from the operative',
     ],
     correctAnswer: 2,
     explanation:
@@ -694,9 +694,9 @@ export const questionsPart1: HNCQuestion[] = [
     question:
       'Under the Management Regulations, what specific groups must be considered in risk assessments?',
     options: [
-      'Only full-time permanent employees with more than two years of service',
-      'Only employees who have specifically requested an individual assessment',
-      'Only senior managers and directors with legal responsibility for the site',
+      'Full-time permanent employees having more than two years of continuous service',
+      'Employees who have specifically asked their supervisor for an individual assessment',
+      'Senior managers and directors who hold legal responsibility for the whole site',
       'Young persons, new or expectant mothers, and persons with disabilities among others',
     ],
     correctAnswer: 3,
@@ -712,9 +712,9 @@ export const questionsPart1: HNCQuestion[] = [
     question: 'What is the ALARP principle in risk management?',
     options: [
       'As Low As Reasonably Practicable - reducing risk to the lowest level where further reduction would be grossly disproportionate to the benefit',
-      'As Low As Realistically Permitted - reducing risk only to the level the budget allows',
-      'Always Limit All Risk Potential - eliminating every risk entirely before work proceeds',
-      'Assessed Level And Recorded Position - documenting the risk score in the assessment',
+      'As Low As Realistically Permitted - reducing risk only as far as the project budget agreed with the client at tender stage will allow',
+      'Always Limit All Risk Potential - eliminating every identified risk entirely before any work is permitted to proceed on the site',
+      'Assessed Level And Recorded Position - documenting each risk score in the assessment and reviewing the whole risk register annually',
     ],
     correctAnswer: 0,
     explanation:
@@ -728,10 +728,10 @@ export const questionsPart1: HNCQuestion[] = [
     id: 41,
     question: "What is a 'suitable and sufficient' risk assessment under UK law?",
     options: [
-      'An assessment that lists every conceivable hazard, however trivial or unlikely',
+      'An assessment that lists every conceivable hazard, however trivial or unlikely, with a score for each one',
       'An assessment proportionate to the risks - identifying significant risks and implementing sensible measures',
-      'An assessment carried out only by an external consultant accredited by the HSE',
-      'An assessment that focuses solely on the most expensive control measures available',
+      'An assessment carried out only by an external consultant who holds formal accreditation from the HSE',
+      'An assessment that specifies the most expensive control measure available for every hazard identified',
     ],
     correctAnswer: 1,
     explanation:
@@ -766,9 +766,9 @@ export const questionsPart1: HNCQuestion[] = [
     question:
       'Under the Personal Protective Equipment at Work Regulations 1992, when should PPE be provided?',
     options: [
-      'As the first and primary control measure before any other options are considered',
-      'Only to employees who specifically request it in writing from their employer',
-      'Whenever it is cheaper than implementing engineering or administrative controls',
+      'As the first and primary control measure, applied before engineering or administrative options are considered',
+      'Only where an employee has specifically requested it in writing from their employer or safety representative',
+      'Whenever it works out cheaper than putting engineering or administrative controls in place at the workplace',
       'Only after other control measures have been considered and risks cannot be adequately controlled by other means',
     ],
     correctAnswer: 3,
@@ -801,10 +801,10 @@ export const questionsPart1: HNCQuestion[] = [
     question:
       "Under Regulation 7 of the PPE Regulations, what are an employer's duties regarding PPE maintenance?",
     options: [
-      'To require employees to purchase and maintain their own protective equipment',
+      'To require employees to purchase and maintain their own protective equipment at their own cost',
       'To ensure PPE is maintained in an efficient state, in efficient working order, and in good repair',
-      'To replace all PPE with new items at the start of every working week',
-      'To maintain PPE only when an employee reports that it has failed in use',
+      'To replace every item of PPE with a brand new one at the start of each and every working week',
+      'To repair or replace items of PPE only once an employee reports that they have failed in use',
     ],
     correctAnswer: 1,
     explanation:
@@ -818,10 +818,10 @@ export const questionsPart1: HNCQuestion[] = [
     id: 46,
     question: 'According to PPE Regulations, what factors must be considered when selecting PPE?',
     options: [
-      'Only the purchase cost and the availability of the equipment from suppliers',
-      'Only the colour and branding of the equipment to match company uniform',
+      'The purchase cost, the delivery lead time, and the availability of replacement stock from the company\'s chosen supplier',
+      'The colour, the branding, and the styling of the equipment so that it matches the company uniform and vehicle livery',
       'The risks, ergonomic requirements, health of the wearer, characteristics of the workstation, and compatibility with other PPE',
-      'Only the preference of the most senior manager on the site at the time',
+      'The stated preference of the most senior manager present, and whatever stock happens to be held in the site store',
     ],
     correctAnswer: 2,
     explanation:
@@ -855,9 +855,9 @@ export const questionsPart1: HNCQuestion[] = [
       'What are the three categories of PPE based on risk level under the PPE Regulation 2016/425?',
     options: [
       'Category I (minimal risks), Category II (intermediate risks), Category III (serious or irreversible risks including death)',
-      'Category A (head protection), Category B (body protection), Category C (foot protection)',
-      'Category 1 (disposable), Category 2 (reusable), Category 3 (specialist hire only)',
-      'Category Low (indoor use), Category Medium (outdoor use), Category High (offshore use)',
+      'Category A (head protection), Category B (body and limb protection), Category C (hand, foot and leg protection)',
+      'Category 1 (disposable single use), Category 2 (reusable general use), Category 3 (specialist hire equipment only)',
+      'Category Low (indoor use only), Category Medium (outdoor site use), Category High (offshore and marine work)',
     ],
     correctAnswer: 0,
     explanation:
@@ -891,10 +891,10 @@ export const questionsPart1: HNCQuestion[] = [
     question:
       'What voltage limits for test instruments are specified in GS38 for safe use near live conductors?',
     options: [
-      'Unfused test leads with bare crocodile clips and probes with 10mm exposed tips',
-      'Fused test leads with a 13A fuse rating and probes with 8mm exposed metal tips',
+      'Unfused test leads fitted with bare crocodile clips, and unshrouded probes with up to 10mm of exposed tip',
+      'Fused test leads with a 13A fuse rating (HRC), rigid unshrouded probes with a maximum 8mm exposed metal tip',
       'Fused test leads with maximum 500mA fuse rating (HRC), spring-loaded shrouded probes with maximum 4mm exposed tip',
-      'Test leads with a 3A fuse rating and fully exposed probe tips for better contact',
+      'Fused test leads with a 3A fuse rating (HRC), fixed probes with the full metal tip exposed for better contact',
     ],
     correctAnswer: 2,
     explanation:
@@ -909,9 +909,9 @@ export const questionsPart1: HNCQuestion[] = [
     question:
       'After isolating a circuit and before commencing work, what sequence of testing must be performed with a voltage indicator?',
     options: [
-      'Test the circuit, then prove the indicator on a known source only once afterwards',
-      'Prove the indicator on a known source once, then test the circuit and begin work',
-      'Test the circuit twice in succession without proving the indicator at any point',
+      'Test the circuit, prove the voltage indicator on a known source afterwards, then begin work on the circuit',
+      'Prove the voltage indicator on a known source once, test the circuit, then begin work on it straight away',
+      'Test the circuit twice in succession at the same point, without proving the voltage indicator at all',
       'Prove the voltage indicator on a known source, test the circuit, prove the indicator again on the known source',
     ],
     correctAnswer: 3,
@@ -961,10 +961,10 @@ export const questionsPart1: HNCQuestion[] = [
     id: 54,
     question: 'What is the purpose of lock-off devices in safe isolation procedures?',
     options: [
-      'To indicate to others which circuit is being worked on by means of a warning label',
-      'To discharge any residual stored energy in the circuit before work begins',
+      'To indicate to other operatives which circuit is being worked on by means of a warning label at the board',
+      'To discharge the residual stored energy held in the circuit capacitors and cables before work begins',
       'To physically prevent the switching device from being operated and ensure it cannot be inadvertently re-energised',
-      'To record the time and date at which the circuit was isolated for the permit',
+      'To record the time and the date at which the circuit was isolated so that the permit may be issued',
     ],
     correctAnswer: 2,
     explanation:
@@ -979,9 +979,9 @@ export const questionsPart1: HNCQuestion[] = [
     question:
       'According to best practice, between which points should voltage absence be verified when proving a circuit dead?',
     options: [
-      'Between line and neutral only, as this confirms the supply has been removed',
-      'Between line and earth only, since this is the most dangerous combination',
-      'Between neutral and earth only, as the line will follow if these are dead',
+      'Line to neutral only (for single phase); between the three line conductors only, with no test to neutral or to earth (for three phase)',
+      'Line to earth only (for single phase); each phase to earth only, as this is the most dangerous combination to meet (for three phase)',
+      'Neutral to earth only (for single phase); neutral to earth at the star point alone, as the lines will follow if these are dead (for three phase)',
       'Line to neutral, line to earth, and neutral to earth (for single phase); between all phases, and each phase to neutral and earth (for three phase)',
     ],
     correctAnswer: 3,
@@ -998,9 +998,9 @@ export const questionsPart1: HNCQuestion[] = [
       'What additional precautions are required when isolating circuits that may include stored energy?',
     options: [
       'Allow time for discharge of capacitors, verify dissipation, consider UPS systems, battery supplies, and generators',
-      'Simply switch off the main supply, as stored energy dissipates instantly on isolation',
-      'Rely on the protective device to trip and clear any residual energy in the circuit',
-      'Wait a fixed period of five minutes for all systems before commencing any work',
+      'Switch off the main supply and start work at once, as any stored energy dissipates the instant the circuit is opened',
+      'Rely on the upstream protective device to trip and clear any residual energy held in capacitors and cables',
+      'Wait a fixed period of five minutes for every system, whatever the plant, then commence work on the circuit',
     ],
     correctAnswer: 0,
     explanation:
@@ -1016,10 +1016,10 @@ export const questionsPart1: HNCQuestion[] = [
     id: 57,
     question: 'What is the primary purpose of a permit-to-work system?',
     options: [
-      'To record the hours worked by operatives so they can be paid correctly',
+      'To record the hours worked by each operative on site so that wages and subcontractor invoices can be paid correctly',
       'To provide a formal documented system that authorises specific work at specific locations under defined safety conditions',
-      'To replace the need for a risk assessment on high-risk activities entirely',
-      'To grant general permission for any worker to enter the site at any time',
+      'To replace the need for a risk assessment and a method statement on any high-risk activity carried out on site',
+      'To grant general permission for any worker holding a site induction card to enter the premises at any time',
     ],
     correctAnswer: 1,
     explanation:
@@ -1033,10 +1033,10 @@ export const questionsPart1: HNCQuestion[] = [
     id: 58,
     question: 'Which types of work typically require a permit-to-work system in building services?',
     options: [
-      'Routine cleaning, general decorating, and low-level changing of light fittings',
-      'Office-based administrative work and the use of display screen equipment',
+      'Routine cleaning, general redecoration, low-level lamp changing, and the replacement of damaged ceiling tiles',
+      'Office administrative work, prolonged use of display screen equipment, and general filing in the site cabin',
       'Hot work, confined space entry, work on high voltage systems, work on pressure systems, and isolation of plant',
-      'Delivery of materials to site and general manual handling of light loads',
+      'Delivery of materials to the site, manual handling of light loads, and sweeping down of the working area',
     ],
     correctAnswer: 2,
     explanation:
@@ -1050,9 +1050,9 @@ export const questionsPart1: HNCQuestion[] = [
     id: 59,
     question: 'What essential elements must a permit-to-work document contain?',
     options: [
-      'The cost estimate for the work and the agreed payment terms with the client',
-      'The full employment history and qualifications of every operative on site',
-      'A list of all the tools and materials to be used during the course of the work',
+      'Cost estimate for the work, the agreed payment terms, retention percentage, client order number, and the invoicing address for the job',
+      'Full employment history, qualifications, training records, medical history, and next of kin details for every operative on site',
+      'A full list of the tools, materials, and plant to be used, together with the hire rates and expected delivery date for each item',
       'Description of work, location, hazards identified, precautions required, authorisation signatures, time validity, and cancellation procedure',
     ],
     correctAnswer: 3,
@@ -1069,9 +1069,9 @@ export const questionsPart1: HNCQuestion[] = [
       "What is the role of the 'Authorised Person' in a permit-to-work system for electrical work?",
     options: [
       'To assess the work required, ensure safe conditions exist, issue the permit, and later cancel it when work is complete',
-      'To carry out the physical work on the circuit once the permit has been issued',
-      'To purchase and supply the tools and materials needed for the permitted work',
-      'To act solely as a witness signature on the permit without any other duties',
+      'To carry out the physical work on the isolated circuit once the permit has been issued, and sign it back on completion',
+      'To purchase and supply the tools, test instruments, and materials needed by the operatives for the permitted work',
+      'To act solely as an independent witness signature on the permit, taking no part in assessing or cancelling it',
     ],
     correctAnswer: 0,
     explanation:
@@ -1088,10 +1088,10 @@ export const questionsPart1: HNCQuestion[] = [
     question:
       'Under the Health and Safety (First-Aid) Regulations 1981, what must employers provide?',
     options: [
-      'A fully staffed on-site medical centre with a registered nurse at all times',
+      'A permanently staffed on-site medical centre with a registered nurse on duty at all times that work is carried out on the premises',
       'Adequate and appropriate equipment, facilities, and personnel to enable first aid to be given to employees who are injured or become ill at work',
-      'Private medical insurance for every employee covering work-related injuries',
-      'A defibrillator at every workplace regardless of size or level of risk',
+      'Private medical insurance for every employee, covering work-related injuries in full and any illness arising away from the workplace as well',
+      'A defibrillator and a qualified first aider at every workplace, whatever its size, its staff numbers, or the level of risk present',
     ],
     correctAnswer: 1,
     explanation:
@@ -1106,10 +1106,10 @@ export const questionsPart1: HNCQuestion[] = [
     question:
       'When dealing with an electric shock casualty, what is the correct sequence of actions?',
     options: [
-      'Immediately pull the casualty away from the source with your bare hands',
-      'Give the casualty water to drink and keep them moving until help arrives',
+      'Pull the casualty clear of the source with your bare hands at once, then call for help and assess them',
+      'Give the casualty a drink of water, keep them walking about, and call for help only if they collapse',
       'Isolate the supply (if safe), call for help, assess the casualty, begin CPR if not breathing normally',
-      'Apply a tourniquet to the affected limb before doing anything else',
+      'Apply a tourniquet above the affected limb, then isolate the supply and call for help afterwards',
     ],
     correctAnswer: 2,
     explanation:
@@ -1217,9 +1217,9 @@ export const questionsPart1: HNCQuestion[] = [
     question: 'What is a thermal bridge (cold bridge) in building construction?',
     options: [
       'An area of the building envelope with significantly higher heat transfer due to interruption in insulation or change in geometry',
-      'A deliberate gap left in the insulation to allow the structure to breathe and ventilate',
-      'A layer of insulation added specifically to connect two separate insulated zones',
-      'A metal strap used to tie the inner and outer leaves of a cavity wall together',
+      'A deliberate gap left in the insulation layer so that the structure can breathe and the cavity behind it is ventilated',
+      'A continuous layer of insulation added specifically to connect two separately insulated zones across a structural junction',
+      'A stainless steel wall tie used to connect the inner and outer leaves of a cavity wall across the insulated cavity',
     ],
     correctAnswer: 0,
     explanation:
@@ -1405,9 +1405,9 @@ export const questionsPart1: HNCQuestion[] = [
     id: 79,
     question: "What is meant by the term 'thermal mass' in building physics?",
     options: [
-      'The total weight of the structural materials used in the building envelope',
-      'The rate at which a material conducts heat through its thickness',
-      'The resistance a material offers to the passage of water vapour',
+      'The total weight of the structural materials used to make up the whole building envelope',
+      'The rate at which a material conducts heat through unit thickness per degree of difference',
+      'The resistance that a material offers to the passage of water vapour through its thickness',
       'The ability of a material to store and release heat, helping to moderate temperature fluctuations',
     ],
     correctAnswer: 3,
@@ -1511,10 +1511,10 @@ export const questionsPart1: HNCQuestion[] = [
     id: 85,
     question: 'What is enthalpy in thermodynamics?',
     options: [
-      'A measure of the disorder or randomness within a thermodynamic system',
+      'A measure of the disorder or randomness within a system, which increases in natural processes (S = Q/T)',
       'The total heat content of a system, equal to internal energy plus the product of pressure and volume (H = U + PV)',
-      'The kinetic energy of the molecules in a gas at a given temperature',
-      'The work done by a system as its volume changes at constant temperature',
+      'The average kinetic energy possessed by the molecules of a gas at a given absolute temperature (E = 3kT/2)',
+      'The external work done by a system as its volume changes while the temperature is held constant (W = P dV)',
     ],
     correctAnswer: 1,
     explanation:
@@ -1528,10 +1528,10 @@ export const questionsPart1: HNCQuestion[] = [
     id: 86,
     question: 'What is entropy in thermodynamic terms?',
     options: [
-      'The total heat content of a system at constant pressure conditions',
-      'The maximum useful work that can be extracted from a system',
+      'The total heat content of a system held at constant pressure, given by internal energy plus PV',
+      'The maximum amount of useful work that can be extracted from a system at constant temperature',
       'A measure of the disorder or randomness in a system, which tends to increase in natural processes',
-      'The amount of energy stored in the chemical bonds of a substance',
+      'The quantity of energy stored in the chemical bonds of a substance and released when it burns',
     ],
     correctAnswer: 2,
     explanation:
@@ -1754,9 +1754,9 @@ export const questionsPart1: HNCQuestion[] = [
     id: 99,
     question: "What does Bernoulli's principle state about fluid flow?",
     options: [
-      'In steady flow, an increase in velocity is accompanied by an increase in pressure',
-      'Pressure remains constant throughout a flowing fluid regardless of its velocity',
-      'The total energy of a flowing fluid increases as it moves through a system',
+      'In steady flow, an increase in velocity occurs simultaneously with an increase in pressure at that point',
+      'In steady flow, the static pressure stays constant along a streamline whatever the fluid velocity',
+      'In steady flow, the total energy of the fluid increases steadily as it passes along the pipework',
       'In steady flow, an increase in velocity occurs simultaneously with a decrease in pressure or potential energy',
     ],
     correctAnswer: 3,
@@ -1875,10 +1875,10 @@ export const questionsPart1: HNCQuestion[] = [
     id: 106,
     question: 'What is cavitation in pumping systems?',
     options: [
-      'The build-up of air pockets at the high points of a pipework system',
-      'The gradual corrosion of pump impellers caused by aggressive water chemistry',
+      'The accumulation of air pockets at the high points of a pipework system, which blocks the flow',
+      'The gradual corrosion of the pump impeller caused by aggressive water chemistry and suspended solids in the water',
       'The formation and collapse of vapour bubbles when local pressure drops below the vapour pressure of the liquid',
-      'The overheating of a pump motor when it runs against a closed valve',
+      'The overheating of the pump casing when the unit is run for long periods against a closed valve',
     ],
     correctAnswer: 2,
     explanation:
@@ -1892,9 +1892,9 @@ export const questionsPart1: HNCQuestion[] = [
     id: 107,
     question: 'What is NPSH in pump terminology?',
     options: [
-      "Nominal Pump Static Head - the static pressure the pump must overcome at start-up",
-      "Net Pressure Supply Head - the supply pressure delivered at the pump outlet",
-      "Negative Pressure Suction Hazard - the risk of air being drawn into the pump",
+      'Nominal Pump Static Head - the static pressure the pump must overcome at start-up before flow begins',
+      'Net Pressure Supply Head - the working pressure delivered by the pump at its discharge branch',
+      'Negative Pressure Suction Hazard - the risk of air being drawn into the pump through the gland',
       "Net Positive Suction Head - the pressure available at the pump inlet above the liquid's vapour pressure",
     ],
     correctAnswer: 3,
@@ -1957,9 +1957,9 @@ export const questionsPart1: HNCQuestion[] = [
     id: 111,
     question: 'What is psychrometrics?',
     options: [
-      'The study of the flow of liquids through pipes and channels',
-      'The study of how heat is conducted through solid building materials',
-      'The study of the behaviour of refrigerants in a compression cycle',
+      'The study of the flow of liquids through pipes, valves, and open channels under gravity',
+      'The study of the conduction of heat through solid building materials and structures',
+      'The study of the behaviour of refrigerants passing through a vapour compression cycle',
       'The study of the thermodynamic properties of moist air and the relationships between them',
     ],
     correctAnswer: 3,
@@ -1975,9 +1975,9 @@ export const questionsPart1: HNCQuestion[] = [
     question: 'What is relative humidity?',
     options: [
       'The ratio of actual water vapour pressure to the saturation vapour pressure at the same temperature, expressed as a percentage',
-      'The total mass of water vapour contained in one cubic metre of air',
-      'The temperature at which air becomes fully saturated with water vapour',
-      'The difference between the dry bulb and wet bulb temperatures of the air',
+      'The total mass of water vapour that is contained in each kilogram of dry air, expressed in grams of moisture per kilogram',
+      'The temperature to which a sample of air must be cooled at constant pressure before it becomes fully saturated',
+      'The difference between the dry bulb and the wet bulb temperatures of a sample of moist air, expressed in degrees kelvin',
     ],
     correctAnswer: 0,
     explanation:
@@ -2008,10 +2008,10 @@ export const questionsPart1: HNCQuestion[] = [
     id: 114,
     question: 'What is the difference between dry bulb and wet bulb temperature?',
     options: [
-      'Dry bulb is the indoor temperature; wet bulb is the outdoor temperature at the same time',
-      'Dry bulb is measured in summer; wet bulb is measured in winter conditions',
+      'Dry bulb is the temperature measured indoors; wet bulb is the temperature measured outside the building at the same moment',
+      'Dry bulb is the temperature recorded during the summer months; wet bulb is the temperature recorded under winter design conditions',
       'Dry bulb is air temperature; wet bulb is the temperature measured by a thermometer with a wet wick, showing evaporative cooling effect',
-      'Dry bulb is the temperature of the air; wet bulb is the temperature of the water in the system',
+      'Dry bulb is the temperature of the air in the duct; wet bulb is the temperature of the chilled water flowing in the coil circuit',
     ],
     correctAnswer: 2,
     explanation:
@@ -2060,10 +2060,10 @@ export const questionsPart1: HNCQuestion[] = [
     id: 117,
     question: 'In an air conditioning process, what happens during sensible cooling?',
     options: [
-      'Both temperature and moisture content decrease as the air is dehumidified',
+      'Both temperature and moisture content decrease (moving diagonally down to the left on psychrometric chart)',
       'Temperature decreases but moisture content remains constant (moving left horizontally on psychrometric chart)',
-      'Moisture content decreases but temperature remains constant throughout',
-      'Both temperature and moisture content increase as the air is warmed',
+      'Moisture content decreases but temperature stays constant (moving straight down on psychrometric chart)',
+      'Both temperature and moisture content increase (moving diagonally up to the right on psychrometric chart)',
     ],
     correctAnswer: 1,
     explanation:
@@ -2077,10 +2077,10 @@ export const questionsPart1: HNCQuestion[] = [
     id: 118,
     question: 'What is the Apparatus Dew Point (ADP) in cooling coil design?',
     options: [
-      'The dew point temperature of the outdoor air entering the air handling unit',
-      'The maximum temperature the cooling coil can reach before it fails',
+      'The dew point temperature of the outdoor air as it enters the air handling unit at the design condition',
+      'The highest surface temperature the cooling coil may reach before the refrigerant circuit trips out',
       'The temperature of the cooling coil surface where air would reach saturation (100% RH) if in perfect contact',
-      'The temperature difference between the air entering and leaving the coil',
+      'The difference between the temperature of the air entering the cooling coil and that of the air leaving it',
     ],
     correctAnswer: 2,
     explanation:
@@ -2130,10 +2130,10 @@ export const questionsPart1: HNCQuestion[] = [
     id: 121,
     question: 'What is interstitial condensation?',
     options: [
-      'Condensation that forms on the inside face of cold windows and walls',
+      'Condensation that forms on the inside face of cold single-glazed windows and poorly insulated external walls',
       'Condensation that occurs within the layers of a building element when the temperature drops below the dew point',
-      'Condensation that forms on cold water pipes running through warm spaces',
-      'Condensation that collects in the base of a sealed double-glazing unit',
+      'Condensation that forms on the outer surface of cold water pipes passing through warm, humid internal spaces',
+      'Condensation that collects in the base of a sealed double-glazing unit once the perimeter seal has failed',
     ],
     correctAnswer: 1,
     explanation:
@@ -2147,10 +2147,10 @@ export const questionsPart1: HNCQuestion[] = [
     id: 122,
     question: 'What is the purpose of a vapour control layer (VCL) in building construction?',
     options: [
-      'To allow water vapour to escape freely from the building fabric to the outside',
-      'To provide an additional layer of thermal insulation within the wall build-up',
+      'To allow water vapour to pass freely out of the building fabric to the outside air, drying the structure',
+      'To provide an additional layer of thermal insulation within the wall build-up, improving the overall U-value',
       'To reduce the rate of water vapour diffusion into the building fabric, reducing interstitial condensation risk',
-      'To act as a windproof barrier preventing draughts through the external wall',
+      'To act as a windproof barrier on the cold outer face, preventing draughts passing through the external wall',
     ],
     correctAnswer: 2,
     explanation:
@@ -2164,9 +2164,9 @@ export const questionsPart1: HNCQuestion[] = [
     id: 123,
     question: 'What is the Glaser method used for in building physics?',
     options: [
-      'Calculating the U-value of a multi-layered building element from its resistances',
-      'Determining the peak heating load of a building on the coldest design day',
-      'Estimating the air permeability of a building envelope from pressure testing',
+      'Calculating the U-value of a multi-layered building element by summing the thermal resistances of all its layers',
+      'Determining the peak heating load of a building on the coldest design day using fabric and ventilation losses',
+      'Estimating the air permeability of a completed building envelope from the results of a fan pressurisation test',
       'Assessing the risk of interstitial condensation by comparing vapour pressure profile with saturation pressure profile',
     ],
     correctAnswer: 3,

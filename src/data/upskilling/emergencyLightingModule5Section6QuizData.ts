@@ -3,10 +3,10 @@ export const emergencyLightingModule5Section6QuizData = [
     id: 1,
     question: 'What is the main purpose of the client handover?',
     options: [
-      'To release the final payment due to the installer on the contract',
+      'To release the final contract payment due to the installer on practical completion of the works',
       'To transfer legal responsibility for maintenance and ensure the client understands system operation',
-      'To register the installation with the local fire and rescue authority',
-      'To activate the manufacturer’s warranty on the luminaires and batteries',
+      'To register the completed installation with the local fire and rescue authority for their records',
+      'To activate the manufacturer’s warranty covering the luminaires, batteries and control gear',
     ],
     correctAnswer: 1,
     explanation:
@@ -55,9 +55,9 @@ export const emergencyLightingModule5Section6QuizData = [
     id: 5,
     question: 'Who signs the handover documentation?',
     options: [
-      'Only the installer, who then posts a copy to the client',
+      'The installer alone, who then posts a copy to the client',
       'Both the client (or Responsible Person) and the installer',
-      'Only the client, once they have read all the documentation',
+      'The client alone, once they have read all the documentation',
       'The local fire and rescue authority inspecting officer',
     ],
     correctAnswer: 1,
@@ -81,9 +81,9 @@ export const emergencyLightingModule5Section6QuizData = [
     id: 7,
     question: 'Why must the client be trained in using the logbook?',
     options: [
-      'So they can carry out their own electrical repairs without a contractor',
-      'Because the logbook replaces the need for any commissioning certificate',
-      'So they can resell the building without a fire risk assessment',
+      'So that they can carry out their own electrical repairs on the system without calling a contractor',
+      'Because the completed logbook replaces the need for any commissioning certificate to be issued at all',
+      'So that they can sell the building on without ever commissioning a new fire risk assessment for it',
       'To record all tests as required by BS 5266-1 and provide evidence of compliance for fire authorities and insurance',
     ],
     correctAnswer: 3,
@@ -95,9 +95,9 @@ export const emergencyLightingModule5Section6QuizData = [
     question: 'What could happen if no formal handover takes place?',
     options: [
       'The contractor may remain liable for maintenance failures, face legal disputes, and be required to revisit at their own expense',
-      'The installation is automatically de-rated to a one-hour duration system',
-      'The local authority issues the missing certificates on the client’s behalf',
-      'The luminaire warranty transfers fully to the client with no conditions',
+      'The whole installation is automatically treated as uncommissioned and has to be stripped out and reinstalled',
+      'The local authority issues the missing certificates on the client’s behalf and recovers the cost from the client',
+      'The luminaire warranty transfers in full to the client with no conditions attached and no further obligation',
     ],
     correctAnswer: 0,
     explanation:
@@ -107,10 +107,10 @@ export const emergencyLightingModule5Section6QuizData = [
     id: 9,
     question: 'How long should handover documentation be retained?',
     options: [
-      'Only until the first annual duration test has been completed',
+      'Until the first annual duration test has been completed and recorded in the logbook',
       'For the life of the installation (indefinitely for client), minimum six years for contractor',
-      'For a fixed period of three years, after which it can be destroyed',
-      'Only until the warranty on the luminaires has expired',
+      'For a fixed period of three years, after which all the records can be destroyed',
+      'Until the manufacturer’s warranty on the luminaires and batteries has expired',
     ],
     correctAnswer: 1,
     explanation:
@@ -120,10 +120,10 @@ export const emergencyLightingModule5Section6QuizData = [
     id: 10,
     question: 'What problem occurred in the London landlord case study?',
     options: [
-      'The luminaires failed their annual three-hour duration test',
-      'The escape-route lux levels fell short of the BS EN 1838 minimum',
+      'The luminaires failed their annual duration test and every battery in the building had to be replaced at the contractor’s cost',
+      'The measured escape route illuminance fell below the required minimum along much of the main corridor route',
       'No formal handover took place, resulting in no documentation or training, leading to contractor liability and expensive revisits',
-      'The batteries were undersized and could not achieve full charge',
+      'The batteries fitted were undersized and could never reach a full charge between the routine test cycles',
     ],
     correctAnswer: 2,
     explanation:

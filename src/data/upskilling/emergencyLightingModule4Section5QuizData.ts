@@ -87,9 +87,9 @@ export const remoteTestingQuizData: QuizQuestion[] = [
     question:
       'What is one key advantage of digital logs over paper logbooks for emergency lighting compliance?',
     options: [
-      'Digital logs do not need to be kept for as many years',
-      'Digital logs can be edited to correct mistakes after audits',
-      'Digital logs eliminate the need for BS 5266-1 compliance',
+      'Digital logs need to be retained for a much shorter period than paper logbooks do',
+      'Digital logs can be edited afterwards to correct mistakes found during an audit',
+      'Digital logs remove the requirement to follow the code of practice for testing',
       'Digital logs provide instant access to time-stamped records that cannot be lost or damaged',
     ],
     correctAnswer: 3,
@@ -101,9 +101,9 @@ export const remoteTestingQuizData: QuizQuestion[] = [
     question: 'Which type of site would benefit most from remote emergency lighting testing?',
     options: [
       'A large university campus with 850 luminaires across multiple buildings',
-      'A low-occupancy warehouse with minimal staff',
-      'A small retail shop with 20 emergency luminaires',
-      'A single-storey office with 40 staff members',
+      'A low-occupancy warehouse unit with only two staff on site',
+      'A small retail shop with 20 emergency luminaires in total',
+      'A single-storey office with 12 luminaires and 40 staff',
     ],
     correctAnswer: 0,
     explanation:

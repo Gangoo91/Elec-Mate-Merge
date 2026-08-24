@@ -3425,6 +3425,906 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     topic: 'Maintenance Strategy',
     category: 'Maintenance',
   },
+  {
+    id: 201,
+    question:
+      'A retrofit smart dimmer needs a neutral at the switch position, but the existing switch drop carries only a permanent line and a switched line. What is the most robust remedy?',
+    options: [
+      'Fit a bypass capacitor across the lamp and leave the wiring unchanged',
+      'Borrow a neutral from the nearest socket circuit at the switch back box',
+      'Rewire the switch drop so a neutral is brought to the switch position',
+      'Connect the dimmer earth terminal to serve as the return path instead',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Where the dimmer specification calls for a neutral, the only sound fix is to provide one, normally by pulling in a new three-core and earth switch drop or by moving the switching function to the ceiling rose. Borrowing a neutral from another circuit is the attractive shortcut and it is wrong: the borrowed conductor stays live when its own circuit is switched off, it unbalances the residual current seen by the RCD on both circuits, and it leaves a fatal trap for the next person who isolates what they believe is the whole lighting circuit. A bypass capacitor only masks leakage-current flicker in dimmers designed to work without a neutral, and never creates a neutral supply for one that requires it. Using the protective conductor as a return is never acceptable.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'Lighting Control',
+    category: 'Lighting',
+  },
+  {
+    id: 202,
+    question:
+      'A low-voltage control bus must follow the same trunking run as 230 V lighting circuits. Which arrangement satisfies Regulation 528.1 of BS 7671:2018+A4:2026?',
+    options: [
+      'Cable-tie the bus cable neatly to one side of the same compartment',
+      'Run the bus in its own separate compartment within the trunking',
+      'Label the trunking to warn that mixed voltage bands are present',
+      'Fit a metal divider only where the two cable groups actually cross',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Regulation 528.1 states that a Band I circuit shall not be contained in the same wiring system as a Band II circuit unless one of the listed methods is adopted. A separate compartment of a cable trunking or ducting system is one of those listed methods, so a compartmented trunking complies. Tidy cable ties in a shared compartment are the tempting answer because the cables look separated, but there is no physical barrier, so a damaged mains core can energise the bus at 230 V. A warning label changes nothing physically, and a partition fitted only at crossing points leaves the rest of the run unsegregated. The other permitted routes are insulating every conductor for the highest voltage present, a partitioned tray, a wholly separate conduit or trunking, or an earthed metal screen between the cores of a multicore cable.',
+    section: 'Module 2',
+    difficulty: 'advanced',
+    topic: 'Segregation',
+    category: 'Installation',
+  },
+  {
+    id: 203,
+    question:
+      'A client wants a smart relay module to be the only means of switching off an immersion heater before maintenance. Why must this be refused?',
+    options: [
+      'The relay contacts would carry more current than the heater draws',
+      'Remote switching of heating loads is banned in domestic premises',
+      'The app cannot record the time at which the heater was switched off',
+      'A remotely operable device cannot be secured against reconnection',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'A means of isolation must disconnect all live conductors and be capable of being secured so that the supply cannot be inadvertently restored while someone is working. A device that any phone on the network can close fails that test outright, and Regulation 537.2.2 additionally prohibits semiconductor devices from being used as isolating devices, which rules out solid-state relays entirely. The plausible-sounding claim that remote switching is banned is wrong: remote switching is perfectly acceptable as functional switching under Regulation 463.1.1, and the smart relay may stay. What it may not do is replace the lockable double-pole isolator, which must remain as the safety function.',
+    section: 'Module 7',
+    difficulty: 'advanced',
+    topic: 'Isolation and Safety',
+    category: 'Installation',
+  },
+  {
+    id: 204,
+    question:
+      'Why is a wired data backbone normally specified on a new-build smart home rather than relying on wireless links throughout?',
+    options: [
+      'Wired links avoid building fabric, congestion and interference issues',
+      'Wireless devices always draw far less standby power than wired ones',
+      'Wired systems remove any need to commission or configure devices',
+      'Wireless signals cannot pass through plasterboard or timber studwork',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'On a new build the cable can be installed at first fix for a fraction of the later cost, and a wired link is not degraded by dense walls, foil-backed insulation, underfloor heating manifolds or a neighbour saturating the same airwaves. The claim that wireless signals cannot pass through plasterboard is the attractive distractor and it is false: they pass through it readily, which is precisely why the argument has to be made on reliability and predictability rather than on absolutes. Wired kit still has to be commissioned, and standby consumption is a property of the device, not of the medium.',
+    section: 'Module 3',
+    difficulty: 'intermediate',
+    topic: 'Network Infrastructure',
+    category: 'Protocols',
+  },
+  {
+    id: 205,
+    question:
+      'What does the term scene mean in a smart lighting system?',
+    options: [
+      'A single luminaire that changes colour on a fixed repeating cycle',
+      'A stored set of levels for several luminaires recalled together',
+      'The maximum load a dimmer module can switch without derating',
+      'A safety cut-out that isolates lighting when a fault is detected',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A scene is a saved snapshot of output levels, and often colour temperature, across a group of luminaires, recalled by one keypad press or one command. The colour-cycling option describes an effect applied to a single fitting, which is a device behaviour rather than a stored group state. Scenes are a control convenience only: they have no protective function, so nothing about a scene affects the dimmer rating or the protective device.',
+    section: 'Module 4',
+    difficulty: 'basic',
+    topic: 'Lighting Control',
+    category: 'Lighting',
+  },
+  {
+    id: 206,
+    question:
+      'A smart dimmer module is added to an existing lighting final circuit in a dwelling. What does BS 7671:2018+A4:2026 require of that circuit?',
+    options: [
+      'A dedicated circuit serving the dimmer module and nothing else',
+      'A double-pole switch fitted immediately adjacent to the module',
+      'Additional protection by an RCD rated at not more than 30 mA',
+      'An arc fault detection device in place of the circuit breaker',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Regulation 411.3.4 requires AC final circuits supplying luminaires in domestic premises to have additional protection by an RCD with a rated residual operating current not exceeding 30 mA, and that requirement follows the circuit whatever control gear is added to it. A smart dimmer is current-using equipment like any other and does not create an exemption. The dedicated-circuit answer is tempting because it sounds cautious, but nothing in BS 7671 demands it. Adding the dimmer does trigger a check that the existing circuit already meets the current requirements, and if it is not RCD protected that must be recorded and addressed.',
+    section: 'Module 6',
+    difficulty: 'advanced',
+    topic: 'Circuit Protection',
+    category: 'Installation',
+  },
+  {
+    id: 207,
+    question:
+      'What most reduces the risk that the next electrician cannot work on a smart installation you have handed over?',
+    options: [
+      'Documented device addresses, credentials handover and labelled hardware',
+      'Keeping the configuration file on your own laptop for safe storage',
+      'Registering every device under your own company account for support',
+      'Installing the most popular ecosystem so that guesswork is easier',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'A smart system is maintainable only if the next person can get into it: administrator credentials in the customer name, a copy of the configuration or backup left with the client, device addresses recorded, and physical labels on hubs, drivers and bus terminations. Registering everything under your own account feels like good service and is the classic trap, because it locks the customer out the moment you retire, fall out or go out of business. Popularity of an ecosystem is no substitute for documentation, and a configuration file that exists only on your laptop is lost the moment that laptop is.',
+    section: 'Module 8',
+    difficulty: 'advanced',
+    topic: 'Maintainability',
+    category: 'Maintenance',
+  },
+  {
+    id: 208,
+    question:
+      'A customer asks what happens to their lighting if the broadband connection fails. What is the correct answer for a locally processed system?',
+    options: [
+      'All lighting reverts to full output until the link is restored',
+      'The lighting circuits are disconnected by the hub as a precaution',
+      'Nothing operates until the hub has re-registered with the server',
+      'Local switching and schedules keep working, remote access is lost',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Where the logic runs on a hub or controller inside the property, keypads, sensors and timed schedules continue to work with the internet down, and only remote access and voice services that depend on a cloud account are lost. The option describing total loss of function is exactly what happens on a cloud-dependent product, which is why the distinction matters at specification stage. Nothing should ever be designed so that a broadband fault disconnects a lighting circuit, and reverting all lighting to full output is a behaviour of a bypassed dimmer, not a network fault.',
+    section: 'Module 7',
+    difficulty: 'intermediate',
+    topic: 'System Resilience',
+    category: 'Installation',
+  },
+  {
+    id: 209,
+    question:
+      'A smart thermostat replaces a mechanical programmer on a wet central heating system. Which failure mode should the design specifically guard against?',
+    options: [
+      'The thermostat drawing more current than the boiler supply can give',
+      'Loss of hub or wireless link leaving the boiler with no call for heat',
+      'The room sensor reading a temperature higher than the flow sensor',
+      'The programmer terminals reversing polarity when the hub restarts',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'If the call for heat depends on a wireless link or an internet-connected hub, a flat battery, a dropped link or a failed router leaves a vulnerable occupant with no heating and the pipework with no frost protection. Specify a receiver with a defined fail state and a local manual override, and keep any frost protection independent of the smart layer. The current-draw option is a red herring, since these controls draw a trivial load; the real risk is loss of the control signal, not loss of supply capacity. The boiler must still retain its own local means of isolation for servicing.',
+    section: 'Module 5',
+    difficulty: 'advanced',
+    topic: 'Heating Control',
+    category: 'HVAC',
+  },
+  {
+    id: 210,
+    question:
+      'A control bus is supplied as a SELV circuit. What does that mean for the way it is installed alongside mains wiring?',
+    options: [
+      'It may share a terminal with the mains as long as it is fused',
+      'It can be run untouched inside any mains accessory back box',
+      'Its separation from live parts of other circuits must be maintained',
+      'It needs no support or containment because the voltage is low',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'The protection offered by SELV depends entirely on the separation between it and higher-voltage circuits being preserved throughout the installation, which is why Regulation 528.1 refers SELV and PELV systems back to the proximity requirements of Regulation 414.4. Sharing an enclosure or a terminal with mains conductors is the tempting practical shortcut and it destroys that separation, since a single loosened core can put 230 V onto every device on the bus. Low voltage does not mean no discipline: the cable still needs proper support, protection from damage and correct containment like any other.',
+    section: 'Module 2',
+    difficulty: 'intermediate',
+    topic: 'SELV and PELV',
+    category: 'Installation',
+  },
+  {
+    id: 211,
+    question:
+      'After a retrofit smart dimmer is fitted, the LED lamps glow faintly when the lighting is switched off. What is the usual cause?',
+    options: [
+      'The lamps have failed and are passing current through the filament',
+      'Standing leakage through the dimmer electronics is exciting the drivers',
+      'The circuit protective conductor has been reversed with the neutral',
+      'The dimmer is rated for a far higher load than the lamps actually draw',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A dimmer working without a neutral has to draw its own operating current through the lamp itself, and that small standing current is enough to keep the electronics inside a modern LED driver partly charged, producing the faint afterglow. The manufacturer bypass or load module gives that current somewhere else to go, and a dimmer supplied with a proper neutral avoids the problem altogether. The load-mismatch option is genuinely a cause of flicker and of lamps dropping out at low level, but it does not explain a glow with the switch off. A reversed protective conductor is a serious fault requiring investigation, not the ordinary explanation for this symptom.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'Lighting Control',
+    category: 'Lighting',
+  },
+  {
+    id: 212,
+    question:
+      'Structured data cabling has to share a route with 230 V final circuits through a floor void. What is the sound approach?',
+    options: [
+      'Run them together, since data cable screening removes any concern',
+      'Bond the data cable screen to the mains earth at every floor box',
+      'Terminate the data cable into the same accessory box as the mains',
+      'Separate them using one of the methods permitted by Regulation 528.1',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Data cabling is a Band I circuit and the final circuits are Band II, so Regulation 528.1 applies: use separate containment, a compartmented trunking or ducting, a partitioned tray, or cable insulated for the highest voltage present. Separation also keeps induced noise off the data pairs, so the safety requirement and the performance requirement point the same way. The screening argument is the attractive one and it fails, because the thin foil screen on a data cable is not insulation rated for 230 V. Bonding the screen at every point is worse than useless, since it creates circulating currents around the earthing system.',
+    section: 'Module 3',
+    difficulty: 'advanced',
+    topic: 'Network Infrastructure',
+    category: 'Protocols',
+  },
+  {
+    id: 213,
+    question:
+      'Smart lighting control is added to existing lighting circuits, with new cabling and accessories but no new circuit. What certification is required?',
+    options: [
+      'A Minor Electrical Installation Works Certificate for the alteration',
+      'A manufacturer commissioning sheet instead of BS 7671 documentation',
+      'No certificate, because control gear is not a circuit alteration',
+      'An Electrical Installation Condition Report covering the dwelling',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'An addition or alteration to an existing circuit that does not create a new circuit is certified by a Minor Works Certificate, which records the tests carried out and confirms the altered circuit still complies. The condition report option is the plausible trap: an EICR assesses an existing installation against the current standard, it is not the document for signing off work you have just carried out. A manufacturer commissioning record is a useful extra and should be handed over, but it certifies the control system, not the fixed wiring. Doing nothing is not an option, since new cable and accessories have been installed.',
+    section: 'Module 7',
+    difficulty: 'intermediate',
+    topic: 'Certification',
+    category: 'Installation',
+  },
+  {
+    id: 214,
+    question:
+      'Smart radiator valves are being added to a wet system that already has a wired room thermostat. What is the main design consideration?',
+    options: [
+      'The valves must each be supplied from a separate fused connection',
+      'The boiler flow temperature must be raised to compensate for them',
+      'A bypass or interlock is needed so the boiler is not left dead-headed',
+      'The wired thermostat must be removed before the valves will operate',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'If every valve can close independently there must still be a path for flow, or a call for heat with all valves shut leaves the boiler pumping against a closed system. That is handled by an automatic bypass, a permanently open radiator, or a boiler interlock arranged so no call for heat exists when the valves are closed. The removal of the wired thermostat is the tempting answer because the valves appear to supersede it, but the wired stat commonly remains as the interlock and as a fallback if the wireless layer fails. The valves are battery or extra-low voltage devices and do not need fused connections of their own.',
+    section: 'Module 5',
+    difficulty: 'intermediate',
+    topic: 'Heating Control',
+    category: 'HVAC',
+  },
+  {
+    id: 215,
+    question:
+      'A single multicore cable is proposed to carry both the 230 V supply and the extra-low voltage control conductors to a run of luminaires. When is that acceptable?',
+    options: [
+      'Whenever the control conductors are identified with numbered sleeves',
+      'Whenever the cable is clipped direct rather than run in containment',
+      'Never, because two voltage bands can never share the same cable',
+      'When every core is insulated for the highest voltage present',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Regulation 528.1 permits a multicore cable to contain both bands where each conductor is insulated for the highest voltage present in the cable, and it separately permits the Band I cores to be divided from the Band II cores by an earthed metal screen of adequate current-carrying capacity. The blanket never is the attractive answer for anyone who has learned segregation as an absolute, but the regulation is explicitly a list of permitted methods rather than a prohibition. Sleeving and numbering identify a conductor, they do not upgrade its insulation, and the method of fixing has no bearing on the voltage a core can withstand.',
+    section: 'Module 2',
+    difficulty: 'advanced',
+    topic: 'Segregation',
+    category: 'Installation',
+  },
+  {
+    id: 216,
+    question:
+      'What is the practical risk of specifying devices whose core functions depend on the manufacturer cloud service?',
+    options: [
+      'They cannot be used on any circuit protected by a 30 mA RCD',
+      'Withdrawal of the service can leave working hardware unusable',
+      'They always require a dedicated final circuit of their own',
+      'They cannot be commissioned unless a wired bus is present',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Where the logic lives on a remote server, the customer owns the hardware but not the function, and the day the manufacturer shuts the service down or moves it behind a subscription, working equipment on the wall stops doing anything. That is a specification decision, not an electrical one, and it is why local control should be favoured for anything the household depends on daily. The RCD option is a plausible-sounding technical objection but has no basis: a cloud device is current-using equipment protected in the normal way, and its need for a circuit is determined by its load, not by where its logic runs.',
+    section: 'Module 8',
+    difficulty: 'advanced',
+    topic: 'System Resilience',
+    category: 'Maintenance',
+  },
+  {
+    id: 217,
+    question:
+      'An existing two-way lighting arrangement is to be converted to smart control, but only one switch position can take a smart switch. What is the usual approach?',
+    options: [
+      'Make the smart switch the supply point and the other a signal input',
+      'Remove the second switch position and make good the wall finish',
+      'Wire both switch positions in parallel across the same terminals',
+      'Leave the strappers connected and fit the smart switch in series',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The smart device takes the load and the far position becomes an input to it, usually by rewiring one strapper as a retractive or momentary connection, or by replacing that plate with a battery-powered wireless one. Paralleling the two positions across the same terminals is the intuitive-looking answer and it is dangerous, because in one switch position it connects the permanent line directly to the switched line and defeats control altogether. Leaving the strappers live and putting the smart switch in series leaves the lamp dead whenever the mechanical switch is off, so the smart switch loses power and drops off the system.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'Lighting Control',
+    category: 'Lighting',
+  },
+  {
+    id: 218,
+    question:
+      'A doorbell camera is to be powered over the data cabling from a network switch. What must the electrician confirm?',
+    options: [
+      'That the data cable is rated for direct burial along its whole run',
+      'That the supply to the switch is on a circuit with a 100 mA RCD',
+      'That the switch has capacity and the run is within maker limits',
+      'That the camera has its own local means of mechanical isolation',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Power delivered over data cabling is limited by the budget of the supplying switch shared across all its powered ports, and by the length and grade of cable the manufacturer permits, so both must be checked before the run is installed. External sections still need cable suitable for their external influences, but direct burial is a separate question that only arises where the route is buried. A 100 mA RCD is a distraction: the switch is a normal load protected in the usual way, and the extra-low voltage supplied to the camera is not covered by an RCD upstream in that sense.',
+    section: 'Module 3',
+    difficulty: 'intermediate',
+    topic: 'Network Infrastructure',
+    category: 'Protocols',
+  },
+  {
+    id: 219,
+    question:
+      'A lighting circuit is refitted with a large number of electronic LED drivers on smart dimmer modules. Which design check becomes important?',
+    options: [
+      'Whether the cable must be increased two sizes for the same load',
+      'Whether the drivers need individual supplementary bonding conductors',
+      'Whether the switched neutral can be omitted from the final circuit',
+      'Whether inrush current at switch-on may trip the protective device',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'A bank of electronic drivers charges its input capacitors at switch-on, drawing a very high current for a few milliseconds that can be far above the steady running current and can operate the instantaneous element of the circuit breaker. The remedy is to split the load across circuits, stagger the switching, or select a device with a higher instantaneous threshold, having first confirmed the disconnection time is still met at the far end. Cable size is driven by the running current, which for LED loads is usually modest, so upsizing is the wrong instinct. Supplementary bonding is a shock-protection measure and has nothing to do with inrush.',
+    section: 'Module 6',
+    difficulty: 'advanced',
+    topic: 'Circuit Protection',
+    category: 'Installation',
+  },
+  {
+    id: 220,
+    question:
+      'A circuit contains smart dimmers and LED drivers that cannot practicably be disconnected for testing. What does the redrafted Regulation 643.3 provide for?',
+    options: [
+      'Testing at 1000 V DC to prove the electronics can withstand it',
+      'A 250 V DC test carried out with the equipment left connected',
+      'Omitting the test and recording a limitation on the certificate',
+      'A 500 V AC test applied between line and neutral conductors',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Regulation 643.3 was redrafted in BS 7671:2018+A4:2026 to deal with exactly this case: where connected equipment is likely to influence the verification or be damaged by the normal test voltage, insulation resistance is verified by a 250 V DC test carried out after the equipment is connected. Disconnecting the vulnerable equipment remains the better option wherever it is practicable, because it tests the wiring rather than the wiring plus the electronics. Recording a limitation and skipping the test is the attractive dodge and is not what the regulation offers, and insulation resistance is never tested with an AC voltage.',
+    section: 'Module 7',
+    difficulty: 'advanced',
+    topic: 'Testing',
+    category: 'Installation',
+  },
+  {
+    id: 221,
+    question:
+      'On a new build, why is a home-run star topology back to a central control panel often preferred over conventional daisy-chained loop-in wiring?',
+    options: [
+      'It removes the need for any protective device on the lighting circuits',
+      'It guarantees the lighting will work if the control panel loses supply',
+      'Any load can be reassigned to a different channel without rewiring',
+      'It roughly halves the total cable length used across the dwelling',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Bringing every luminaire and every switch position back to one panel means the relationship between switch and load becomes a configuration decision rather than a wiring one, so zones can be re-grouped years later without lifting a floor. The trade-off is honest and should be explained to the client: a star uses considerably more cable, not less, and it concentrates risk at the panel, so that panel needs an accessible position, its own clearly identified means of isolation, and a documented schedule. It changes nothing about the need for protective devices on the circuits themselves.',
+    section: 'Module 1',
+    difficulty: 'advanced',
+    topic: 'Wiring Topologies',
+    category: 'Protocols',
+  },
+  {
+    id: 222,
+    question:
+      'Where should a centralised lighting control panel containing several dimmer modules be located?',
+    options: [
+      'Accessible and ventilated, and not in a cupboard used for storage',
+      'Sealed inside a loft void to keep the equipment well out of sight',
+      'Above the consumer unit so that both share one means of isolation',
+      'Inside the airing cupboard next to the hot water cylinder',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Dimmer modules dissipate heat and are usually derated when grouped, so the enclosure needs the free air the manufacturer specifies and a position where it will not end up buried behind boxes. It also has to be reachable for fault finding and re-commissioning, and it needs its own identified means of isolation rather than sharing an ambiguous one. The airing cupboard is the classic site choice and the wrong one, because the raised ambient temperature around a cylinder eats directly into the derating allowance the modules depend on.',
+    section: 'Module 6',
+    difficulty: 'advanced',
+    topic: 'Control Panels',
+    category: 'Installation',
+  },
+  {
+    id: 223,
+    question:
+      'What labelling should be left at a smart lighting control panel on completion?',
+    options: [
+      'A note of the installer mobile number in case of any future faults',
+      'A warning that the enclosure must not be opened by any occupant',
+      'The wifi password so the client can reconnect after a router change',
+      'A channel-to-load schedule and the origin of supply to the panel',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'The next person at the panel needs to know what each output feeds and where the panel is fed from, because without that they cannot isolate safely or trace a fault. Contact details are a courtesy and a warning notice does not tell anyone anything useful. Putting the wifi password on a label inside a shared or rented property is the tempting convenience and a poor idea: credentials belong in the handover pack given to the client, not on the wall where anyone with access to the cupboard can read them.',
+    section: 'Module 7',
+    difficulty: 'intermediate',
+    topic: 'Labelling',
+    category: 'Installation',
+  },
+  {
+    id: 224,
+    question:
+      'What is the purpose of a boiler interlock in a heating control system?',
+    options: [
+      'It limits the maximum current the boiler can draw from the supply',
+      'It stops the boiler firing when no zone is calling for heat',
+      'It prevents the boiler being switched on outside its warranty',
+      'It isolates the boiler automatically if the flow temperature drops',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The interlock is the wiring arrangement that ensures the boiler and pump shut down once the room thermostat, cylinder thermostat and zone valves are all satisfied, so the boiler is not left cycling with nowhere to send its heat. It is a control function, not a protective device, so it has no role in limiting current. Automatic isolation on low flow temperature describes a boiler internal safety, which is a different thing entirely and is built into the appliance rather than into the control wiring.',
+    section: 'Module 5',
+    difficulty: 'basic',
+    topic: 'Heating Control',
+    category: 'HVAC',
+  },
+  {
+    id: 225,
+    question:
+      'A smart hub, router and network switch are all fed from one socket-outlet on a general-purpose circuit. What should the design take into account?',
+    options: [
+      'They must be supplied from a circuit protected by an AFDD',
+      'They should be fed through a plug fuse rated at no more than 1 A',
+      'Loss of supply to that circuit takes the whole system down at once',
+      'They must be bonded together with a supplementary conductor',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Everything that makes the house intelligent is sitting behind one plug, so an operated protective device, a tripped RCD, or somebody unplugging it to charge a phone takes out lighting control, heating control and the doorbell together. Sensible design gives that equipment a clearly labelled supply, often an unswitched fused connection unit, and considers a small uninterruptible supply. An AFDD addresses series and parallel arcing in the fixed wiring and does nothing for continuity of supply, and supplementary bonding is a shock-protection measure unrelated to this equipment.',
+    section: 'Module 6',
+    difficulty: 'advanced',
+    topic: 'Supplies to Control Equipment',
+    category: 'Installation',
+  },
+  {
+    id: 226,
+    question:
+      'In a wireless mesh system, what is the practical effect of removing a permanently powered device that other devices were routing through?',
+    options: [
+      'Nearby battery devices may lose their route back to the controller',
+      'The controller automatically increases transmit power to compensate',
+      'All devices on the system revert to their factory default settings',
+      'The remaining devices are unaffected as each talks to the hub direct',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'In a mesh, permanently powered devices generally carry traffic for battery-powered ones that sleep most of the time, so taking one out can leave sensors and handsets at the far end of the house with no path home. The system usually needs a re-heal or re-pair afterwards, and the customer should be told at handover that pulling out a smart plug can have effects well beyond that socket. The assumption that every device talks straight to the hub describes a star arrangement, not a mesh, and no system resets itself to defaults because a neighbour disappeared.',
+    section: 'Module 1',
+    difficulty: 'intermediate',
+    topic: 'Wireless Topologies',
+    category: 'Protocols',
+  },
+  {
+    id: 227,
+    question:
+      'A smart relay module is to be concealed in the void above a plasterboard ceiling with no hatch. What is the concern under BS 7671?',
+    options: [
+      'The module will overheat because voids have no air movement at all',
+      'Ceiling voids are classified as a special location under BS 7671',
+      'Modules above a ceiling must always be supplied at extra-low voltage',
+      'Its connections are not accessible for inspection and maintenance',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Regulation 526.3 requires every connection to be accessible for inspection, testing and maintenance, with a short list of exceptions such as a joint designed to be buried in the ground, a compound-filled or encapsulated joint, and the connection between a cold tail and a heating element. A relay module pushed above a sealed ceiling is none of those, so it must be relocated to an accessible position, for example within the luminaire, at a lighting point, or back at the panel. Thermal performance in the void is a real design factor but it is not the regulation being breached, and a ceiling void is not a special location.',
+    section: 'Module 8',
+    difficulty: 'advanced',
+    topic: 'Accessibility',
+    category: 'Maintenance',
+  },
+  {
+    id: 228,
+    question:
+      'Which check belongs in the functional testing of a completed smart lighting installation?',
+    options: [
+      'Measuring the standby power drawn by each keypad in the property',
+      'Proving each keypad, sensor and scene operates the intended loads',
+      'Confirming the internet upload speed exceeds the hub requirement',
+      'Recording the colour temperature of every lamp that was installed',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Functional testing proves that the equipment installed actually operates as intended, so every input is pressed or triggered and every output watched, with any scene recalled and checked against what the client asked for. This catches the commonest smart-install defect, which is a channel wired to the wrong load and never noticed. Broadband speed is worth confirming for remote access but proves nothing about the installation, and lamp colour temperature and standby consumption are specification details recorded earlier, not tests of function.',
+    section: 'Module 7',
+    difficulty: 'intermediate',
+    topic: 'Functional Testing',
+    category: 'Installation',
+  },
+  {
+    id: 229,
+    question:
+      'A circuit supplies a large number of switch-mode LED drivers behind smart dimmer modules. Why can the choice of RCD type matter?',
+    options: [
+      'Electronic loads reduce the earth fault loop impedance of the circuit',
+      'An RCD cannot be used at all where electronic equipment is present',
+      'Smooth DC leakage from such loads can blind a basic AC-only device',
+      'Each driver must be given its own RCD to satisfy additional protection',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Switch-mode electronics can produce residual currents with a DC component, and an RCD intended only for alternating residual current may be desensitised by it and fail to operate when it is needed, so the type has to be matched to the residual current the load can actually generate. A second, related design point is that the small protective conductor currents of many drivers add up and can cause unwanted tripping, which is a reason to split the load rather than to abandon the RCD. Note also that under A4:2026 the effectiveness of any RCD type is verified by an alternating current test at its rated residual operating current.',
+    section: 'Module 6',
+    difficulty: 'advanced',
+    topic: 'RCD Selection',
+    category: 'Installation',
+  },
+  {
+    id: 230,
+    question:
+      'A client wants a voice assistant set up to switch a portable heater on and off remotely. What is the correct advice?',
+    options: [
+      'A remote-controlled load should not be one that is unsafe if unattended',
+      'Voice control is acceptable for any portable load below 3 kW in rating',
+      'The heater should be plugged into a socket protected by a 100 mA RCD',
+      'Voice commands must always be confirmed by a second person present',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The question to ask of any remotely switched load is what happens if it energises while nobody is in the room. A portable heater can be covered, moved against furnishings or left with washing draped over it, so it is a poor candidate for remote or scheduled switching whatever its rating. That judgement is about the nature of the load, which is why the power-rating answer is attractive and wrong: a 2 kW heater under a towel is no safer than a 3 kW one. A 100 mA device gives no additional protection against shock and does nothing about the fire risk here.',
+    section: 'Module 8',
+    difficulty: 'advanced',
+    topic: 'Safe Design',
+    category: 'Maintenance',
+  },
+  {
+    id: 231,
+    question:
+      'Presence-detector control is proposed for a hallway and staircase. Which aspect most needs attention at design stage?',
+    options: [
+      'Sensors must be supplied at extra-low voltage in circulation areas',
+      'A manual means of switching the lighting on must remain available',
+      'Sensor coverage must be verified with the lighting circuit isolated',
+      'The time delay must be set to the shortest period the unit allows',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A staircase is exactly where you do not want a single sensor, controller or hub to be the only thing standing between the occupant and darkness, so a conventional switch or keypad must remain as a fallback and the detector should add convenience rather than replace control. Setting the shortest delay is the opposite of what is wanted, since the lights dropping out halfway up a flight is itself a hazard, and detection has to cover the head and foot of the stairs. Detectors come in both mains and extra-low voltage forms, and neither is mandated for circulation areas.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'Lighting Control',
+    category: 'Lighting',
+  },
+  {
+    id: 232,
+    question:
+      'What is the most useful provision to make at first fix on a new build when the client has not yet chosen a smart system?',
+    options: [
+      'A hub mounted centrally with power and an aerial already fitted',
+      'A full set of smart switch plates ready to be paired up later',
+      'Wireless repeaters placed at regular intervals through the house',
+      'Containment and data cabling back to a central service position',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Cable and containment are what become impossible to add once the plaster is on, and they suit almost any system the client eventually picks, so putting in a central service position with routes out to it keeps every option open at very little cost. Buying hardware before the system is chosen is the temptation to resist, because plates, hubs and repeaters are all specific to an ecosystem and may be obsolete or incompatible by the time the decision is made. The cable does not care which ecosystem wins.',
+    section: 'Module 3',
+    difficulty: 'intermediate',
+    topic: 'First Fix Planning',
+    category: 'Protocols',
+  },
+  {
+    id: 233,
+    question:
+      'A wired keypad needs both a 230 V supply and an extra-low voltage control bus terminated at the same back box. What is the correct practice?',
+    options: [
+      'Maintain separation inside the box using a barriered accessory',
+      'Twist the bus pair around the mains conductors to save space',
+      'Cut the bus back and rely on wireless for that position instead',
+      'Fit a deeper box and let the two sets of cores share the space',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The separation that gives the extra-low voltage circuit its protection has to survive the termination, not just the cable run, so the accessory must be one designed to take both, with the internal barrier or separation the manufacturer provides, or the bus cable must be insulated for the highest voltage present. A deeper box is the intuitive fix and it solves only the space problem: the two sets of cores are still free to touch, and a single loosened core then puts 230 V onto every device on the bus. Abandoning the wired position is a retreat, not a solution.',
+    section: 'Module 2',
+    difficulty: 'advanced',
+    topic: 'Segregation',
+    category: 'Installation',
+  },
+  {
+    id: 234,
+    question:
+      'A smart controller is retrofitted to a system with a stored hot water cylinder. Which existing control must not be bypassed?',
+    options: [
+      'The mechanical timer that previously controlled the immersion heater',
+      'The manual gate valve on the cold feed to the cylinder itself',
+      'The cylinder thermostat that limits the stored water temperature',
+      'The pressure gauge fitted to the primary side of the heating system',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'The cylinder thermostat is a safety and control function that stops the stored water being heated beyond its set point, and it must stay in the circuit regardless of what the smart controller is asked to do. It is a common shortcut to wire a smart relay straight to the immersion or the valve to get simpler control, and it removes that limit. The old mechanical timer is genuinely redundant once a smart programmer takes over its role, and a pressure gauge is an indicating device with no place in the switching arrangement at all.',
+    section: 'Module 5',
+    difficulty: 'intermediate',
+    topic: 'Heating Control',
+    category: 'HVAC',
+  },
+  {
+    id: 235,
+    question:
+      'A client changes broadband provider and the smart lighting stops responding to the app. What is the most likely cause?',
+    options: [
+      'The lighting circuit protective device has operated during the change',
+      'The hub is on a new network and its devices have not been rejoined',
+      'The new router supplies insufficient current to power the hub itself',
+      'The dimmer modules have lost their scene data during the power cut',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A new router means a new network name and key, and often a new address range, so the hub sits offline until it is reconnected and, in some systems, until the devices behind it are re-registered. This is why the handover pack should say how to reconnect after a router change and who owns the administrator account. Scene data is normally stored in the hub or in the devices and survives a power interruption, and a router does not power the hub. A tripped protective device would leave the lighting dead at the switch too, which is easy to rule out.',
+    section: 'Module 3',
+    difficulty: 'intermediate',
+    topic: 'Network Infrastructure',
+    category: 'Protocols',
+  },
+  {
+    id: 236,
+    question:
+      'A Victorian terrace is being rewired room by room while the family remains in occupation. Which control strategy is most defensible?',
+    options: [
+      'Wireless throughout, since no cabling of any kind will be required',
+      'A central panel installed now with the wiring pulled in much later',
+      'Cloud-only devices so nothing has to be installed in the fabric',
+      'Wired control where floors are up, wireless where they are not',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Access dictates what is sensible: wherever boards are lifted or walls are chased, put in cable and a draw wire, because that access will not come back, and accept wireless in the rooms that cannot be disturbed. Committing to a central panel before you know you can reach it with cable is the trap, since a panel with no home runs is an expensive junction box. Going fully wireless is the easy sell and throws away the one opportunity the job offers, and choosing cloud-only devices adds a dependency on a service the installer does not control.',
+    section: 'Module 1',
+    difficulty: 'advanced',
+    topic: 'Retrofit Strategy',
+    category: 'Protocols',
+  },
+  {
+    id: 237,
+    question:
+      'Smart control is being added to the landlord lighting in a block of flats that also has emergency escape lighting. What is the governing principle?',
+    options: [
+      'Emergency luminaires may join a scene if it is set to full output',
+      'The smart system may switch the emergency luminaires between zones',
+      'Safety services must not depend on the control layer to operate',
+      'Emergency lighting should be re-fed from the smart panel for testing',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Emergency lighting exists to work when the normal supply or the normal control has failed, so nothing about its operation may sit behind a hub, a scene, a relay module or an app. BS 7671 consistently treats safety services separately from ordinary final circuits for this reason. Including the emergency luminaires in a scene set to full output looks harmless and is the seductive wrong answer, because it makes the fittings reachable by a system that can be reconfigured, can lose its controller, or can be handed to an occupant who edits the scene.',
+    section: 'Module 2',
+    difficulty: 'advanced',
+    topic: 'Safety Services',
+    category: 'Installation',
+  },
+  {
+    id: 238,
+    question:
+      'What should be confirmed before specifying a particular dimmer for a set of LED luminaires?',
+    options: [
+      'That the luminaire maker lists that dimmer or method as suitable',
+      'That the dimmer is rated ten times the connected lamp load',
+      'That the luminaires are all supplied from the same phase',
+      'That the dimmer carries a fuse below the circuit breaker rating',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'LED dimming performance depends on the pairing of driver and dimmer, and manufacturers publish compatibility lists precisely because a combination that is not listed can flicker, buzz, refuse to strike at low level or drop out entirely. Checking that list before ordering is the difference between a clean job and a return visit. Gross overrating of the dimmer is the intuitive precaution and is often counterproductive, because a dimmer also has a minimum load below which it misbehaves with a handful of low-wattage LED lamps.',
+    section: 'Module 4',
+    difficulty: 'intermediate',
+    topic: 'Dimming Compatibility',
+    category: 'Lighting',
+  },
+  {
+    id: 239,
+    question:
+      'Why does the polarity check matter particularly where retrofit smart switch modules have been installed?',
+    options: [
+      'Modules are all double insulated so polarity has no effect on them',
+      'Some modules require the permanent and switched lines in set terminals',
+      'Polarity affects the direction in which the dimmer ramps its output',
+      'A reversed polarity will cause the module to draw excessive current',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Retrofit modules have dedicated terminals for the incoming line, the load and the neutral, and existing switch drops are rarely marked, so it is easy to cross them. The serious outcome is the one polarity testing was invented to catch: if the switching ends up in the neutral, the lamp holder stays live with the light apparently off, and someone changing a lamp finds that out the hard way. The double-insulation answer is attractive because Class II equipment does exist, but insulation class says nothing about which conductor is being interrupted.',
+    section: 'Module 7',
+    difficulty: 'advanced',
+    topic: 'Testing',
+    category: 'Installation',
+  },
+  {
+    id: 240,
+    question:
+      'What should the handover advice cover for a system that includes battery-powered sensors?',
+    options: [
+      'That the client replaces every battery on a fixed monthly schedule',
+      'That low battery warnings can be ignored until a device stops',
+      'That batteries be removed from any sensor not in daily use',
+      'How low-battery alerts appear and which functions they affect',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'The client needs to recognise the warning when it appears and understand what stops working if it is ignored, particularly where a flat sensor also removes a routing path for its neighbours in a mesh. That turns a silent degradation into something the household can act on. A blanket monthly replacement wastes money and is the sort of advice that gets quietly abandoned, ignoring the alert until the device dies gives no chance to plan, and pulling batteries from lightly used sensors takes them off the system altogether.',
+    section: 'Module 8',
+    difficulty: 'intermediate',
+    topic: 'Handover',
+    category: 'Maintenance',
+  },
+  {
+    id: 241,
+    question:
+      'An energy monitor with a split-core current transformer is clipped around a meter tail and its lead run back to a hub. What must the installer be alert to?',
+    options: [
+      'The lead is a Band I circuit and must be kept clear of the tails',
+      'The clamp adds impedance to the tail and increases the voltage drop',
+      'The monitor must be certified as a metering device before installation',
+      'The clamp will trip the RCD as soon as it is closed around the tail',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The signal lead from the transformer is an extra-low voltage Band I circuit and it is being run out of an enclosure full of unprotected Band II conductors, so the separation methods of Regulation 528.1 apply to its route just as they would anywhere else, and it must not simply be draped across the tails. There is also the practical point that the tails and cut-out are the distributor equipment and the work has to be planned accordingly. A split-core transformer is clipped around the outside of the insulation, so it adds no series impedance and injects nothing that an RCD would see.',
+    section: 'Module 6',
+    difficulty: 'advanced',
+    topic: 'Energy Monitoring',
+    category: 'Installation',
+  },
+  {
+    id: 242,
+    question:
+      'What happens to stored schedules and automations when a hub loses its supply and has no backup power?',
+    options: [
+      'They are permanently erased and must be rebuilt from scratch',
+      'They continue to run because they are stored in each device',
+      'They stop until supply returns and the clock may need resetting',
+      'They transfer automatically to the nearest mains-powered device',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Automations live in the hub, so with the hub dead nothing scheduled happens, but the configuration is normally held in non-volatile memory and comes back when the supply does. What can be lost is accurate time, which matters where a hub without a battery-backed clock relies on the network to reset itself. The permanent-erasure answer is the one clients fear and it is usually wrong, though it is exactly why a configuration backup belongs in the handover pack. Nothing migrates to another device on its own.',
+    section: 'Module 1',
+    difficulty: 'intermediate',
+    topic: 'System Resilience',
+    category: 'Protocols',
+  },
+  {
+    id: 243,
+    question:
+      'Individually addressable drivers are specified so every luminaire can be controlled separately. What does this add to the commissioning work?',
+    options: [
+      'Each luminaire must be run at full output for an hour before use',
+      'Each driver must be addressed and mapped to its physical position',
+      'Each driver requires its own protective device at the distribution board',
+      'Each luminaire needs a separate switched line back to the control panel',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Addressable drivers share a common supply and a common control path, so the intelligence is in the addressing: every driver has to be given an identity and that identity recorded against the fitting it actually serves. Get the map wrong and the system works perfectly while doing the wrong things, which is a fault that can take longer to find than a wiring error. The separate-switched-line answer describes precisely the topology addressing replaces, and giving each driver its own protective device would defeat the point of the shared supply.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'Addressable Lighting',
+    category: 'Lighting',
+  },
+  {
+    id: 244,
+    question:
+      'What is the role of a hub or controller in a smart home system?',
+    options: [
+      'It supplies the power for every smart device around the property',
+      'It protects the wiring against overload and earth fault current',
+      'It removes the need for switches at each lighting position',
+      'It coordinates devices and runs the logic that links them together',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'The hub is where devices are registered, where automations and schedules are held, and where a press on one device is turned into an action somewhere else. It has no protective function whatsoever, and the protective devices in the consumer unit remain entirely responsible for the wiring. It does not supply the devices either, since each is fed from the fixed wiring or its own battery, and good practice keeps manual switches in place rather than removing them.',
+    section: 'Module 1',
+    difficulty: 'basic',
+    topic: 'System Architecture',
+    category: 'Protocols',
+  },
+  {
+    id: 245,
+    question:
+      'A smart plug adaptor is used to control a load that draws close to 13 A continuously. What is the concern?',
+    options: [
+      'Adaptor contacts and relay may not be rated for continuous full load',
+      'The plug fuse must be uprated to match the relay contact rating',
+      'A smart adaptor cannot be used on a ring final circuit at all',
+      'The socket-outlet will need supplementary bonding to the adaptor',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Many adaptors carry a rating well below the socket they plug into, or a lower rating for continuous as opposed to intermittent duty, and the marking has to be read rather than assumed from the fact that it fits a 13 A socket. Run above that rating the internal relay contacts and the pin connections heat, and the adaptor is the part that fails. Uprating the fuse is the instinctive wrong move, since that fuse protects the flexible cord and the appliance, not the relay. Nothing about the adaptor calls for bonding or rules out its use on a ring.',
+    section: 'Module 6',
+    difficulty: 'advanced',
+    topic: 'Load Ratings',
+    category: 'Installation',
+  },
+  {
+    id: 246,
+    question:
+      'Electric underfloor heating is to be controlled by a smart thermostat. Which requirement applies to that circuit regardless of the control used?',
+    options: [
+      'The thermostat must be sited outside the room being heated',
+      'The circuit must be supplied from its own dedicated hub relay',
+      'The circuit requires RCD protection with the 30 mA characteristics',
+      'The floor sensor must be replaced each time the mat is tested',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Regulation 753.411.3.2 requires RCDs having the characteristics specified in Regulation 415.1.1, the 30 mA additional-protection characteristics, to be used as disconnecting devices for heating installations of this kind, and a smart thermostat changes nothing about that. It is worth knowing that the same regulation carries a note suggesting rated heating power downstream of a 30 mA RCD be limited to around 7.5 kW at 230 V to avoid unwanted tripping from accumulated leakage, which is a real design constraint on large floor areas. The thermostat sensing point belongs in the heated room, not outside it.',
+    section: 'Module 5',
+    difficulty: 'intermediate',
+    topic: 'Underfloor Heating',
+    category: 'HVAC',
+  },
+  {
+    id: 247,
+    question:
+      'What is the sensible position on automatic firmware updates for control equipment installed in a dwelling?',
+    options: [
+      'Disable them permanently so the behaviour can never change at all',
+      'Allow every device to update itself at any time without any review',
+      'Apply them by hand to critical equipment during a site visit only',
+      'Enable them for security fixes and review changes that alter function',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Security patches close real vulnerabilities in equipment sitting on a household network, so blocking updates outright ages the system into a liability. What does need control is the update that quietly changes how something behaves, since a feature change on a hub can break an automation the occupant depends on. The balanced approach is to let security fixes through and to look at anything that changes function before it lands on a system the client relies on. Leaving everything to update itself is easy and gives no chance to catch that.',
+    section: 'Module 8',
+    difficulty: 'advanced',
+    topic: 'Maintenance',
+    category: 'Maintenance',
+  },
+  {
+    id: 248,
+    question:
+      'Why are retractive or momentary switch plates used with some smart lighting systems?',
+    options: [
+      'They interrupt both the line and neutral conductors when pressed',
+      'They send a press signal so the controller decides what happens',
+      'They allow the lighting to be dimmed without any electronics',
+      'They reduce the current that the switch contacts have to carry',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A retractive plate makes a contact only while it is held, so it is an input rather than a switch: the controller sees a short press or a long hold and applies whatever behaviour has been configured, which is how one plate can toggle, dim and recall a scene. Because the load is switched at the module rather than at the plate, the contacts do see less current, but that is a consequence rather than the reason. Dimming still requires electronics somewhere, and a retractive plate is not a double-pole device.',
+    section: 'Module 4',
+    difficulty: 'intermediate',
+    topic: 'Switch Types',
+    category: 'Lighting',
+  },
+  {
+    id: 249,
+    question:
+      'A smart relay module is to be fitted inside an existing luminaire that has no provision for through wiring. What governs the decision?',
+    options: [
+      'The luminaire manufacturer documentation must confirm it is suitable',
+      'Any luminaire may be used if the module is smaller than the canopy',
+      'The module may be fitted if the circuit is protected by a 30 mA RCD',
+      'A luminaire of metal construction may always accept a module inside',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Regulation 559.5.3.1 permits through wiring in a luminaire only where the luminaire is designed for it, and the way to establish that is the manufacturer documentation and the markings on the fitting. The temperature inside a luminaire and the insulation rating of anything placed there are the reasons for the rule, which is why physical fit is not the test: a module that drops neatly into the canopy may still sit in a temperature the enclosure and its conductors were never selected for. RCD protection is required in its own right and does nothing to make an unsuitable luminaire suitable.',
+    section: 'Module 2',
+    difficulty: 'advanced',
+    topic: 'Luminaires',
+    category: 'Installation',
+  },
+  {
+    id: 250,
+    question:
+      'A client asks for the mains-powered interlinked smoke alarms to be integrated so the smart system can silence them. What is the correct response?',
+    options: [
+      'Integrate them fully, as silencing from the app is more convenient',
+      'Fit a relay in the alarm interconnect so the hub can mute the sounder',
+      'The alarm system must keep working independently of the smart system',
+      'Replace the alarms with battery units that the hub can control directly',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Fire detection is a life safety function and nothing in the smart layer may be able to disable it, mute it or hold it off, because a hub that has crashed, a scene that has been edited or an occupant tapping the wrong button then stands between a fire and the people asleep upstairs. A one-way arrangement, where the alarm can raise a notification on the smart system, is acceptable and often useful. Putting a relay in the interconnect is the technically neat answer and is exactly the thing to refuse, since it makes the controller capable of breaking the interlink between alarms.',
+    section: 'Module 7',
+    difficulty: 'advanced',
+    topic: 'Safety Services',
+    category: 'Installation',
+  },
 ];
 
 // Categories for balanced question selection

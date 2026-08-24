@@ -24,11 +24,11 @@ import useSEO from '@/hooks/useSEO';
 const quickCheckQuestions = [
   {
     id: 'escape-route-lux',
-    question: 'What is the minimum illumination on the centre line of an escape route?',
+    question: 'What is the minimum illumination across the full width of an escape route?',
     options: ['0.5 lux', '1 lux', '2 lux', '5 lux'],
     correctIndex: 1,
     explanation:
-      'BS 5266 Part 1 requires a minimum of 1 lux on the centre line of an escape route. This level of illumination is sufficient to allow safe movement along the route even in total darkness. The measurement is taken at floor level along the centre line of the defined escape route. In addition, a minimum of 50% of the centre line width must achieve at least 0.5 lux to ensure adequate uniformity across the route.',
+      'BS EN 1838:2024 requires a minimum of 1 lux across the FULL WIDTH of an escape route, measured at floor level. The 2013 edition required it only along the centre line; the 2024 revision extended it to the whole width, excluding borders (0.5 m each side above 2 m width, or a quarter of the width at 2 m or less).',
   },
   {
     id: 'sleeping-duration',
@@ -89,7 +89,7 @@ const quizQuestions = [
     options: ['0.2 lux', '0.5 lux', '1 lux', '5 lux'],
     correctAnswer: 1,
     explanation:
-      'Open area or anti-panic emergency lighting requires a minimum of 0.5 lux at floor level. This level is designed to reduce the risk of panic in large open areas (such as halls with a floor area exceeding 60 m\u00B2) by providing enough illumination for occupants to identify their surroundings and locate escape routes. Escape route lighting requires 1 lux on the centre line, and high-risk task area lighting requires the greater of 10% of normal illumination or 15 lux.',
+      'Open area or anti-panic emergency lighting requires a minimum of 0.5 lux at floor level. This level is designed to reduce the risk of panic in large open areas (such as halls with a floor area exceeding 60 m\u00B2) by providing enough illumination for occupants to identify their surroundings and locate escape routes. Escape route lighting requires 1 lux across the full width, and high-risk task area lighting requires the greater of 10% of normal illumination or 15 lux.',
   },
   {
     id: 3,
@@ -212,7 +212,7 @@ export default function FireSafetyModule3Section4() {
             <p className="text-rose-400 text-base font-medium mb-2">In 30 Seconds</p>
             <ul className="text-base text-white space-y-1.5">
               <li>
-                <strong>Escape route:</strong> Minimum 1 lux on centre line
+                <strong>Escape route:</strong> Minimum 1 lux across the full width
               </li>
               <li>
                 <strong>Duration:</strong> 1 hour (standard) or 3 hours (sleeping risk)
@@ -398,14 +398,14 @@ export default function FireSafetyModule3Section4() {
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                         <span>
-                          Minimum <strong className="text-white">1 lux</strong> on the centre line
+                          Minimum <strong className="text-white">1 lux</strong> across the full width
                           of the escape route at floor level
                         </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                         <span>
-                          50% of the centre line width must achieve at least 0.5 lux for adequate
+                          borders are excluded — 0.5 m each side above 2 m width, or a quarter of the width at 2 m or less, for adequate
                           uniformity
                         </span>
                       </li>
@@ -816,7 +816,7 @@ export default function FireSafetyModule3Section4() {
                     {
                       location: 'Along escape routes',
                       detail:
-                        'Corridors, passageways, and other routes forming part of the means of escape must achieve minimum 1 lux on the centre line',
+                        'Corridors, passageways, and other routes forming part of the means of escape must achieve minimum 1 lux across the full width',
                     },
                     {
                       location: 'At changes of direction',
@@ -1310,7 +1310,7 @@ export default function FireSafetyModule3Section4() {
                   {/* Illumination categories */}
                   <div className="grid grid-cols-3 gap-2 w-full max-w-lg">
                     {[
-                      { label: 'Escape Route', sub: '1 lux centre line' },
+                      { label: 'Escape Route', sub: '1 lux full width' },
                       { label: 'Open Area', sub: '0.5 lux floor level' },
                       { label: 'High-Risk Task', sub: '10% or 15 lux min' },
                     ].map((item, i) => (

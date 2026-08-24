@@ -135,7 +135,7 @@ export default function ElectricianInvoiceAppPage() {
       'Digital invoicing app for UK electricians. Stripe card payments, Xero and QuickBooks sync, automatic payment chasing, VAT and CIS compliance.',
     breadcrumbs: [
       { name: 'Home', url: '/' },
-      { name: 'Electrician Invoice App', url: '/tools/electrician-invoice-app' },
+      { name: 'Electrician Invoice App', url: '/electrician-invoice-app' },
     ],
     dateModified: '2026-06-10',
     author: 'Andrew Moore',

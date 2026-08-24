@@ -84,9 +84,9 @@ export const emergencyLightingModule5Section3QuizQuestions: QuizQuestion[] = [
     question:
       'Which set of details must be recorded for each entry in the emergency lighting logbook?',
     options: [
-      'Battery manufacturer, cell chemistry, and warranty expiry date',
-      'Ambient temperature, humidity, and lux level at the time of test',
-      'Names of all occupants present in the building during the test',
+      'Battery manufacturer, cell chemistry, warranty expiry date, and rated charge current',
+      'Ambient temperature, relative humidity, and the measured lux level at each luminaire',
+      'Names of every occupant present in the building and the time at which testing started',
       'Date of test, type of test, person conducting test, pass/fail results, defects and remedial action',
     ],
     correctAnswer: 3,
@@ -110,10 +110,10 @@ export const emergencyLightingModule5Section3QuizQuestions: QuizQuestion[] = [
     id: 9,
     question: 'What is the risk of failing to keep emergency lighting test records?',
     options: [
-      'The self-test luminaires will automatically disable themselves',
+      'The self-test luminaires will disable themselves and stop reporting faults to the panel',
       'Insurance may be invalid, enforcement notices issued, and the Responsible Person may face prosecution',
-      'The batteries will lose their rated 3-hour duration capacity',
-      'The fire alarm panel will register a permanent fault condition',
+      'The batteries will progressively lose their rated duration capacity within a few months',
+      'The fire alarm panel will register a permanent fault condition until records are made',
     ],
     correctAnswer: 1,
     explanation:
@@ -123,10 +123,10 @@ export const emergencyLightingModule5Section3QuizQuestions: QuizQuestion[] = [
     id: 10,
     question: 'What happened at the Birmingham retail park case study?',
     options: [
-      'A short-circuit in the central battery system caused a small fire during testing',
-      'The wrong duration of luminaire was installed, failing the annual three-hour test',
+      'A short circuit in the central battery system started a small fire while routine testing was being carried out',
+      'The wrong duration of luminaire had been installed throughout, so the annual duration test was failed',
       'Fire inspection found working lights but no logbook records, resulting in an enforcement notice and £5,150 remedial costs',
-      'Staggered testing left one floor without emergency lighting when a power cut occurred',
+      'Staggered testing left an entire floor with no emergency lighting at all when a power cut occurred',
     ],
     correctAnswer: 2,
     explanation:

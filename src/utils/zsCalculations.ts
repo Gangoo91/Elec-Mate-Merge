@@ -9,6 +9,7 @@ import {
   FUSE_ZS_LIMITS_5S,
   getZsLimitFromDeviceString,
   getMcbZsLimit,
+  getBs3871ZsLimit,
   getFuseZsLimit,
   getDisconnectionTimeForCircuit,
   checkZsCompliance as checkZsComplianceFromData,
@@ -19,6 +20,7 @@ import {
   ZS_TEMP_FACTOR_PRACTICAL,
   type DisconnectionTime,
   type MCBCurve,
+  type BS3871Type,
   type FuseType,
   type ZsLookupResult,
 } from '@/data/zsLimits';
@@ -193,6 +195,26 @@ export const getMaxZsFromDeviceDetails = (
 
   // Handle shorthand and full standard formats
   const standardLower = bsStandard.toLowerCase();
+
+  /*
+   * BS 3871-1 circuit-breakers — ELE-1604.
+   *
+   * MUST be tested before BS EN 60898, because a Type 1/2/3/4 device carries a
+   * completely different trip multiple (4x / 7x / 10x / 50x In) and falling
+   * through to the Table 41.3 B/C/D lookup would quietly return the wrong
+   * limit rather than nothing. A wrong Max Zs is worse than a blank one: it
+   * prints on the certificate as a judged value.
+   *
+   * Curve arrives as '1'|'2'|'3'|'4' from the Type column. A BS 3871 row with
+   * no type selected returns null — we cannot guess which curve an old breaker
+   * is, and the Type is moulded on the device for the inspector to read.
+   */
+  if (standardLower.includes('3871')) {
+    const typeKey = `type${String(curve).trim()}` as BS3871Type;
+    if (!['type1', 'type2', 'type3', 'type4'].includes(typeKey)) return null;
+    const result = getBs3871ZsLimit(typeKey, ratingNum, disconnectionTime);
+    return result?.maxZs ?? null;
+  }
 
   // MCB (BS EN 60898)
   if (standardLower.includes('60898') || standardLower === 'mcb') {

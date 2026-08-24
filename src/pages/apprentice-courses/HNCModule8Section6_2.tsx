@@ -183,7 +183,7 @@ const quizQuestions = [
     question: 'What type of emergency lighting is required in plant rooms according to BS 5266?',
     options: [
       'High-risk task area lighting providing minimum 10% of normal illuminance',
-      'Escape route lighting providing a minimum of 1 lux along the centre line',
+      'Escape route lighting providing a minimum of 1 lux across the full width',
       'Standby lighting restoring 100% of normal illuminance within 5 seconds',
       'Open area (anti-panic) lighting covering the core floor space only',
     ],

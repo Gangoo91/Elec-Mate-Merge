@@ -525,7 +525,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Commercial systems</strong> — a BS 5839 Part 1 commissioning certificate
+                <strong>Commercial systems</strong> — a BS 5839 Part 1{' '}
+                <SEOInternalLink href="/guides/fire-alarm-certificate-requirements">
+                  commissioning certificate
+                </SEOInternalLink>{' '}
                 including system verification, zone testing, sounder level measurements, and cause
                 and effect testing. A full set of as-built drawings and zone charts must be
                 provided.

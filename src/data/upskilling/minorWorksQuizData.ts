@@ -66,7 +66,7 @@ export const minorWorksQuizQuestions: QuizQuestion[] = [
     ],
     correctAnswer: 1,
     explanation:
-      'RCD operating time at 5×IΔn must be ≤40ms for socket outlet circuits. At 1×IΔn, the maximum is 300ms.',
+      'At five times the rated residual current a general non-delay RCD operates within 40 ms. 40 ms at 5xIdn is the BS EN 61008/61009 PRODUCT-STANDARD figure — it describes the device, not the BS 7671 verification. Amendment 4 deleted Table 3A of Appendix 3, and effectiveness is now verified by an AC test at the rated residual operating current: 300 ms maximum for a general non-delay type, or between 130 ms and 500 ms for a delay Type S (Reg 643.7.3).',
   },
   {
     id: 6,
@@ -127,10 +127,10 @@ export const minorWorksQuizQuestions: QuizQuestion[] = [
     question:
       'What should be done if work scope exceeds minor works limitations during installation?',
     options: [
-      'Continue with Minor Works Certificate anyway',
-      'Split the work across multiple Minor Works Certificates',
+      'Carry on and issue a Minor Works Certificate regardless',
+      'Split the work across several Minor Works Certificates',
       'Stop work and complete under appropriate EIC certification',
-      'Ignore the limitations and complete the work',
+      'Continue and record the variation in the site diary only',
     ],
     correctAnswer: 2,
     explanation:

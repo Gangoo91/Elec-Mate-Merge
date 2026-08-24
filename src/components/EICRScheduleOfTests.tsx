@@ -34,7 +34,8 @@ import {
   getCircuitsForBoard,
   formatBoardsForFormData,
 } from '@/utils/boardMigration';
-import { isSpareCircuit, describeBulkFill } from '@/utils/spareWays';
+import { isSpareCircuit } from '@/utils/spareWays';
+import { planColumnFill, describeColumnFill } from '@/utils/columnFill';
 import { getSpareCircuitFields } from '@/utils/spareCircuitFields';
 import {
   getNextCircuitNumber,
@@ -2217,30 +2218,44 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
   // Bulk field update — sets a single field to the same value. The tables pass
   // the ids of the circuits THEY render (one board's worth); scoping to those
   // ids is what stops a header Fill on Board 2 overwriting Board 1.
-  const handleBulkFieldUpdate = (field: keyof TestResult, value: string, circuitIds?: string[]) => {
-    const scope = circuitIds ? new Set(circuitIds) : null;
+  const handleBulkFieldUpdate = (
+    field: keyof TestResult,
+    value: string,
+    circuitIds?: string[],
+    /**
+     * ELE-1605 — `onlyBlank` fills empty cells and leaves recorded readings
+     * alone. The column-fill control passes it by default; overwriting is a
+     * separate, labelled choice there because these are test results on a
+     * signed document and a silent replacement is unrecoverable.
+     *
+     * Optional, so every existing caller keeps its previous behaviour.
+     */
+    options?: { onlyBlank?: boolean }
+  ) => {
     setTestResults((prev) => {
-      // A spare way is an empty position — there is no circuit to measure, so a
-      // bulk fill must not write a reading into it. The board scanner already
-      // sets these to 'N/A'; without this guard one tap on "Fill all" replaced
-      // that with a result. See utils/spareWays for the production numbers.
-      let filled = 0;
-      let skipped = 0;
-      const updatedResults = prev.map((result) => {
-        if (scope && !scope.has(result.id)) return result;
-        if (isSpareCircuit(result)) {
-          skipped += 1;
-          return result;
-        }
-        filled += 1;
-        return {
-          ...result,
-          [field]: value,
-          // Clear autoFilled flag when user makes bulk changes
-          autoFilled: result.autoFilled ? false : result.autoFilled,
-        };
-      });
-      if (skipped > 0) toast.success(describeBulkFill(filled, skipped));
+      /*
+       * A spare way is an empty position — there is no circuit to measure, so a
+       * bulk fill must not write a reading into it. The board scanner already
+       * sets these to 'N/A'; without this guard one tap on "Fill all" replaced
+       * that with a result. See utils/spareWays for the production numbers.
+       *
+       * That rule, the board scoping and the ELE-1605 existing-reading rule all
+       * live in `planColumnFill` so they can be asserted (check:eicr) and so
+       * the table's fallback path cannot drift from this one.
+       */
+      const plan = planColumnFill(prev, field as string, options?.onlyBlank ? 'blank' : 'overwrite', circuitIds);
+      const writeTo = new Set(plan.fillIds);
+      const updatedResults = prev.map((result) =>
+        writeTo.has(result.id)
+          ? {
+              ...result,
+              [field]: value,
+              // Clear autoFilled flag when user makes bulk changes
+              autoFilled: result.autoFilled ? false : result.autoFilled,
+            }
+          : result
+      );
+      if (plan.kept > 0 || plan.skipped > 0) toast.success(describeColumnFill(plan, value));
       queueMicrotask(() => onUpdate('scheduleOfTests', updatedResults));
       return updatedResults;
     });

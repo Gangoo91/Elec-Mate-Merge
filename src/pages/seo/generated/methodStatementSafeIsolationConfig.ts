@@ -300,7 +300,7 @@ export const methodStatementSafeIsolationConfig: GeneratedGuideConfig = {
   ],
   relatedPages: [
     {
-      href: '/tools/rams-generator',
+      href: '/rams-generator',
       title: 'RAMS Generator',
       description: 'Generate site-specific RAMS that include the 10-step safe isolation procedure, GS38 equipment list and BS 7671 references in minutes.',
       icon: 'FileText',

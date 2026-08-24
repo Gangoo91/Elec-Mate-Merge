@@ -47,7 +47,7 @@ const EmergencyLightingStandardsQuiz = () => {
       options: ['0.2 lux', '1 lux', '5 lux', '15 lux'],
       correctAnswer: 1,
       explanation:
-        'BS EN 1838 specifies a minimum of 1 lux along the centre line of an escape route, measured at floor level.',
+        'BS EN 1838:2024 specifies a minimum of 1 lux across the FULL WIDTH of an escape route, measured at floor level — the 2013 edition required it only along the centre line.',
     },
     {
       id: 6,

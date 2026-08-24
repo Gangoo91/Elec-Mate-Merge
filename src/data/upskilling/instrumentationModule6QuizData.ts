@@ -3,10 +3,10 @@ export const instrumentationModule6Section1Questions = [
     id: 1,
     question: 'What is the formal definition of calibration?',
     options: [
-      'The act of adjusting an instrument so that its output reads exactly zero error at every point',
+      'The act of adjusting an instrument until its output reads with exactly zero error at every point of its range',
       'Comparison of measurement values delivered by a device under test with those of a calibration standard of known accuracy',
-      'The routine replacement of measuring instruments at fixed intervals to maintain accuracy',
-      'The process of cleaning and servicing an instrument to restore it to factory condition',
+      'The routine replacement of measuring instruments at fixed intervals in order to maintain their accuracy',
+      'The process of cleaning and servicing an instrument so as to restore it to its original factory condition',
     ],
     correctAnswer: 1,
     explanation:
@@ -29,9 +29,9 @@ export const instrumentationModule6Section1Questions = [
     id: 3,
     question: 'What is the difference between calibration and adjustment?',
     options: [
-      "Calibration corrects the instrument's output, whereas adjustment only records the measured error without changing anything",
-      "There is no difference; the two terms describe exactly the same process",
-      "Calibration applies only to electrical instruments, whereas adjustment applies only to mechanical ones",
+      'Calibration corrects the instrument\'s output, whereas adjustment merely records the measured error without changing anything at all',
+      'There is no practical difference between them, since both terms describe exactly the same process carried out on the instrument',
+      'Calibration applies only to electrical instruments, whereas adjustment applies only to mechanical ones such as pressure gauges',
       "Calibration determines the relationship between measured and actual values; adjustment brings the instrument's response within acceptable limits",
     ],
     correctAnswer: 3,
@@ -139,10 +139,10 @@ export const instrumentationModule6Section3Questions = [
     id: 1,
     question: 'What is the first critical safety step before any calibration work?',
     options: [
-      'Record the ambient temperature and humidity of the work area',
+      'Record the ambient temperature and humidity of the work area in the calibration sheet',
       'Switch off and lock out electrical supplies, close isolation valves, and vent trapped pressure',
-      'Confirm the reference standard is within its calibration due date',
-      'Photograph the instrument nameplate for the calibration record',
+      'Confirm that the reference standard is still within its stated calibration due date',
+      'Photograph the instrument nameplate and its tag number for the calibration record',
     ],
     correctAnswer: 1,
     explanation:
@@ -152,10 +152,10 @@ export const instrumentationModule6Section3Questions = [
     id: 2,
     question: 'For pressure device calibration, what points should be tested at minimum?',
     options: [
-      'Only the zero and full-scale points of the range',
-      'Three random points anywhere within the range',
+      '0% and 100% of range only',
+      'Three random points in range',
       '0%, 25%, 50%, 75%, and 100% of range',
-      'Only the normal operating point of the process',
+      'The normal operating point only',
     ],
     correctAnswer: 2,
     explanation:
@@ -180,9 +180,9 @@ export const instrumentationModule6Section3Questions = [
       'For electrical calibration, why is 4-wire connection recommended for resistance measurements?',
     options: [
       'It accounts for lead resistance and provides best accuracy',
-      "It's required by regulation",
-      'It looks more professional',
-      "It's faster to connect",
+      'It doubles the test current and so improves the reading',
+      'It isolates the instrument from mains supply interference',
+      'It allows the resistance to be measured while energised',
     ],
     correctAnswer: 0,
     explanation:
@@ -192,10 +192,10 @@ export const instrumentationModule6Section3Questions = [
     id: 5,
     question: 'What should be recorded during calibration besides the actual readings?',
     options: [
-      'Only the final pass or fail result of the calibration',
+      'The final pass or fail result of the calibration and nothing further about how it was done',
       'Environmental conditions, reference standards used, technician ID, timestamps, and any adjustments made',
-      'Only the date the next calibration is due',
-      'Only the make and model of the device under test',
+      'Nothing more than the date on which the next calibration of the instrument falls due',
+      'The make and model of the device under test, with no other information recorded at all',
     ],
     correctAnswer: 1,
     explanation:
@@ -208,10 +208,10 @@ export const instrumentationModule6Section4Questions = [
     id: 1,
     question: 'What information MUST be recorded for device identification in calibration records?',
     options: [
-      'Only the manufacturer and model number of the device',
+      'The manufacturer and model number of the device, with nothing else recorded',
       'Unique Device ID, manufacturer & model, location, range & units, and accuracy class',
-      'Only the purchase price and date the device was acquired',
-      'Only the name of the technician who last used the device',
+      'The purchase price of the device and the date on which it was first acquired',
+      'The name of the technician who last used the device out on the process plant',
     ],
     correctAnswer: 1,
     explanation:
@@ -277,10 +277,10 @@ export const instrumentationModule6Section5Questions = [
     id: 1,
     question: 'What factors should be considered when determining calibration intervals?',
     options: [
-      'Only the original purchase price of the instrument',
+      'The original purchase price of the instrument alone, with no other factor taken into account when scheduling',
       'Environmental conditions, usage frequency, instrument stability, regulatory requirements, and criticality of measurements',
-      'Only the physical size and weight of the instrument',
-      'Only the brand reputation of the instrument manufacturer',
+      'The physical size and weight of the instrument, with no regard to how or where it is actually being used',
+      'The brand reputation of the manufacturer, on the basis that well-known makes need checking far less often',
     ],
     correctAnswer: 1,
     explanation:
@@ -290,10 +290,10 @@ export const instrumentationModule6Section5Questions = [
     id: 2,
     question: 'What does UKAS traceability ensure?',
     options: [
-      'That every instrument is calibrated by the same laboratory each year',
-      'That calibration certificates are issued free of charge to the customer',
+      'That every instrument on the site is calibrated by the same accredited laboratory each year',
+      'That calibration certificates are issued free of charge to the customer whenever requested',
       'An unbroken chain of measurements linking field instruments to national standards maintained by NPL',
-      'That instruments never need recalibration once UKAS certified',
+      'That an instrument never needs recalibrating again once it has been UKAS certified',
     ],
     correctAnswer: 2,
     explanation:
@@ -303,9 +303,9 @@ export const instrumentationModule6Section5Questions = [
     id: 3,
     question: 'When should immediate recalibration be triggered?',
     options: [
-      'Only at the scheduled interval, regardless of the instrument condition',
-      'Whenever the instrument is moved to a different bench',
-      'Only when the customer specifically requests it in writing',
+      'At the scheduled interval alone, whatever condition the instrument is found in',
+      'Whenever the instrument is moved from one bench to another within the workshop',
+      'When the customer specifically asks for it in writing, and at no other time at all',
       'After physical damage, unusual readings, failed checks, repairs, or exposure to extremes',
     ],
     correctAnswer: 3,
@@ -317,9 +317,9 @@ export const instrumentationModule6Section5Questions = [
     question: 'What are the benefits of risk-based calibration scheduling?',
     options: [
       'Optimised resource allocation, more frequent calibration for critical instruments, and cost-effective use of calibration resources',
-      'It removes the need to calibrate any low-criticality instruments at all',
-      'It allows every instrument to share a single fixed calibration interval',
-      'It guarantees no instrument will ever be found out of tolerance',
+      'Complete removal of calibration for all low-criticality instruments, with no records kept for them at any point',
+      'A single fixed calibration interval applied to every instrument on the site, regardless of its duty or its importance',
+      'A guarantee that no instrument will ever be found out of tolerance between its scheduled calibration dates',
     ],
     correctAnswer: 0,
     explanation:
@@ -329,10 +329,10 @@ export const instrumentationModule6Section5Questions = [
     id: 5,
     question: 'Why is a site-wide calibration program important?',
     options: [
-      'It allows individual departments to set their own measurement standards',
+      'To allow individual departments to set their own measurement standards and calibration intervals entirely independently',
       'To ensure consistent measurement quality, regulatory compliance, optimised costs, and systematic management of all measuring equipment',
-      'It removes the need for traceability to national standards',
-      'It reduces the number of instruments that require any calibration',
+      'To remove the requirement for any measurement on the site to be traceable back to national measurement standards',
+      'To reduce the total number of instruments that require any form of calibration at all across the whole site',
     ],
     correctAnswer: 1,
     explanation:
@@ -345,10 +345,10 @@ export const instrumentationModule6Section6Questions = [
     id: 1,
     question: 'What is the difference between Type A and Type B uncertainty?',
     options: [
-      'Type A applies to electrical measurements; Type B applies to mechanical measurements',
+      'Type A applies only to electrical measurements, while Type B applies only to mechanical measurements such as pressure and flow',
       'Type A is evaluated by statistical analysis of repeated measurements; Type B is evaluated by other means such as specifications or prior knowledge',
-      'Type A is always larger than Type B and dominates the combined uncertainty',
-      'Type A is the uncertainty of the standard; Type B is the uncertainty of the device under test',
+      'Type A is always larger than Type B and therefore dominates the combined standard uncertainty in every calibration carried out',
+      'Type A is the uncertainty of the reference standard being used, while Type B is the uncertainty of the device that is under test on site',
     ],
     correctAnswer: 1,
     explanation:
@@ -358,10 +358,10 @@ export const instrumentationModule6Section6Questions = [
     id: 2,
     question: 'What are the benefits of in-situ calibration?',
     options: [
-      'It always achieves lower measurement uncertainty than laboratory calibration',
-      'It removes the need for the calibration to be traceable to national standards',
+      'Consistently lower measurement uncertainty than any laboratory calibration could achieve on the same instrument type',
+      'No requirement for the calibration to remain traceable to national standards, because the work is done on site',
       'No removal from service, calibration under actual operating conditions, includes installation effects, and reduced downtime costs',
-      'It allows the instrument to be calibrated without any reference standard',
+      'No need for any reference standard at all, since the instrument is checked directly against the process itself',
     ],
     correctAnswer: 2,
     explanation:
@@ -371,9 +371,9 @@ export const instrumentationModule6Section6Questions = [
     id: 3,
     question: 'How do you troubleshoot repeatability problems in calibration?',
     options: [
-      'Increase the calibration interval so the problem is observed less often',
-      'Accept the scatter and report only the average of the readings',
-      'Replace the reference standard with a less accurate one to reduce variation',
+      'Lengthen the calibration interval so that the scatter in the readings is observed far less often, then carry on using the instrument',
+      'Accept the scatter in the results, report only the average of the readings taken, and record the instrument as being within its stated tolerance',
+      'Replace the reference standard with a less accurate one so that the observed variation appears smaller against the wider tolerance',
       'Allow proper stabilisation time, control environmental conditions, check for mechanical wear or electrical noise, and implement shielding if necessary',
     ],
     correctAnswer: 3,
@@ -385,9 +385,9 @@ export const instrumentationModule6Section6Questions = [
     question: 'What emerging technologies are affecting modern calibration practices?',
     options: [
       'AI for predictive calibration, IoT connectivity, blockchain certificates, automated calibration systems, and cloud-based management platforms',
-      'A return to purely manual paper-based record keeping with no software',
-      'The removal of measurement uncertainty from calibration certificates',
-      'The abandonment of traceability to national measurement standards',
+      'A return to purely manual paper-based record keeping, with no software support of any kind on site or in the laboratory',
+      'The removal of measurement uncertainty statements from every calibration certificate that is issued to customers by laboratories',
+      'The abandonment of traceability to national measurement standards in favour of in-house references held by each department',
     ],
     correctAnswer: 0,
     explanation:
@@ -397,10 +397,10 @@ export const instrumentationModule6Section6Questions = [
     id: 5,
     question: 'What are key calibration best practices for professional implementation?',
     options: [
-      'Calibrating from memory without referring to a written procedure',
+      'Calibrating from memory without any written procedure, recording only the results that look reasonable, and skipping any review of the recorded data',
       'Proper preparation and stabilisation, systematic approach following procedures, comprehensive documentation, trend monitoring, and continuous process improvement',
-      'Recording only the readings that fall within tolerance',
-      'Skipping documentation to save time on routine calibrations',
+      'Recording only the readings that fall within tolerance, discarding all the rest, and reporting the instrument as fully compliant on the certificate',
+      'Skipping the documentation entirely to save time on routine calibrations, then reconstructing the figures from memory at the end of the quarter',
     ],
     correctAnswer: 1,
     explanation:

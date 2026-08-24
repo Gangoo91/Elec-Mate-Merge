@@ -102,7 +102,7 @@
 
       <div class="accent">
         <strong>Effective date:</strong> 27 February 2026 ·
-        <strong>Last updated:</strong> 19 May 2026
+        <strong>Last updated:</strong> 24 August 2026
       </div>
 
       <h2>1. Data Controller</h2>
@@ -164,6 +164,22 @@
         <li>Crash reports and performance telemetry</li>
       </ul>
 
+      <h3>Health &amp; Safety Records (Special Category Data)</h3>
+      <p>
+        If you use the site safety tools to record an accident, incident or near miss, that record
+        can include details about a person's injuries and any first aid given — their name, role and
+        employer, the type and description of the injury, the first aid administered, and where and
+        when it happened. Under Article 9 UK GDPR this is <strong>special category data</strong> and
+        it carries a higher bar than everything else on this page.
+      </p>
+      <p>
+        You are the controller of these records: they exist so you can meet your own duties under
+        RIDDOR and the Health and Safety at Work etc. Act 1974. We process them as your processor,
+        relying on Article 9(2)(b) — obligations in the field of employment and social protection —
+        together with Schedule 1 Part 1 of the Data Protection Act 2018. They are restricted to your
+        account, are never used to train AI models, and never appear in any published statistics.
+      </p>
+
       <h2>3. How We Use Your Data</h2>
       <ul>
         <li><strong>Service delivery</strong> — providing the certificates, quotes, invoices, calculators, study modules and AI features that make up Elec-Mate.</li>
@@ -171,6 +187,7 @@
         <li><strong>Communication</strong> — sending transactional emails, push notifications and (with your consent) marketing.</li>
         <li><strong>AI-powered features</strong> — passing your prompts and selected context to our AI models so they can answer regs questions, write quotes, generate RAMS, etc. We do not use your data to train third-party AI models.</li>
         <li><strong>Platform improvement</strong> — anonymous aggregate analytics to find bugs and improve features.</li>
+        <li><strong>Published industry statistics</strong> — we publish anonymised, aggregated statistics about the UK electrical trade drawn from activity on the platform: typical quote values by job type, regional price ranges, how often particular defects are recorded on inspections, distributions of test readings, exam pass rates. These are counts, medians and percentages calculated across many users at once. No individual user, client, property or job is identifiable in anything we publish; we never publish your name, your business, your clients, addresses, individual certificates, quotes or invoices, and we do not publish a figure derived from so few records that anyone could be singled out from it. Nothing in this category is sold or shared with advertisers. Our lawful basis is legitimate interests (Article 6(1)(f)) — producing free, accurate benchmarks for the trade — and if you would rather your activity was excluded from these aggregates entirely, email us and we will exclude it.</li>
         <li><strong>Legal &amp; security</strong> — fraud prevention, security monitoring, complying with HMRC / Companies Act / VAT obligations.</li>
       </ul>
 
@@ -186,12 +203,14 @@
       <h2>5. Who We Share Your Data With</h2>
       <p>We do not sell your data. We share it only with vetted sub-processors who deliver the platform on our behalf:</p>
       <ul>
-        <li><strong>Supabase</strong> — database hosting, authentication, edge functions (EU/UK region)</li>
+        <li><strong>Supabase</strong> — database hosting, authentication, edge functions. Your account and certificates are held in the UK (London).</li>
         <li><strong>Vercel</strong> — web hosting and CDN</li>
         <li><strong>Stripe</strong> — payment processing (subscriptions and invoices)</li>
         <li><strong>RevenueCat</strong> — mobile in-app subscription management</li>
         <li><strong>Apple App Store / Google Play</strong> — app distribution and mobile purchase processing</li>
-        <li><strong>Brevo / Resend</strong> — transactional email delivery</li>
+        <li><strong>Brevo</strong> — transactional and service email delivery</li>
+        <li><strong>PDFMonkey</strong> — rendering your certificates and reports to PDF. Receives the contents of the document being produced, including client name, installation address and signatures.</li>
+        <li><strong>Twilio / Vonage</strong> — SMS one-time codes, where you choose to verify a phone number</li>
         <li><strong>OpenAI / Anthropic / Google</strong> — AI inference for the Elec-AI, Circuit Designer and Mate assistants. Prompts are not used to train these models.</li>
         <li><strong>Sentry</strong> — error and performance monitoring</li>
         <li><strong>Google Maps</strong> — geocoding and map rendering when you use map features</li>

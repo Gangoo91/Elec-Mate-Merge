@@ -37,6 +37,8 @@ import FlashcardAchievements from '@/components/apprentice/flashcards/FlashcardA
 import AchievementUnlockToast from '@/components/apprentice/flashcards/AchievementUnlockToast';
 import WeeklyProgressCard from '@/components/apprentice/flashcards/WeeklyProgressCard';
 import { PullToRefresh } from '@/components/ui/pull-to-refresh';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useStudyStreak } from '@/hooks/useStudyStreak';
 import { useFlashcardProgress } from '@/hooks/useFlashcardProgress';
@@ -313,11 +315,16 @@ const OnJobFlashcards = () => {
 
         {/* First-time welcome banner */}
         {streak.totalSessions === 0 && masteredCards === 0 && (
-          <div className="flex items-center gap-3 p-4 bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl">
-            <Sparkles className="h-6 w-6 text-elec-yellow flex-shrink-0" />
+          <div
+            className={cn(
+              'flex items-center gap-3 rounded-2xl border border-elec-yellow/35 p-4',
+              CARD_SURFACE
+            )}
+          >
+            <Sparkles className="h-6 w-6 flex-shrink-0 text-elec-yellow" />
             <div>
-              <p className="text-sm font-semibold text-white">Welcome to Flashcards!</p>
-              <p className="text-xs text-white mt-0.5">
+              <p className="text-sm font-semibold text-white">Welcome to Flashcards</p>
+              <p className="mt-0.5 text-xs text-white">
                 Pick a set below to start studying. Swipe right for cards you know, left to practise
                 again.
               </p>
@@ -332,15 +339,13 @@ const OnJobFlashcards = () => {
               key={tab.id}
               type="button"
               onClick={() => setActiveLevel(tab.id)}
-              className={`
-              flex-1 min-h-[44px] py-2 rounded-lg text-sm font-medium
-              border touch-manipulation active:scale-[0.96] transition-all
-              ${
+              className={cn(
+                'min-h-[44px] flex-1 rounded-xl border py-2 text-sm font-semibold',
+                'touch-manipulation transition-all active:scale-[0.96]',
                 activeLevel === tab.id
-                  ? 'bg-elec-yellow/20 border-elec-yellow/40 text-elec-yellow'
-                  : 'bg-white/5 border-white/10 text-white'
-              }
-            `}
+                  ? 'border-elec-yellow bg-elec-yellow text-black'
+                  : cn('border-elec-yellow/35 text-white', CARD_SURFACE)
+              )}
             >
               {tab.label}
             </button>
@@ -354,11 +359,18 @@ const OnJobFlashcards = () => {
             return (
               <div
                 key={pill.label}
-                className="bg-white/5 border border-white/10 rounded-xl p-2.5 text-center"
+                className={cn(
+                  'rounded-2xl border border-elec-yellow/35 px-2 py-3 text-center',
+                  CARD_SURFACE
+                )}
               >
-                <PillIcon className={`h-4 w-4 mx-auto mb-1 ${pill.colour}`} />
-                <div className={`text-sm font-bold ${pill.colour}`}>{pill.value}</div>
-                <div className="text-[10px] text-white">{pill.label}</div>
+                <PillIcon className={cn('mx-auto mb-1.5 h-4 w-4', pill.colour)} />
+                <div className={cn('text-[19px] font-bold leading-none tabular-nums', pill.colour)}>
+                  {pill.value}
+                </div>
+                <div className="mt-1.5 text-[10px] font-medium uppercase tracking-[0.14em] text-white">
+                  {pill.label}
+                </div>
               </div>
             );
           })}
@@ -369,8 +381,13 @@ const OnJobFlashcards = () => {
 
         {/* Streak reminder */}
         {!streakInfo.studiedToday && (
-          <div className="flex items-center gap-3 p-3 bg-amber-500/10 border border-amber-500/30 rounded-xl">
-            <Clock className="h-5 w-5 text-amber-400 flex-shrink-0" />
+          <div
+            className={cn(
+              'flex items-center gap-3 rounded-2xl border border-orange-400 p-3.5',
+              CARD_SURFACE
+            )}
+          >
+            <Clock className="h-5 w-5 flex-shrink-0 text-orange-300" />
             <p className="text-sm text-white">
               Complete a session today to keep your streak alive.
             </p>
@@ -384,15 +401,13 @@ const OnJobFlashcards = () => {
               key={cat.id}
               type="button"
               onClick={() => setActiveCategory(activeCategory === cat.id ? 'all' : cat.id)}
-              className={`
-              min-h-[44px] px-3 py-1.5 rounded-lg text-xs font-medium
-              border touch-manipulation active:scale-[0.96] transition-all
-              ${
+              className={cn(
+                'min-h-[44px] rounded-full border px-4 text-xs font-semibold',
+                'touch-manipulation transition-all active:scale-[0.96]',
                 activeCategory === cat.id
-                  ? 'bg-elec-yellow/20 border-elec-yellow/40 text-elec-yellow'
-                  : 'bg-white/5 border-white/10 text-white'
-              }
-            `}
+                  ? 'border-elec-yellow bg-elec-yellow text-black'
+                  : cn('border-elec-yellow/35 text-white', CARD_SURFACE)
+              )}
             >
               {cat.label}
             </button>

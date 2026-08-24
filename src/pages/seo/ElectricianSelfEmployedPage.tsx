@@ -379,7 +379,7 @@ const sections = [
         </p>
         <p>
           The three main schemes for electricians are{' '}
-          <SEOInternalLink href="/guides/niceic-vs-napit">
+          <SEOInternalLink href="/niceic-vs-napit-comparison">
             NICEIC, NAPIT, and ELECSA
           </SEOInternalLink>
           . All three are government-authorised and allow you to self-certify notifiable work under

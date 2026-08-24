@@ -237,7 +237,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Escape routes</strong> — Minimum 1 lux on the centre line of all corridors,
+                <strong>Escape routes</strong> — Minimum 1 lux across the full width of all corridors,
                 stairways, and routes to final exits. Self-contained LED fittings with 3-hour
                 duration.
               </span>

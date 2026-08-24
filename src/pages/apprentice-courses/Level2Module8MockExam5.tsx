@@ -178,7 +178,7 @@ const Level2Module8MockExam5 = () => {
         totalQuestions={60}
         bankSize={module5QuestionBank.length}
         timeLimitMinutes={90}
-        passThreshold={70}
+        passThreshold={60}
         topics={[
           'Site roles',
           'Statutory framework',
@@ -215,7 +215,7 @@ const Level2Module8MockExam5 = () => {
         exitLabel={examExit.label}
         questions={examQuestions}
         answers={answersArray}
-        passThreshold={70}
+        passThreshold={60}
         history={history}
         onReview={() => setReviewMode(true)}
         onRetake={startExam}

@@ -3403,6 +3403,904 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     topic: 'System Inertia',
     category: 'Grid Connection',
   },
+  {
+    id: 201,
+    question:
+      'Which photovoltaic arrangements fall within the scope of Section 712 of BS 7671:2018+A4:2026?',
+    options: [
+      'Grid-parallel PV systems and no other arrangement whatever',
+      'Standalone, grid-parallel and alternative-to-supply PV systems',
+      'Only PV systems exceeding a stated inverter power rating',
+      'PV systems mounted on roofs but not those at ground level',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Section 712 states its scope as PV installations not connected to a system for distribution of electricity to the public, PV installations in parallel with such a system, and PV installations acting as an alternative to it. Island and off-grid arrays are therefore in scope, which is why the grid-parallel-only answer is wrong. There is no power threshold and no roof-versus-ground distinction in the scope statement.',
+    section: 'Module 1',
+    difficulty: 'advanced',
+    topic: 'Solar PV',
+    category: 'Solar PV',
+  },
+  {
+    id: 202,
+    question:
+      'In a solar PV installation, what does Section 712 treat as the start point of the electrical installation?',
+    options: [
+      'The DC isolator mounted next to the inverter enclosure',
+      'The AC terminals of the inverter at the supply interface',
+      'The PV modules in series with cables supplied by the maker',
+      'The consumer unit where the generation circuit is landed',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Section 712 fixes the start point at the PV module, or set of modules connected in series, together with the cables provided by the module manufacturer. Selection, earthing and protection duties therefore begin at the array itself. Treating the DC isolator or the inverter AC terminals as the start point would leave the whole DC string outside the designer scope, which is exactly the gap the regulation closes.',
+    section: 'Module 1',
+    difficulty: 'advanced',
+    topic: 'Solar PV',
+    category: 'Solar PV',
+  },
+  {
+    id: 203,
+    question:
+      'Regulation 712.514.102 requires a permanent warning notice at DC access points such as combiner boxes. What must that notice convey?',
+    options: [
+      'That array output varies with the prevailing sunlight level',
+      'That the enclosure must be tested before annual servicing',
+      'That the DC voltage is always below the low voltage band',
+      'That live parts may remain energised after isolation here',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'The notice warns that live parts may remain energised after isolation, because opening the AC side or the inverter switch does not de-energise an illuminated array. A notice about output varying with sunlight is true but is not a safety warning and does not satisfy the regulation. The DC side of a PV array can readily sit well above extra-low voltage, so the low voltage band claim is simply false.',
+    section: 'Module 7',
+    difficulty: 'advanced',
+    topic: 'Solar PV',
+    category: 'Installation & Safety',
+  },
+  {
+    id: 204,
+    question:
+      'A separate insulation monitoring device is fitted to an unearthed PV array. To which standard must it be selected under Regulation 712.538.101?',
+    options: [
+      'BS EN 62305-3, the lightning protection installation part',
+      'BS EN 61557-8, the insulation monitoring device standard',
+      'BS EN 60898-1, the standard for domestic circuit breakers',
+      'BS EN 61008-1, the standard covering RCCB type devices',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Regulation 712.538.101 requires an IMD to be selected in accordance with BS EN 61557-8, the product standard for insulation monitoring devices used on unearthed and separated systems. BS EN 61008-1 is attractive because an RCCB also detects earth faults, but an RCD measures residual current on a referenced system and cannot monitor insulation on an unearthed DC array.',
+    section: 'Module 2',
+    difficulty: 'advanced',
+    topic: 'Solar PV',
+    category: 'Solar PV',
+  },
+  {
+    id: 205,
+    question:
+      'Where the insulation monitoring function is built into the PV inverter rather than provided as a separate device, which standards does Regulation 712.538.101 accept?',
+    options: [
+      'BS EN 62109-2 alone, since it covers inverter equipment',
+      'Any standard chosen by the designer for the installation',
+      'BS EN 62109-2 or BS EN 61557-8 for the built-in function',
+      'BS EN 61557-8 alone, since it covers monitoring devices',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Where the IMD is an integral part of the inverter, 712.538.101 permits the function to comply with either BS EN 62109-2 or BS EN 61557-8. Answering with BS EN 61557-8 alone is the common slip, because that is the rule for a separate device, but the regulation deliberately widens the choice once the function sits inside power conversion equipment already assessed to BS EN 62109-2.',
+    section: 'Module 2',
+    difficulty: 'advanced',
+    topic: 'Solar PV',
+    category: 'Solar PV',
+  },
+  {
+    id: 206,
+    question:
+      'An RCD protects the AC supply circuit of PV power conversion equipment. In what case may a device other than a Type B RCD be used?',
+    options: [
+      'Where the inverter is rated below a stated output current',
+      'Where the circuit also has a surge protective device fitted',
+      'Where the cable to the inverter is run in a metallic conduit',
+      'Where the PCE gives at least simple separation of AC and DC',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'The default is a Type B RCD to BS EN 62423 or BS EN 60947-2, because DC fault current from the array can blind an ordinary device. That requirement is excepted where the power conversion equipment provides at least simple separation between its AC and DC sides, since smooth DC can then no longer reach the RCD. Adding an SPD or a metallic containment changes nothing about DC leakage, so neither creates an exception.',
+    section: 'Module 2',
+    difficulty: 'advanced',
+    topic: 'Solar PV',
+    category: 'Solar PV',
+  },
+  {
+    id: 207,
+    question:
+      'Regulation 712.542.101 requires the metallic structures supporting PV modules, including metallic cable management, to be bonded in which circumstance?',
+    options: [
+      'Where bonding is needed to prevent electrostatic charge build-up',
+      'Where the array is installed on any commercial building roof',
+      'Whenever the DC string voltage exceeds the extra-low band',
+      'Wherever modules are fixed to a structure made of any metal',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The duty in 712.542.101 is conditional, and the stated condition is that equipotential bonding is necessary to prevent the accumulation of electrostatic charge on the metallic supporting structures and cable management. It is tempting to read it as a blanket rule for every metal frame, but where no electrostatic risk arises the obligation under this clause does not bite at all.',
+    section: 'Module 2',
+    difficulty: 'intermediate',
+    topic: 'Solar PV',
+    category: 'Installation & Safety',
+  },
+  {
+    id: 208,
+    question:
+      'Where PV support structures are bonded under Regulation 712.542.101, where must that bonding conductor be connected?',
+    options: [
+      'To the DC negative conductor inside the array combiner box',
+      'To any suitable earthing terminal within the installation',
+      'Directly to a dedicated rod driven adjacent to the building',
+      'To the neutral bar of the board feeding the inverter circuit',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The regulation requires the bonding conductor to be connected to any suitable earthing terminal, which keeps the metalwork at the same potential as the rest of the installation. Driving a separate rod sounds thorough but creates a second, isolated earth reference that can leave a dangerous potential difference between the frame and the installation earth during a fault.',
+    section: 'Module 2',
+    difficulty: 'advanced',
+    topic: 'Solar PV',
+    category: 'Installation & Safety',
+  },
+  {
+    id: 209,
+    question:
+      'Why must the isolator used on the DC side of a PV array be a device specifically rated for DC duty?',
+    options: [
+      'Because DC current is always far higher than the AC equivalent',
+      'Because DC circuits carry harmonics that overheat the contacts',
+      'Because DC has no zero crossing so the arc is not self-quenching',
+      'Because DC voltage rises steeply once the array warms in service',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'An AC arc extinguishes naturally as the current passes through zero one hundred times a second. Direct current never crosses zero, so an arc drawn across opening contacts is sustained and must be stretched and cooled by the design of the device itself. The temperature answer is a trap in reverse: PV array voltage falls as cell temperature rises, it does not climb.',
+    section: 'Module 7',
+    difficulty: 'intermediate',
+    topic: 'Solar PV',
+    category: 'Solar PV',
+  },
+  {
+    id: 210,
+    question:
+      'Why is a solar PV array a particular hazard to anyone carrying out maintenance work on the system?',
+    options: [
+      'It stores charge in capacitors for several days after shutdown',
+      'It becomes live only once the inverter has been switched on',
+      'It is energised solely by the incoming public supply network',
+      'It generates a DC voltage whenever it is exposed to daylight',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'A module is a source, not a load. It produces voltage whenever light falls on it, so the DC side stays live no matter what has been switched off downstream. The belief that the array only goes live when the inverter is running is the classic and dangerous misunderstanding, and it is precisely why Section 712 demands warning notices at DC access points.',
+    section: 'Module 1',
+    difficulty: 'basic',
+    topic: 'Solar PV',
+    category: 'Maintenance',
+  },
+  {
+    id: 211,
+    question:
+      'The new Chapter 57 introduced by BS 7671:2018+A4:2026 sets requirements for which equipment?',
+    options: [
+      'Stationary secondary battery installations for storage and supply',
+      'All portable battery packs used on construction sites in the UK',
+      'Battery chargers forming part of emergency lighting luminaires',
+      'Vehicle traction batteries connected to a charging point supply',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Chapter 57 is new in A4:2026 and deals with stationary secondary battery installations whose designed purpose is the storage and supply of electrical installations, which is the domestic and commercial BESS the trade now installs routinely. Emergency lighting batteries are expressly excluded, and vehicle traction batteries belong to the vehicle, not to the fixed installation.',
+    section: 'Module 3',
+    difficulty: 'advanced',
+    topic: 'Battery Storage',
+    category: 'Energy Storage',
+  },
+  {
+    id: 212,
+    question:
+      'Which of the following battery installations sits outside the scope of Chapter 57?',
+    options: [
+      'A battery inside a pluggable uninterruptible power supply unit',
+      'A wall mounted home storage battery charged from a PV array',
+      'A floor standing battery cabinet serving a small commercial unit',
+      'A battery bank installed to store energy for an off-grid supply',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Chapter 57 excludes stationary secondary batteries inside products already covered by product safety standards, and pluggable UPS equipment is named as one of those exclusions along with fire and emergency lighting systems. A wall mounted home battery is not excluded simply because it is a manufactured unit, since it forms part of the fixed installation and is designed for storage and supply of that installation.',
+    section: 'Module 3',
+    difficulty: 'advanced',
+    topic: 'Battery Storage',
+    category: 'Energy Storage',
+  },
+  {
+    id: 213,
+    question:
+      'Within which Part of BS 7671:2018+A4:2026 has the new Chapter 57 been placed?',
+    options: [
+      'Part 6, because it concerns inspection and testing of batteries',
+      'Part 7, because battery rooms are treated as special locations',
+      'Part 3, because it concerns assessment of general characteristics',
+      'Part 5, selection and erection of equipment for installations',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Chapter 57 sits in Part 5, Selection and Erection of Equipment, alongside the other Chapter 5 material such as Chapter 55 on other equipment. Part 7 is a tempting answer because battery installations feel like a special location, but a stationary battery is equipment selected and erected within an ordinary installation rather than a location with its own particular external influences.',
+    section: 'Module 8',
+    difficulty: 'advanced',
+    topic: 'Battery Storage',
+    category: 'Energy Storage',
+  },
+  {
+    id: 214,
+    question:
+      'What does indent (c) of Regulation 551.7.1, as redrafted by Amendment A4:2026, require where energy flow is bidirectional?',
+    options: [
+      'A suitable protective device shall be provided for that circuit',
+      'A second earth electrode shall be installed at the source point',
+      'An additional main bonding conductor shall be run to the source',
+      'A separate metering position shall be provided for the exports',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Indent (c) requires a suitable protective device wherever the source and the supply can each deliver energy to the other, which covers export capable inverters and charging or discharging battery systems. Metering is a supplier matter rather than a BS 7671 protective requirement, and extra electrodes or bonding do nothing to address a device that may be fed from its downstream side.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'Grid Connection',
+    category: 'Energy Storage',
+  },
+  {
+    id: 215,
+    question:
+      'What does the new indent (d) of Regulation 551.7.1 introduce in relation to residual current devices?',
+    options: [
+      'A duty to test each RCD at five times its rated residual current',
+      'A conditional ban on connecting a source to the load side of an RCD',
+      'A requirement that every RCD in the installation be of Type AC',
+      'A rule that RCDs must be replaced whenever a source is added',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Indent (d) prohibits connecting a source on the load side of an RCD where the stated conditions apply, because a source downstream of the device can energise the circuit while the RCD is open and can also unbalance the sensing element. The prohibition is conditional rather than absolute, so the exact wording of the regulation must be read before a hybrid inverter is landed downstream of an RCD.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'Grid Connection',
+    category: 'Energy Storage',
+  },
+  {
+    id: 216,
+    question:
+      'The new indents added to Regulation 551.7.1 by A4:2026 apply to which types of source?',
+    options: [
+      'Only rotating generator sets driven by a combustion engine',
+      'Battery systems below a stated stored energy capacity in kWh',
+      'PV inverters, battery storage systems and generator sets alike',
+      'Standby generators fitted with a changeover switch, and nothing else',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'The requirements are triggered by the behaviour of the source, not by its technology, so PV inverters, battery energy storage systems and generating sets are all caught where they can export energy or could be connected on the load side of an RCD. Restricting the rule to rotating machines is the common error and would leave the majority of modern installations unprotected.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'Grid Connection',
+    category: 'Energy Storage',
+  },
+  {
+    id: 217,
+    question:
+      'Why does BS 7671 treat a battery energy storage system as a source of supply rather than as an ordinary load?',
+    options: [
+      'Because it can deliver energy back into the installation wiring',
+      'Because it is always installed on the supply side of the meter',
+      'Because it draws a very high current while it is being charged',
+      'Because it contains cells that are classified as hazardous goods',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Regulation 551.7.2.1 treats a battery system as a generating set because it can push energy back into the installation, which is what brings the whole of 551.7 into play for isolation, protection and prevention of reconnection. Charging current matters for cable sizing, but a heavy load is still only a load and would never attract the source of supply requirements.',
+    section: 'Module 3',
+    difficulty: 'advanced',
+    topic: 'Battery Storage',
+    category: 'Energy Storage',
+  },
+  {
+    id: 218,
+    question:
+      'An installation is fed from the public supply and also from a battery inverter. What does BS 7671 require in respect of isolation?',
+    options: [
+      'One main switch is enough provided it is lockable in the off position',
+      'The battery inverter may be isolated by unplugging its control cable',
+      'Isolation of the public supply automatically isolates the other source',
+      'A main switch suitable for isolation shall be provided for each source',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Where an installation is supplied from more than one source, a main switch suitable for isolation, such as a switch-disconnector, is required for each source, supported by a durable warning notice or an interlock. Opening the incoming main switch does nothing to the battery, which will keep the installation live, and a control cable is not an isolating device at all.',
+    section: 'Module 7',
+    difficulty: 'advanced',
+    topic: 'Isolation and Switching',
+    category: 'Energy Storage',
+  },
+  {
+    id: 219,
+    question:
+      'Regulation 514.15.1 lists the places where an alternative supply warning notice must be fixed. Which of these is one of them?',
+    options: [
+      'At every socket outlet on the final circuits nearest the source',
+      'At all points of isolation of all sources of supply in the premises',
+      'Inside the inverter enclosure where the terminals are accessible',
+      'At the loft hatch giving access to the roof space above the array',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Indent (d) of 514.15.1 requires the notice at all points of isolation of all sources of supply, alongside the origin, the meter position where it is remote, and the board to which the additional source connects. A notice hidden inside an inverter enclosure fails the purpose entirely, because it can only be read by someone who has already opened live equipment.',
+    section: 'Module 7',
+    difficulty: 'intermediate',
+    topic: 'Isolation and Switching',
+    category: 'Energy Storage',
+  },
+  {
+    id: 220,
+    question:
+      'In which installations do the warning notice requirements of Regulation 514.15.1 apply?',
+    options: [
+      'Only where the installation is fed from a TT earthing arrangement',
+      'Where the generation equipment exceeds a stated rated output',
+      'Where the installation includes alternative or additional sources',
+      'Where the installation is inspected and found to be unsatisfactory',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'The clause applies wherever the installation includes an alternative or additional source of supply, which brings in PV, battery storage and standby generation regardless of size. There is no rating threshold in the regulation, and the earthing arrangement is irrelevant, since the hazard being labelled is a second source that can keep conductors live after the main switch is opened.',
+    section: 'Module 7',
+    difficulty: 'intermediate',
+    topic: 'Isolation and Switching',
+    category: 'Energy Storage',
+  },
+  {
+    id: 221,
+    question:
+      'What is the subject of the new Chapter 82 in BS 7671:2018+A4:2026?',
+    options: [
+      'Requirements for testing of high voltage switchgear on site',
+      'Recommendations for the layout of consumer unit enclosures',
+      'Requirements for lightning protection of exposed structures',
+      'Requirements for prosumer low-voltage electrical installations',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Chapter 82 gives requirements, measures and recommendations for the design, erection and verification of low-voltage installations designated as prosumer electrical installations, meaning premises that both consume and produce or store energy. It is not a testing chapter, so the switchgear answer confuses Part 8 with Part 6, which is where inspection and testing still sits.',
+    section: 'Module 8',
+    difficulty: 'advanced',
+    topic: 'Prosumer Installations',
+    category: 'Introduction',
+  },
+  {
+    id: 222,
+    question:
+      'Under A4:2026, where are the energy efficiency provisions that were previously set out in Appendix 17 now found?',
+    options: [
+      'In Appendix 17, which has been retained and expanded',
+      'In Chapter 55, alongside the generating set provisions',
+      'In Chapter 81, within the new Part 8 of the standard',
+      'In Appendix 14, with the voltage drop calculations',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Appendix 17 has been deleted and its subject matter has become Chapter 81 inside the new Part 8, so energy efficiency is now normative structure rather than an appendix of recommendations. Anyone still citing Appendix 17 is quoting the superseded Amendment 3 text, which is the trap here.',
+    section: 'Module 8',
+    difficulty: 'advanced',
+    topic: 'Energy Efficiency',
+    category: 'Introduction',
+  },
+  {
+    id: 223,
+    question:
+      'What do the two chapters that make up the new Part 8 of BS 7671 cover?',
+    options: [
+      'Chapter 81 verification and Chapter 82 periodic inspection intervals',
+      'Chapter 81 energy efficiency and Chapter 82 prosumer installations',
+      'Chapter 81 earthing systems and Chapter 82 protective conductor sizes',
+      'Chapter 81 special locations and Chapter 82 agricultural premises',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Part 8 now exists in the published standard and contains Chapter 81 on energy efficiency and Chapter 82 on prosumer electrical installations. Verification remains in Part 6 and earthing remains in Chapter 54, so the other options move material that has not in fact moved.',
+    section: 'Module 8',
+    difficulty: 'advanced',
+    topic: 'Prosumer Installations',
+    category: 'Introduction',
+  },
+  {
+    id: 224,
+    question:
+      'In what circumstance does Chapter 82 apply to a low-voltage electrical installation?',
+    options: [
+      'Where local production or storage of energy is present',
+      'Where the maximum demand exceeds one hundred amperes',
+      'Where the premises are supplied at more than one voltage',
+      'Where the installation is owned by a commercial landlord',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The chapter applies to all types of low-voltage installation designated as prosumer installations, and the defining feature is local production and or storage of energy. Size of supply and ownership are irrelevant, so a modest domestic property with a PV array and a battery is a prosumer installation just as much as a large commercial site.',
+    section: 'Module 8',
+    difficulty: 'intermediate',
+    topic: 'Prosumer Installations',
+    category: 'Introduction',
+  },
+  {
+    id: 225,
+    question:
+      'What does Regulation 722.411.4.1 state about the use of a PME earthing facility at an outdoor electric vehicle charging point?',
+    options: [
+      'It may be used where an earth electrode is also installed nearby',
+      'It may be used provided the charge point is under a car port roof',
+      'It may be used only where a separate RCD of Type B is provided',
+      'It shall not be used for the protective conductor contact there',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'The regulation states that a PME earthing facility shall not be used for the protective conductor contacts of an outdoor charging point, because a broken PEN conductor can raise the vehicle body to a dangerous potential while a person stands on true earth. Adding an electrode or an RCD does not cure the problem, since neither detects or clears an open PEN.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'EV Charging',
+    category: 'Installation & Safety',
+  },
+  {
+    id: 226,
+    question:
+      'How did Amendment A4:2026 change the PME rule for outdoor electric vehicle charging points?',
+    options: [
+      'It extended the rule to cover indoor charging equipment too',
+      'It relaxed the rule where the vehicle is charged on a driveway',
+      'It removed the former not reasonably practicable exception',
+      'It replaced the rule with a requirement for open PEN detection',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'A4:2026 deleted the exception that previously allowed PME to be used where providing a separate earthing arrangement was not reasonably practicable, so the prohibition now stands without that escape route. Open PEN detection devices remain a recognised approach in their own right but they did not replace the regulation, so treating them as a substitute misreads the amendment.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'EV Charging',
+    category: 'Installation & Safety',
+  },
+  {
+    id: 227,
+    question:
+      'Section 722 as amended requires designs to take account of prosumer installations. What does that mean for an EV charge point at a property with PV and battery storage?',
+    options: [
+      'The charge point must be fed from a dedicated second supply head',
+      'Export, import and protective device coordination must be assessed',
+      'The PV inverter must be disconnected whenever a vehicle is charging',
+      'The charging equipment must be rated for the full array output',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The A4:2026 wording obliges the designer to consider how generation, export and import interact with the charging equipment and how the protective devices coordinate with inverter behaviour. Forcing the inverter offline during charging is the opposite of what a prosumer installation is for, and nothing in Section 722 calls for a second supply head.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'EV Charging',
+    category: 'Grid Connection',
+  },
+  {
+    id: 228,
+    question: 'What subject does Regulation 712.431 deal with?',
+    options: [
+      'When protective devices are required for PV strings in parallel',
+      'The colour coding to be used for PV direct current conductors',
+      'The maximum permitted length of a string cable run on a roof',
+      'The minimum insulation resistance value for a completed array',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Regulation 712.431 sets requirements according to the nature of the circuits within a PV array, including when overcurrent protection is needed for strings connected in parallel. This matters because a faulted string can be back-fed by every other parallel string, and a single string on its own cannot deliver enough fault current to be a concern.',
+    section: 'Module 2',
+    difficulty: 'advanced',
+    topic: 'Solar PV',
+    category: 'Solar PV',
+  },
+  {
+    id: 229,
+    question:
+      'A designer needs Upc max, the maximum continuous PV circuit voltage, in order to select DC equipment. How must that value be obtained?',
+    options: [
+      'By reading the open circuit voltage from the module data plate',
+      'By multiplying the nominal AC supply voltage by the string count',
+      'By measuring the array voltage on the day of commissioning work',
+      'By determining it in accordance with Regulation 712.433.101.1',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Upc max shall be determined in accordance with Regulation 712.433.101.1, which sets out the method and the factors to be applied. Taking the figure straight off the module data plate is the popular shortcut and it understates the voltage, because the plate value is quoted at standard test conditions rather than at the lowest expected cell temperature.',
+    section: 'Module 2',
+    difficulty: 'advanced',
+    topic: 'Solar PV',
+    category: 'System Design',
+  },
+  {
+    id: 230,
+    question:
+      'A diode is used within a PV array. What reverse voltage rating does Section 712 require it to have?',
+    options: [
+      'Twice Isc max, the maximum short-circuit current of the array',
+      'Equal to the nominal AC voltage at the inverter output terminals',
+      'Twice Upc max, the maximum continuous PV circuit voltage',
+      'Equal to the open circuit voltage of a single module in a string',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'The diode reverse voltage rating is expressed as twice Upc max, giving margin above the highest continuous circuit voltage the array can present. The Isc max answer confuses the two derived quantities: Isc max is the maximum short-circuit current used for sizing conductors and overcurrent devices, and a current value can never express a voltage rating.',
+    section: 'Module 2',
+    difficulty: 'advanced',
+    topic: 'Solar PV',
+    category: 'System Design',
+  },
+  {
+    id: 231,
+    question:
+      'Section 753 was retitled and completely revised in A4:2026. What does its extended scope now cover?',
+    options: [
+      'Embedded and surface heating, including de-icing and frost prevention',
+      'Industrial process heating equipment complying with BS EN 60519',
+      'Space heating by warm air units mounted at high level indoors',
+      'Immersion heaters and storage cylinders in domestic dwellings',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The revised Section 753 applies to embedded electric heating systems for surface heating and to heating for de-icing, frost prevention and similar duties, both indoors and outdoors. Industrial and commercial systems built to BS EN 60519, BS EN 62395 and BS EN 60079 are specifically not covered, so that option describes what the section excludes rather than what it includes.',
+    section: 'Module 5',
+    difficulty: 'intermediate',
+    topic: 'Heating Systems',
+    category: 'Introduction',
+  },
+  {
+    id: 232,
+    question:
+      'Which of the following heating installations falls outside the scope of Section 753?',
+    options: [
+      'Outdoor de-icing systems installed on an access ramp surface',
+      'Systems complying with BS EN 60519, BS EN 62395 or BS EN 60079',
+      'Floor heating units embedded in a screed in a domestic kitchen',
+      'Frost protection heating on pipework running through a loft',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Industrial and commercial heating systems complying with BS EN 60519, BS EN 62395 and BS EN 60079 are expressly outside Section 753 because those product standards already govern them. Outdoor de-icing and frost protection are named in the scope as being inside the section, which is exactly what the A4:2026 revision extended it to reach.',
+    section: 'Module 5',
+    difficulty: 'intermediate',
+    topic: 'Heating Systems',
+    category: 'Introduction',
+  },
+  {
+    id: 233,
+    question:
+      'What does Regulation 753.412.1.201 say about relying on double or reinforced insulation as the sole protective measure?',
+    options: [
+      'It is permitted for any embedded heating system in a dwelling',
+      'It is prohibited for all embedded heating systems without exception',
+      'It is not permitted for a wall system but is for compliant floor units',
+      'It is permitted only where the circuit is also protected by an RCD',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'The regulation forbids double or reinforced insulation as the sole protective measure for a wall heating system, yet allows it for floor heating units that comply with Regulation 412.2.1.1. Reading it as a blanket prohibition is the usual mistake and would rule out compliant floor units, while reading it as a blanket permission ignores the real risk of a wall being drilled or fixed into.',
+    section: 'Module 5',
+    difficulty: 'advanced',
+    topic: 'Heating Systems',
+    category: 'Installation & Safety',
+  },
+  {
+    id: 234,
+    question:
+      'What is the purpose of Regulation 753.522 in relation to heating system wiring?',
+    options: [
+      'Wiring must be selected so external influences do not impair safety',
+      'Wiring must be replaced at intervals stated by the manufacturer',
+      'Wiring must be tested for insulation resistance twice each year',
+      'Wiring must be installed only by a person holding a heating licence',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Regulation 753.522 requires wiring systems to be chosen and installed so that external influences such as mechanical damage, moisture, heat, ultraviolet radiation, corrosion and biological attack do not impair safety or functioning throughout the expected service life. It sets a design duty, not a maintenance schedule, so the fixed replacement interval and the annual testing answers both invent obligations.',
+    section: 'Module 5',
+    difficulty: 'intermediate',
+    topic: 'Heating Systems',
+    category: 'Installation & Safety',
+  },
+  {
+    id: 235,
+    question:
+      'Regulation 753.554.4.201 sets requirements for heating cables intended for which application?',
+    options: [
+      'Cables clipped direct to the underside of a suspended timber floor',
+      'Cables laid directly in soil, concrete, screed or road construction',
+      'Cables run inside a metal trunking above a suspended ceiling void',
+      'Cables coiled inside the immersion pocket of a hot water cylinder',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The regulation applies to heating cables intended to be laid directly in soil, concrete, cement screed or other material used in road and building construction, which is the buried de-icing and underfloor case. Cables clipped in a void or run in trunking remain accessible and are dealt with by the general wiring system rules rather than by this clause.',
+    section: 'Module 5',
+    difficulty: 'intermediate',
+    topic: 'Heating Systems',
+    category: 'Installation & Safety',
+  },
+  {
+    id: 236,
+    question:
+      'An outbuilding is supplied on a TT arrangement while a heat pump indoors is on a TN system, and both could be touched at once. What approach does the guidance call for?',
+    options: [
+      'The TT electrode must be removed and the outbuilding put onto TN',
+      'The heat pump must be supplied through a separating transformer',
+      'The two systems must be bonded together at the outbuilding board',
+      'A simultaneous contact assessment with barriers if found necessary',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Where parts of two differently earthed systems are simultaneously accessible, a simultaneous contact assessment is carried out and barriers or other measures are applied where the assessment shows they are needed. Simply bonding the two systems together defeats the reason the TT arrangement was created and can import a fault potential from one system into the other.',
+    section: 'Module 5',
+    difficulty: 'advanced',
+    topic: 'Heat Pumps',
+    category: 'Installation & Safety',
+  },
+  {
+    id: 237,
+    question:
+      'A circuit supplies equipment whose load current may contain DC components. What does Regulation 531.3.3 require?',
+    options: [
+      'A Type AC RCD may be used only in the limited case stated there',
+      'A Type AC RCD may be used on any circuit rated below thirty-two amps',
+      'A Type AC RCD may be used where the cable is run in earthed conduit',
+      'A Type AC RCD may be used where the circuit is also fused at origin',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Regulation 531.3.3 confines Type AC devices to one stated limited circumstance, so where DC or pulsating DC components may be present a Type A, Type F or Type B device must be selected as appropriate. Current rating, containment and upstream fusing have no bearing on the waveform of the residual current, which is the only thing that determines the device type needed.',
+    section: 'Module 6',
+    difficulty: 'intermediate',
+    topic: 'Protective Devices',
+    category: 'Installation & Safety',
+  },
+  {
+    id: 238,
+    question:
+      'Why can a Type AC residual current device be unsuitable for a circuit supplying an inverter-driven heat pump?',
+    options: [
+      'Because the compressor draws a large inrush current when starting',
+      'Because smooth or pulsating DC leakage can stop it from tripping',
+      'Because outdoor equipment must always have a time delayed device',
+      'Because the circuit will exceed the permitted voltage drop limit',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Power electronics inside the drive can produce residual currents with DC content, and DC magnetises the sensing core of a Type AC device so that it may fail to operate on a subsequent earth fault. Inrush is a nuisance tripping issue that is handled by device characteristic and rating, not by the RCD type, so it is the wrong reason even though it sounds plausible.',
+    section: 'Module 6',
+    difficulty: 'intermediate',
+    topic: 'Heat Pumps',
+    category: 'Installation & Safety',
+  },
+  {
+    id: 239,
+    question: 'What does an electrically driven heat pump actually do?',
+    options: [
+      'It burns a low carbon fuel to raise the flow temperature',
+      'It generates electricity from the heat held in the ground',
+      'It moves heat from outside air or ground into the building',
+      'It stores surplus electricity as heat for release at night',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'A heat pump uses electrical energy to move existing heat from the outside air, the ground or water into the building, which is why it delivers more heat energy than the electrical energy it consumes. It does not generate electricity and it burns no fuel, and storing electricity as heat for later release describes a storage heater, which is a different technology entirely.',
+    section: 'Module 5',
+    difficulty: 'basic',
+    topic: 'Heat Pumps',
+    category: 'Introduction',
+  },
+  {
+    id: 240,
+    question:
+      'A heat pump outdoor unit is sited well away from the consumer unit. Why does BS 7671 attach importance to a local means of isolation?',
+    options: [
+      'Because it lowers the voltage drop on the circuit conductors',
+      'Because it allows the unit to be tested while still energised',
+      'Because it prevents the RCD from tripping during defrost cycles',
+      'Because it allows the supply to be secured where work is done',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Isolation has to be capable of being secured against inadvertent reclosure and should be under the control of the person working on the equipment, which a distant consumer unit cannot provide. Voltage drop depends on conductor size, length and current, so an isolator placed near the unit changes nothing about it.',
+    section: 'Module 7',
+    difficulty: 'intermediate',
+    topic: 'Isolation and Switching',
+    category: 'Installation & Safety',
+  },
+  {
+    id: 241,
+    question:
+      'What brings the additional requirements of Regulation 551.7 into effect?',
+    options: [
+      'Where the generating set may operate in parallel with other sources',
+      'Only once the set has actually run in parallel for a full year',
+      'Where the generating set is the sole source feeding the premises',
+      'Where the set is rated above the capacity of the incoming supply',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The trigger is the possibility of parallel operation, expressed as where the set may operate in parallel, so the requirements apply from the design stage rather than once paralleling has actually happened. A set that is the only source cannot parallel with anything, and rating relative to the supply plays no part in the test.',
+    section: 'Module 4',
+    difficulty: 'intermediate',
+    topic: 'Grid Connection',
+    category: 'Grid Connection',
+  },
+  {
+    id: 242,
+    question:
+      'In Regulation 551.7, what is meant by the other sources with which a generating set may operate in parallel?',
+    options: [
+      'Only sources located inside the same building as the generator',
+      'Other generators and the public electricity distribution system',
+      'Any load that draws current at the same time as the generator',
+      'Rotating machines but never static inverter based equipment',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The phrase covers any other source, expressly including the system for distribution of electricity to the public, so it catches both a second generator and the incoming network. Confusing a source with a load is the trap in the third option: a load consumes energy and can never parallel with a generator in the sense the regulation means.',
+    section: 'Module 4',
+    difficulty: 'intermediate',
+    topic: 'Grid Connection',
+    category: 'Grid Connection',
+  },
+  {
+    id: 243,
+    question:
+      'A hybrid inverter serving a PV array and a battery is fed through the consumer unit main switch. Why is opening that switch not enough before working on the inverter?',
+    options: [
+      'The battery and array can both keep the inverter terminals live',
+      'The main switch is not rated for the fault level of the inverter',
+      'The inverter needs a controlled shutdown to protect its firmware',
+      'The main switch only disconnects the line and leaves the neutral',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The main switch removes just the public supply. The array continues to generate in daylight and the battery holds stored energy, so both remain sources feeding the inverter, which is why each source needs its own means of isolation and a warning notice at every isolation point. A domestic main switch is double pole, so the neutral answer misstates how the device works.',
+    section: 'Module 7',
+    difficulty: 'advanced',
+    topic: 'Isolation and Switching',
+    category: 'Energy Storage',
+  },
+  {
+    id: 244,
+    question:
+      'Regulation 551.7 requires means to prevent a generating set connecting to the public distribution network in which situation?',
+    options: [
+      'While the set is being serviced by an approved maintenance firm',
+      'While the network is de-energised or outside its normal parameters',
+      'While the installation is drawing more current than it exports',
+      'While the ambient temperature is above the rating of the machine',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Reconnection has to be prevented while the network is dead or outside its normal voltage and frequency limits, so that the source cannot energise a supply that has been switched off or is faulty. The balance between import and export tells you nothing about the state of the network, and servicing arrangements are a safe working matter rather than the automatic function the regulation demands.',
+    section: 'Module 4',
+    difficulty: 'intermediate',
+    topic: 'Grid Connection',
+    category: 'Grid Connection',
+  },
+  {
+    id: 245,
+    question:
+      'Why must a grid-connected inverter disconnect itself when the incoming supply fails?',
+    options: [
+      'To stop the battery from discharging into the local distribution main',
+      'To prevent the inverter tripping on over temperature during a fault',
+      'To avoid energising a network that others believe to be dead',
+      'To keep the export meter reading correct while supply is absent',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'If the inverter kept running it would island a section of the network, so conductors that network staff have isolated and proved dead could be re-energised from the property. Preventing discharge is a partial description of the same event but misses the point, since the danger is to people working on the network rather than to the battery state of charge.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'Grid Connection',
+    category: 'Grid Connection',
+  },
+  {
+    id: 246,
+    question:
+      'Which statement correctly describes how Amendment A4:2026 dealt with stationary battery installations?',
+    options: [
+      'Battery storage is covered only by Section 712 as before',
+      'Battery storage was moved from Part 5 into Part 7 entirely',
+      'Chapter 57 replaced Chapter 55 for all generating equipment',
+      'A4 modified Regulation 560.6 and inserted a new Chapter 57',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'A4:2026 amended Regulation 560.6 and inserted the new Chapter 57 for stationary secondary batteries, and these are substantive amendment actions rather than editorial tidying. Chapter 55 remains in force for generating sets, so Chapter 57 sits alongside it rather than replacing it, and Section 712 has never been the home of battery requirements.',
+    section: 'Module 3',
+    difficulty: 'advanced',
+    topic: 'Battery Storage',
+    category: 'Energy Storage',
+  },
+  {
+    id: 247,
+    question:
+      'Beyond providing a main switch for each source, what else does BS 7671 require where an installation is fed from two sources?',
+    options: [
+      'A durable warning notice or an interlock between the two switches',
+      'A padlock fitted permanently to the switch of the second source',
+      'A separate earth electrode dedicated to the second source only',
+      'A written maintenance record kept at the origin of installation',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'A durable warning notice or an interlock is required so that anyone opening one switch understands that full isolation has not yet been achieved. A permanently fitted padlock would defeat the purpose of a switch that must be operable, and an electrode addresses earthing rather than the risk of a second live source.',
+    section: 'Module 7',
+    difficulty: 'intermediate',
+    topic: 'Isolation and Switching',
+    category: 'Energy Storage',
+  },
+  {
+    id: 248,
+    question:
+      'A PV installation is complete and the DC warning notices required by Regulation 712.514.102 are in place. How should this be handled in the paperwork?',
+    options: [
+      'They are a manufacturer matter and need not be recorded at all',
+      'Their presence and adequacy should be recorded on the certification',
+      'They should be listed as a departure from BS 7671 on the schedule',
+      'They should be photographed and sent to the network operator only',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The presence and adequacy of the required notices should be recorded on the certification or inspection record, whether that is an EIC, a commissioning record or an EICR, as the evidence of compliance. Recording them as a departure is exactly backwards, because a departure is what you record when the standard has not been followed.',
+    section: 'Module 6',
+    difficulty: 'intermediate',
+    topic: 'Certification',
+    category: 'Testing & Commissioning',
+  },
+  {
+    id: 249,
+    question:
+      'Why is a warning notice fixed at the origin of an installation that includes a solar PV system?',
+    options: [
+      'To record the date on which the array was last cleaned and checked',
+      'To confirm that the installation has been designed by an engineer',
+      'To warn that another source can keep the installation live',
+      'To identify the network operator responsible for the incoming main',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'The notice tells anyone approaching the origin that an alternative or additional source of supply is present, so opening the main switch will not necessarily make the installation dead. It is a safety warning about live parts, not a maintenance log or a design credential, and the network operator is identified by other labelling entirely.',
+    section: 'Module 1',
+    difficulty: 'basic',
+    topic: 'Solar PV',
+    category: 'Installation & Safety',
+  },
+  {
+    id: 250,
+    question:
+      'A property has a PV array, a battery storage system and an EV charge point. Which mapping of requirements to equipment is correct?',
+    options: [
+      'Section 712 for the battery, Chapter 57 for the array, 722 for the EV',
+      'Chapter 57 for all three, since they share the same inverter equipment',
+      'Section 722 for all three, because the charge point is the largest load',
+      'Section 712 for the array, Chapter 57 for the battery, 722 for the EV',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Section 712 governs the PV system, the new Chapter 57 governs the stationary secondary battery, and Section 722 governs the EV charging installation, while Regulation 551.7 and Chapter 82 sit across the whole arrangement as a prosumer installation. Swapping 712 and Chapter 57 is the common error and matters, because the array and the battery raise very different hazards.',
+    section: 'Module 8',
+    difficulty: 'advanced',
+    topic: 'Prosumer Installations',
+    category: 'System Design',
+  },
 ];
 
 // Categories for Renewable Energy mock exam

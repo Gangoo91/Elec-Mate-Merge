@@ -2589,6 +2589,906 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     topic: 'System Specification',
     category: 'Compliance',
   },
+  {
+    id: 151,
+    question:
+      'An insurer requires automatic detection covering only the two areas identified as high fire risk, leaving the rest of the warehouse undetected. Which system category best describes this?',
+    options: [
+      'A Category P2 property protection system',
+      'A Category P1 property protection system',
+      'A Category L2 life protection system',
+      'A Category L4 life protection system',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'P systems exist to protect property, and P2 provides automatic detection only in defined parts of the building where the risk is high or the consequences of fire are severe. P1 is the attractive wrong answer because it is also a property system, but P1 means detection throughout all areas of the building, which is not what the insurer has asked for. The L categories are life protection and would be driven by escape rather than by stock value.',
+    section: 'Module 1',
+    difficulty: 'advanced',
+    topic: 'System Categories',
+    category: 'Design & Zoning',
+  },
+  {
+    id: 152,
+    question:
+      'A designer specifies detection in all escape routes, in rooms opening onto them, and additionally in the laundry and boiler room, but not in every room. Which category is this?',
+    options: [
+      'Category L1, automatic detection in all building areas',
+      'Category L3, escape routes and adjoining rooms only',
+      'Category L2, escape route cover plus high risk rooms',
+      'Category L4, circulation area detection on escape routes',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'L2 is defined as an L3 system with additional detection in specified areas of high fire hazard or high risk to life, which is exactly the laundry and boiler room addition described. L3 is the attractive wrong answer because the escape route and adjoining room cover matches it, but L3 stops there and would not include the two extra high risk rooms. L1 would require detection in all areas including cupboards and voids.',
+    section: 'Module 1',
+    difficulty: 'advanced',
+    topic: 'System Categories',
+    category: 'Design & Zoning',
+  },
+  {
+    id: 153,
+    question:
+      'What does a Category M fire alarm system rely on to raise the alarm in a building?',
+    options: [
+      'Automatic smoke detectors in circulation spaces',
+      'Manual call points operated by building occupants',
+      'Automatic heat detectors in all high risk rooms',
+      'Aspirating detection sampling from occupied rooms',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A Category M system is entirely manual, so discovery of fire depends on a person operating a call point on the escape route. Automatic smoke detection in circulation spaces is the attractive wrong answer because it describes the minimum automatic system, L4, not M. An M system may be acceptable where occupants are awake and alert and the building is small, but it gives no warning at all in an unoccupied building.',
+    section: 'Module 1',
+    difficulty: 'intermediate',
+    topic: 'System Categories',
+    category: 'Design & Zoning',
+  },
+  {
+    id: 154,
+    question:
+      'In fire alarm category coding, what does the letter P indicate the system is primarily intended to protect?',
+    options: [
+      'People, by giving warning to allow safe escape',
+      'Plant, by shutting down process equipment safely',
+      'Perimeter, by detecting forced entry to premises',
+      'Property, by limiting fire damage to the building',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'P stands for property protection, where the aim is early detection so that the fire is fought while it is still small and business or building damage is limited. People is the attractive wrong answer because P is easily misread as protection of persons, but life safety systems are coded L. A building can require both, in which case the design is described using both a P and an L category.',
+    section: 'Module 1',
+    difficulty: 'basic',
+    topic: 'System Categories',
+    category: 'Design & Zoning',
+  },
+  {
+    id: 155,
+    question:
+      'A commercial kitchen needs automatic detection, but cooking fumes repeatedly trigger the existing point smoke detectors. What is the most appropriate design change?',
+    options: [
+      'Fit optical smoke detectors at a lower ceiling level',
+      'Fit ionisation smoke detectors set to low sensitivity',
+      'Fit heat detectors of a suitable class for the room',
+      'Fit carbon monoxide fire detectors above the cookers',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Heat detectors do not respond to cooking aerosols and steam, so they are the standard selection for kitchens even though they respond later than smoke detection. Reducing the sensitivity of ionisation heads is the attractive wrong answer because it sounds like a targeted fix, but desensitising a detector degrades genuine fire performance and ionisation types are particularly prone to cooking fumes. Detector selection, not sensitivity fiddling, is the correct remedy.',
+    section: 'Module 2',
+    difficulty: 'advanced',
+    topic: 'Detector Selection',
+    category: 'Design & Zoning',
+  },
+  {
+    id: 156,
+    question:
+      'Which statement correctly compares the response of optical and ionisation smoke detectors to different fire types?',
+    options: [
+      'Optical responds better to smouldering smoke particles',
+      'Optical responds faster to clean flaming fire particles',
+      'Ionisation responds better to large smouldering smoke',
+      'Ionisation is unaffected by fast flaming fire particles',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Optical scattering works best on the larger visible particles produced by slow smouldering fires, which is why optical heads suit sleeping risks where overnight smouldering is the concern. The claim that ionisation suits smouldering smoke is the attractive wrong answer because it simply reverses the real behaviour: ionisation chambers respond to the very small invisible particles typical of fast clean flaming fires. Matching sensor physics to the expected fire is the core of detector selection.',
+    section: 'Module 2',
+    difficulty: 'advanced',
+    topic: 'Detector Selection',
+    category: 'Design & Zoning',
+  },
+  {
+    id: 157,
+    question:
+      'Why might optical beam detectors be preferred over point smoke detectors in a large atrium with a very high ceiling?',
+    options: [
+      'Beams detect heat rise faster than any point detector',
+      'Beams are unaffected by dust or by building movement',
+      'Beams need no access for cleaning or for realignment',
+      'One beam covers a wide area that point heads cannot',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'A projected beam sees smoke anywhere along a long path, so a small number of beams can protect a volume that would need many point heads on inaccessible high ceilings. The claim that beams are unaffected by dust or movement is the attractive wrong answer because it sounds like a maintenance benefit, but lens contamination and structural movement causing misalignment are the two classic beam fault sources and must be designed for.',
+    section: 'Module 2',
+    difficulty: 'advanced',
+    topic: 'Detector Selection',
+    category: 'Design & Zoning',
+  },
+  {
+    id: 158,
+    question:
+      'In which situation is an aspirating smoke detection system most likely to be the correct specification?',
+    options: [
+      'A car park where vehicle exhaust fumes are frequent',
+      'A data hall needing very early warning of smouldering',
+      'A boiler room where high heat output is expected',
+      'A kitchen where cooking fumes are released daily',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Aspirating systems draw air continuously through sampling pipework to a very sensitive detection chamber, giving warning of overheating cable or component smoke long before a point detector would alarm. A car park is the attractive wrong answer because pipe sampling is used in dirty environments, but exhaust particulate would drive an aspirating system into constant alarm unless heavily desensitised. High sensitivity suits clean, high value, critical spaces.',
+    section: 'Module 2',
+    difficulty: 'advanced',
+    topic: 'Detector Selection',
+    category: 'Design & Zoning',
+  },
+  {
+    id: 159,
+    question:
+      'What is the main limitation of relying on heat detectors for life safety in a sleeping risk such as a bedroom?',
+    options: [
+      'They cannot be used in rooms with a high ceiling',
+      'They respond only after a fire has developed heat',
+      'They are unreliable where the mains voltage varies',
+      'They must be tested more often than smoke heads',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A sleeping occupant is most at risk from smoke and toxic gas long before the room reaches heat detector operating temperature, so heat detection gives warning far too late for escape. The high ceiling answer is the attractive wrong option because ceiling height genuinely does restrict heat detector spacing and mounting, but that is a coverage rule rather than the reason heat detection is unsuitable for sleeping risks.',
+    section: 'Module 2',
+    difficulty: 'intermediate',
+    topic: 'Detector Selection',
+    category: 'Design & Zoning',
+  },
+  {
+    id: 160,
+    question:
+      'What is the principal design benefit of a multi-sensor detector that combines optical and heat sensing elements?',
+    options: [
+      'Longer service life because the sensors share the load',
+      'Removal of the need for periodic servicing and testing',
+      'Coverage of twice the floor area of a point detector',
+      'Broader fire response with better false alarm rejection',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Combining sensing elements lets the detector algorithm confirm a real fire signature across two physical effects, so it reacts to a wider range of fires while discounting transient smoke or heat alone. Doubling the covered floor area is the attractive wrong answer because a multi-sensor still occupies one position and its coverage radius is unchanged; the benefit is response quality, not spacing.',
+    section: 'Module 2',
+    difficulty: 'advanced',
+    topic: 'Detector Selection',
+    category: 'Design & Zoning',
+  },
+  {
+    id: 161,
+    question:
+      'A three storey office is proposed with one detection zone covering each pair of adjacent floors, to reduce panel cost. Why is this arrangement unacceptable?',
+    options: [
+      'A zone should be confined to a single storey of a building',
+      'A zone must contain no more than one manual call point',
+      'A zone must be wired in fire resisting cable throughout',
+      'A zone must be fed from a separately fused supply',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Zoning exists so that an indication at the panel tells responders where to go, and in a multi storey building that means keeping each zone within one storey so the floor is known immediately. The fire resisting cable option is the attractive wrong answer because that requirement is real, but it applies to the cabling regardless of how zones are drawn and has nothing to do with the storey rule. Stairwells and other vertical shafts are handled as their own zone.',
+    section: 'Module 3',
+    difficulty: 'advanced',
+    topic: 'Zoning',
+    category: 'Design & Zoning',
+  },
+  {
+    id: 162,
+    question:
+      'A proposed detection zone is drawn so that it extends across a fire resisting compartment wall. What is the main problem with this?',
+    options: [
+      'The loop resistance across the wall becomes too high',
+      'The detectors either side will need to be different types',
+      'Staff may search the wrong compartment for the fire',
+      'The sounder level either side of the wall will differ',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'A zone boundary should follow compartment boundaries so that a zone indication points to one enclosed space, otherwise responders may open the wrong compartment and lose time while the fire develops. Sounder level difference is the attractive wrong answer because audibility across a compartment wall really does change, but that is an alarm coverage calculation and is not what makes the zone boundary wrong.',
+    section: 'Module 3',
+    difficulty: 'advanced',
+    topic: 'Zoning',
+    category: 'Design & Zoning',
+  },
+  {
+    id: 163,
+    question:
+      'Why is a clear zone plan displayed immediately adjacent to the fire alarm control panel?',
+    options: [
+      'So the installer can record cable sizes for each zone',
+      'So responders can convert an indication into a location',
+      'So the panel can be silenced without a key being used',
+      'So the engineer can log the battery test dates on site',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The panel gives a zone name or number, and the plan is what turns that into a physical route through the building for an attending person or fire crew. Logging battery tests is the attractive wrong answer because records really are kept at the panel in the logbook, but the logbook is a separate document and does not help anyone locate a fire under time pressure.',
+    section: 'Module 3',
+    difficulty: 'intermediate',
+    topic: 'Zoning',
+    category: 'Design & Zoning',
+  },
+  {
+    id: 164,
+    question:
+      'Zone sizes are limited partly so that the time needed to search a zone on foot stays short. What does that limit primarily achieve?',
+    options: [
+      'The number of detectors on a loop is kept within limits',
+      'The volt drop to the furthest device on the loop stays low',
+      'The standby battery duration required at the panel is cut',
+      'The fire is located and confirmed before it grows large',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Search time is a life safety parameter: a fire found quickly can be tackled or reported accurately while escape is still straightforward, so zones are kept small enough to be walked quickly. Limiting devices on a loop is the attractive wrong answer because loop device limits are a genuine constraint, but they come from the panel and protocol specification rather than from how long a search takes.',
+    section: 'Module 3',
+    difficulty: 'advanced',
+    topic: 'Zoning',
+    category: 'Design & Zoning',
+  },
+  {
+    id: 165,
+    question:
+      'How does an addressable system change the practical role of physical zoning in a building?',
+    options: [
+      'Zoning is no longer needed anywhere in the building',
+      'Each device needs its own dedicated pair to the panel',
+      'Each device reports its own location within the zone',
+      'Zones are then set only by manual call point positions',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Addressable devices identify themselves individually, so the panel can name the exact detector while zones remain as the coarse grouping used for cause and effect and for display. The claim that zoning is no longer needed is the attractive wrong answer because addressing does refine location, but zones still drive alarm outputs, ancillary control and the zone plan that responders rely on.',
+    section: 'Module 3',
+    difficulty: 'advanced',
+    topic: 'Zoning',
+    category: 'Design & Zoning',
+  },
+  {
+    id: 166,
+    question:
+      'BS 7671 treats fire detection and fire alarm cabling as a safety circuit. What does that classification require of the cable?',
+    options: [
+      'A resistance to fire rating suitable for its duty time',
+      'A minimum conductor size of two point five square mm',
+      'An earthed metallic screen over every circuit conductor',
+      'A separate protective conductor run outside the cable',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'BS 7671 requires cables for safety circuits, which expressly include fire detection and fire alarm systems, to have a resistance to fire rating meeting the time set by building regulations or the relevant British Standard, and one hour where no such time is specified. The minimum conductor size answer is the attractive wrong option because installers associate fire cable with a familiar small size, but the governing property is fire survival time, not cross sectional area.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'Cabling and Supplies',
+    category: 'Installation',
+  },
+  {
+    id: 167,
+    question:
+      'A fire alarm circuit operating within voltage Band I shares a trunking route with lighting circuits at Band II. What does BS 7671 require here?',
+    options: [
+      'Both circuit types to be run in the same conduit',
+      'The alarm circuit to be reclassified as Band II',
+      'The lighting circuit to be derated by one cable size',
+      'Segregation or separation by a recognised method',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Regulation 528.1 requires Band I and Band II cables sharing a route or cable management system to be segregated or separated by one of the recognised methods, for example an earthed metal screen in a multicore cable having capacity equivalent to the largest Band II core. Reclassifying the alarm circuit as Band II is the attractive wrong answer because insulating every conductor to the higher band is one permitted route, but that means selecting cable rated for the higher band rather than simply relabelling an existing circuit.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'Cabling and Supplies',
+    category: 'Installation',
+  },
+  {
+    id: 168,
+    question:
+      'Why does BS 7671 permit the omission of overload protection on a circuit supplying a fire alarm system?',
+    options: [
+      'Fire alarm circuits cannot draw an overload current',
+      'Unexpected disconnection would itself cause danger',
+      'The alarm panel provides its own overload device',
+      'Band I circuits never require any overload device',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Regulation 433.3.3 allows overload protection to be omitted where opening the circuit could cause danger, and a circuit supplying a safety service such as a fire alarm is one of the listed examples. The claim that the panel provides its own overload device is the attractive wrong answer because panels do fuse their internal outputs, but that protects the panel electronics and is not the reason the incoming circuit may omit overload protection. Fault current protection is still required.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'Cabling and Supplies',
+    category: 'Installation',
+  },
+  {
+    id: 169,
+    question:
+      'Why should the mains supply to a fire alarm control panel be taken from a dedicated and clearly labelled final circuit?',
+    options: [
+      'So the panel can operate without standby batteries',
+      'So other work cannot switch the system off unnoticed',
+      'So the supply cable may be reduced in cross section',
+      'So the panel does not need an earth connection made',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A dedicated and identified circuit means nobody isolating a socket or lighting circuit can silently remove the mains supply from the life safety system, and the labelling warns anyone working at the board. Running without standby batteries is the attractive wrong answer because a dedicated supply does improve availability, but batteries are still required precisely because mains supplies fail during fires and faults.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'Cabling and Supplies',
+    category: 'Installation',
+  },
+  {
+    id: 170,
+    question:
+      'BS 7671 gives fire detection systems as an example where transient overvoltage failure could cause serious injury or loss of life. What follows from that?',
+    options: [
+      'The system must be supplied from a separate generator',
+      'The system must use fibre optic interconnection only',
+      'The supply must be isolated during any thunderstorm',
+      'Protection against transient overvoltage is required',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Regulation 443.4.1 requires protection against transient overvoltages where the consequence of failure includes serious injury or loss of life, and fire detection is named as such a case, so surge protection is provided rather than left to a risk calculation. Isolating during a thunderstorm is the attractive wrong answer because it appears to address the same threat, but disconnecting a life safety system to protect it defeats the purpose of installing it.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'Cabling and Supplies',
+    category: 'Installation',
+  },
+  {
+    id: 171,
+    question:
+      'What is the purpose of the cause and effect schedule agreed for a fire alarm project?',
+    options: [
+      'It defines what each input makes each output do',
+      'It records the cable route taken by each loop',
+      'It lists the spare parts held for the panel',
+      'It sets the order in which devices are wired',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The cause and effect schedule is the agreed statement of system behaviour: which detector or zone triggers which sounders, door releases, plant shutdowns and signalling outputs, and it is the document commissioning is tested against. Cable routing is the attractive wrong answer because it also appears in project paperwork, but routing is an installation record and proves nothing about how the system will respond to a fire.',
+    section: 'Module 5',
+    difficulty: 'advanced',
+    topic: 'Cause and Effect',
+    category: 'Design & Zoning',
+  },
+  {
+    id: 172,
+    question:
+      'In a building using phased evacuation, why does the alarm signal differ between the fire floor and floors further away?',
+    options: [
+      'To reduce the total current drawn by the sounders',
+      'To let the panel test each zone independently',
+      'To move the most threatened occupants out first',
+      'To avoid the need for call points on those floors',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Phased evacuation clears the floors at greatest risk before the rest of the building, so the escape routes are not overwhelmed and the people in danger move first, which is why those floors receive an evacuate signal while others receive an alert. Reducing sounder current is the attractive wrong answer because staged operation does lower peak load, but battery sizing is a consequence of the strategy rather than its purpose.',
+    section: 'Module 5',
+    difficulty: 'advanced',
+    topic: 'Cause and Effect',
+    category: 'Design & Zoning',
+  },
+  {
+    id: 173,
+    question:
+      'A corridor fire door is held open by an electromagnetic device linked to the fire alarm. What must happen on alarm and also on loss of supply to the holder?',
+    options: [
+      'The door stays open until it is reset at the panel',
+      'The door releases and closes under its own closer',
+      'The door releases only when its own zone alarms',
+      'The door locks shut to contain the spread of fire',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Hold open devices are fail safe: removing power, whether by alarm or by a fault, must let the door close so the compartment is never left open by a failure. Releasing only on its own zone is the attractive wrong answer because zone based release sounds selective and efficient, but smoke travels beyond the zone of origin and the compartment must close whenever the system calls for evacuation.',
+    section: 'Module 5',
+    difficulty: 'advanced',
+    topic: 'Ancillary Interfaces',
+    category: 'Design & Zoning',
+  },
+  {
+    id: 174,
+    question:
+      'Why are passenger lifts commonly interfaced to the fire alarm so that they return to a designated floor and park with the doors open?',
+    options: [
+      'So the lift motor supply can be safely overloaded',
+      'So firefighters can ride the lift to the fire floor',
+      'So the lift shaft stays pressurised during an alarm',
+      'So no one is trapped in a lift car during a fire',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'A normal passenger lift may stop at the fire floor or lose power with occupants inside, so the interface brings it to a safe level and opens the doors before that can happen. The firefighter access answer is the attractive wrong option because firefighting lifts genuinely are used by crews, but those are a separately designed installation with their own supply and controls, not the standard passenger lift recall function.',
+    section: 'Module 5',
+    difficulty: 'advanced',
+    topic: 'Ancillary Interfaces',
+    category: 'Design & Zoning',
+  },
+  {
+    id: 175,
+    question:
+      'Why must a fire alarm system be provided with a standby battery supply in addition to the normal mains supply?',
+    options: [
+      'Batteries reduce the current drawn from the mains',
+      'Batteries allow the panel to be tested off load',
+      'A fire may remove the mains supply to the building',
+      'The mains supply cannot power sounder circuits',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Fire damage, a fault, or deliberate isolation can take the mains away exactly when the system is needed, so the standby supply has to carry the system through a period of quiescent operation and then still drive the alarm devices. The reduced mains current answer is the attractive wrong option because the battery does buffer peak sounder load, but the standby supply exists for availability during supply failure, not for demand management.',
+    section: 'Module 5',
+    difficulty: 'intermediate',
+    topic: 'Power Supplies',
+    category: 'Design & Zoning',
+  },
+  {
+    id: 176,
+    question:
+      'An engineer removes a detector head from its base for cleaning and the panel indicates a fault rather than a fire signal. Why is this correct behaviour?',
+    options: [
+      'System wiring is monitored so faults are indicated',
+      'Detector heads short the circuit when removed',
+      'The panel treats any change as a genuine alarm',
+      'Fault signals replace alarms while servicing',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Fire alarm circuits are continuously monitored so that an open circuit, a short circuit or a missing device produces a distinct fault warning, telling the responsible person that protection is degraded. The idea that fault signals replace alarms during servicing is the attractive wrong answer because engineers do disable zones while working, but that is a deliberate disablement recorded in the logbook and is a different indication from a monitored wiring fault.',
+    section: 'Module 5',
+    difficulty: 'advanced',
+    topic: 'Control Equipment',
+    category: 'Design & Zoning',
+  },
+  {
+    id: 177,
+    question:
+      'Why is a higher alarm sound level specified at the bedhead in sleeping accommodation than in general occupied areas?',
+    options: [
+      'Bedrooms usually have a higher background noise',
+      'Bedroom doors are thinner than corridor doors',
+      'Sounders lose output along the length of a corridor',
+      'A sleeping person needs more sound to be roused',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Rousing a sleeping person requires a markedly higher sound level at the pillow than simply alerting someone who is awake, and closed bedroom doors attenuate the corridor sounder, so the design is checked at the bedhead. Background noise is the attractive wrong answer because sound levels are indeed set relative to ambient noise elsewhere in a building, but bedrooms are usually quiet and the driver here is sleep, not noise.',
+    section: 'Module 5',
+    difficulty: 'advanced',
+    topic: 'Alarm Devices',
+    category: 'Design & Zoning',
+  },
+  {
+    id: 178,
+    question:
+      'What is the main advantage of a voice alarm system over conventional sounders in a large public building?',
+    options: [
+      'Loudspeakers need less standby battery capacity',
+      'Clear instructions reduce hesitation before moving',
+      'Voice systems remove the need for detection zones',
+      'Speech carries further through fire doors than tone',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Members of the public unfamiliar with a building often wait and look for confirmation when a tone sounds, whereas a spoken message tells them a fire has been reported and where to go, cutting the delay before movement starts. Better propagation through doors is the attractive wrong answer because it sounds physical and technical, but speech is actually harder to understand through obstructions and needs careful loudspeaker design.',
+    section: 'Module 5',
+    difficulty: 'advanced',
+    topic: 'Alarm Devices',
+    category: 'Design & Zoning',
+  },
+  {
+    id: 179,
+    question:
+      'In premises left unoccupied overnight and protected for property, why is remote signalling to an alarm receiving centre important?',
+    options: [
+      'It removes the need for sounders in the building',
+      'No one is present to act on a local alarm signal',
+      'It doubles the standby time available at the panel',
+      'It allows the detection zones to be made larger',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Property protection depends on the fire being attended while it is still small, and an audible alarm in an empty building achieves nothing unless the signal reaches someone who will respond. Removing internal sounders is the attractive wrong answer because the building is empty at night, but the premises are occupied during the day and the audible warning is still needed for the people inside.',
+    section: 'Module 5',
+    difficulty: 'advanced',
+    topic: 'Cause and Effect',
+    category: 'Design & Zoning',
+  },
+  {
+    id: 180,
+    question:
+      'Where should manual call points be positioned so that occupants can raise the alarm without deviating from their escape route?',
+    options: [
+      'Inside every room that contains a known fire risk',
+      'Next to the fire alarm panel and its repeaters only',
+      'At the head and foot of every flight of stairs',
+      'On escape routes and at all final exits from a floor',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Call points are placed where people already pass while leaving, that is on exit routes, at storey exits and at final exits, so raising the alarm costs no extra travel. Siting them inside every high risk room is the attractive wrong answer because those rooms are where fire starts, but requiring someone to enter or remain in a room of origin to operate a call point puts them at greater risk.',
+    section: 'Module 5',
+    difficulty: 'intermediate',
+    topic: 'Alarm Devices',
+    category: 'Installation',
+  },
+  {
+    id: 181,
+    question:
+      'A smoke detector on the landing outside a shower room alarms most mornings when the bathroom door is opened. What is the best remedy?',
+    options: [
+      'Relocate or change the detector for a suitable type',
+      'Reduce the sensitivity of the detector at the panel',
+      'Disable that detector during morning occupancy hours',
+      'Fit a second detector nearby to confirm the alarm',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Steam is the cause, so the fix is to move the head away from the plume or select a detector type that discriminates against water vapour, keeping full fire performance. Timed disablement is the attractive wrong answer because it stops the nuisance completely, but it leaves the landing, part of the escape route, unprotected during the exact period when the household is up and cooking or using appliances.',
+    section: 'Module 6',
+    difficulty: 'advanced',
+    topic: 'False Alarm Management',
+    category: 'Testing & Maintenance',
+  },
+  {
+    id: 182,
+    question:
+      'A system signals fire with no fire present and no external cause found, and the panel later logs that same detector as faulty. How is this best classified?',
+    options: [
+      'An unwanted alarm from a cooking process',
+      'A malicious alarm from a manual call point',
+      'A false alarm due to an equipment fault',
+      'A genuine alarm caused by smoke in the room',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Classifying the cause matters because remedies differ, and a defective detector or panel input belongs in the equipment fault category, which is corrected by replacement rather than by resiting or re-education. The cooking answer is the attractive wrong option because cooking is the most common unwanted alarm source overall, but nothing in this scenario points to a process, and the fault log points squarely at the device.',
+    section: 'Module 6',
+    difficulty: 'advanced',
+    topic: 'False Alarm Management',
+    category: 'Testing & Maintenance',
+  },
+  {
+    id: 183,
+    question:
+      'A hotel wants to avoid evacuating guests every time a single detector operates at night. Which measure is legitimate within a fire strategy?',
+    options: [
+      'Switching detection off in guest rooms at night',
+      'A staff investigation delay agreed in the strategy',
+      'Removing sounders from the guest bedroom areas',
+      'Setting all detectors to their lowest sensitivity',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A short, formally agreed staff alarm and investigation period lets trained staff check the source before general evacuation, and it is only acceptable where staffing, procedures and time limits are defined and the delay collapses if a second device operates. Disabling bedroom detection at night is the attractive wrong answer because it certainly stops nuisance calls, but night is precisely when sleeping occupants depend on that detection.',
+    section: 'Module 6',
+    difficulty: 'advanced',
+    topic: 'False Alarm Management',
+    category: 'Testing & Maintenance',
+  },
+  {
+    id: 184,
+    question:
+      'A detector mounted directly below an air conditioning diffuser gives repeated alarms and dirty sensor warnings. What is the correct action?',
+    options: [
+      'Cover the detector to keep the airflow off the head',
+      'Increase the alarm threshold stored within the panel',
+      'Replace the head with an identical new detector unit',
+      'Move the detector clear of the airflow from the vent',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Forced air drives dust through the chamber and can also sweep smoke away from the head, so relocating outside the airstream fixes both the contamination and the detection blind spot. Replacing with an identical head is the attractive wrong answer because the dirty sensor warning suggests a worn device, but a new head in the same position will simply foul again in the same way.',
+    section: 'Module 6',
+    difficulty: 'advanced',
+    topic: 'False Alarm Management',
+    category: 'Testing & Maintenance',
+  },
+  {
+    id: 185,
+    question:
+      'Why are hinged protective covers sometimes fitted over manual call points in schools and other public buildings?',
+    options: [
+      'To keep the call point wiring dry and free of dust',
+      'To allow the call point to be tested without a key',
+      'To deter casual or malicious operation of the point',
+      'To hold the element in place after it has operated',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'The cover adds a deliberate second action, which discourages impulsive or malicious operation while still allowing a genuine user to raise the alarm immediately. Weather and dust protection is the attractive wrong answer because external call points really do need suitable ingress protection, but that is achieved by selecting a call point with the right enclosure rating rather than by adding a hinged flap.',
+    section: 'Module 6',
+    difficulty: 'intermediate',
+    topic: 'False Alarm Management',
+    category: 'Testing & Maintenance',
+  },
+  {
+    id: 186,
+    question:
+      'Why is every false alarm recorded in the system logbook with its date, zone and identified cause?',
+    options: [
+      'Patterns reveal the device or process causing them',
+      'It proves the system has been serviced correctly',
+      'It allows the standby battery life to be predicted',
+      'It removes the need for the weekly alarm test',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Only a recorded history shows that one head, one room or one activity is behind most of the events, which is what turns a recurring nuisance into a targeted remedy. Proving the system was serviced is the attractive wrong answer because servicing entries also live in the logbook, but service records show maintenance took place and say nothing about why the system keeps alarming.',
+    section: 'Module 6',
+    difficulty: 'advanced',
+    topic: 'False Alarm Management',
+    category: 'Testing & Maintenance',
+  },
+  {
+    id: 187,
+    question:
+      'A hotel lobby smoke detector operates when guests use aerosols and vaping devices near the reception desk. What is the most appropriate technical change?',
+    options: [
+      'Fit an ionisation head in place of the optical head',
+      'Fit a heat detector to cover the whole reception area',
+      'Reduce the number of detectors in the lobby ceiling',
+      'Fit a multi-sensor head needing two fire signatures',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'A multi-sensor requires corroboration between sensing elements, so a puff of aerosol without any heat or sustained obscuration is rejected while a real fire is still detected promptly. Fitting a heat detector is the attractive wrong answer because it would certainly cure the nuisance, but the lobby is on the escape route of a sleeping risk and heat detection responds far too late there.',
+    section: 'Module 6',
+    difficulty: 'advanced',
+    topic: 'False Alarm Management',
+    category: 'Testing & Maintenance',
+  },
+  {
+    id: 188,
+    question:
+      'What term describes an alarm signal caused by something other than fire, such as burnt toast or bathroom steam?',
+    options: [
+      'A genuine alarm requiring full building evacuation',
+      'An unwanted alarm caused by an everyday activity',
+      'A fault warning raised by the control equipment',
+      'A test signal generated during the weekly check',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The detector has worked exactly as designed by responding to smoke or aerosol, but no fire exists, so the event is an unwanted alarm arising from normal activity rather than a device defect. A fault warning is the attractive wrong answer because both interrupt normal operation, but a fault is a separate indication telling you the system itself is impaired, not that it has detected something.',
+    section: 'Module 6',
+    difficulty: 'basic',
+    topic: 'False Alarm Management',
+    category: 'Testing & Maintenance',
+  },
+  {
+    id: 189,
+    question:
+      'During commissioning, why is every detector and call point operated individually instead of testing a representative sample?',
+    options: [
+      'To confirm the loop current stays within limits',
+      'To prove each device signals the correct zone',
+      'To prove the standby battery can hold the load',
+      'To measure the sound level in every single room',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Individual operation is the only way to catch a device wired into the wrong zone, addressed incorrectly or labelled wrongly at the panel, all of which would send responders to the wrong place in a real fire. Confirming loop current is the attractive wrong answer because loading is checked at commissioning too, but that is a single measurement and would not expose a mislabelled device.',
+    section: 'Module 7',
+    difficulty: 'advanced',
+    topic: 'Commissioning',
+    category: 'Testing & Maintenance',
+  },
+  {
+    id: 190,
+    question:
+      'A finished system departs from recommended practice because the client refused detection in one store room. What must the installer do at handover?',
+    options: [
+      'Refuse to issue any certification for the system',
+      'Reclassify the system as a Category M installation',
+      'Fit the detector anyway and adjust the final invoice',
+      'Record the variation clearly on the certification',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Departures from recommended practice are permitted provided they are declared, so the certificate records the variation and the responsible person accepts a documented, informed risk. Refusing to certify is the attractive wrong answer because it feels like the safe professional stance, but withholding paperwork leaves the client with an undocumented system and no record of the shortfall for the fire risk assessment.',
+    section: 'Module 7',
+    difficulty: 'advanced',
+    topic: 'Certification',
+    category: 'Testing & Maintenance',
+  },
+  {
+    id: 191,
+    question:
+      'What is the main purpose of the routine weekly user test of a fire alarm system?',
+    options: [
+      'To check the system alerts occupants and staff respond',
+      'To recharge the standby batteries inside the panel',
+      'To satisfy the annual insurance inspection record',
+      'To reset any detectors that have become dirty',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The weekly test proves that operating a call point produces the alarm signal throughout the building and keeps occupants familiar with the sound, using a different call point each week so the whole system is covered over time. Recharging the batteries is the attractive wrong answer because sounding the alarm does discharge them briefly, but the charger maintains the battery continuously and the test exists to prove function and familiarity.',
+    section: 'Module 7',
+    difficulty: 'intermediate',
+    topic: 'Maintenance',
+    category: 'Testing & Maintenance',
+  },
+  {
+    id: 192,
+    question:
+      'Who carries responsibility for keeping the fire alarm system logbook up to date once the system is in use?',
+    options: [
+      'The manufacturer of the fire alarm control equipment',
+      'The electrician who first installed the system wiring',
+      'The responsible person for the premises or a delegate',
+      'The alarm receiving centre monitoring the premises',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'The logbook belongs to the premises, so the responsible person, or a named person acting for them, records tests, faults, false alarms and service visits as they happen. The installing electrician is the attractive wrong answer because the installer starts the record at handover, but they are not on site week to week and cannot log events they never see.',
+    section: 'Module 7',
+    difficulty: 'intermediate',
+    topic: 'Maintenance',
+    category: 'Testing & Maintenance',
+  },
+  {
+    id: 193,
+    question:
+      'Which device allows a person who discovers a fire to raise the alarm immediately?',
+    options: [
+      'An optical smoke detector in the ceiling',
+      'A manual call point on the escape route',
+      'A sounder mounted on the corridor wall',
+      'A door holder fitted to the fire door',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The manual call point is the human input to the system, letting anyone who sees fire raise the alarm without waiting for smoke to reach a detector. The smoke detector is the attractive wrong answer because it also raises an alarm, but it is automatic and only responds once combustion products arrive at the ceiling, which can be much later than a person seeing flames.',
+    section: 'Module 7',
+    difficulty: 'basic',
+    topic: 'System Components',
+    category: 'Design & Zoning',
+  },
+  {
+    id: 194,
+    question:
+      'Why does a fire alarm system need periodic servicing by a competent person as well as routine user testing?',
+    options: [
+      'User tests are not permitted once a system is old',
+      'Servicing replaces the need for any logbook entries',
+      'Only a service visit can reset a system after alarm',
+      'Some checks need skills and equipment users lack',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Servicing covers work beyond a weekly call point test, such as functional testing of every device, checking battery condition under load, verifying cause and effect and inspecting for building changes that affect coverage. The claim that servicing removes the need for logbook entries is the attractive wrong answer because the engineer does sign the book, but the weekly user records continue between visits and are part of the same history.',
+    section: 'Module 7',
+    difficulty: 'intermediate',
+    topic: 'Maintenance',
+    category: 'Testing & Maintenance',
+  },
+  {
+    id: 195,
+    question:
+      'Which set of documents should be handed to the client at completion of a fire alarm installation?',
+    options: [
+      'The wholesaler invoices for the equipment supplied',
+      'A copy of the fire risk assessment for the premises',
+      'As fitted drawings, certification and operating details',
+      'The installer public liability insurance certificate',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'The handover pack has to let someone else run and maintain the system, so it contains the record of what was installed and where, the certification covering design, installation and commissioning, and instructions for the user. The fire risk assessment is the attractive wrong answer because it drives the specification, but it is the duty holder document and is produced for the premises rather than issued by the installer.',
+    section: 'Module 7',
+    difficulty: 'intermediate',
+    topic: 'Handover',
+    category: 'Testing & Maintenance',
+  },
+  {
+    id: 196,
+    question:
+      'What is the function of a fire alarm sounder within a protected building?',
+    options: [
+      'To warn occupants so they can start to evacuate',
+      'To detect smoke rising towards the ceiling void',
+      'To signal the alarm receiving centre remotely',
+      'To release fire doors held open magnetically',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The sounder is the output that converts a detection or call point signal into a warning people can hear and act on, which is the whole point of a life safety system. Releasing held open doors is the attractive wrong answer because that does happen on alarm, but it is performed by separate hold open devices driven by the panel, not by the sounder circuit.',
+    section: 'Module 7',
+    difficulty: 'basic',
+    topic: 'System Components',
+    category: 'Design & Zoning',
+  },
+  {
+    id: 197,
+    question:
+      'The mains supply is removed during a standby test and the panel immediately indicates a battery fault. What does this most likely mean?',
+    options: [
+      'The mains fuse at the distribution board has failed',
+      'The detectors on the loop are drawing too much',
+      'The panel charger is set to the wrong voltage',
+      'The batteries can no longer support the system',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'A healthy standby battery should carry the quiescent load for the full designed period, so a fault appearing at once shows the cells have lost capacity and must be replaced and dated. The failed mains fuse is the attractive wrong answer because it would also remove the mains, but the mains was deliberately switched off for the test, and a good battery would have taken over without complaint.',
+    section: 'Module 7',
+    difficulty: 'intermediate',
+    topic: 'Maintenance',
+    category: 'Testing & Maintenance',
+  },
+  {
+    id: 198,
+    question:
+      'Why should a hotel nominate and train specific staff to operate and interpret the fire alarm control panel?',
+    options: [
+      'So the panel can be silenced whenever guests complain',
+      'So an alarm is interpreted and acted on without delay',
+      'So the annual service visit can be carried out faster',
+      'So the system can be left disabled during busy periods',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Trained staff can read the zone indication, follow the agreed procedure and either investigate or evacuate quickly, which is what makes any investigation period safe to use. Silencing the panel on complaint is the attractive wrong answer because trained staff do use the silence control, but that is done after the cause is confirmed, never as a way to stop the noise for guests.',
+    section: 'Module 7',
+    difficulty: 'intermediate',
+    topic: 'Handover',
+    category: 'Testing & Maintenance',
+  },
+  {
+    id: 199,
+    question:
+      'Why must a detector head never be painted over or covered up during redecoration work?',
+    options: [
+      'The paint will short the terminals inside the base',
+      'Smoke cannot reach the sensing chamber inside it',
+      'The head will alarm continuously once it is painted',
+      'The panel will lose the address of that detector',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Blocking the entry slots stops smoke reaching the chamber, so the detector appears healthy at the panel while giving no protection at all, which is the most dangerous kind of failure. Continuous alarming is the attractive wrong answer because contamination can cause spurious alarms, but a sealed head usually goes quiet instead, and covers used during works must be removed and the system proved afterwards.',
+    section: 'Module 7',
+    difficulty: 'basic',
+    topic: 'Maintenance',
+    category: 'Testing & Maintenance',
+  },
+  {
+    id: 200,
+    question:
+      'A zone has shown an intermittent circuit fault ever since a contractor installed a new suspended ceiling. What should be investigated first?',
+    options: [
+      'The standby battery capacity at the control panel',
+      'The sensitivity setting of every detector on site',
+      'The sound level achieved in the affected rooms',
+      'Cable damage or a disturbed connection in that zone',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'The fault started with building work in that area, so the probable cause is a cable pinched or cut by grid fixings, or a detector base disturbed when tiles were lifted, and monitored wiring reports exactly that as a circuit fault. Battery capacity is the attractive wrong answer because a failing battery does produce faults, but a supply problem would affect the whole panel rather than one zone that has just been worked on.',
+    section: 'Module 7',
+    difficulty: 'intermediate',
+    topic: 'Fault Finding',
+    category: 'Testing & Maintenance',
+  },
 ];
 
 /**

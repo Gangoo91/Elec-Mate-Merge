@@ -24,7 +24,7 @@ import { useQuestionFailureRates } from '@/hooks/useQuestionFailureRates';
 const Level3Module8MockExam5 = () => {
   useSEO(
     'Mock Exam 5: Inspection & Testing | Level 3 Electrical Course',
-    'Test your knowledge of Module 5 inspection and testing with this comprehensive 30-question mock exam.'
+    'Test your knowledge of Module 5 inspection and testing with this comprehensive 60-question mock exam.'
   );
 
   const [examQuestions, setExamQuestions] = useState<Question[]>([]);
@@ -32,7 +32,7 @@ const Level3Module8MockExam5 = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [examStarted, setExamStarted] = useState(false);
   const [showResults, setShowResults] = useState(false);
-  const [timeRemaining, setTimeRemaining] = useState(60 * 45);
+  const [timeRemaining, setTimeRemaining] = useState(90 * 60);
   const [flaggedQuestions, setFlaggedQuestions] = useState(new Set<number>());
   const [reviewMode, setReviewMode] = useState(false);
   const [reviewFilter, setReviewFilter] = useState<ExamReviewFilter>('all');
@@ -65,15 +65,15 @@ const Level3Module8MockExam5 = () => {
 
   const startExam = () => {
     const selectedQuestions = shuffleAllQuestionOptions(
-      getRandomQuestions(30),
+      getRandomQuestions(60),
       createShuffleSalt()
     );
     setExamQuestions(selectedQuestions);
-    setSelectedAnswers(new Array(30).fill(-1));
+    setSelectedAnswers(new Array(60).fill(-1));
     setCurrentQuestion(0);
     setExamStarted(true);
     setShowResults(false);
-    setTimeRemaining(60 * 45);
+    setTimeRemaining(90 * 60);
     setFlaggedQuestions(new Set());
     missesRecordedRef.current = false;
     startedAtRef.current = Date.now();
@@ -152,7 +152,7 @@ const Level3Module8MockExam5 = () => {
         exitLabel={examExit.label}
         title="Level 3 Mock Exam 5"
         subtitle="Inspection & Testing"
-        totalQuestions={30}
+        totalQuestions={60}
         bankSize={module5Questions.length}
         timeLimitMinutes={45}
         passThreshold={60}
@@ -201,7 +201,7 @@ const Level3Module8MockExam5 = () => {
           setSelectedAnswers([]);
           setShowResults(false);
           setExamStarted(false);
-          setTimeRemaining(60 * 45);
+          setTimeRemaining(90 * 60);
           setReviewMode(false);
           setReviewFilter('all');
         }}

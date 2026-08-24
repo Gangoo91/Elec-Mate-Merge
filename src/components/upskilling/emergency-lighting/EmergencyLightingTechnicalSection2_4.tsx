@@ -32,7 +32,7 @@ export const EmergencyLightingTechnicalSection2_4 = () => {
                 <li className="flex items-center gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400" />
                   <span>
-                    <strong>1 lux</strong> along centre line of escape route
+                    <strong>1 lux</strong> across the full width of the escape route
                   </span>
                 </li>
                 <li className="flex items-center gap-2">

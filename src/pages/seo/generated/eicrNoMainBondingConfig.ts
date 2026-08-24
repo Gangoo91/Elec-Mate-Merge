@@ -260,7 +260,7 @@ export const eicrNoMainBondingConfig: GeneratedGuideConfig = {
       category: 'Tool',
     },
     {
-      href: '/tools/minor-works-certificate',
+      href: '/minor-works-certificate',
       title: 'Minor Works Certificate Tool',
       description: 'Issue the MEIWC for the bonding remedial work in minutes.',
       icon: 'FileCheck2',

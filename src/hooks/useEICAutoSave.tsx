@@ -126,9 +126,16 @@ export const useEICAutoSave = ({
 
   // Clear auto-save data
   const clearAutoSave = useCallback(() => {
-    draftStorage.clearDraft(reportType);
+    /*
+     * ELE-1599 — pass this certificate's own identity so the right draft is
+     * cleared. Drafts are now keyed per certificate; without the id this would
+     * only remove the legacy shared key and leave this certificate's draft
+     * behind, so "start new" would offer to recover the cert just abandoned.
+     */
+    const certId = (formData as Record<string, unknown>)?._clientCertId;
+    draftStorage.clearDraft(reportType, null, typeof certId === 'string' ? certId : null);
     setHasUnsavedChanges(false);
-  }, [reportType]);
+  }, [reportType, formData]);
 
   return {
     isSaving,

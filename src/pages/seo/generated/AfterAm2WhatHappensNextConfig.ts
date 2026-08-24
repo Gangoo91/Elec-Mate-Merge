@@ -148,7 +148,7 @@ export const AfterAm2WhatHappensNextConfig: GeneratedGuideConfig = {
       category: 'Guide',
     },
     {
-      href: '/guides/niceic-vs-napit-registration',
+      href: '/niceic-vs-napit-comparison',
       title: 'NICEIC vs NAPIT',
       description: 'Related guide for apprentices about to take or just-passed AM2.',
       icon: 'FileCheck2',
@@ -162,7 +162,7 @@ export const AfterAm2WhatHappensNextConfig: GeneratedGuideConfig = {
       category: 'Guide',
     },
     {
-      href: '/guides/starting-an-electrical-business-uk',
+      href: '/guides/starting-an-electrical-business',
       title: 'Starting an Electrical Business',
       description: 'Related guide for apprentices about to take or just-passed AM2.',
       icon: 'Briefcase',

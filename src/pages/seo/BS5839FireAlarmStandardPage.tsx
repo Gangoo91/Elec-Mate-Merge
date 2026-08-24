@@ -84,6 +84,14 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
+    href: '/guides/fire-alarm-certificate-requirements',
+    title: 'Fire Alarm Certificate Requirements',
+    description:
+      'Which BS 5839-1 certificate applies at each stage — design, installation, commissioning, verification — and who signs it.',
+    icon: FileCheck2,
+    category: 'Guide',
+  },
+  {
     href: '/fire-alarm-certificate',
     title: 'Fire Alarm Certificate App',
     description:

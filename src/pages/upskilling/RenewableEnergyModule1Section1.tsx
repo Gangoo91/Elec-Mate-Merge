@@ -180,7 +180,7 @@ const quizQuestions = [
   {
     id: 5,
     question:
-      'Appendix 17 (energy efficiency) in A4:2026 lands certain design decisions on Part 6 certification. Which framing is most useful to the LCT designer?',
+      'Chapter 81 (energy efficiency), introduced by A4:2026 in place of the deleted Appendix 17, lands certain design decisions on Part 6 certification. Which framing is most useful to the LCT designer?',
     options: [
       'It is informational only and has no bearing on the Part 6 certification of a design',
       'It overlaps Building Regulations Part L — efficiency choices become cert-recordable, slated to become a Part 8',
@@ -189,7 +189,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      'Cable sizing for loss minimisation, transformer efficiency class, variable-speed-drive choice are now BS 7671 design decisions with cert-level recordability. Appendix 17 collapses part of the boundary between BS 7671 and Part L. LCT design competence in 2027+ must include Part L-aware loss thinking.',
+      'Cable sizing for loss minimisation, transformer efficiency class, variable-speed-drive choice are now BS 7671 design decisions with cert-level recordability. Chapter 81 collapses part of the boundary between BS 7671 and Part L. LCT design competence in 2027+ must include Part L-aware loss thinking.',
   },
   {
     id: 6,
@@ -256,9 +256,9 @@ const faqs = [
   },
   {
     question:
-      'Does Appendix 17 (energy efficiency) actually change what an LCT designer needs to do on a day-to-day install?',
+      'Does Chapter 81 (energy efficiency) actually change what an LCT designer needs to do on a day-to-day install?',
     answer:
-      'Selectively, yes. Chapter 81 introduces loss-minimisation design considerations and makes certain decisions recordable on Part 6 certs. For routine domestic installs the recordable items are narrower than the cross-cutting design philosophy. The deeper change is cultural: BS 7671 designers are increasingly expected to think about energy efficiency as a design dimension, not just protection coordination. The 19th Edition is expected to push further, promoting Appendix 17 into a full Part 8.',
+      'Selectively, yes. Chapter 81 introduces loss-minimisation design considerations and makes certain decisions recordable on Part 6 certs. For routine domestic installs the recordable items are narrower than the cross-cutting design philosophy. The deeper change is cultural: BS 7671 designers are increasingly expected to think about energy efficiency as a design dimension, not just protection coordination. A4:2026 already deleted Appendix 17 and introduced Chapter 81 inside the new Part 8; the 19th Edition is expected to build that out further.',
   },
   {
     question:
@@ -282,7 +282,7 @@ const faqs = [
     question:
       'What is the realistic timeline for the 19th Edition of BS 7671?',
     answer:
-      'The IET / BSI joint committee is working through proposed structural changes. Public consultation on the draft is expected during 2027–2028; publication during 2028–2029 is the working assumption; implementation transition through 2029–2030. The expected direction: consolidation of the LCT chapters into a clearer Part 7 framework, promotion of Appendix 17 into Part 8, deeper integration with BS EN 60364. The 18th Edition with A4 amendments remains in force across the transition.',
+      'The IET / BSI joint committee is working through proposed structural changes. Public consultation on the draft is expected during 2027–2028; publication during 2028–2029 is the working assumption; implementation transition through 2029–2030. The expected direction: consolidation of the LCT chapters into a clearer Part 7 framework, further build-out of Part 8 (A4 having already replaced Appendix 17 with Chapter 81), deeper integration with BS EN 60364. The 18th Edition with A4 amendments remains in force across the transition.',
   },
   {
     question:
@@ -335,7 +335,7 @@ export default function RenewableEnergyModule1Section1() {
           <LearningOutcomes
             outcomes={[
               'Locate the UK net-zero duty in statute and read the policy stack above it as implementation routes, not the duty itself.',
-              'Read the A4:2026 LCT-relevant changes (Reg 551.7.1(c), Reg 722.411.4.1, Reg 133.1.3, Appendix 17) as a coherent regulatory direction rather than as isolated amendments.',
+              'Read the A4:2026 LCT-relevant changes (Reg 551.7.1(c), Reg 722.411.4.1, Reg 133.1.3, Chapter 81) as a coherent regulatory direction rather than as isolated amendments.',
               'Disaggregate the headline LCT market numbers before they inform commercial decisions — utility-scale vs domestic, funded vs unfunded.',
               'Position MCS not as compliance overhead but as a market-segmentation mechanism.',
               'Identify the upstream electrical infrastructure constraints that gate LCT project delivery as tightly as installer count does.',
@@ -548,12 +548,12 @@ export default function RenewableEnergyModule1Section1() {
 
           <SectionRule />
 
-          <ContentEyebrow>Appendix 17 — BS 7671 colonising Part L territory</ContentEyebrow>
+          <ContentEyebrow>Chapter 81 — BS 7671 colonising Part L territory</ContentEyebrow>
 
           <ConceptBlock
-            title="Appendix 17 is regulatory convergence, not relabelling"
+            title="Chapter 81 is regulatory convergence, not relabelling"
             plainEnglish="Energy efficiency used to live in Building Regulations Part L. A4:2026 starts to embed it in BS 7671. The boundary between the two regimes is moving."
-            onSite="On any install where loss minimisation matters — long sub-mains, three-phase commercial work, motor circuits — Appendix 17 design considerations are now within scope."
+            onSite="On any install where loss minimisation matters — long sub-mains, three-phase commercial work, motor circuits — Chapter 81 design considerations are now within scope."
           >
             <p>
               Chapter 81 is the new energy-efficiency chapter introduced in A4:2026 in place of the deleted Appendix 17, and

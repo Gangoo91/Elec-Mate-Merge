@@ -9,7 +9,8 @@ import { StickyHorizontalScrollbar } from './mobile/StickyHorizontalScrollbar';
 import EnhancedTestResultDesktopTableRow from './EnhancedTestResultDesktopTableRow';
 import { toast } from 'sonner';
 import { getMaxZsFromDeviceDetails } from '@/utils/zsCalculations';
-import { bsStandardRequiresCurve } from '@/types/protectiveDeviceTypes';
+import { bsStandardRequiresCurve, curveFillApplies } from '@/types/protectiveDeviceTypes';
+import { planColumnFill, describeColumnFill, type ColumnFillMode } from '@/utils/columnFill';
 import { handleGridKeyDown } from '@/utils/scheduleGridNavigation';
 
 interface EnhancedTestResultDesktopTableProps {
@@ -30,7 +31,13 @@ interface EnhancedTestResultDesktopTableProps {
    * fill on Board 2 silently overwrites Board 1. Parents that ignore the third
    * argument keep the previous (whole-schedule) behaviour.
    */
-  onBulkFieldUpdate?: (field: keyof TestResult, value: string, circuitIds?: string[]) => void;
+  onBulkFieldUpdate?: (
+    field: keyof TestResult,
+    value: string,
+    circuitIds?: string[],
+    /** ELE-1605 — `onlyBlank` leaves circuits that already hold a reading alone. */
+    options?: { onlyBlank?: boolean }
+  ) => void;
   onScanBoard?: () => void;
   earthingArrangement?: string;
   /**
@@ -144,6 +151,55 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
       }
     },
     [onBulkFieldUpdate, onUpdate]
+  );
+
+  /*
+   * ELE-1605 — per-column fill for the reading columns.
+   *
+   * Board scoping comes free: `resultsRef.current` is this table's circuits,
+   * i.e. one board's worth, and those ids are what the parent is told to
+   * restrict the write to. The header's counts are computed from the same
+   * array, so what the popover says it will touch is what gets touched.
+   *
+   * `mode: 'blank'` is the default the control passes. Without a bulk parent
+   * the fallback loop applies the same rule per row rather than quietly
+   * overwriting — a fallback that behaves differently from the real path is
+   * how a safety rule ends up not applying on one screen.
+   */
+  const handleFillColumn = useCallback(
+    (field: keyof TestResult, value: string, mode: ColumnFillMode) => {
+      const circuits = resultsRef.current;
+      const onlyBlank = mode === 'blank';
+      if (onBulkFieldUpdate) {
+        onBulkFieldUpdate(field, value, circuits.map((c) => c.id), { onlyBlank });
+        return;
+      }
+      const plan = planColumnFill(circuits, field as string, mode);
+      plan.fillIds.forEach((id) => onUpdate(id, field, value));
+      toast.success(describeColumnFill(plan, value));
+    },
+    [onBulkFieldUpdate, onUpdate]
+  );
+
+  /**
+   * Blank vs populated counts for a column, over the circuits this table
+   * renders — i.e. one board.
+   *
+   * Derived from the same planner the fill uses, so the number the popover
+   * promises is the number the fill delivers. Counting them separately is how
+   * a control ends up saying "fill 8 empty cells" and writing 6.
+   */
+  const columnCounts = useCallback(
+    (field: keyof TestResult) => {
+      const circuits = resultsRef.current;
+      const blank = planColumnFill(circuits, field as string, 'blank');
+      const all = planColumnFill(circuits, field as string, 'overwrite');
+      return {
+        blankCount: blank.fillIds.length,
+        populatedCount: all.fillIds.length - blank.fillIds.length,
+      };
+    },
+    []
   );
 
   // ELE-871 — accept a value so the header popover can offer Pass/Fail/N/A
@@ -329,19 +385,23 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
   // fuses don't, so they're skipped.
   const handleFillAllCurve = useCallback(
     (value: string) => {
-      const curveApplies = (bs: string) =>
-        bs === 'MCB (BS EN 60898)' || bs === 'RCBO (BS EN 61009)' || bs === 'MCCB (BS EN 60947)';
+      // ELE-1604 — B/C/D fills BS EN 60898/61009/60947 rows, 1–4 fills BS 3871
+      // rows. A mixed board is normal on an EICR (an old sub-board alongside a
+      // new consumer unit), so this must skip rather than overwrite.
       let count = 0;
       resultsRef.current.forEach((result) => {
-        if (curveApplies(result.bsStandard || '')) {
+        if (curveFillApplies(value, result.bsStandard || '')) {
           onUpdate(result.id, 'protectiveDeviceCurve', value);
           count += 1;
         }
       });
+      const isBs3871Value = /^[1-4]$/.test(value);
+      const label = isBs3871Value ? `Type ${value}` : `Curve ${value}`;
+      const family = isBs3871Value ? 'BS 3871' : 'MCB/RCBO';
       toast.success(
         count > 0
-          ? `Curve ${value} applied to ${count} MCB/RCBO circuit${count === 1 ? '' : 's'}`
-          : 'No MCB/RCBO circuits to apply a curve to'
+          ? `${label} applied to ${count} ${family} circuit${count === 1 ? '' : 's'}`
+          : `No ${family} circuits to apply ${label} to`
       );
     },
     [onUpdate]
@@ -530,6 +590,8 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
                     onFillAllCurve={handleFillAllCurve}
                     onFillAllPhase={handleFillAllPhase}
                     onFillAllAfddNA={handleFillAllAfddNA}
+                    onFillColumn={handleFillColumn}
+                    columnCounts={columnCounts}
                   />
                   <TableBody>
                     {testResults.map((result) => (

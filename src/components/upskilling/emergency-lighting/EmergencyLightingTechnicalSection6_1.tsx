@@ -165,7 +165,7 @@ export const EmergencyLightingTechnicalSection6_1 = () => {
                 <h4 className="font-semibold text-blue-300 mb-2">Illuminance Requirements:</h4>
                 <ul className="text-sm space-y-2">
                   <li>
-                    • Escape routes: <strong>1 lux minimum</strong> along the centre line
+                    • Escape routes: <strong>1 lux minimum</strong> across the full width
                     <p className="text-xs text-gray-300 mt-1 ml-4">
                       Measured at floor level along the entire escape route, including corridors,
                       stairways, and final exits. Half the required illuminance must be achieved

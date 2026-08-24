@@ -312,7 +312,7 @@ export const methodStatementFaultFindingConfig: GeneratedGuideConfig = {
   faqHeading: 'Frequently asked questions',
   relatedPages: [
     {
-      href: '/tools/rams-generator',
+      href: '/rams-generator',
       title: 'RAMS Generator',
       description: 'Generate a site-specific risk assessment and method statement for any electrical job — fault finding, EICR, install, rewire — in minutes.',
       icon: 'FileText',

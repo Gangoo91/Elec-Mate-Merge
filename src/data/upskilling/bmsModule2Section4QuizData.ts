@@ -97,9 +97,9 @@ export const bmsModule2Section4QuizData: QuizQuestion[] = [
     question: 'Why is it important to walk the space before installing sensors?',
     options: [
       'To understand how the space is used and identify potential interference sources',
-      'To confirm the correct mounting brackets have been ordered',
-      'To check the ceiling height matches the drawings',
-      'To verify the network cabling is already in place',
+      'To confirm the correct mounting brackets and back boxes have been ordered',
+      'To check the ceiling heights match the dimensions shown on the drawings',
+      'To verify that the network cabling has already been pulled in and terminated',
     ],
     correctAnswer: 0,
     explanation:

@@ -66,8 +66,10 @@ export interface DurationRequirement {
  * Minimum illuminance requirements per BS EN 1838:2024
  *
  * Escape routes (Section 4.2):
- * - Minimum 1 lux at floor level along centre line
- * - Central band (50% of route width) must have at least 0.5 lux
+ * - Minimum 1 lux at floor level across the FULL WIDTH of the route
+ * - Borders excluded: 0.5 m each side above 2 m width, or a quarter of
+ *   the width at 2 m or less (the 2013 edition required 1 lux only on the
+ *   centre line, with 0.5 lux on a central band)
  * - Uniformity ratio not greater than 40:1
  *
  * Anti-panic/Open areas (Section 4.3):

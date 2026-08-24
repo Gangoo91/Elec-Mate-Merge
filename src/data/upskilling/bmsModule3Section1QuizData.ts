@@ -109,10 +109,10 @@ export const bmsModule3Section1QuizData: QuizQuestion[] = [
     id: 9,
     question: 'How does BMS scheduling reduce boiler fuel use in schools?',
     options: [
-      'By raising the flow temperature so spaces heat up faster',
+      'By raising the boiler flow temperature so the classrooms heat up much faster',
       'By pre-heating classrooms before lessons then reducing output during empty periods',
-      'By running the boilers continuously to avoid cold starts',
-      'By switching heating to electric panel heaters out of hours',
+      'By running the boilers continuously overnight to avoid repeated cold starts',
+      'By switching the heating over to electric panel heaters outside school hours',
     ],
     correctAnswer: 1,
     explanation:

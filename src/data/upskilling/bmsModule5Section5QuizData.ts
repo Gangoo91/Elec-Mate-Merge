@@ -18,10 +18,10 @@ export const bmsModule5Section5QuizData: QuizQuestion[] = [
     id: 2,
     question: 'Why are gateways compared to translators?',
     options: [
-      'They store every message so it can be replayed later',
-      'They split one signal into several identical copies',
+      'They store every message that passes so it can be replayed to the system later',
+      'They split one incoming signal into several identical copies for other devices',
       "They convert different protocol 'languages' so systems can understand each other",
-      'They amplify weak signals to extend the network reach',
+      'They amplify weak signals so the network can be extended over longer distances',
     ],
     correctAnswer: 2,
     explanation:
@@ -45,9 +45,9 @@ export const bmsModule5Section5QuizData: QuizQuestion[] = [
     question: 'What is the benefit of using a KNX-to-BACnet gateway?',
     options: [
       'It allows KNX-controlled devices to appear as BACnet objects for central monitoring',
-      'It removes the need to address KNX devices individually',
-      'It supplies the KNX bus with its required operating voltage',
-      'It increases the maximum cable length of the BACnet network',
+      'It removes the need to give each KNX device an individual address on the bus',
+      'It supplies the KNX bus segment with the operating voltage its devices need',
+      'It increases the maximum cable length permitted on the BACnet network segment',
     ],
     correctAnswer: 0,
     explanation:
@@ -57,10 +57,10 @@ export const bmsModule5Section5QuizData: QuizQuestion[] = [
     id: 5,
     question: 'Why do gateways help make systems more future-proof?',
     options: [
-      'They automatically update device firmware over the network',
+      'They automatically update the firmware on every connected device whenever one is added',
       'They allow mixing devices from different vendors and adding new subsystems without replacing everything',
-      'They eliminate the need for periodic commissioning checks',
-      'They convert all analogue signals into a single digital standard',
+      'They remove the need for any periodic commissioning checks once the system is running',
+      'They convert every analogue field signal into a single digital standard used across the site',
     ],
     correctAnswer: 1,
     explanation:
@@ -109,10 +109,10 @@ export const bmsModule5Section5QuizData: QuizQuestion[] = [
     id: 9,
     question: 'What should be tested on both sides of a gateway during commissioning?',
     options: [
-      'The insulation resistance of the supply cabling',
+      'That the insulation resistance of the supply cabling meets the required minimum',
       'That data passes correctly and is visible on both the source device and target system',
-      'The ambient humidity around the enclosure',
-      'The earth fault loop impedance of the panel',
+      'That the ambient humidity inside the gateway enclosure remains within its limits',
+      'That the earth fault loop impedance measured at the control panel is low enough',
     ],
     correctAnswer: 1,
     explanation:

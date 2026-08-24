@@ -189,7 +189,7 @@ export const minorWorksCertificateHowToFillInConfig: GeneratedGuideConfig = {
       category: 'Certificate',
     },
     {
-      href: '/tools/electrical-quoting-app',
+      href: '/electrical-quoting-app',
       title: 'Electrical Quoting App',
       description: 'Move from certificate work into a follow-on quote without retyping the job.',
       icon: 'Calculator',

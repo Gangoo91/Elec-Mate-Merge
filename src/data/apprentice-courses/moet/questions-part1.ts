@@ -34,10 +34,10 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'When carrying out safe isolation of an electrical circuit, what is the correct sequence of steps?',
     options: [
-      'Isolate, prove dead, then identify the circuit and obtain permission',
-      'Lock off, isolate, prove the tester after testing, then obtain permission',
+      'Isolate, prove dead, lock off, then identify the circuit and obtain permission afterwards',
+      'Obtain permission, lock off, isolate, then prove the test instrument only after testing dead',
       'Identify circuit, obtain permission, isolate, lock off, prove dead using a proven test instrument',
-      'Prove dead, isolate, lock off, then prove the tester on a live source',
+      'Prove dead, isolate, obtain permission, lock off, then prove the tester on a live source',
     ],
     correctAnswer: 2,
     explanation:
@@ -52,9 +52,9 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'Under a lock-out/tag-out (LOTO) procedure, who is authorised to remove a personal safety lock?',
     options: [
-      'Any qualified electrician on site, provided they sign the permit register',
-      'The site supervisor or person in charge of the work area',
-      'The first-aider on duty, once the area has been confirmed clear',
+      'Any competent electrician on site, provided the removal is recorded in the permit register',
+      'The site supervisor, who may cut any lock once the shift on which it was applied has ended',
+      'The person who issued the permit to work, acting alone whenever the holder is away from site',
       'Only the person who applied the lock, unless a formally documented override procedure is followed',
     ],
     correctAnswer: 3,
@@ -88,10 +88,10 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'What information must be clearly stated on a permit to work for electrical maintenance?',
     options: [
-      'Only the name of the issuer and the expected duration of the work',
+      'The name of the issuer and the expected duration of the work, with the hazards covered verbally at the toolbox talk',
       'The equipment identity, nature of work, hazards identified, precautions required, and signatures of issuer and recipient',
-      'Just the isolation points and the rating of the protective devices involved',
-      'A list of the tools and test instruments to be used during the work',
+      'The isolation points and the ratings of the protective devices involved, with no signatures required from either party',
+      'A list of the tools and test instruments to be used, the cost of the work, and the name of the shift supervisor',
     ],
     correctAnswer: 1,
     explanation:
@@ -179,10 +179,10 @@ export const questionsPart1: StandardMockQuestion[] = [
     id: 10,
     question: 'What is the legal status of an Approved Code of Practice (ACoP) in the UK?',
     options: [
-      'It is fully legally binding and overrides the parent Act in court',
-      'It has no legal standing and is purely advisory best-practice guidance',
+      'It is legally binding in its own right and takes precedence over the parent Act it was made under',
+      'It has no standing of any kind in court and is purely advisory best-practice guidance for industry',
       'It is not legally binding but failure to follow it can be used as evidence of non-compliance in court',
-      'It applies only to employers with more than five employees',
+      'It applies only to employers with five or more employees, who must prove compliance with it in court',
     ],
     correctAnswer: 2,
     explanation:
@@ -199,9 +199,9 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       "Under Section 2 of the Health and Safety at Work Act 1974, what is the employer's general duty?",
     options: [
-      'To provide free personal protective equipment to all visitors on site',
-      'To insure every employee against injury arising from their own negligence',
-      'To report all workplace accidents to the HSE within 24 hours',
+      'To provide free personal protective equipment to every employee, visitor and contractor on the site',
+      'To hold insurance covering every employee against any injury arising from their own negligence',
+      'To report every workplace accident and near miss to the Health and Safety Executive within a day',
       'To ensure, so far as is reasonably practicable, the health, safety and welfare at work of all employees',
     ],
     correctAnswer: 3,
@@ -252,10 +252,10 @@ export const questionsPart1: StandardMockQuestion[] = [
     id: 14,
     question: 'Under HSWA 1974, what duty does Section 7 place on employees?',
     options: [
-      'To carry out their own risk assessments before every task',
-      'To provide their own personal protective equipment at work',
+      'To carry out and record a written risk assessment personally before starting every task, however routine it may be',
+      'To supply their own personal protective equipment and to fund their own safety training courses each year',
       'To take reasonable care for the health and safety of themselves and others who may be affected by their acts or omissions',
-      'To report directly to the HSE any breach they witness on site',
+      'To report to the Health and Safety Executive directly any breach of the regulations they witness at work',
     ],
     correctAnswer: 2,
     explanation:
@@ -270,9 +270,9 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'The Provision and Use of Work Equipment Regulations 1998 (PUWER) require that work equipment is suitable for its intended purpose. How does this apply to a voltage indicating device used for proving dead?',
     options: [
-      'Any multimeter set to the AC voltage range is acceptable for proving dead',
-      'A non-contact voltage detector alone is sufficient to prove dead',
-      'The device only needs proving once at the start of the working day',
+      'Any multimeter set to the AC voltage range is acceptable, provided the leads are undamaged and in good condition',
+      'A non-contact voltage detector alone is sufficient, provided it is switched on and its battery has been tested',
+      'The device needs proving only once at the start of the working day, before the first isolation is carried out',
       'The device must comply with GS 38, be in calibration, and be proved on a known live source before and after use',
     ],
     correctAnswer: 3,
@@ -289,9 +289,9 @@ export const questionsPart1: StandardMockQuestion[] = [
       'Under RIDDOR 2013, which of the following electrical incidents must be reported to the HSE?',
     options: [
       'An electrical burn requiring hospital treatment, or any electrical incident causing loss of consciousness',
-      'A momentary shock with no injury that the worker shrugs off',
-      'A blown fuse or tripped MCB during normal fault clearance',
-      'A minor singe to a glove that required no first aid',
+      'A momentary shock from a 230 V socket outlet where the worker felt no pain and carried on working',
+      'A blown fuse or a tripped circuit breaker occurring during normal fault clearance on a final circuit',
+      'A minor singe to an insulating glove that needed no first aid and left the wearer uninjured',
     ],
     correctAnswer: 0,
     explanation:
@@ -307,10 +307,10 @@ export const questionsPart1: StandardMockQuestion[] = [
     id: 17,
     question: 'What is the legal status of BS 7671:2018+A3:2024 (the IET Wiring Regulations)?',
     options: [
-      'It is a statutory instrument that carries the full force of criminal law',
+      'It is a statutory instrument made under EAWR 1989, and any departure from its requirements is a criminal offence',
       'It is a non-statutory British Standard, but is referenced by statutory regulations such as EAWR 1989 as a means of compliance',
-      'It is an Approved Code of Practice issued directly by the HSE',
-      'It is an EU directive that no longer applies in UK law',
+      'It is an Approved Code of Practice issued by the HSE, so failure to follow it is evidence of non-compliance',
+      'It is a retained EU directive that ceased to have any effect in United Kingdom law after the transition period',
     ],
     correctAnswer: 1,
     explanation:
@@ -343,9 +343,9 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'Under Regulation 12 of EAWR 1989, what must be ensured about the means of cutting off the supply and isolation of electrical equipment?',
     options: [
-      'The means of isolation must be a key-operated switch fitted with an RCD',
-      'Isolation may rely on the upstream protective device tripping on fault',
-      'A single isolator may serve the whole installation without a means to secure it',
+      'The means of isolation shall be a key-operated switch fitted with a residual current device at the origin of every circuit',
+      'Isolation may rely on the upstream protective device tripping on fault, provided that device is correctly rated for the circuit it protects',
+      'A single isolator may serve the whole installation and need not be capable of being secured, provided it is clearly labelled',
       'Suitable means shall be available for cutting off the supply and for isolation, and these must be capable of being secured in the OFF position',
     ],
     correctAnswer: 3,
@@ -362,9 +362,9 @@ export const questionsPart1: StandardMockQuestion[] = [
       'A maintenance technician discovers a colleague has received an electric shock and is still in contact with the live source. What is the correct first action?',
     options: [
       'Isolate the electrical supply if it can be done quickly and safely, or use a non-conducting object to separate them from the source',
-      'Immediately grab the casualty and pull them clear of the live source',
-      'Call the emergency services first and wait before taking any action',
-      'Pour water over the contact point to break the electrical connection',
+      'Take hold of the casualty by their clothing and pull them clear of the live source before calling anyone for assistance',
+      'Call the emergency services and wait for their arrival before attempting any action at the scene of the incident',
+      'Pour water over the point of contact to break the electrical connection before moving the casualty into fresh air',
     ],
     correctAnswer: 0,
     explanation:
@@ -530,10 +530,10 @@ export const questionsPart1: StandardMockQuestion[] = [
     id: 29,
     question: "What is the primary function of a transformer's core?",
     options: [
-      'To provide mechanical support for the windings and nothing more',
+      'To give mechanical support to the windings and to hold them at the correct spacing from each other',
       'To provide a low-reluctance path for magnetic flux, enabling efficient energy transfer between windings',
-      'To act as a heat sink dissipating losses from the windings',
-      'To electrically connect the primary and secondary windings together',
+      'To act as a heat sink that dissipates the copper losses generated in the primary and secondary windings',
+      'To form a conducting link between the primary and secondary windings so that power can pass between them',
     ],
     correctAnswer: 1,
     explanation:
@@ -566,9 +566,9 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'A capacitor bank is connected to an industrial installation. What is its primary purpose?',
     options: [
-      'To smooth voltage ripple on the incoming DC supply',
-      'To increase the supply voltage to overcome volt drop on long runs',
-      'To provide short-circuit protection for the main distribution board',
+      'To smooth voltage ripple on the incoming supply so that sensitive electronic control equipment is not disturbed',
+      'To raise the supply voltage at the far end of long cable runs so that the volt drop stays inside the permitted limit',
+      'To provide short-circuit protection at the main distribution board by limiting the prospective fault current available',
       'To improve the power factor by providing leading reactive current to offset the lagging reactive current drawn by inductive loads',
     ],
     correctAnswer: 3,
@@ -638,9 +638,9 @@ export const questionsPart1: StandardMockQuestion[] = [
     id: 35,
     question: 'What is the purpose of earthing (grounding) in an electrical installation?',
     options: [
-      'To carry the normal load current back to the supply transformer',
-      'To reduce the voltage drop along the line conductors under load',
-      'To improve the power factor of inductive loads on the installation',
+      'To carry the normal load current back to the supply transformer in parallel with the neutral conductor',
+      'To reduce the voltage drop along the line conductors so that equipment always receives its full rated voltage',
+      'To improve the power factor of inductive loads by returning reactive current to the supply transformer',
       'To provide a low-impedance path for fault current, enabling protective devices to operate and disconnect the supply quickly',
     ],
     correctAnswer: 3,
@@ -656,9 +656,9 @@ export const questionsPart1: StandardMockQuestion[] = [
     question: 'In a TN-S earthing system, what provides the earth fault return path?',
     options: [
       'A separate metallic conductor (usually the cable sheath) provided by the distributor throughout the distribution system',
-      'An earth electrode installed at the consumer\'s installation',
-      'The combined neutral-and-earth (PEN) conductor of the supply',
-      'The general mass of earth via the soil around the building',
+      'An earth electrode installed at the origin of the installation and connected to the main earthing terminal',
+      'A combined neutral-and-earth (PEN) conductor that is split into separate conductors at the installation origin',
+      'The general mass of earth, reached through the soil surrounding the buried supply cable and the building',
     ],
     correctAnswer: 0,
     explanation:
@@ -691,10 +691,10 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'What is the purpose of a residual current device (RCD) in an electrical installation?',
     options: [
-      'To disconnect the supply when the load current exceeds the cable rating',
-      'To protect against short-circuit currents between line and neutral',
+      'To disconnect the supply whenever the load current exceeds the current-carrying capacity of the cable',
+      'To detect a short circuit between the line and neutral conductors and interrupt the resulting fault current',
       'To detect an imbalance between line and neutral current, indicating earth leakage, and disconnect the supply',
-      'To limit the prospective fault current at the origin of the installation',
+      'To limit the prospective fault current available at the origin of the installation to a declared safe value',
     ],
     correctAnswer: 2,
     explanation:

@@ -3528,4 +3528,902 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     topic: 'Survey Types',
     category: 'Identification & Surveys',
   },
+  {
+    id: 207,
+    question:
+      'Which single factor is the strongest first indicator that a building may contain asbestos materials?',
+    options: [
+      'The age of the building, in particular pre-2000 work',
+      'The number of electrical circuits in the building',
+      'Whether the building has a suspended timber floor',
+      'The type of heating system fitted to the building',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Any premises whose construction was completed before 2000 should be presumed to contain asbestos unless there is strong evidence that it does not. Premises built after 2000 can be presumed asbestos free, though care is needed where new build sits on older basements. Circuit count, floor construction and heating type say nothing about the materials used, so they are not screening indicators.',
+    section: 'Module 1',
+    difficulty: 'basic',
+    topic: 'Where asbestos is found',
+    category: 'Identification & Surveys',
+  },
+  {
+    id: 208,
+    question:
+      'What is asbestos awareness training intended to enable an electrician to do?',
+    options: [
+      'Carry out minor removal of asbestos insulating board',
+      'Take air samples and interpret fibre counts on site',
+      'Recognise and avoid work that would disturb asbestos',
+      'Issue a clearance certificate after a removal job',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Awareness training exists to help workers avoid carrying out work that would disturb asbestos. It is given to employees whose work could foreseeably disturb the fabric of a building. It is not a licence to remove anything: removal of insulating board, air monitoring and clearance certification all require separate task specific training and, for most board work, a licensed contractor and an independent analyst.',
+    section: 'Module 6',
+    difficulty: 'basic',
+    topic: 'Training requirements',
+    category: 'Legislation & Duty to Manage',
+  },
+  {
+    id: 209,
+    question:
+      'Under regulation 4 of the Control of Asbestos Regulations 2012, which premises does the duty to manage cover?',
+    options: [
+      'All domestic dwellings including private family homes',
+      'Non-domestic premises and common parts of domestic ones',
+      'Only premises built before the year 1980 in England',
+      'Any building where more than five people are employed',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Regulation 4 places the duty to manage on those responsible for non-domestic premises and for the common parts of domestic premises, such as a shared entrance hall, stairs, lift or roof space in a block of flats. The interior of a private dwelling is outside regulation 4, but note that section 3 of the Health and Safety at Work Act still applies to a landlord or contractor working there, so the risk cannot simply be ignored.',
+    section: 'Module 2',
+    difficulty: 'intermediate',
+    topic: 'Duty to manage',
+    category: 'Legislation & Duty to Manage',
+  },
+  {
+    id: 210,
+    question:
+      'A tenancy agreement makes the tenant responsible for repairs and maintenance of a leased industrial unit. Who holds the duty to manage asbestos?',
+    options: [
+      'The tenant, because they control repair and maintenance',
+      'The building owner, because ownership always decides it',
+      'The electrical contractor working in the unit that week',
+      'The local authority as the enforcing body for the site',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The duty falls on whoever has the main responsibility for maintenance and repair of the premises, which a tenancy agreement or contract can transfer to the tenant. Ownership is only the default: where the owner keeps repair responsibility the owner is the dutyholder, so the answer turns on the agreement, not the deeds. A visiting contractor and the enforcing authority never hold the regulation 4 duty.',
+    section: 'Module 2',
+    difficulty: 'advanced',
+    topic: 'Dutyholder identity',
+    category: 'Legislation & Duty to Manage',
+  },
+  {
+    id: 211,
+    question:
+      'While chasing a wall you break into a soft grey board you did not expect. What is the correct immediate action?',
+    options: [
+      'Damp the dust down and finish the chase before leaving',
+      'Bag the debris in a rubble sack and place it in the skip',
+      'Fit a dust mask and continue at a slower cutting speed',
+      'Stop work, leave the area and report it to the dutyholder',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Where asbestos, or a material suspected of being asbestos, is found that was not identified in the initial assessment, the rule is to stop work, evacuate the area and protect the material from further damage until it has been decided how work can proceed safely. Damping down, bagging up or carrying on behind a dust mask all keep a worker in a contaminated area and spread fibres further, and none of them creates the specialist advice the situation needs.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'Action on discovery',
+    category: 'Emergency Procedures',
+  },
+  {
+    id: 212,
+    question:
+      'No asbestos register is available for a 1975 office you are rewiring. How should the materials be treated?',
+    options: [
+      'Presumed to contain asbestos until evidence shows otherwise',
+      'Treated as asbestos free because no register was supplied',
+      'Assessed by the electrician using a hand lens on site',
+      'Regarded as safe provided the materials look undamaged',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Dutyholders must presume that materials contain asbestos unless there is strong evidence that they do not, and that presumption is exactly what protects you when paperwork is missing. An absent register is not evidence of absence, it is a gap in the duty to manage that should be raised before work starts. Asbestos fibres cannot be identified by eye or hand lens, and condition tells you about risk of release, not about content.',
+    section: 'Module 3',
+    difficulty: 'intermediate',
+    topic: 'Presumption and survey',
+    category: 'Identification & Surveys',
+  },
+  {
+    id: 213,
+    question:
+      'An asbestos board panel in a plant room is undamaged, painted and well out of the way. What does the guidance normally favour?',
+    options: [
+      'Immediate removal by a licensed contractor at high cost',
+      'Leaving it in place, recording it and managing its condition',
+      'Sealing it with expanding foam and closing the plant room',
+      'Breaking it out carefully and double bagging the pieces',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Where material is in good condition, protected by its position or by physical protection and unlikely to be worked on or disturbed, it is usually safer to leave it in place and manage it. Removal is itself a fibre release event, so it is not automatically the safer choice. Whatever is left in place must be entered on the record of locations, kept up to date, and everyone who needs to know must be told it is there.',
+    section: 'Module 3',
+    difficulty: 'intermediate',
+    topic: 'Manage or remove',
+    category: 'Identification & Surveys',
+  },
+  {
+    id: 214,
+    question:
+      'Where in an older distribution board are asbestos materials most likely to be encountered?',
+    options: [
+      'Inside the plastic sheathing of the final circuit cables',
+      'Within the copper busbar connections and their fixings',
+      'As flash guards and panel linings behind the switchgear',
+      'In the moulded case of the miniature circuit breakers',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Asbestos was valued as a heat and fire resistant insulator, so in older switchgear it turns up as flash guards, arc barriers and board linings placed where an arc could otherwise strike. Cable sheathing, busbars and modern breaker cases are not where the material was used. Recognising this matters because opening an old board to add a way can disturb a brittle guard at head height in a confined enclosure.',
+    section: 'Module 1',
+    difficulty: 'advanced',
+    topic: 'Electrical equipment',
+    category: 'Identification & Surveys',
+  },
+  {
+    id: 215,
+    question:
+      'What does the control limit in the Control of Asbestos Regulations 2012 represent?',
+    options: [
+      'A safe level below which asbestos causes no harm at all',
+      'The maximum weight of waste one van may legally carry',
+      'The number of workers allowed inside an enclosure at once',
+      'An airborne fibre concentration that must not be exceeded',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'The control limit is defined in regulation 2 as a concentration of asbestos in the atmosphere of 0.1 fibres per cubic centimetre of air, measured by the recommended method and averaged over a continuous period. It is a legal maximum, not a threshold of safety, and exposure must still be reduced as low as reasonably practicable below it. Waste loading and enclosure occupancy are controlled by other means entirely.',
+    section: 'Module 6',
+    difficulty: 'intermediate',
+    topic: 'Exposure limits',
+    category: 'Legislation & Duty to Manage',
+  },
+  {
+    id: 216,
+    question:
+      'You must fix a ceiling rose to a textured coated ceiling in a 1980s house. What is the safest approach?',
+    options: [
+      'Sand the texture flat first so the rose sits down neatly',
+      'Check the survey information and avoid disturbing the coating',
+      'Drill quickly on hammer action to reduce the working time',
+      'Scrape the coating off with a filling knife while damp',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Textured coatings of that era can contain asbestos, so the first move is to establish what the material is from the survey or register and then plan the fixing so the coating is not disturbed. Sanding and scraping are abrasive methods that liberate large numbers of fibres and are exactly what the regulations aim to prevent. Hammer action drilling shatters the surface and shortening the job does not reduce the fibres released.',
+    section: 'Module 1',
+    difficulty: 'advanced',
+    topic: 'Textured coatings',
+    category: 'Safe Working & PPE',
+  },
+  {
+    id: 217,
+    question:
+      'Which of these tasks would normally require a contractor licensed by the enforcing authority?',
+    options: [
+      'Removing asbestos cement roof sheets from a farm building',
+      'Drilling a single hole through an asbestos cement gutter',
+      'Removing asbestos insulating board panels from a ceiling',
+      'Lifting vinyl floor tiles with an asbestos backing paper',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Work in which asbestos insulation, asbestos coating or asbestos insulating board is removed, repaired or disturbed normally has to be done by a licensed contractor, because these materials release fibres readily. Asbestos cement and floor tiles hold their fibres firmly in a matrix, so work on them is usually non-licensed, though it still needs assessment and controls. The trap is assuming that quantity decides the licence, when it is the type and friability of the material that decides it.',
+    section: 'Module 5',
+    difficulty: 'advanced',
+    topic: 'Licensed work',
+    category: 'Legislation & Duty to Manage',
+  },
+  {
+    id: 218,
+    question:
+      'How far ahead must licensable asbestos work be notified to the enforcing authority?',
+    options: [
+      'At least 14 days before the work is due to start',
+      'At least 28 days before the work is due to start',
+      'Within 14 days of the work being completed on site',
+      'On the first day that the work begins on the site',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Licensable work must be notified to the relevant enforcing authority at least 14 days before it starts, on the prescribed notification form. Notice can be given by telephone where there is doubt about which authority to notify, but it must still be confirmed in writing within that period. Notifying on the day of the work, or after it, defeats the purpose, which is to allow the authority to plan inspection before fibres are disturbed.',
+    section: 'Module 5',
+    difficulty: 'intermediate',
+    topic: 'Notification',
+    category: 'Legislation & Duty to Manage',
+  },
+  {
+    id: 219,
+    question:
+      'How does notification of notifiable non-licensed work differ from notification of licensable work?',
+    options: [
+      'It requires the same fourteen day period of advance notice',
+      'It is made to the insurer rather than to an authority',
+      'It is only needed when the control limit is exceeded',
+      'It must be made before work begins, using an online form',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Notifiable non-licensed work is notified using the online notification form, and the notification must be made before the work begins. That is a real difference from licensable work, which carries a fixed 14 day advance period. Both go to an enforcing authority, never to an insurer, and neither is triggered by exceeding the control limit: notifiable non-licensed work is by definition expected to stay below it.',
+    section: 'Module 5',
+    difficulty: 'advanced',
+    topic: 'Notifiable non-licensed work',
+    category: 'Legislation & Duty to Manage',
+  },
+  {
+    id: 220,
+    question:
+      'Asbestos work is planned in a high street shop. Which body is normally the enforcing authority?',
+    options: [
+      'The Health and Safety Executive in every commercial case',
+      'The Office of Rail Regulation for all retail properties',
+      'The local authority, which covers shops and offices',
+      'The building control department of the county council',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Enforcement is split by premises type. Local authorities enforce in shops, offices, catering, hotels, and leisure and entertainment premises, while the Health and Safety Executive takes construction sites, factories, farms, domestic premises and similar, and the rail regulator takes railway premises. Getting this wrong means a notification lands with a body that cannot act on it. Building control has no role in asbestos enforcement.',
+    section: 'Module 5',
+    difficulty: 'intermediate',
+    topic: 'Enforcing authority',
+    category: 'Legislation & Duty to Manage',
+  },
+  {
+    id: 221,
+    question:
+      'Which situation could meet the sporadic and low intensity conditions that disapply certain duties?',
+    options: [
+      'Stripping sprayed coating from steelwork over three days',
+      'Short maintenance work handling only non-friable material',
+      'Removing lagging from pipework in an occupied boiler room',
+      'Cutting insulating board partitions to run new containment',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The exemption needs exposure to be sporadic and of low intensity, the risk assessment to show clearly that exposure stays below the control limit, and the work to be of a listed kind such as short non-continuous maintenance handling only non-friable materials, or sealing material in good condition. Sprayed coatings, lagging and insulating board are licensable work and cannot satisfy those conditions, whatever the duration of the job.',
+    section: 'Module 5',
+    difficulty: 'advanced',
+    topic: 'Non-licensed work',
+    category: 'Legislation & Duty to Manage',
+  },
+  {
+    id: 222,
+    question: 'Which statement about asbestos and health is correct?',
+    options: [
+      'The risk of lung cancer is increased further by smoking',
+      'Illness appears within a few days of any fibre exposure',
+      'Only workers who handle asbestos daily can be affected',
+      'Washing the skin after work removes the risk of disease',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Awareness training must cover the effects of asbestos on health, including the increased lung cancer risk for asbestos workers who smoke, because the two exposures multiply rather than simply add. Asbestos diseases develop over decades, not days, which is why there is no immediate symptom to warn a worker. The harm comes from inhaled fibres reaching the lung, so washing removes contamination from clothing and skin but does not undo an inhaled dose.',
+    section: 'Module 1',
+    difficulty: 'basic',
+    topic: 'Health effects',
+    category: 'Asbestos Types & Properties',
+  },
+  {
+    id: 223,
+    question:
+      'What must the dutyholder produce once asbestos locations and condition have been assessed?',
+    options: [
+      'A verbal briefing given to staff at the annual meeting',
+      'A written record kept up to date, and a plan to manage',
+      'A removal programme completed within twelve months',
+      'An insurance policy covering future exposure claims',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The dutyholder must make a written record of the location and condition of asbestos and presumed asbestos, keep that record up to date, assess the risk of exposure, and prepare and implement a written management plan. The record should include an accurate drawing and describe the product type and appearance. A briefing leaves nothing for the next contractor to consult, and neither wholesale removal nor insurance is what regulation 4 asks for.',
+    section: 'Module 2',
+    difficulty: 'intermediate',
+    topic: 'Management plan',
+    category: 'Legislation & Duty to Manage',
+  },
+  {
+    id: 224,
+    question:
+      'Before running cables through the ceiling void of a 1970s school, what should you obtain?',
+    options: [
+      'The asbestos register information covering that void',
+      'A permit from the local authority licensing office',
+      'A face fit test certificate for a disposable mask',
+      'An air monitoring result taken in the corridor below',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The management plan and register exist so that maintenance workers and contractors can be told what is present before they open up the fabric, and ceiling voids are a classic location for insulating board, lagging and sprayed coatings. Asking for that information is the practical expression of the duty to manage. A licensing permit is not issued to cable installers, and monitoring or mask fitting addresses exposure that good planning should avoid creating.',
+    section: 'Module 3',
+    difficulty: 'advanced',
+    topic: 'Asbestos register',
+    category: 'Safe Working & PPE',
+  },
+  {
+    id: 225,
+    question:
+      'Is there a legal requirement to repeat a formal asbestos awareness course every twelve months?',
+    options: [
+      'Yes, a certificate expires exactly twelve months later',
+      'Yes, but only for those who work in domestic premises',
+      'No, though refresher awareness should be given as needed',
+      'No, because awareness training is not required at all',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'There is no legal requirement to repeat a formal refresher awareness course every twelve months, but some form of refresher should be given as necessary, driven by a training needs analysis rather than a calendar. The annual certificate is a commercial convention, not a regulation. It is equally wrong to conclude that awareness training is optional: it is required for anyone whose work could foreseeably disturb asbestos.',
+    section: 'Module 6',
+    difficulty: 'advanced',
+    topic: 'Refresher training',
+    category: 'Legislation & Duty to Manage',
+  },
+  {
+    id: 226,
+    question:
+      'How long must an employer keep the health record of an employee who does notifiable asbestos work?',
+    options: [
+      'Ten years from the date the employment came to an end',
+      'Five years from the date of the medical examination',
+      'Twenty years from the last recorded exposure to fibres',
+      'Forty years, kept in a safe place by the employer',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Health records for employees doing work notifiable as either licensable or notifiable non-licensed work must be kept for 40 years in a safe place. The long period reflects the decades that can pass between exposure and disease, so a record destroyed at ten or twenty years would be gone before it was ever needed. The record must also be in a form that lets each employee see their own entries on request.',
+    section: 'Module 6',
+    difficulty: 'intermediate',
+    topic: 'Health records',
+    category: 'Legislation & Duty to Manage',
+  },
+  {
+    id: 227,
+    question:
+      'Which method of lifting old thermoplastic floor tiles is least likely to release fibres?',
+    options: [
+      'Breaking them up with a hammer and a cold chisel',
+      'Lifting them whole and intact without breaking them',
+      'Softening the bitumen with a hot air gun and scraper',
+      'Sanding the surface before prising each tile upwards',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Floor tiles hold their fibres firmly in a matrix, so the hazard comes from what you do to them rather than from their presence. Removing them whole and undamaged keeps the matrix intact and can fall within non-licensed work. Breaking, sanding and heating all degrade the material: heat softens the bitumen but can also drive off dust from the backing, and abrasive methods are the single most effective way of making a low risk material into a high one.',
+    section: 'Module 1',
+    difficulty: 'advanced',
+    topic: 'Floor tiles',
+    category: 'Safe Working & PPE',
+  },
+  {
+    id: 228,
+    question:
+      'How must waste containing asbestos be dealt with when a job is finished?',
+    options: [
+      'Placed in the general builders skip once it is wetted',
+      'Left with the client to dispose of at their convenience',
+      'Burnt on site to destroy the fibres before disposal',
+      'Labelled as asbestos waste and disposed of as such',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'The regulations set specific requirements for the storage, labelling and transport of asbestos waste so that it stays sealed and identified from the work area to the disposal point. Putting it in a general skip loses that chain entirely and passes the hazard to whoever handles the skip. Wetting reduces dust but does not make the waste ordinary, and burning does not destroy asbestos fibres, it disperses them.',
+    section: 'Module 6',
+    difficulty: 'intermediate',
+    topic: 'Waste handling',
+    category: 'Safe Working & PPE',
+  },
+  {
+    id: 229,
+    question:
+      'Which cleaning method is acceptable where a small amount of asbestos debris has been created?',
+    options: [
+      'Sweeping the debris up using a stiff yard broom',
+      'Blowing the area down with an airline to clear it',
+      'Using a suitable filtered vacuum and damp wiping',
+      'Leaving the debris in place for the next site visit',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'The requirement is to prevent the spread of asbestos and to thoroughly clean the work area, which means capturing fibres rather than moving them. A suitable filtered vacuum with damp wiping does that. Dry sweeping and compressed air both re-suspend settled fibres into the breathing zone and can contaminate a far larger area than the original job. Leaving debris simply hands the exposure to the next person through the door.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'Preventing spread',
+    category: 'Safe Working & PPE',
+  },
+  {
+    id: 230,
+    question:
+      'What makes asbestos containing materials dangerous to an electrician?',
+    options: [
+      'The weight of the material when it is being lifted',
+      'The fibres released into the air when it is disturbed',
+      'The electrical conductivity of the fibres in a board',
+      'The chemical burns caused by touching the surface',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The hazard is inhalation of airborne fibres, which is why undisturbed material in good condition can often be left alone while drilling, cutting or breaking it is tightly controlled. Asbestos was used precisely because it is a good insulator, so conductivity is not the issue, and it does not burn skin on contact. Understanding that disturbance is the trigger is what makes an electrician change method rather than change gloves.',
+    section: 'Module 1',
+    difficulty: 'basic',
+    topic: 'Nature of the hazard',
+    category: 'Asbestos Types & Properties',
+  },
+  {
+    id: 231,
+    question:
+      'Why must respiratory protective equipment for asbestos work be face fit tested?',
+    options: [
+      'To confirm the mask seals against the face of the wearer',
+      'To prove the filters have not passed their expiry date',
+      'To record how long the wearer can stay in an enclosure',
+      'To show the mask is the right colour for the work type',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'A tight fitting mask only achieves its rated protection if it seals to that individual face, and faces differ, so a fit test matches the wearer to the model and size. Records of fit testing must be available to the worker on request. A leaking seal lets unfiltered air bypass a perfectly good filter, which is why filter dates, wear times and colour coding are all secondary to whether the mask actually seals.',
+    section: 'Module 6',
+    difficulty: 'intermediate',
+    topic: 'Respiratory protection',
+    category: 'Safe Working & PPE',
+  },
+  {
+    id: 232,
+    question:
+      'Where does respiratory protective equipment sit in the order of controls for asbestos?',
+    options: [
+      'It is the first control to be selected on every job',
+      'It replaces the need for a written risk assessment',
+      'It is used in addition to measures that reduce exposure',
+      'It is only needed when the work is licensable work',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Where it is not reasonably practicable to bring exposure below the control limit by other means, the employer must provide suitable respiratory protection in addition to those measures, not instead of them. Protective equipment protects only the wearer and only while it is worn correctly, so it is the last line, never the first. It also never displaces the risk assessment, which is what determines the controls in the first place.',
+    section: 'Module 6',
+    difficulty: 'advanced',
+    topic: 'Hierarchy of control',
+    category: 'Safe Working & PPE',
+  },
+  {
+    id: 233,
+    question:
+      'Who may carry out the medical examination for a worker doing notifiable non-licensed work?',
+    options: [
+      'Only a doctor appointed by the enforcing authority',
+      'The site supervisor holding a first aid certificate',
+      'Any occupational nurse employed by the main contractor',
+      'A doctor who need not be appointed, such as a local GP',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'For notifiable non-licensed work the examination does not have to be done by an appointed doctor and may be carried out by a doctor such as a local general practitioner, whereas licensable work requires an appointed doctor. Either way the examination happens in normal working time and at the expense of the employer, including travel and fees. A supervisor or a nurse cannot substitute for the medical examination the regulations require.',
+    section: 'Module 6',
+    difficulty: 'intermediate',
+    topic: 'Medical surveillance',
+    category: 'Legislation & Duty to Manage',
+  },
+  {
+    id: 234,
+    question:
+      'A full rewire is planned in a 1968 hospital wing. What asbestos survey information is needed?',
+    options: [
+      'Survey cover for every area to be disturbed by the work',
+      'Survey cover limited to surfaces visible from corridors',
+      'Survey cover produced after the strip out is completed',
+      'Survey cover sampling only the plant and boiler rooms',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'A rewire opens voids, chases walls and lifts floors, so the information must extend to every area the work will disturb, including places a routine management inspection would never look. Restricting it to visible surfaces or to plant rooms leaves the installer working blind exactly where the hazard hides. Surveying after the strip out is worthless, because the disturbance that releases fibres has already happened.',
+    section: 'Module 3',
+    difficulty: 'advanced',
+    topic: 'Surveys before work',
+    category: 'Identification & Surveys',
+  },
+  {
+    id: 235,
+    question:
+      'Who should be told about asbestos identified in a building under the management plan?',
+    options: [
+      'Only the directors of the company that owns the site',
+      'Everyone who needs to know, including maintenance staff',
+      'Nobody, to avoid causing alarm among the occupants',
+      'The enforcing authority alone, by an annual return',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Everyone who needs to know about the asbestos should be told in sufficient detail, and that expressly includes maintenance workers and contractors, because they are the people whose work could disturb it. Occupants who simply use the building need informing only where necessary. Withholding the information to avoid alarm is the failure that puts a drill through a board, and there is no annual return to an authority that substitutes for telling the workforce.',
+    section: 'Module 2',
+    difficulty: 'intermediate',
+    topic: 'Sharing information',
+    category: 'Legislation & Duty to Manage',
+  },
+  {
+    id: 236,
+    question:
+      'Two contractors are working with asbestos in the same building at the same time. What is required?',
+    options: [
+      'The larger contractor takes over all of the duties',
+      'Each must ignore the other to keep lines of control clear',
+      'The client assumes the duties of both contractors',
+      'They must cooperate to meet their separate duties',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Where more than one employer works with asbestos at the same workplace at the same time, they must cooperate so that each meets its own duties towards its own employees, towards each other employees and towards anyone else who might be affected, and they should consult safety representatives. Duties are not transferable by size or by contract: no employer can hand its statutory obligations to a bigger firm or to the client.',
+    section: 'Module 5',
+    difficulty: 'advanced',
+    topic: 'Cooperation between employers',
+    category: 'Legislation & Duty to Manage',
+  },
+  {
+    id: 237,
+    question:
+      'Which action must come before any work that may foreseeably disturb asbestos begins?',
+    options: [
+      'A suitable risk assessment of the planned work',
+      'A clearance certificate issued by an analyst',
+      'An air monitoring survey of the whole building',
+      'A licence application to the enforcing authority',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The regulations require a risk assessment before work starts, and it is that assessment which decides whether the job is licensable, notifiable or ordinary non-licensed work and what controls are needed. A clearance certificate belongs at the end of a licensed removal, not the beginning. A licence is only relevant if the assessment shows licensable material, and building wide air monitoring tells you nothing about the specific task you are about to do.',
+    section: 'Module 3',
+    difficulty: 'advanced',
+    topic: 'Risk assessment',
+    category: 'Identification & Surveys',
+  },
+  {
+    id: 238,
+    question:
+      'Which material found on structural steelwork is treated as licensable work if disturbed?',
+    options: [
+      'Galvanised finish applied to the steel at the works',
+      'Intumescent paint applied over the primed steelwork',
+      'Sprayed asbestos coating applied for fire protection',
+      'Mineral wool batts fixed around the steel with wire',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Sprayed asbestos coating on beams and columns is one of the highest risk forms of the material: it is soft, poorly bonded and releases fibres very readily, so removing, repairing or disturbing it is licensable work. Electrical work is a documented cause of damage to such coatings where fixings and containment are run against steelwork. Galvanising, intumescent paint and mineral wool are not asbestos and are not licensable.',
+    section: 'Module 5',
+    difficulty: 'intermediate',
+    topic: 'Sprayed coatings',
+    category: 'Legislation & Duty to Manage',
+  },
+  {
+    id: 239,
+    question:
+      'The only easy route for a new cable is across an asbestos insulating board soffit. What is the best plan?',
+    options: [
+      'Shot fix clips into the board at close centres',
+      'Reroute the cable so the board is not drilled at all',
+      'Drill the board slowly and wear a disposable mask',
+      'Cut a channel in the board and bury the cable in it',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Avoiding the disturbance altogether is the only option that keeps the work outside the licensing regime and keeps fibres in the board. Insulating board is friable, so shot firing, drilling and channelling all disturb it, and disturbing insulating board is normally licensable work whatever the size of the hole. A disposable mask does not convert licensable work into something an electrician may lawfully do.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'Avoiding disturbance',
+    category: 'Safe Working & PPE',
+  },
+  {
+    id: 240,
+    question:
+      'After stopping work on finding a suspected asbestos material, who should be told first?',
+    options: [
+      'The wholesaler that supplied the cable and fittings',
+      'The other trades once the job has been completed',
+      'Your supervisor and the dutyholder for the premises',
+      'The insurance company handling the site policy',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'The people who can act are your own employer or supervisor and the dutyholder, who holds the management plan and can arrange a specialist analyst to identify the material and decide how work proceeds safely. Telling other trades only after the job is finished leaves them exposed in the meantime, which is the opposite of what stopping work is for. Suppliers and insurers have no role in making the area safe.',
+    section: 'Module 4',
+    difficulty: 'basic',
+    topic: 'Reporting a discovery',
+    category: 'Emergency Procedures',
+  },
+  {
+    id: 241,
+    question:
+      'What should happen to the area around a newly discovered asbestos material?',
+    options: [
+      'It should be swept clean so the extent can be seen',
+      'It should be opened up further to check for more',
+      'It should be used for storing tools until Monday',
+      'It should be protected from further damage and access',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'The material must be protected from further damage and people kept out until a decision has been made on how work can safely continue. Sweeping is an abrasive dry method that pushes settled fibres back into the air, and opening the area up to see how far it extends is doing exactly the disturbance you have just stopped. Using the area for storage guarantees repeated traffic through a contaminated space.',
+    section: 'Module 4',
+    difficulty: 'intermediate',
+    topic: 'Securing the area',
+    category: 'Emergency Procedures',
+  },
+  {
+    id: 242,
+    question:
+      'You must pass a cable through an asbestos cement wall in an outbuilding. What is the best method?',
+    options: [
+      'A high speed abrasive disc to make the opening quickly',
+      'Hand drilling slowly with the dust controlled and damped',
+      'Hammer action drilling followed by a stiff brush clean',
+      'Breaking the sheet out and patching the hole afterwards',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Asbestos cement is a hard material with the fibres firmly bound, so the aim is to work it gently and capture what little dust is made. Slow hand drilling with dust suppression and local capture does that. High speed abrasive discs and hammer action shatter the matrix and generate large quantities of fine dust, and brushing afterwards spreads it. Breaking the sheet out turns a small controlled task into a much larger disturbance.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'Asbestos cement',
+    category: 'Safe Working & PPE',
+  },
+  {
+    id: 243,
+    question:
+      'Why is asbestos still a live risk for electricians despite the ban on its use?',
+    options: [
+      'It is still imported for use in switchgear linings',
+      'It is manufactured under licence for use in fire doors',
+      'It forms naturally in damp basements over many years',
+      'It remains in many buildings constructed before 2000',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'The ban stopped new use, it did not remove what was already installed, which is why any premises completed before 2000 should be presumed to contain asbestos unless there is strong evidence otherwise. Maintenance and refurbishment trades meet it precisely because they open up existing fabric. Asbestos is a mined mineral, not something that forms in a building, and it is not lawfully manufactured into new products.',
+    section: 'Module 1',
+    difficulty: 'intermediate',
+    topic: 'Legacy in buildings',
+    category: 'Identification & Surveys',
+  },
+  {
+    id: 244,
+    question: 'What should a non-licensed asbestos task be carried out under?',
+    options: [
+      'A verbal instruction given at the morning briefing',
+      'A written method based on the risk assessment',
+      'A licence issued by the enforcing authority',
+      'A clearance certificate obtained beforehand',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Even where work does not need a licence, it still needs a risk assessment and a written method setting out the controls, the equipment, the waste route and the cleaning, so that the people doing it work the same way every time. A licence is not required for non-licensed work by definition, and a clearance certificate is issued after a licensed removal to allow reoccupation, so it cannot be obtained in advance.',
+    section: 'Module 5',
+    difficulty: 'advanced',
+    topic: 'Plan of work',
+    category: 'Identification & Surveys',
+  },
+  {
+    id: 245,
+    question:
+      'An electrician holds only asbestos awareness training. Which work may they carry out?',
+    options: [
+      'Work that is planned so asbestos is not disturbed',
+      'Removal of small areas of insulating board',
+      'Notifiable non-licensed work on pipe lagging',
+      'Enclosure building for a licensed removal',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Awareness training equips a worker to recognise the material and avoid disturbing it, and nothing more. Non-licensed work, notifiable non-licensed work and licensable work each require additional task specific information, instruction and training on top of awareness. Board removal and lagging work are licensable in most circumstances, and building enclosures is practical training reserved for those working inside them.',
+    section: 'Module 6',
+    difficulty: 'intermediate',
+    topic: 'Limits of awareness training',
+    category: 'Legislation & Duty to Manage',
+  },
+  {
+    id: 246,
+    question:
+      'Which older electrical item is a recognised location for asbestos containing components?',
+    options: [
+      'A modern plastic consumer unit fitted in 2015',
+      'A recently installed LED panel light fitting',
+      'An old storage heater with insulating panels',
+      'A twin and earth cable run in a new dwelling',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Asbestos was used in plant as well as in building fabric, wherever heat resistance was needed, so older heating appliances and their insulating panels are a recognised location alongside flash guards and board linings. Awareness training covers the likely occurrence of asbestos in buildings and in plant for this reason. Equipment made in recent decades is outside the ban period and does not contain it.',
+    section: 'Module 1',
+    difficulty: 'intermediate',
+    topic: 'Electrical equipment',
+    category: 'Identification & Surveys',
+  },
+  {
+    id: 247,
+    question:
+      'What keeps an asbestos management plan effective once it has been written?',
+    options: [
+      'Filing it securely so it cannot be altered by others',
+      'Periodic checks that the arrangements are working',
+      'Reissuing it to the enforcing authority each year',
+      'Replacing it fully whenever a tenant moves out',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'There should be periodic checks that the arrangements and procedures for managing asbestos are working and that people know what they should be doing, because a plan that is never tested becomes a document rather than a control. The record of locations and conditions must also be kept up to date. Locking the plan away defeats the requirement to make it available, and no annual submission to an authority is required.',
+    section: 'Module 2',
+    difficulty: 'advanced',
+    topic: 'Reviewing the plan',
+    category: 'Identification & Surveys',
+  },
+  {
+    id: 248,
+    question:
+      'Beyond employees, who else should the management plan information be given to?',
+    options: [
+      'The emergency services, who may attend the premises',
+      'Every visitor signing in at reception each day',
+      'The local newspaper covering the district council',
+      'Competitor firms tendering for the maintenance',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Dutyholders should tell employees what the arrangements are and provide the emergency services with information about the premises, because firefighters and rescue crews may have to enter and disturb the structure in circumstances where no one can look the information up. Ordinary visitors need informing only where it is necessary for their safety, and publication to the press or to competitors serves no safety purpose.',
+    section: 'Module 2',
+    difficulty: 'intermediate',
+    topic: 'Sharing information',
+    category: 'Legislation & Duty to Manage',
+  },
+  {
+    id: 249,
+    question:
+      'Damaged lagging is found in a riser and a sound cement sheet outside. How should priority be set?',
+    options: [
+      'The cement sheet first, because it is easiest to reach',
+      'Both at once, because all asbestos ranks the same',
+      'The damaged lagging first, because it can release fibres',
+      'Neither, because both should simply be recorded only',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Priority follows the likelihood of fibre release, which depends on the type of material, its condition and whether it is likely to be disturbed. Damaged lagging in a riser is friable, deteriorating and in a route people work in, so it needs repair, protection or removal first. Sound cement sheet outside is hard, bound and undisturbed, so managing it in place is reasonable. Recording alone is not enough where material is already damaged.',
+    section: 'Module 3',
+    difficulty: 'advanced',
+    topic: 'Prioritising risk',
+    category: 'Identification & Surveys',
+  },
+  {
+    id: 250,
+    question:
+      'Air monitoring shows the control limit has unexpectedly been exceeded. What must the employer do?',
+    options: [
+      'Wait until the annual safety meeting to report the result',
+      'Record the reading and take no further action at all',
+      'Repeat the sampling until a lower result is obtained',
+      'Tell employees and their representatives promptly, with reasons',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Where monitoring shows the relevant control limit has unexpectedly been exceeded, the employer should tell employees and their safety representatives as quickly as possible, with the reasons for what happened and the action taken or proposed. Delay denies the exposed workers information they need about their own health. Resampling until a convenient figure appears is falsification, not monitoring, and silent recording defeats the point of measuring.',
+    section: 'Module 6',
+    difficulty: 'intermediate',
+    topic: 'Air monitoring',
+    category: 'Safe Working & PPE',
+  },
+  {
+    id: 251,
+    question:
+      'You are rewiring a privately owned 1960s house where regulation 4 does not apply. What still governs your work?',
+    options: [
+      'Nothing, because duties exist only in commercial premises',
+      'Only the wiring standard covering the installation work',
+      'A voluntary code of practice with no legal force at all',
+      'Employer duties to assess and control the exposure risk',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'The regulation 4 duty to manage does not reach inside a private dwelling, but the duties on employers and the self employed to identify asbestos, assess the risk and control exposure apply wherever the work is done. Section 3 of the Health and Safety at Work Act also requires that the conduct of an undertaking does not put non employees at risk, which covers the household. The wiring standard says nothing about asbestos control.',
+    section: 'Module 2',
+    difficulty: 'advanced',
+    topic: 'Domestic premises',
+    category: 'Legislation & Duty to Manage',
+  },
+  {
+    id: 252,
+    question:
+      'What is the purpose of labelling asbestos waste and products containing asbestos?',
+    options: [
+      'To satisfy the client that a tidy job has been done',
+      'To warn anyone handling it of the hazard it holds',
+      'To record the price paid for its safe disposal',
+      'To identify which operative created the waste',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Labelling carries the warning with the material, so that everyone who stores, moves, sorts or receives it knows what they are handling long after the people who bagged it have left. The regulations set requirements for labelling both asbestos waste and products containing asbestos for exactly this reason. Tidiness, cost records and operative traceability are administrative matters that do not protect the next person to lift the bag.',
+    section: 'Module 6',
+    difficulty: 'intermediate',
+    topic: 'Labelling',
+    category: 'Safe Working & PPE',
+  },
+  {
+    id: 253,
+    question:
+      'Following a licensed removal in an occupied office, what allows people back into the area?',
+    options: [
+      'The removal contractor confirming the work is complete',
+      'The dutyholder deciding that the area now looks clean',
+      'A certificate of reoccupation issued after clearance',
+      'A period of twenty four hours with the doors shut',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Reoccupation follows clearance sampling by an independent analyst and the issue of a certificate of reoccupation, because settled and airborne fibres cannot be judged by eye. The contractor who did the removal has an obvious interest in declaring it finished, which is why the check is independent of them. Time alone does nothing, as fibres that have settled are readily disturbed again when people return to the room.',
+    section: 'Module 5',
+    difficulty: 'intermediate',
+    topic: 'Clearance and reoccupation',
+    category: 'Legislation & Duty to Manage',
+  },
+  {
+    id: 254,
+    question:
+      'What is the first thing an electrician should do before starting work in an older building?',
+    options: [
+      'Ask for the asbestos information held for the premises',
+      'Begin the first fix and watch for unusual materials',
+      'Buy a box of disposable masks for the whole team',
+      'Photograph the ceilings so damage can be disputed',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The dutyholder must make the record and management plan available to those who need it, so asking for it is the correct first step and the one the whole system is built around. Starting work and watching out is discovery by damage, which is precisely the sequence the regulations exist to prevent. Masks are a control chosen after an assessment, and photographs protect a commercial position rather than anyone health.',
+    section: 'Module 3',
+    difficulty: 'basic',
+    topic: 'Before starting work',
+    category: 'Safe Working & PPE',
+  },
+  {
+    id: 255,
+    question:
+      'Why must overalls contaminated with asbestos never be taken home to be washed?',
+    options: [
+      'Because fibres can be carried to other family members',
+      'Because domestic machines wash at a low temperature',
+      'Because the overalls will shrink in a hot wash cycle',
+      'Because the employer must be billed for the washing',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Decontamination procedures exist to prevent the spread of asbestos and the consequential risk of exposing others, and clothing is one of the main ways fibres leave a site. Taking contaminated overalls home exposes people who never went near the job and who have no protection at all. Wash temperature is irrelevant to a mineral fibre, and shrinkage and billing are not health and safety reasons.',
+    section: 'Module 4',
+    difficulty: 'intermediate',
+    topic: 'Decontamination',
+    category: 'Safe Working & PPE',
+  },
+  {
+    id: 256,
+    question:
+      'A builder offers to rip out an asbestos board partition today to keep your rewire moving. What should you do?',
+    options: [
+      'Accept, provided he damps the board down thoroughly',
+      'Accept if he has held awareness training this year',
+      'Refuse but remove the board yourself more carefully',
+      'Refuse and insist the work goes to a licensed firm',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Removing asbestos insulating board normally requires a licensed contractor, advance notification and controls such as enclosure, filtered extraction and clearance before reoccupation, none of which a same day rip out provides. Damping down and awareness training do not change the legal status of the work, and awareness training is expressly intended to stop workers doing this. Doing it yourself more carefully is the same breach with your name on it.',
+    section: 'Module 5',
+    difficulty: 'advanced',
+    topic: 'Licensed work',
+    category: 'Legislation & Duty to Manage',
+  },
 ];

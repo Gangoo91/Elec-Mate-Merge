@@ -3558,4 +3558,904 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     topic: 'Stability',
     category: 'Assembly',
   },
+  {
+    id: 207,
+    question:
+      'What is the first step in the hierarchy for managing work at height?',
+    options: [
+      'Provide a harness to everyone working above ground level',
+      'Select the tallest tower available for the whole project',
+      'Avoid the work at height where it can be done from the ground',
+      'Issue a permit to work before access equipment is used',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'The hierarchy runs avoid, then prevent, then minimise. If the task can be done from ground level the risk is removed altogether, so that is always considered first. Issuing a harness is a minimise measure that only limits the consequences of a fall, so reaching for it first skips the two more effective steps above it.',
+    section: 'Module 1',
+    difficulty: 'basic',
+    topic: 'Hierarchy of Control',
+    category: 'Legislation',
+  },
+  {
+    id: 208,
+    question:
+      'Why is a tower scaffold described as a form of collective protection?',
+    options: [
+      'It protects every person on the platform without individual kit',
+      'It is assembled by a team rather than by a single operative',
+      'It is owned by the employer instead of the individual worker',
+      'It can be shared between several trades on the same site',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Collective protection guards everyone in the danger zone at once, and a guarded tower platform does exactly that with no action needed from the user. Being shared between trades is about site logistics, not protection, so it does not make a measure collective.',
+    section: 'Module 1',
+    difficulty: 'intermediate',
+    topic: 'Access Equipment Selection',
+    category: 'Legislation',
+  },
+  {
+    id: 209,
+    question:
+      'A short cable pull runs 40 m along a factory ceiling over a flat, firm floor. What supports choosing a mobile tower here?',
+    options: [
+      'A tower is always cheaper to hire than any powered platform',
+      'The work is repositioned often along a level, unobstructed route',
+      'A tower removes the need to assess the task before starting',
+      'Towers may be used by anyone on site without any instruction',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Equipment choice turns on the nature, frequency and duration of the work and on the conditions, and a level, clear route suits a tower that is moved repeatedly along a long run. Cost alone is never a valid basis for selection, because the duty is to provide the most suitable equipment for the work.',
+    section: 'Module 1',
+    difficulty: 'advanced',
+    topic: 'Access Equipment Selection',
+    category: 'Legislation',
+  },
+  {
+    id: 210,
+    question:
+      'An operative has used towers for years but holds no training record. What is the correct position on competence?',
+    options: [
+      'Long experience on site is accepted in place of any training',
+      'Competence needs training and knowledge of the specific risks',
+      'Only the site manager needs to be trained to assemble a tower',
+      'A verbal briefing on the day removes the need for any training',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The person who assembles, alters or dismantles a tower must be competent, and competence combines training with an understanding of the particular risks of that equipment. Years on the job can embed bad practice rather than correct it, so unrecorded experience does not by itself demonstrate competence.',
+    section: 'Module 2',
+    difficulty: 'advanced',
+    topic: 'Competence and Training',
+    category: 'Legislation',
+  },
+  {
+    id: 211,
+    question:
+      'Which document must be followed when a mobile access tower is assembled?',
+    options: [
+      'The generic site induction handout issued at the main gate',
+      'A written method statement produced for a different tower',
+      'The assembly instructions supplied for that particular tower',
+      'The hire company delivery note listing the parts supplied',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'A tower is only safe in the configuration its supplier designed and tested, so the instruction manual for that model governs the build sequence and component list. A delivery note only records what arrived on site and says nothing about how the parts go together.',
+    section: 'Module 2',
+    difficulty: 'intermediate',
+    topic: 'Assembly Procedure',
+    category: 'Assembly',
+  },
+  {
+    id: 212,
+    question:
+      'A tower is built with two horizontal braces left out because the box was short. What is the real hazard?',
+    options: [
+      'The structure loses strength and the whole tower may collapse',
+      'The platform will sit slightly lower than the planned height',
+      'The tower will rock a little but remains structurally sound',
+      'Only the appearance of the finished tower is affected by this',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'A tower relies on every component being in place to develop its designed strength, and omitting bracing can lead to collapse rather than a minor wobble. Treating missing braces as cosmetic is the exact reasoning behind many tower accidents, so any shortfall of parts stops the build.',
+    section: 'Module 2',
+    difficulty: 'advanced',
+    topic: 'Assembly Procedure',
+    category: 'Assembly',
+  },
+  {
+    id: 213,
+    question:
+      'One castor of a tower sits over a shallow dip in the yard surface. What is the correct action?',
+    options: [
+      'Pack the low castor with bricks to bring the base back level',
+      'Extend that leg fully and leave the other three legs as set',
+      'Accept the lean provided the platform still feels firm to walk on',
+      'Reposition or level the base so all four castors bear properly',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'A tower must stand on firm, level ground with every wheel or foot properly supported, so the base is moved or the ground made good. Bricks or building blocks must never carry any part of a tower because they can crush or shift under load and put the tower out of plumb.',
+    section: 'Module 3',
+    difficulty: 'intermediate',
+    topic: 'Ground Conditions',
+    category: 'Assembly',
+  },
+  {
+    id: 214,
+    question:
+      'Outriggers are fitted to two corners on one side of a tower only. Why is this unacceptable?',
+    options: [
+      'The tower will be harder to move along the working route later',
+      'Stability is only improved in one direction, not around the base',
+      'The outriggers will obstruct access to the internal ladder',
+      'The tower would then exceed the load it is rated to carry',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Outriggers work by enlarging the effective base area, so they must be fitted diagonally across all four corners rather than to one side. Fitting them to a single side leaves the tower just as easy to tip in the unprotected direction, which is where the overturning usually happens.',
+    section: 'Module 3',
+    difficulty: 'advanced',
+    topic: 'Tower Stability',
+    category: 'Assembly',
+  },
+  {
+    id: 215,
+    question:
+      'A tower is to be used outside in an exposed yard. What limits the working platform height?',
+    options: [
+      'The height is fixed by the number of frames carried on the van',
+      'Any height is acceptable once the castor brakes are applied',
+      'Platform height should not exceed three times the smallest base',
+      'The height is set purely by the reach the operative needs',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'HSE guidance gives a working platform height of no more than three times the minimum base dimension where a tower is used outside or in exposed conditions. Brakes stop the tower rolling but do nothing to resist overturning, so locking the castors does not license extra height.',
+    section: 'Module 3',
+    difficulty: 'advanced',
+    topic: 'Tower Stability',
+    category: 'Assembly',
+  },
+  {
+    id: 216,
+    question:
+      'A tower with a 2 m by 3 m base is used inside on firm, level ground. What guide height applies?',
+    options: [
+      'Around 7 m, using the ratio of three and a half times 2 m',
+      'Around 10 m, using three and a half times the longer side',
+      'Around 6 m, because indoor use follows the outdoor guidance',
+      'Around 4 m, because the ratio applies to half the base width',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Indoors on firm, level ground the guide ratio may be extended to three and a half times the minimum base dimension, and the minimum here is 2 m, giving about 7 m. Using the 3 m side instead of the smallest dimension inflates the answer and removes the stability margin the ratio exists to provide.',
+    section: 'Module 3',
+    difficulty: 'intermediate',
+    topic: 'Tower Stability',
+    category: 'Assembly',
+  },
+  {
+    id: 217,
+    question:
+      'A tower must be moved 15 m along a corridor. Where should the pushing force be applied?',
+    options: [
+      'At the guardrail level so the mover can see the route ahead',
+      'At any convenient height as long as two people share the load',
+      'At the base of the tower, pushing or pulling from ground level',
+      'At the mid height frame to keep the tower balanced while moving',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'A tower is moved by pushing or pulling at the base, because force applied high up creates a turning moment that can topple a light aluminium structure. Sharing the push between two people at guardrail height doubles that toppling force rather than controlling it.',
+    section: 'Module 4',
+    difficulty: 'intermediate',
+    topic: 'Moving a Tower',
+    category: 'Safety',
+  },
+  {
+    id: 218,
+    question:
+      'An operative offers to stay on the platform while the tower is wheeled to the next bay. What is the correct response?',
+    options: [
+      'Allow it if the operative holds the guardrail throughout the move',
+      'Refuse it, as nobody may remain on a tower while it is moved',
+      'Allow it if the move is under five metres on a smooth floor',
+      'Refuse it unless a second person steadies the tower while moving',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A tower is never moved with people or materials on the upper platforms, because a snagged castor can stop the base while the mass above keeps travelling. Holding the guardrail gives no protection at all if the tower overturns, and the distance moved does not change that.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'Moving a Tower',
+    category: 'Safety',
+  },
+  {
+    id: 219,
+    question:
+      'What overhead check must be made along the route before a tower is moved?',
+    options: [
+      'That the ceiling finish will not be marked by the tower frames',
+      'That lighting levels along the route are adequate for the work',
+      'That no power lines or other overhead obstructions are in the way',
+      'That the route is clear of parked vehicles and stacked materials',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Before moving a tower the route is checked for power lines and other overhead obstructions, because an aluminium tower contacting a live conductor can be fatal. Clearing parked vehicles matters for the ground route but does nothing about the hazard directly above the tower.',
+    section: 'Module 4',
+    difficulty: 'intermediate',
+    topic: 'Moving a Tower',
+    category: 'Safety',
+  },
+  {
+    id: 220,
+    question:
+      'Wind is gusting strongly across an open site. What does this mean for repositioning a tower?',
+    options: [
+      'The tower may be moved if the platform is stripped of materials',
+      'The tower may be moved provided outriggers stay fitted throughout',
+      'The tower must not be moved while windy conditions persist',
+      'The tower may be moved if extra people steady it during the move',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'A tower must never be moved in windy conditions, because wind loading on a tall lightweight structure can overturn it even when the platform is empty. Adding people to steady it simply places more of them inside the danger zone if it does go over.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'Weather Conditions',
+    category: 'Safety',
+  },
+  {
+    id: 221,
+    question:
+      'A tower is left standing overnight on an exposed site. What is the main concern before use resumes?',
+    options: [
+      'Wind and interference may have altered or damaged the structure',
+      'The aluminium frames may have corroded during the hours of darkness',
+      'The castor brakes will have released themselves during the night',
+      'The platform boards will have absorbed enough water to fail',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'A tower left unattended can be climbed on, have parts removed or be shifted by the weather, so its condition is confirmed before anyone uses it again. Overnight corrosion of aluminium frames is not a realistic failure mechanism over a single shift.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'Weather Conditions',
+    category: 'Safety',
+  },
+  {
+    id: 222,
+    question:
+      'A tower is erected on a shop floor open to customers. Which extra precaution is most relevant?',
+    options: [
+      'Painting the tower frames a high visibility colour before the job',
+      'Restricting the work to hours when the store is fully staffed',
+      'Cordoning the area and keeping stored materials to a minimum',
+      'Fitting a second guardrail on the platform to reassure the public',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Where towers are used in public places extra precautions are needed, including keeping stored materials on the tower to a minimum and preventing the public from straying beneath. Extra guardrails protect the operative on the platform, not the people passing below.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'Public Areas',
+    category: 'Safety',
+  },
+  {
+    id: 223,
+    question:
+      'Which item is a genuine pre-use check on a mobile access tower?',
+    options: [
+      'That the hire invoice for the tower has been approved for payment',
+      'That the castors are locked and the platform is fully boarded',
+      'That the operative has eaten before starting work at height',
+      'That the tower colour matches the rest of the site equipment',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Pre-use checks confirm the physical state of the tower, such as brakes applied, components complete and the platform properly boarded and guarded. Commercial paperwork like the hire invoice has no bearing on whether the structure is safe to climb.',
+    section: 'Module 5',
+    difficulty: 'basic',
+    topic: 'Pre-use Checks',
+    category: 'Inspection',
+  },
+  {
+    id: 224,
+    question:
+      'Who is responsible for the pre-use check of a tower at the start of a shift?',
+    options: [
+      'The hire company representative who delivered it to the site',
+      'The principal contractor safety adviser on their weekly round',
+      'The competent user, before the tower is climbed and worked from',
+      'The designer of the building the tower is being used against',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'The pre-use check belongs to the competent person about to work from the tower, because conditions change between shifts and only they can confirm its state now. A weekly visit by a safety adviser cannot detect a component removed since the last visit.',
+    section: 'Module 5',
+    difficulty: 'intermediate',
+    topic: 'Pre-use Checks',
+    category: 'Inspection',
+  },
+  {
+    id: 225,
+    question:
+      'Under the Work at Height Regulations, which equipment attracts a duty to inspect?',
+    options: [
+      'Fixed scaffolds erected around the outside of a building alone',
+      'Equipment that has already been involved in a reportable fall',
+      'Equipment hired in rather than owned outright by the employer',
+      'Guard rails, working platforms including tower scaffolds, and ladders',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'The inspection duty in the Work at Height Regulations covers collective protection such as guard rails and toe boards, fixed and mobile working platforms including tower scaffolds, and ladders. Ownership is irrelevant, so hiring a tower does not transfer the duty away from the user.',
+    section: 'Module 5',
+    difficulty: 'advanced',
+    topic: 'Inspection Duties',
+    category: 'Legislation',
+  },
+  {
+    id: 226,
+    question:
+      'A tower is dismantled and rebuilt at a new position on the same site. What follows?',
+    options: [
+      'Nothing further, because the same components were used again',
+      'It is a new assembly and must be checked before it is used',
+      'A fresh risk assessment replaces the need for any inspection',
+      'The original inspection record simply carries over to the new spot',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Safety depends on how the tower has been assembled in its present location, so a rebuild creates a new structure on new ground that has to be checked before use. A record made for the previous position says nothing about the ground or the build in front of you now.',
+    section: 'Module 5',
+    difficulty: 'advanced',
+    topic: 'Inspection Duties',
+    category: 'Inspection',
+  },
+  {
+    id: 227,
+    question:
+      'An inspection finds a cracked platform trapdoor hinge. What should happen next?',
+    options: [
+      'Note it on the record and allow use until the job is finished',
+      'Take the tower out of use and report the defect for repair',
+      'Tape over the crack and continue using the trapdoor carefully',
+      'Reduce the platform height so the trapdoor carries less weight',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A defect that could affect safety takes the tower out of service until it is put right, because a hinge that fails under a climber gives no warning. Recording the fault and carrying on leaves the same person exposed to the same failure for the rest of the job.',
+    section: 'Module 5',
+    difficulty: 'advanced',
+    topic: 'Defect Reporting',
+    category: 'Inspection',
+  },
+  {
+    id: 228,
+    question:
+      'Why should the result of a tower inspection be recorded rather than simply remembered?',
+    options: [
+      'Because recording it transfers the legal duty to the hire company',
+      'Because the record replaces the need for any pre-use checking',
+      'Because a record proves the check was done and flags faults found',
+      'Because insurers require a record before a tower may be hired',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'A record shows that a competent person examined the tower, what they found and what was put right, so the next user and the employer can rely on it. It never displaces the pre-use check, which covers changes that have happened since the inspection was made.',
+    section: 'Module 5',
+    difficulty: 'intermediate',
+    topic: 'Records',
+    category: 'Inspection',
+  },
+  {
+    id: 229,
+    question:
+      'What is the underlying principle of a through the trapdoor assembly method?',
+    options: [
+      'The builder works from inside the platform below the level being built',
+      'The builder stands on the top frame while fitting the next section',
+      'The builder assembles the tower fully at ground level and lifts it',
+      'The builder wears a harness clipped to the frame while climbing',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'In the trapdoor method the person building the tower stays seated in the trapdoor of the platform below, so they are never on an unguarded platform while fitting the next lift. Standing on the top frame to add components is the unprotected practice the method exists to eliminate.',
+    section: 'Module 6',
+    difficulty: 'advanced',
+    topic: 'Assembly Methods',
+    category: 'Assembly',
+  },
+  {
+    id: 230,
+    question:
+      'What distinguishes an advance guardrail method from the trapdoor method?',
+    options: [
+      'The guardrails are fitted after the operative reaches the new level',
+      'The guardrails are fitted from below before the level is occupied',
+      'The guardrails are replaced entirely by a personal fall arrest system',
+      'The guardrails are omitted because the platform stays below head height',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'With advance guardrails the protection is positioned from the safe level beneath, so the operative steps onto a platform that is already guarded. Fitting guardrails after arriving at the level leaves a period of unprotected exposure, which is exactly what the method removes.',
+    section: 'Module 6',
+    difficulty: 'advanced',
+    topic: 'Assembly Methods',
+    category: 'Assembly',
+  },
+  {
+    id: 231,
+    question:
+      'A supervisor says either assembly method is acceptable if used correctly. Is that right?',
+    options: [
+      'No, because only one recognised method may ever be used on a site',
+      'No, because both methods require a personal fall arrest system too',
+      'Yes, provided the method matches the tower and the trained user',
+      'Yes, because the choice of method is left entirely to the operative',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Both recognised methods protect the builder, but each depends on the tower being designed for it and the user being trained in that specific technique. Leaving the choice to individual preference ignores that a tower supplied for one method may lack the components the other needs.',
+    section: 'Module 6',
+    difficulty: 'advanced',
+    topic: 'Assembly Methods',
+    category: 'Assembly',
+  },
+  {
+    id: 232,
+    question:
+      'How should an operative reach the working platform of a mobile tower?',
+    options: [
+      'By climbing the internal ladder built into the tower frames',
+      'By climbing the outside of the end frames using the horizontals',
+      'By leaning a separate ladder against the side of the tower',
+      'By being lifted to the platform on a telehandler forks basket',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Access is made by the internal ladder or stairway provided within the tower, keeping the climber inside the structure and the load close to the centre. Climbing the outside applies an overturning force to a light tower and is a recognised cause of collapse.',
+    section: 'Module 6',
+    difficulty: 'intermediate',
+    topic: 'Safe Access',
+    category: 'Safety',
+  },
+  {
+    id: 233,
+    question:
+      'Why must the platform trapdoor be closed once the operative is on the platform?',
+    options: [
+      'To keep dust and debris from falling into the tower structure',
+      'To stop the platform boards from lifting in a gust of wind',
+      'To close the opening so nobody can step or fall through it',
+      'To hold the tower frames square while the work is carried out',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'An open trapdoor is a hole in the working platform, and a person concentrating on the task above them can step straight into it. The trapdoor is not a structural component, so leaving it open does not affect how square the frames sit.',
+    section: 'Module 6',
+    difficulty: 'intermediate',
+    topic: 'Safe Access',
+    category: 'Safety',
+  },
+  {
+    id: 234,
+    question:
+      'What is the purpose of a toe board around a tower working platform?',
+    options: [
+      'To provide a foothold when the operative reaches out sideways',
+      'To stop tools and materials being kicked off the platform edge',
+      'To take the weight of materials stacked against the guardrail',
+      'To mark the boundary of the platform for people working below',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A toe board is an edge barrier that keeps tools and loose materials from being kicked over the side onto people beneath. It is not a structural shelf, so stacking materials against it misuses a component intended only to stop things rolling off.',
+    section: 'Module 6',
+    difficulty: 'basic',
+    topic: 'Guardrails and Toe Boards',
+    category: 'Safety',
+  },
+  {
+    id: 235,
+    question:
+      'Materials are needed on a tower platform. What is the safest way to get them up?',
+    options: [
+      'Climb the internal ladder carrying the load in one free hand',
+      'Throw the smaller items up to a colleague on the platform',
+      'Raise them by a hand line or hoist so both hands stay free',
+      'Rest them on the guardrail and slide them along to the work',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Loads are raised by a hand line or similar so the climber keeps both hands on the ladder, which is where most control on a tower comes from. Throwing items up creates a falling object hazard and offers no control if the catch is missed.',
+    section: 'Module 7',
+    difficulty: 'intermediate',
+    topic: 'Falling Objects',
+    category: 'Safety',
+  },
+  {
+    id: 236,
+    question:
+      'Two operatives plan to work from a tower platform with a bundle of trunking. What must be checked?',
+    options: [
+      'That the combined weight stays within the rated platform loading',
+      'That both operatives are of similar build and body weight',
+      'That the trunking is stacked centrally and reaching guardrail height',
+      'That one operative remains at ground level to steady the tower',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The platform has a safe working load covering people, tools and materials together, so the total on the deck is what matters. Stacking material up to guardrail height also defeats the edge protection, so it makes the situation worse rather than better.',
+    section: 'Module 7',
+    difficulty: 'advanced',
+    topic: 'Platform Loading',
+    category: 'Safety',
+  },
+  {
+    id: 237,
+    question:
+      'A tower is used in a remote plant room by a lone operative. What must the plan cover?',
+    options: [
+      'The route the tower will take between the plant room doors',
+      'The tools the operative expects to need during that shift',
+      'The time by which the operative is booked to finish the work',
+      'How the operative is reached and recovered if injured up there',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Planning work at height includes arranging emergency and rescue procedures rather than relying entirely on the emergency services to reach a casualty. Knowing the finish time tells nobody how to get an injured person down from a platform in a locked plant room.',
+    section: 'Module 7',
+    difficulty: 'advanced',
+    topic: 'Emergency Planning',
+    category: 'Legislation',
+  },
+  {
+    id: 238,
+    question:
+      'Why is use of a tower restricted to people trained in that equipment?',
+    options: [
+      'Because it carries specific risks that training and knowledge address',
+      'Because the hire agreement names the individuals who may use it',
+      'Because untrained users invalidate the site insurance arrangements',
+      'Because the tower manufacturer runs the only recognised courses',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Where equipment involves a specific risk its use is restricted to those trained in that equipment and in the risks it presents, which is a safety duty rather than a paperwork one. Insurance and hire terms may follow from that, but they are not the reason the restriction exists.',
+    section: 'Module 2',
+    difficulty: 'intermediate',
+    topic: 'Competence and Training',
+    category: 'Legislation',
+  },
+  {
+    id: 239,
+    question:
+      'You arrive to find a tower with one guardrail removed and a scaffold board bridging to a mezzanine. What do you do?',
+    options: [
+      'Use it briefly because the board makes the crossing much quicker',
+      'Replace the missing guardrail and leave the bridging board in place',
+      'Use it only while a second person holds the board steady at one end',
+      'Stop, remove the board and have the tower put right before any use',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'A tower is only safe in its designed configuration, so improvised bridging and missing edge protection make it unusable until a competent person reinstates it. Refitting the guardrail alone still leaves an unplanned load path through a board the tower was never designed to carry.',
+    section: 'Module 7',
+    difficulty: 'advanced',
+    topic: 'Unsafe Towers',
+    category: 'Safety',
+  },
+  {
+    id: 240,
+    question:
+      'When would tying a tower to an adjacent structure normally be considered?',
+    options: [
+      'Whenever the tower is going to be used for more than one shift',
+      'Where stability cannot be achieved by the base and outriggers alone',
+      'Whenever the tower is erected within a building rather than outside',
+      'Where the operative would prefer the platform to feel more solid',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Tying in is a stability measure used where the base dimensions, ballast and outriggers cannot give the tower adequate resistance to overturning at the height needed. How long the tower stands does not by itself determine whether it is stable at that height.',
+    section: 'Module 3',
+    difficulty: 'intermediate',
+    topic: 'Tower Stability',
+    category: 'Assembly',
+  },
+  {
+    id: 241,
+    question:
+      'An operative proposes cantilevering a platform out from the tower to reach over a machine. What is the concern?',
+    options: [
+      'The extra platform will make the tower slower to move afterwards',
+      'The cantilever will use up the spare boards needed at the next level',
+      'The reach saves time but the platform edge will need extra marking',
+      'It shifts load outside the base and can overturn the whole tower',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Any arrangement that puts weight outside the footprint moves the line of action of the load towards the edge of the base and can tip the tower. Unless the supplier specifically designs and details such a configuration, the reach is achieved by moving the tower instead.',
+    section: 'Module 3',
+    difficulty: 'advanced',
+    topic: 'Tower Stability',
+    category: 'Assembly',
+  },
+  {
+    id: 242,
+    question:
+      'Two towers from different makers are on site and one is short of a brace. What is the position?',
+    options: [
+      'Components may be swapped if the tube diameters look much the same',
+      'Components may be swapped provided the build is checked afterwards',
+      'Components must not be mixed unless the supplier states they suit',
+      'Components may be swapped because all aluminium towers are similar',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'A tower is designed and tested as a matched system, so parts from another maker are only used where the supplier confirms compatibility. Matching tube diameters by eye tells you nothing about the locking claws, wall thickness or the loads the frame was proved against.',
+    section: 'Module 2',
+    difficulty: 'intermediate',
+    topic: 'Components',
+    category: 'Assembly',
+  },
+  {
+    id: 243,
+    question:
+      'A tower is to stand with one castor over a plastic drain cover in a yard. What should be done?',
+    options: [
+      'Set the castor down gently so the cover is not shock loaded at all',
+      'Lay a scaffold board over the cover and set the castor on the board',
+      'Leave the castor there but keep the platform to half its usual height',
+      'Reposition the tower so every castor bears on sound, firm ground',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Every wheel or foot must be properly supported on ground capable of taking the load, and a light cover can give way suddenly under a point load. Spreading the load over a board still relies on the cover beneath it, so the safe answer is to move the tower onto sound ground.',
+    section: 'Module 3',
+    difficulty: 'advanced',
+    topic: 'Ground Conditions',
+    category: 'Assembly',
+  },
+  {
+    id: 244,
+    question:
+      'Why should an operative avoid overreaching from a tower platform?',
+    options: [
+      'It shifts weight to the edge and can destabilise the whole tower',
+      'It makes the finished electrical work harder to inspect afterwards',
+      'It uses more time than repositioning the tower would have taken',
+      'It puts strain on the shoulders and can cause a longer term injury',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Leaning out beyond the guardrails moves the load towards the edge of the base and can overturn a light tower as well as risking a fall. Musculoskeletal strain is a genuine issue but it is not the reason overreaching is prohibited on access towers.',
+    section: 'Module 7',
+    difficulty: 'basic',
+    topic: 'Safe Working Practice',
+    category: 'Safety',
+  },
+  {
+    id: 245,
+    question:
+      'An operative sets a stepladder on the tower platform to gain the last half metre of reach. What is wrong?',
+    options: [
+      'The stepladder will damage the platform boards under the feet',
+      'The stepladder must be tied to the guardrail before being used',
+      'The stepladder should be replaced with a taller pair of trestles',
+      'It raises the person above the guardrails on an unstable base',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Standing on anything placed on the platform lifts the operative above the edge protection and puts a small, unstable base on a structure already at height. Tying the stepladder to the guardrail does not restore any protection, because the fall risk is now above the rail.',
+    section: 'Module 7',
+    difficulty: 'advanced',
+    topic: 'Unsafe Towers',
+    category: 'Safety',
+  },
+  {
+    id: 246,
+    question:
+      'A tower must be positioned close to an overhead busbar in a factory. What should happen first?',
+    options: [
+      'Fit insulating sleeves to the top guardrails before erecting the tower',
+      'Arrange isolation of the busbar or a safe exclusion distance from it',
+      'Erect the tower quickly so exposure to the busbar is kept brief',
+      'Mark the busbar with hazard tape and brief the operative on it',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'An aluminium tower is a good conductor, so the hazard is controlled at source by isolating the supply or keeping the structure a safe distance away. Tape and briefings only inform people about a live conductor that remains fully capable of causing a fatality.',
+    section: 'Module 4',
+    difficulty: 'intermediate',
+    topic: 'Overhead Hazards',
+    category: 'Safety',
+  },
+  {
+    id: 247,
+    question:
+      'A tower is being dismantled at the end of a job. Which approach is correct?',
+    options: [
+      'Drop components to a colleague below to speed the strip down',
+      'Remove all the guardrails first so the frames come apart easily',
+      'Leave the top platform in place and lower the tower on its side',
+      'Work down in reverse of the build, handing components down safely',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Dismantling reverses the assembly sequence so the person is protected at every stage and components are passed rather than dropped. Stripping the guardrails first removes the edge protection while the operative is still working at the highest level.',
+    section: 'Module 6',
+    difficulty: 'advanced',
+    topic: 'Dismantling',
+    category: 'Assembly',
+  },
+  {
+    id: 248,
+    question:
+      'A frame with a bent horizontal is found while loading the van. What should be done with it?',
+    options: [
+      'Load it separately and straighten the tube back at the depot',
+      'Quarantine it as unusable and report it so it is not rebuilt in',
+      'Return it to stock because a small bend has little real effect',
+      'Mark it with tape and use it only in the lowest tower section',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A distorted member no longer carries the load it was proved to carry, so it is segregated and reported rather than returned to the pool. Using it low in the tower is worse rather than safer, because the bottom sections carry the load of everything above them.',
+    section: 'Module 5',
+    difficulty: 'intermediate',
+    topic: 'Defect Reporting',
+    category: 'Inspection',
+  },
+  {
+    id: 249,
+    question:
+      'A tower is needed on a gently sloping car park. What is the correct approach?',
+    options: [
+      'Build the tower square and accept the lean the slope produces',
+      'Chock the downhill castors with timber offcuts to take up the fall',
+      'Reduce the platform height by one lift and ignore the slope itself',
+      'Use adjustable legs to bring the base level and check it is plumb',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'The base must be brought level within the adjustment the tower provides, and the structure checked for plumb, so the load runs down through the legs as designed. Chocking with loose offcuts relies on material that can shift or split and leaves the tower out of plumb.',
+    section: 'Module 3',
+    difficulty: 'advanced',
+    topic: 'Ground Conditions',
+    category: 'Assembly',
+  },
+  {
+    id: 250,
+    question:
+      'What must be done with the castor brakes before anyone climbs the tower?',
+    options: [
+      'Every brake must be applied so the tower cannot roll during use',
+      'Two diagonal brakes are applied and the others left free to swivel',
+      'The brakes are left off so the tower can be nudged into position',
+      'The brakes are applied only where the floor surface is not level',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'All castor brakes are locked before the tower is climbed, because a single free wheel lets the base creep away under the person above. Leaving brakes off for fine positioning is how towers move unexpectedly while someone is already on the platform.',
+    section: 'Module 4',
+    difficulty: 'intermediate',
+    topic: 'Pre-use Checks',
+    category: 'Safety',
+  },
+  {
+    id: 251,
+    question:
+      'How do stabilisers and ballast differ in the way they resist overturning?',
+    options: [
+      'Stabilisers add weight low down and ballast widens the base area',
+      'Both work by adding weight, so the two are entirely interchangeable',
+      'Stabilisers widen the effective base and ballast adds weight low down',
+      'Both widen the base, so either may be fitted to one side of a tower',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Stabilisers and outriggers resist tipping by enlarging the effective base, while ballast resists it by adding mass at the bottom of the structure. They are not interchangeable, and whichever is specified must be fitted as the supplier details it rather than to one side only.',
+    section: 'Module 3',
+    difficulty: 'intermediate',
+    topic: 'Tower Stability',
+    category: 'Assembly',
+  },
+  {
+    id: 252,
+    question:
+      'A tower is required in a stairwell where a standard rectangular base will not fit. What is correct?',
+    options: [
+      'Build the standard tower and let one pair of castors hang clear',
+      'Cut down a set of frames on site so the base fits the stairwell',
+      'Use a ladder instead, since no tower can ever suit a stairwell',
+      'Use a configuration the supplier provides and details for stairs',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Stair configurations exist as designed arrangements with the components and instructions to match, so the answer is to obtain the right tower rather than improvise. Modifying frames on site destroys the tested strength of the system and leaves the build with no valid instructions.',
+    section: 'Module 6',
+    difficulty: 'advanced',
+    topic: 'Special Configurations',
+    category: 'Assembly',
+  },
+  {
+    id: 253,
+    question:
+      'An apprentice who has not been trained on towers asks to help with the build. What should happen?',
+    options: [
+      'Let them build the first lift only, as it is closest to the ground',
+      'They may observe or pass components but not assemble the tower',
+      'Let them assemble it while a trained person watches from the ground',
+      'Let them assemble it if they have watched the build once before',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Assembly is restricted to people trained in that equipment and its specific risks, so an untrained apprentice can watch and hand up parts but not build. Supervision does not create competence, and the lowest lift is where the errors that fail the whole tower begin.',
+    section: 'Module 2',
+    difficulty: 'intermediate',
+    topic: 'Competence and Training',
+    category: 'Legislation',
+  },
+  {
+    id: 254,
+    question:
+      'A spanner falls from a tower platform into an empty cordoned area. What is the right response?',
+    options: [
+      'Retrieve it quietly, as the cordon meant nobody was ever at risk',
+      'Log it at the end of the week if a similar event happens again',
+      'Report it so the cause is examined and the controls are improved',
+      'Fit a wider toe board and treat the matter as closed at that point',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'A dropped tool is a near miss that reveals a failure in how tools were secured, and reporting it lets the cause be fixed before someone is standing there. Deciding it does not count because the cordon held treats good luck as if it were a control measure.',
+    section: 'Module 7',
+    difficulty: 'advanced',
+    topic: 'Falling Objects',
+    category: 'Safety',
+  },
+  {
+    id: 255,
+    question:
+      'Which use of a mobile access tower is not acceptable?',
+    options: [
+      'Using it as a support point for lifting or hauling a heavy load',
+      'Using it to install a long run of lighting in a factory unit',
+      'Using it as a working platform for second fix cabling work',
+      'Using it to gain access to a high level distribution board',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'A tower is designed as a working platform, not as a lifting anchor, and hauling against it applies forces the structure was never proved against. Long lighting runs and high level boards are exactly the repetitive access tasks towers are suited to.',
+    section: 'Module 1',
+    difficulty: 'basic',
+    topic: 'Safe Working Practice',
+    category: 'Safety',
+  },
+  {
+    id: 256,
+    question:
+      'What should be in place before a tower is erected for a job on a construction site?',
+    options: [
+      'A copy of the training certificate displayed on the tower frame',
+      'A signed acceptance of the hire terms from the equipment supplier',
+      'A risk assessment and method covering the erection and the work',
+      'A record of the previous inspection carried out at the last site',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Work at height is planned before it starts, so the hazards of erecting, using, moving and dismantling the tower are assessed and the method agreed. A record from a previous site describes a different structure on different ground and cannot serve as that plan.',
+    section: 'Module 1',
+    difficulty: 'intermediate',
+    topic: 'Planning',
+    category: 'Legislation',
+  },
 ];

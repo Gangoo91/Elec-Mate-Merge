@@ -60,7 +60,7 @@ const faqs = [
   {
     question: 'What emergency lighting standard applies to retail premises?',
     answer:
-      'Emergency lighting in retail premises must comply with BS 5266-1 (Emergency Lighting — Code of Practice for the Emergency Lighting of Premises). The standard requires emergency lighting to be provided on all escape routes, at every exit and safety sign, at every change of direction on an escape route, at stairways (each flight receives direct light), at every change of floor level, near firefighting equipment and fire alarm call points, and at points of emphasis (such as escape route intersections and outside final exits). The emergency lighting must provide a minimum illuminance of 1 lux along the centre line of escape routes (2 lux at intersections and changes of direction) and 0.5 lux across the full width. For large open-plan retail areas exceeding 60 m², anti-panic lighting must provide a minimum of 0.5 lux across the entire floor area. The emergency lighting system must provide illumination for a minimum of 3 hours (1 hour is only acceptable in premises that are evacuated immediately upon loss of normal lighting and not reoccupied until the system is fully recharged). Monthly functional tests and annual full-duration tests must be carried out and recorded. A fire risk assessment may require additional emergency lighting beyond the BS 5266 minimum.',
+      'Emergency lighting in retail premises must comply with BS 5266-1 (Emergency Lighting — Code of Practice for the Emergency Lighting of Premises). The standard requires emergency lighting to be provided on all escape routes, at every exit and safety sign, at every change of direction on an escape route, at stairways (each flight receives direct light), at every change of floor level, near firefighting equipment and fire alarm call points, and at points of emphasis (such as escape route intersections and outside final exits). The emergency lighting must provide a minimum illuminance of 1 lux across the full width of escape routes (2 lux at intersections and changes of direction), BS EN 1838:2024 having extended this from the centre line. For large open-plan retail areas exceeding 60 m², anti-panic lighting must provide a minimum of 0.5 lux across the entire floor area. The emergency lighting system must provide illumination for a minimum of 3 hours (1 hour is only acceptable in premises that are evacuated immediately upon loss of normal lighting and not reoccupied until the system is fully recharged). Monthly functional tests and annual full-duration tests must be carried out and recorded. A fire risk assessment may require additional emergency lighting beyond the BS 5266 minimum.',
   },
   {
     question: 'What fire alarm category is required for a shop?',
@@ -261,7 +261,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <Siren className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Escape route lighting.</strong> A minimum of 1 lux along the centre line of
+                <strong>Escape route lighting.</strong> A minimum of 1 lux across the full width of
                 escape routes, increasing to 2 lux at intersections, changes of direction, and
                 changes of floor level. The uniformity ratio must not exceed 40:1.
               </span>

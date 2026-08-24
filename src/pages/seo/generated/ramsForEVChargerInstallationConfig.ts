@@ -249,7 +249,7 @@ export const ramsForEVChargerInstallationConfig: GeneratedGuideConfig = {
   faqHeading: 'EV charger RAMS \u2014 frequently asked questions',
   relatedPages: [
     {
-      href: '/tools/rams-generator',
+      href: '/rams-generator',
       title: 'RAMS Generator',
       description: 'Build a site-specific RAMS in under a minute from a structured input form \u2014 EV, EICR, rewire and more.',
       icon: 'ClipboardCheck',

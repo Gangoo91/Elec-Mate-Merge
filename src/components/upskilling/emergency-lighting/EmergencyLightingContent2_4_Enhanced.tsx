@@ -38,7 +38,7 @@ export const EmergencyLightingContent2_4_Enhanced = () => {
               <ul className="space-y-2 text-foreground">
                 <li className="flex items-center gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400" />
-                  Minimum of 1 lux along the centre line of the escape route
+                  Minimum of 1 lux across the full width of the escape route
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400" />
@@ -62,7 +62,7 @@ export const EmergencyLightingContent2_4_Enhanced = () => {
               <span className="font-semibold text-green-400">Quick Check</span>
             </div>
             <p className="text-foreground">
-              What is the minimum lux requirement along the centre line of an escape route?
+              What is the minimum lux requirement across the full width of an escape route?
             </p>
             <p className="text-green-400 mt-2 font-medium">Answer: 1 lux minimum</p>
           </div>

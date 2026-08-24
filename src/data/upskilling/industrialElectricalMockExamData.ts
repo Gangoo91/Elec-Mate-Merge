@@ -2054,6 +2054,906 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     topic: 'Documentation',
     category: 'Safety & Isolation',
   },
+  {
+    id: 121,
+    question:
+      'A 30 kW cage induction motor is started star-delta instead of direct-on-line. At the instant of starting in star, what does the motor draw and produce compared with a DOL start?',
+    options: [
+      'About a third of the line current and about a third of the torque',
+      'About a third of the line current but the same starting torque',
+      'The same line current but about a third of the starting torque',
+      'About a third of the line current and about a ninth of the torque',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'In star each winding sees the line voltage divided by root three, so winding current falls by that factor and line current falls to about a third of the delta value. Torque varies with the square of the applied voltage, so it falls to about a third as well. The tempting wrong answer is reduced current with full torque, but you cannot take current away and leave torque untouched, which is exactly why star-delta only suits motors started off load or against a light load.',
+    section: 'Module 3',
+    difficulty: 'advanced',
+    topic: 'Motor Starting',
+    category: 'Motors & Control',
+  },
+  {
+    id: 122,
+    question:
+      'A heavily loaded inclined conveyor keeps snatching at the star-to-delta changeover. Why does a soft starter solve this where star-delta cannot?',
+    options: [
+      'It removes the open-transition surge that occurs at the changeover',
+      'It lets the motor develop full locked-rotor torque from standstill',
+      'It reduces the running current of the motor once it is up to speed',
+      'It allows the motor to be run continuously in the star connection',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'An open-transition star-delta starter briefly disconnects the motor, so the rotor flux and the supply drift out of step and reconnection in delta produces a current and torque spike that shows up as a snatch. A soft starter ramps voltage smoothly with no break in supply, so there is no transition step. Full locked-rotor torque is what a DOL start gives, and it is the thing being avoided here; neither starter changes the current once the motor is running normally.',
+    section: 'Module 3',
+    difficulty: 'advanced',
+    topic: 'Motor Starting',
+    category: 'Motors & Control',
+  },
+  {
+    id: 123,
+    question:
+      'Why does a motor circuit need short-circuit protection and a separate overload relay rather than one device doing both?',
+    options: [
+      'The overload relay is faster than a fuse at every level of fault current',
+      'A device set to pass starting current cannot also protect against overload',
+      'The overload relay provides the required breaking capacity for the circuit',
+      'A short-circuit device cannot clear a three-phase fault without assistance',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The short-circuit device has to sit above the starting inrush or it will trip on every start, which leaves it far too coarse to notice a motor running at say fifteen per cent above full load current. The overload relay has a thermal characteristic matched to the motor and trips on that modest sustained excess. The breaking capacity distractor is the attractive one, but an overload relay has almost no fault-breaking capability at all; that duty belongs entirely to the fuse or circuit breaker.',
+    section: 'Module 3',
+    difficulty: 'intermediate',
+    topic: 'Motor Protection',
+    category: 'Motors & Control',
+  },
+  {
+    id: 124,
+    question:
+      'A three-phase motor loses one supply line while running. Why is an overload relay with a phase-failure feature preferred to a plain three-element relay?',
+    options: [
+      'It detects the imbalance and trips before winding current reaches setting',
+      'It responds to earth leakage current that appears when a line is lost',
+      'It resets itself automatically once the missing line has been restored',
+      'It limits current in the two healthy lines to the full load value',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Losing one line forces the remaining windings to carry far more than their share, and inside a delta winding the internal current can be well above rating while the measured line current still sits under the relay setting. A differential or phase-failure element sees the imbalance itself and trips on that. Losing a line is not an earth fault, so leakage detection is irrelevant, and no relay limits current; it only interrupts it.',
+    section: 'Module 3',
+    difficulty: 'advanced',
+    topic: 'Motor Protection',
+    category: 'Motors & Control',
+  },
+  {
+    id: 125,
+    question:
+      'A variable speed drive raises output voltage in proportion to output frequency as it ramps a motor up. What is this ratio maintained for?',
+    options: [
+      'To hold the flux in the motor core roughly constant and avoid saturation',
+      'To keep the slip of the rotor constant across the whole speed range',
+      'To reduce the harmonic current drawn by the drive from the supply',
+      'To hold the power factor at the motor terminals constant while ramping',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Core flux depends on volts per hertz, so if frequency were reduced while voltage stayed up the core would saturate, magnetising current would rise sharply and the motor would overheat at low speed. Holding the ratio keeps flux and therefore available torque roughly constant. Slip is set by the load, not by the drive ramp, and harmonics on the supply side are a function of the rectifier front end rather than the output volts per hertz law.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'Variable Speed Drives',
+    category: 'Motors & Control',
+  },
+  {
+    id: 126,
+    question:
+      'A drive-fed motor circuit is to have RCD protection. Under BS 7671 Regulation 531.3.3, why is a Type AC device unsuitable?',
+    options: [
+      'The drive may produce DC components in residual current that blind it',
+      'The drive draws a starting current higher than the RCD rated current',
+      'The drive needs a residual operating current no lower than 300 mA',
+      'The drive requires an RCD of the time delayed selective pattern',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Power electronic converters can put smooth or pulsating DC into the residual current, and Regulation 531.3.3 says Type AC may only be used where the absence of DC components is known, so a Type A, F or B is selected instead depending on the drive. Rated current and starting current are separate selection issues that do not decide the RCD type, and a time delay affects discrimination between devices rather than the waveform the device can sense.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'Variable Speed Drives',
+    category: 'Motors & Control',
+  },
+  {
+    id: 127,
+    question:
+      'A three-phase circuit supplies a bank of switch-mode loads. At what point does BS 7671 indicate that the neutral conductor may need a larger cross-sectional area?',
+    options: [
+      'Where the load is unbalanced by more than 10 percent between the lines',
+      'Where the neutral runs alongside more than three loaded line conductors',
+      'Where triplen harmonic content exceeds 33 percent of fundamental current',
+      'Where the measured power factor of the load falls below 0.85 lagging',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Triplen harmonics do not cancel in the neutral of a three-phase four-wire circuit; they add, so the neutral can carry more current than any line. BS 7671 flags an increase in neutral size where triplen content exceeds 33 percent of the fundamental line current, with Regulation 523.6.3 and Appendix 4 giving the assessment. Balance matters for neutral current too, but it is the harmonic threshold that BS 7671 states, and power factor alone tells you nothing about harmonic content.',
+    section: 'Module 2',
+    difficulty: 'advanced',
+    topic: 'Harmonics',
+    category: 'Distribution Systems',
+  },
+  {
+    id: 128,
+    question:
+      'You have identified the correct isolator and switched it off before working on a machine. What is the next step in safe isolation?',
+    options: [
+      'Prove the voltage indicator on a known source such as a proving unit',
+      'Secure the isolator in the off position and retain the key yourself',
+      'Test between all live conductors and earth at the machine terminals',
+      'Fit a warning notice and tell the production team the line is down',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The order is identify, isolate, secure against reconnection, then prove dead. Securing comes first because until the isolator is locked and the key is on your person somebody can restore the supply between your test and your first cut. Proving the tester on a known source is a real and necessary step, but it belongs to the prove-dead stage that follows securing, so choosing it here leaves the isolation unsecured while you work.',
+    section: 'Module 5',
+    difficulty: 'intermediate',
+    topic: 'Safe Isolation',
+    category: 'Safety & Isolation',
+  },
+  {
+    id: 129,
+    question:
+      'Two electricians are working on the same conveyor drive during a shutdown. What is the correct lock-off arrangement at the isolator?',
+    options: [
+      'Each fits a personal lock to a multi-lock hasp on the isolator',
+      'One fits a lock and hands the single key to the shift supervisor',
+      'One fits a lock and leaves the key beside the isolator position',
+      'Each signs the permit and one shared lock is fitted for the job',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'A hasp taking one lock per person means the isolator cannot be closed until the last person has finished and removed their own lock, so no one can be re-energised onto by a colleague who finished early. Guidance is explicit that the person who isolated should keep their key on them. Handing the key to a supervisor or leaving it at the isolator puts control of your safety in somebody else hands, and a shared lock has the same defect however carefully the permit is signed.',
+    section: 'Module 5',
+    difficulty: 'advanced',
+    topic: 'Lock-Off Procedure',
+    category: 'Safety & Isolation',
+  },
+  {
+    id: 130,
+    question:
+      'BS 7671 Regulation 537.2.7 requires each device used for isolation to be clearly identified. What must that identification convey?',
+    options: [
+      'The prospective fault current at that point of the installation',
+      'The installation or circuit that the particular device isolates',
+      'The date on which the device was last operated and tested',
+      'The name of the contractor who installed the switchgear',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The point of the identification is that somebody isolating in a hurry can tell, by position or by durable marking, exactly what that device switches off. It applies to every isolating device wherever it sits, including inside a motor control centre. Fault current and test dates are recorded on certification and labels for other purposes, and neither tells a person standing at the panel which machine goes dead when the handle is turned.',
+    section: 'Module 5',
+    difficulty: 'basic',
+    topic: 'Isolation Devices',
+    category: 'Safety & Isolation',
+  },
+  {
+    id: 131,
+    question:
+      'Why is a start and stop pushbutton station driving a contactor preferred to a plain rotary switch for a machine tool motor?',
+    options: [
+      'The contactor provides short-circuit protection for the motor supply cable',
+      'The contactor reduces the starting current drawn by the motor from supply',
+      'The contactor drops out on supply loss so the machine cannot restart itself',
+      'The contactor allows the motor to be started under a heavier mechanical load',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'BS 7671 requires motor control circuits to be designed so a motor cannot restart automatically after a fall or loss of voltage where that would be dangerous. A contactor held in by its own auxiliary contact drops out when the supply dips and stays out until somebody presses start, which is exactly that no-volt release behaviour. A rotary switch simply stays where it was left. The contactor gives no fault protection at all, and it changes neither the inrush current nor the torque available at start.',
+    section: 'Module 3',
+    difficulty: 'advanced',
+    topic: 'Motor Control',
+    category: 'Motors & Control',
+  },
+  {
+    id: 132,
+    question:
+      'BS 7671 Regulation 552.1.2 calls for control equipment incorporating overload protection. Which motors does it apply to?',
+    options: [
+      'A rating exceeding 1.5 kW, with an exception for single-phase motors',
+      'A rating exceeding 0.37 kW, with an exception for motors fed by a drive',
+      'A rating exceeding 3 kW, with an exception for motors started direct on line',
+      'A rating exceeding 0.37 kW, with an exception for complete standard equipment',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'The threshold is a rating exceeding 0.37 kW, and the exception is a motor incorporated in an item of current-using equipment that complies as a whole with an appropriate British or Harmonized Standard, because the protection is then built into the product. The trap is the same threshold with the wrong exception; being fed from a drive does not exempt a motor from the requirement, it simply means the drive is often the equipment that provides the protection.',
+    section: 'Module 3',
+    difficulty: 'intermediate',
+    topic: 'Motor Protection',
+    category: 'Motors & Control',
+  },
+  {
+    id: 133,
+    question:
+      'A pump motor is started and stopped remotely by a PLC and is not continuously supervised on site. What does BS 7671 require in addition?',
+    options: [
+      'A self-resetting thermistor circuit that restores the pump supply',
+      'A manually reset protective device against excess temperature',
+      'A time delayed RCD set to disconnect within five seconds',
+      'An additional isolator located inside the plant control room',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Where a motor is automatically or remotely controlled and nobody is watching it, an excess temperature trip must require a deliberate manual reset, so a thermal fault cannot cycle the machine unattended until something burns or seizes. A self-resetting device is the attractive wrong answer for exactly that reason, since it restores supply on its own and hides the fault. An RCD responds to earth leakage, not overheating, and a remote isolator does nothing about temperature.',
+    section: 'Module 3',
+    difficulty: 'advanced',
+    topic: 'Thermal Protection',
+    category: 'Motors & Control',
+  },
+  {
+    id: 134,
+    question:
+      'A three-phase four-wire board supplies 60 A of purely resistive single-phase load on each of the three lines. What current flows in the neutral?',
+    options: [
+      'Approximately zero, because the three currents sum to zero',
+      'About 60 A, because the neutral returns one line current',
+      'About 104 A, because the currents add by root three',
+      'About 180 A, because all three line currents return together',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Three equal linear currents spaced 120 degrees apart cancel at the star point, so a balanced resistive load leaves the neutral carrying almost nothing. The 180 A answer treats the currents as if they were in phase, which is the classic mistake. Note that this cancellation depends on the load being linear; with switch-mode or drive loads the triplen harmonics do not cancel and the neutral can carry more than any line conductor.',
+    section: 'Module 2',
+    difficulty: 'advanced',
+    topic: 'Three-Phase Balance',
+    category: 'Distribution Systems',
+  },
+  {
+    id: 135,
+    question:
+      'A cable route crosses a factory floor at low level where fork lift trucks work. Which containment choice best suits the vulnerable section?',
+    options: [
+      'Basket tray fixed to the wall with the cables clipped inside it',
+      'Cables clipped direct to the wall surface with saddles at intervals',
+      'Flexible corrugated conduit run along the wall at low level',
+      'Steel trunking with a fitted lid at the vulnerable low level section',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'BS 7671 requires the wiring system to be selected for the external influences present, and impact from vehicles is a mechanical influence that only a rigid closed metallic system will withstand. Steel trunking with a lid encloses and shields the cables. Basket tray is the tempting answer because it is the normal industrial choice, but it is an open system offering no impact protection on its exposed side, and clipped or corrugated systems are weaker still.',
+    section: 'Module 6',
+    difficulty: 'intermediate',
+    topic: 'Containment Selection',
+    category: 'Cables & Containment',
+  },
+  {
+    id: 136,
+    question:
+      'A control enclosure is being selected for a food factory wash-down area where hoses are used and staff knock past it. Which criteria govern the choice?',
+    options: [
+      'IP rating alone, because impact is covered by the enclosure material',
+      'Impact rating alone, since the wash-down uses low-pressure hoses',
+      'IP rating for jetting water and IK rating for impact from handling',
+      'The ambient temperature rating and the enclosure colour coding',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'External influences have to be assessed separately for each hazard: the IP code covers ingress of solids and water, so a jetting wash-down sets the second IP digit, while the IK code covers resistance to mechanical impact. Choosing on IP alone is the common shortcut, but a thin plastic box can be perfectly watertight and still crack when a trolley hits it, which then destroys the ingress protection you paid for.',
+    section: 'Module 6',
+    difficulty: 'advanced',
+    topic: 'IP and IK Ratings',
+    category: 'Cables & Containment',
+  },
+  {
+    id: 137,
+    question:
+      'A long submain to a remote motor comfortably meets the voltage drop limit at full load current, yet the motor struggles to start. Why?',
+    options: [
+      'Starting current is at a lower frequency so cable reactance falls away',
+      'Starting current is several times running current so volt drop multiplies',
+      'The cable insulation resistance falls during the starting period',
+      'The overload relay contacts add resistance during the starting period',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Volt drop is proportional to current, so an inrush of several times full load current produces several times the drop, and because motor torque varies with the square of the applied voltage a dip at the terminals cuts the available torque sharply and the motor may not accelerate its load. The frequency answer sounds plausible but the supply frequency does not change during a direct start; only the current does.',
+    section: 'Module 2',
+    difficulty: 'advanced',
+    topic: 'Voltage Drop',
+    category: 'Distribution Systems',
+  },
+  {
+    id: 138,
+    question:
+      'A machine has a latching mushroom-head emergency stop and a lockable supply isolator. Which may be relied on before starting maintenance work?',
+    options: [
+      'The emergency stop, because it latches in the off position when hit',
+      'Either device, provided a warning notice is fitted to the machine',
+      'The emergency stop, provided the control circuit fuse is removed',
+      'The isolator, because it is lockable and provides isolation of supply',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Emergency stopping is about removing a hazard quickly; it usually acts on the control circuit and may leave incoming terminals and interlocked circuits live. Isolation requires a device with an adequate contact gap that can be secured against reconnection, which is what the lockable isolator provides. The latching feature makes the emergency stop the attractive answer, but latching stops it being reset accidentally, it does not make the machine dead.',
+    section: 'Module 5',
+    difficulty: 'intermediate',
+    topic: 'Emergency Switching',
+    category: 'Safety & Isolation',
+  },
+  {
+    id: 139,
+    question:
+      'BS 7671 requires the means of operation of a device for emergency switching off to be capable of latching in the off position. When does that not apply?',
+    options: [
+      'Where the device is mounted within arm reach of the machine operator',
+      'Where the machine is fitted with a separate lockable supply isolator',
+      'Where the same person controls the switching off and the re-energising',
+      'Where the device is a semiconductor switch rather than a contact type',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'The latching requirement exists so that nobody else can restore the supply while the person who hit the stop is still in the danger zone. If both the switching off and the re-energising are under the control of the same person that risk does not arise, and BS 7671 states that exception. Having a lockable isolator elsewhere is the plausible distractor, but a separate isolator does not change what the emergency device itself has to do when operated.',
+    section: 'Module 5',
+    difficulty: 'advanced',
+    topic: 'Emergency Switching',
+    category: 'Safety & Isolation',
+  },
+  {
+    id: 140,
+    question:
+      'Which of these starting methods draws the highest inrush current from the supply when a cage induction motor is started?',
+    options: [
+      'Star-delta starting with an open transition between the two states',
+      'Direct on line starting with the motor connected straight to supply',
+      'Soft starting with a thyristor stack ramping the applied voltage',
+      'Variable speed drive starting with a ramped frequency and voltage',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A direct on line start applies full voltage to a stationary rotor, so the motor behaves like a short-circuited transformer and draws its full locked-rotor current. Every other method exists to reduce that figure: star-delta reduces the applied winding voltage, a soft starter ramps voltage up, and a drive starts at low frequency where the motor develops rated torque at close to rated current rather than a large multiple of it.',
+    section: 'Module 3',
+    difficulty: 'basic',
+    topic: 'Motor Starting',
+    category: 'Motors & Control',
+  },
+  {
+    id: 141,
+    question:
+      'Several variable speed drives are added to a factory and the supply transformer begins running hotter with no rise in the kW demand. What is the likely cause?',
+    options: [
+      'The drives have raised the fundamental line current of the whole factory',
+      'The drives have improved the displacement power factor of the load',
+      'The drives have lowered the supply frequency at the transformer terminals',
+      'Harmonic currents from the drive rectifiers cause extra heating in windings',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'A drive front end draws current in pulses rather than sinusoidally, so it injects harmonic currents that do no useful work but still cause copper and iron losses in the transformer. That is why kW can stay flat while temperature climbs. The fundamental current answer is tempting, but a drive normally reduces the fundamental current drawn for a given mechanical output, and nothing a load does alters the frequency of the incoming supply.',
+    section: 'Module 2',
+    difficulty: 'advanced',
+    topic: 'Harmonics',
+    category: 'Distribution Systems',
+  },
+  {
+    id: 142,
+    question:
+      'Why is the screen of a drive to motor cable normally terminated with a 360 degree gland at both ends rather than a pigtail at one end only?',
+    options: [
+      'It reduces the volt drop along the motor supply cable at full load',
+      'It allows the screen to be used as the circuit protective conductor',
+      'It gives the high frequency return current a low impedance path',
+      'It prevents the motor restarting after a momentary loss of supply',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'The switching edges of a drive output push high frequency current into stray capacitance, and that current has to get back to the drive. A concentric screen bonded all the way round at both ends offers it a low impedance route that stays close to the conductors, which keeps interference out of nearby instrument and control wiring. A pigtail adds inductance and defeats this. The screen is an EMC measure and is not a substitute for a properly sized protective conductor.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'Drive Installation',
+    category: 'Motors & Control',
+  },
+  {
+    id: 143,
+    question:
+      'To what value should the thermal overload relay in a conventional direct on line starter normally be set?',
+    options: [
+      'The current rating of the supply cable feeding the motor starter',
+      'The full load current on the motor nameplate for that connection',
+      'The rating of the short-circuit protective device in the starter',
+      'The locked rotor current of the motor divided by a factor of six',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The relay is there to protect the motor windings, so it must be matched to what the motor can take, which is the nameplate full load current for the connection and voltage in use. Setting it to the cable rating is the common site error; the cable is usually larger than the motor needs, so the winding would cook long before the relay noticed. The fuse or breaker rating is chosen to pass starting current and is far too high to be a thermal setting.',
+    section: 'Module 3',
+    difficulty: 'intermediate',
+    topic: 'Motor Protection',
+    category: 'Motors & Control',
+  },
+  {
+    id: 144,
+    question:
+      'In a star-delta starter the overload relay is wired into the winding legs rather than the incoming lines. What setting does that arrangement require?',
+    options: [
+      'The nameplate full load current, since the relay sees the line current',
+      'Twice the nameplate full load current, to allow for the changeover',
+      'A third of the nameplate full load current, matching the star current',
+      'About 0.58 of the nameplate full load current, the winding current',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'In a delta connection the winding current is the line current divided by root three, about 0.58 of it, so a relay in the winding leg sees that smaller figure and must be set accordingly. Leaving it at the nameplate line value would let the motor run substantially overloaded before tripping. The one third figure comes from the starting current reduction in star and has nothing to do with the running winding current in delta.',
+    section: 'Module 3',
+    difficulty: 'advanced',
+    topic: 'Motor Protection',
+    category: 'Motors & Control',
+  },
+  {
+    id: 145,
+    question:
+      'Why is a lockable isolator provided at the machine itself when the distribution board already has one for the same circuit?',
+    options: [
+      'So the person working can see it is off and secure it where they work',
+      'So the machine can be switched off during normal production stoppages',
+      'So the supply cable to the machine is protected against overload current',
+      'So the machine can be started remotely by the production control system',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Isolation is only safe if the person exposed to the danger controls it and can see it, which is why guidance treats an isolation point remote from the worksite as needing extra precautions. A local lockable isolator lets them lock off, keep the key and glance at it while working. Using it for routine production stopping is functional switching, a different duty, and an isolator provides no overload protection whatsoever.',
+    section: 'Module 5',
+    difficulty: 'intermediate',
+    topic: 'Isolation Devices',
+    category: 'Safety & Isolation',
+  },
+  {
+    id: 146,
+    question:
+      'A three-phase motor hums loudly, fails to accelerate and a clamp meter shows heavy current in two lines only. What should be checked first?',
+    options: [
+      'The setting of the overload relay against the motor nameplate value',
+      'The insulation resistance between each winding and the motor frame',
+      'Continuity of all three lines including starter fuses and contacts',
+      'The alignment of the coupling between the motor and the driven load',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Current in two lines and none in the third is the classic signature of single-phasing, so the job is to find the break, and the usual culprits are one blown fuse, a burnt contactor tip or a loose terminal. A motor in that state produces a badly reduced pulsating torque, which is exactly the hum and stall described. Insulation testing is a reasonable later step but it will not explain a missing line, and coupling problems load all three lines equally.',
+    section: 'Module 7',
+    difficulty: 'advanced',
+    topic: 'Fault Finding',
+    category: 'Safety & Isolation',
+  },
+  {
+    id: 147,
+    question:
+      'You need to insulation resistance test the cable between a variable speed drive and its motor. What must be done before applying the test voltage?',
+    options: [
+      'Set the test instrument to its lowest available test voltage range',
+      'Link the three motor winding ends together and test them to earth',
+      'Short the drive output terminals together to protect the rectifier',
+      'Disconnect the cable at the drive so the electronics see no test voltage',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'An insulation test voltage will destroy the output semiconductors of a drive, so the cable has to be free of the drive terminals before testing. Reducing the test voltage is the tempting compromise, but any applied test voltage can still damage the electronics and a reduced voltage also invalidates the result. Linking the winding ends is a genuine technique for testing a motor as a unit, yet on its own it does nothing to protect the drive.',
+    section: 'Module 7',
+    difficulty: 'advanced',
+    topic: 'Testing Practice',
+    category: 'Safety & Isolation',
+  },
+  {
+    id: 148,
+    question:
+      'A thermal survey of an industrial panel shows one line terminal on a busbar much hotter than the other two while all three carry equal current. What does this suggest?',
+    options: [
+      'A harmonic current circulating in that line of the distribution board',
+      'A high resistance joint at that terminal producing extra heat loss',
+      'A failing overload relay element mounted next to that terminal',
+      'An unbalanced load drawing more current through that line conductor',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Heat at a joint goes as current squared times resistance, so with the currents equal the only variable left is resistance, and a loose or corroded connection is the usual answer. Unbalance is the attractive distractor and would be the right call if the currents differed, which is why the clamp readings matter before you reach for a spanner. Left alone the joint deteriorates, gets hotter and eventually fails or ignites nearby material.',
+    section: 'Module 7',
+    difficulty: 'intermediate',
+    topic: 'Planned Maintenance',
+    category: 'Safety & Isolation',
+  },
+  {
+    id: 149,
+    question:
+      'After a distribution board replacement a three-phase pump is found to be running backwards. What is the correct remedy at the starter?',
+    options: [
+      'Reverse the neutral and earth connections at the pump terminal box',
+      'Swap the line and neutral conductors at the motor starter terminals',
+      'Interchange any two of the three line conductors at the starter',
+      'Change the star point connection inside the motor terminal box',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Direction of rotation follows the phase sequence, so swapping any two lines reverses the rotating field and therefore the shaft. The two answers involving the neutral are not merely wrong but dangerous, since a neutral or earth is not part of the rotating field and disturbing them creates a shock risk. Reconnecting the star point changes the winding configuration and voltage rating, not the direction the motor turns.',
+    section: 'Module 2',
+    difficulty: 'advanced',
+    topic: 'Phase Rotation',
+    category: 'Distribution Systems',
+  },
+  {
+    id: 150,
+    question:
+      'Why can a measured Zs value that sits just under the BS 7671 tabulated maximum still fail to prove compliance on an industrial submain?',
+    options: [
+      'The tabulated values assume the circuit is also protected by an RCD',
+      'The tabulated values assume the load is balanced across three lines',
+      'The tabulated values apply only to circuits shorter than fifty metres',
+      'The tabulated values assume conductors at normal operating temperature',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'The BS 7671 maxima are derived with the conductors hot, as they would be when carrying design current, whereas a test is taken on a cold circuit whose resistance is lower. A cold reading close to the limit will therefore breach it in service, which is why GN3 publishes separate tables of maximum measured loop impedance at ambient temperature for comparison. RCD presence, circuit length and load balance do not enter into how the tabulated figures were derived.',
+    section: 'Module 8',
+    difficulty: 'advanced',
+    topic: 'Earth Fault Loop Impedance',
+    category: 'Distribution Systems',
+  },
+  {
+    id: 151,
+    question:
+      'A large centrifugal extract fan must have its airflow varied continuously through the working shift. Which control method suits the duty?',
+    options: [
+      'A variable speed drive, because it controls speed continuously in service',
+      'A soft starter, because it ramps the applied voltage up and down',
+      'A star-delta starter switched between the two states as required',
+      'A direct on line starter with a timer cycling the fan on and off',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Only a drive changes the frequency, and frequency is what sets synchronous speed, so only a drive gives continuous speed control once the machine is running. The soft starter answer catches people out because it also varies voltage, but it does so purely to manage the start and is bypassed at full speed; reducing voltage on a running motor increases slip and current rather than usefully controlling speed. Star-delta and cycling on and off are start methods, not control methods.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'Variable Speed Drives',
+    category: 'Motors & Control',
+  },
+  {
+    id: 152,
+    question:
+      'Why does reducing the speed of a centrifugal pump with a drive save far more energy than throttling the discharge valve?',
+    options: [
+      'Shaft power falls in direct proportion to the speed of the pump',
+      'The drive raises the power factor seen at the supply transformer',
+      'Shaft power falls roughly with the cube of the speed of the pump',
+      'The motor runs at a higher slip and so draws a smaller current',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'For a centrifugal machine flow tracks speed, pressure tracks speed squared and power tracks the product, so it falls roughly with the cube of speed and a modest speed reduction produces a large power saving. Throttling leaves the pump at full speed and simply wastes the surplus across the valve. The linear answer is the intuitive one and badly understates the saving; power factor and slip are side effects, not the mechanism.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'Variable Speed Drives',
+    category: 'Motors & Control',
+  },
+  {
+    id: 153,
+    question:
+      'What is the purpose of the mechanical interlock fitted between the forward and reverse contactors of a reversing starter?',
+    options: [
+      'It ensures the motor cannot start until the overload relay is reset',
+      'It prevents both contactors closing together and shorting two lines',
+      'It delays the reverse contactor until the motor has come to rest',
+      'It stops the motor restarting automatically after a loss of supply',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The reversing contactor swaps two lines, so if both contactors closed at once those two lines would be bridged through the contactor tips and the result is a phase to phase fault at the starter. The mechanical interlock makes that physically impossible even if the control wiring is faulty, which is why it is fitted in addition to electrical interlocking. Anti-restart on voltage loss is a real requirement but it is provided by the hold-in arrangement of the control circuit.',
+    section: 'Module 3',
+    difficulty: 'intermediate',
+    topic: 'Motor Control',
+    category: 'Motors & Control',
+  },
+  {
+    id: 154,
+    question:
+      'How is a machine control transformer normally arranged so that an earth fault in the control wiring cannot cause unintentional starting?',
+    options: [
+      'The secondary is left unearthed and floating clear of the machine frame',
+      'The secondary is supplied through a residual current device at the panel',
+      'The secondary is connected so both ends of the coils feed through fuses',
+      'One side of the secondary is earthed and the switching is in the other',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'With one pole of the control supply earthed and every switch, stop button and interlock in the unearthed leg, an earth fault on the wiring between a switch and a coil simply blows the control fuse rather than feeding the coil. BS 7671 requires that earth faults in control circuits shall not cause unintentional starting, and this is the standard way of achieving it. A floating secondary is the attractive answer, but a first earth fault then passes unnoticed and a second one can energise the contactor.',
+    section: 'Module 3',
+    difficulty: 'advanced',
+    topic: 'Control Circuits',
+    category: 'Motors & Control',
+  },
+  {
+    id: 155,
+    question:
+      'A drive panel has 400 V power cables and extra-low voltage instrument cables sharing one trunking. What does BS 7671 Regulation 528.1 require?',
+    options: [
+      'The instrument cables are run inside a flexible sleeve for their length',
+      'The power cables are derated to allow for the extra grouping factor',
+      'Segregation, or every cable insulated for the highest voltage present',
+      'The instrument cables are terminated onto the same earth bar as power',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Band I and Band II circuits must not share a wiring system unless one of the permitted methods is used, the common ones being physical separation by a partition or compartment, or insulating every conductor for the highest voltage present. The reason is that a fault in the power cabling must not put low voltage onto extra-low voltage wiring that people treat as safe. Grouping derating is a thermal matter and does not address the voltage band issue at all.',
+    section: 'Module 6',
+    difficulty: 'intermediate',
+    topic: 'Segregation',
+    category: 'Cables & Containment',
+  },
+  {
+    id: 156,
+    question:
+      'Why is a short length of flexible conduit used for the final connection into a motor terminal box rather than continuing in rigid steel conduit?',
+    options: [
+      'It accommodates vibration and movement that would fatigue conductors',
+      'It provides a higher degree of ingress protection at the terminal box',
+      'It improves the earth continuity between the motor frame and the panel',
+      'It allows the motor supply cable to be reduced by one size in area',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'BS 7671 requires wiring systems to be selected and erected with the mechanical vibration present taken into account, and a rigid connection to a running motor transmits that vibration straight into the terminations until conductors work harden and crack. The earth continuity answer is the reverse of the truth: flexible conduit is not relied on as a protective conductor, so a separate cpc is normally run inside it precisely because its continuity cannot be trusted.',
+    section: 'Module 6',
+    difficulty: 'advanced',
+    topic: 'Containment Selection',
+    category: 'Cables & Containment',
+  },
+  {
+    id: 157,
+    question:
+      'Cables are to be run at high level in a foundry where the ambient temperature reaches 45 degrees C. What must the designer take into account?',
+    options: [
+      'Apply a grouping factor for the number of circuits on the tray',
+      'Increase the rating of the protective device to suit the ambient',
+      'Select cables with a lower conductor operating temperature limit',
+      'Apply an ambient temperature correction factor when sizing cables',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Tabulated current-carrying capacities assume a reference ambient, and a hotter environment leaves less of the temperature rise budget for the cable itself, so a correction factor is applied and the conductor size increases. Grouping is a separate factor that may also apply but is not the answer to a hot ambient. Raising the device rating is the dangerous distractor, because it would let more current flow through a cable that can already carry less than the tables suggest.',
+    section: 'Module 6',
+    difficulty: 'intermediate',
+    topic: 'External Influences',
+    category: 'Cables & Containment',
+  },
+  {
+    id: 158,
+    question:
+      'BS 7671 Regulation 537.2.5 requires provision for securing off-load isolating devices against unintentional opening. What is an acceptable way of doing this?',
+    options: [
+      'Marking the device with a warning notice about on load operation',
+      'Locating the device in a lockable space so it cannot be operated',
+      'Fitting a fuse in the supply so the device cannot pass load current',
+      'Providing a written procedure held by the site maintenance manager',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'An off-load device is not built to break load current, so opening it while current flows can draw an arc across the contacts. BS 7671 therefore wants a physical measure, and it gives locating the device in a lockable space as an example of securing it. A notice or a procedure relies on somebody reading and obeying it, which is why neither counts as securing, and a fuse limits fault current rather than preventing the handle being pulled.',
+    section: 'Module 5',
+    difficulty: 'intermediate',
+    topic: 'Isolation Devices',
+    category: 'Safety & Isolation',
+  },
+  {
+    id: 159,
+    question:
+      'A fault inside one machine on a production line trips the incoming breaker feeding the whole line as well as the machine device. What has failed?',
+    options: [
+      'The earthing arrangement between the machine and the main earth bar',
+      'The overload setting on the thermal relay inside the machine starter',
+      'Selectivity between the machine protective device and the upstream one',
+      'The rated breaking capacity of the protective device in the machine',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Selectivity means the device nearest the fault clears it before anything upstream operates, so that only the faulty machine stops. Losing the whole line shows the two characteristics overlap at that fault current, and the usual cures are a different device type or an intentional short time delay upstream. An overload setting problem would cause nuisance tripping of that machine alone, and a breaking capacity failure would show up as a damaged device, not a co-ordinated pair both operating.',
+    section: 'Module 8',
+    difficulty: 'advanced',
+    topic: 'Selectivity',
+    category: 'Distribution Systems',
+  },
+  {
+    id: 160,
+    question:
+      'Why is no neutral conductor run to a standard 400 V three-phase cage induction motor circuit?',
+    options: [
+      'The earthing conductor of the circuit performs the neutral function',
+      'The motor windings are supplied at 230 V from each line to earth',
+      'The starter contactor connects a neutral internally when required',
+      'The three winding currents balance so no return conductor is needed',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'A motor is a balanced three-wire load, so at any instant the three currents sum to zero and the star point sits at neutral potential carrying nothing, which means there is nothing for a neutral to do. A circuit protective conductor is still required, but it carries fault current only. The first option is the dangerous confusion to avoid, since using an earthing conductor as a return would put load current through the protective system.',
+    section: 'Module 2',
+    difficulty: 'advanced',
+    topic: 'Three-Phase Balance',
+    category: 'Distribution Systems',
+  },
+  {
+    id: 161,
+    question:
+      'A 110 V reduced low voltage supply feeds portable tools during a shutdown. On the single-phase supply, what is the nominal voltage to earth?',
+    options: [
+      '110 V, because the transformer secondary is earthed at one end',
+      '55 V, because the secondary midpoint is connected to earth',
+      '63.5 V, because the secondary star point is connected to earth',
+      '0 V, because the secondary of the transformer is left floating',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'BS 7671 Regulation 411.8.1.2 limits reduced low voltage to 110 V between lines, and for a single-phase supply the secondary midpoint is earthed, so the worst case shock voltage is 55 V. The 63.5 V figure is the corresponding value for a three-phase reduced low voltage system measured to the earthed neutral, which is why it is such a convincing wrong answer. Earthing one end instead would leave the full 110 V to earth and defeat the whole point.',
+    section: 'Module 1',
+    difficulty: 'intermediate',
+    topic: 'Reduced Low Voltage',
+    category: 'Cables & Containment',
+  },
+  {
+    id: 162,
+    question:
+      'BS 7671 Regulation 433.3.3 permits overload protection to be omitted where unexpected disconnection could cause danger. Which is one of its examples?',
+    options: [
+      'The supply circuit to a variable speed drive on a process line',
+      'The final circuit to a three-phase socket outlet in a workshop',
+      'The submain feeding a motor control centre in a switchroom',
+      'The secondary circuit of a current transformer in switchgear',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'The listed examples include the exciter circuit of a rotating machine, a lifting magnet supply, a current transformer secondary, a fire extinguishing device and a safety service circuit. A CT secondary qualifies because opening it while primary current flows drives the core into saturation and produces dangerous voltages at the open terminals. Ordinary distribution and socket circuits keep their overload protection, and BS 7671 also advises considering an overload alarm wherever the protection is omitted.',
+    section: 'Module 8',
+    difficulty: 'advanced',
+    topic: 'Overload Protection',
+    category: 'Distribution Systems',
+  },
+  {
+    id: 163,
+    question:
+      'What is the purpose of a permit to work issued before maintenance on an industrial plant item?',
+    options: [
+      'It records the isolation and the limits of the work authorised',
+      'It replaces the need to prove the circuit dead before starting',
+      'It transfers responsibility for safety onto the person working',
+      'It confirms the equipment has been tested within the last year',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'A permit is a written control document that states what has been isolated, how it has been secured, what work is allowed and where the boundaries lie, and it is handed back when the job ends so the plant can be returned to service. It never removes the duty to prove dead at the point of work, and it does not shift responsibility onto the person holding it, since the issuing authority remains accountable for the isolation described on it.',
+    section: 'Module 5',
+    difficulty: 'intermediate',
+    topic: 'Permit to Work',
+    category: 'Safety & Isolation',
+  },
+  {
+    id: 164,
+    question:
+      'A motor nameplate reads 400 V delta and 690 V star. How should the terminal links be arranged for continuous running on a 400 V supply?',
+    options: [
+      'In star, so that each winding sees the reduced phase voltage',
+      'In delta, so that each winding sees its rated 400 volts',
+      'In star, with the star point connected to the supply neutral',
+      'In delta, with one winding end linked to the earth terminal',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The lower of the two nameplate voltages is the delta figure, so on a 400 V supply the windings must be linked in delta to sit at their rated voltage. Running it in star would put only about 230 V across each winding, and the motor would be badly down on torque and would stall under load. That same undervoltage effect is exactly what a star-delta starter exploits deliberately, but only for the few seconds of the start.',
+    section: 'Module 3',
+    difficulty: 'intermediate',
+    topic: 'Motor Connections',
+    category: 'Motors & Control',
+  },
+  {
+    id: 165,
+    question:
+      'Before specifying a star-delta starter for a machine, what has to be confirmed about the motor and its duty?',
+    options: [
+      'That the motor has a rating of at least 15 kW at its rated speed',
+      'That the motor is fitted with a manually reset thermal cut-out',
+      'That six winding ends are available and delta suits the supply',
+      'That the motor can be started against its full mechanical load',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Star-delta needs both ends of all three windings brought out to the terminal box, and the motor must be rated for delta connection at the supply voltage, otherwise it cannot run in the delta state at all. The full load starting option is the trap, because a star-delta start gives only about a third of the DOL torque, so a motor that must accelerate against full load is precisely the case where this method is the wrong choice.',
+    section: 'Module 3',
+    difficulty: 'advanced',
+    topic: 'Motor Starting',
+    category: 'Motors & Control',
+  },
+  {
+    id: 166,
+    question:
+      'What distinguishes a device suitable for isolation from an ordinary functional switch?',
+    options: [
+      'It is rated to carry a higher current than the circuit design current',
+      'It disconnects the circuit protective conductor as well as the lines',
+      'It operates automatically when a fault current flows in the circuit',
+      'It gives an adequate contact gap and can be secured in the off position',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Isolation means cutting off the supply for reasons of safety, so the device has to open with a verified separation between its contacts and be capable of being secured against reconnection. A functional switch only has to make and break load current in normal use. A protective conductor is never disconnected by an isolator, and automatic operation on fault current describes a protective device rather than a means of isolation.',
+    section: 'Module 5',
+    difficulty: 'basic',
+    topic: 'Isolation Devices',
+    category: 'Safety & Isolation',
+  },
+  {
+    id: 167,
+    question:
+      'A conveyor is stopped by a solid state relay in the control panel. Why is the conveyor drive still unsafe to work on in that condition?',
+    options: [
+      'The relay may be rated below the full load current of the motor',
+      'The relay interrupts current without opening the poles of the circuit',
+      'The relay resets automatically when the panel supply is restored',
+      'The relay gives no overload protection for the motor windings',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'BS 7671 notes that semiconductor switching devices can interrupt the current in a circuit without opening the corresponding poles, so the conductors beyond the relay may still be at supply potential and can pass leakage current. A stopped machine is not an isolated one. That is why safe isolation always uses a device with a proper contact gap that can be secured, and why nobody should judge a pole open from the state of the control system.',
+    section: 'Module 5',
+    difficulty: 'advanced',
+    topic: 'Safe Isolation',
+    category: 'Safety & Isolation',
+  },
+  {
+    id: 168,
+    question:
+      'In an ingress protection rating such as IP66, what does the first numeral describe?',
+    options: [
+      'The level of protection against impact from external mechanical force',
+      'The level of protection against ingress of water from any direction',
+      'The level of protection against solid objects and the ingress of dust',
+      'The level of protection against corrosion of the enclosure material',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'The first numeral of the IP code covers solid bodies, running from large objects and fingers up to dust tight, while the second numeral covers water. Mechanical impact is not part of the IP code at all; that is the separate IK code, which is why an enclosure specification for an industrial area normally quotes both. Reading the first numeral as the water figure is the classic mix up and leads to enclosures being ordered the wrong way round.',
+    section: 'Module 6',
+    difficulty: 'intermediate',
+    topic: 'IP and IK Ratings',
+    category: 'Cables & Containment',
+  },
+  {
+    id: 169,
+    question:
+      'Why must you wait before working inside a variable speed drive even after its supply has been isolated and locked off?',
+    options: [
+      'The output contactor may take a short time to drop out after isolation',
+      'The motor windings retain a residual magnetic field for a period',
+      'The control transformer feeds the panel until its fuses are pulled',
+      'The DC link capacitors hold a dangerous charge after supply removal',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'A drive rectifies the incoming supply onto a DC link with substantial capacitance, and that stored energy remains at a lethal voltage for some time after the supply has gone. The discharge time stated by the maker must elapse and the DC terminals themselves must be proved dead, not just the incoming ones. Residual magnetism in a motor is real but produces only a brief low voltage while the shaft is still turning, so it is not what makes the drive enclosure dangerous.',
+    section: 'Module 4',
+    difficulty: 'advanced',
+    topic: 'Drive Maintenance',
+    category: 'Motors & Control',
+  },
+  {
+    id: 170,
+    question:
+      'One starter inside a motor control centre needs work while the rest of the plant keeps running. What is the minimum acceptable arrangement?',
+    options: [
+      'Lock off the isolator for that starter and prove dead at its terminals',
+      'Switch the starter to the off position and fit a warning notice to it',
+      'Ask the plant operator to keep that machine switched off during work',
+      'Trust that the incoming main switch has been locked off by another trade',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The person exposed to the danger must control the isolation themselves, secure it and then prove dead at the actual point of work, because that is the only test that covers the conductors they will touch. Notices and verbal arrangements can be overridden by anyone, and relying on somebody else lock leaves you with no control over when it is removed. Remember too that the busbars in the panel stay live, so additional barriers or screening may be needed.',
+    section: 'Module 5',
+    difficulty: 'intermediate',
+    topic: 'Safe Isolation',
+    category: 'Safety & Isolation',
+  },
 ];
 
 // Function to get random questions for mock exam (30 questions with difficulty distribution)

@@ -310,7 +310,7 @@ export const methodStatementLiveWorkingConfig: GeneratedGuideConfig = {
   ],
   relatedPages: [
     {
-      href: '/tools/rams-generator',
+      href: '/rams-generator',
       title: 'RAMS Generator',
       description: 'Build a compliant live-work method statement in minutes — Regulation 14 reasoning, GS38 instruments and sign-off chain pre-formatted.',
       icon: 'FileText',

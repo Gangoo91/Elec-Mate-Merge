@@ -5,10 +5,10 @@ export const bmsModule7Section1Quiz: QuizQuestion[] = [
     id: 1,
     question: 'What is the difference between a digital and an analog input in a BMS?',
     options: [
-      'There is no difference, both terms mean the same thing',
+      'There is no difference between them; both terms describe the same controller input',
       'Digital inputs are on/off signals, analog inputs are variable signals like 0-10V or 4-20mA',
-      'Digital inputs use ethernet cables, analog inputs use standard cable',
-      'Digital inputs are faster, analog inputs are slower',
+      'Digital inputs need ethernet cabling, analog inputs use ordinary twisted pair',
+      'Digital inputs sample faster, analog inputs are limited to slow signals only',
     ],
     correctAnswer: 1,
     explanation:
