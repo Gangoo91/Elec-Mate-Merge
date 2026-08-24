@@ -487,6 +487,27 @@ const TOPIC_REGISTRY = JSON.parse(
   readFileSync(join(ROOT, 'src/data/seo/mockExamTopics.json'), 'utf-8')
 );
 
+/**
+ * Strip comments before counting questions.
+ *
+ * The scan below is a regex over raw source, so a doc comment that merely
+ * MENTIONS the shape it is documenting gets counted as a question. That is
+ * exactly what broke the 2026-08-23 build: a comment reading
+ *   Questions here carry only `section: '3.4'` and no `topic`
+ * made the build-time count 26 while the runtime registry returned 25, so the
+ * topic route keys (which embed the count) disagreed and check-topic-registry
+ * failed the whole deploy.
+ *
+ * Only block comments and whole-line `//` comments are removed — a `//` inside
+ * a string (an https:// URL in an explanation, say) never starts a line, so it
+ * is left alone.
+ */
+function stripComments(src) {
+  return src
+    .replace(/\/\*[\s\S]*?\*\//g, '')
+    .replace(/^[ \t]*\/\/.*$/gm, '');
+}
+
 function categoryToSlug(c) {
   // Must stay identical to categoryToSlug() in mockExamTopicRegistry.ts —
   // a mismatch means the static HTML lands on a URL the client route can't
@@ -510,7 +531,7 @@ let topicCount = 0;
 for (const entry of TOPIC_REGISTRY) {
   const bankPath = join(ROOT, entry.bankFile);
   if (!existsSync(bankPath)) continue;
-  let bankSrc = readFileSync(bankPath, 'utf-8');
+  let bankSrc = stripComments(readFileSync(bankPath, 'utf-8'));
   // Scan only from the exported bank onward. Several data files declare a
   // categories list or a sample question ABOVE the bank (asbestos, PASMA),
   // and a whole-file regex counts those too — which inflated the question

@@ -46,6 +46,16 @@ export interface ExamResultsPanelProps {
    * column of figures. Pass the bank's own map where it has one.
    */
   topicNames?: Record<string, string>;
+  /**
+   * Which field to group "what to study next" by. Defaults to the shared
+   * resolver, which prefers `topic`.
+   *
+   * The AM2 bank carries BOTH a broad `category` ("Health & Safety") and a very
+   * granular `topic` ("Notification"), so the default grouping produced 23
+   * one-question rows — a list of everything you got wrong, not a study order.
+   * That paper passes 'category'.
+   */
+  groupBy?: 'topic' | 'category' | 'section';
   /** Seconds spent, where the paper tracks it. */
   timeTakenSeconds?: number;
   onReview: () => void;
@@ -79,6 +89,7 @@ export function ExamResultsPanel({
   passThreshold,
   history,
   topicNames,
+  groupBy,
   timeTakenSeconds,
   onReview,
   onRetake,
@@ -111,7 +122,7 @@ export function ExamResultsPanel({
   // attempted, so an abandoned paper cannot invent weak areas.
   const byTopic = new Map<string, { correct: number; attempted: number }>();
   questions.forEach((q, i) => {
-    const t = topicLabelOf(q, topicNames);
+    const t = groupBy ? (q[groupBy] ?? null) : topicLabelOf(q, topicNames);
     if (!t) return;
     const row = byTopic.get(t) ?? { correct: 0, attempted: 0 };
     if (!isSkipped(answers[i])) {

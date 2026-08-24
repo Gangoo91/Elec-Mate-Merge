@@ -42,6 +42,27 @@ const categoryToSlug = (c) =>
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
 
+/**
+ * Strip comments before counting questions.
+ *
+ * The scan below is a regex over raw source, so a doc comment that merely
+ * MENTIONS the shape it is documenting gets counted as a question. That is
+ * exactly what broke the 2026-08-23 build: a comment reading
+ *   Questions here carry only `section: '3.4'` and no `topic`
+ * made the build-time count 26 while the runtime registry returned 25, so the
+ * topic route keys (which embed the count) disagreed and check-topic-registry
+ * failed the whole deploy.
+ *
+ * Only block comments and whole-line `//` comments are removed — a `//` inside
+ * a string (an https:// URL in an explanation, say) never starts a line, so it
+ * is left alone.
+ */
+function stripComments(src) {
+  return src
+    .replace(/\/\*[\s\S]*?\*\//g, '')
+    .replace(/^[ \t]*\/\/.*$/gm, '');
+}
+
 /** Build-time view: regex-scan each bank exactly as generate-seo-html.mjs does. */
 function routesFromBuildScript() {
   const registry = JSON.parse(readFileSync(JSON_PATH, 'utf-8'));
@@ -51,7 +72,7 @@ function routesFromBuildScript() {
     if (!existsSync(bankPath)) {
       throw new Error(`${entry.examSlug}: bankFile does not exist — ${entry.bankFile}`);
     }
-    let src = readFileSync(bankPath, 'utf-8');
+    let src = stripComments(readFileSync(bankPath, 'utf-8'));
     const start = src.search(new RegExp(`export const ${entry.bankExport}\\b`));
     if (start < 0) {
       throw new Error(

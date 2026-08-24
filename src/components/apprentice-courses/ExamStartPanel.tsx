@@ -31,6 +31,12 @@ export interface ExamStartPanelProps {
   passThreshold: number;
   topics?: string[];
   history?: MockExamHistory;
+  /**
+   * Paper-specific condition worth knowing before starting — e.g. AM2 allows
+   * reference materials in the real assessment, so practising it closed-book
+   * is practising the wrong exam.
+   */
+  note?: string;
   onStart: () => void;
   onExit: () => void;
   exitLabel?: string;
@@ -53,6 +59,7 @@ export function ExamStartPanel({
   passThreshold,
   topics = [],
   history,
+  note,
   onStart,
   onExit,
   exitLabel = 'course',
@@ -205,6 +212,19 @@ export function ExamStartPanel({
               ))}
             </div>
           </section>
+        )}
+
+        {/* Volt EDGE — the original carried this in blue, which is off-brand
+            and read as a system message rather than exam guidance. */}
+        {note && (
+          <p
+            className={cn(
+              'mt-5 rounded-xl border border-elec-yellow px-4 py-3 text-[13px] font-medium leading-relaxed text-white',
+              SURFACE_DEPTH
+            )}
+          >
+            {note}
+          </p>
         )}
 
         <p className="mt-5 text-[12.5px] leading-relaxed text-white">
