@@ -77,10 +77,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 2,
     question: 'What is the fourth element added to the fire triangle to form the fire tetrahedron?',
     options: [
-      'Water',
-      'Carbon dioxide',
+      'Convection currents',
+      'Pyrolysis gases',
       'Chemical chain reaction',
-      'Smoke',
+      'Accumulated smoke particles',
     ],
     correctAnswer: 2,
     explanation:
@@ -94,9 +94,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 3,
     question: "What is the 'flash point' of a flammable liquid?",
     options: [
-      'The temperature at which the liquid begins to boil and convert entirely into vapour',
-      'The temperature at which the liquid will continue to burn steadily once it has been ignited',
-      'The lowest temperature at which the liquid will ignite spontaneously without any external ignition source',
+      'The temperature at which the liquid starts to boil and passes entirely into vapour at normal atmospheric pressure in air',
+      'The temperature at which the liquid will continue to burn steadily once it has been ignited by a naked flame applied to its surface',
+      'The lowest temperature at which the liquid will ignite spontaneously in air without any external source of ignition being present',
       'The lowest temperature at which the liquid gives off sufficient vapour to form an ignitable mixture with air near its surface',
     ],
     correctAnswer: 3,
@@ -112,9 +112,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     question: "What is the 'auto-ignition temperature' of a substance?",
     options: [
       'The lowest temperature at which the substance will spontaneously ignite in air without an external ignition source',
-      'The lowest temperature at which the substance gives off enough vapour to be ignited by a nearby flame or spark',
-      'The temperature at which the substance produces enough vapour to sustain continuous burning once lit',
-      'The temperature at which the substance melts and changes from a solid to a liquid state',
+      'The lowest temperature at which the substance gives off enough vapour to be ignited by a nearby naked flame or spark',
+      'The temperature at which the substance produces enough vapour to sustain continuous burning once it has first been ignited',
+      'The temperature at which the substance melts and changes from a solid to a liquid state under normal atmospheric conditions',
     ],
     correctAnswer: 0,
     explanation:
@@ -218,10 +218,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     question:
       'Fires involving electrical equipment are not given their own class in the UK system. Why is this?',
     options: [
-      'Because fires involving electrical equipment are too rare in modern buildings to justify giving them a dedicated class of their own',
-      'Because electrical fires may only be tackled by the fire and rescue service, so occupants have no need of a class label',
+      'Because fires involving electrical equipment are too rare in modern buildings to justify giving them a dedicated class of their own in the UK system',
+      'Because electrical fires may only be tackled by the fire and rescue service, so occupants have no need of a class label of their own at all',
       'Because electricity is the ignition source, not the fuel — once the electrical supply is isolated, the fire is classified by the burning material',
-      'Because electricity is classified internationally as Class E, and the UK has simply chosen not to adopt that class',
+      'Because electricity is classified internationally as Class E, and the UK has simply chosen not to adopt that class of fire in this country',
     ],
     correctAnswer: 2,
     explanation:
@@ -253,9 +253,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     question: "What is 'flashover' in the context of fire development?",
     options: [
       'The rapid transition to a state of full involvement of all combustible materials in a compartment, caused by intense radiant heat',
-      'The point at which a fire exhausts the available oxygen and then self-extinguishes inside a sealed compartment',
-      'The initial moment of ignition, at which a single item first catches alight within the compartment',
-      'The sudden inrush of fresh air into a sealed compartment, which ignites accumulated fire gases explosively',
+      'The point at which a fire exhausts the available oxygen in a sealed compartment and then self-extinguishes entirely of its own accord',
+      'The initial moment of ignition, at which a single item first catches alight within the compartment before the fire spreads to other items',
+      'The sudden inrush of fresh air into a sealed compartment, which ignites accumulated fire gases in a single violent event as the door is opened',
     ],
     correctAnswer: 0,
     explanation:
@@ -269,10 +269,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 13,
     question: "What is 'backdraught' (backdraft)?",
     options: [
-      'A reverse flow of smoke back down a chimney or flue caused by negative pressure inside the building',
+      'A reverse flow of smoke back down a chimney or flue caused by negative pressure inside the building while a fire burns in the room below',
       'A sudden explosive event caused by the introduction of oxygen into a compartment containing superheated, oxygen-depleted fire gases',
-      'The simultaneous ignition of all combustible surfaces in a compartment once radiant heat reaches a critical level',
-      'A draught of cold air that cools a fire below its ignition temperature and causes it to die down',
+      'The simultaneous ignition of all combustible surfaces in a compartment once radiant heat reaches a critical level throughout the room of origin',
+      'A draught of cold air that cools a fire below its ignition temperature and causes it to die down and eventually go out of its own accord',
     ],
     correctAnswer: 1,
     explanation:
@@ -286,10 +286,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 14,
     question: 'How does fire spread by conduction?',
     options: [
-      'Through hot smoke and gases rising and circulating to carry heat upward through the building',
-      'Through electromagnetic infrared waves that travel across an air gap without heating the air',
+      'Through hot smoke and gases rising and circulating to carry heat upward through the building as it burns',
+      'Through electromagnetic infrared waves that travel across an open air gap without heating the air',
       'Through the direct transfer of heat through a solid material from a hotter region to a cooler region',
-      'Through burning embers and sparks being carried by the wind to ignite materials some distance away',
+      'Through burning embers and sparks being carried by the wind to ignite materials further away',
     ],
     correctAnswer: 2,
     explanation:
@@ -321,9 +321,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     question: 'How does fire spread by radiation?',
     options: [
       'Through the transfer of heat energy as electromagnetic waves (infrared radiation) that travel through air or vacuum',
-      'Through hot gases and smoke rising upwards and circulating through the rooms and voids of a building',
-      'Through heat passing directly along a solid material from a hotter region to a cooler one',
-      'Through glowing embers carried on air currents which land and ignite distant materials',
+      'Through hot gases and smoke rising upwards and circulating through the rooms and voids of a building as the fire develops',
+      'Through heat passing directly along a solid material from a hotter region to a cooler one that is in contact with it',
+      'Through glowing embers carried on air currents which land and ignite distant materials lying downwind of the fire',
     ],
     correctAnswer: 0,
     explanation:
@@ -354,10 +354,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 18,
     question: "What is the 'stack effect' in relation to fire spread in tall buildings?",
     options: [
-      'The tendency of stacked combustible goods to collapse during a fire and spread burning material across the floor of the compartment they are stored in',
-      'The increased fire load created in a warehouse when goods are stored on high-bay racking close to the roof',
+      'The tendency of stacked combustible goods to collapse during a fire and spread burning material across the floor of the compartment they are stored in during a fire',
+      'The increased fire load created in a warehouse when goods are stored on high-bay racking close to the roof of the building, which allows fire to spread upwards',
       'The natural upward movement of air through a tall building due to temperature and pressure differences, which can accelerate the vertical spread of smoke and fire',
-      'The downward layering of cool, dense smoke which fills a tall building from the lowest floor upwards',
+      'The downward layering of cool, dense smoke which fills a tall building from the lowest floor upwards, so that the upper storeys remain clear of smoke for longer',
     ],
     correctAnswer: 2,
     explanation:
@@ -389,9 +389,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     question: 'What is the most common accidental cause of fire in UK workplaces?',
     options: [
       'Electrical faults and misuse of electrical equipment',
-      'Spontaneous combustion of stored oily materials',
-      'Lightning strikes during electrical storms',
-      'Friction from poorly maintained machinery bearings',
+      'Spontaneous combustion of oily rags and waste materials',
+      'Lightning strikes during severe electrical storms',
+      'Friction in poorly maintained machine bearings',
     ],
     correctAnswer: 0,
     explanation:
@@ -405,10 +405,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 21,
     question: 'How can poor housekeeping contribute to fire risk in the workplace?',
     options: [
-      'It mainly reduces fire risk, because tidy premises attract more frequent inspection visits from the fire and rescue service',
+      'It mainly reduces fire risk, because tidy premises attract more frequent inspection visits from the fire and rescue service for the area concerned',
       'Accumulation of combustible waste, blocked escape routes, obstructed fire exits, and stored materials near heat sources all increase fire risk',
-      'It has no real effect on fire risk, provided that an automatic fire alarm system is installed throughout the premises',
-      'It increases fire risk in industrial premises alone, and has no bearing on offices or retail environments',
+      'It has no real effect on fire risk, provided that an automatic fire alarm system is installed throughout the premises and is tested every month',
+      'It increases fire risk in industrial premises alone, and has no bearing on offices or retail environments, whatever their size or use',
     ],
     correctAnswer: 1,
     explanation:
@@ -439,9 +439,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 23,
     question: "What is a 'ventilation-controlled fire'?",
     options: [
-      'A fire whose rate of burning is limited by the amount of fuel available rather than by oxygen',
-      'A fire that has been deliberately ventilated by the fire service to release smoke and heat',
-      'A fire that can only occur in mechanically ventilated buildings with air conditioning systems',
+      'A fire whose rate of burning is limited by the amount of fuel available rather than by the oxygen supply present',
+      'A fire that has been deliberately ventilated by the fire and rescue service to release smoke and heat from the room',
+      'A fire that can only occur in mechanically ventilated buildings with air conditioning systems and ductwork',
       'A fire where the rate of burning is limited by the available oxygen supply rather than by the fuel available',
     ],
     correctAnswer: 3,
@@ -458,9 +458,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
       'Why is smoke considered the greatest killer in fires rather than the flames themselves?',
     options: [
       'Because toxic gases in smoke (primarily carbon monoxide and hydrogen cyanide) cause incapacitation and death before flames reach the victim, and thick smoke prevents evacuation by obscuring escape routes',
-      'Because the smoke layer is far hotter than the flames themselves, so contact with it causes fatal burns to the face and airway long before the flames themselves reach the person escaping',
-      'Because smoke triggers the sprinkler system early in the fire, and the majority of fire deaths are therefore caused by drowning rather than by burns',
-      'Because smoke is heavier than air, so it fills a room from the floor upwards and crushes the occupants under its weight',
+      'Because the smoke layer is far hotter than the flames themselves, so contact with it causes fatal burns to the face and airway long before the flames themselves reach the person escaping from the compartment',
+      'Because smoke sets off the sprinkler system very early in the fire, so that the majority of fire deaths in buildings are caused by drowning in the discharged water rather than by burns or by radiant heat or smoke',
+      'Because smoke is heavier than air, so it fills a room from the floor upwards and crushes the occupants beneath its own weight long before the flames or the heat of the fire can reach them where they are standing',
     ],
     correctAnswer: 0,
     explanation:
@@ -475,10 +475,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the primary toxic gas produced in most fires that causes the majority of fire-related deaths?',
     options: [
-      'Oxygen',
+      'Hydrogen chloride',
       'Carbon monoxide',
       'Carbon dioxide',
-      'Nitrogen',
+      'Nitrogen dioxide',
     ],
     correctAnswer: 1,
     explanation:
@@ -492,10 +492,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 26,
     question: 'What are common sources of heat that can cause ignition in the workplace?',
     options: [
-      'Cardboard packaging, paper waste, timber pallets, textiles and other ordinary combustible solid materials',
-      'Petrol, diesel, solvents, paints and other flammable liquids stored on the premises in bulk',
+      'Cardboard packaging, paper waste, timber pallets, textiles and other ordinary combustible solids stored on the premises in bulk',
+      'Petrol, diesel, solvents, paints, thinners and other flammable liquids kept on the premises in bulk storage containers and in drums',
       'Electrical equipment, hot surfaces, friction, static electricity, hot work (welding/cutting), radiant heat, and naked flames',
-      'Oxygen cylinders, compressed air lines, ventilation plant and other sources of oxygen enrichment',
+      'Oxygen cylinders, compressed air lines, ventilation plant and other sources of oxygen enrichment found within the workplace itself',
     ],
     correctAnswer: 2,
     explanation:
@@ -509,9 +509,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 27,
     question: "What is 'pyrolysis' in the context of fire science?",
     options: [
-      'The chemical reaction between burning fuel and oxygen that releases heat and light as a flame',
-      'The cooling of a fire below its ignition temperature when water absorbs the surrounding heat',
-      'The smothering of a fire when oxygen is excluded from the surface of the burning material',
+      'The chemical reaction between burning fuel and oxygen that releases heat and light as visible flame and smoke',
+      'The cooling of a fire below its own ignition temperature when water absorbs the surrounding heat energy',
+      'The smothering of the fire when oxygen is excluded from the surface of the burning material by foam',
       'The thermal decomposition of materials by heat, producing flammable gases and vapours that can then ignite',
     ],
     correctAnswer: 3,
@@ -527,9 +527,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     question: "What is the 'Lower Explosive Limit' (LEL) of a flammable gas or vapour?",
     options: [
       'The lowest concentration of the gas or vapour in air that will support combustion when an ignition source is present',
-      'The highest concentration of the gas or vapour in air above which the mixture is too rich to ignite',
-      'The lowest temperature at which the gas or vapour will ignite without any external ignition source',
-      'The minimum oxygen concentration in air below which flaming combustion can no longer be sustained',
+      'The highest concentration of the gas or vapour in air above which the mixture is too rich to burn when a spark is applied',
+      'The lowest temperature at which the gas or vapour will ignite without any external ignition source such as a flame or spark',
+      'The minimum oxygen concentration in air below which flaming combustion can no longer be sustained within the compartment',
     ],
     correctAnswer: 0,
     explanation:
@@ -543,10 +543,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 29,
     question: "What is the 'Upper Explosive Limit' (UEL) of a flammable gas or vapour?",
     options: [
-      'The minimum concentration of the gas or vapour in air below which the mixture is too lean to ignite',
+      'The minimum concentration of the gas or vapour in air below which the mixture is too lean to be ignited by a spark',
       'The maximum concentration of the gas or vapour in air above which the mixture is too rich to support combustion',
-      'The highest temperature a gas or vapour can reach before it ignites spontaneously in air',
-      'The maximum pressure at which a flammable gas can be safely stored in a cylinder',
+      'The highest temperature a gas or vapour can reach before it ignites spontaneously in air without a naked flame',
+      'The maximum pressure at which a flammable gas can safely be stored in a cylinder at the workplace or on site',
     ],
     correctAnswer: 1,
     explanation:
@@ -561,10 +561,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     question:
       'What happens to fire behaviour when the oxygen concentration in a compartment drops below approximately 16%?',
     options: [
-      'The fire immediately and completely extinguishes itself, with no further combustion of any kind taking place',
-      'The fire burns more fiercely, because the lower oxygen level forces a faster rate of combustion',
+      'The fire immediately and completely extinguishes itself, with no further combustion of any kind taking place in the compartment',
+      'The fire burns more fiercely, because the lower oxygen level forces a faster rate of combustion at the seat of the fire itself',
       'Flaming combustion is no longer supported, though smouldering may continue and hot, unburned pyrolysis gases accumulate',
-      'The compartment reaches flashover, as all the combustible materials ignite simultaneously',
+      'The compartment reaches flashover, as all the combustible materials ignite simultaneously in a single event across the whole room',
     ],
     correctAnswer: 2,
     explanation:
@@ -578,9 +578,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 31,
     question: "What is meant by the 'fire load' of a building or compartment?",
     options: [
-      'The maximum number of occupants who may be present in the space at any one time under the fire safety regulations for the building',
-      'The structural weight that the floors and beams of the compartment can bear before collapsing in a fire',
-      'The total electrical load drawn by the appliances in the space, which determines the risk of overheating',
+      'The maximum number of occupants who may be present in the space at any one moment under the fire safety regulations for the building itself',
+      'The structural weight that the floors and beams of the compartment can bear before collapsing during a fire in the compartment below',
+      'The total electrical load drawn by the appliances within the space, which determines the risk of the final circuits overheating',
       'The total amount of combustible material within a space, expressed as an equivalent mass of wood per unit floor area (kg/m² or MJ/m²)',
     ],
     correctAnswer: 3,
@@ -597,9 +597,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
       'Hot work activities such as welding and cutting are a common cause of workplace fires. Why are they particularly hazardous?',
     options: [
       'Because they generate extreme heat, sparks, and molten metal that can travel significant distances and ignite combustible materials',
-      'Because they release large volumes of flammable gas which accumulate at high level and form an explosive atmosphere',
-      'Because they consume oxygen rapidly and create an oxygen-deficient atmosphere that asphyxiates the workers',
-      'Because they may only be carried out by external contractors who are unfamiliar with the premises',
+      'Because they release large volumes of flammable gas which accumulate at high level and form an explosive atmosphere high in the roof void',
+      'Because they consume oxygen rapidly and create an oxygen-deficient atmosphere that asphyxiates the workers carrying out the work nearby',
+      'Because they may only be carried out by external contractors who are unfamiliar with the layout of the premises they are visiting',
     ],
     correctAnswer: 0,
     explanation:
@@ -614,10 +614,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     question:
       'What fire hazard is associated with the improper storage of chemicals in the workplace?',
     options: [
-      'Chemicals that are stored improperly become inert and lose their flammability, which gives a false sense of security',
+      'Chemicals that are stored improperly become inert and lose their flammability, which gives staff a false sense of security about the chemical store',
       'Incompatible chemicals can react and generate heat, toxic fumes, or flammable gases, and flammable liquids can release ignitable vapours',
-      'The only fire hazard is that chemical containers may leak and create slip hazards on the floor of the store',
-      'Improper storage poses no fire hazard at all, provided the chemicals are kept below normal room temperature',
+      'The only fire hazard is that chemical containers may leak and create slip hazards on the floor of the chemical store itself and in the doorway',
+      'Improper storage poses no fire hazard at all, provided that the chemicals are kept below normal room temperature at all times of the year',
     ],
     correctAnswer: 1,
     explanation:
@@ -632,10 +632,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     question:
       "What is 'spontaneous combustion' and which workplace materials are susceptible to it?",
     options: [
-      'Ignition caused by a discharge of static electricity, common where dry powders are transferred and where flammable solvent vapours are already present in the air',
-      'Ignition caused by sunlight focused through glass, common where windows, glass bottles and mirrors are stored in direct sun',
+      'Ignition caused by a discharge of static electricity, common where dry powders are transferred and where flammable solvent vapours are already present in the air of the workroom',
+      'Ignition caused by sunlight focused through glass, common where windows, glass bottles and mirrors are stored outdoors in direct summer sun on a rack in an open yard',
       'Self-heating of a material to its ignition temperature without an external heat source, common in oily rags, linseed oil-soaked cloths, coal dust, and certain organic materials',
-      'Ignition caused by friction between moving parts, common in overheated bearings, seized rollers and conveyor belts',
+      'Ignition caused by friction between moving parts, common in overheated bearings, seized rollers, drive belts and misaligned conveyor systems in a factory or warehouse',
     ],
     correctAnswer: 2,
     explanation:
@@ -649,9 +649,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 35,
     question: "What is the significance of the 'fire point' compared to the 'flash point'?",
     options: [
-      'The fire point is always significantly lower than the flash point, because a liquid begins to burn before it starts to give off vapour at all',
-      'The fire point is the temperature at which a liquid ignites spontaneously without any source of ignition, while the flash point requires one',
-      'The fire point and the flash point are identical values, so the two terms may be used interchangeably',
+      'The fire point is always significantly lower than the flash point, because a liquid begins to burn before it starts to give off any vapour from its surface',
+      'The fire point is the temperature at which a liquid ignites spontaneously without any source of ignition, while the flash point always requires a flame or spark',
+      'The fire point and the flash point are identical values for every liquid, so the two terms may be used interchangeably in practice on a safety data sheet',
       'The fire point is the temperature at which a liquid produces enough vapour to sustain continuous combustion, typically a few degrees above the flash point',
     ],
     correctAnswer: 3,
@@ -667,9 +667,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     question: 'What is the effect of oxygen enrichment on fire behaviour?',
     options: [
       'Materials burn more fiercely, at lower ignition temperatures, and materials that do not normally burn in air may become combustible',
-      'Materials burn more slowly, because the excess oxygen cools the surface of the fuel below its ignition temperature',
-      'Fire behaviour is unaffected, because combustion is always limited by the available fuel rather than by oxygen',
-      'Fires self-extinguish, because the higher oxygen level dilutes the flammable vapours below their lower limit',
+      'Materials burn more slowly, because the excess oxygen cools the surface of the fuel below its normal ignition temperature and slows combustion',
+      'Fire behaviour is unaffected, because combustion is always limited by the fuel available rather than by oxygen present in the compartment',
+      'Fires self-extinguish, because the higher oxygen level dilutes flammable vapours below their lower limit of flammability in the air nearby',
     ],
     correctAnswer: 0,
     explanation:
@@ -683,10 +683,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 37,
     question: "What is a 'dust explosion' and in what types of workplace can it occur?",
     options: [
-      'The slow smouldering of accumulated dust layers lying on hot surfaces, which can only occur in coal-fired power stations and in foundries handling hot metal',
+      'The slow smouldering of accumulated dust layers lying on hot surfaces, which can only occur in coal-fired power stations and in foundries handling hot metal or handling molten slag',
       'A rapid combustion of fine combustible dust particles dispersed in air within an enclosed space, occurring in industries such as flour mills, woodworking, and grain storage',
-      'The build-up of static charge within dust layers, which damages sensitive electronic equipment but cannot start a fire',
-      'The ignition of settled dust by direct flame contact alone, which can occur in any workplace whatever the process',
+      'The build-up of static charge within settled dust layers, which damages sensitive electronic equipment in the workplace but cannot start a fire in the dust layer itself',
+      'The ignition of settled dust by direct flame contact alone, which can occur in any workplace whatever the process carried on there or the material handled in the building',
     ],
     correctAnswer: 1,
     explanation:
@@ -700,10 +700,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 38,
     question: 'What role does smoking play as a cause of workplace fires?',
     options: [
-      'Smoking has been eliminated as a cause of workplace fires entirely since the indoor smoking ban came into force in 2006, so no further controls are now required in any premises',
-      'Smoking is a fire risk in residential premises alone, and never in commercial or industrial workplaces where the ban applies',
+      'Smoking has been eliminated as a cause of workplace fires entirely since the indoor smoking ban came into force in 2006, so no further controls are needed at any premises in England or Wales',
+      'Smoking is a fire risk in residential premises alone, and never in commercial or industrial workplaces where the indoor ban applies to staff and visitors alike throughout the whole of the working day',
       'Discarded smoking materials (cigarettes, matches, lighters) remain a fire cause, particularly in areas with poor housekeeping, near flammable materials, or where smoking policies are not enforced',
-      'Smoking materials cannot start fires, because a cigarette burns at too low a temperature to ignite ordinary materials',
+      'Smoking materials cannot start fires, because a cigarette burns at too low a temperature to ignite ordinary combustible materials such as paper or textiles left lying about the floor of the premises',
     ],
     correctAnswer: 2,
     explanation:
@@ -717,9 +717,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 39,
     question: "What is the 'flammable range' of a gas or vapour?",
     options: [
-      'The range of temperatures lying between the flash point of the substance and its auto-ignition temperature, measured in air at atmospheric pressure',
-      'The single fixed concentration of gas in air at which the mixture will always ignite, whatever the conditions',
-      'The distance over which heavier-than-air vapours can travel from a spill before they disperse and become safe',
+      'The range of temperatures lying between the flash point of the substance and its auto-ignition temperature, measured at atmospheric pressure in still air indoors',
+      'The single fixed concentration of gas in air at which the mixture will always ignite, whatever the conditions in the workplace may be at the time of the release',
+      'The distance over which heavier-than-air vapours can travel from a spill before they disperse and become safe to approach with a naked flame or other ignition source',
       'The range of concentrations in air between the Lower Explosive Limit (LEL) and Upper Explosive Limit (UEL) within which the gas-air mixture can be ignited',
     ],
     correctAnswer: 3,
@@ -736,9 +736,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
       'How does the vapour density of a flammable liquid affect fire safety in the workplace?',
     options: [
       'Vapours heavier than air (vapour density greater than 1) sink and accumulate at low levels such as basements, pits, and drains, where they may find ignition sources',
-      'All flammable vapours are lighter than air and rise to ceiling level, so gas detection only ever needs to be provided at high level in a workroom',
-      'Vapour density has no effect on fire safety, because vapours disperse evenly throughout a room within seconds of a spill',
-      'Heavier vapours are safer, because they settle to the floor quickly and cannot reach any source of ignition',
+      'All flammable vapours are lighter than air and rise to ceiling level, so gas detection only ever needs to be provided at high level in a workroom or store room',
+      'Vapour density has no effect on fire safety, because vapours disperse evenly throughout a room within seconds of any spill occurring at floor level inside the building',
+      'Heavier vapours are safer, because they settle to the floor quickly and cannot reach any source of ignition at bench or ceiling level above them in the room',
     ],
     correctAnswer: 0,
     explanation:
@@ -758,10 +758,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the primary piece of fire safety legislation for non-domestic premises in England and Wales?',
     options: [
-      'The Fire Precautions Act 1971',
+      'The Construction (Design and Management) Regulations 2015',
       'The Regulatory Reform (Fire Safety) Order 2005 (RRFSO)',
-      'The Building Safety Act 2022',
-      'The Health and Safety at Work etc. Act 1974',
+      'The Management of Health and Safety at Work Regulations 1999',
+      'The Fire Precautions (Workplace) Regulations 1997',
     ],
     correctAnswer: 1,
     explanation:
@@ -775,10 +775,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 42,
     question: "Who is defined as the 'responsible person' under the RRFSO 2005?",
     options: [
-      'The local fire and rescue authority for the area in which the premises happen to be situated',
-      'Any competent fire risk assessor who is engaged to carry out the fire risk assessment',
+      'The local fire and rescue authority for the area in which the premises are situated, acting as the enforcing body',
+      'Any competent fire risk assessor engaged to carry out the fire risk assessment for the premises under assessment',
       'The employer, or in relation to premises not connected with work, the person who has control of the premises',
-      'The most senior fire marshal who has been appointed at the premises by the employer',
+      'The most senior fire marshal appointed at the premises by the employer and named in the emergency plan',
     ],
     correctAnswer: 2,
     explanation:
@@ -792,9 +792,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 43,
     question: 'What does Article 9 of the RRFSO 2005 require the responsible person to do?',
     options: [
-      'Install sprinklers in all premises',
-      'Register the premises with the local fire authority',
-      'Employ a full-time fire marshal',
+      'Install automatic sprinklers throughout all premises',
+      'Register the premises with the local fire and rescue authority',
+      'Employ a full-time qualified fire marshal at the premises',
       'Carry out a suitable and sufficient fire risk assessment',
     ],
     correctAnswer: 3,
@@ -811,9 +811,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
       'What are the five steps of a fire risk assessment as recommended by HM Government fire safety guidance?',
     options: [
       'Identify fire hazards, identify people at risk, evaluate/remove/reduce/protect from risk, record/plan/inform/instruct/train, review',
-      'Detect, alert, evacuate, account for all occupants and then report — the five stages of the emergency response plan',
-      'Prevention, detection, warning, escape and firefighting — the five general fire precautions required',
-      'Avoid, evaluate, combat at source, adapt and replace — the five principles of prevention in Schedule 1',
+      'Detect, alert, evacuate, account for all occupants and then report the incident to the fire and rescue authority for the area afterwards',
+      'Prevention, detection, warning, escape and firefighting, being the five general fire precautions required by the Order in every workplace',
+      'Avoid, evaluate, combat at source, adapt and replace, being the five principles of prevention set out in Schedule 1 to the Order itself',
     ],
     correctAnswer: 0,
     explanation:
@@ -828,10 +828,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     question:
       "Under Article 8 of the RRFSO 2005, what is the 'duty to take general fire precautions'?",
     options: [
-      'To carry out a suitable and sufficient fire risk assessment of the premises and to record its significant findings',
+      'To carry out a suitable and sufficient fire risk assessment of the premises and to record its significant findings without delay',
       'To take such general fire precautions as will ensure, so far as is reasonably practicable, the safety of any relevant persons',
-      'To appoint one or more competent persons to assist with the preventive and protective measures',
-      'To establish and maintain emergency evacuation procedures and nominate persons to implement them',
+      'To appoint one or more competent persons to assist with the fire preventive and protective measures at the premises',
+      'To establish and maintain emergency evacuation procedures and nominate persons to implement them at the premises safely',
     ],
     correctAnswer: 1,
     explanation:
@@ -845,10 +845,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 46,
     question: 'What does Article 11 of the RRFSO 2005 require regarding fire safety arrangements?',
     options: [
-      'The responsible person must equip the premises with appropriate fire-fighting equipment, fire detectors and alarms, and make sure that any non-automatic equipment is easily accessible and clearly signed',
-      'The responsible person must ensure that all emergency routes and exits are kept clear at all times and that they lead as directly as possible to a place of safety',
+      'The responsible person must equip the premises with appropriate fire-fighting equipment, fire detectors and alarms, and make sure that any non-automatic equipment is accessible and signed for the occupants to use',
+      'The responsible person must ensure that all emergency routes and exits are kept clear at all times and that they lead as directly as possible to a place of safety outside the building throughout working hours',
       'The responsible person must make and give effect to appropriate fire safety arrangements for the effective planning, organisation, control, monitoring, and review of fire preventive and protective measures',
-      'The responsible person must provide employees with comprehensible information on the risks identified by the fire risk assessment and the measures taken',
+      'The responsible person must provide employees with comprehensible information on the risks identified by the fire risk assessment and on the preventive measures taken at the premises to reduce those risks',
     ],
     correctAnswer: 2,
     explanation:
@@ -863,9 +863,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     question:
       'What does Article 13 of the RRFSO 2005 require regarding fire-fighting and fire detection?',
     options: [
-      'The responsible person must establish appropriate emergency procedures and nominate a sufficient number of competent persons to implement the evacuation of the premises safely',
-      'The responsible person must ensure that all fire safety equipment is subject to a suitable system of maintenance and kept in efficient working order',
-      'The responsible person must provide employees with adequate fire safety training at the time they are first recruited to the premises',
+      'The responsible person must establish appropriate emergency procedures and nominate a sufficient number of competent persons to implement the evacuation of the premises safely and quickly',
+      'The responsible person must ensure that all fire safety equipment at the premises is subject to a suitable system of maintenance and is kept in efficient working order and in good repair',
+      'The responsible person must provide employees with adequate fire safety training at the time they are first recruited and whenever they are exposed to new or increased risks of any kind',
       'The premises must be equipped with appropriate fire-fighting equipment and fire detectors and alarms, and any non-automatic equipment must be easily accessible and indicated by signs',
     ],
     correctAnswer: 3,
@@ -882,9 +882,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
       'What does Article 14 of the RRFSO 2005 require regarding emergency routes and exits?',
     options: [
       'Emergency routes and exits must lead as directly as possible to a place of safety, be kept clear at all times, be adequately lit, and be indicated by signs',
-      'Emergency routes and exits must be fitted with automatic sprinkler protection along the whole of their length and width, including any lobbies',
-      'Emergency routes must be inspected and certified by the fire and rescue authority at intervals of no more than 12 months',
-      'Emergency exits must be kept locked throughout occupied hours and unlocked only by a nominated key holder on the alarm',
+      'Emergency routes and exits must be fitted with automatic sprinkler protection along the whole of their length and width, including all lobbies and stairways',
+      'Emergency routes must be inspected and certified by the fire and rescue authority for the area at intervals of no more than 12 months by an officer',
+      'Emergency exits must be kept locked throughout occupied hours and unlocked only by a nominated key holder when the alarm sounds during the working day',
     ],
     correctAnswer: 0,
     explanation:
@@ -899,10 +899,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     question:
       'What does Article 15 of the RRFSO 2005 require regarding procedures for serious and imminent danger?',
     options: [
-      'The responsible person must keep all emergency escape routes and final exits clear, adequately lit and clearly signed, and must make sure that they lead as directly as possible to a place of safety outside',
+      'The responsible person must keep all emergency escape routes and final exits clear, adequately lit and clearly signed, and must make sure that they lead as directly as possible to a place of safety outside the building',
       'The responsible person must establish appropriate procedures to be followed in the event of serious and imminent danger, nominate competent persons, and ensure persons are able to stop work and go to a place of safety',
-      'The responsible person must ensure that all of the fire safety equipment at the premises is maintained in efficient working order and in good repair at all times',
-      'The responsible person must provide employees with relevant information on the risks identified by the fire risk assessment and on the measures taken to reduce them',
+      'The responsible person must ensure that all of the fire safety equipment at the premises is maintained in efficient working order and in good repair at all times, whether or not it is in use on any part of the premises',
+      'The responsible person must provide employees with relevant information on the risks identified by the fire risk assessment and on the preventive and protective measures taken to reduce them and on the emergency plan',
     ],
     correctAnswer: 1,
     explanation:
@@ -917,10 +917,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     question:
       'What does Article 17 of the RRFSO 2005 require regarding maintenance of fire safety measures?',
     options: [
-      'The responsible person must arrange for every item of fire safety equipment provided at the premises to be replaced in full every five years, whether or not it is still serviceable, and must keep the replacement certificates available for inspection',
-      'The responsible person must have all fire safety equipment maintained only by the fire and rescue authority, which must be given access to the premises for that purpose',
+      'The responsible person must arrange for every item of fire safety equipment provided at the premises to be replaced in full every five years, whether or not it is still serviceable, and must keep the certificates for inspection by the fire and rescue authority',
+      'The responsible person must have all fire safety equipment maintained only by the fire and rescue authority for the area, which must be given access to the premises for that purpose whenever maintenance falls due under the Order at the premises in every year',
       'The responsible person must ensure that the premises, any facilities, equipment, and devices provided for fire safety are subject to a suitable system of maintenance and are maintained in an efficient state, in efficient working order, and in good repair',
-      'The responsible person must record every test of the fire safety equipment provided and submit those records to the enforcing authority once a year',
+      'The responsible person must record every test of the fire safety equipment provided at the premises and submit those records to the enforcing authority for the area once in every year, together with the fire risk assessment for the preceding twelve months',
     ],
     correctAnswer: 2,
     explanation:
@@ -934,9 +934,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 51,
     question: 'What does Article 18 of the RRFSO 2005 require regarding safety assistance?',
     options: [
-      'The responsible person must personally carry out all of the fire safety duties and may not delegate any of them to any other person',
-      'The responsible person must obtain assistance with fire safety measures only from the fire and rescue authority for the area',
-      'The responsible person must appoint a minimum of two qualified fire engineers for every premises under their control',
+      'The responsible person must personally carry out all of the fire safety duties and may not delegate any of them to any other person at all under the Order',
+      'The responsible person must obtain assistance with fire safety measures only from the fire and rescue authority for the area concerned at all times',
+      'The responsible person must appoint a minimum of two qualified fire engineers for every premises under their control at all times and in every case',
       'The responsible person must appoint one or more competent persons to assist in undertaking the preventive and protective measures required by the Order',
     ],
     correctAnswer: 3,
@@ -952,9 +952,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     question: "What is the role of a 'competent person' under the RRFSO 2005?",
     options: [
       'A person with sufficient training, experience, and knowledge or other qualities to properly assist the responsible person in undertaking fire safety measures',
-      'A government-appointed official who inspects the premises and enforces compliance with the Order on behalf of the enforcing authority for the area',
-      'A person who has completed a basic fire awareness course but who holds no further duties or responsibilities',
-      'The senior fire marshal, who legally assumes the duties of the responsible person whenever they are absent',
+      'A government-appointed official who inspects the premises and enforces compliance with the Order on behalf of the enforcing authority for the area in which they stand',
+      'A person who has completed a basic fire awareness course but who holds no further duties or responsibilities at the premises under the Order at all, whatever the risk',
+      'The senior fire marshal, who legally assumes the duties of the responsible person whenever the responsible person is absent from the premises for any reason',
     ],
     correctAnswer: 0,
     explanation:
@@ -969,10 +969,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     question:
       'What does Article 21 of the RRFSO 2005 require regarding the provision of information to employees?',
     options: [
-      'The responsible person must publish the full fire risk assessment on a public noticeboard at every entrance to the premises, and must give a printed copy to every employee on the day they start work, together with the name of the assessor',
+      'The responsible person must publish the full fire risk assessment on a public noticeboard at every entrance to the premises, and must give a printed copy to every employee on the day they start work, with the name of the assessor who prepared it for the premises',
       'The responsible person must provide employees with comprehensible and relevant information on the risks identified by the fire risk assessment, the fire preventive and protective measures, the identity of competent persons, and the emergency procedures',
-      'The responsible person must provide every employee with a personal fire extinguisher and a smoke hood, and must show them how these are used',
-      'The responsible person must obtain written confirmation from each employee that they have read and memorised the building evacuation plan',
+      'The responsible person must provide every employee with a personal fire extinguisher and a smoke hood, must show them how each of these is used, and must have that equipment serviced by a competent person once in every year at the premises where they are employed',
+      'The responsible person must obtain written confirmation from each employee that they have read and memorised the building evacuation plan, and must keep those signed confirmations available for inspection by the fire authority for the area during any audit visit',
     ],
     correctAnswer: 1,
     explanation:
@@ -987,10 +987,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     question:
       'What does Article 22 of the RRFSO 2005 require when multiple responsible persons share a building?',
     options: [
-      'The most senior of the responsible persons automatically assumes sole responsibility for fire safety in the entire building',
-      'Each responsible person is liable only for their own area and need not consider the rest of the building at all',
+      'The most senior of the responsible persons automatically assumes sole responsibility for fire safety in the entire building and for its occupants',
+      'Each responsible person is liable only for their own area and need not consider the rest of the building at all when a fire breaks out',
       'All responsible persons must cooperate and coordinate with each other to ensure fire safety duties are fulfilled across the entire premises',
-      'The building owner must appoint a single external fire risk assessor to take over all of the fire safety duties',
+      'The building owner must appoint a single external fire risk assessor to take over all of the fire safety duties for the whole building',
     ],
     correctAnswer: 2,
     explanation:
@@ -1005,9 +1005,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     question:
       'What enforcement powers does the fire and rescue authority have under the RRFSO 2005?',
     options: [
-      'They can issue advisory letters only, and have no power to compel any action or to prosecute an offender',
-      'They can revoke the building owner\'s licence, but they cannot impose fines or seek imprisonment',
-      'They can impose an immediate fine on the spot, but cannot restrict the use of the premises',
+      'They can issue advisory letters only, and have no power to compel any action or to prosecute an offender in court',
+      'They can revoke the building owner\'s licence, but they cannot impose fines or seek imprisonment at all for the offence',
+      'They can impose an immediate fine on the spot, but cannot restrict the use of the premises or close them down',
       'They can issue alterations notices, enforcement notices, and prohibition notices, and can prosecute for offences',
     ],
     correctAnswer: 3,
@@ -1024,9 +1024,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
       'What maximum penalties can be imposed for fire safety offences under the RRFSO 2005 (as amended)?',
     options: [
       'Unlimited fines and/or imprisonment for up to two years (summary conviction), or unlimited fines and/or imprisonment on indictment',
-      'A fixed maximum fine of £5,000 on conviction, with no possibility of a custodial sentence in any circumstances',
-      'A formal written caution only, with prosecution reserved for those who offend repeatedly',
-      'Immediate closure of the premises, with no financial penalty or possibility of imprisonment',
+      'A fixed maximum fine of £5,000 on conviction, with no possibility of a custodial sentence in any circumstances at all for the offender',
+      'A formal written caution only, with prosecution reserved for those who offend repeatedly at the same premises over a period of several years',
+      'Immediate closure of the premises, with no financial penalty or possibility of imprisonment in any case brought by the fire authority',
     ],
     correctAnswer: 0,
     explanation:
@@ -1040,10 +1040,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 57,
     question: 'What significant change did the Fire Safety Act 2021 introduce?',
     options: [
-      'It abolished the role of the responsible person and transferred all of the fire safety duties to the fire and rescue service for the area',
+      'It abolished the role of the responsible person and transferred all of the fire safety duties to the fire and rescue service for the area instead',
       'It clarified that the RRFSO applies to the structure, external walls (including cladding), and flat entrance doors of multi-occupied residential buildings',
-      'It made the installation of automatic sprinkler systems mandatory in all commercial premises, whatever their size',
-      'It replaced the RRFSO 2005 entirely with a new and prescriptive set of fire safety rules for all buildings',
+      'It made the installation of automatic sprinkler systems mandatory in all commercial premises, whatever their size or the use made of the building or its age',
+      'It replaced the RRFSO 2005 entirely with a new and prescriptive set of fire safety rules for all buildings, whatever their use or the occupancy',
     ],
     correctAnswer: 1,
     explanation:
@@ -1058,10 +1058,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     question:
       'What did the Building Safety Act 2022 introduce in relation to fire safety in high-rise residential buildings?',
     options: [
-      'A requirement that all high-rise residential buildings are surveyed and, where cladding is present, evacuated and demolished within five years',
-      'A scheme requiring every individual flat in a high-rise building to be fitted with its own automatic sprinkler head',
+      'A requirement that all high-rise residential buildings are surveyed and, where cladding is present, evacuated and demolished within five years of the survey date',
+      'A scheme requiring every individual flat in a high-rise building to be fitted with its own automatic sprinkler head in each of its habitable rooms and voids',
       'A new regulatory regime for higher-risk buildings including a Building Safety Regulator, mandatory safety case reports, and a residents\' engagement strategy',
-      'A duty placed on residents rather than the building owner to carry out the fire risk assessment for the structure',
+      'A duty placed on residents rather than on the building owner to carry out the fire risk assessment for the structure at their own expense once each year',
     ],
     correctAnswer: 2,
     explanation:
@@ -1076,9 +1076,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     question:
       'How does the Health and Safety at Work etc. Act 1974 (HASAWA) relate to fire safety?',
     options: [
-      'It has no relevance at all to fire safety, which is covered exclusively by the RRFSO 2005 and enforced by the fire and rescue authority for the area alone',
-      'It applies only to construction sites and does not extend to fire hazards in general workplaces such as offices',
-      'It transfers all fire safety enforcement from the fire and rescue authority to the police and local authority',
+      'It has no relevance at all to fire safety, which is covered exclusively by the RRFSO 2005 and enforced by the fire and rescue authority for the area alone and by nobody else',
+      'It applies only to construction sites and does not extend to fire hazards in general workplaces such as offices, shops and other general commercial premises in use',
+      'It transfers all fire safety enforcement from the fire and rescue authority to the police and to the local authority for the area in which the premises stand today',
       'It imposes general duties on employers to ensure the health, safety, and welfare of employees, which includes fire safety as far as it is part of a workplace hazard',
     ],
     correctAnswer: 3,
@@ -1095,9 +1095,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
       'What do the Management of Health and Safety at Work Regulations 1999 require in relation to fire safety?',
     options: [
       'They require employers to carry out risk assessments (including fire risks), implement preventive and protective measures, appoint competent persons, provide information and training, and establish emergency procedures',
-      'They require employers to install and maintain automatic fire suppression systems throughout every workplace, and to have those systems inspected and certified by an approved contractor at the end of each year of use',
-      'They require employers to register all of their premises with the fire and rescue authority before the premises are first occupied',
-      'They apply only to offshore installations and have no bearing at all on fire safety in land-based workplaces',
+      'They require employers to install and maintain automatic fire suppression systems throughout every workplace, and to have those systems inspected and certified by an approved contractor at the end of each year of operation',
+      'They require employers to register all of their premises with the fire and rescue authority for the area before those premises are first occupied by staff or by members of the public, and to renew it every year',
+      'They apply only to offshore installations and to shipping, and have no bearing at all on fire safety in land-based workplaces throughout Great Britain and Northern Ireland, whatever the work carried on in them',
     ],
     correctAnswer: 0,
     explanation:
@@ -1111,10 +1111,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 61,
     question: 'What do the Building Regulations 2010 Approved Document B (Fire Safety) cover?',
     options: [
-      'The ongoing fire safety management duties that are placed on the responsible person once a building has been completed and occupied, including fire drills, staff training and record keeping',
+      'The ongoing fire safety management duties placed on the responsible person once a building has been completed and occupied, including fire drills, staff training and record keeping at the premises',
       'The fire safety design and construction requirements for new buildings and building works, including means of escape, internal fire spread, external fire spread, and access for fire services',
-      'The inspection and testing intervals for fixed electrical installations and portable appliances in commercial premises',
-      'The procedures for investigating a fire and for reporting it to the fire and rescue authority afterwards',
+      'The inspection and testing intervals for fixed electrical installations and for portable appliances in commercial premises, and the records that must be kept of each test by a competent person',
+      'The procedures for investigating a fire and for reporting it to the fire and rescue authority for the area afterwards, and for preserving the scene for investigators and for the coroner',
     ],
     correctAnswer: 1,
     explanation:
@@ -1128,10 +1128,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 62,
     question: 'What is BS 5839 and what does it cover?',
     options: [
-      'The code of practice for emergency escape lighting in premises',
-      'The standard for the requirements and testing of portable fire extinguishers',
+      'The code of practice for emergency escape lighting in premises of all kinds and for its periodic testing by a competent person once a year',
+      'The standard for the requirements and testing of portable fire extinguishers and their periodic servicing, recharging and marking',
       'The code of practice for the design, installation, commissioning, and maintenance of fire detection and fire alarm systems in buildings',
-      'The code of practice for fire safety in the design and management of buildings as an alternative to Approved Document B',
+      'The code of practice for fire safety in the design and management of buildings as an alternative to Approved Document B in England',
     ],
     correctAnswer: 2,
     explanation:
@@ -1163,9 +1163,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     question: 'What is BS 9999 and how does it relate to fire safety?',
     options: [
       'A code of practice for fire safety in the design, management, and use of buildings, providing a risk-based framework as an alternative to Approved Document B',
-      'The code of practice for the design, installation, commissioning and ongoing maintenance of fire detection and fire alarm systems in buildings',
-      'The standard governing the colour coding, siting and annual testing of portable fire extinguishers in buildings',
-      'The code of practice for emergency escape lighting on escape routes and in areas of high risk',
+      'The code of practice for the design, installation, commissioning and ongoing maintenance of fire detection and fire alarm systems in buildings of all kinds of use',
+      'The standard governing the colour coding, siting and annual testing of portable fire extinguishers in buildings and on construction sites of all kinds and uses',
+      'The code of practice for emergency escape lighting on escape routes and in areas of high risk, and for its routine testing by a competent person each month',
     ],
     correctAnswer: 0,
     explanation:
@@ -1180,10 +1180,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     question:
       "Under the RRFSO 2005, Article 5, who does the Order apply to (the 'relevant persons')?",
     options: [
-      'The employees who are directly employed by the responsible person at those premises, and nobody else at all on the site',
+      'The employees who are directly employed by the responsible person at those premises, and nobody else at all on the site at any time of the day',
       'Any person who is or may be lawfully on the premises, and any person in the immediate vicinity who is at risk from a fire on the premises',
-      'The persons who have been appointed as competent persons or as fire marshals at the premises',
-      'The members of the public who have paid to enter the premises, such as customers and ticket holders',
+      'The persons who have been appointed as competent persons or as fire marshals at the premises by the responsible person in charge of the site',
+      'The members of the public who have paid to enter the premises, such as customers and ticket holders at the door before an event begins',
     ],
     correctAnswer: 1,
     explanation:
@@ -1197,10 +1197,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 66,
     question: "What is an 'alterations notice' under the RRFSO 2005?",
     options: [
-      'A notice served by the fire and rescue authority requiring the immediate evacuation and closure of premises where the use is considered dangerous to the relevant persons using them',
-      'A notice served by the responsible person to inform employees that the evacuation procedures for the premises have been changed',
+      'A notice served by the fire and rescue authority requiring the immediate evacuation and closure of premises where the use made of them is considered dangerous to the relevant persons using them there',
+      'A notice served by the responsible person to inform employees that the evacuation procedures for the premises have been changed and that they must be rehearsed at the next fire drill at the premises',
       'A notice served by the fire authority requiring the responsible person to notify them before making changes to the premises or its use that could increase fire risk or affect fire safety measures',
-      'A notice served by the fire and rescue authority setting out specific remedial steps and a deadline by which they must be completed',
+      'A notice served by the fire and rescue authority for the area setting out the specific remedial steps required at the premises and a deadline set by that authority by which they must all be completed',
     ],
     correctAnswer: 2,
     explanation:
@@ -1214,9 +1214,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 67,
     question: "What is a 'prohibition notice' under the RRFSO 2005?",
     options: [
-      'A notice served by the fire and rescue authority requiring the responsible person to notify the authority before making any alteration to the premises or to the way in which they are used, so that the effect on fire risk can be considered',
-      'A notice served by the fire and rescue authority setting out the remedial steps that must be taken, together with a fixed period within which compliance is required',
-      'A notice served by the responsible person prohibiting employees from using the fire exits for any purpose other than an emergency evacuation',
+      'A notice served by the fire and rescue authority requiring the responsible person to notify the authority before making any alteration to the premises or to the way in which they are used, so that the effect on fire risk can be considered by the officer',
+      'A notice served by the fire and rescue authority for the area setting out the remedial steps that must be taken at the premises, together with a fixed period within which compliance with those steps is required by the responsible person for the premises',
+      'A notice served by the responsible person prohibiting employees from using the fire exits for any purpose other than an emergency evacuation of the premises, and requiring them to be kept clear during the working day at the premises concerned',
       'A notice served by the fire authority prohibiting or restricting the use of all or part of the premises because the use involves a risk of death or serious injury to relevant persons that is so serious that the use should be prohibited or restricted',
     ],
     correctAnswer: 3,
@@ -1233,9 +1233,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
       'Under Article 19 of the RRFSO 2005, what must the responsible person provide to employees?',
     options: [
       'Adequate fire safety training at the time of recruitment and on being exposed to new or increased risks, repeated periodically, and adapted to take account of new or changed risks',
-      'A personal fire extinguisher for their own work area and a printed copy of the building fire risk assessment on their first day, to be kept at their workstation',
-      'Written confirmation that the employee has passed an accredited fire marshal qualification before they may start work',
-      'Comprehensive fire safety training on one occasion only, at the point of initial recruitment, with no further refreshers',
+      'A personal fire extinguisher for their own work area and a printed copy of the building fire risk assessment on their first day, to be kept at their workstation during their employment',
+      'Written confirmation that the employee has passed an accredited fire marshal qualification before they may start work at the premises on their very first day with the firm',
+      'Comprehensive fire safety training on one occasion only, at the point of initial recruitment, with no further refresher training at any later stage of their employment there',
     ],
     correctAnswer: 0,
     explanation:
@@ -1249,10 +1249,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 69,
     question: 'What are the CDM 2015 Regulations and how do they relate to fire safety?',
     options: [
-      'They require that fire safety is considered only after a building has been completed and handed over to the client, on the basis that the principal contractor controls the site up to that point in the project',
+      'They require that fire safety is considered only after a building has been completed and handed over to the client, on the basis that the principal contractor controls the site up to that point in the project programme',
       'The Construction (Design and Management) Regulations 2015 require that fire safety is considered during the design and construction phases of building projects, including safe means of escape from construction sites',
-      'They apply solely to the maintenance and refurbishment of existing buildings, and have no application to new construction projects',
-      'They transfer responsibility for fire safety on a construction site entirely to the fire and rescue service for the area',
+      'They apply solely to the maintenance and refurbishment of existing buildings, and have no application at all to new construction projects or to the design work done for them before any construction work begins on the site',
+      'They transfer responsibility for fire safety on a construction site entirely to the fire and rescue service for the area, which must inspect the site before the start of each working day and again at the end of each one',
     ],
     correctAnswer: 1,
     explanation:
@@ -1266,10 +1266,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 70,
     question: 'When must a fire risk assessment be reviewed under the RRFSO 2005?',
     options: [
-      'Once every ten years on a fixed cycle, whatever changes may have been made to the premises in the meantime or to the work carried on there',
-      'When the fire and rescue authority serves a formal notice on the responsible person requiring it to be reviewed',
+      'Once every ten years on a fixed cycle, whatever changes have been made to the premises or to the work that is carried on there by the occupier in the meantime',
+      'When the fire and rescue authority for the area serves a formal notice on the responsible person within a stated period requiring a review of it in full',
       'When there is reason to suspect it is no longer valid, after a significant change in the matters to which it relates, or after a fire or near-miss incident',
-      'When the building changes ownership or is sold, so that the new responsible person can adopt it',
+      'When the building changes ownership or is sold, so that the new responsible person can adopt it as their own record of the fire risks at the premises concerned',
     ],
     correctAnswer: 2,
     explanation:
@@ -1283,9 +1283,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 71,
     question: 'What is the DSEAR 2002 and how does it relate to fire safety?',
     options: [
-      'The regulations that govern the design, installation, commissioning and ongoing maintenance of automatic fire detection and fire alarm systems in commercial and industrial buildings of all types',
-      'The regulations that set out the maintenance intervals, servicing arrangements and discharge testing required for portable fire extinguishers',
-      'The regulations that require fire safety to be taken into account during the design and construction of new buildings and major refurbishments',
+      'The regulations that govern the design, installation, commissioning and ongoing maintenance of automatic fire detection and fire alarm systems of every kind in commercial, industrial and public buildings',
+      'The regulations that set out the maintenance intervals, servicing arrangements and discharge testing required for portable fire extinguishers in every workplace where they are provided under the Order at the premises',
+      'The regulations that require fire safety to be taken into account during the design and construction of new buildings and during major refurbishment of any significant size, value or complexity at the premises',
       'The Dangerous Substances and Explosive Atmospheres Regulations 2002 require employers to assess and control risks from dangerous substances that could cause fire, explosion, or similar energy-releasing events',
     ],
     correctAnswer: 3,
@@ -1301,9 +1301,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     question: 'Under the RRFSO 2005, who can carry out the fire risk assessment?',
     options: [
       'The responsible person themselves (if competent) or a competent person appointed by the responsible person',
-      'A fire risk assessor who is formally registered with the local fire and rescue authority',
-      'An officer of the fire and rescue authority, who must visit and inspect the premises in person',
-      'A chartered fire engineer holding a degree-level qualification in fire safety engineering',
+      'A fire risk assessor who is formally registered with the local fire and rescue authority for the area concerned',
+      'An officer of the fire and rescue authority, who must visit and inspect the premises in person beforehand',
+      'A chartered fire engineer holding a degree-level qualification in fire safety engineering and practice',
     ],
     correctAnswer: 0,
     explanation:
@@ -1318,10 +1318,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     question:
       "What is the difference between an 'enforcement notice' and a 'prohibition notice' under the RRFSO 2005?",
     options: [
-      'An enforcement notice closes the premises with immediate effect; a prohibition notice allows a period of time in which remedial action can be taken by the responsible person',
+      'An enforcement notice closes the premises with immediate effect; a prohibition notice allows a period of time in which remedial action can be taken by the responsible person for the premises',
       'An enforcement notice requires specific actions within a time limit; a prohibition notice requires immediate cessation of use due to a serious and imminent risk of death or serious injury',
-      'An enforcement notice is issued by the Health and Safety Executive; a prohibition notice is issued by the fire and rescue authority',
-      'An enforcement notice applies to the safety of employees; a prohibition notice applies only to visitors and members of the public',
+      'An enforcement notice is issued by the Health and Safety Executive; a prohibition notice is issued by the fire and rescue authority for the area in which the premises are situated',
+      'An enforcement notice applies to the safety of employees at work; a prohibition notice applies only to visitors and to members of the public who are using the premises at that time',
     ],
     correctAnswer: 1,
     explanation:
@@ -1335,10 +1335,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 74,
     question: 'What is the duty of employees under Article 23 of the RRFSO 2005?',
     options: [
-      'Employees must carry out the fire risk assessment for their own work area, record the significant findings and pass them to the responsible person for approval before any change is made to the way in which the work is carried out',
-      'Employees must purchase and maintain their own personal fire safety equipment at their own expense, and must produce it for inspection when asked',
+      'Employees must carry out the fire risk assessment for their own work area, record the significant findings and pass them to the responsible person for approval before any change is made to the work that they carry out at the premises on each working day',
+      'Employees must purchase and maintain their own personal fire safety equipment at their own expense, must produce it for inspection when asked, and must replace it entirely at their own cost whenever it becomes damaged or is lost or reaches the end of its life',
       'Employees must take reasonable care for the safety of themselves and others, cooperate with the responsible person, and inform the employer of any situation they consider a serious and immediate danger or any shortcomings in fire safety arrangements',
-      'Employees have no duties at all under the RRFSO, because all of the responsibility rests with the responsible person for the premises',
+      'Employees have no duties at all under the RRFSO, because all of the responsibility for fire safety rests with the responsible person, and any breach of the Order is a matter for the employer alone and for nobody else at the premises in question at all',
     ],
     correctAnswer: 2,
     explanation:
@@ -1353,9 +1353,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     question:
       'What specific requirement does Article 9(6) of the RRFSO place on the fire risk assessment where dangerous substances are present?',
     options: [
-      'The responsible person must remove all of the dangerous substances from the premises before any fire risk assessment is carried out, and may only bring those substances back once the assessment has been completed and recorded',
-      'The fire risk assessment for premises where dangerous substances are present must be carried out by the fire and rescue authority rather than by the responsible person',
-      'The presence of dangerous substances exempts the premises from the requirement to carry out a fire risk assessment, since DSEAR applies to them instead',
+      'The responsible person must remove all of the dangerous substances from the premises before any fire risk assessment is carried out, and may only bring those substances back once the assessment has been completed and recorded in the significant findings',
+      'The fire risk assessment for premises where dangerous substances are present must be carried out by the fire and rescue authority for the area rather than by the responsible person, at the cost of the occupier of those premises and of the owner',
+      'The presence of dangerous substances exempts the premises from the requirement to carry out a fire risk assessment at all, since DSEAR applies to those substances in place of the Order, which the fire and rescue authority enforces at the premises',
       'The fire risk assessment must include consideration of the hazardous properties of the substance, how it is used, stored, and transported, the likelihood of an explosive atmosphere occurring, and the adequacy of measures to prevent ignition',
     ],
     correctAnswer: 3,
@@ -1387,10 +1387,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 77,
     question: 'How does the Equality Act 2010 relate to fire safety and evacuation?',
     options: [
-      'It requires that all disabled persons must always wait in a refuge for the fire and rescue service to reach them, rather than attempt to evacuate the building themselves',
+      'It requires that all disabled persons must always wait in a refuge for the fire and rescue service to reach them, rather than attempt to evacuate the building themselves without help',
       'It requires that fire safety arrangements, including evacuation plans, make reasonable adjustments for disabled persons to ensure they are not placed at a substantial disadvantage',
-      'It exempts disabled persons from any evacuation duties and places sole responsibility for their rescue on the fire and rescue service',
-      'It requires that any building with disabled occupants installs additional automatic sprinkler protection on every floor',
+      'It exempts disabled persons from any evacuation duties and places sole responsibility for their rescue on the fire and rescue service for the area and on nobody else at the premises',
+      'It requires that any building with disabled occupants installs additional automatic sprinkler protection on every floor of the building at the owner\'s own expense and to a fixed timescale',
     ],
     correctAnswer: 1,
     explanation:
@@ -1404,10 +1404,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 78,
     question: 'What is a Personal Emergency Evacuation Plan (PEEP)?',
     options: [
-      'A generic evacuation plan that is used for all of the visitors and contractors who arrive at the premises unannounced during normal working hours or out of hours',
-      'The overall building-wide emergency plan that sets out the assembly points and evacuation routes for all of the occupants',
+      'A generic evacuation plan that is used for all of the visitors and contractors who arrive at the premises unannounced during working hours and out of hours alike on any day',
+      'The overall building-wide emergency plan that sets out the assembly points and the evacuation routes of the building on each floor and in each block and in every stairway',
       'A tailored plan developed for an individual who may need assistance to evacuate a building in an emergency, detailing the specific arrangements for their safe evacuation',
-      'A protected area within a stairway where a person who cannot use the stairs waits for assisted evacuation to arrive',
+      'A protected area within a stairway where a person who cannot use the stairs waits for assistance from the fire and rescue service crews outside and from the fire marshals on duty',
     ],
     correctAnswer: 2,
     explanation:
@@ -1422,9 +1422,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the legal duty of the responsible person regarding fire safety training under the RRFSO 2005?',
     options: [
-      'The responsible person must provide fire safety training only to those employees who volunteer to act as fire marshals, and must arrange for that training to be repeated for them every twelve months in working hours',
-      'The responsible person must arrange for the fire and rescue authority to deliver all employee fire safety training at the premises',
-      'The responsible person must train employees once on appointment but is not required to provide any refresher training',
+      'The responsible person must provide fire safety training only to those employees who volunteer to act as fire marshals, and must arrange for that training to be repeated for them every twelve months of employment at the premises where they work',
+      'The responsible person must arrange for the fire and rescue authority for the area to deliver all of the employee fire safety training at the premises, and must pay that authority a fee for delivering it at the premises for every course',
+      'The responsible person must train employees once on appointment but is not required to provide any refresher training to them at any later stage, whatever changes are made to the work or to the premises they work in during their employment',
       'The responsible person must ensure employees receive adequate fire safety training when first employed, when exposed to new or increased risks, and periodically thereafter — provided during working hours and at no cost to the employee',
     ],
     correctAnswer: 3,
@@ -1441,9 +1441,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
       'Under Article 5(3) of the RRFSO 2005, what hierarchy must the responsible person follow when implementing fire safety measures?',
     options: [
       'The principles of prevention in Schedule 1: avoid risks, evaluate unavoidable risks, combat risks at source, adapt work to the individual, adapt to technical progress, replace dangerous with non/less dangerous, develop a coherent prevention policy, give collective measures priority, and give appropriate instructions',
-      'The order of detection, warning, evacuation, firefighting and reinstatement that must be followed during any incident at the premises, as set out in the emergency plan prepared by the responsible person, agreed with the fire and rescue authority and rehearsed with staff at least once in every twelve months',
-      'A hierarchy requiring that extinguishers are provided first, then alarms, then emergency lighting, then signage and finally staff training',
-      'A hierarchy that gives priority to protecting the property and assets of the business over the safety of relevant persons',
+      'The order of detection, warning, evacuation, firefighting and reinstatement that must be followed during any incident at the premises, as set out in the emergency plan prepared by the responsible person, agreed with the fire and rescue authority for the area and rehearsed with staff at least once in every twelve months',
+      'A hierarchy requiring that extinguishers are provided first, then alarms, then emergency lighting, then signage and finally staff training, in that fixed order and whatever the findings of the fire risk assessment may be, so that the cheapest measures are always installed before the more costly ones are considered',
+      'A hierarchy that gives priority to protecting the property and the assets of the business over the safety of relevant persons, on the basis that the fire and rescue service will always reach the occupants of the premises before any of them are placed in danger by the fire or by the smoke and heat it produces',
     ],
     correctAnswer: 0,
     explanation:
@@ -1462,10 +1462,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 81,
     question: "What is the purpose of compartmentation in a building's fire safety strategy?",
     options: [
-      'To divide a building into detection zones so that the fire alarm control panel can quickly indicate the area in which a fire has started to the attending crews',
+      'To divide a building into detection zones so that the fire alarm control panel can quickly indicate the area in which a fire has started to the attending crews on arrival',
       'To divide a building into fire-resistant compartments that contain fire and smoke to the compartment of origin, limiting fire spread and protecting escape routes',
-      'To increase the number of escape routes available so that occupants always have more than one way out of the building',
-      'To separate the electrical wiring from the gas supply so that a fault in one service cannot affect the other',
+      'To increase the number of escape routes available so that occupants always have more than one way out of the building when the alarm sounds at any time of the day',
+      'To separate the electrical wiring from the gas supply so that a fault in one of those services cannot affect the other at all in the event of a fire on the premises',
     ],
     correctAnswer: 1,
     explanation:
@@ -1479,10 +1479,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 82,
     question: 'What is a fire door and what do the designations FD30 and FD60 mean?',
     options: [
-      'A fire door is a self-closing door — FD30 means that it closes within 30 seconds of release and FD60 within 60 seconds',
-      'A fire door is a door rated by leaf width — FD30 is 30 inches wide and FD60 is 60 inches wide as installed',
+      'A fire door is a self-closing door — FD30 means that it closes within 30 seconds of release and FD60 within 60 seconds of release by the closer',
+      'A fire door is a door rated by leaf width — FD30 is 30 inches wide and FD60 is 60 inches wide as installed in the compartment wall opening',
       'A fire door is a door assembly designed to resist fire for a specified period — FD30 resists fire for 30 minutes and FD60 for 60 minutes',
-      'A fire door is a door rated by cost — FD30 and FD60 indicate the manufacturer\'s grade of construction',
+      'A fire door is a door rated by cost — FD30 and FD60 indicate the manufacturer\'s grade of construction fitted to the leaf and to the frame',
     ],
     correctAnswer: 2,
     explanation:
@@ -2051,9 +2051,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 115,
     question: 'What is the difference between maintained and non-maintained emergency lighting?',
     options: [
-      'Maintained lighting is more expensive to install; non-maintained is the budget option',
-      'Maintained lighting runs from a battery at all times; non-maintained runs from the mains',
-      'Maintained lighting uses LED lamps throughout; non-maintained uses fluorescent tubes',
+      'Maintained lighting is more expensive to install; non-maintained is the cheaper option to install',
+      'Maintained lighting runs from a battery at all times; non-maintained runs from the mains only',
+      'Maintained lighting uses LED lamps throughout; non-maintained uses fluorescent tubes only',
       'Maintained lighting operates continuously; non-maintained only operates when mains power fails',
     ],
     correctAnswer: 3,
@@ -2158,10 +2158,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 121,
     question: 'What is the primary role of a fire marshal in the workplace?',
     options: [
-      'To lead firefighting operations and extinguish any fire that breaks out',
+      'To lead firefighting operations and extinguish any fire that breaks out on the premises',
       'To assist with the safe evacuation of people and carry out fire prevention duties',
-      'To carry out the statutory fire risk assessment for the premises',
-      'To service and maintain the fire alarm and detection system',
+      'To carry out the statutory fire risk assessment for the premises and to sign it off',
+      'To service and maintain the fire alarm and detection system once each year',
     ],
     correctAnswer: 1,
     explanation:
@@ -2175,10 +2175,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 122,
     question: 'Who is legally responsible for appointing fire marshals under the RRFSO?',
     options: [
-      'The local fire and rescue authority for the area',
-      'The Health and Safety Executive (HSE) as enforcing body',
+      'The local fire and rescue authority for the area in which the site lies',
+      'The Health and Safety Executive (HSE) as enforcing body for the site',
       'The responsible person (usually the employer or building owner)',
-      'The building insurer as a condition of cover',
+      'The building insurer as a condition of cover for the premises each year',
     ],
     correctAnswer: 2,
     explanation:
@@ -2192,9 +2192,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 123,
     question: 'What is the key difference between a fire marshal and a fire warden?',
     options: [
-      'Fire marshals work only in offices; fire wardens work on construction sites',
-      'Fire wardens are employed by the fire service; fire marshals are not',
-      'Fire marshals fight fires; fire wardens do not',
+      'Fire marshals work only in offices; fire wardens work on construction sites and nowhere else',
+      'Fire wardens are employed by the fire service; fire marshals are not employed there',
+      'Fire marshals fight fires; fire wardens do not fight fires at all on the premises',
       'The terms are generally used interchangeably, though marshals may have more training',
     ],
     correctAnswer: 3,
@@ -2210,9 +2210,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     question: "What are a fire marshal's responsibilities BEFORE an emergency?",
     options: [
       'Conducting routine checks of escape routes, fire doors, and extinguisher availability',
-      'Drafting the premises fire risk assessment and recording its significant findings',
-      'Conducting a roll call of all occupants at the assembly point',
-      'Liaising with the fire and rescue service incident commander on arrival',
+      'Drafting the premises fire risk assessment and recording its significant findings in full',
+      'Conducting a roll call of all occupants at the assembly point once the building is clear',
+      'Liaising with the fire and rescue service incident commander on arrival at the site',
     ],
     correctAnswer: 0,
     explanation:
@@ -2226,10 +2226,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 125,
     question: "What are a fire marshal's responsibilities DURING an emergency?",
     options: [
-      'Updating the fire risk assessment to reflect what happened in the incident',
+      'Updating the fire risk assessment to reflect what happened in the incident once it has ended',
       'Assisting evacuation, checking their zone is clear, and reporting to the assembly point',
-      'Providing psychological support and debriefing to the affected staff',
-      'Re-energising the electrical installation once the fire has been put out',
+      'Providing psychological support and debriefing to the affected staff once the incident has ended',
+      'Re-energising the electrical installation once the fire has been put out by the attending crews',
     ],
     correctAnswer: 1,
     explanation:
@@ -2280,9 +2280,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
       "How does the fire marshal's role relate to the 'responsible person' under the RRFSO?",
     options: [
       'The fire marshal acts on behalf of the responsible person to assist with fire safety duties',
-      'The fire marshal legally replaces the responsible person and assumes their statutory duties',
+      'The fire marshal legally replaces the responsible person and assumes their statutory duties in full',
       'The fire marshal independently enforces fire safety law against the responsible person',
-      'The fire marshal and responsible person have no formal relationship under the RRFSO',
+      'The fire marshal and responsible person have no formal relationship under the RRFSO at all',
     ],
     correctAnswer: 0,
     explanation:
@@ -2296,10 +2296,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 129,
     question: 'How should fire marshals be easily identified during an emergency?',
     options: [
-      'By a verbal announcement over the public address system',
+      'By a verbal announcement over the public address system at the time of the alarm',
       'By wearing high-visibility vests or armbands, often in a distinct colour',
-      'By a badge worn only at the assembly point after evacuation',
-      'By carrying a fire extinguisher at all times during the alarm',
+      'By a badge worn only at the assembly point after evacuation has been completed',
+      'By carrying a fire extinguisher at all times during the alarm itself',
     ],
     correctAnswer: 1,
     explanation:
@@ -2313,10 +2313,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 130,
     question: 'What should a fire marshal check during a routine inspection of an escape route?',
     options: [
-      'That the route has been freshly redecorated and is aesthetically presentable',
-      'That the route has at least two fire extinguishers along its length',
+      'That the route has been freshly redecorated and is aesthetically presentable to visitors',
+      'That the route has at least two fire extinguishers at every doorway along it',
       'That the route is clear of obstructions, well lit, and fire doors are operational',
-      'That the route is wide enough to accommodate fire service vehicles',
+      'That the route is wide enough to accommodate fire service vehicles and their appliances',
     ],
     correctAnswer: 2,
     explanation:
@@ -2330,9 +2330,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 131,
     question: 'What is simultaneous evacuation?',
     options: [
-      'Evacuating one floor at a time starting from the fire floor',
-      'Moving occupants horizontally to an adjacent compartment',
-      'Evacuating only the area immediately affected by fire',
+      'Evacuating one floor at a time starting from the fire floor and working upwards',
+      'Moving occupants horizontally to an adjacent compartment on the same floor',
+      'Evacuating only the area immediately affected by fire and no other area',
       'Evacuating all occupants of a building at the same time upon alarm activation',
     ],
     correctAnswer: 3,
@@ -2348,9 +2348,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     question: 'What is phased evacuation and where is it typically used?',
     options: [
       'Evacuating the fire floor first then adjacent floors sequentially; used in tall buildings',
-      'Evacuating the ground floor first, then upwards; used in shopping centres',
-      'Evacuating using the passenger lifts in phases; used in large hospitals',
-      'Evacuating in alphabetical order by surname; used in schools and colleges',
+      'Evacuating the ground floor first, then upwards; used in shopping centres and retail parks',
+      'Evacuating using the passenger lifts in phases; used in large hospitals and in nursing homes',
+      'Evacuating in alphabetical order by surname; used in schools and colleges alike',
     ],
     correctAnswer: 0,
     explanation:
@@ -2364,10 +2364,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 133,
     question: 'What is progressive horizontal evacuation?',
     options: [
-      'Evacuating occupants down the protected stairs one floor at a time in sequence',
+      'Evacuating occupants down the protected stairs one floor at a time down to the final exit',
       'Moving occupants horizontally through fire-resisting barriers into an adjacent safe compartment',
-      'Moving occupants outward along a single corridor to the nearest final exit',
-      'Keeping occupants in place to be rescued by the fire and rescue service',
+      'Moving occupants outward along a single corridor to the nearest final exit and out of the building',
+      'Keeping occupants in place to be rescued by the fire and rescue service on its arrival at the scene',
     ],
     correctAnswer: 1,
     explanation:
@@ -2381,10 +2381,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 134,
     question: "What is a 'defend-in-place' strategy?",
     options: [
-      'All occupants leave the building immediately upon any alarm activation',
+      'All occupants leave the building immediately upon any alarm activation at any hour',
       'Occupants gather in a central refuge to await the fire and rescue service',
       'Occupants remain in their fire-resistant compartment unless directly threatened',
-      'The fire floor is evacuated first, then adjacent floors in sequence',
+      'The fire floor is evacuated first, then adjacent floors in sequence above',
     ],
     correctAnswer: 2,
     explanation:
@@ -2433,9 +2433,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 137,
     question: 'How often should fire drills be conducted in most workplaces?',
     options: [
-      'Every month',
+      'Every other month',
       'Every 6 months',
-      'Annually',
+      'Every other year',
       'Every 3 years',
     ],
     correctAnswer: 1,
@@ -2450,10 +2450,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 138,
     question: 'What information should be recorded after a fire drill?',
     options: [
-      'The names of any staff who failed to evacuate, and the reasons they gave for it',
-      'Confirmation that the alarm sounded correctly in every zone of the building',
+      'The names of any staff who failed to evacuate, and the reasons they gave for it to the fire marshal on duty',
+      'Confirmation that the alarm sounded correctly in every zone of the building during the drill that day',
       'Date, time, duration of evacuation, number of occupants, any issues identified, and actions taken',
-      'The serial numbers of every fire extinguisher checked before the drill',
+      'The serial numbers of every fire extinguisher checked before the drill began, and the date of each check',
     ],
     correctAnswer: 2,
     explanation:
@@ -2501,10 +2501,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 141,
     question: 'What is a GEEP and how does it differ from a PEEP?',
     options: [
-      'Government Emergency Escape Protocol — a statutory requirement',
+      'Government Emergency Escape Protocol — a statutory requirement for every premises in use',
       'Generic Emergency Evacuation Plan — a template plan for visitors or occasional users',
-      'General Emergency Evacuation Plan — a plan for the entire building',
-      'Group Evacuation and Exit Procedure — for evacuating groups together',
+      'General Emergency Evacuation Plan — a plan for the entire building and its site',
+      'Group Evacuation and Exit Procedure — for evacuating groups together at once',
     ],
     correctAnswer: 1,
     explanation:
@@ -2536,9 +2536,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 143,
     question: "What is a 'buddy system' in fire evacuation?",
     options: [
-      'Pairing two fire marshals so they always patrol their zones together',
-      'Assigning each visitor a member of staff to escort them at all times on site',
-      'Splitting occupants into pairs to take turns using a single evacuation chair',
+      'Pairing two fire marshals so they always patrol their zones together during a drill or an alarm',
+      'Assigning each visitor a member of staff to escort them at all times on site and off the site as well',
+      'Splitting occupants into pairs to take turns using a single evacuation chair on the stairs',
       'Pairing a person who needs assistance with a designated colleague who will help them evacuate',
     ],
     correctAnswer: 3,
@@ -2554,9 +2554,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     question: 'What is a fire refuge and where should they be provided?',
     options: [
       'A protected area within a stairway enclosure where a disabled person can wait for assisted evacuation',
-      'The outdoor assembly point where occupants gather after evacuating',
-      'A fire-resisting cupboard used to store evacuation chairs and firefighting equipment',
-      'A designated area outside the building where the fire service stages its operations',
+      'The outdoor assembly point where occupants gather after evacuating the building and are counted by the marshals',
+      'A fire-resisting cupboard used to store evacuation chairs and firefighting equipment on each floor of the building',
+      'A designated area outside the building where the fire service stages its operations during a large incident',
     ],
     correctAnswer: 0,
     explanation:
@@ -2570,10 +2570,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 145,
     question: 'When should an evacuation chair be used during a fire evacuation?',
     options: [
-      'By wearing high-visibility vests or armbands, often in a distinct colour',
+      'By any member of staff who is nearest, whether or not they have been trained',
       'By trained personnel to evacuate people who cannot use stairs independently',
-      'Psychological support and debriefing, recognising potential trauma',
-      'A high-visibility vest, torch, and a copy of the evacuation plan',
+      'By untrained staff whenever the lifts have been taken out of service',
+      'By anyone at all once the fire and rescue service has arrived on scene',
     ],
     correctAnswer: 1,
     explanation:
@@ -2587,10 +2587,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 146,
     question: 'What should happen at the assembly point during an evacuation?',
     options: [
-      'Everyone should return to their workstation to collect belongings',
-      'Staff should wait for exactly 10 minutes then re-enter the building',
+      'Everyone should return to their workstation to collect belongings before the roll call',
+      'Staff should wait for exactly 10 minutes then re-enter the building without waiting',
       'A roll call or headcount should be taken and reported to the incident controller',
-      'Fire marshals should enter the building to search for missing persons',
+      'Fire marshals should enter the building to search for missing persons at once',
     ],
     correctAnswer: 2,
     explanation:
@@ -2604,9 +2604,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 147,
     question: 'How should visitors be accounted for during a fire evacuation?',
     options: [
-      'By assuming all visitors will follow staff out and leave independently',
-      'By searching the building room by room after the staff roll call',
-      'By relying on each visitor\'s host to confirm they have left',
+      'By assuming all visitors will follow staff out and leave independently on the alarm',
+      'By searching the building room by room after the staff roll call has been completed',
+      'By relying on each visitor\'s host to confirm they have left the premises safely by phone',
       'Through the visitor sign-in register, which should be taken to the assembly point',
     ],
     correctAnswer: 3,
@@ -2622,9 +2622,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     question: 'What is the correct communication chain during a fire emergency?',
     options: [
       'Fire marshal reports to incident controller, who liaises with fire and rescue service',
-      'Each fire marshal calls the fire and rescue service directly and independently',
-      'Occupants report directly to the fire and rescue service at the assembly point',
-      'The incident controller reports to each individual occupant before evacuation',
+      'Each fire marshal calls the fire and rescue service directly and independently on 999 in turn',
+      'Occupants report directly to the fire and rescue service at the assembly point there',
+      'The incident controller reports to each individual occupant before evacuation begins',
     ],
     correctAnswer: 0,
     explanation:
@@ -2638,10 +2638,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 149,
     question: 'Why is preventing re-entry to a building after evacuation critically important?',
     options: [
-      'To avoid triggering any further activations of the building fire alarm system',
+      'To avoid triggering any further activations of the building fire alarm system during the incident',
       'To ensure no one returns to a potentially dangerous environment before it is declared safe',
-      'To keep the assembly point headcount accurate for the roll call',
-      'To preserve the fire scene so that the insurer can value the damage',
+      'To keep the assembly point headcount accurate for the roll call and for the report that follows',
+      'To preserve the fire scene so that the insurer can value the damage done to the building',
     ],
     correctAnswer: 1,
     explanation:
@@ -2656,10 +2656,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     question:
       'What additional challenges exist for fire evacuation on a construction site compared to a finished building?',
     options: [
-      'Permanent fire detection is installed from the outset, so manual call points are unnecessary',
-      'Escape routes are fixed and well signed throughout the whole build programme',
+      'Permanent fire detection is installed from the outset, so manual call points are unnecessary anywhere on the site',
+      'Escape routes are fixed and well signed throughout the whole build programme and never change from start to finish',
       'Escape routes change frequently, fire detection may be limited, and workers may be unfamiliar with the layout',
-      'Sprinkler systems are fully commissioned before any construction work begins',
+      'Sprinkler systems are fully commissioned before any construction work begins on the site and are tested weekly',
     ],
     correctAnswer: 2,
     explanation:
@@ -2673,9 +2673,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 151,
     question: 'How should fire marshals be distributed across shift patterns?',
     options: [
-      'Fire marshals are only required during normal daytime working hours',
-      'A single fire marshal can cover all shifts across the whole week',
-      'Marshal cover is only needed when the fire risk assessment is being reviewed',
+      'Fire marshals are only required during normal daytime working hours from Monday to Friday',
+      'A single fire marshal can cover all shifts across the whole week and every weekend too',
+      'Marshal cover is only needed when the fire risk assessment is being reviewed or updated each year',
       'Sufficient fire marshals should be available on every shift, including nights and weekends',
     ],
     correctAnswer: 3,
@@ -2692,8 +2692,8 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
       'What should a fire marshal do if they discover a fire door wedged open during a routine inspection?',
     options: [
       'Close the door immediately, remove the wedge, and report the issue',
-      'Wedge it open more securely so it cannot swing shut on someone',
-      'Leave it open but note it for the annual review of the assessment',
+      'Wedge it open more securely so it cannot swing shut on someone walking past',
+      'Leave it open but note it for the annual review of the assessment later',
       'Ask the occupants of the area for permission before closing it',
     ],
     correctAnswer: 0,
@@ -2726,10 +2726,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 154,
     question: 'What responsibilities does a fire marshal have AFTER an emergency has concluded?',
     options: [
-      'Guiding remaining occupants to the nearest exit and clearing their zone',
-      'Conducting the roll call and reporting headcounts to the incident controller',
+      'Guiding remaining occupants to the nearest exit while the alarm is still sounding in the building',
+      'Conducting the roll call and reporting headcounts to the incident controller at the assembly point',
       'Assisting with the debrief, recording lessons learned, and checking the area before reoccupation',
-      'Putting on their high-visibility vest and proceeding to their designated zone',
+      'Putting on their high-visibility vest and proceeding to their designated zone when the alarm sounds',
     ],
     correctAnswer: 2,
     explanation:
@@ -2762,9 +2762,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
       'How should a fire marshal assist a wheelchair user who is above the ground floor during an evacuation?',
     options: [
       'Guide them to a designated refuge and ensure the fire service is informed of their location',
-      'Use the nearest passenger lift to take them straight down to ground level',
-      'Leave them at their workstation and inform the fire service after evacuating',
-      'Carry them down the stairs immediately without any specialist equipment',
+      'Use the nearest passenger lift to take them straight down and out of the building safely',
+      'Leave them at their workstation and inform the fire service after evacuating yourself',
+      'Carry them down the stairs immediately without any specialist equipment or any help from others',
     ],
     correctAnswer: 0,
     explanation:
@@ -2814,9 +2814,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     question:
       'What equipment should a fire marshal carry or have access to during a fire drill or emergency?',
     options: [
-      'A breathing apparatus set and a fire-resistant suit',
-      'A first-aid kit and a defibrillator',
-      'A set of master keys to lock all the fire exits',
+      'A breathing apparatus set and a fire-resistant suit and a fire helmet',
+      'A first-aid kit and a defibrillator for use at the assembly point',
+      'A set of master keys to lock all the fire exits on each floor',
       'A high-visibility vest, torch, and a copy of the evacuation plan',
     ],
     correctAnswer: 3,
@@ -2832,9 +2832,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     question: 'What should fire marshals do if a person refuses to evacuate during an alarm?',
     options: [
       'Clearly advise them of the danger, make a note of their location, and report it to the incident controller',
-      'Physically remove them from the building using reasonable force if they refuse to walk out',
-      'Remain with them inside the building until they agree to leave, whatever the fire is doing',
-      'Leave them where they are and assume they will move once the fire becomes visible',
+      'Physically remove them from the building using reasonable force if they refuse to walk out on their own two feet',
+      'Remain with them inside the building until they agree to leave, whatever the fire is doing at the time of the alarm',
+      'Leave them where they are and assume they will move once the fire becomes visible to them from where they are',
     ],
     correctAnswer: 0,
     explanation:
@@ -2970,8 +2970,8 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     question: 'Why should a CO2 extinguisher NOT be used in a confined space?',
     options: [
       'It displaces oxygen and can cause asphyxiation',
-      'It leaves a residue that is difficult to clean',
-      'It is too noisy for enclosed areas',
+      'It leaves a residue that is difficult to clean up',
+      'It is too noisy for enclosed areas indoors',
       'It creates a fire risk in confined spaces',
     ],
     correctAnswer: 0,
@@ -3039,9 +3039,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     question: 'What is a fire blanket primarily used for?',
     options: [
       'Wrapping around a person whose clothing is on fire or smothering small fires',
-      'Sealing gaps under doors to stop smoke entering a room',
-      'Covering electrical equipment to protect it from water damage',
-      'Insulating escape routes against radiant heat during evacuation',
+      'Sealing gaps under doors to stop smoke entering a room during a full evacuation',
+      'Covering electrical equipment to protect it from water damage during firefighting',
+      'Insulating escape routes against radiant heat during evacuation of a floor',
     ],
     correctAnswer: 0,
     explanation:
@@ -3107,9 +3107,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     question: 'How do automatic sprinkler systems help control fires?',
     options: [
       'Individual sprinkler heads activate when heated to their threshold, releasing water directly over the fire',
-      'All of the sprinkler heads in the building discharge together as soon as the fire alarm sounds',
-      'Sprinkler heads release a fine inert gas that displaces the oxygen around the fire',
-      'A central operator manually directs water to the sprinkler head nearest the fire',
+      'All of the sprinkler heads in the building discharge together as soon as the fire alarm sounds in any zone at all',
+      'Sprinkler heads release a fine inert gas that displaces the oxygen around the fire and smothers the fire quickly',
+      'A central operator manually directs water to the sprinkler head nearest the fire from a remote control room',
     ],
     correctAnswer: 0,
     explanation:
@@ -3157,9 +3157,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 179,
     question: 'Under RIDDOR, when must a fire in a workplace be reported to the HSE?',
     options: [
-      'Whenever any fire occurs on the premises, whatever its outcome and however quickly it is put out by staff',
-      'Whenever the fire causes damage to property or stock above a set financial value fixed by the HSE',
-      'Whenever the fire and rescue service attends the incident and makes an entry in its own log',
+      'Whenever any fire occurs on the premises, whatever its outcome and however quickly it is put out on the day it happens',
+      'Whenever the fire causes damage to property or stock above a set financial value fixed by the HSE for the year in question',
+      'Whenever the fire and rescue service attends the incident and makes an entry in its own log of the incident at the premises itself',
       'Only when the fire results in the death of any person, specified injuries, or incapacitation of a worker for more than 7 days',
     ],
     correctAnswer: 3,
@@ -3191,10 +3191,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 181,
     question: 'What is root cause analysis in the context of fire incident investigation?',
     options: [
-      'Identifying the single item that first caught fire and stopping there',
+      'Identifying the single item that first caught fire and stopping there without more enquiry',
       'A systematic process to identify the underlying causes that led to the fire occurring',
-      'Estimating the financial cost of the fire damage for the insurer',
-      'Determining who is legally liable for prosecution after the fire',
+      'Estimating the financial cost of the fire damage for the insurer of the building and stock',
+      'Determining who is legally liable for prosecution after the fire at the premises',
     ],
     correctAnswer: 1,
     explanation:
@@ -3208,10 +3208,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 182,
     question: "What should be included in a 'lessons learned' review after a fire incident?",
     options: [
-      'A list of which members of staff were absent from the building on the day of the fire',
-      'An inventory of every item of stock and equipment destroyed in the fire',
+      'A list of which members of staff were absent from the building on the day of the fire and the reasons why',
+      'An inventory of every item of stock and equipment destroyed in the fire for the insurance claim that follows',
       'Analysis of what happened, what worked well, what failed, and recommendations for preventing recurrence',
-      'A breakdown of the repair costs to be submitted to the building insurer',
+      'A breakdown of the repair costs to be submitted to the building insurer and to the landlord in due course',
     ],
     correctAnswer: 2,
     explanation:
@@ -3225,8 +3225,8 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 183,
     question: 'Who should the responsible person liaise with at the scene of a workplace fire?',
     options: [
-      'The building insurer\'s loss adjuster',
-      'The Health and Safety Executive duty officer',
+      'The building insurer\'s loss adjuster on site',
+      'The Health and Safety Executive duty officer on call',
       'The local authority building control officer',
       'The fire and rescue service incident commander',
     ],
@@ -3243,8 +3243,8 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     question: "When should the building's insurer be notified of a fire?",
     options: [
       'As soon as reasonably practicable, typically within 24 hours',
-      'After the reinstatement works have been fully completed',
-      'Within 28 days, once the cost of the damage is known',
+      'After the reinstatement works have been fully completed on site',
+      'Within 28 days, once the cost of the damage is known in detail',
       'Where the fire was caused by an identified third party',
     ],
     correctAnswer: 0,
@@ -3259,10 +3259,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 185,
     question: 'What must happen to a fire risk assessment after a fire incident?',
     options: [
-      'It can remain unchanged provided it was adequate before the fire',
+      'It can remain unchanged provided it was adequate before the fire broke out at all',
       'It must be reviewed and updated to reflect the lessons learned from the incident',
-      'It should be destroyed and a completely new one written from scratch',
-      'It only needs updating if a person was actually injured in the fire',
+      'It should be destroyed and a completely new one written from scratch straight afterwards',
+      'It only needs updating if a person was actually injured in the fire at the premises',
     ],
     correctAnswer: 1,
     explanation:
@@ -3276,7 +3276,7 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 186,
     question: 'What support should be offered to staff following a fire incident in the workplace?',
     options: [
-      'A formal written warning for failing to evacuate quickly enough',
+      'A formal written warning for failing to evacuate quickly enough that day',
       'A deduction from pay for the time lost during the evacuation',
       'Psychological support and debriefing, recognising potential trauma',
       'Mandatory retraining as a fire marshal regardless of their role',
@@ -3293,9 +3293,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 187,
     question: 'What electrical work may be required after a fire in a building?',
     options: [
-      'Simply resetting any tripped circuit breakers to restore the supply',
-      'A visual check of the consumer unit before switching the power back on',
-      'Replacing only the cables that show visible signs of scorching',
+      'Simply resetting any tripped circuit breakers to restore the supply straight away',
+      'A visual check of the consumer unit before switching the power back on once more',
+      'Replacing only the cables that show visible signs of scorching or damage',
       'Full inspection, testing, and re-certification of the electrical installation',
     ],
     correctAnswer: 3,
@@ -3311,9 +3311,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     question: 'What is the correct technique for using a fire blanket on a pan fire?',
     options: [
       'Turn off the heat source, hold the blanket as a shield, and gently place it over the pan from front to back',
-      'Throw the blanket onto the pan from a safe distance to smother the flames quickly',
-      'Soak the blanket in water first, then drape it over the burning pan',
-      'Place the blanket over the pan from the far side towards yourself to direct flames away',
+      'Throw the blanket onto the pan from a safe distance to smother the flames and then leave the kitchen at once',
+      'Soak the blanket in water first, then drape it over the burning pan and turn the heat off once it is covered up',
+      'Place the blanket over the pan from the far side towards yourself to direct flames away from you as it settles',
     ],
     correctAnswer: 0,
     explanation:
@@ -3327,10 +3327,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 189,
     question: 'Why should powder extinguishers generally not be used indoors?',
     options: [
-      'The powder conducts electricity and creates a risk of electrocution when used indoors',
+      'The powder conducts electricity and creates a risk of electrocution when used on live equipment on site',
       'The powder cloud severely reduces visibility, can cause breathing difficulties, and leaves residue',
-      'The powder reacts violently with the oxygen present in an enclosed space',
-      'The powder is only effective on outdoor fires that are exposed to wind',
+      'The powder reacts violently with the oxygen present in an enclosed space such as a plant room indoors',
+      'The powder is only effective on outdoor fires that are exposed to wind and to open air outside on a site',
     ],
     correctAnswer: 1,
     explanation:
@@ -3344,10 +3344,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 190,
     question: 'What should a person check before attempting to fight a fire with an extinguisher?',
     options: [
-      'That the fire and rescue service has already arrived on the scene and has given their permission',
-      'That the building insurer has authorised the use of the extinguisher in writing',
+      'That the fire and rescue service has already arrived on the scene and has given their permission to tackle the fire',
+      'That the building insurer has authorised the use of the extinguisher in writing beforehand and in advance of the fire',
       'That they have a clear escape route behind them, the fire is small enough, and they have the right extinguisher',
-      'That all other occupants have first been accounted for at the assembly point',
+      'That all other occupants have first been accounted for at the assembly point outside the building itself',
     ],
     correctAnswer: 2,
     explanation:
@@ -3395,10 +3395,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 193,
     question: "What is the purpose of a hose reel in a building's firefighting provision?",
     options: [
-      'To supply water directly to the fire and rescue service pumping appliances',
+      'To supply water directly to the fire and rescue service pumping appliances on their arrival at the scene',
       'To provide a continuous water supply for first-aid firefighting by trained building occupants',
-      'To wash down the escape routes and remove smoke residue after a fire',
-      'To feed the automatic sprinkler system in the event of a mains failure',
+      'To wash down the escape routes and remove smoke residue after a fire has been put out by the crews',
+      'To feed the automatic sprinkler system in the event of a mains failure at the premises during a fire',
     ],
     correctAnswer: 1,
     explanation:
@@ -3413,10 +3413,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     question:
       'What dangerous occurrence involving fire or explosion is specifically reportable under RIDDOR?',
     options: [
-      'A small contained fire that staff extinguish within a few minutes using an extinguisher',
-      'A false fire alarm activation that causes a brief evacuation of the building',
+      'A small contained fire that staff extinguish within a few minutes using an extinguisher and without any injury',
+      'A false fire alarm activation that causes a brief evacuation of the building and no damage at all',
       'An uncontrolled explosion or fire in a workplace causing a stoppage of normal work for more than 24 hours',
-      'Any fire that activates one or more heads of the building sprinkler system',
+      'Any fire that activates one or more heads of the building sprinkler system on any floor of the premises',
     ],
     correctAnswer: 2,
     explanation:
@@ -3430,9 +3430,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 195,
     question: 'What is reinstatement in the context of fire incident recovery?',
     options: [
-      'The process of investigating the cause and the point of origin of the fire afterwards',
-      'The process of preparing and submitting the insurance claim for the damage',
-      'The process of reviewing and updating the fire risk assessment afterwards',
+      'The process of investigating the cause and the point of origin of the fire for the fire report',
+      'The process of preparing and submitting the insurance claim for the damage to the building and its contents',
+      'The process of reviewing and updating the fire risk assessment for the premises after the event',
       'The process of restoring the building and its systems to a safe and operational condition after a fire',
     ],
     correctAnswer: 3,
@@ -3465,10 +3465,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     question:
       'What information should be recorded when conducting monthly visual inspections of fire extinguishers?',
     options: [
-      'The full internal condition of each extinguisher, recorded after it has been dismantled and inspected',
+      'The full internal condition of each extinguisher, recorded after it has been dismantled by a competent person',
       'Location, type, condition, pressure gauge reading (if applicable), seal integrity, and any damage or obstruction',
-      'The results of the discharge test carried out on each extinguisher that month',
-      'The name and qualifications of the manufacturer of each extinguisher fitted',
+      'The results of the discharge test carried out on each extinguisher by a competent person at the premises',
+      'The name and qualifications of the manufacturer of each extinguisher fitted at the premises during the month itself',
     ],
     correctAnswer: 1,
     explanation:
@@ -3482,10 +3482,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 198,
     question: 'Why is it important to preserve the fire scene after an incident?',
     options: [
-      'To allow staff to return and recover their personal belongings more quickly',
-      'To speed up the reinstatement and the repair of the damaged building',
+      'To allow staff to return and recover their personal belongings after the incident at the premises',
+      'To speed up the reinstatement and the repair of the damaged building at the premises afterwards',
       'To allow fire investigators to determine the origin, cause, and circumstances of the fire',
-      'To reduce the eventual cost of the insurance claim for the damage',
+      'To reduce the eventual cost of the insurance claim for the damage to the building and its stock',
     ],
     correctAnswer: 2,
     explanation:
@@ -3499,9 +3499,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 199,
     question: 'What additional risk does a CO2 extinguisher pose to the user during discharge?',
     options: [
-      'It produces a bright flash that can cause temporary blindness',
-      'It creates a high-pitched noise that can damage hearing',
-      'It releases a strong chemical smell that causes nausea',
+      'It produces a bright flash that can cause temporary blindness to the user',
+      'It creates a high-pitched noise that can damage hearing in an enclosed room',
+      'It releases a strong chemical smell that causes nausea in the user',
       'The horn becomes extremely cold and can cause cold burns (frostbite)',
     ],
     correctAnswer: 3,
@@ -3518,9 +3518,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
       'What should be the first action taken by a fire marshal after a fire investigation is complete and the building is cleared for reoccupation?',
     options: [
       'Conduct a thorough check of their zone to confirm all fire safety measures are in place before staff return',
-      'Submit the fire incident report to the Health and Safety Executive and to the insurer at once',
-      'Order replacement fire extinguishers and signage for the whole of the building',
-      'Begin the redecoration and repair of the areas damaged by the fire',
+      'Submit the fire incident report to the Health and Safety Executive and to the insurer on the same day',
+      'Order replacement fire extinguishers and signage for the whole of the building before any of the staff return',
+      'Begin the redecoration and repair of the areas damaged by the fire before any of the staff come back to work',
     ],
     correctAnswer: 0,
     explanation:
@@ -3603,7 +3603,7 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     question: 'Why must a water extinguisher never be used on energised electrical equipment?',
     options: [
       'Water conducts, so the jet can make the operator part of a circuit',
-      'Water reacts chemically with copper and produces a flammable gas',
+      'Water reacts chemically with copper and produces a flammable gas at once',
       'Water is banned because it leaves a residue on the switchgear',
       'Water cools too slowly to be effective on an energised fault',
     ],
@@ -3619,8 +3619,8 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 206,
     question: 'Why is a loose terminal screw at a socket outlet treated as a fire risk?',
     options: [
-      'The loose terminal raises the circuit current until the fuse operates',
-      'The loose terminal lowers circuit impedance and causes an overload',
+      'The loose terminal raises the circuit current until the fuse operates each time',
+      'The loose terminal lowers circuit impedance and causes an overload on the cable',
       'Resistance at the joint dissipates heat and can arc, igniting the accessory',
       'The loose terminal removes the earth reference and creates leakage',
     ],
@@ -3636,10 +3636,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 207,
     question: 'What does BS 7671 require of a consumer unit enclosure within domestic premises?',
     options: [
-      'A consumer unit in domestic premises shall have an AFDD on every final circuit',
+      'A consumer unit in domestic premises shall have an AFDD on every final circuit too',
       'The enclosure shall be non-combustible, or be within a non-combustible cabinet',
-      'The enclosure shall be mounted only on a wall of masonry or of solid concrete',
-      'The enclosure shall be sealed to the fire resistance of the wall behind it',
+      'The enclosure shall be mounted only on a wall of masonry or of solid concrete block',
+      'The enclosure shall be sealed to the fire resistance of the wall behind it at all points',
     ],
     correctAnswer: 1,
     explanation:
@@ -3671,7 +3671,7 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     question: 'An alteration disturbs an existing fire seal around a cable penetration. What does BS 7671 require next?',
     options: [
       'Reinstate the disturbed sealing as soon as it is reasonably practicable',
-      'Record the breach and leave reinstatement to the principal contractor',
+      'Record the breach and leave reinstatement to the principal contractor later',
       'Reinstate the sealing at the next periodic inspection of the premises',
       'Leave the breach open so that the cable can be withdrawn again later',
     ],
@@ -3687,8 +3687,8 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 210,
     question: 'Trunking passes through a wall having a specified fire resistance. How must the penetration be sealed?',
     options: [
-      'Sealing around the outside of the trunking alone satisfies the regulation fully',
-      'Sealing the inside of the trunking alone is adequate for a busbar trunking',
+      'Sealing around the outside of the trunking alone satisfies the regulation fully in law',
+      'Sealing the inside of the trunking alone is adequate for a busbar trunking of any size',
       'It must be sealed internally to the fire resistance of the element and externally',
       'Sealing is needed only where the trunking passes through an external wall',
     ],
@@ -3704,10 +3704,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 211,
     question: 'In practice, what does reinstating a penetration to the fire resistance of the element mean?',
     options: [
-      'Fill the gap with any expanding foam that carries a manufacturer name',
+      'Fill the gap with any expanding foam that carries a manufacturer name on the tin',
       'Use a product tested in that construction, to that period, with that service',
-      'Fill the void with mineral wool and finish it with a skim of plaster',
-      'Match the colour of the wall so the repair is not visible at handover',
+      'Fill the void with mineral wool and finish it with a skim of plaster over the face',
+      'Match the colour of the wall so the repair is not visible at handover to the client',
     ],
     correctAnswer: 1,
     explanation:
@@ -3721,7 +3721,7 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 212,
     question: 'Who carries responsibility for fire stopping a cable penetration formed by the electrical contractor?',
     options: [
-      'The main contractor, because compartmentation is a structural matter',
+      'The main contractor, because compartmentation is a structural matter on site',
       'The building control body, which inspects seals before handover',
       'The fire and rescue service, on the audit visit after occupation',
       'The contractor who made the penetration, as part of that installation',
@@ -3739,8 +3739,8 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     question: 'How is the sealing requirement of Regulation 527.2.1 satisfied for a proprietary sealing system?',
     options: [
       'The sealing has passed a relevant type test for that wiring system',
-      'The installer has held a fire stopping card for at least two years',
-      'The product is listed in the manufacturer catalogue as fire rated',
+      'The installer has held a fire stopping card for at least two years now',
+      'The product is listed in the manufacturer catalogue as fire rated too',
       'The seal is inspected visually and recorded on the certificate',
     ],
     correctAnswer: 0,
@@ -3755,10 +3755,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 214,
     question: 'What did BS 7671:2018+A4:2026 introduce at Regulation 422.2?',
     options: [
-      'A ban on any wiring system being installed within an escape route',
-      'A requirement for emergency lighting to be designed to BS 7671',
+      'A ban on any wiring system being installed within an escape route of any kind',
+      'A requirement for emergency lighting to be designed to BS 7671 in all premises',
       'Separate requirements for escape routes, including protected escape routes',
-      'A duty to fit AFDDs on every final circuit crossing an escape route',
+      'A duty to fit AFDDs on every final circuit crossing an escape route in a building',
     ],
     correctAnswer: 2,
     explanation:
@@ -3773,7 +3773,7 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     question: 'Wiring systems must be supported so that they cannot collapse prematurely in a fire. Where does that requirement apply?',
     options: [
       'Throughout the installation, not just within escape routes as before',
-      'Within escape routes and protected stairways of the premises only',
+      'Within escape routes and protected stairways of the premises only in use',
       'Within escape routes and any room containing a sleeping occupant',
       'Wherever a cable is clipped direct to a combustible timber joist',
     ],
@@ -3789,10 +3789,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 216,
     question: 'What horizontal illuminance does current emergency escape lighting guidance call for on an escape route?',
     options: [
-      'Not less than 5 lux measured at the centre line of the escape route',
+      'Not less than 5 lux measured at the centre line of the escape route itself',
       'Not less than 1 lux measured across the full width of the escape route',
       'Not less than 1 lux measured at the centre line of the escape route',
-      'Not less than 5 lux measured across the full width of the escape route',
+      'Not less than 5 lux measured across the full width of the escape route itself',
     ],
     correctAnswer: 1,
     explanation:
@@ -3806,9 +3806,9 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 217,
     question: 'What is the first purpose of a hot work permit?',
     options: [
-      'To record who supplied the welding set and its inspection date',
-      'To move liability for any fire from the client to the operative',
-      'To confirm that a fire extinguisher of any type is within reach',
+      'To record who supplied the welding set and its inspection date on site',
+      'To move liability for any fire from the client to the operative on the job',
+      'To confirm that a fire extinguisher of any type is within reach of the work',
       'To ensure the area is free of fire and explosion risks before work',
     ],
     correctAnswer: 3,
@@ -3823,7 +3823,7 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 218,
     question: 'Cutting and grinding on a steel frame has just finished. What control is expected on completion?',
     options: [
-      'Return the permit to the office and close it out the following week',
+      'Return the permit to the office and close it out the following week instead',
       'Move all combustible materials back into the area straight away',
       'Keep a watch on the area afterwards, as smouldering can develop late',
       'Rely on the building smoke detection to raise the alarm if needed',
@@ -3841,8 +3841,8 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     question: 'HSE guidance sets out fire risk assessment as five steps. What is the first step?',
     options: [
       'Identify the fire hazards, including sources of fuel, ignition and oxygen',
-      'Decide how many extinguishers the site needs for its total floor area',
-      'Write the fire plan and issue it to everyone working on the site',
+      'Decide how many extinguishers the site needs for its total floor area first',
+      'Write the fire plan and issue it to everyone working on the site on that day',
       'Review the assessment whenever the work or the building changes',
     ],
     correctAnswer: 0,
@@ -3857,10 +3857,10 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 220,
     question: 'Under the Regulatory Reform (Fire Safety) Order, who is the responsible person for a workplace?',
     options: [
-      'The most senior electrician present on the site at the time of work',
+      'The most senior electrician present on the site at the time of work that day',
       'The employer, or whoever has control of the premises for a business',
-      'The fire and rescue service officer who last audited the premises',
-      'The insurer of the building, which sets the fire precautions needed',
+      'The fire and rescue service officer who last audited the premises on site',
+      'The insurer of the building, which sets the fire precautions needed on site',
     ],
     correctAnswer: 1,
     explanation:
@@ -3909,7 +3909,7 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     question: 'What is the main danger of discharging a carbon dioxide extinguisher in a small unventilated plant room?',
     options: [
       'The gas displaces oxygen, so the atmosphere becomes an asphyxiation risk',
-      'The gas becomes flammable once it is heated by the burning equipment',
+      'The gas becomes flammable once it is heated by the burning equipment nearby',
       'The gas attacks copper busbars and leaves them mechanically weakened',
       'The gas condenses into a conductive film across insulation surfaces',
     ],
@@ -3942,8 +3942,8 @@ export const fireSafetyQuestionBank: StandardMockQuestion[] = [
     id: 225,
     question: 'An electrician wedges a fire door open to make cable pulling easier. Why is that a serious fault?',
     options: [
-      'It voids the warranty on the door leaf and its intumescent seals',
-      'It stops the door closer from being tested at its annual service',
+      'It voids the warranty on the door leaf and its intumescent seals at once',
+      'It stops the door closer from being tested at its annual service visit',
       'It makes the corridor a designated hot work area for the shift',
       'It breaks the compartment line, letting smoke into the escape route',
     ],

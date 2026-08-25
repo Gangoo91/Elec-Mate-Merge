@@ -6,7 +6,9 @@
 
 import { supabase } from '@/integrations/supabase/client';
 import { normalisePdfDates } from '@/utils/certDate';
-import { getBoardWays, getMainBoard, MAIN_BOARD_ID, sortBoards } from '@/types/distributionBoard';
+import { getBoardWays, getMainBoard, MAIN_BOARD_ID, sortBoards,
+  printableBoardLocation,
+} from '@/types/distributionBoard';
 import { formatBsAmendment, formatDesignStandard } from '@/data/standards';
 import type { EICRPayload } from '@/types/eicr-payload';
 import { normaliseRcdRating } from '@/utils/rcdRating';
@@ -344,7 +346,7 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       const userRef = (board.reference || '').trim();
       return {
         designation: userRef || board.name || board.designation || '',
-        location: board.location || '',
+        location: printableBoardLocation(board.location),
         manufacturer: board.make || board.manufacturer || '',
         board_type: board.type || board.boardType || '',
         ways: boardWays?.toString() || board.ways || '',
@@ -733,7 +735,7 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       return {
         // Board metadata
         db_reference: board.reference || board.name || 'Main DB',
-        db_location: board.location || '',
+        db_location: printableBoardLocation(board.location),
         // Main board: fall back to the scanner's flat boardBrand key
         db_manufacturer: board.make || (isMainBoard ? scanVal('boardBrand') : ''),
         db_type: board.type || '',
@@ -1088,6 +1090,33 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       next_inspection_date: get('nextInspectionDate'),
       inspection_interval: get('inspectionInterval'),
       interval_reasons: get('intervalReasons'),
+      /*
+       * ELE-1611 — the interval as words, so the certificate reads
+       * "25/08/2029 (3 years)" rather than a bare date the reader has to
+       * subtract to understand.
+       */
+      inspection_interval_display: (() => {
+        const years = String(get('inspectionInterval') || '').trim();
+        if (!years) return '';
+        return `${years} ${years === '1' ? 'year' : 'years'}`;
+      })(),
+      /** What the premises are used for (free text). */
+      installation_use: get('installationUse'),
+      /*
+       * The change-of-occupancy recommendation, as the sentence to print.
+       *
+       * Emitted as finished wording rather than a boolean so the template
+       * cannot paraphrase it into something the electrician did not say.
+       * Source: IET Guidance Note 3, 3.1 — periodic inspection and testing
+       * should be considered on a change of occupancy (especially rented
+       * domestic accommodation) or a change of use. ⚠️ GN3 guidance, NOT a
+       * BS 7671 regulation: 651.1 makes the duty conditional on requirements
+       * set out elsewhere, so a 65x citation here would be false.
+       */
+      reinspect_on_occupancy_change: get('reinspectOnOccupancyChange') ? 'Yes' : '',
+      reinspect_on_occupancy_change_note: get('reinspectOnOccupancyChange')
+        ? 'Further inspection is recommended on a change of occupancy or change of use of the premises, in addition to the interval above.'
+        : '',
     },
 
     standards_compliance: {
@@ -1227,7 +1256,7 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
         type: board?.mainSwitchType || '',
         rating: board?.mainSwitchRating || get('mainSwitchRating') || '',
         poles: board?.mainSwitchPoles || get('mainSwitchPoles') || '',
-        location: board?.location || get('cuLocation') || '',
+        location: printableBoardLocation(board?.location) || get('cuLocation') || '',
         voltage_rating: get('mainSwitchVoltageRating') || '',
       };
     })(),
@@ -1263,7 +1292,7 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
           get('boardDesignation', 'Main DB'),
         board_size: boardSize,
         board_type: mainBoard?.type || get('cuType'),
-        board_location: mainBoard?.location || get('cuLocation'),
+        board_location: printableBoardLocation(mainBoard?.location) || get('cuLocation'),
         // Board scanner writes flat boardBrand/boardModel (EICRForm) — read
         // them as last-resort fallbacks so scanned details reach the PDF.
         board_manufacturer: mainBoard?.make || get('cuManufacturer') || scanVal('boardBrand'),
@@ -1668,7 +1697,7 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
     limitationsOfInspection: get('limitationsOfInspection'),
 
     // Distribution Board (flat)
-    db_location: formData.distributionBoards?.[0]?.location || get('cuLocation'),
+    db_location: printableBoardLocation(formData.distributionBoards?.[0]?.location) || get('cuLocation'),
     db_manufacturer:
       formData.distributionBoards?.[0]?.make || get('cuManufacturer') || scanVal('boardBrand'),
     db_model: formData.distributionBoards?.[0]?.model || get('cuModel') || scanVal('boardModel'),

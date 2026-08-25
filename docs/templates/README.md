@@ -69,7 +69,7 @@ template ID anywhere else.**
 These sit outside this directory and are being worked on separately:
 
 - EICR — `docs/pdfmonkey-eicr-template.html` (canonical)
-- EIC — `docs/pdfmonkey-eic-template.html`
+- EIC — `docs/templates/eic-certificate-template.html` (canonical; mirrors PDFMonkey template B39538E9-8FF1-4882-BC13-70B1C0D30947)
 - Minor works — **five copies survive, not yet de-duplicated.** Three here
   (`minor-works-certificate-template.html`, `-v2.html`,
   `minor-works-pdfmonkey-template.html`), a `-v3.html.bak`, and a stale

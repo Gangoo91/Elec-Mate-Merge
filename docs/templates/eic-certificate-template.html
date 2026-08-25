@@ -1752,6 +1752,20 @@ declaration with a single signature instead of three identical blocks.{% endcomm
         </div>
     </div>
     {% endif %}
+    <!--
+      ELE-1608 — "there is no main switch". On a three-phase service head with
+      BS 88 fuses feeding DB1 directly there is no separate isolator, switch or
+      RCD. The fields below all read N/A in that case, which is correct but
+      ambiguous; this states the reason once, in words. Sentence composed in
+      the formatter so it cannot be reworded over the electrician's signature.
+    -->
+    {% if main_protective_device.not_applicable and main_protective_device.not_applicable != "" %}
+    <div class="inline-form" style="background: #f8fafc; padding: 4px 6px; border-left: 3px solid #94a3b8; margin-bottom: 2px">
+        <div class="inline-group" style="flex: 1">
+            <span class="inline-value wide">{{ main_protective_device.not_applicable }}</span>
+        </div>
+    </div>
+    {% endif %}
     <div class="inline-form">
         <div class="inline-group">
             <span class="inline-label">Type:</span>

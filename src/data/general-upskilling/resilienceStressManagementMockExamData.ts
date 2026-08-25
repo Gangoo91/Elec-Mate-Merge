@@ -47,10 +47,10 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     id: 2,
     question: 'What happens to the body during the Alarm stage of the General Adaptation Syndrome?',
     options: [
-      'The body adapts and begins to cope with the stressor effectively',
-      'The immune system strengthens to prepare for future stressors',
+      'The body settles into adaptation, drawing on reserves to cope with the ongoing stressor',
+      'The immune system strengthens permanently to protect against future stressors',
       'The body releases cortisol and adrenaline, triggering the fight-or-flight response',
-      'The body enters a state of deep relaxation to conserve energy',
+      'The body drops into deep relaxation and conserves energy for the days ahead',
     ],
     correctAnswer: 2,
     explanation:
@@ -79,9 +79,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
       'In the Lazarus and Folkman (1984) Transactional Model, what does primary appraisal involve?',
     options: [
       'Assessing whether the situation is irrelevant, benign-positive, or stressful',
-      'Deciding whether to use problem-focused or emotion-focused coping',
-      'Evaluating what coping resources are available to deal with the stressor',
-      'Measuring the physiological impact of the stressor on the body',
+      'Selecting the coping response, choosing between problem-focused and emotion-focused',
+      'Evaluating which coping resources you hold and whether they will be sufficient',
+      'Measuring the cortisol and adrenaline released by the body under threat',
     ],
     correctAnswer: 0,
     explanation:
@@ -109,10 +109,10 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     question:
       'The Yerkes-Dodson Law (1908) describes the relationship between arousal and performance as which shape?',
     options: [
-      'A downward slope — any arousal reduces performance',
-      'A straight upward line — more arousal always means better performance',
+      'A downward slope — performance falls steadily as soon as any arousal appears',
+      'A straight upward line — the more arousal there is, the better the performance',
       'An inverted-U curve — performance peaks at moderate arousal then declines',
-      'A flat line — arousal has no measurable effect on performance',
+      'A flat line — the level of arousal has no measurable effect on performance at all',
     ],
     correctAnswer: 2,
     explanation:
@@ -172,10 +172,10 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     question:
       'A colleague on site who was previously outgoing has become withdrawn, irritable, and is making uncharacteristic mistakes. This most likely indicates:',
     options: [
-      'They are deliberately trying to get out of work',
-      'They need stricter supervision and more frequent checks',
+      'They are deliberately avoiding work and should be given a formal written warning first',
+      'They need closer daily supervision and more frequent checks on their paperwork',
       'They may be experiencing significant stress and should be approached with concern',
-      'They are probably just tired and will recover after the weekend',
+      'They are simply tired and will be completely back to normal after the weekend',
     ],
     correctAnswer: 2,
     explanation:
@@ -219,10 +219,10 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     question:
       'Which behavioural symptom of stress is particularly dangerous on a construction site?',
     options: [
-      'Taking slightly longer to complete familiar tasks than usual',
+      'Taking noticeably longer than usual to finish familiar routine jobs on site',
       'Increased risk-taking and poor concentration leading to safety errors',
-      'A noticeable improvement in punctuality and attention to detail',
-      'Occasionally needing to double-check a measurement before cutting',
+      'A noticeable improvement in punctuality and in attention to fine detail',
+      'Needing to double-check a measurement before making an awkward cut',
     ],
     correctAnswer: 1,
     explanation:
@@ -234,10 +234,10 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     id: 14,
     question: 'What is distress?',
     options: [
-      'Positive stress that motivates and enhances performance',
-      'A normal level of arousal that has no effect on performance',
+      'Positive stress that motivates a person and improves their performance at work',
+      'A normal level of arousal that has no real effect on how well you perform',
       'Negative stress that overwhelms coping ability and impairs functioning',
-      'The body’s initial alarm reaction to a sudden, short-lived threat',
+      'The initial alarm reaction of the body to a sudden and short-lived threat',
     ],
     correctAnswer: 2,
     explanation:
@@ -267,9 +267,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
       'Under the Management of Health and Safety at Work Regulations 1999, Regulation 3 requires employers to:',
     options: [
       'Carry out a suitable and sufficient assessment of risks to health and safety, including stress',
-      'Provide every employee with private medical insurance covering mental health treatment',
-      'Guarantee that no employee will ever experience stress while at work',
-      'Refer any employee showing signs of stress to occupational health within 24 hours',
+      'Provide every employee with private medical insurance that covers mental health treatment',
+      'Guarantee that no employee will ever experience any stress at any point during their work',
+      'Refer any employee showing early signs of stress to an occupational health provider within 24 hours',
     ],
     correctAnswer: 0,
     explanation:
@@ -281,10 +281,10 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     id: 17,
     question: 'The HSE Management Standard for "Control" relates to:',
     options: [
-      'The ability of HR to control absence rates',
+      'How well HR is able to control the rate of sickness absence',
       'How much say a person has in the way they do their work',
-      'How well managers control the behaviour of their teams',
-      'The level of CCTV and monitoring on a construction site',
+      'How tightly managers control the behaviour of their own teams',
+      'The level of CCTV and monitoring used across a site',
     ],
     correctAnswer: 1,
     explanation:
@@ -328,9 +328,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
       'A site electrician tells you he has been having trouble sleeping, is snapping at his family, and feels his chest tighten every Sunday evening before the work week. These symptoms suggest:',
     options: [
       'Work-related stress manifesting across physical, emotional, and behavioural domains',
-      'A simple lack of sleep that a few early nights will fully resolve',
-      'A purely physical health problem unrelated to his job or workload',
-      'Normal pre-week nerves that every worker experiences and should ignore',
+      'A straightforward lack of sleep that several early nights at home would completely resolve',
+      'A purely physical health problem that has nothing at all to do with his job or workload',
+      'Ordinary pre-week nerves that every worker on site experiences and should simply ignore',
     ],
     correctAnswer: 0,
     explanation:
@@ -342,10 +342,10 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     id: 21,
     question: 'The Exhaustion stage of the General Adaptation Syndrome is characterised by:',
     options: [
-      'The body successfully adapting and returning to normal',
+      'The body adapting successfully and returning to its normal resting state',
       "Depletion of the body's resources, leading to burnout, illness, or breakdown",
-      'A sudden burst of energy as the body makes a final attempt to cope',
-      'The stressor being removed and recovery beginning immediately',
+      'A sudden surge of energy as the body makes one final attempt to keep on coping',
+      'The stressor being removed and full recovery beginning almost straight away',
     ],
     correctAnswer: 1,
     explanation:
@@ -418,10 +418,10 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     id: 26,
     question: 'The HSE Management Standard for "Change" refers to:',
     options: [
-      'How often employees are required to change their work clothes',
-      'The legal requirement to change risk assessments every 12 months',
+      'How often employees are required to change into clean work clothing on site',
+      'The legal requirement to review and change every risk assessment each year',
       'How organisational change, large or small, is managed and communicated',
-      'Moving workers between sites without notice',
+      'Moving workers between different sites without any prior notice',
     ],
     correctAnswer: 2,
     explanation:
@@ -433,9 +433,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     id: 27,
     question: 'Which emotional symptom of stress is most likely to damage workplace relationships?',
     options: [
-      'Feeling occasionally tired at the end of a shift',
-      'Mild nervousness before a performance review',
-      'Feeling proud after completing a difficult task',
+      'Feeling somewhat tired towards the end of a long working shift on site',
+      'Mild nervousness in the days before a formal annual performance review',
+      'Feeling genuinely proud after finishing a long and difficult job on site',
       'Persistent irritability, mood swings, and disproportionate anger',
     ],
     correctAnswer: 3,
@@ -451,8 +451,8 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     options: [
       'Have a private, non-judgemental conversation expressing genuine concern',
       'Report your concerns to their line manager before speaking to them',
-      'Wait several weeks to see whether the behaviour resolves on its own',
-      'Raise it publicly during a team meeting so everyone can offer support',
+      'Wait several more weeks to see whether the behaviour settles down on its own',
+      'Raise it during a team meeting so that everyone can offer support',
     ],
     correctAnswer: 0,
     explanation:
@@ -464,10 +464,10 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     id: 29,
     question: 'The Resistance stage of the General Adaptation Syndrome involves:',
     options: [
-      'The sudden release of adrenaline that produces the initial shock reaction',
+      'The sudden release of adrenaline and cortisol that produces the initial shock reaction of alarm',
       'The body attempting to adapt and cope with the ongoing stressor, using significant resources',
-      'The complete depletion of resources that leads to burnout and breakdown',
-      'The immediate return of the body to its normal, relaxed baseline state',
+      'The complete depletion of the reserves of the body that finally leads to burnout and breakdown',
+      'The immediate return of the body to its normal, relaxed baseline state within minutes',
     ],
     correctAnswer: 1,
     explanation:
@@ -479,10 +479,10 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     id: 30,
     question: 'The Transactional Model of stress emphasises that stress is determined by:',
     options: [
-      'The amount of cortisol and adrenaline released during the alarm stage',
-      'The level of physical danger objectively present in the situation',
+      'The amount of cortisol and adrenaline released during the alarm stage of stress',
+      'The level of physical danger that is objectively present in the situation itself',
       'The individual\'s perception of the event and their perceived ability to cope',
-      'The total number of stressors a person faces in a single day',
+      'The total number of separate stressors a person happens to face in a single working day',
     ],
     correctAnswer: 2,
     explanation:
@@ -497,7 +497,7 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     options: [
       'A very low level of arousal, as relaxation improves precision on routine work',
       'A complete absence of arousal, allowing the task to be done on autopilot',
-      'A moderate level of arousal identical to that needed for complex tasks',
+      'A moderate level of arousal, identical to that needed for complex diagnostic tasks',
       'A relatively high level of arousal, as the task requires less cognitive effort',
     ],
     correctAnswer: 3,
@@ -526,10 +526,10 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     id: 33,
     question: 'The concept of "allostatic load" in stress physiology refers to:',
     options: [
-      'The maximum weight a stressed worker can safely lift',
+      'The maximum weight a stressed worker is permitted to lift safely on site',
       'The cumulative wear and tear from chronic activation of stress systems',
-      'The number of stressors a person can handle simultaneously',
-      'The financial cost of stress-related absence to a business',
+      'The number of separate stressors a person is able to handle at the same time',
+      'The annual financial cost of stress-related absence to a business',
     ],
     correctAnswer: 1,
     explanation:
@@ -542,10 +542,10 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     question:
       'An employer conducts a stress risk assessment and identifies that their electricians face high demands, low control, and poor support. According to the Demand-Control-Support model, this combination predicts:',
     options: [
-      'High motivation and job satisfaction',
-      'Average stress levels that require no intervention',
+      'High motivation, strong job satisfaction and consistently low absence',
+      'An average level of stress that requires no further action at all',
       'The highest risk of work-related stress and associated illness',
-      'Low stress because high demands keep workers engaged',
+      'Low stress, because high demands keep the workers engaged and motivated',
     ],
     correctAnswer: 2,
     explanation:
@@ -558,9 +558,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     question:
       'Which of the following best explains why construction has a particularly high suicide rate compared to other industries?',
     options: [
-      'A single dominant cause, namely the long hours worked on most construction sites',
-      'Purely the physical danger of the work, which raises baseline anxiety levels',
-      'Mainly the high pay, which leads workers to take on excessive responsibility',
+      'A single dominant cause, namely the very long hours that are worked on most construction sites',
+      'Purely the physical danger of the work, which raises baseline anxiety levels across the whole industry',
+      'Mainly the high pay, which leads many workers to take on excessive personal responsibility',
       'A combination of job insecurity, peripatetic working, help-seeking stigma, and financial pressure',
     ],
     correctAnswer: 3,
@@ -575,9 +575,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
       'If a stressed worker presents with chest pain and shortness of breath, the priority action is to:',
     options: [
       'Treat it as a potential medical emergency and call 999 without delay',
-      'Reassure them it is only stress and encourage them to keep working',
-      'Send them home to rest and tell them to see their GP next week',
-      'Give them a strong coffee and a short break before they continue',
+      'Reassure them it is only stress and encourage them to carry on working',
+      'Send them home to rest and tell them to see their own GP some time next week',
+      'Give them a strong coffee and a short break before they carry on',
     ],
     correctAnswer: 0,
     explanation:
@@ -589,10 +589,10 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     id: 37,
     question: 'The HSE Management Standard for "Relationships" includes addressing:',
     options: [
-      'Personal romantic relationships between colleagues',
+      'Personal romantic relationships between colleagues working on the same site',
       'Unacceptable behaviour such as bullying, harassment, and conflict at work',
-      'The relationship between the company and its shareholders',
-      'Client-contractor commercial relationships',
+      'The relationship between the company and its shareholders and other investors',
+      'Commercial contract relationships between the client and the principal contractor',
     ],
     correctAnswer: 1,
     explanation:
@@ -621,8 +621,8 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
       'Which of the following is an emotional symptom of stress rather than a cognitive one?',
     options: [
       'Difficulty concentrating and making decisions',
-      'Persistent headaches and muscle tension',
-      'Withdrawing from colleagues and increased absence',
+      'Persistent headaches and constant muscle tension',
+      'Withdrawing from colleagues and taking more days off sick',
       'Persistent feelings of dread and overwhelming anxiety',
     ],
     correctAnswer: 3,
@@ -637,9 +637,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
       'In the context of stress risk assessment, a "hazard" versus a "risk" is best described as:',
     options: [
       'A hazard has the potential to cause harm; a risk is the likelihood and severity of that harm',
-      'A hazard is a minor issue, whereas a risk is always a major, life-threatening one',
-      'A hazard only applies to physical dangers, whereas a risk applies only to mental health',
-      'A hazard and a risk mean exactly the same thing in stress risk assessment',
+      'A hazard is always only a minor issue, whereas a risk is always a major and life-threatening one',
+      'A hazard applies only to physical dangers on site, whereas a risk applies only to mental health',
+      'A hazard and a risk mean exactly the same thing when a stress risk assessment is done',
     ],
     correctAnswer: 0,
     explanation:
@@ -684,9 +684,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     question:
       'Carol Dweck (2006) described two types of mindset. A "growth mindset" is the belief that:',
     options: [
-      'Abilities and intelligence are fixed at birth and cannot meaningfully change',
-      'Success depends mainly on natural talent rather than effort or learning',
-      'Setbacks are proof that a person lacks the ability for a particular task',
+      'Abilities and intelligence are fixed at birth and cannot meaningfully be changed later in life',
+      'Success depends mainly on natural talent rather than on effort, learning, or persistence',
+      'Setbacks are clear proof that a person simply lacks the ability for that particular task',
       'Abilities and intelligence can be developed through effort, learning, and persistence',
     ],
     correctAnswer: 3,
@@ -701,9 +701,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
       'The concept of neuroplasticity is important to resilience because it demonstrates that:',
     options: [
       'The brain can form new neural pathways throughout life, so resilience can be built',
-      'The brain stops developing in early childhood, so resilience is fixed by adulthood',
-      'Personality is entirely genetic, so resilience cannot be learned or strengthened',
-      'Stress permanently damages the brain, making resilience impossible to rebuild',
+      'The brain stops developing during early childhood, so resilience is fixed by adulthood',
+      'Personality is entirely genetic, so resilience cannot be learned or improved',
+      'Stress permanently damages the brain, so resilience can never be rebuilt again',
     ],
     correctAnswer: 0,
     explanation:
@@ -715,10 +715,10 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     id: 45,
     question: 'The "resilience bucket" metaphor describes:',
     options: [
-      'The idea that resilience is a fixed container that cannot be enlarged or emptied',
+      'The idea that resilience is a fixed container which can never be enlarged or emptied at all',
       'The idea that stress capacity is finite, so resilience cuts inflow and raises outflow',
-      'The idea that stress should simply be ignored until the bucket eventually overflows',
-      'The idea that only major life events, and not daily hassles, ever fill the bucket',
+      'The idea that stress should simply be ignored until the bucket finally overflows completely',
+      'The idea that only major life events, and never daily hassles, ever fill the bucket',
     ],
     correctAnswer: 1,
     explanation:
@@ -730,10 +730,10 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     id: 46,
     question: 'A protective factor for resilience is:',
     options: [
-      'A condition that increases a person’s vulnerability to stress and adversity',
-      'A symptom of stress such as poor sleep or persistent muscle tension',
+      'A condition or attribute that increases the vulnerability of a person to stress and adversity',
+      'A recognised symptom of stress such as broken sleep, low mood, or persistent muscle tension',
       'A condition or attribute that reduces the impact of risk and supports positive adaptation',
-      'A stage of the General Adaptation Syndrome in which resources are depleted',
+      'A stage of the General Adaptation Syndrome in which the remaining resources are all depleted',
     ],
     correctAnswer: 2,
     explanation:
@@ -745,9 +745,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     id: 47,
     question: 'Which of the following is a risk factor that reduces resilience?',
     options: [
-      'Regular exercise, social connection, and adequate sleep',
-      'A strong sense of purpose and clear personal goals',
-      'Effective problem-solving skills and emotional regulation',
+      'Regular exercise, strong social connection, and enough good-quality sleep',
+      'A strong sense of purpose and a clear set of personal work goals',
+      'Effective problem-solving skills and good emotional regulation',
       'Social isolation, lack of support networks, and poor coping habits',
     ],
     correctAnswer: 3,
@@ -761,9 +761,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     question: 'Seligman\'s concept of "Learned Optimism" proposes that:',
     options: [
       'Optimistic thinking can be learned by challenging pessimistic explanatory styles',
-      'Some people are simply born optimistic and others can never learn to be',
+      'Some people are simply born optimistic and others can never learn to think that way',
       'Optimism is always preferable to realism in every situation a person faces',
-      'Pessimistic people are consistently more intelligent than optimistic people',
+      'Pessimistic people are consistently more intelligent than optimistic people at work',
     ],
     correctAnswer: 0,
     explanation:
@@ -775,10 +775,10 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     id: 49,
     question: 'A stress diary is useful for building resilience because it helps a person to:',
     options: [
-      'Eliminate all sources of stress permanently from their life',
+      'Eliminate every single source of stress permanently from both their work and their home life',
       'Identify patterns, triggers, and the effectiveness of their coping strategies over time',
-      'Prove to their employer that their workload is too high',
-      'Replace professional mental health support with self-monitoring alone',
+      'Prove to their employer that their workload is far too high and must be formally reduced',
+      'Replace professional mental health support entirely with their own self-monitoring alone',
     ],
     correctAnswer: 1,
     explanation:
@@ -791,10 +791,10 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     question:
       'A person with a fixed mindset is most likely to respond to a failed electrical inspection by saying:',
     options: [
-      '"This is disappointing, but I can review the feedback and improve for the resit"',
-      '"Let me work out exactly what went wrong so I can pass next time"',
+      '“This is disappointing, but I can review the feedback carefully and improve for the resit”',
+      '“Let me work out exactly what went wrong so that I can pass it the next time round”',
       '"I’m just not good enough — some people are natural electricians and I’m not one of them"',
-      '"Everyone fails their first inspection, so I won’t worry about it at all"',
+      '“Everyone fails their first inspection, so there is no need to worry about it”',
     ],
     correctAnswer: 2,
     explanation:
@@ -806,9 +806,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     id: 51,
     question: 'Self-assessment of resilience is valuable because it:',
     options: [
-      'Guarantees that the person will never experience any stress again',
-      'Provides a formal medical diagnosis of an underlying mental health condition',
-      'Removes the need for any professional support or clinical treatment',
+      'Guarantees that the person will never experience stress again at any point in future',
+      'Provides a formal medical diagnosis of any underlying mental health condition present',
+      'Removes the need for any professional support or for any clinical treatment',
       'Helps identify strengths and development areas, creating a personal baseline',
     ],
     correctAnswer: 3,
@@ -823,9 +823,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
       'Which of the following best describes the relationship between resilience and adversity?',
     options: [
       'Resilience is developed by successfully navigating adversity, not by avoiding it',
-      'Resilience is only possible for people who have never faced any adversity',
-      'Resilience and adversity are unrelated, as resilience is fixed from birth',
-      'Resilience is permanently destroyed by any significant experience of adversity',
+      'Resilience is only possible for people who have never faced any serious adversity at all',
+      'Resilience and adversity are unrelated, as resilience is entirely fixed from birth',
+      'Resilience is permanently destroyed by any significant experience of adversity at work',
     ],
     correctAnswer: 0,
     explanation:
@@ -838,10 +838,10 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     question:
       "Seligman's PERMA model identifies five elements of wellbeing. What does PERMA stand for?",
     options: [
-      'Purpose, Enjoyment, Rest, Management, Adaptability',
+      'Purpose, Enjoyment, Resilience, Mindfulness, Accountability',
       'Positive Emotion, Engagement, Relationships, Meaning, Accomplishment',
-      'Persistence, Empathy, Resilience, Mindfulness, Awareness',
-      'Positivity, Energy, Relationships, Motivation, Achievement',
+      'Persistence, Empathy, Resilience, Mindfulness, Self-Awareness',
+      'Perseverance, Encouragement, Relationships, Mindfulness, Accomplishment',
     ],
     correctAnswer: 1,
     explanation:
@@ -886,9 +886,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     question: 'Seligman\'s "3 Ps" that can hinder recovery from setbacks are:',
     options: [
       'Personalisation, Pervasiveness, and Permanence',
-      'Planning, Preparation, and Performance',
+      'Preparation, Perfectionism, and Procrastination',
       'Pessimism, Procrastination, and Perfectionism',
-      'Patience, Persistence, and Positivity',
+      'Professionalism, Patience, and Persistence',
     ],
     correctAnswer: 0,
     explanation:
@@ -916,10 +916,10 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     question:
       'Reivich and Shatte (2002) identified seven abilities of highly resilient people. Which of the following is one of these abilities?',
     options: [
-      'The ability to suppress all emotions completely under pressure',
-      'A fixed level of toughness that never changes throughout life',
+      'The ability to suppress every single emotion completely while working under pressure',
+      'A fixed level of toughness that never changes at any point throughout your life',
       'Emotional regulation — the ability to manage strong feelings under pressure',
-      'The avoidance of any situation that might cause stress or discomfort',
+      'The deliberate avoidance of any situation that might cause stress or discomfort',
     ],
     correctAnswer: 2,
     explanation:
@@ -931,9 +931,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     id: 59,
     question: 'The "Pervasiveness" trap in the 3 Ps involves:',
     options: [
-      'A stressor being present in every workplace',
-      'The widespread nature of stress in the construction industry',
-      'A disease that spreads through a population',
+      'A stressor that is present in every single workplace across the whole industry',
+      'The widespread nature of work stress across the construction industry as a whole',
+      'A disease that spreads quickly through a whole population of workers',
       'Believing that a setback in one area of life will undermine all other areas',
     ],
     correctAnswer: 3,
@@ -976,10 +976,10 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     id: 62,
     question: 'Identifying personal stress triggers is an important resilience skill because:',
     options: [
-      'It guarantees that you will never encounter those stressors again',
-      'It allows you to blame external factors for all of your stress',
+      'It guarantees that you will never encounter any of those stressors again',
+      'It allows you to blame outside factors for every bit of the stress you feel',
       'It lets you anticipate, prepare for, and manage your known stressors',
-      'It proves that your stress is entirely caused by other people',
+      'It proves that your own stress is caused entirely by other people',
     ],
     correctAnswer: 2,
     explanation:
@@ -992,9 +992,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     question:
       'According to Dweck, a growth mindset response to receiving critical feedback on your work would be:',
     options: [
-      '"This proves I’m no good at this part of the job and never will be"',
-      '"I’ll ignore the feedback because it’s just one person’s opinion"',
-      '"There’s no point trying to improve, some people just can’t do this"',
+      '“This just proves I am no good at this part of the job and there is no point trying again”',
+      '“I will ignore this feedback completely because it is only one opinion of the work I do”',
+      '“There is no point in trying to improve at this job, because some people simply cannot do it”',
       '"This feedback shows me specifically where I can improve — what can I learn from this?"',
     ],
     correctAnswer: 3,
@@ -1009,7 +1009,7 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
       "Which of Reivich and Shatte's seven resilience abilities involves accurately identifying the causes of problems?",
     options: [
       'Causal analysis',
-      'Impulse control',
+      'Realistic optimism',
       'Reaching out',
       'Self-efficacy',
     ],
@@ -1024,10 +1024,10 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     question:
       'An apprentice electrician fails their first AM2 assessment. Which response demonstrates the highest resilience?',
     options: [
-      'Deciding that electrical work is not for them and quitting',
+      'Deciding that electrical work is simply not for them and leaving the trade now',
       'Analysing the feedback, targeting weak areas, and rebooking the assessment',
-      'Blaming the assessor for being unfair and refusing to accept the result',
-      'Pretending it did not happen and hoping to pass next time without changes',
+      'Blaming the assessor for being unfair and refusing to accept the result at all',
+      'Pretending it never happened and hoping to pass next time without changes',
     ],
     correctAnswer: 1,
     explanation:
@@ -1039,10 +1039,10 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     id: 66,
     question: 'Resilience differs from simple "toughness" because resilience:',
     options: [
-      'Requires you to suppress and hide all of your emotions while under pressure',
-      'Means simply enduring hardship stoically without ever asking anyone for help',
+      'Requires you to suppress and hide all of your emotions while you are under pressure',
+      'Means simply enduring hardship stoically without ever asking anyone at all for help',
       'Involves flexibility, emotional awareness, and a willingness to seek support',
-      'Is a fixed trait that you either possess or lack right from birth',
+      'Is a fixed personal trait that you either possess or lack right from the day of birth',
     ],
     correctAnswer: 2,
     explanation:
@@ -1057,7 +1057,7 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     options: [
       'A return to the same level of functioning as before the trauma',
       'A complete absence of any distress following the adversity',
-      'A temporary lift in mood that fades once the crisis passes',
+      'A temporary lift in mood that fades once the crisis has finally passed',
       'Experiencing positive transformation beyond the pre-trauma baseline',
     ],
     correctAnswer: 3,
@@ -1072,9 +1072,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
       'Seligman\'s concept of "learned helplessness" is relevant to resilience because it shows that:',
     options: [
       'Repeated uncontrollable events can teach a belief of powerlessness, which can be unlearned',
-      'Helplessness is an innate trait that cannot be changed by experience or therapy',
-      'People who feel helpless are simply choosing not to try hard enough',
-      'Helplessness only develops in people who lack natural intelligence or talent',
+      'Helplessness is an innate personal trait that cannot be changed by any experience or therapy',
+      'People who feel helpless are simply choosing not to try hard enough to change their situation',
+      'Helplessness only develops in people who lack natural intelligence or real talent',
     ],
     correctAnswer: 0,
     explanation:
@@ -1103,10 +1103,10 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     question:
       'A site manager who experienced a serious accident on site five years ago now mentors others on safety, reports finding deeper meaning in his work, and says the experience fundamentally changed his priorities for the better. This best illustrates:',
     options: [
-      'Learned helplessness developing after repeated uncontrollable events',
-      'A relapse into chronic stress and emotional exhaustion',
+      'Learned helplessness developing after repeated uncontrollable events at work over time',
+      'A relapse into chronic stress, emotional exhaustion, and complete disengagement from work',
       'Post-Traumatic Growth across new possibilities, meaning, and appreciation of life',
-      'Simple resilience, returning exactly to his pre-accident outlook',
+      'Simple resilience, returning exactly to the same outlook he held before the accident',
     ],
     correctAnswer: 2,
     explanation:
@@ -1150,9 +1150,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     question:
       "Which of the following is NOT one of Reivich and Shatte's seven resilience abilities?",
     options: [
-      'Empathy',
+      'Emotional regulation',
       'Financial planning',
-      'Realistic optimism',
+      'Causal analysis',
       'Impulse control',
     ],
     correctAnswer: 1,
@@ -1165,10 +1165,10 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     id: 74,
     question: '"Reaching out" in Reivich and Shatte\'s resilience framework means:',
     options: [
-      'Avoiding all contact with others to focus entirely on the problem',
-      'Suppressing emotions so that no one notices you are struggling',
+      'Avoiding all contact with other people so that you can focus entirely on the problem',
+      'Suppressing your emotions completely so that nobody notices that you are struggling',
       'A willingness to try new things, take risks, and connect with others for support',
-      'Insisting on solving every problem entirely by yourself',
+      'Insisting on solving every single problem entirely by yourself without help',
     ],
     correctAnswer: 2,
     explanation:
@@ -1181,9 +1181,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     question:
       'The growth mindset concept is particularly relevant to electrical apprentices because:',
     options: [
-      'The apprenticeship guarantees success regardless of effort or attitude',
-      'Apprentices rarely face setbacks, so mindset is largely irrelevant',
-      'A fixed mindset protects apprentices from the disappointment of failure',
+      'The apprenticeship guarantees success regardless of the effort or attitude that is shown',
+      'Apprentices rarely face any real setbacks, so their mindset is largely irrelevant here',
+      'A fixed mindset protects apprentices from the disappointment of failing an assessment',
       'The apprenticeship involves constant challenges that require belief in improvement',
     ],
     correctAnswer: 3,
@@ -1198,9 +1198,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
       'Which of the following statements reflects "realistic optimism" as described in resilience research?',
     options: [
       '"This is genuinely difficult, but I can find a way through it with effort and support"',
-      '"Everything will definitely work out perfectly, so there’s nothing to worry about"',
-      '"This situation is hopeless and there is nothing I can do to change it"',
-      '"I won’t think about the problem at all and just hope it goes away"',
+      '“Everything will definitely work out perfectly, so there is nothing at all to worry about”',
+      '“This situation is hopeless and there is nothing at all I can do to change it”',
+      '“I will not think about the problem at all and will simply hope that it goes away”',
     ],
     correctAnswer: 0,
     explanation:
@@ -1244,9 +1244,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     question:
       'An experienced electrician with 20 years on site says, "I\'ve seen it all and dealt with it all — I don\'t need to think about resilience." This attitude is problematic because:',
     options: [
-      'Resilience guarantees that experienced workers will never struggle',
-      'Resilience is only relevant to apprentices and newer workers',
-      'Resilience built early in a career lasts unchanged for life',
+      'Resilience guarantees that experienced workers will never struggle at work',
+      'Resilience is only ever relevant to apprentices and to newer, younger workers',
+      'Resilience built early in a career then lasts unchanged for a lifetime',
       'Resilience is not permanent; it fluctuates and needs ongoing maintenance',
     ],
     correctAnswer: 3,
@@ -1261,9 +1261,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
       'Research into resilience and neuroplasticity together suggest that the most effective way to build resilience is through:',
     options: [
       'Consistent, repeated practice of resilient thinking that strengthens neural pathways',
-      'A single intensive workshop that permanently fixes resilience in one session',
-      'Avoiding all stressful situations so that resilience never needs to be used',
-      'Waiting passively for resilience to develop naturally with age',
+      'A single intensive workshop that permanently fixes resilience in one long session on site',
+      'Avoiding every stressful situation at work so that resilience never needs to be used at all',
+      'Waiting passively for resilience to develop naturally with age and general life experience',
     ],
     correctAnswer: 0,
     explanation:
@@ -1397,10 +1397,10 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     id: 89,
     question: 'Emotion-focused coping is most appropriate when:',
     options: [
-      'The stressor can be easily removed through direct, practical action',
+      'The stressor can be removed quickly through direct, practical action on site',
       'The stressor is largely outside your control, so managing your response matters most',
-      'You have plenty of time and resources to tackle the problem head-on',
-      'The stressor is minor and likely to resolve itself within minutes',
+      'You have plenty of time and resources to tackle the whole problem head-on',
+      'The stressor is very minor and likely to resolve itself within a few minutes',
     ],
     correctAnswer: 1,
     explanation:
@@ -1412,10 +1412,10 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     id: 90,
     question: 'Avoidant coping refers to:',
     options: [
-      'Carefully analysing the cause of a problem before taking action',
-      'Seeking emotional support from trusted friends and family',
+      'Carefully analysing the cause of a problem before taking any practical action',
+      'Seeking emotional support from trusted friends, family, and colleagues',
       'Strategies that escape or deny the stressor, such as substance use or withdrawal',
-      'Reframing a situation to find a more balanced interpretation',
+      'Reframing a situation to find a more balanced and realistic interpretation',
     ],
     correctAnswer: 2,
     explanation:
@@ -1443,9 +1443,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     question: 'A Body Scan meditation involves:',
     options: [
       'Directing attention through each part of the body, noticing sensations as they are',
-      'Visualising a peaceful scene such as a beach while breathing slowly',
-      'Tensing every muscle in the body at once and then releasing it',
-      'Scanning the room for potential hazards before starting a task',
+      'Visualising a peaceful scene such as a quiet beach while breathing slowly',
+      'Tensing every muscle in the body at once and then releasing them together',
+      'Scanning the whole room for potential hazards before starting any task',
     ],
     correctAnswer: 0,
     explanation:
@@ -1504,9 +1504,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     question: 'The cognitive distortion of "catastrophising" involves:',
     options: [
       'Imagining the worst possible outcome and treating it as the most likely outcome',
-      'Preparing for a natural disaster as part of emergency planning',
-      'Recognising that a situation is genuinely catastrophic',
-      'Making an insurance claim for catastrophic damage',
+      'Preparing for a natural disaster as part of formal emergency planning',
+      'Recognising that a particular situation really is genuinely catastrophic',
+      'Making an insurance claim after genuinely catastrophic storm damage',
     ],
     correctAnswer: 0,
     explanation:
@@ -1643,10 +1643,10 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     id: 105,
     question: 'A key principle of CBT that makes it practical for construction workers is that it:',
     options: [
-      'Requires many years of therapy before any benefit is felt',
+      'Requires many years of weekly therapy before any benefit is felt at all',
       'Focuses on changing current thoughts and behaviours within a structured timeframe',
-      'Concentrates mainly on exploring childhood experiences in depth',
-      'Can only be delivered by a specialist psychiatrist in a clinic',
+      'Concentrates mainly on exploring early childhood experiences in depth',
+      'Can only be delivered by a specialist psychiatrist in a hospital clinic',
     ],
     correctAnswer: 1,
     explanation:
@@ -1674,9 +1674,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     id: 107,
     question: 'Research evidence for mindfulness includes findings that regular practice:',
     options: [
-      'Eliminates the need for sleep by improving overall mental efficiency',
-      'Guarantees lasting immunity from every stress-related physical illness',
-      'Permanently removes a person’s capacity to feel any negative emotion',
+      'Eliminates the need for sleep entirely by improving overall mental efficiency',
+      'Guarantees lasting immunity from every kind of stress-related physical illness',
+      'Permanently removes the capacity of a person to feel any negative emotion',
       'Is associated with lower cortisol, changes in grey matter, and better immune function',
     ],
     correctAnswer: 3,
@@ -1720,10 +1720,10 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     question:
       'An electrician who uses alcohol every evening to "switch off" from work stress is primarily using:',
     options: [
-      'Problem-focused coping, because they are taking direct action to relax',
-      'Emotion-focused coping, because they are reframing the situation positively',
+      'Problem-focused coping, because drinking is a direct, practical action to relax',
+      'Emotion-focused coping, because they are actively reframing the situation in a positive way',
       'Avoidant coping, giving brief relief while leaving the stressor and adding health risks',
-      'Cognitive reframing, because they are changing their perspective on work',
+      'Cognitive reframing, because they are changing their whole perspective on work',
     ],
     correctAnswer: 2,
     explanation:
@@ -1735,9 +1735,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     id: 111,
     question: 'The CBT concept of "emotional reasoning" involves:',
     options: [
-      'Setting aside a fixed time each day to deal with worries',
-      'Recording thoughts in a structured diary to challenge them',
-      'Looking at a situation from a different, more balanced perspective',
+      'Setting aside a fixed period each day in which to work through all of your worries',
+      'Recording your thoughts in a structured written diary so that you can challenge them',
+      'Looking at a situation from a different and rather more balanced perspective',
       'Assuming that because you feel something, it must therefore be objectively true',
     ],
     correctAnswer: 3,
@@ -1766,10 +1766,10 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     id: 113,
     question: 'Lazarus and Folkman identified that most effective copers use:',
     options: [
-      'Problem-focused coping alone, applied in the same way whatever the situation',
+      'Problem-focused coping alone, applied in precisely the same way whatever situation is faced',
       'A flexible mix of problem-focused and emotion-focused coping, matched to the situation',
-      'Emotion-focused coping alone, applied in the same way whatever the situation',
-      'Avoidant coping whenever a particular stressor begins to feel overwhelming',
+      'Emotion-focused coping alone, applied in exactly the same way whatever the situation faced',
+      'Avoidant coping whenever a particular stressor begins to feel at all overwhelming at work',
     ],
     correctAnswer: 1,
     explanation:
@@ -1782,9 +1782,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     question: 'In the ABC Model, the "C" (Consequences) includes:',
     options: [
       'The physical symptoms produced directly by the activating event alone',
-      'The thoughts and beliefs a person holds about the activating event',
+      'The thoughts, beliefs and assumptions a person holds about the activating event',
       'Both emotional consequences (how you feel) and behavioural ones (what you do)',
-      'The long-term physical health effects of repeated chronic stress',
+      'The long-term physical health effects of repeated and chronic stress',
     ],
     correctAnswer: 2,
     explanation:
@@ -1812,9 +1812,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     question: 'The primary purpose of the "gathering" step in the 3-Minute Breathing Space is to:',
     options: [
       'Narrow attention to the physical sensation of breathing, creating a focused anchor point',
-      'Acknowledge and label all current thoughts, feelings, and bodily sensations',
-      'Expand attention outwards to the whole body and surroundings',
-      'Tense and release each muscle group to relieve physical tension',
+      'Acknowledge and label all of the current thoughts, feelings, and bodily sensations present',
+      'Expand attention outwards to the whole body and then out to the wider surroundings beyond',
+      'Tense and release each muscle group in turn to relieve any physical tension held',
     ],
     correctAnswer: 0,
     explanation:
@@ -1826,10 +1826,10 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     id: 117,
     question: 'Cognitive reframing does NOT mean:',
     options: [
-      'Looking at a situation from a different perspective',
+      'Looking at a difficult situation from a completely different perspective',
       'Pretending that something negative did not happen or denying reality',
-      'Finding a more balanced way to interpret events',
-      'Challenging automatic negative thoughts with evidence',
+      'Finding a more balanced and realistic way to interpret what has happened',
+      'Challenging automatic negative thoughts by weighing up the actual evidence',
     ],
     correctAnswer: 1,
     explanation:
@@ -1858,8 +1858,8 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
       'Mindfulness-based practice is particularly relevant for construction workers because:',
     options: [
       'It requires expensive equipment that most workers cannot afford on site',
-      'It can only be practised in a quiet room away from the workplace',
-      'It works only for people who have already had formal therapy',
+      'It can only be practised in a quiet room some distance from the workplace',
+      'It works only for people who have already completed a full course of formal therapy',
       'A high-stress, physical environment benefits from quick, no-equipment techniques',
     ],
     correctAnswer: 3,
@@ -1874,9 +1874,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
       'A thought record reveals that an electrician consistently catastrophises about electrical inspections. The most effective CBT strategy would be to:',
     options: [
       'Examine the evidence: how many inspections have they failed versus passed?',
-      'Encourage them to avoid inspections wherever possible to reduce anxiety',
-      'Tell them simply to stop worrying and think positively instead',
-      'Accept that their catastrophic thoughts are probably accurate',
+      'Encourage them to avoid inspections wherever possible so as to reduce anxiety',
+      'Tell them simply to stop worrying about inspections and think positively instead',
+      'Accept that their catastrophic thoughts are probably fairly accurate',
     ],
     correctAnswer: 0,
     explanation:
@@ -1905,10 +1905,10 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     id: 122,
     question: 'Which of the following is a core principle of good sleep hygiene?',
     options: [
-      'Using your phone in bed to help you fall asleep',
-      'Sleeping in as late as possible whenever you can',
+      'Using your phone in bed at night to help yourself fall asleep faster',
+      'Sleeping in as late as you possibly can whenever you get the chance',
       'Maintaining a consistent sleep and wake time, even on weekends',
-      'Drinking alcohol before bed to relax',
+      'Drinking a little alcohol shortly before bed in order to relax and unwind',
     ],
     correctAnswer: 2,
     explanation:
@@ -1922,7 +1922,7 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     options: [
       'Improves concentration and mood, making stress easier to manage',
       'Has no measurable effect on mood, only on physical performance',
-      'Reduces cortisol levels, making the body more resilient to stress',
+      'Reduces cortisol levels, which makes the body far more resilient to stress',
       'Impairs concentration and mood, and increases fatigue and irritability',
     ],
     correctAnswer: 3,
@@ -1936,9 +1936,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     question: 'Physical exercise benefits mental resilience through which mechanism?',
     options: [
       'It releases endorphins, lowers cortisol, improves sleep, and aids neuroplasticity',
-      'It permanently removes the body’s capacity to feel stress at all',
-      'It delivers benefits only if performed for several continuous hours',
-      'It fully replaces the need for adequate sleep and proper nutrition',
+      'It permanently removes the capacity of the body to feel any stress whatsoever again',
+      'It delivers real benefits only if it is performed for several continuous hours each day',
+      'It fully replaces the need for adequate sleep and for proper daily nutrition',
     ],
     correctAnswer: 0,
     explanation:
@@ -1951,10 +1951,10 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     question:
       'A common mistake is assuming that physically demanding construction work is the same as exercise. This is incorrect because:',
     options: [
-      'Site work always uses the same muscle groups, building balanced fitness',
+      'Site work always uses exactly the same muscle groups, and this builds balanced fitness',
       'Repetitive labour creates strain without the benefits of varied, voluntary exercise',
-      'Physical site work raises mood more effectively than chosen exercise',
-      'Manual labour fully replaces the need for any additional activity',
+      'Physical site work raises the mood far more effectively than any exercise you choose yourself',
+      'Manual labour fully replaces the need for any kind of additional physical activity at all',
     ],
     correctAnswer: 1,
     explanation:
@@ -1967,9 +1967,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     question: 'The Mates in Mind charity focuses on:',
     options: [
       'Providing free legal representation for construction workers in disputes',
-      'Training electricians in the latest BS 7671 wiring regulations',
+      'Training electricians in the latest BS 7671 wiring regulations and rules',
       'Raising awareness and improving mental health support across UK construction',
-      'Supplying discounted tools and equipment to apprentices',
+      'Supplying discounted tools and safety equipment to apprentices across the country',
     ],
     correctAnswer: 2,
     explanation:
@@ -1981,8 +1981,8 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     id: 127,
     question: 'The Lighthouse Club provides:',
     options: [
-      'Free legal representation in employment tribunals and nothing else',
-      'Discounted training courses aimed only at already-qualified electricians',
+      'Free legal representation at employment tribunals and nothing else besides that',
+      'Discounted training courses aimed only at electricians who have already qualified',
       'Subsidised tool and equipment insurance for self-employed tradespeople',
       'Financial and emotional support for construction workers and their families',
     ],
@@ -1997,9 +1997,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     question: 'Social connection is a protective factor for resilience because:',
     options: [
       'Supportive relationships give emotional support, belonging, and a buffer against stress',
-      'Spending time with others always increases stress through social pressure',
-      'Social contact is only helpful for people who are naturally extroverted',
-      'Relationships matter only at home, not in the workplace',
+      'Spending time with other people always increases stress through the added social pressure',
+      'Social contact is only ever helpful for those people who happen to be naturally extroverted',
+      'Relationships matter only at home and never in the workplace itself, whatever the job may be',
     ],
     correctAnswer: 0,
     explanation:
@@ -2028,10 +2028,10 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     question:
       'The Working Time Regulations 1998 entitle workers to a minimum daily rest period of:',
     options: [
-      '8 hours',
-      '6 hours',
+      '20 consecutive minutes',
+      '8 consecutive hours',
       '11 consecutive hours',
-      '12 hours',
+      '9 consecutive hours',
     ],
     correctAnswer: 2,
     explanation:
@@ -2060,9 +2060,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     question: 'StepChange is a UK charity that provides:',
     options: [
       'Free, confidential debt advice and debt management solutions',
-      'Physical fitness programmes with step counting',
-      'Staircase design and installation services',
-      'Step-by-step construction training',
+      'Physical fitness programmes based on counting your daily steps',
+      'Staircase design and installation services for domestic buildings',
+      'Step-by-step construction training for new site starters',
     ],
     correctAnswer: 0,
     explanation:
@@ -2075,10 +2075,10 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     question:
       'Setting boundaries at work, such as saying no to excessive overtime, supports resilience because:',
     options: [
-      'It signals to the employer that the worker is not committed',
+      'It signals to the employer that the worker is not properly committed to the job',
       'It protects recovery time, prevents burnout, and sustains energy over time',
-      'It guarantees a higher rate of pay for the hours actually worked',
-      'It removes all responsibility for meeting deadlines',
+      'It guarantees a higher rate of pay for all of the hours that are actually worked',
+      'It removes all responsibility for meeting any of the agreed deadlines on a project',
     ],
     correctAnswer: 1,
     explanation:
@@ -2092,9 +2092,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
       'HMRC\'s "Time to Pay" arrangement is relevant to construction worker resilience because it:',
     options: [
       'It writes off the tax debt entirely for those in financial difficulty',
-      'It allows workers to avoid paying tax for the current year',
+      'It allows workers to avoid paying any tax for the current trading year',
       'Lets people who cannot pay a tax bill in full agree a manageable payment plan',
-      'It provides a free grant to cover outstanding tax bills',
+      'It provides a free government grant that covers all of the outstanding tax bills',
     ],
     correctAnswer: 2,
     explanation:
@@ -2122,9 +2122,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     question: 'Peer support models in construction are effective because:',
     options: [
       'Workers open up more readily to someone who understands their daily reality',
-      'They remove the need for any professional mental health services',
-      'They are cheaper for employers than providing safety training',
-      'They guarantee that no worker will ever experience stress again',
+      'They remove the need for any professional mental health services at all on site',
+      'They are far cheaper for employers to run than providing proper safety training',
+      'They guarantee that no worker will ever experience any stress again',
     ],
     correctAnswer: 0,
     explanation:
@@ -2151,10 +2151,10 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     id: 138,
     question: 'Financial stress is particularly prevalent in construction because of:',
     options: [
-      'The consistently high pay rates, which encourage reckless personal spending',
-      'A legal requirement for every worker to buy private medical health insurance',
+      'The consistently high pay rates, which encourage reckless personal spending habits',
+      'A legal requirement for every worker to buy their own private medical insurance cover',
       'Job insecurity, fluctuating income, CIS deductions, and gaps between contracts',
-      'The unusually low cost of the tools and equipment needed for the trade',
+      'The unusually low cost of all the tools and test equipment needed for the trade today',
     ],
     correctAnswer: 2,
     explanation:
@@ -2166,9 +2166,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     id: 139,
     question: "Building an emergency fund of 3-6 months' expenses supports resilience because:",
     options: [
-      'It guarantees that no financial emergencies will ever occur in the future',
+      'It guarantees that no financial emergency will ever occur again in future',
       'It allows a worker to stop saving for their retirement entirely from now on',
-      'It removes any need to budget carefully or manage day-to-day spending',
+      'It removes any need to budget carefully or to manage your day-to-day spending at all',
       'It softens the impact of unexpected events like illness, redundancy, or job gaps',
     ],
     correctAnswer: 3,
@@ -2183,8 +2183,8 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
       'Alcohol disrupts sleep quality even when it helps you fall asleep initially because:',
     options: [
       'It suppresses REM sleep, which is essential for emotional processing and memory',
-      'It increases the total number of hours a person is able to sleep each night',
-      'It deepens sleep so much that the person regularly wakes feeling unrefreshed',
+      'It increases the total number of hours that a person is able to sleep every night',
+      'It deepens the sleep so much that the person regularly wakes up feeling unrefreshed',
       'It has no real effect on sleep itself, influencing only the next-day mood',
     ],
     correctAnswer: 0,
@@ -2197,10 +2197,10 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     id: 141,
     question: 'Nutrition impacts resilience because:',
     options: [
-      'The body simply needs more calories when under stress, regardless of source',
+      'The body simply needs more calories when it is under stress, whatever the source may be',
       'The brain needs adequate nutrition and stable blood sugar to regulate mood and stress',
-      'Only protein intake matters for managing stress and mood',
-      'Diet has no measurable effect on mental resilience or mood',
+      'Only the amount of protein in the diet matters for managing stress levels and overall mood',
+      'Diet has no measurable effect on mental resilience or on mood, whatever a person happens to eat',
     ],
     correctAnswer: 1,
     explanation:
@@ -2214,9 +2214,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
       'A colleague confides in you about feeling suicidal. The most appropriate immediate response is to:',
     options: [
       'Tell them firmly to pull themselves together and get back to the job',
-      'Avoid raising the subject again in case talking makes things worse',
+      'Avoid raising the subject again in case talking about it makes things worse',
       'Listen without judgement, stay with them, and help them reach a crisis service',
-      'Promise to keep it entirely secret and take no further action at all',
+      'Promise to keep it completely secret and to take no further action at any point',
     ],
     correctAnswer: 2,
     explanation:
@@ -2228,8 +2228,8 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     id: 143,
     question: 'The concept of "saying no" as a resilience skill means:',
     options: [
-      'Refusing every request made at work, regardless of its real importance',
-      'Avoiding any difficult conversation by ignoring requests altogether',
+      'Refusing every single request made at work, regardless of how important it may be',
+      'Avoiding every difficult conversation by simply ignoring all the requests altogether',
       'Always saying yes to every request to maintain good working relationships',
       'Assertively declining requests that compromise your health, with reasons given',
     ],
@@ -2245,9 +2245,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
       'An electrician working 60+ hours per week to meet financial pressures is at risk because:',
     options: [
       'Chronic overwork depletes resources, impairs safety, and reduces performance over time',
-      'Long hours reliably lead to higher quality and faster project completion',
-      'Working beyond 48 hours a week has no measurable effect on accident risk',
-      'Overwork affects only a person’s mental health and never physical safety',
+      'Long hours reliably lead to a higher quality of work and to a faster project completion',
+      'Working beyond 48 hours in a single week has no measurable effect at all on accident risk',
+      'Overwork affects only mental health and never the physical safety of the worker on a site',
     ],
     correctAnswer: 0,
     explanation:
@@ -2259,10 +2259,10 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     id: 145,
     question: 'The relationship between caffeine consumption and resilience is that:',
     options: [
-      'Caffeine has no effect on stress or sleep at any level',
+      'Caffeine has no measurable effect on either stress or sleep at any level',
       'Moderate caffeine aids alertness, but excess raises anxiety and disrupts sleep',
-      'More caffeine always improves resilience and reduces stress',
-      'Caffeine is harmful only when consumed first thing in the morning',
+      'Taking more caffeine always improves resilience and reduces the stress felt at work',
+      'Caffeine is harmful only when it is consumed first thing in the morning',
     ],
     correctAnswer: 1,
     explanation:
@@ -2275,10 +2275,10 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     question:
       'A site manager notices that absence rates increase sharply every Monday and Friday. From a resilience perspective, this pattern most likely indicates:',
     options: [
-      'Workers are simply less motivated at the start and end of the week',
-      'The site rota is poorly designed and needs administrative changes only',
+      'Workers are simply less motivated at the start and at the end of each working week here',
+      'The site rota is poorly designed and simply needs administrative changes and nothing more',
       'Potential burnout or avoidant coping across the workforce, warranting investigation',
-      'A seasonal illness is spreading and will resolve without action',
+      'A seasonal illness is spreading and will resolve itself without any further action',
     ],
     correctAnswer: 2,
     explanation:
@@ -2290,9 +2290,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     id: 147,
     question: 'Sleep hygiene for shift workers or those with early starts should include:',
     options: [
-      'Drinking caffeine late at night to stay alert ahead of very early starts',
-      'Catching up on lost sleep with extended lie-ins whenever days off allow',
-      'Using bright screens in bed as a way to wind down before falling asleep',
+      'Drinking strong caffeine late at night in order to stay alert ahead of early starts',
+      'Catching up on all of the lost sleep with extended lie-ins whenever the days off allow',
+      'Using bright phone screens in bed as a way of winding down properly before falling asleep',
       'Darkening the room, limiting screens, keeping routines, and protecting 7-9 hours',
     ],
     correctAnswer: 3,
@@ -2306,9 +2306,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     question: 'Citizens Advice can help construction workers with:',
     options: [
       'A wide range of issues including debt, employment rights, benefits, and tax',
-      'Emergency medical treatment for injuries sustained on site',
-      'Trade qualifications and apprenticeship assessments',
-      'Discounted tools, materials, and protective equipment',
+      'Emergency medical treatment for any injuries sustained on a busy site',
+      'Trade qualifications and formal apprenticeship end-point assessments',
+      'Discounted tools, materials, and personal protective equipment for site work',
     ],
     correctAnswer: 0,
     explanation:
@@ -2337,8 +2337,8 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     question:
       'Social isolation on site (for example, a solo electrician on a long project) is a resilience risk factor because:',
     options: [
-      'It guarantees the whole project will be completed much more quickly',
-      'It improves concentration by removing every possible workplace distraction',
+      'It guarantees that the whole project will be completed a great deal more quickly',
+      'It improves concentration by removing every single possible distraction on the site',
       'It removes the buffer of social support, raises rumination, and limits talking',
       'It has no real effect on resilience for sufficiently experienced workers',
     ],
@@ -2352,9 +2352,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     id: 151,
     question: 'A practical step an electrician can take to reduce financial stress is:',
     options: [
-      'Taking out a high-cost payday loan to cover any shortfall immediately',
-      'Ignoring tax obligations entirely until a final demand finally arrives',
-      'Relying on extra overtime alone to make up any short-term financial gaps',
+      'Taking out a high-cost payday loan in order to cover any shortfall immediately',
+      'Ignoring all of the tax obligations entirely until a final demand eventually arrives',
+      'Relying on extra overtime alone in order to make up any short-term financial gaps',
       'Setting aside a fixed share of each payment for tax, budgeting, and saving',
     ],
     correctAnswer: 3,
@@ -2368,9 +2368,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     question: 'A Mental Health First Aider on a construction site is trained to:',
     options: [
       'Recognise signs of mental ill-health, give initial support, and signpost to help',
-      'Diagnose mental health conditions and prescribe treatment',
-      'Provide ongoing therapy and counselling to colleagues',
-      'Replace the need for GPs and professional mental health services',
+      'Diagnose mental health conditions and prescribe a suitable medical treatment',
+      'Provide ongoing therapy and counselling sessions for colleagues on the site',
+      'Replace the need for GPs and for all other professional mental health services entirely',
     ],
     correctAnswer: 0,
     explanation:
@@ -2399,10 +2399,10 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     question:
       'A sub-contractor who routinely agrees to unrealistic deadlines because they fear losing the client is demonstrating:',
     options: [
-      'Strong assertiveness and clear professional boundaries',
-      'Excellent time management and realistic scheduling',
+      'Strong assertiveness and clear, well-defended professional boundaries at work',
+      'Excellent time management and consistently realistic scheduling of all the work',
       'Poor boundary setting that leads to chronic overwork and eventual burnout',
-      'A healthy growth mindset focused on learning from challenges',
+      'A healthy growth mindset focused on learning from difficult challenges',
     ],
     correctAnswer: 2,
     explanation:
@@ -2415,9 +2415,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     question:
       'The impact of peripatetic (travelling) work on construction worker resilience includes:',
     options: [
-      'It always improves resilience by exposing workers to new experiences',
-      'It has no effect on resilience because the work itself is unchanged',
-      'It only affects workers who are naturally introverted',
+      'It always improves resilience by exposing workers to brand new experiences',
+      'It has no effect on resilience because the work itself remains unchanged',
+      'It only affects those workers who happen to be naturally introverted people',
       'Time away from family and support, disrupted routines, and isolation',
     ],
     correctAnswer: 3,
@@ -2433,8 +2433,8 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     options: [
       'Emergency financial help, wellbeing support, career guidance, and legal advice',
       'Guaranteed re-employment with a new construction firm within a fixed period',
-      'Free full retraining into a completely different industry of their choosing',
-      'A lump-sum redundancy payment funded directly by central government',
+      'Free retraining into a completely different industry of their own choosing',
+      'A guaranteed lump-sum redundancy payment funded directly by the central government',
     ],
     correctAnswer: 0,
     explanation:
@@ -2447,10 +2447,10 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     question:
       'The concept of "presenteeism" — being at work but not functioning effectively — is a resilience concern because:',
     options: [
-      'It improves long-term performance by building mental toughness',
+      'It improves long-term performance by steadily building up genuine mental toughness',
       'It shows workers pushing through depleted, raising errors and delaying recovery',
-      'It is always cheaper for the employer than authorised absence',
-      'It has no real impact on safety as long as the worker is present',
+      'It is always far cheaper for an employer than any period of authorised absence would be',
+      'It has no real impact on site safety as long as the worker is actually present',
     ],
     correctAnswer: 1,
     explanation:
@@ -2478,9 +2478,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     question:
       "When a self-employed electrician's income drops unexpectedly, resilience-building financial advice would be to:",
     options: [
-      'Take out a high-interest payday loan to cover the shortfall quickly',
-      'Delay contacting HMRC until the next contract arrives and cut nothing',
-      'Withdraw from support services to avoid disclosing personal details',
+      'Take out a high-interest payday loan in order to cover the shortfall straight away',
+      'Delay contacting HMRC until the next contract arrives and cut back on nothing at all',
+      'Withdraw from all support services in order to avoid disclosing personal details',
       'Assess calmly, contact HMRC about Time to Pay, get advice, and cut spending',
     ],
     correctAnswer: 3,
@@ -2510,10 +2510,10 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     id: 161,
     question: 'The performance-recovery cycle describes:',
     options: [
-      'The idea that recovery is only needed after a major crisis or illness',
+      'The idea that recovery is only needed after a major crisis or a serious illness',
       'The principle that sustained performance requires deliberate periods of recovery',
-      'The belief that the harder you work without rest, the better you perform',
-      'The view that recovery should only happen during annual leave',
+      'The belief that the harder you work without any rest at all, the better you perform',
+      'The view that recovery should only ever happen during a period of annual leave',
     ],
     correctAnswer: 1,
     explanation:
@@ -2525,10 +2525,10 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     id: 162,
     question: 'Micro-recovery refers to:',
     options: [
-      'Extended breaks such as holidays that allow deep restoration over weeks',
-      'Recovery that happens overnight and across the weekend between shifts',
+      'Extended breaks such as long holidays which allow deep restoration over several weeks',
+      'The recovery that happens overnight and across the whole weekend between working shifts',
       'Short recovery activities during the working day, such as brief walks or breathing',
-      'A one-off recovery session after a particularly stressful project ends',
+      'A one-off recovery session taken after a particularly stressful project ends',
     ],
     correctAnswer: 2,
     explanation:
@@ -2540,9 +2540,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     id: 163,
     question: 'A transition ritual is:',
     options: [
-      'A formal handover meeting at the end of every working shift',
-      'A reward you give yourself for completing a difficult task',
-      'A health check carried out before starting work each morning',
+      'A formal handover meeting that is held at the end of every single working shift',
+      'A reward that you give to yourself after completing a particularly difficult task',
+      'A health check that is carried out before starting work on site each morning',
       'A deliberate routine that helps you shift from work mode to personal mode',
     ],
     correctAnswer: 3,
@@ -2557,8 +2557,8 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     options: [
       'Repetitive, circular thinking about problems that does not lead to solutions',
       'A structured problem-solving process that produces clear action steps',
-      'Deliberately setting aside time to reflect calmly on the day',
-      'A relaxation technique used to slow the breathing during stress',
+      'Deliberately setting aside some time to reflect calmly on the working day',
+      'A relaxation technique that is used to slow the breathing during stressful moments',
     ],
     correctAnswer: 0,
     explanation:
@@ -2573,8 +2573,8 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     options: [
       'Physical injury',
       'Emotional exhaustion',
-      'Financial bankruptcy',
-      'Career advancement',
+      'Professional development',
+      'Financial responsibility',
     ],
     correctAnswer: 1,
     explanation:
@@ -2586,10 +2586,10 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     id: 166,
     question: 'Burnout differs from normal stress in that burnout:',
     options: [
-      'Resolves quickly once the immediate stressor is removed',
-      'Affects only physical health and never emotional wellbeing',
+      'Resolves quickly and completely once the immediate stressor has finally been removed',
+      'Affects only physical health and never emotional wellbeing or general mood at work',
       'Involves deep depletion marked by exhaustion, detachment, and loss of efficacy',
-      'Improves performance by keeping the person constantly alert',
+      'Improves performance by keeping the person constantly alert and very highly focused',
     ],
     correctAnswer: 2,
     explanation:
@@ -2601,9 +2601,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     id: 167,
     question: 'Digital detox in the context of resilience refers to:',
     options: [
-      'Deleting all social media accounts permanently to reduce stress',
-      'Replacing screen time with additional work tasks in the evening',
-      'Using devices only for work but not for leisure or relaxation',
+      'Deleting all your social media accounts permanently to reduce stress',
+      'Replacing screen time with additional work tasks during the evening',
+      'Using electronic devices only for work but never for leisure or for relaxation',
       'Deliberately limiting screen and device use to allow genuine mental recovery',
     ],
     correctAnswer: 3,
@@ -2617,9 +2617,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     question: 'The Samaritans helpline can be reached on:',
     options: [
       '116 123',
+      '0345 605 1956',
+      '0800 58 58 58',
       '999',
-      '101',
-      '111',
     ],
     correctAnswer: 0,
     explanation:
@@ -2677,9 +2677,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     question: 'Personal "resilience non-negotiables" are:',
     options: [
       'The minimum self-care activities you maintain however busy or stressed you are',
-      'The list of tasks you must complete at work before you can rest',
-      'The strict rules an employer sets about breaks and working hours',
-      'The activities you give up first whenever you become busy or stressed',
+      'The list of tasks that you must complete at work before you are allowed any rest',
+      'The strict rules that an employer sets about rest breaks and total working hours',
+      'The activities that you give up first whenever you become busy or very stressed',
     ],
     correctAnswer: 0,
     explanation:
@@ -2691,10 +2691,10 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     id: 173,
     question: 'An early warning system for stress involves:',
     options: [
-      'Waiting until you reach crisis point before taking any action',
+      'Waiting until you reach crisis point before taking any action of any kind',
       'Identifying your personal early signs of stress so you can act before a crisis',
-      'Relying solely on colleagues to tell you when you are stressed',
-      'Ignoring early symptoms in the hope that they resolve themselves',
+      'Relying entirely on your colleagues to tell you when you have become too stressed',
+      'Ignoring the early symptoms in the hope that they will resolve themselves',
     ],
     correctAnswer: 1,
     explanation:
@@ -2706,10 +2706,10 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     id: 174,
     question: 'Building a support network involves:',
     options: [
-      'Relying entirely on one trusted person for all your support',
-      'Keeping work and personal relationships strictly separate at all times',
+      'Relying entirely on one single trusted person for every part of your support needs',
+      'Keeping work relationships and personal relationships strictly separate from each other',
       'Cultivating relationships across work, family, friends, and community for support',
-      'Avoiding close relationships to prevent being let down by others',
+      'Avoiding close relationships in order to prevent being let down by other people',
     ],
     correctAnswer: 2,
     explanation:
@@ -2934,10 +2934,10 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     question:
       'Research on rumination shows that it differs from constructive problem-solving because rumination:',
     options: [
-      'Always produces a clear solution to the problem being considered',
+      'Always produces a clear and workable solution to the problem being considered',
       'Is passive and repetitive without action, whereas problem-solving is goal-directed',
-      'Is more effective than problem-solving at reducing stress',
-      'Only occurs in people who have already developed burnout',
+      'Is far more effective than active problem-solving at reducing stress levels',
+      'Only ever occurs in people who have already developed clinical burnout',
     ],
     correctAnswer: 1,
     explanation:
@@ -2949,10 +2949,10 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
     id: 190,
     question: 'The "worry window" technique for managing rumination involves:',
     options: [
-      'Talking about your worries with a colleague during every break',
-      'Writing down each worry and then immediately acting on it',
+      'Talking about your worries with a colleague during every single break',
+      'Writing each worry down and then immediately acting on every one of them',
       'Setting aside a fixed time each day for worries, and postponing them outside it',
-      'Trying to stop all worrying thoughts the moment they appear',
+      'Trying to stop all worrying thoughts the very moment that they appear',
     ],
     correctAnswer: 2,
     explanation:
@@ -2981,9 +2981,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
       'An electrician who used to enjoy their work but now dreads going in, feels they are "running on empty," and has started calling in sick regularly is most likely experiencing:',
     options: [
       'A progression into burnout, marked by exhaustion, lost engagement, and withdrawal',
-      'A temporary dip in motivation that will pass within a few days',
-      'A normal seasonal change in mood unrelated to their work',
-      'A deliberate choice to reduce their commitment to the job',
+      'A temporary dip in motivation that will pass within the next few days',
+      'A normal seasonal change in mood that is entirely unrelated to their work',
+      'A deliberate personal choice to reduce their level of commitment to the job',
     ],
     correctAnswer: 0,
     explanation:
@@ -3104,9 +3104,9 @@ export const rsmQuestionBank: StandardMockQuestion[] = [
       'An electrician has completed this course and wants to maintain their resilience over the coming year. The most effective approach is to:',
     options: [
       'Select a few SMART non-negotiables, build them into routines, and review regularly',
-      'Try to apply every technique from the course at the same time',
-      'Wait until they feel stressed before using any of the techniques',
-      'Rely on memory alone rather than building any lasting routines',
+      'Try to apply every single technique from the course all at the same time',
+      'Wait until they feel stressed before using any of the techniques at all',
+      'Rely on memory alone rather than building any lasting practical routines',
     ],
     correctAnswer: 0,
     explanation:

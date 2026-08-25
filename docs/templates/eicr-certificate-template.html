@@ -1577,7 +1577,8 @@
         </div>
         <div class="inline-group">
           <span class="inline-label">Recommended Interval:</span>
-          <span class="inline-value">{{installation_details.inspection_interval}} years</span>
+          <!-- ELE-1611 — pre-formatted so "1 year" is not printed as "1 years". -->
+          <span class="inline-value">{{installation_details.inspection_interval_display}}</span>
         </div>
         <div class="inline-group">
           <span class="inline-label">Next Inspection Due:</span>
@@ -1589,6 +1590,28 @@
         <div class="inline-group" style="flex: 1">
           <span class="inline-label">Reasons for recommended interval:</span>
           <span class="inline-value wide">{{installation_details.interval_reasons}}</span>
+        </div>
+      </div>
+      {% endif %}
+      <!-- ELE-1611 — intended use of the installation. -->
+      {% if installation_details.installation_use and installation_details.installation_use != "" %}
+      <div class="inline-form" style="margin-top: 4px">
+        <div class="inline-group" style="flex: 1">
+          <span class="inline-label">Intended use of the installation:</span>
+          <span class="inline-value wide">{{installation_details.installation_use}}</span>
+        </div>
+      </div>
+      {% endif %}
+      <!--
+        ELE-1611 — change-of-occupancy recommendation. The sentence is composed
+        in the formatter, not here, so the template cannot reword advice given
+        over the electrician's signature. Source: IET Guidance Note 3, 3.1.
+      -->
+      {% if installation_details.reinspect_on_occupancy_change_note and installation_details.reinspect_on_occupancy_change_note != "" %}
+      <div class="inline-form" style="margin-top: 4px">
+        <div class="inline-group" style="flex: 1">
+          <span class="inline-label">Change of occupancy:</span>
+          <span class="inline-value wide">{{installation_details.reinspect_on_occupancy_change_note}}</span>
         </div>
       </div>
       {% endif %}
@@ -2068,6 +2091,28 @@
         </div>
       </div>
 
+      <!-- Supply tails — ELE-1580.
+           Reported missing: the certificate carried earthing and bonding
+           conductor sizes but nothing for the tails. The payload has always
+           built cables.tails_size / tails_length; nothing rendered them, and
+           there was no input to fill them either. Conditional so a cert
+           without the values is unchanged rather than showing empty cells. -->
+      {% if cables.tails_size != "" or cables.tails_length != "" %}
+      <div class="avoid-break">
+        <div class="section-subtitle">Supply Tails</div>
+        <div class="grid-row cols-2">
+          <div class="grid-cell">
+            <div class="cell-label">Tails CSA</div>
+            <div class="cell-value">{% if cables.tails_size != "" %}{{cables.tails_size}} mm&sup2;{% if cables.tails_size_note != "" %}<span class="field-note">{{cables.tails_size_note}}</span>{% endif %}{% else %}&mdash;{% endif %}</div>
+          </div>
+          <div class="grid-cell">
+            <div class="cell-label">Tails Length</div>
+            <div class="cell-value">{% if cables.tails_length != "" %}{{cables.tails_length}} m{% else %}&mdash;{% endif %}</div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+
       <!-- Cables (aligned 4-col / 3-col grids, kept together across page breaks) -->
       <div class="avoid-break">
         <div class="section-subtitle">Main Earth &amp; Bonding Conductors</div>
@@ -2439,6 +2484,20 @@
           <span class="inline-value">{{schedule_tested_by_date}}</span>
         </div>
       </div>
+      <!-- Test notes and observations.
+           Captured on the Testing tab as `testNotes` and carried in the
+           payload as `test_notes`, but never rendered here until 2026-08-20 —
+           so 84 EICRs (8.9% of all of them) had notes typed that silently
+           never reached the certificate. Most were RECORDED LIMITATIONS
+           ("insulation resistance testing restricted to 250 V DC due to
+           connected sensitive equipment"), which an EICR is required to state.
+           Conditional so a cert without notes is unchanged. -->
+      {% if test_notes and test_notes != "" and test_notes != "N/A" %}
+      <div style="font-size: 8px; color: #1e293b; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 3px; padding: 6px 8px; margin-top: 6px;">
+        <div style="font-weight: 600; color: #475569; margin-bottom: 2px;">Test notes and observations</div>
+        <div style="white-space: pre-wrap; line-height: 1.35;">{{ test_notes }}</div>
+      </div>
+      {% endif %}
       <!-- The basis the Zs verdicts on this schedule were judged against.
            Reg 411.4.4 permits correcting the tabulated limit to 80% for
            measured values at ambient temperature, and it changes pass/fail —

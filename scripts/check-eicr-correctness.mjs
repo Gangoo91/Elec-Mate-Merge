@@ -80,7 +80,10 @@ writeFileSync(
    export { getMaxZsFromDeviceDetails } from '@/utils/zsCalculations';
    export { getZsLimitFromDeviceString } from '@/data/zsLimits';
    export { curveFillApplies, getCurveOptionsForStandard, clearOnStandardChange, curveMatchesStandard } from '@/types/protectiveDeviceTypes';
-   export { planColumnFill, describeColumnFill } from '@/utils/columnFill';`
+   export { planColumnFill, describeColumnFill } from '@/utils/columnFill';
+   export { hasAnyReading, hasCoreResults, READING_FIELDS } from '@/utils/testReadings';
+   export { getScheduleProgress, isCircuitTested, isTestableRow } from '@/utils/scheduleProgress';
+   export { printableBoardLocation, isCustomBoardLocation, BOARD_LOCATIONS } from '@/types/distributionBoard';`
 );
 
 const out = join(tmp, 'bundle.mjs');
@@ -109,6 +112,15 @@ const {
   curveMatchesStandard,
   planColumnFill,
   describeColumnFill,
+  hasAnyReading,
+  hasCoreResults,
+  READING_FIELDS,
+  getScheduleProgress,
+  isCircuitTested,
+  isTestableRow,
+  printableBoardLocation,
+  isCustomBoardLocation,
+  BOARD_LOCATIONS,
 } = await import(pathToFileURL(out).href);
 
 /** The issue gate, for a certificate that is otherwise complete. */
@@ -940,6 +952,302 @@ check('a column fill is board-scoped, skips spares, and spares recorded readings
   if (!/left unchanged/i.test(message))
     fails.push(`the toast does not mention untouched readings: "${message}"`);
   if (!/spare/i.test(message)) fails.push(`the toast does not mention skipped spares: "${message}"`);
+
+  return fails.length ? fails.slice(0, 4).join('; ') : null;
+});
+
+/* ── 13e. One definition of "tested", shared by every counter ───────────────
+ * ELE-1610. The schedule had FOUR answers to "is this circuit tested" and they
+ * disagreed on screen: a board with a tick on every circuit showed
+ * "Complete 9" of 10, "Progress 100%", "TOTAL 10" and "1 Pass / 9 Warn".
+ *
+ * The two faults every completion rule shared:
+ *   · `insulationResistance` is the legacy field no cell writes, so offering it
+ *     as an alternative offered nothing;
+ *   · none of them recognised continuity, so a ring final measured properly
+ *     (r₁, rₙ, r₂, insulation L-L) counted as untested.
+ */
+check('a properly tested ring final counts as tested by every counter', () => {
+  const fails = [];
+  const ring = {
+    id: 'r1',
+    circuitNumber: '1',
+    circuitDescription: 'Ring final — sockets',
+    ringR1: '0.52',
+    ringRn: '0.53',
+    ringR2: '0.86',
+    r1r2: '0.35',
+    insulationLiveNeutral: '>999',
+    insulationTestVoltage: '500',
+    polarity: '✓',
+    zs: '0.42',
+  };
+  if (!hasAnyReading(ring)) fails.push('the gate does not see a tested ring final as touched');
+  if (!hasCoreResults(ring)) fails.push('a fully measured ring final is not "complete"');
+  if (!isCircuitTested(ring)) fails.push('the progress counter calls a tested ring final untested');
+
+  // The dead field must not be the only way to satisfy insulation.
+  const lEarthOnly = { ...ring, insulationLiveNeutral: '', insulationTestVoltage: '', insulationLiveEarth: '299' };
+  if (!hasCoreResults(lEarthOnly)) fails.push('L-E alone no longer satisfies insulation');
+  const lLineOnly = { ...ring, insulationLiveEarth: '' };
+  if (!hasCoreResults(lLineOnly)) fails.push('L-L alone does not satisfy insulation — the reported bug');
+
+  // Genuinely missing a core test is still incomplete.
+  for (const [field, label] of [['polarity', 'polarity'], ['zs', 'Zs']]) {
+    if (hasCoreResults({ ...ring, [field]: '' }))
+      fails.push(`a circuit with no ${label} is reported complete`);
+  }
+  const noContinuity = { ...ring, ringR1: '', ringRn: '', ringR2: '', r1r2: '' };
+  if (hasCoreResults(noContinuity)) fails.push('a circuit with no continuity reading is reported complete');
+
+  // RCD/AFDD/functional must NOT be required — plenty of circuits have none.
+  const noRcd = { ...ring, rcdOneX: '', rcdTestButton: '', afddTest: '', functionalTesting: '' };
+  if (!hasCoreResults(noRcd))
+    fails.push('a circuit with no RCD/AFDD can never complete — the old TestAnalytics rule');
+
+  // A recorded limitation is an answer, not a gap.
+  const allNa = { ...ring, polarity: 'N/A', zs: 'LIM', insulationLiveNeutral: 'N/V' };
+  if (!hasCoreResults(allNa)) fails.push('N/A, LIM and N/V are not being counted as recorded');
+
+  // The dead field is listed only for old certificates — it must not be the
+  // sole insulation route for anything written today.
+  if (!READING_FIELDS.includes('insulationLiveNeutral'))
+    fails.push('the reading columns omit insulation L-L');
+
+  return fails.length ? fails.join('; ') : null;
+});
+
+check('progress and analytics agree, and exclude the same rows', () => {
+  const fails = [];
+  const tested = (id) => ({
+    id, circuitNumber: id, circuitDescription: 'Lighting',
+    r1r2: '0.4', insulationLiveEarth: '299', polarity: '✓', zs: '0.8',
+  });
+  const rows = [
+    tested('a'), tested('b'),
+    { id: 'sp', circuitNumber: '3', circuitDescription: 'Spare', isSpare: true },
+    { id: 'dev', circuitNumber: '4', circuitDescription: 'Incoming RCD', isDeviceRow: true },
+  ];
+  const p = getScheduleProgress(rows);
+  if (p.circuits !== 2) fails.push(`progress counted ${p.circuits} circuits, expected 2 (spare + device row excluded)`);
+  if (p.tested !== 2) fails.push(`progress counted ${p.tested} tested, expected 2`);
+  if (p.percent !== 100) fails.push(`progress read ${p.percent}%, expected 100 — the reported "9/10 at 100%" mismatch`);
+  if (p.excluded !== 2) fails.push(`progress excluded ${p.excluded} rows, expected 2`);
+  if (!p.isComplete) fails.push('a fully tested board with a spare does not read as complete');
+
+  // The analytics denominator must use the same row set — a spare validated as
+  // a circuit is where most of the reported "9 warnings" came from.
+  const analyticsRows = rows.filter(isTestableRow);
+  if (analyticsRows.length !== p.circuits)
+    fails.push(`analytics would judge ${analyticsRows.length} rows against progress's ${p.circuits}`);
+
+  return fails.length ? fails.join('; ') : null;
+});
+
+/* ── 13f. The app must not invent a measured value ──────────────────────────
+ * ELE-1612. `updateSmartFieldDependencies` seeded `mainSwitchRating` from the
+ * property type — domestic 100 A, commercial 200 A, industrial 400 A — plus a
+ * main bonding conductor size. Those are read off the installation by the
+ * inspector and signed for; a property type cannot imply either.
+ *
+ * Reported only as "the defaults look inconsistent". The real fault was that a
+ * 200 A rating nobody measured sat one un-touched field away from printing on
+ * a certificate.
+ *
+ * Source-level check: this helper is plain data, and the thing worth pinning is
+ * that nobody adds a measurement back to it.
+ */
+check('property-type defaults never fabricate a measured value', () => {
+  const src = readFileSync('src/utils/inspectionFiltering.ts', 'utf8');
+  const block = src.slice(src.indexOf('const dependencies = {'), src.indexOf('const dependencies = {') + 1600);
+  const banned = [
+    ['mainSwitchRating', 'the main switch rating'],
+    ['mainBondingSize', 'the main bonding conductor size'],
+    ['supplyDeviceRating', 'the supply device rating'],
+    ['breakingCapacity', 'the breaking capacity'],
+    ['ze', 'Ze'],
+    ['ipf', 'the prospective fault current'],
+  ];
+  const found = banned.filter(([f]) => new RegExp(`\\b${f}\\s*:`).test(block));
+  if (found.length)
+    return `property type now seeds ${found.map(([, l]) => l).join(', ')} — that is a measurement, not a default`;
+
+  // And the component-level backstop must still be wired.
+  const guard = readFileSync('src/components/eic/SmartFieldDependencies.tsx', 'utf8');
+  if (!/NEVER_AUTOFILL\.has\(field\)/.test(guard))
+    return 'the NEVER_AUTOFILL guard is no longer applied in SmartFieldDependencies';
+  for (const [f] of banned)
+    if (!new RegExp(`'${f}'`).test(guard)) return `${f} is missing from NEVER_AUTOFILL`;
+  return null;
+});
+
+/* ── 13g. The word "Other" must never print as a board location ─────────────
+ * ELE-1609. The location picker offered "Other" with nowhere to type the real
+ * place, and `board.location` is rendered straight onto the certificate
+ * ({{board.location}} / {{distribution_board.board_location}}).
+ *
+ * 🔴 **86 boards across 60 live certificates already hold the literal
+ * "Other"** — they print "Location: Other" today. The form no longer stores
+ * it; this covers everything already saved.
+ */
+/** ELE-1611 fixtures — the formatter is async, so awaited at top level. */
+const nextInspectionPayload = await formatEICRJson(
+  {
+    inspectionDate: '2026-08-25',
+    nextInspectionDate: '2029-08-25',
+    inspectionInterval: '3',
+    installationUse: 'Rented domestic dwelling',
+    reinspectOnOccupancyChange: 'yes',
+    scheduleOfTests: [],
+  },
+  'EICR-PROBE'
+);
+const offPayload = await formatEICRJson(
+  { inspectionInterval: '3', installationUse: 'Retail unit', scheduleOfTests: [] },
+  'EICR-PROBE'
+);
+
+/** Awaited once — `check` bodies cannot await, and the formatter is async. */
+const locationPayload = await formatEICRJson(
+  {
+    distributionBoards: [
+      { id: 'main-cu', reference: 'DB1', location: 'Other', order: 0 },
+      { id: 'b2', reference: 'DB2', location: 'Riser', order: 1 },
+    ],
+    // Boards are emitted with their circuits, so each needs one to appear.
+    scheduleOfTests: [
+      { id: 'c1', circuitNumber: '1', circuitDescription: 'Lighting', boardId: 'main-cu' },
+      { id: 'c2', circuitNumber: '1', circuitDescription: 'Sockets', boardId: 'b2' },
+    ],
+  },
+  'EICR-PROBE'
+);
+
+check('a board location never prints as the literal "Other"', () => {
+  const fails = [];
+  if (printableBoardLocation('Other') !== '') fails.push('"Other" survives to the payload');
+  if (printableBoardLocation('other') !== '') fails.push('lowercase "other" survives');
+  if (printableBoardLocation(' Other ') !== '') fails.push('padded "Other" survives');
+  // A real place that merely contains the word must be kept.
+  for (const real of ['Other building', 'Plant Room', 'Sub-station 2, north elevation'])
+    if (printableBoardLocation(real) !== real.trim())
+      fails.push(`a real location "${real}" was stripped`);
+
+  // The form must be able to tell a typed location from a picked one.
+  if (isCustomBoardLocation('Plant Room')) fails.push('a listed location is treated as custom');
+  if (!isCustomBoardLocation('Sub-station 2')) fails.push('a typed location is not treated as custom');
+  if (isCustomBoardLocation('')) fails.push('an empty location is treated as custom');
+  if (isCustomBoardLocation('Other'))
+    fails.push('"Other" is treated as a custom value — it would be stored and printed');
+
+  // End to end through the real formatter. `formatEICRJson` is async — awaited
+  // above, because `check` bodies are synchronous. Forgetting that made this
+  // assertion compare a Promise and report a fix that had actually worked.
+  const asText = JSON.stringify(locationPayload);
+  if (/"(board_)?location":\s*"Other"/i.test(asText))
+    fails.push('the formatter still emits "Other" as a location');
+  if (!/Riser/.test(asText)) fails.push('a real location was lost by the formatter');
+
+  return fails.length ? fails.slice(0, 4).join('; ') : null;
+});
+
+/* ── 13h. "No main switch" must be sayable, and must clear the whole panel ──
+ * ELE-1608. On a three-phase service head with BS 88 fuses feeding DB1 direct
+ * there is no isolator, switch or RCD to record. The EIC gave no way to say so
+ * — "there is no where to say N/A. Cant work it out?" — so the user either
+ * invented values or left the section broken.
+ *
+ * The trap this pins: `MAIN_SWITCH_FIELDS` is the list stamped 'N/A' when the
+ * panel is marked not applicable. A field rendered in the panel but missing
+ * from that list keeps whatever was in it, so the certificate would print a
+ * rating next to a section declaring there is no device — the two halves of
+ * one panel contradicting each other.
+ */
+check('marking the main switch N/A clears every field the panel renders', () => {
+  const src = readFileSync('src/components/eic/EICElectricalInstallationSection.tsx', 'utf8');
+
+  const listMatch = src.match(/const MAIN_SWITCH_FIELDS = \[([\s\S]*?)\] as const;/);
+  if (!listMatch) return 'MAIN_SWITCH_FIELDS is gone — the N/A toggle cannot clear the panel';
+  const declared = new Set([...listMatch[1].matchAll(/'([^']+)'/g)].map((m) => m[1]));
+
+  // The panel is the card between its own heading and the next section.
+  const start = src.indexOf('Main switch / circuit-breaker / RCD');
+  if (start === -1) return 'the main switch panel heading has been renamed — this check is now blind';
+  const after = src.indexOf('<SectionHeading title=', start);
+  const panel = src.slice(start, after === -1 ? src.length : after);
+
+  const rendered = new Set([...panel.matchAll(/onUpdate\('([a-zA-Z]+)'/g)].map((m) => m[1]))
+  rendered.delete('mainProtectiveDeviceLimit'); // the marker itself
+
+  const missing = [...rendered].filter((f) => !declared.has(f));
+  if (missing.length)
+    return `the panel writes ${missing.join(', ')} but N/A does not clear ${missing.length === 1 ? 'it' : 'them'} — a stale value would print beside "N/A"`;
+
+  // And the controls must actually lock, or the section reads as answered
+  // while behaving as unanswered.
+  if (!/disabled=\{mainSwitchNA\}/.test(panel))
+    return 'the main switch panel does not disable its controls when marked N/A';
+
+  return null;
+});
+
+check('the EICR main protective device locks on N/A as well as LIM', () => {
+  const src = readFileSync('src/components/SupplyCharacteristicsSection.tsx', 'utf8');
+  if (!/const mpdLocked = mpdLimit === 'LIM' \|\| mpdLimit === 'N\/A';/.test(src))
+    return 'mpdLocked is gone — N/A would stamp the fields and leave them editable';
+  // Nothing should gate a control on LIM alone any more; the only remaining
+  // 'LIM' comparisons are the chip's own on/off state.
+  const gates = [...src.matchAll(/disabled=\{mpdLimit === 'LIM'\}/g)];
+  if (gates.length) return `${gates.length} control(s) still lock on LIM only, so N/A leaves them editable`;
+  if (/mpdLimit === 'LIM' && 'opacity-40'/.test(src))
+    return 'a control still dims on LIM only';
+  return null;
+});
+
+/* ── 13i. The next-inspection additions reach the certificate ───────────────
+ * ELE-1611. Requested by a user on site: intended use, and a recommendation
+ * that a change of occupancy triggers re-inspection ("if they leave then it
+ * needs to be looked at again but dont think the report covers that?").
+ *
+ * 🔴 The failure mode this pins is the one this repo has hit four times in a
+ * single batch: a field captured on the form, carried in the payload, and
+ * rendered nowhere. Adding a payload key without the template is half a
+ * feature that looks like a whole one.
+ *
+ * ⚠️ Citation: the advice is IET Guidance Note 3 §3.1 — periodic inspection
+ * should be considered on a change of occupancy (especially rented domestic)
+ * or change of use. NOT a BS 7671 regulation; 651.1 makes the duty conditional
+ * on requirements set out elsewhere, so a 65x number here would be false.
+ */
+check('intended use and the change-of-occupancy note reach the PDF', () => {
+  const fails = [];
+  const details = nextInspectionPayload.installation_details || {};
+
+  if (details.installation_use !== 'Rented domestic dwelling')
+    fails.push(`installation_use came through as ${JSON.stringify(details.installation_use)}`);
+  if (!/change of occupancy/i.test(details.reinspect_on_occupancy_change_note || ''))
+    fails.push('the change-of-occupancy sentence is not in the payload');
+  if (details.inspection_interval_display !== '3 years')
+    fails.push(`interval display came through as ${JSON.stringify(details.inspection_interval_display)}`);
+
+  // The template must actually render all three.
+  const tpl = readFileSync('docs/templates/eicr-certificate-template.html', 'utf8');
+  for (const key of [
+    'installation_details.installation_use',
+    'installation_details.reinspect_on_occupancy_change_note',
+    'installation_details.inspection_interval_display',
+  ])
+    if (!tpl.includes(`{{${key}}}`)) fails.push(`the template never renders ${key}`);
+
+  // "1 year", not "1 years" — the old template hard-coded the plural.
+  if (/\{\{installation_details\.inspection_interval\}\} years/.test(tpl))
+    fails.push('the template still hard-codes "years" after the raw interval');
+
+  // Off unless the electrician asked for it: advice must not appear over a
+  // signature by default.
+  const off = offPayload.installation_details || {};
+  if (off.reinspect_on_occupancy_change_note)
+    fails.push('the recommendation prints even when it was not selected');
 
   return fails.length ? fails.slice(0, 4).join('; ') : null;
 });

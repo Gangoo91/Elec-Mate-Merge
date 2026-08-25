@@ -65,7 +65,7 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
       'A natural personality trait that some people are simply born with and others lack entirely',
       'The ability to perceive, understand, manage, and use emotions effectively in oneself and others',
       'The ability to suppress negative emotions and project a consistently positive outward image',
-      'A measure of how emotionally sensitive a person is compared to those around them',
+      'A measure of how emotionally sensitive a person is when compared with the colleagues around them',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -98,9 +98,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Daniel Goleman\'s 1995 book "Emotional Intelligence" is primarily credited with which achievement?',
     options: [
-      'Inventing the original academic concept of emotional intelligence',
-      'Developing the first validated psychometric test for measuring EI',
-      'Proving that EI matters more than IQ in every situation',
+      'Inventing the original academic concept before any psychologists had studied it',
+      'Developing the first validated psychometric test for measuring EI as a true ability',
+      'Proving that EI matters more than IQ in every single workplace situation',
       'Popularising emotional intelligence and bringing it to mainstream awareness',
     ] as const,
     correctAnswer: 3,
@@ -116,9 +116,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question: 'What is the relationship between emotional intelligence (EI) and IQ?',
     options: [
       'EI and IQ are separate constructs, each contributing to overall effectiveness',
-      'EI is simply another name for IQ measured on a different scale',
-      'EI is a fixed trait determined entirely by IQ in early childhood',
-      'High IQ reliably guarantees a correspondingly high level of EI',
+      'EI is simply another name for IQ, but measured and reported on a different scale',
+      'EI is a fixed trait that is determined entirely by a person\'s IQ score in early childhood',
+      'A high IQ score reliably guarantees a correspondingly high level of emotional ability',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -168,9 +168,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 7,
     question: 'What does the Bar-On EQ-i model measure?',
     options: [
-      'The speed at which a person can identify emotions in photographs of faces',
-      "A person's general cognitive ability and capacity for abstract reasoning",
-      'How frequently a person experiences positive versus negative moods each day',
+      'The speed at which a person can correctly identify emotions in photographs of human faces',
+      'A person\'s general cognitive ability and their capacity for abstract logical reasoning tasks',
+      'How often a person experiences positive rather than negative moods during each day',
       'Emotional and social competencies for understanding ourselves and relating to others',
     ] as const,
     correctAnswer: 3,
@@ -186,9 +186,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question: 'What role does the amygdala play in emotional processing?',
     options: [
       "It acts as the brain's emotional alarm system, processing threats and triggering rapid emotional responses",
-      'The brain region chiefly responsible for long-term planning and rational decision-making',
-      'The structure that converts short-term memories into long-term storage',
-      'The area that coordinates fine motor control and physical balance',
+      'The brain region that is chiefly responsible for long-term planning and for rational decision-making under pressure',
+      'The structure that converts short-term memories into long-term storage during sleep and later conscious recall',
+      'The area that coordinates fine motor control, physical balance and the precise timing of voluntary body movement',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -220,10 +220,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 10,
     question: 'The limbic system is best described as:',
     options: [
-      'A single structure dedicated solely to converting short-term memories into long-term ones',
-      'The outermost layer of the brain responsible for conscious, rational thought',
+      'A single brain structure dedicated solely to converting short-term memories into long-term ones',
+      'The outermost layer of the brain that is responsible for conscious, rational thought and for language',
       'A collection of brain structures involved in emotional responses, memory formation, and motivation',
-      'The network of nerves that carries motor signals to the muscles of the body',
+      'The network of nerves that carries motor signals from the spinal cord out to skeletal muscles',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -256,8 +256,8 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question: 'What is an "amygdala hijack"?',
     options: [
       'An overwhelming emotional reaction where the amygdala overrides the rational brain',
-      'A deliberate technique for calming yourself during a stressful conversation',
-      'A gradual build-up of mild irritation over the course of a working day',
+      'A deliberate breathing technique for calming yourself during a stressful conversation',
+      'A gradual build-up of mild irritation over the course of a long working day on site',
       'The conscious decision to walk away from a confrontation before it escalates',
     ] as const,
     correctAnswer: 0,
@@ -289,10 +289,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 14,
     question: 'What is emotional contagion?',
     options: [
-      'The deliberate effort to hide your true emotions from those around you',
-      'A technique for accurately naming the specific emotion you are feeling',
+      'The deliberate effort to hide your true emotions from everyone working around you',
+      'A structured technique for accurately naming the specific emotion you are feeling',
       "The phenomenon where one person's emotions trigger similar emotions in others",
-      "The tendency to misread other people's emotions based on your own mood",
+      'The tendency to misread other people\'s emotions because of the mood you are currently in',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -325,9 +325,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question: 'Which statement about emotional intelligence is supported by research?',
     options: [
       'Emotional intelligence can be learned and developed throughout life with deliberate practice',
-      'Emotional intelligence is a fixed trait that cannot be changed after childhood',
-      'High emotional intelligence is found almost exclusively in senior managers',
-      'Emotional intelligence has no measurable effect on workplace performance',
+      'Emotional intelligence is a fixed inherited trait that cannot be changed after early childhood',
+      'High emotional intelligence is found almost exclusively among senior construction managers',
+      'Emotional intelligence has no measurable effect on performance or on workplace safety',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -380,9 +380,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Why does Goleman argue that the five EI domains build sequentially upon one another?',
     options: [
-      'Because the domains are entirely independent and can be developed in any order',
-      'Because social skills are the easiest domain and should always be learned first',
-      'Because empathy must be fully mastered before any self-awareness can develop',
+      'Because the domains are wholly independent and can be developed in any given order',
+      'Because social skills are the easiest domain and should always be developed first of all',
+      'Because empathy must be fully mastered before any real self-awareness can begin to develop',
       'Because you must understand and manage yourself before you can manage relationships',
     ] as const,
     correctAnswer: 3,
@@ -399,9 +399,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
       'The HSE Management Standards identify six key areas of work design that can affect stress levels. Which of the following is one of these six areas?',
     options: [
       'Demands — workload, work patterns, and the work environment',
-      'Demand, Effort, Reward, and Imbalance from the workload',
-      'Plan, Do, Check, and Act in a continuous cycle',
-      'Hazard, Risk, Control, and Review on each task',
+      'Effort and Reward — a separate imbalance model of workplace stress',
+      'Plan, Do, Check, Act — the HSE cycle for managing safety on site',
+      'Hazard, Risk, Control, Review — the four steps of a risk assessment',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -416,10 +416,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'CITB behavioural competencies for site managers include emotional intelligence-related skills. Which of the following is a CITB behavioural competency?',
     options: [
-      'Maintaining accurate records of plant and material deliveries to site',
+      'Maintaining accurate records of all plant and material deliveries arriving on site',
       'Leading and motivating others, including managing relationships and team dynamics',
-      'Calculating the correct cable sizes for a given circuit load',
-      'Interpreting structural drawings to set out a building accurately',
+      'Calculating the correct cable size for a given circuit and design current',
+      'Interpreting structural drawings in order to set out a new building accurately',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -452,8 +452,8 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
       'In a construction team context, which scenario best demonstrates the practical application of emotional intelligence?',
     options: [
       'Insisting that every worker on site adopt an identical communication style',
-      "Recording each team member's mood in a daily log for management review",
-      'Setting deliberately high targets to push the team beyond their comfort zone',
+      'Recording each team member\'s mood in a written daily log for the management review',
+      'Setting deliberately high targets in order to push the team beyond their comfort zone',
       'A supervisor noticing a quiet apprentice, checking in, and adjusting their tasks',
     ] as const,
     correctAnswer: 3,
@@ -486,10 +486,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 25,
     question: 'What are the potential costs of low emotional intelligence in a construction team?',
     options: [
-      'Slightly slower decision-making but no measurable effect on safety or morale',
+      'Slightly slower decision-making but no measurable effect on site safety or on team morale',
       'Higher conflict, poor communication, more safety incidents, and lower productivity',
-      'Improved short-term output at the expense of long-term staff development',
-      'A reduction in administrative paperwork but an increase in technical errors',
+      'Improved short-term output at the expense of long-term staff development and retention',
+      'A reduction in administrative paperwork but a sharp increase in avoidable technical errors',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -504,9 +504,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question: 'How does emotional contagion typically spread within a construction team?',
     options: [
       'Primarily through formal written instructions and documented site procedures',
-      "Mainly through deliberate, conscious decisions to copy a colleague's mood",
+      'Mainly through deliberate, conscious decisions to copy a colleague\'s current mood',
       'Through facial expressions, tone, body language, and behaviour — often unconsciously',
-      'Only when team members already share a close personal friendship',
+      'Chiefly in teams whose members already share a close personal friendship outside work',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -520,9 +520,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 27,
     question: 'In the context of EI, what does "emotional literacy" specifically refer to?',
     options: [
-      'The ability to read and write technical documentation accurately',
-      'The capacity to memorise large amounts of emotional theory',
-      'The skill of persuading others to adopt your emotional viewpoint',
+      'The ability to read and write technical site documentation accurately and clearly',
+      'The capacity to memorise large amounts of published emotional theory',
+      'The skill of persuading other people on site to adopt your emotional viewpoint',
       'The ability to identify, name, and describe emotions in oneself and others',
     ] as const,
     correctAnswer: 3,
@@ -539,9 +539,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
       'Which of the following best describes the concept of "emotional agility" as developed by Susan David?',
     options: [
       'Being flexible with your thoughts and feelings to respond optimally to situations',
-      'A rigid set of rules dictating exactly how to feel in each situation',
-      'The practice of suppressing all emotions to maintain professionalism',
-      'A technique for permanently eliminating unwanted negative emotions',
+      'A rigid set of fixed rules dictating exactly how a person should feel in each situation',
+      'The practice of suppressing all difficult emotions in order to maintain professionalism',
+      'A technique for permanently eliminating unwanted negative emotions from your thinking',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -556,7 +556,7 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'According to research, how does emotional intelligence relate to leadership effectiveness in the construction industry?',
     options: [
-      'EI is useful only for senior executives and has no relevance at site level',
+      'EI is useful only for senior executives and carries no relevance at site level',
       'Leaders with higher EI achieve better team performance, safety, and retention',
       'Technical knowledge is the sole factor determining leadership effectiveness',
       'EI and leadership effectiveness are negatively correlated under pressure',
@@ -573,10 +573,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 30,
     question: 'What is the primary difference between "trait EI" and "ability EI" models?',
     options: [
-      'Trait EI is measured in children while ability EI is measured in adults',
-      'Trait EI applies to individuals while ability EI applies only to teams',
+      'Trait EI is measured in school children while ability EI is measured only in working adults',
+      'Trait EI applies to individuals while ability EI applies only to teams and organisations',
       'Trait EI measures self-perceived competencies; ability EI measures task performance',
-      'Trait EI is innate and fixed while ability EI is learned and changeable',
+      'Trait EI is innate and fixed from birth while ability EI is learned and changeable',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -591,9 +591,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'In the context of the UK construction industry, why is emotional intelligence particularly important for managing subcontractor relationships?',
     options: [
-      'Because subcontractors are legally barred from raising concerns directly',
-      'Because technical competence alone fully determines project success',
-      'Because empathy is irrelevant once a contract has been formally signed',
+      'Because subcontractors are legally barred from raising any concerns with the client directly',
+      'Because technical competence alone fully determines the success of any construction project',
+      'Because empathy becomes irrelevant once a contract has been formally signed by both parties',
       'Because coordinating diverse teams requires empathy, communication, and conflict skills',
     ] as const,
     correctAnswer: 3,
@@ -610,7 +610,7 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
       'How does the concept of "neuroplasticity" relate to developing emotional intelligence?',
     options: [
       'The brain can form new neural pathways for life, so EI can be developed at any age',
-      'The fixed structure of the adult brain that prevents EI from changing after 25',
+      'The fixed structure of the adult brain that prevents EI changing after early adulthood',
       'A genetic limit that caps how much emotional intelligence a person can develop',
       'The idea that emotional skills can only be learned during early childhood',
     ] as const,
@@ -631,8 +631,8 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     options: [
       'All three models are essentially identical and use interchangeable measures',
       'Each model offers a different but complementary lens on emotional intelligence',
-      "Goleman's model is the only one supported by any scientific evidence",
-      "Bar-On's model has entirely replaced the earlier Salovey-Mayer approach",
+      'Goleman\'s model is the only one of the three supported by any scientific evidence',
+      'Bar-On\'s model has entirely replaced the earlier Salovey-Mayer four-branch model',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -647,10 +647,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       "A construction project manager notices that two teams on site are in open conflict, productivity has dropped significantly, and several workers have requested transfers. Using Goleman's framework, which sequence of EI application would be most effective?",
     options: [
-      'Immediately discipline the most vocal worker to restore order quickly',
-      'Reassign both teams to separate sites to avoid any further contact',
+      'Immediately discipline the most vocal worker on each of the teams to restore order quickly',
+      'Reassign both of the teams to completely separate sites so that they have no further contact',
       'Self-regulate first, then use empathy, social awareness, and social skills to resolve it',
-      'Wait for the conflict to resolve itself without any intervention',
+      'Wait for the conflict to resolve itself over time without any intervention from management',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -665,7 +665,7 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Critical analysis of emotional intelligence research has raised several valid concerns. Which of the following is a legitimate critique?',
     options: [
-      'Emotional intelligence has been conclusively proven to be entirely innate',
+      'Emotional intelligence has been conclusively proven to be an entirely innate trait',
       'No EI measure has ever shown any correlation with workplace performance',
       'Ability-based EI tests are universally rejected by the research community',
       'Some EI measures overlap with personality traits, questioning its distinctness',
@@ -684,8 +684,8 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
       "An electrical contractor is tendering for a major hospital project. How might the organisation's collective emotional intelligence provide a competitive advantage during the bid process?",
     options: [
       'High collective EI lets teams understand clients and build trust during the bid',
-      'Lowering the bid price below cost is the only reliable way to win the work',
-      'Technical specifications alone determine the outcome of every bid evaluation',
+      'Lowering the bid price below cost is the only reliable way to win any of the work',
+      'Technical specifications alone determine the outcome of every bid evaluation process',
       'Collective EI is irrelevant because procurement is decided solely on price',
     ] as const,
     correctAnswer: 0,
@@ -701,10 +701,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'How does the Mayer-Salovey-Caruso Emotional Intelligence Test (MSCEIT) differ fundamentally from self-report EI measures?',
     options: [
-      "The MSCEIT relies entirely on the test-taker's own rating of their abilities",
+      'The MSCEIT relies entirely on the test-taker\'s own rating of their emotional ability',
       'The MSCEIT measures actual ability through tasks, not self-perceived competence',
-      'Self-report measures use performance tasks while the MSCEIT uses questionnaires',
-      'Both approaches measure identical things and produce interchangeable scores',
+      'Self-report measures use performance tasks while the MSCEIT uses only questionnaires',
+      'Both approaches measure identical things and produce fully interchangeable scores',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -719,10 +719,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Research on the "dark side" of emotional intelligence suggests that EI can sometimes be used manipulatively. Which scenario best illustrates this concern?',
     options: [
-      'A manager who openly shares credit with their team for shared successes',
-      'A supervisor who uses empathy to support a struggling apprentice',
+      'A manager who openly shares the credit with their team for every one of its successes',
+      'A supervisor who uses empathy to support a struggling first-year apprentice',
       "A manager who exploits team members' insecurities to maintain control and compliance",
-      'A leader who honestly admits their own mistakes to build team trust',
+      'A leader who honestly admits their own mistakes in order to build team trust',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -737,9 +737,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'A site engineer with excellent technical skills consistently receives poor 360-degree feedback on interpersonal competencies. Using the concept of EI development, what would be the most evidence-based approach to improvement?',
     options: [
-      'Send the engineer on a single one-day awareness workshop and consider it resolved',
-      'Reassign the engineer to purely technical tasks with no team contact',
-      'Simply inform the engineer of the poor feedback and expect them to self-correct',
+      'Send the engineer on a single one-day awareness workshop and consider the matter resolved',
+      'Reassign the engineer to purely technical tasks with no further team contact',
+      'Simply inform the engineer of the poor feedback and expect them to self-correct alone',
       'A structured programme of feedback, coaching, deliberate practice, and reflection',
     ] as const,
     correctAnswer: 3,
@@ -756,9 +756,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
       "In integrating multiple EI frameworks for a construction organisation's leadership development programme, which approach would be most theoretically sound and practically effective?",
     options: [
       'Combine the ability, competency, and trait models to leverage the strengths of each',
-      'Adopt a single model exclusively and disregard the other two frameworks entirely',
-      "Avoid all formal models and rely purely on managers' personal intuition",
-      'Use only self-report questionnaires because they are quicker to administer',
+      'Adopt a single model exclusively and disregard everything the other two frameworks offer',
+      'Avoid all formal models and rely purely on the personal intuition of individual managers',
+      'Use only self-report questionnaires because they are quicker and cheaper to administer',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -778,10 +778,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 41,
     question: 'According to Goleman, which three competencies make up the self-awareness domain?',
     options: [
-      'Self-control, adaptability, and conscientiousness',
+      'Self-control, trustworthiness, conscientiousness, and adaptability',
       'Emotional self-awareness, accurate self-assessment, and self-confidence',
-      'Empathy, service orientation, and organisational awareness',
-      'Influence, communication, and conflict management',
+      'Empathy, service orientation, developing others, and political awareness',
+      'Influence, communication, conflict management, and collaboration',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -795,10 +795,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 42,
     question: 'Lisa Feldman Barrett\'s research on "emotional granularity" refers to:',
     options: [
-      'The tendency to experience the same few emotions repeatedly over time',
-      'The ability to mask emotions so completely that others cannot detect them',
+      'The tendency to experience only the same few basic emotions repeatedly over an entire lifetime',
+      'The ability to mask your own emotions so completely that other people cannot detect them at all',
       'The ability to make fine distinctions between similar emotions, like irritation and anger',
-      'The speed at which an emotion fades once the trigger has passed',
+      'The speed at which a strong emotion completely fades once the original trigger passes',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -812,9 +812,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 43,
     question: "Plutchik's Wheel of Emotions organises emotions according to which principle?",
     options: [
-      'Four primary emotions arranged in a straight line from positive to negative',
-      'A simple list of emotions ranked from least to most socially acceptable',
-      'Eight primary emotions grouped solely by how pleasant each one feels',
+      'Four primary emotions arranged along a single straight line from most positive to most negative',
+      'A simple alphabetical list of emotions ranked from the least to the most socially acceptable',
+      'Eight primary emotions grouped solely by how pleasant or unpleasant each one of them feels',
       'Eight primary emotions in opposing pairs and intensities that combine into complex ones',
     ] as const,
     correctAnswer: 3,
@@ -831,9 +831,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
       'Which of the following is a common physical signal that someone is experiencing anxiety or stress?',
     options: [
       'Increased heart rate, shallow breathing, muscle tension, or stomach tightness',
-      'A sudden feeling of calm and a noticeable slowing of the heart rate',
+      'A sudden feeling of deep calm along with a noticeable slowing of the heart rate',
       'Improved concentration and a heightened sense of physical relaxation',
-      'Lowered blood pressure accompanied by deep, slow breathing',
+      'Lowered blood pressure accompanied by deep, slow and steady breathing',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -849,8 +849,8 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     options: [
       'Emotions are caused directly by external events, regardless of interpretation',
       'An event triggers a thought, which generates an emotion, which drives a behaviour',
-      'Behaviour always comes before the thought that triggers an emotion',
-      'Events trigger behaviours directly, bypassing any thought or feeling',
+      'Behaviour always comes before the thought that in turn triggers the emotional response',
+      'Events trigger behaviours directly, bypassing any conscious thought or emotional response',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -865,10 +865,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'On a construction site, which of the following is most likely to be a common emotional trigger for electricians?',
     options: [
-      'Receiving clear, well-co-ordinated drawings ahead of starting a task',
-      'Being given generous timescales and ample materials for a job',
+      'Receiving clear, well-co-ordinated drawings well ahead of starting a first fix on site',
+      'Being given generous timescales and all of the materials needed before starting a job',
       'An unrealistic deadline, having to redo previous work, or being publicly criticised',
-      'Working alongside a supportive team who routinely check their work',
+      'Working alongside a supportive team who routinely check over each other\'s finished work',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -883,8 +883,8 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question: 'The Johari Window model divides self-knowledge into four quadrants. What are they?',
     options: [
       'Strengths, Weaknesses, Opportunities, and Threats',
-      'Conscious, Subconscious, Unconscious, and Preconscious',
-      'Past, Present, Future, and Potential',
+      'Public Self, Private Self, Ideal Self, and the Feared Self',
+      'Thoughts, Feelings, Behaviours, and Sensations',
       'Open (Arena), Blind Spot, Hidden (Facade), and Unknown',
     ] as const,
     correctAnswer: 3,
@@ -900,9 +900,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question: 'Carol Dweck\'s concept of a "growth mindset" is most accurately described as:',
     options: [
       'The belief that abilities can be developed through effort and learning from mistakes',
-      'The belief that intelligence and ability are fixed and cannot be changed',
-      'A naturally optimistic temperament that some people are simply born with',
-      'The conviction that talent matters far more than effort or practice',
+      'The belief that intelligence and ability are fixed at birth and cannot be changed at all',
+      'A naturally optimistic temperament that certain fortunate people are simply born with',
+      'The conviction that natural talent matters far more than effort or practice',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -916,10 +916,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 49,
     question: 'Which daily practice is most effective for developing emotional self-awareness?',
     options: [
-      'Avoiding any reflection on emotions to prevent dwelling on the negative',
+      'Avoiding any reflection on your own emotions in order to prevent dwelling on the negative',
       'Keeping a brief daily log of emotional states, triggers, and responses to spot patterns',
-      'Asking colleagues each day to rate your mood on your behalf',
-      'Reading widely about emotional theory without applying it personally',
+      'Asking several of your colleagues at the end of each day to rate your mood on your behalf',
+      'Reading widely about published emotional theory without ever applying any of it personally',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -933,10 +933,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 50,
     question: 'What is the primary purpose of emotional self-awareness in the workplace?',
     options: [
-      'To eliminate all negative emotions before they can affect your work',
-      'To ensure you always appear calm and positive to colleagues',
+      'To eliminate all negative emotions before they can affect the quality of your work',
+      'To ensure that you always appear calm and positive in front of your colleagues',
       'To recognise your emotions as they occur and understand their impact on your actions',
-      'To learn to hide your emotions so they never influence your decisions',
+      'To learn to hide your emotions so that they can never influence the decisions you make',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -950,9 +950,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 51,
     question: 'Which of the following best describes "emotional vocabulary"?',
     options: [
-      'The total number of languages in which a person can express emotions',
-      'The volume or loudness at which a person typically expresses feelings',
-      'The speed at which a person can recall an emotional memory',
+      'The total number of different languages in which a person is able to express their emotions',
+      'The volume or loudness at which a person typically expresses their own strongest feelings',
+      'The speed at which a person is able to recall a specific and vivid emotional memory',
       'The range and precision of words a person uses to describe their emotional experiences',
     ] as const,
     correctAnswer: 3,
@@ -969,9 +969,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
       'In the construction industry, why is recognising personal stress responses particularly important?',
     options: [
       'Because unrecognised stress impairs judgement and reaction time on a high-hazard site',
-      'Because stress always improves focus and sharpens reaction time',
-      'Because recognising stress is mainly useful for office-based roles',
-      'Because stress has no measurable effect on physical safety on site',
+      'Because stress always improves a worker\'s concentration and sharpens their reaction time',
+      'Because recognising your own stress signals is only useful for office-based support staff',
+      'Because unrecognised stress has no measurable effect on physical safety on a construction site',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -985,10 +985,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 53,
     question: 'What does "accurate self-assessment" mean as a Goleman EI competency?',
     options: [
-      'Always presenting yourself as highly confident regardless of your actual ability',
+      'Always presenting yourself as highly confident to colleagues regardless of your real ability level',
       'Having an honest understanding of your own strengths and limitations, and being open to learning',
-      'Comparing your performance favourably against that of your colleagues',
-      'Focusing only on your strengths and avoiding any thought of weaknesses',
+      'Comparing your own performance favourably against that of the colleagues working around you',
+      'Focusing only on your own strengths and avoiding any serious thought about your weaknesses',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -1002,10 +1002,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 54,
     question: 'Which of the following is an example of an internal emotional trigger?',
     options: [
-      'A specific external event, such as a deadline being moved or a tool going missing',
-      'A physical sensation in the body, such as a racing heart or tight chest',
+      'A specific external event happening on site, such as a deadline being moved or a tool going missing',
+      'A physical sensation felt in the body, such as a racing heart, a tight chest or rapid shallow breathing',
       "A recurring negative thought pattern, such as \"I'm not good enough\" or \"They don't respect me\"",
-      "A colleague's facial expression or tone of voice during a conversation",
+      'A colleague\'s facial expression or their tone of voice during a difficult site conversation',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -1019,9 +1019,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 55,
     question: 'Self-confidence, as an EI competency, is best described as:',
     options: [
-      'Always being the loudest and most dominant voice in any discussion',
-      'The absence of any self-doubt or uncertainty in any situation',
-      'A tendency to take on far more work than you can realistically manage',
+      'Always being the loudest and most dominant voice in every team discussion on site',
+      'The complete absence of any self-doubt or uncertainty in any situation at all',
+      'A tendency to take on far more work than any one person could realistically manage',
       'A strong sense of your self-worth and capabilities, even when under pressure',
     ] as const,
     correctAnswer: 3,
@@ -1056,10 +1056,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       "Albert Ellis's ABC model identifies three components of emotional experience. What do A, B, and C stand for?",
     options: [
-      'Awareness, Behaviour, and Consequence of the action',
+      'Awareness of the event, Behaviour chosen, and Consequence that follows',
       'Activating event, Beliefs about it, and the Consequences that follow',
-      'Action, Belief, and the resulting Choice made',
-      'Adversity, Bargaining, and a return to Calm',
+      'Action taken, Belief about it, and the Choice that results',
+      'Adversity faced, Bargaining over it, and a slow return to Calm',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -1090,9 +1090,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 59,
     question: 'The Dunning-Kruger effect describes:',
     options: [
-      'A bias where people consistently and accurately judge their own competence',
-      'A tendency for experts to greatly overestimate their own abilities',
-      'The effect where confidence rises steadily in proportion to skill',
+      'A bias where people at every skill level consistently and accurately judge their own competence',
+      'A tendency for the most experienced experts to greatly overestimate their own level of ability',
+      'The effect where a person\'s confidence rises steadily in direct proportion to their skill',
       'A bias where the less competent overestimate their ability and experts underestimate theirs',
     ] as const,
     correctAnswer: 3,
@@ -1108,9 +1108,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question: "Gibbs' Reflective Cycle contains which six stages?",
     options: [
       'Description, Feelings, Evaluation, Analysis, Conclusion, Action Plan',
-      'Define, Measure, Analyse, Improve, Control, and Sustain',
+      'Concrete Experience, Reflection, Conceptualisation, and Experimentation',
       'Denial, Anger, Bargaining, Depression, Acceptance, and Hope',
-      'Plan, Do, Study, Act, Review, and Repeat the cycle',
+      'Plan, Do, Study, Act, Review, and Repeat the improvement cycle',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -1124,10 +1124,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 61,
     question: 'Body scanning as a self-awareness technique involves:',
     options: [
-      'Rapidly tensing and releasing each muscle group to release physical stress',
+      'Rapidly tensing and then releasing each muscle group in turn to release physical tension',
       'Directing attention through the body to notice tension that may signal emotional states',
-      'Visualising a calm scene to distract yourself from physical discomfort',
-      'Counting your breaths until your heart rate returns to its resting level',
+      'Visualising a calm outdoor scene in order to distract yourself from the discomfort',
+      'Counting each of your breaths until your heart rate has returned to its normal resting level',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -1142,10 +1142,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Viktor Frankl famously stated: "Between stimulus and response there is a space." How does this relate to emotional intelligence?',
     options: [
-      'It proves that we have no control over how we react to any trigger',
-      'It shows that emotional reactions are always instantaneous and automatic',
+      'It proves that we have no control whatsoever over the way in which we react to a trigger',
+      'It shows that emotional reactions are always instantaneous, automatic and beyond control',
       'It highlights the moment of choice between a trigger and our reaction — a core EI skill',
-      'It suggests that the gap between stimulus and response should be eliminated',
+      'It suggests that the gap between a stimulus and our response should be eliminated entirely',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -1160,9 +1160,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the primary purpose of conducting regular emotional check-ins with yourself throughout the working day?',
     options: [
-      'To build the habit of noticing your emotional state and choosing how to proceed',
-      'To ensure you suppress any unhelpful emotions as soon as they arise',
-      'To compare your emotional state with that of your colleagues',
+      'To produce a written record of your emotional state so that a supervisor can later review it',
+      'To ensure that you suppress any unhelpful emotions as soon as they begin to arise',
+      'To compare your own emotional state with that of the other colleagues on your team',
       'To build the habit of noticing and naming your emotional state and choosing how to proceed',
     ] as const,
     correctAnswer: 3,
@@ -1178,9 +1178,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question: 'In the Johari Window, a "blind spot" refers to:',
     options: [
       'Aspects of your behaviour and personality that are visible to others but that you are unaware of',
-      'Aspects of yourself that you are aware of but deliberately hide from others',
-      'Aspects of yourself that neither you nor anyone else is yet aware of',
-      'Aspects of yourself that are openly known to both you and others',
+      'Aspects of your own behaviour that you are fully aware of but deliberately hide from other people',
+      'Aspects of your own behaviour and personality that neither you nor your colleagues are yet aware of',
+      'Aspects of your own behaviour and personality that are openly known to both you and others',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -1194,10 +1194,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 65,
     question: 'How does the concept of "meta-cognition" relate to emotional self-awareness?',
     options: [
-      'It refers to the speed at which the brain processes emotional information',
+      'It refers to the raw speed at which the brain processes and stores new emotional information',
       'Thinking about your own thinking lets you observe responses and choose rather than react',
-      'It is the ability to memorise and recall emotional vocabulary accurately',
-      'It describes the tendency to think about other people more than yourself',
+      'It is the ability to memorise and accurately recall a very wide range of emotional vocabulary',
+      'It describes the tendency to consider other people\'s feelings far more often than your own',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -1212,10 +1212,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'An electrician notices that they consistently feel defensive when receiving feedback from the main contractor\'s project manager. Using the ABC model, which "B" (belief) might be driving this reaction?',
     options: [
-      'A specific external event, such as receiving the feedback itself',
-      'A physical reaction, such as a tightening of the chest or clenched jaw',
+      'A specific external event, such as receiving the project manager\'s feedback',
+      'A physical reaction in the body, such as a tightening of the chest or a clenched jaw',
       "A belief such as \"They think I'm incompetent\" or \"They are looking to blame me\"",
-      'A learned habit of avoiding feedback conversations altogether',
+      'A learned habit of avoiding all difficult feedback conversations altogether',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -1231,8 +1231,8 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
       'What is the difference between "emotional suppression" and "emotional awareness" as approaches to managing emotions?',
     options: [
       'Emotional suppression and emotional awareness are simply two names for the same process',
-      'Suppression acknowledges emotions openly while awareness hides them from others',
-      'Awareness eliminates emotions entirely while suppression merely delays them',
+      'Suppression acknowledges emotions openly while awareness conceals them from all other people',
+      'Awareness eliminates emotions entirely while suppression merely delays them for a while longer',
       'Suppression denies emotions and raises stress; awareness acknowledges them without control',
     ] as const,
     correctAnswer: 3,
@@ -1249,9 +1249,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
       'How can an electrician use the "feelings wheel" (an expansion of Plutchik\'s model) to improve their emotional self-awareness?',
     options: [
       "By using it to name emotions precisely, from \"bad\" to \"overwhelmed\" or \"frustrated\"",
-      'By using it to rank emotions from least to most professionally acceptable',
-      'By memorising the entire wheel so emotions can be recited on demand',
-      'By using it to decide which emotions colleagues are permitted to express',
+      'By using it to rank your emotions from the least to the most professionally acceptable on site',
+      'By memorising the entire feelings wheel so that every emotion can be recited in order on demand',
+      'By using it to decide which of the emotions colleagues are permitted to express openly at work',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -1266,10 +1266,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Research on self-awareness suggests that there are two distinct types: internal self-awareness and external self-awareness. What is the difference?',
     options: [
-      'Internal self-awareness concerns the past while external concerns the future',
+      'Internal self-awareness concerns your past while external self-awareness concerns your future',
       "Internal is understanding your own feelings; external is how accurately you read others' views of you",
-      'Internal self-awareness applies to leaders while external applies to followers',
-      'Internal self-awareness is innate while external self-awareness is impossible to develop',
+      'Internal self-awareness applies only to leaders while external self-awareness applies only to followers',
+      'Internal self-awareness is innate from birth while external self-awareness cannot be developed',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -1283,8 +1283,8 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 70,
     question: 'What is a "values-behaviour gap" and why is it relevant to self-awareness?',
     options: [
-      'The gap between what a person knows and what they are able to do technically',
-      "The difference between a person's stated goals and their actual achievements",
+      'The gap between what a person knows and what they are actually able to do technically',
+      'The difference between a person\'s stated goals and their actual level of achievement',
       'The discrepancy between the values a person claims and how they actually behave',
       'The mismatch between how confident a person feels and how skilled they are',
     ] as const,
@@ -1300,9 +1300,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 71,
     question: 'How does "confirmation bias" affect emotional self-awareness?',
     options: [
-      'It causes people to forget emotional information almost as soon as they receive it',
-      'It makes people equally open to all evidence regardless of their existing beliefs',
-      'It improves emotional accuracy by forcing constant re-evaluation of beliefs',
+      'It causes people to forget any new emotional information almost as soon as they have received it',
+      'It makes people equally open to all new evidence regardless of any of their own existing beliefs',
+      'It improves emotional accuracy by forcing a constant re-evaluation of all your existing beliefs',
       'It makes people notice evidence confirming existing beliefs, creating a distorted self-picture',
     ] as const,
     correctAnswer: 3,
@@ -1319,9 +1319,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
       'A foreman uses Gibbs\' Reflective Cycle after losing their temper with a subcontractor. At the "Analysis" stage, they should:',
     options: [
       'Explore why events occurred, examining the assumptions and triggers that influenced them',
-      'Simply describe in plain terms exactly what happened during the incident',
-      'State only how the experience made you feel at the time',
-      'Decide immediately what you will do differently next time',
+      'Simply describe in plain factual terms exactly what happened during the incident on the site',
+      'State only how the whole experience made you feel at the time it happened on site',
+      'Decide immediately what you will do differently the next time the same thing happens',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -1338,9 +1338,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'A senior electrician consistently receives feedback that they are perceived as unapproachable, despite believing themselves to be friendly and open. Using the Johari Window framework, which quadrant does this discrepancy sit in, and what is the most effective strategy to address it?',
     options: [
-      'The Open quadrant — they should simply continue behaving exactly as they do now',
+      'The Open quadrant — they should simply continue behaving exactly as they have always done',
       'The Blind Spot quadrant — seek specific feedback, then work on modifying the behaviours',
-      'The Hidden quadrant — they should disclose more personal information to colleagues',
+      'The Hidden quadrant — they should disclose much more personal information to their colleagues',
       'The Unknown quadrant — no action is possible because no one is aware of the issue',
     ] as const,
     correctAnswer: 1,
@@ -1374,9 +1374,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'An electrical project manager prides themselves on making purely rational, emotion-free decisions. From an EI perspective, what is problematic about this approach?',
     options: [
-      'Purely rational decision-making is the gold standard that all managers should aim for',
-      'Emotions are a distraction that consistently lead to worse decisions',
-      'People who exclude emotion from decisions make demonstrably better choices',
+      'Purely rational, emotion-free decision-making is the gold standard that every project manager should aim for',
+      'Emotions are simply a distraction that consistently leads people to make worse decisions at work under pressure',
+      'People who exclude all emotion from their decisions consistently make demonstrably better choices on site',
       "Damasio's research shows emotions are essential to good decisions; the 'rational' just don't notice them",
     ] as const,
     correctAnswer: 3,
@@ -1393,8 +1393,8 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
       'How might the concept of "alexithymia" — difficulty identifying and describing one\'s own emotions — present challenges in a construction workplace?',
     options: [
       'Workers may not recognise stress or fatigue until it becomes severe, creating safety risks',
-      'Workers with alexithymic traits typically have unusually high emotional awareness',
-      "Alexithymia mainly affects a person's technical skills rather than their emotions",
+      'Workers with alexithymic traits typically have unusually high levels of emotional awareness',
+      'Alexithymia mainly affects a person\'s technical skills rather than their emotions',
       'Alexithymia makes workers overly sensitive and prone to overreacting emotionally',
     ] as const,
     correctAnswer: 0,
@@ -1428,10 +1428,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Research suggests that the practice of "self-distancing" — referring to yourself in the third person when reflecting on emotional experiences — can enhance self-awareness. Why might this be effective?',
     options: [
-      'Because referring to yourself in the third person eliminates the emotion entirely',
-      'Because it distracts you from the situation so the emotion is simply ignored',
+      'Because referring to yourself in the third person eliminates the emotion from the memory entirely',
+      'Because it distracts you from the situation so that the emotion can be simply ignored',
       'Third-person self-talk creates distance, engaging the prefrontal cortex and easing intensity',
-      'Because speaking aloud about yourself increases amygdala activity and clarity',
+      'Because speaking aloud about yourself increases amygdala activity and improves clarity',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -1447,8 +1447,8 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
       'An apprentice electrician has strong internal self-awareness (they understand their own values and emotional patterns well) but weak external self-awareness (they do not understand how others perceive them). What specific risks does this imbalance create?',
     options: [
       'They will understand others perfectly but be unable to understand their own feelings',
-      'They will become overconfident about their technical abilities on site',
-      'They will struggle to identify their own values while reading others flawlessly',
+      'They will become overconfident about their own technical abilities and their knowledge',
+      'They will struggle to name their own values and triggers while reading other people flawlessly',
       'They may alienate colleagues, miss social cues, and not understand the feedback they receive',
     ] as const,
     correctAnswer: 3,
@@ -1465,9 +1465,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
       'How might cultural norms within the UK construction industry specifically hinder the development of emotional self-awareness among workers?',
     options: [
       "\"Tough it out\" cultures discourage emotional expression, driving suppression and poor help-seeking",
-      'Construction culture strongly encourages open emotional expression and reflection',
-      'Workplace culture has no measurable influence on emotional self-awareness',
-      "The fast pace of site work naturally improves workers' emotional awareness",
+      'Construction site culture strongly encourages open emotional expression and regular reflection',
+      'Workplace culture has no measurable influence on an individual\'s emotional self-awareness',
+      'The fast pace of construction site work naturally improves every worker\'s emotional awareness',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -1504,10 +1504,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 82,
     question: 'What is the key difference between emotional suppression and emotional regulation?',
     options: [
-      'Suppression and regulation are simply two terms for the same underlying process',
-      'Suppression acknowledges the emotion openly while regulation hides it from view',
+      'Suppression and regulation are simply two different terms for the same underlying process',
+      'Suppression acknowledges the emotion openly while regulation hides it from other people',
       'Suppression pushes emotions down; regulation acknowledges them and manages them constructively',
-      'Regulation removes the emotion completely while suppression merely postpones it',
+      'Regulation removes the emotion completely while suppression merely postpones it briefly',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -1540,9 +1540,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question: 'Jill Bolte Taylor\'s "90-second rule" states that:',
     options: [
       "An emotion's neurochemical surge passes in about 90 seconds; longer is sustained by our thoughts",
-      'Any strong emotion physically lasts for a minimum of 90 minutes before fading',
-      'It takes about 90 seconds to consciously decide how to respond to any emotion',
-      'The first 90 seconds of an emotion are the only part we can consciously control',
+      'Any strong emotion physically lasts for a minimum of 90 minutes before it begins to fade',
+      'It takes about 90 seconds to consciously decide how to respond to any strong emotion',
+      'The first 90 seconds of any strong emotion are the only part that we can consciously control',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -1590,9 +1590,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 87,
     question: 'What is "cognitive reappraisal" in the context of emotional regulation?',
     options: [
-      'Physically removing yourself from any situation that triggers a strong emotion',
-      'Distracting yourself with another task until the emotion naturally passes',
-      'Expressing the emotion outwardly as forcefully as possible to release it',
+      'Physically removing yourself from any situation on site that triggers strong emotions in you',
+      'Distracting yourself with a completely different task until the emotion naturally passes',
+      'Expressing the emotion outwardly and as forcefully as possible in order to release it',
       'Changing the way you think about or interpret a situation in order to alter its emotional impact',
     ] as const,
     correctAnswer: 3,
@@ -1729,9 +1729,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'A site electrician feels intense frustration when they discover that plasterboard has been installed over cable routes before first fix was completed. Which self-regulation technique would be most appropriate as an immediate response?',
     options: [
-      'Immediately confront the person responsible loudly so others learn from it',
-      'Say nothing and quietly redo the work yourself to avoid any conflict',
-      'Leave the issue entirely and hope it is not noticed at inspection',
+      'Immediately confront the person responsible loudly so that the whole team learns from it',
+      'Say nothing at all and quietly redo the whole job yourself to avoid any conflict',
+      'Leave the issue entirely alone and hope it is not noticed at the final inspection',
       'Use STOP: Stop, breathe, observe the frustration, then raise it through site coordination',
     ] as const,
     correctAnswer: 3,
@@ -1747,9 +1747,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question: 'What role does "self-talk" play in emotional regulation?',
     options: [
       'Internal dialogue shapes emotion — negative self-talk escalates it, constructive self-talk eases it',
-      "Self-talk has no measurable influence on a person's emotional state",
-      'Negative self-talk reliably calms emotions while positive self-talk inflames them',
-      'Self-talk only matters when spoken aloud, not when it is internal',
+      'Internal self-talk has no measurable influence on a person\'s emotional state or behaviour',
+      'Negative self-talk reliably calms strong emotions while positive self-talk always inflames them',
+      'Self-talk only matters when it is spoken aloud to other people, not when it stays internal',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -1897,9 +1897,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
       'Research shows that cortisol (the stress hormone) takes approximately 20-60 minutes to return to baseline after an acute stress response. How should this "cortisol cooldown period" inform self-regulation strategy on site?',
     options: [
       'Delay important decisions for at least 20 minutes to let the stress response subside',
-      'You should make all important decisions immediately while emotions are vivid',
+      'You should make all important decisions immediately while the emotions are still vivid',
       'The cooldown period only applies to physical exertion, not emotional stress',
-      'You should suppress the stress response so decisions can be made at once',
+      'You should suppress the stress response so that decisions can be made at once',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -1914,10 +1914,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Cognitive reappraisal is the process of reinterpreting a situation to change its emotional impact. A site supervisor tells you your installation work needs to be partially redone. Which response demonstrates cognitive reappraisal?',
     options: [
-      'Immediately telling the supervisor their assessment is completely wrong',
+      'Immediately telling the supervisor that their assessment of the installation is completely wrong',
       'Reframing the feedback as a chance to improve quality before inspection, easing the negativity',
-      'Suppressing your disappointment entirely and saying nothing at all',
-      'Walking away from the conversation until the supervisor changes their mind',
+      'Suppressing your disappointment about the feedback entirely and saying nothing to the supervisor',
+      'Walking away from the conversation and waiting until the supervisor changes their mind',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -1932,10 +1932,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'The Kubler-Ross Change Curve describes five stages: denial, anger, bargaining, depression, and acceptance. When a construction company transitions to a completely new digital reporting system, which stage might manifest as an electrician saying "I\'ll use the new system for small jobs but keep doing the big ones on paper"?',
     options: [
-      'Denial — they are refusing to accept that any change is taking place',
-      'Acceptance — they have fully embraced the new system without reservation',
+      'Denial — they are refusing to accept that any change to the reporting system is happening',
+      'Acceptance — they have fully embraced the new reporting system without any reservation',
       'Bargaining — negotiating a partial adoption while retaining some of the old approach',
-      'Anger — they are openly hostile and refusing to engage with the change',
+      'Anger — they are openly hostile and are refusing to engage with the new system in any way',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -1950,9 +1950,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Emotional flooding occurs when the intensity of emotions overwhelms the capacity for rational thought. What is a reliable physiological indicator that emotional flooding may be occurring?',
     options: [
-      'Heart rate above about 100 bpm with unclear thinking and an urge to flee',
-      'Improved clarity of thought and a heightened sense of control',
-      'Slow, deep breathing accompanied by relaxed shoulders and jaw',
+      'A heart rate falling below about 60 bpm, with unusually clear thinking and no sense of urgency',
+      'Improved clarity of thought along with a heightened sense of control over the situation',
+      'Slow, deep breathing accompanied by relaxed shoulders and a completely unclenched jaw',
       'Heart rate above about 100 bpm with difficulty thinking clearly and an urge to fight or flee',
     ] as const,
     correctAnswer: 3,
@@ -1969,9 +1969,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
       "In Goleman's EI framework, conscientiousness is a self-regulation competency defined as taking responsibility for personal performance. Which behaviour best demonstrates conscientiousness in an electrical context?",
     options: [
       'Testing installations to standard even when unsupervised, driven by internal standards',
-      'Producing high-quality work only when a supervisor is watching closely',
-      'Completing tasks as quickly as possible regardless of testing standards',
-      'Always deferring to others rather than taking responsibility for outcomes',
+      'Producing consistently high-quality work only when a supervisor is watching the job closely',
+      'Completing every task as quickly as possible regardless of the required testing standards',
+      'Always deferring to other people rather than taking responsibility for the outcome',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -1986,10 +1986,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       "Innovation, in Goleman's framework, is a self-regulation competency involving comfort with novel ideas and approaches. Why is innovation classified under self-regulation rather than, say, motivation?",
     options: [
-      'Because innovation is purely a cognitive skill unrelated to any emotion',
+      'Because innovation is purely a cognitive skill that has no connection with emotion of any kind',
       'It requires regulating fear of failure and resistance to change before creativity can occur',
-      'Because innovation depends only on external rewards and incentives',
-      'Because innovation is mainly about copying ideas from other people',
+      'Because innovation depends only on the external rewards and incentives that an employer offers',
+      'Because innovation is mainly about copying good ideas from other people and from other trades',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -2004,10 +2004,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'When joining a new site team, a qualified electrician feels anxious about establishing credibility. Applying the Kubler-Ross model to this personal transition, what self-regulation strategy would be most effective?',
     options: [
-      'Demanding immediate respect by emphasising your qualifications to the team',
-      'Avoiding the team entirely until you feel completely confident',
+      'Demanding immediate respect from the new team by emphasising all your qualifications and experience',
+      'Avoiding the rest of the team entirely until you feel completely confident in the new role',
       'Acknowledge the anxiety, reappraise it as a chance to learn, and build trust through reliability',
-      'Suppressing the anxiety and pretending you have no concerns at all',
+      'Suppressing the anxiety completely and pretending to the team that you have no concerns',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -2041,9 +2041,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
       'A foreman receives news that the project deadline has been moved forward by two weeks. He notices his jaw clenching and his thoughts racing with worst-case scenarios. According to the cognitive reappraisal model, what should he do FIRST?',
     options: [
       'Recognise the stress signals as an amygdala trigger, then pause to re-engage the prefrontal cortex',
-      'Immediately announce the new deadline to the team while still feeling stressed',
-      'Suppress the physical signs of stress and carry on as though nothing happened',
-      'Make a quick decision about resourcing before the stress response subsides',
+      'Immediately announce the new deadline to the whole team while you are still feeling stressed and angry',
+      'Suppress all the physical signs of stress and carry on with the day as though nothing at all had happened',
+      'Make a quick decision about resourcing the whole project before the stress response subsides',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -2058,10 +2058,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'An experienced electrician discovers a serious wiring error made by a colleague on a commercial installation. The error poses no immediate safety risk but will fail inspection. Integrating multiple self-regulation strategies, what is the most emotionally intelligent approach?',
     options: [
-      "Publicly point out the colleague's error so the whole team can learn from it",
+      'Publicly point out the colleague\'s error in front of the whole team so that they can all learn from it',
       'Regulate frustration, raise it privately as a quality issue, and offer to help correct it',
-      'Quietly correct the work yourself without mentioning it to anyone',
-      'Report the colleague to management before speaking to them at all',
+      'Quietly correct all of the faulty work yourself without ever mentioning the error to anybody',
+      'Report the colleague straight to the site management before speaking to them about it at all',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -2076,10 +2076,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'The Trust Equation states Trust = (Credibility + Reliability + Intimacy) / Self-Orientation. An electrician is highly credible and reliable but has very high self-orientation (always talking about their own achievements). According to the equation, what happens to trust — and what self-regulation skill is needed?',
     options: [
-      'Trust is increased because high self-orientation signals drive and ambition',
-      'Trust is unaffected because credibility and reliability outweigh everything else',
+      'Trust is increased because a high self-orientation score clearly signals personal drive and ambition',
+      'Trust is unaffected because credibility and reliability together outweigh every other factor',
       'Trust falls because self-orientation is the denominator; managing self-interest is the skill needed',
-      'Trust improves slightly because talking about achievements builds credibility',
+      'Trust improves slightly because talking about your own achievements builds extra credibility',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -2094,9 +2094,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       "In construction culture, there is often an unspoken expectation to project toughness and hide vulnerability. Brene Brown's research suggests that vulnerability is actually essential for trust and connection. How does this create a self-regulation challenge for electricians?",
     options: [
-      'The challenge is that vulnerability always damages professional credibility on site',
-      'The challenge is that construction culture fully supports emotional openness already',
-      'The challenge is that vulnerability and self-regulation are the same skill',
+      'The challenge is that showing any vulnerability always damages professional credibility on site',
+      'The challenge is that construction site culture already fully supports open emotional expression',
+      'The challenge is that vulnerability and self-regulation are exactly the same single skill',
       'Self-regulation can require vulnerability, which conflicts with the cultural norm of toughness',
     ] as const,
     correctAnswer: 3,
@@ -2113,9 +2113,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
       "Gross and John's (2003) research compared people who habitually use expressive suppression versus cognitive reappraisal. Which finding accurately reflects their research on long-term effects?",
     options: [
       'Suppressors had worse social outcomes and more negative emotion; reappraisers fared better',
-      'Habitual suppressors showed better social outcomes and more positive emotion over time',
-      'There was no measurable difference in outcomes between suppressors and reappraisers',
-      'Reappraisers showed worse wellbeing because they over-analysed every situation',
+      'Habitual suppressors showed better social outcomes and much more positive emotion over time',
+      'There was no measurable difference in outcomes between the suppressors and the reappraisers',
+      'Reappraisers showed much worse long-term wellbeing because they over-analysed every situation',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -2130,10 +2130,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'ACT (Acceptance and Commitment Therapy) identifies six core processes of psychological flexibility. One is "cognitive defusion" — the ability to see thoughts as thoughts rather than facts. A site manager thinks "I am a terrible leader because we missed the deadline." What would cognitive defusion look like?',
     options: [
-      'Repeating the thought firmly until you fully believe it is an accurate fact',
+      'Repeating the thought firmly to yourself until you completely believe that it is an accurate fact',
       "Seeing the thought as a thought, not a fact: \"I'm having the thought that I'm a poor leader\"",
-      'Pushing the thought out of your mind and refusing to acknowledge it at all',
-      'Acting immediately on the thought before it has a chance to fade',
+      'Pushing the thought out of your mind completely and refusing to acknowledge it at all',
+      'Acting immediately on the thought before it has any chance at all to fade from your mind',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -2148,10 +2148,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'An electrician takes ownership when a circuit they designed causes nuisance tripping, rather than blaming the manufacturer or the design brief. According to self-regulation theory, what distinguishes ownership from blame culture?',
     options: [
-      'Ownership and blame are essentially the same response to a workplace error',
-      'Blame culture requires more emotional regulation than taking genuine ownership',
+      'Ownership and blame are essentially the same emotional response to any serious workplace error',
+      'A blame culture requires far more emotional regulation than taking genuine ownership ever does',
       'Ownership regulates defensive impulses and focuses on learning; blame redirects fear outward',
-      'Ownership means accepting fault while also condemning yourself harshly for it',
+      'Ownership means accepting all the fault while also condemning yourself very harshly for it',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -2166,9 +2166,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'During a high-pressure commissioning where multiple systems are failing, an electrical project manager needs to maintain composure while the client is escalating complaints. Which advanced self-regulation approach integrates the most strategies effectively?',
     options: [
-      "Immediately matching the client's rising emotional intensity to show you care",
-      "Suppressing all outward signs of stress while ignoring the client's feelings",
-      'Deflecting responsibility onto the supplier until the client calms down',
+      'Immediately matching the client\'s rising emotional intensity in order to show them that you care',
+      'Suppressing every outward sign of stress while completely ignoring how the client must be feeling',
+      'Deflecting all of the responsibility onto the equipment supplier until the client has calmed down',
       'Combine breathing, cognitive reappraisal, psychological flexibility, and measured vulnerability',
     ] as const,
     correctAnswer: 3,
@@ -2185,9 +2185,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
       'Adaptability is a self-regulation competency in Goleman\'s framework. The construction industry is experiencing rapid change: new regulations, digital tools, sustainability requirements, and evolving safety standards. What distinguishes adaptability as a self-regulation competency from simply "going along with changes"?',
     options: [
       'Actively regulating resistance to change and flexing strategies without losing core values',
-      'Simply accepting every change without question to avoid any conflict',
-      'Resisting all change firmly to protect established and proven methods',
-      'Waiting for management to enforce changes rather than engaging with them',
+      'Simply accepting every proposed change without question in order to avoid any conflict at all',
+      'Resisting all change firmly in order to protect long-established and proven methods',
+      'Waiting for management to enforce each change rather than engaging with any of them',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -2208,8 +2208,8 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     options: [
       'Emotional self-awareness — recognising your emotions and their effects',
       'Achievement drive — a striving to improve or meet a standard of excellence',
-      'Trustworthiness — maintaining standards of honesty and integrity',
-      'Service orientation — anticipating and meeting the needs of clients',
+      'Trustworthiness — maintaining high standards of honesty and personal integrity',
+      'Service orientation — anticipating and meeting the needs of every client on site',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -2314,9 +2314,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the standard definition of empathy in the context of emotional intelligence?',
     options: [
-      'The ability to persuade others to adopt your own emotional viewpoint',
-      "The capacity to remain completely detached from other people's feelings",
-      'The skill of accurately predicting how a situation will turn out',
+      'The ability to persuade other people on site to adopt your own emotional viewpoint on a matter',
+      'The capacity to remain completely detached from the feelings of every other person around you',
+      'The skill of accurately predicting how a difficult situation on site will eventually turn out',
       "Understanding and sharing another person's feelings, seeing the world from their perspective",
     ] as const,
     correctAnswer: 3,
@@ -2333,9 +2333,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
       'Research identifies three distinct types of empathy. Which option correctly names all three?',
     options: [
       'Cognitive empathy (understanding), emotional empathy (feeling), and compassionate empathy (acting)',
-      'Strong empathy, weak empathy, and neutral empathy based on intensity',
-      'Verbal empathy, written empathy, and visual empathy based on channel',
-      'Conscious empathy, unconscious empathy, and learned empathy based on awareness',
+      'Strong empathy (intense), weak empathy (mild), and neutral empathy (absent), based on their intensity',
+      'Verbal empathy (speech), written empathy (text), and visual empathy (images), based on channel',
+      'Conscious empathy (deliberate), unconscious empathy (automatic), and learned empathy (trained)',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -2349,10 +2349,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 129,
     question: 'What is the key difference between empathy and sympathy?',
     options: [
-      'Empathy and sympathy are simply two words for the same emotional response',
+      'Empathy and sympathy are simply two different words for exactly the same emotional response',
       "Empathy shares another's feelings from their view; sympathy feels for them from your own",
-      'Empathy is felt only towards friends, while sympathy is felt towards strangers',
-      'Sympathy requires understanding the other person while empathy does not',
+      'Empathy is felt only towards friends, while sympathy is felt only towards complete strangers',
+      'Sympathy requires fully understanding the other person\'s view while empathy does not',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -2367,10 +2367,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Mirror neurons are brain cells that fire both when we perform an action and when we observe someone else performing the same action. How do mirror neurons relate to empathy?',
     options: [
-      'Mirror neurons are responsible for storing long-term emotional memories',
-      'Mirror neurons fire only when we are performing an action, never when observing',
+      'Mirror neurons are responsible for storing all of our long-term emotional memories in the brain',
+      'Mirror neurons fire only when we are performing an action ourselves, never when observing one',
       "They let us automatically simulate others' experiences, providing a neural basis for empathy",
-      "Mirror neurons prevent us from being affected by other people's emotions",
+      'Mirror neurons prevent us from being affected by the emotions of any of the other people around us',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -2384,9 +2384,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 131,
     question: "In Goleman's framework, which of the following is one of his empathy competencies?",
     options: [
-      'Self-control — managing disruptive emotions and impulses',
-      'Achievement drive — striving to meet a standard of excellence',
-      'Adaptability — flexibility in handling change and shifting demands',
+      'Self-control — managing disruptive emotions and impulses while working under pressure',
+      'Achievement drive — striving constantly to meet a high standard of excellence',
+      'Adaptability — flexibility in handling change and shifting demands on site',
       'Understanding others — sensing their feelings and taking interest in their concerns',
     ] as const,
     correctAnswer: 3,
@@ -2403,9 +2403,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
       'Daniel Pink argues that "if-then" rewards (e.g., "If you finish early, you get a bonus") can actually decrease motivation for complex tasks. Why?',
     options: [
       'They shift focus from the work to the reward, narrowing thinking (the overjustification effect)',
-      'Because external rewards always increase the quality of complex creative work',
-      'Because workers ignore any reward that is not paid in cash',
-      'Because complex tasks are unaffected by either rewards or motivation',
+      'Because offering an external financial reward always improves the quality of complex creative work',
+      'Because most workers will simply ignore any reward that is not paid directly to them in cash',
+      'Because complex technical tasks are entirely unaffected by either external rewards or motivation',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -2420,10 +2420,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Which of the following best describes Goleman\'s motivation competency of "initiative"?',
     options: [
-      'Readiness to act on opportunities and go beyond what is required, unprompted',
+      'Persistence in pursuing your own goals despite the obstacles and setbacks that arise on a project',
       'Readiness to act on opportunities and go beyond what is required, without waiting for direction',
-      'Flexibility in adjusting your approach when circumstances change',
-      'Aligning your personal goals with those of the wider organisation',
+      'Flexibility in adjusting your own approach whenever the circumstances on the job suddenly change',
+      'Aligning your own personal goals and values with those of the wider organisation that employs you',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -2438,8 +2438,8 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       "Goleman's optimism competency within motivation means persistence in pursuing goals despite obstacles and setbacks. How does this differ from naive positivity?",
     options: [
-      'Naive positivity and realistic optimism are essentially the same outlook',
-      'Optimism means ignoring all obstacles so they cannot affect your mood',
+      'Naive positivity and realistic optimism are essentially the same outlook on any setback',
+      'Optimism means ignoring all obstacles so that they cannot affect your own mood',
       'It pairs realistic assessment of obstacles with belief that effort can still succeed',
       'Realistic optimism guarantees success while naive positivity guarantees failure',
     ] as const,
@@ -2456,9 +2456,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Csikszentmihalyi found that flow states occur in a specific zone between anxiety and boredom. If an electrician is performing a task far below their skill level, which emotional state is most likely according to flow theory?',
     options: [
-      'Flow — because the task perfectly matches their high level of skill',
-      'Anxiety — because the task far exceeds their current ability',
-      'Deep concentration — because routine tasks require the most focus',
+      'Flow — because the difficulty of the task perfectly matches their high level of skill',
+      'Anxiety — because the difficulty of the task far exceeds their current level of skill',
+      'Deep concentration — because routine tasks always require the most careful focus',
       'Boredom or apathy — the challenge is too low for their skill level to engage them',
     ] as const,
     correctAnswer: 3,
@@ -2475,9 +2475,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
       'In Self-Determination Theory, what happens to motivation when a work environment meets all three basic psychological needs (autonomy, competence, relatedness)?',
     options: [
       'Intrinsic motivation, engagement, wellbeing, and performance quality all increase',
-      'Motivation falls sharply because meeting all three needs removes any challenge',
-      'Only short-term motivation rises, while long-term performance declines',
-      'Motivation is unaffected because these needs apply only outside of work',
+      'Motivation falls sharply because meeting all three of the needs removes any challenge',
+      'Only short-term motivation rises, while long-term performance quality steadily declines',
+      'Motivation is unaffected because these three needs apply only outside of the workplace',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -2514,8 +2514,8 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       "An electrician fails an inspection on a domestic installation. Using Seligman's framework, which response demonstrates a pessimistic explanatory style?",
     options: [
-      '"This particular installation had a specific fault that I can now identify and correct"',
-      '"The inspector found one issue; I will review my process for that detail"',
+      '"This particular installation had one specific fault that I can now identify and then correct"',
+      '"The inspector found one issue; I will review my own process for that particular detail"',
       "Treating the setback as permanent, pervasive, and entirely personal (\"I always mess up\")",
       '"This is a useful reminder to double-check that section more carefully next time"',
     ] as const,
@@ -2531,8 +2531,8 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 139,
     question: 'What is the difference between realistic optimism and toxic positivity?',
     options: [
-      'Realistic optimism and toxic positivity are simply two terms for the same outlook',
-      'Realistic optimism denies all difficulties while toxic positivity acknowledges them',
+      'Realistic optimism and toxic positivity are simply two different names for the same outlook',
+      'Realistic optimism denies all of the difficulties while toxic positivity acknowledges them fully',
       'Toxic positivity validates negative feelings while realistic optimism dismisses them',
       'Realistic optimism acknowledges difficulties; toxic positivity dismisses negative emotions',
     ] as const,
@@ -2550,9 +2550,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
       'According to Csikszentmihalyi, what are the key conditions that must be present for a flow state to occur?',
     options: [
       'Clear goals, immediate feedback, and a balance of high challenge and high skill',
-      'Complete isolation from others and the absence of any external distractions',
-      'A guaranteed reward at the end of the task and recognition from a manager',
-      'High pressure and a tight deadline that forces total concentration',
+      'Complete isolation from other people and the absence of any external distractions',
+      'A guaranteed reward at the end of the task and public recognition from the manager',
+      'Constant high pressure and a very tight deadline that forces complete concentration',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -2568,10 +2568,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       "Paul Ekman's research identified micro-expressions — brief, involuntary facial expressions lasting 1/25 to 1/5 of a second. Why are micro-expressions relevant to empathy in a workplace context?",
     options: [
-      'Micro-expressions are deliberate signals people use to communicate clearly',
+      'Micro-expressions are deliberate signals that people use to communicate their mood clearly',
       'They reveal genuine emotions a person conceals, giving you data about their true state',
-      'Micro-expressions last several seconds and are easy for anyone to read',
-      "Micro-expressions reveal a person's long-term personality rather than their emotions",
+      'Micro-expressions last for several seconds and are easy for almost anyone to read',
+      'Micro-expressions reveal a person\'s long-term personality rather than their emotions',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -2586,10 +2586,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       "Research suggests that approximately 55% of emotional communication is through body language, 38% through tone of voice, and only 7% through words (Mehrabian's rule). In a construction context, which scenario demonstrates using body language awareness empathically?",
     options: [
-      'Telling the apprentice firmly to stand up straight and make more eye contact',
-      "Ignoring the apprentice's posture since body language is unreliable",
+      'Telling the apprentice firmly to stand up straight and to make far more eye contact when speaking',
+      'Ignoring the apprentice\'s posture entirely since body language is a wholly unreliable signal',
       "Noticing an apprentice's hunched shoulders and quiet voice, then gently checking in with them",
-      'Assuming the hunched posture simply means the apprentice is physically tired',
+      'Assuming that the hunched posture simply means the apprentice is physically tired after a shift',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -2604,9 +2604,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       "Active listening is a core empathy skill. Which set of behaviours best demonstrates active listening during a colleague's description of a problem on site?",
     options: [
-      'Interrupting frequently to offer solutions before the speaker has finished',
-      'Nodding politely while planning your own response to what they are saying',
-      "Listening only for the technical facts and ignoring the speaker's feelings",
+      'Interrupting frequently to offer your own solutions before the speaker has finished talking',
+      'Nodding politely while silently planning your own reply to everything they are saying',
+      'Listening only for the technical facts and completely ignoring the speaker\'s feelings',
       'Eye contact, nodding, paraphrasing what you heard, and asking clarifying questions',
     ] as const,
     correctAnswer: 3,
@@ -2623,9 +2623,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
       'Perspective-taking is the cognitive component of empathy. A client is angry about a delay to their kitchen rewire. What does effective perspective-taking involve?',
     options: [
       "Imagining the client's viewpoint — the time off, planning, and disruption the delay causes",
-      'Explaining to the client exactly why the delay was unavoidable on your part',
-      'Reminding the client that delays are a normal part of any building project',
-      'Focusing only on the technical reasons for the delay and not its wider impact',
+      'Explaining to the client in careful detail exactly why the delay was unavoidable on your part',
+      'Reminding the client that delays are a completely normal part of any building project',
+      'Focusing only on the technical reasons for the delay and not on its wider impact at home',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -2640,10 +2640,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Cultural sensitivity is an aspect of empathy. On a multi-cultural construction site, an electrician notices that a colleague from a different cultural background never makes direct eye contact during conversations. What is the empathically intelligent response?',
     options: [
-      'Telling the colleague directly that avoiding eye contact appears evasive',
+      'Telling the colleague directly that avoiding eye contact makes them appear evasive to others',
       'Recognising that eye-contact norms vary by culture and adjusting your communication style',
-      'Assuming the colleague is being deliberately rude and responding in kind',
-      'Insisting that everyone on site adopt the same communication norms',
+      'Assuming that the colleague is being deliberately rude and responding to them in kind',
+      'Insisting that every person working on the site adopts exactly the same communication norms',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -2676,9 +2676,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'The famous MetLife study on optimism found that salespeople in the top 10% for optimism outsold the bottom 10% by 88%. What does this research suggest about the relationship between optimism and workplace performance?',
     options: [
-      'Optimism has no measurable link to performance in real workplace settings',
-      'Optimistic and pessimistic salespeople performed almost identically in the study',
-      'Pessimism predicted higher performance because it encouraged careful planning',
+      'Optimism has no measurable link to sales performance in any real workplace settings outside the laboratory',
+      'Optimistic and pessimistic salespeople performed almost identically throughout the entire period of the study',
+      'Pessimism predicted higher sales performance because it encouraged far more careful and detailed planning',
       'Optimists persist longer after setbacks, so optimism predicted performance better than other criteria',
     ] as const,
     correctAnswer: 3,
@@ -2695,9 +2695,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
       'The Stockdale Paradox, named after Admiral James Stockdale, describes a crucial balance for maintaining motivation through extreme adversity. What is this paradox?',
     options: [
       'Keep unwavering faith you will prevail while confronting the brutal facts of your reality',
-      'You must remain purely optimistic at all times and never dwell on difficulties',
-      'You should focus only on the harsh facts and abandon any hope of success',
-      'You must set firm deadlines for when the adversity will end and stick to them',
+      'You must remain purely optimistic in every situation and never dwell on any of the difficulties',
+      'You should focus only on the harsh facts and abandon any real hope of eventual success',
+      'You must set firm deadlines for when the adversity will end and then stick to them',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -2712,10 +2712,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Karen Reivich and Andrew Shatte identified seven key abilities of resilience. Which of these is most directly connected to the motivation domain of EI?',
     options: [
-      'Emotion regulation — managing your emotional responses under stress',
+      'Emotion regulation — managing your own emotional responses while under real pressure',
       'Reaching out — seeking new opportunities and connecting with others after setbacks',
-      'Impulse control — resisting the urge to act on immediate feelings',
-      "Empathy — accurately reading and responding to others' emotions",
+      'Impulse control — resisting the strong urge to act at once on your immediate feelings',
+      'Empathy — accurately reading and responding to the emotions of other people',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -2730,10 +2730,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'An electrician applies the ABCDE model after receiving critical feedback on an EICR report. Adversity: the report was returned for corrections. Belief: "I am not good enough to do inspection work." What would effective Disputation look like?',
     options: [
-      'Accepting the criticism silently and concluding you are simply not capable',
-      "Dismissing the feedback as unfair and blaming the inspector's standards",
+      'Accepting the criticism silently and concluding that you are simply not capable of doing the work',
+      'Dismissing all of the feedback as completely unfair and blaming the inspector\'s high standards',
       'Challenging the belief with evidence: one returned report is temporary and fixable, not proof',
-      'Avoiding all future inspection work to prevent the feeling happening again',
+      'Avoiding all future inspection and testing work in order to prevent the feeling happening again',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -2767,9 +2767,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
       "An apprentice's work quality has dropped significantly over two weeks. Using empathic inquiry rather than immediate criticism, which approach is most emotionally intelligent?",
     options: [
       'Use private, non-judgemental inquiry to understand the cause before deciding how to respond',
-      'Immediately issuing a formal warning to address the drop in work quality',
-      'Publicly pointing out the declining standard so the apprentice improves',
-      "Reducing the apprentice's responsibilities without discussing it with them",
+      'Immediately issuing a formal written warning in order to address the sudden drop in work quality',
+      'Publicly pointing out the declining standard so that the apprentice improves quickly',
+      'Reducing the apprentice\'s responsibilities without ever discussing it with them first',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -2784,10 +2784,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       "How can Daniel Pink's three elements of intrinsic motivation (autonomy, mastery, purpose) be integrated with Self-Determination Theory's three needs (autonomy, competence, relatedness) to create a comprehensive motivation framework?",
     options: [
-      'Both share autonomy; mastery maps to competence, and purpose and relatedness add connection',
+      'Both share autonomy, but mastery directly contradicts SDT\'s own separate need for competence',
       'Both share autonomy; mastery maps to competence, and purpose and relatedness both add connection',
-      'Both theories reject autonomy as a meaningful element of motivation',
-      "SDT's relatedness directly contradicts Pink's concept of purpose",
+      'Both of the theories explicitly reject autonomy as any meaningful element of workplace motivation',
+      'SDT\'s need for relatedness directly contradicts Pink\'s entire concept of purpose in the workplace',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -2802,10 +2802,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Flow states in a team context present unique challenges. What conditions must be present for a construction team to experience "group flow," and how does this relate to individual flow?',
     options: [
-      'Group flow requires only that each individual reach personal flow separately',
-      'Group flow needs identical skill levels and removes any element of risk',
+      'Group flow requires only that each individual should reach personal flow separately',
+      'Group flow needs identical skill levels throughout and removes any element of risk',
       'Group flow needs all individual conditions plus shared goals and close listening',
-      'Group flow depends solely on a single dominant leader directing the team',
+      'Group flow depends solely on a single dominant leader directing the whole of the team',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -2820,7 +2820,7 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'A project manager applies the ABCDE model to a major project failure (a complete rewire requiring significant rework). The initial belief is "This project is a disaster and my career is over." After successful disputation, which response demonstrates genuine Energisation?',
     options: [
-      '"At least this proves I should never have taken on a project of this size"',
+      '"At least this proves that I should never have taken on a project of this size again"',
       '"The damage is done; I will just have to accept that my reputation is ruined"',
       '"I will avoid complex projects from now on so this can never happen again"',
       'A genuine shift to a clear action plan with motivation to apply the lessons learned',
@@ -2839,9 +2839,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
       'Empathy fatigue (also called compassion fatigue) can occur in helping professions when the emotional cost of empathy becomes overwhelming. How might empathy fatigue manifest in a site supervisor responsible for apprentice welfare?',
     options: [
       'Less patience, emotional numbness, cynicism, and withdrawal — signs their empathy is depleted',
-      'Increasing patience and a renewed sense of enthusiasm for mentoring',
-      "A sudden improvement in the supervisor's ability to read others' emotions",
-      'Heightened emotional sensitivity that makes every conversation feel rewarding',
+      'Increasing patience and a renewed sense of personal enthusiasm for mentoring young apprentices',
+      'A sudden and lasting improvement in the supervisor\'s ability to read other people\'s emotions',
+      'Heightened emotional sensitivity that makes each difficult conversation feel much more rewarding',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -2856,10 +2856,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'On a construction site with workers from six different countries, an electrician needs to communicate a safety concern to a colleague whose cultural background includes very different norms around hierarchy, directness, and emotional expression. What level of cultural empathy is required?',
     options: [
-      'Communicating the safety concern in exactly the same blunt way to everyone',
+      'Communicating the safety concern in exactly the same blunt manner to every single worker on the site',
       'Advanced cultural empathy — adapting safety communication to convey urgency without causing shame',
-      'Avoiding the conversation entirely to prevent any cultural misunderstanding',
-      'Assuming that safety language needs no adjustment as long as it is accurate',
+      'Avoiding the safety conversation entirely in order to prevent any possible cultural misunderstanding',
+      'Assuming that the safety language needs no adjustment at all as long as it is technically accurate',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -2874,10 +2874,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       "During a tense client meeting about project delays and budget overruns, the project manager notices the client's jaw tightening, arms crossing, and breathing becoming shallow — while the client's words remain calm and professional. What does this incongruence suggest, and how should the project manager respond?",
     options: [
-      'Calm words with stressed body language suggest suppressed frustration; acknowledge it',
-      "The body language is irrelevant because the client's words are professional",
+      'Calm words with stressed body language show that the client has already accepted the delays completely',
+      'The body language is irrelevant here because the client\'s words remain calm and professional',
       'Calm words with stressed body language suggest suppressed frustration; acknowledge it empathically',
-      'The incongruence shows the client is deliberately trying to deceive you',
+      'The incongruence shows that the client is deliberately trying to deceive you about something',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -2892,9 +2892,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Showing empathy toward someone you find difficult is one of the most challenging EI skills. A subcontractor who has repeatedly caused problems on site is now visibly distressed about a personal issue. What does advanced empathy require in this situation?',
     options: [
-      'Reminding the subcontractor of their past failures before offering any support',
-      'Withholding empathy entirely until the subcontractor improves their work',
-      'Treating the distress as an opportunity to gain the upper hand in the dispute',
+      'First reminding the subcontractor of all of their past failures on site before offering any support',
+      'Withholding all empathy entirely until the subcontractor improves the quality of their work',
+      'Treating the personal distress as a useful opportunity to gain the upper hand in the ongoing dispute',
       'Separating the person from past behaviour and responding to their present distress with compassion',
     ] as const,
     correctAnswer: 3,
@@ -2911,9 +2911,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
       "An electrical contractor is managing a team where morale is low after two failed inspections in one week. Integrating Seligman's learned optimism, Pink's Drive, and Csikszentmihalyi's flow theory, what is the most comprehensive motivational approach?",
     options: [
       'Address the 3 Ps, then restore autonomy, clear goals and feedback, and purpose',
-      'Tell the team firmly that morale is their own responsibility to fix',
-      'Focus only on the technical causes of the failures and ignore morale',
-      'Offer a one-off cash bonus and assume motivation will recover by itself',
+      'Tell the team firmly that their morale is entirely their own responsibility to fix',
+      'Focus only on the technical causes of the two failures and ignore the team\'s morale',
+      'Offer the team a one-off cash bonus and assume that motivation will recover by itself',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -2932,10 +2932,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Assertive communication is a social skill that sits between passive and aggressive communication. Which response demonstrates assertive communication when a colleague keeps borrowing your tools without asking?',
     options: [
-      'Saying nothing and quietly accepting that your tools will keep disappearing',
+      'Saying nothing at all and quietly accepting that your own tools will keep disappearing',
       'Stating the behaviour, its impact on you, and the change you want, without aggression',
-      'Loudly confronting the colleague in front of the whole team about it',
-      'Hiding your tools so the colleague is unable to borrow them again',
+      'Loudly confronting the colleague in front of the whole team about the missing tools',
+      'Hiding all of your tools so that the colleague is unable to borrow them again',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -2950,10 +2950,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'The DESC model is a structured assertiveness framework. What do the four letters stand for?',
     options: [
-      'Decide, Engage, Sustain, Conclude',
-      'Describe, Explain, Suggest, Close',
+      'Demonstrate, Establish, Summarise, and Communicate',
+      'Determine, Establish, Standardise, and Conclude',
       'Describe, Express, Specify, and Consequences',
-      'Discuss, Evaluate, Schedule, Confirm',
+      'Discuss, Evaluate, Schedule, and Confirm',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -2968,9 +2968,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'The Thomas-Kilmann Conflict Mode Instrument (TKI) identifies five approaches to conflict. Which of these five modes involves high assertiveness AND high cooperativeness?',
     options: [
-      'Competing — high assertiveness AND low cooperativeness, pursuing your own way',
-      'Accommodating — low assertiveness AND high cooperativeness, yielding to others',
-      'Avoiding — low assertiveness AND low cooperativeness, sidestepping the issue',
+      'Competing — high assertiveness and low cooperativeness, pursuing only your own outcome',
+      'Accommodating — low assertiveness and high cooperativeness, yielding to the other party',
+      'Avoiding — low assertiveness and low cooperativeness, sidestepping the issue entirely',
       'Collaborating — high assertiveness and high cooperativeness, satisfying both parties',
     ] as const,
     correctAnswer: 3,
@@ -2988,8 +2988,8 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     options: [
       'Members felt safe to speak up, ask questions, and admit mistakes without fear',
       'Team members had the highest average level of technical qualification',
-      'Team members worked the longest hours and rarely took breaks',
-      'Team members were closely supervised and monitored at all times',
+      'Team members worked the longest hours on site and rarely took any breaks at all',
+      'Team members were closely supervised and monitored throughout each shift',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -3004,10 +3004,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Goleman identified six leadership styles based on emotional intelligence. Which style involves creating harmony and building emotional bonds?',
     options: [
-      'Visionary — mobilising people towards a shared, compelling vision',
+      'Visionary — mobilising people towards a shared and compelling vision, with the motto "come with me"',
       'Affiliative — creating harmony and building emotional bonds, with the motto "people come first"',
-      'Pacesetting — setting extremely high performance standards for all',
-      'Commanding — demanding immediate compliance, with the motto "do what I say"',
+      'Pacesetting — setting extremely high performance standards for everyone, with the motto "do as I do"',
+      'Commanding — demanding immediate compliance from everyone, with the motto "do what I say"',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -3022,10 +3022,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Influence without authority means persuading others when you do not have formal power over them. Which approach is most effective for an electrician trying to influence a plumber to adjust their pipe routing?',
     options: [
-      'Reminding the plumber that electrical work must always take priority on site',
-      'Reporting the plumber to the site manager to force the routing change',
+      'Reminding the plumber firmly that electrical work must always take priority on any site',
+      'Reporting the plumber straight to the site manager in order to force the routing change',
       'Showing how the adjusted routing benefits both trades and offering to help with it',
-      'Simply re-routing the cables yourself without involving the plumber',
+      'Simply re-routing all of the cables yourself without involving the plumber in it at all',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -3060,8 +3060,8 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     options: [
       'Separate the people from the problem and focus on the issue, not personal attacks',
       'Immediately decide who is right and who is wrong before discussing anything',
-      'Escalate the matter to management before either party has spoken',
-      'Insist that both parties drop the issue and simply move on',
+      'Escalate the matter straight to management before either party has spoken to the other',
+      'Insist that both of the parties drop the issue and simply move on with the work',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -3076,10 +3076,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'How does emotional intelligence enhance teamwork beyond basic coordination of tasks?',
     options: [
-      'It builds trust, communication, constructive conflict, and psychological safety',
+      'It removes any need for trust in the team because clear task allocation replaces communication',
       'It builds trust, communication, constructive conflict, and psychological safety in the team',
-      'EI primarily reduces the amount of paperwork a team must complete',
-      'EI chiefly helps a team work in silence without needing to communicate',
+      'EI primarily reduces the amount of paperwork and reporting that a team must complete',
+      'EI chiefly helps a team to work on in silence without any need to communicate with each other',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -3094,10 +3094,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'De-escalation is a critical social skill in construction environments where tensions can run high. Which technique is most effective for de-escalating an angry colleague?',
     options: [
-      'Telling the colleague firmly to calm down before you will listen to them',
-      'Matching their raised voice to show that you take the issue seriously',
+      'Telling the colleague firmly to calm down first before you are willing to listen to them at all',
+      'Matching their raised voice in order to show them that you are taking the issue very seriously',
       'Lowering your voice, acknowledging their feelings, and listening fully before responding',
-      'Walking away immediately and refusing to engage until they are calm',
+      'Walking away immediately and refusing to engage with them again until they are completely calm',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -3113,9 +3113,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Robert Cialdini identified six principles of ethical persuasion. Which principle is demonstrated when an electrician helps a plumber with a difficult task, and the plumber later willingly adjusts their pipe routing in return?',
     options: [
-      'Authority — people comply because the request comes from an expert',
-      'Scarcity — people value things more when they appear to be in short supply',
-      'Social proof — people follow the actions of those around them',
+      'Authority — people comply because the request comes from a recognised technical expert',
+      'Scarcity — people value things more highly when they appear to be in short supply',
+      'Social proof — people follow the actions of the people working around them',
       'Reciprocity — people feel a natural obligation to return a favour they have received',
     ] as const,
     correctAnswer: 3,
@@ -3133,8 +3133,8 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     options: [
       "It requires empathy, self-regulation, and social skills to enable the team's success",
       'Servant leadership means letting the team make every decision without guidance',
-      "Servant leadership prioritises the leader's authority over the team's needs",
-      'Servant leadership avoids EI by focusing purely on task delegation',
+      'Servant leadership always prioritises the leader\'s authority over the needs of the team',
+      'Servant leadership avoids EI entirely by focusing purely on the delegation of site tasks',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -3148,10 +3148,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     id: 173,
     question: 'What are the key components of an effective EI development plan?',
     options: [
-      'Memorising the academic theory of EI and reciting it accurately',
+      'Memorising the entire academic theory of EI and being able to recite it back accurately',
       'Self-assessment, specific goals, practice, feedback, reflection, and accountability',
-      'Attending a single EI workshop and considering your development complete',
-      'Waiting for emotional skills to improve naturally with age and experience',
+      'Attending a single one-day EI workshop and then considering your development complete',
+      'Simply waiting for your emotional skills to improve naturally with age and experience',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -3166,10 +3166,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'When setting goals for EI development, why is the SMART framework (Specific, Measurable, Achievable, Relevant, Time-bound) important?',
     options: [
-      'SMART goals are useful for technical skills but cannot be applied to EI',
+      'SMART goals are useful for technical skills but cannot be applied to EI development at all',
       'Vague EI intentions are more effective because they allow greater flexibility',
       'It turns vague intentions into specific, measurable, time-bound development commitments',
-      'SMART goals remove the need for any feedback or reflection on progress',
+      'SMART goals remove the need for any feedback or reflection on your own progress',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -3185,8 +3185,8 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
       'Why are accountability structures important for EI development, and what might an effective accountability structure look like?',
     options: [
       'Accountability structures are unnecessary because EI develops automatically over time',
-      'Accountability mainly creates pressure that undermines genuine EI development',
-      'EI changes are so easy that no external support or structure is required',
+      'Accountability structures mainly create pressure that undermines any genuine EI development',
+      'EI changes are so easy to make that no external support or any formal structure is ever required',
       'A development partner, a reflective journal, self-assessments, and scheduled review points',
     ] as const,
     correctAnswer: 3,
@@ -3203,9 +3203,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
       'How does emotional intelligence apply to written communication in construction (e.g., emails, site reports, messages)?',
     options: [
       'Writing carries emotional tone, so consider how the reader will feel and re-read before sending',
-      'Written communication carries no emotional tone, so EI is irrelevant to it',
-      'EI matters less in writing because the reader cannot see your reaction',
-      'Tone in writing is fixed by the words alone and cannot be misread',
+      'Written site communication carries no emotional tone at all, so EI is completely irrelevant to it',
+      'EI matters far less in written messages because the reader cannot see your face or your reaction',
+      'The tone of any written message is fixed by the words alone and can never be misread by the reader',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -3224,10 +3224,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Apply the DESC model to this situation: a fellow electrician regularly arrives late to site, meaning you have to start preparatory work alone. Write out what a DESC response would look like.',
     options: [
-      "\"You're always late and it's really starting to wind everyone up on site.\"",
+      '"You\'re always late and it\'s really starting to wind up everyone else on this site."',
       'Describe the lateness, express its impact, specify the change wanted, and state the benefit',
-      "\"Whatever — I'll just keep doing the prep on my own from now on.\"",
-      "\"It's fine, don't worry about it, I can manage the early start by myself.\"",
+      '"Whatever — I\'ll just carry on doing all of the prep work on my own from now on."',
+      '"It\'s fine, don\'t worry about it at all, I can manage the early start by myself."',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -3279,9 +3279,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
       'Goleman distinguishes between resonant leadership (which creates positive emotional climates) and dissonant leadership (which creates negative ones). Which of his six styles are considered dissonant?',
     options: [
       'Pacesetting and commanding — both create anxiety or fear when used as default styles',
-      'Visionary and coaching — both can create dependency if overused',
-      'Affiliative and democratic — both slow decision-making in a crisis',
-      'Coaching and democratic — both ignore the emotional needs of the team',
+      'Visionary and coaching — both can create real dependency in a team if overused',
+      'Affiliative and democratic — both slow down decision-making during a crisis',
+      'Coaching and democratic — both ignore the emotional needs of the whole team',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -3296,10 +3296,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       "Boyatzis' Intentional Change Theory (ICT) outlines five discoveries for sustained personal change. What is the first discovery?",
     options: [
-      'The Real Self — an honest assessment of who you are right now',
+      'The Real Self — an honest assessment of exactly who you are at the present time',
       'The Ideal Self — a compelling vision of who you want to become that energises change',
-      'The Learning Agenda — specific development goals to close the gap',
-      'Trusting Relationships — the support network that sustains the change',
+      'The Learning Agenda — the specific development goals that will close the gap',
+      'Trusting Relationships — the support network that sustains the whole change',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -3314,10 +3314,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       "Kolb's experiential learning cycle has four stages. How does this cycle support EI development?",
     options: [
-      'The cycle eliminates the need to reflect on emotional experiences at all',
-      'The cycle works only for technical learning and not for emotional skills',
+      'The cycle eliminates any need whatsoever to reflect on difficult emotional experiences',
+      'The cycle works only for technical learning and never for emotional or social skills',
       'Its four stages turn emotional experiences into systematic learning rather than repetition',
-      'The cycle skips straight from experience to action without any reflection',
+      'The cycle skips straight from experience to action without any reflection at all',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -3332,9 +3332,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'A 90-day EI development plan is a practical structure for building specific competencies. What should the three phases typically cover?',
     options: [
-      'Days 1-30 integration, Days 31-60 assessment, Days 61-90 foundation',
-      'Days 1-30 mastery, Days 31-60 review, Days 61-90 reassessment',
-      'Days 1-30 theory only, Days 31-60 theory only, Days 61-90 a final exam',
+      'Phase 1 integration, Phase 2 assessment and review, Phase 3 foundation building',
+      'Phase 1 full mastery, Phase 2 review and repetition, Phase 3 reassessment',
+      'Phase 1 theory only, Phase 2 further theory, Phase 3 a final written exam',
       'Phase 1 foundation and assessment, Phase 2 practice and feedback, Phase 3 integration',
     ] as const,
     correctAnswer: 3,
@@ -3386,7 +3386,7 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Digital communication (emails, WhatsApp, Teams) removes most non-verbal cues. What EI skills are most critical for effective digital communication in construction?',
     options: [
-      'Empathic anticipation, deliberate tone, impulse control, and reviewing before sending',
+      'Copying a supervisor into every message so that the tone can never later be disputed',
       'Brevity is always best because shorter messages cannot be misread',
       'Empathic anticipation, deliberate tone management, impulse control, and reviewing before sending',
       'Speed of reply matters far more than how a message might be received',
@@ -3423,9 +3423,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
       'In Lencioni\'s model, "fear of conflict" is the second dysfunction. Why is the ABSENCE of conflict actually more dangerous than the presence of constructive conflict in a team?',
     options: [
       'Avoided conflict leaves issues unaddressed and tensions festering, harming decision quality',
-      'The absence of conflict is always healthier than open disagreement',
-      'Conflict avoidance has no real effect on the quality of team decisions',
-      'Teams perform best when all disagreement is suppressed to keep the peace',
+      'The complete absence of conflict is always healthier for a team than open disagreement',
+      'Conflict avoidance has no measurable effect on the quality of a team\'s decisions',
+      'Teams perform best when all disagreement is suppressed in order to keep the peace',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -3458,7 +3458,7 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Goleman warns about the risks of overusing the pacesetting style (leading by setting high standards and expecting others to follow). What typically happens when a construction manager relies exclusively on pacesetting?',
     options: [
-      'Over time the team feels overwhelmed, initiative drops, and the leader bottlenecks',
+      'Over time the team becomes more autonomous and needs the leader far less often',
       'The team becomes more self-reliant as members rise to meet the standards',
       'Over time the team feels overwhelmed, initiative drops, morale falls, and the leader bottlenecks',
       'Initiative increases because workers feel trusted to match the high bar',
@@ -3476,9 +3476,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Boyatzis\' Intentional Change Theory identifies the importance of the "Positive Emotional Attractor" (PEA) versus the "Negative Emotional Attractor" (NEA) in sustaining change. What is the difference and why does it matter for EI development?',
     options: [
-      'PEA and NEA produce identical effects on the brain and on learning',
-      'NEA driven by fear is the more reliable route to lasting EI development',
-      'PEA closes neural pathways while NEA opens them to new learning',
+      'PEA and NEA produce completely identical effects on the brain and on the learning process',
+      'The NEA driven by fear is by far the more reliable route to lasting EI development',
+      'The PEA closes neural pathways while the NEA opens them all up to new learning',
       'PEA (hope, vision) opens learning pathways; NEA (fear) closes them, so PEA sustains change',
     ] as const,
     correctAnswer: 3,
@@ -3516,10 +3516,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'A site manager faces three simultaneous challenges: a client escalating a complaint, an apprentice struggling with mental health, and two subcontractors in open conflict. Each situation requires a different Goleman leadership style. Which combination is most appropriate?',
     options: [
-      'Visionary for the client, coaching for the apprentice, democratic for the conflict',
+      'Commanding for the client, pacesetting for the apprentice, and commanding again for the conflict',
       'Visionary for the client, coaching and affiliative for the apprentice, democratic for the conflict',
-      'Apply pacesetting throughout to drive rapid resolution of every issue',
-      'Use only the affiliative style everywhere to keep everyone happy',
+      'Apply the pacesetting style throughout in order to drive rapid resolution of every issue',
+      'Use only the affiliative style in all three of the situations in order to keep everyone happy',
     ] as const,
     correctAnswer: 1,
     explanation:
@@ -3534,10 +3534,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Integrating all five EI domains, describe the complete EI process when an electrician discovers that a regulation they have been following has been updated (e.g., BS 7671 amendment). How do all five domains work together?',
     options: [
-      'Rely on a single domain — self-regulation — and ignore the other four',
-      'Apply the domains one at a time over several weeks rather than together',
+      'Rely on a single domain — self-regulation — and simply ignore the other four entirely',
+      'Apply the five domains one at a time over several weeks rather than all together',
       'Each domain contributes: notice the feeling, regulate, find purpose, empathise, communicate',
-      'Use only social skills, since communicating the change is all that matters',
+      'Use only social skills, since communicating the change is all that really matters',
     ] as const,
     correctAnswer: 2,
     explanation:
@@ -3571,9 +3571,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
       'Creating psychological safety (Edmondson) requires consistent leader behaviour over time. Which set of actions would most effectively build psychological safety in a construction team?',
     options: [
       'Framing work as learning, admitting your own fallibility, and welcoming people who speak up',
-      'Issuing a written policy declaring that the team is now psychologically safe',
-      'Punishing the first person who admits a mistake to set a clear example',
-      'Telling the team once that they should feel free to speak up, then moving on',
+      'Issuing a written site policy declaring that the whole team is now psychologically safe',
+      'Punishing the first person who admits to a mistake in order to set a clear example',
+      'Telling the team once that they should feel free to speak up, and then moving on',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -3588,7 +3588,7 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'A workplace conflict between two electricians has been simmering for weeks and now threatens project delivery. The conflict involves both a legitimate technical disagreement AND a personal relationship breakdown. Which TKI modes might need to be used in sequence?',
     options: [
-      'Brief avoiding, then accommodating emotions, then collaborating, then compromising',
+      'Move straight to competing so a decision is imposed before delivery slips further',
       'Brief avoiding, then accommodating the emotions, then collaborating, then compromising if needed',
       'Rely on avoiding alone and hope the conflict resolves on its own',
       'Apply only accommodating so both electricians feel completely satisfied',
@@ -3606,7 +3606,7 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'How does emotional intelligence directly contribute to safety culture on construction sites, beyond just following HSE regulations?',
     options: [
-      'Self-awareness, regulation, motivation, empathy, and social skills build safety culture',
+      'Recording near misses accurately is the only part of safety culture that EI affects',
       'EI is a soft skill with no measurable link to safety outcomes on site',
       'Self-awareness, regulation, motivation, empathy, and social skills together build safety culture',
       'Safety culture depends only on enforcement and penalties, not on EI',
@@ -3624,9 +3624,9 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Applying servant leadership (Greenleaf) through an EI lens to construction management, which behaviour best demonstrates the integration of both frameworks?',
     options: [
-      'Directing every task personally so the team never has to make a decision',
-      'Keeping the most interesting work for yourself to demonstrate your expertise',
-      "Avoiding involvement in the team's problems so they learn independence",
+      'Directing every single task personally so that the team never has to make any decision at all',
+      'Keeping the most interesting work for yourself in order to demonstrate your expertise',
+      'Avoiding any involvement in the team\'s own problems so that they learn independence',
       'Asking what obstacles you can remove, then using empathy and follow-through to enable the team',
     ] as const,
     correctAnswer: 3,

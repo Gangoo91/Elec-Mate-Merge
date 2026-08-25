@@ -136,7 +136,7 @@ const CERTS = [
   { id: 'eic', name: 'EIC', templateId: 'B39538E9-8FF1-4882-BC13-70B1C0D30947',
     formatter: 'src/utils/eicJsonFormatter.ts', schema: 'eic', edge: 'generate-eic-pdf',
     template: 'eic-certificate-template.html',
-    templatePath: 'docs/pdfmonkey-eic-template.html', components: 'src/components/eic' },
+    templatePath: 'docs/templates/eic-certificate-template.html', components: 'src/components/eic' },
   // Minor Works has NO *JsonFormatter.ts — alone among the certs it builds its
   // payload inline in the generator component (`buildFormattedPayload`), so the
   // formatter column reads that file. Its schema is `minor-works-schema.ts`,

@@ -84,7 +84,8 @@ function extractKeys(text) {
     // (`options: ['Section 7', 'Section 5', …],`). Requiring a newline before
     // the closing bracket silently dropped those questions, which then read as
     // "LOST IDS" — a false alarm on ids that were perfectly intact.
-    const opts = block.match(/options:\s*\[([\s\S]*?)\n?\s*\],/);
+    // Tolerate `] as const,` — see the note in check-question-quality.mjs.
+    const opts = block.match(/options:\s*\[([\s\S]*?)\n?\s*\]\s*(?:as const\s*)?,/);
     const ca = block.match(/correctAnswer:\s*(\d+)/);
     if (!id || !opts || !ca) continue;
     const options = [...opts[1].matchAll(/'((?:[^'\\]|\\.)*)'|"([^"]*)"/g)].map((m) =>

@@ -6921,7 +6921,15 @@ export const getRandomQuestions = (
 
 // Helper function to randomly select items from array
 function getRandomFromArray<T>(array: T[], count: number): T[] {
-  const shuffled = [...array].sort(() => 0.5 - Math.random());
+  // Fisher-Yates. `sort(() => 0.5 - Math.random())` is not a uniform
+  // permutation — an inconsistent comparator, so some positions are
+  // systematically favoured and slicing the front biases which questions
+  // get examined.
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
   return shuffled.slice(0, Math.min(count, array.length));
 }
 

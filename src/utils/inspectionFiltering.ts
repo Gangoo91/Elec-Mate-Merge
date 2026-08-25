@@ -487,35 +487,49 @@ export const filterInspectionSections = (
 export const updateSmartFieldDependencies = (propertyType: string) => {
   const category = getPropertyCategory(propertyType);
 
+  /*
+   * ELE-1612 — 🔴 `mainSwitchRating` and `mainBondingSize` were REMOVED here.
+   *
+   * They were seeded from property type: domestic 100 A, commercial 200 A,
+   * industrial 400 A, with a 10/16 mm² bonding size alongside. That is not a
+   * default, it is a **fabricated measurement**. The main switch rating and the
+   * main bonding conductor size are things the inspector reads off the
+   * installation and records on a signed certificate; nothing about the words
+   * "commercial property" tells you either one.
+   *
+   * The reported symptom was only that the numbers looked inconsistent — the
+   * supply device sat blank at a "100" placeholder while the main switch
+   * already said 200 A. The actual fault is that a 200 A rating nobody
+   * measured was one un-touched field away from printing on an EIC.
+   *
+   * The remaining entries are inferences a reader can check on the face of the
+   * certificate — a three-phase commercial supply really is 400 V, and Part P
+   * really is domestic-only — rather than measurements only the inspector can
+   * make. They stay.
+   */
   const dependencies = {
     domestic: {
       supplyVoltage: '230V',
       phases: 'single',
-      mainSwitchRating: '100',
       partPCompliance: 'compliant',
       earthingArrangement: 'tncs',
       earthElectrodeType: 'pme',
-      mainBondingSize: '10mm',
       rcdMainSwitch: 'recommended',
     },
     commercial: {
       supplyVoltage: '400V',
       phases: 'three',
-      mainSwitchRating: '200',
       partPCompliance: 'notApplicable',
       earthingArrangement: 'tncs',
       earthElectrodeType: 'pme',
-      mainBondingSize: '10mm',
       rcdMainSwitch: 'yes',
     },
     industrial: {
       supplyVoltage: '400V',
       phases: 'three',
-      mainSwitchRating: '400',
       partPCompliance: 'notApplicable',
       earthingArrangement: 'tns',
       earthElectrodeType: 'rod',
-      mainBondingSize: '16mm',
       rcdMainSwitch: 'yes',
     },
   };

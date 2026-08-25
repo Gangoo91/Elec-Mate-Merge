@@ -5,6 +5,7 @@ import {
   getOverallCompliance,
 } from '@/utils/testValidation';
 import { checkRegulationCompliance } from '@/utils/regulationChecker';
+import { isTestableRow, isCircuitTested } from '@/utils/scheduleProgress';
 import EnhancedRegulationWarningDialog from './EnhancedRegulationWarningDialog';
 import { Eyebrow } from '@/components/college/primitives';
 import { cn } from '@/lib/utils';
@@ -46,7 +47,20 @@ const TestAnalytics = ({ testResults, earthingArrangement }: TestAnalyticsProps)
   const [allRegulationWarnings, setAllRegulationWarnings] = useState<any[]>([]);
 
   const analytics = React.useMemo(() => {
-    const validations = testResults.map((result) => {
+    /*
+     * ELE-1610 — judge only rows that are circuits.
+     *
+     * This ran over every row, so a spare way and an incoming-RCD device row
+     * were each validated as though they were circuits, came back "warning"
+     * for having no readings, and were counted in TOTAL. On the reported board
+     * that is most of the 9 warnings: the user had ticked everything and was
+     * shown 1 Pass / 9 Warn. Same `isTestableRow` the progress tiles use, so
+     * the two panels can no longer disagree about what a circuit is.
+     */
+    const circuits = testResults.filter(isTestableRow);
+    const excludedRows = testResults.length - circuits.length;
+
+    const validations = circuits.map((result) => {
       const v = validateTestResult(result, earthingArrangement);
       return {
         result,
@@ -55,22 +69,26 @@ const TestAnalytics = ({ testResults, earthingArrangement }: TestAnalyticsProps)
       };
     });
 
-    const totalCircuits = testResults.length;
+    const totalCircuits = circuits.length;
     const passCircuits = validations.filter((v) => v.compliance.status === 'pass').length;
     const warningCircuits = validations.filter((v) => v.compliance.status === 'warning').length;
     const failCircuits = validations.filter((v) => v.compliance.status === 'fail').length;
 
     const passPercentage = totalCircuits > 0 ? (passCircuits / totalCircuits) * 100 : 0;
+    /*
+     * Was a FOURTH definition of "complete" — `r1r2 && insulationLiveNeutral &&
+     * polarity && zs && functionalTesting`. Demanding `functionalTesting` meant
+     * a circuit with nothing to functionally test could never be complete, and
+     * demanding `r1r2` specifically excluded every ring final measured with
+     * r₁/rₙ/r₂. Now the same rule the Complete tile uses.
+     */
+    const completedCircuits = circuits.filter(isCircuitTested).length;
     const completionPercentage =
-      (testResults.filter(
-        (r) => r.r1r2 && r.insulationLiveNeutral && r.polarity && r.zs && r.functionalTesting
-      ).length /
-        Math.max(totalCircuits, 1)) *
-      100;
+      totalCircuits > 0 ? (completedCircuits / totalCircuits) * 100 : 0;
 
     const criticalIssues = validations.flatMap((v) => v.compliance.criticalIssues);
 
-    const circuitTypes = testResults.reduce(
+    const circuitTypes = circuits.reduce(
       (acc, result) => {
         const type = inferCircuitType(result);
         acc[type] = (acc[type] || 0) + 1;
@@ -81,6 +99,8 @@ const TestAnalytics = ({ testResults, earthingArrangement }: TestAnalyticsProps)
 
     return {
       totalCircuits,
+      completedCircuits,
+      excludedRows,
       passCircuits,
       warningCircuits,
       failCircuits,
@@ -93,7 +113,9 @@ const TestAnalytics = ({ testResults, earthingArrangement }: TestAnalyticsProps)
   }, [testResults, earthingArrangement]);
 
   const handleValidateAll = () => {
-    const allWarnings = testResults.flatMap((result) => {
+    // Spares and device rows are not circuits — validating them produced
+    // findings nobody could act on (ELE-1610).
+    const allWarnings = testResults.filter(isTestableRow).flatMap((result) => {
       const check = checkRegulationCompliance(result, earthingArrangement);
       return check.warnings;
     });
@@ -102,7 +124,7 @@ const TestAnalytics = ({ testResults, earthingArrangement }: TestAnalyticsProps)
   };
 
   const stats = [
-    { label: 'Total', value: analytics.totalCircuits, toneClass: 'text-white' },
+    { label: 'Circuits', value: analytics.totalCircuits, toneClass: 'text-white' },
     { label: 'Pass', value: analytics.passCircuits, toneClass: 'text-green-400' },
     { label: 'Warn', value: analytics.warningCircuits, toneClass: 'text-amber-400' },
     { label: 'Fail', value: analytics.failCircuits, toneClass: 'text-red-400' },
@@ -129,8 +151,22 @@ const TestAnalytics = ({ testResults, earthingArrangement }: TestAnalyticsProps)
           <div>
             <Eyebrow>Analytics</Eyebrow>
             <h2 className="mt-1.5 text-xl sm:text-2xl lg:text-[26px] font-semibold text-white tracking-tight leading-tight">
-              Test Results
+              Compliance check
             </h2>
+            {/*
+              ELE-1610 — this panel judges readings against BS 7671. It is NOT
+              a measure of how much of the board you have filled in; that is the
+              Complete tile on the schedule. Titling it "Test Results" next to a
+              row of amber numbers made a finished board read as nine faults.
+            */}
+            <p className="mt-1 text-[12px] font-medium text-white">
+              {analytics.completedCircuits} of {analytics.totalCircuits} fully tested ·{' '}
+              readings judged against BS 7671
+              {analytics.excludedRows > 0 &&
+                ` · ${analytics.excludedRows} spare/device ${
+                  analytics.excludedRows === 1 ? 'row' : 'rows'
+                } not counted`}
+            </p>
           </div>
           <button
             onClick={handleValidateAll}
@@ -173,7 +209,7 @@ const TestAnalytics = ({ testResults, earthingArrangement }: TestAnalyticsProps)
           />
           <ProgressRow
             eyebrow="02 · Completion"
-            label="Circuits fully tested"
+            label="Circuits with continuity, insulation, polarity and Zs recorded"
             percent={analytics.completionPercentage}
             barClass="bg-gradient-to-r from-elec-yellow to-amber-400"
           />

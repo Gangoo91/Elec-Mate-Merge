@@ -32,6 +32,7 @@
  */
 import { TestResult } from '@/types/testResult';
 import { isRealCircuit } from '@/utils/validation/applicability';
+import { hasCoreResults } from '@/utils/testReadings';
 
 /**
  * True when a row is something that can be tested at all.
@@ -44,18 +45,29 @@ export const isTestableRow = (circuit: TestResult): boolean => isRealCircuit(cir
 /**
  * True when a circuit carries its core test results.
  *
- * Zs, polarity and an insulation reading. Insulation is recorded under two
- * different keys depending on which surface filled the row, so either counts —
- * this mirrors the rule both original counters used, so no certificate's
- * reported progress moves except by the spare-way fix above.
+ * ⚠️ **This rule changed under ELE-1610 and reported progress moves with it —
+ * upwards.** The previous rule was:
  *
- * A deliberate "N/A" or "LIM" counts as recorded. The electrician has answered
- * the question; a limitation is a result, not a gap.
+ *   `zs && polarity && (insulationLiveEarth || insulationResistance)`
+ *
+ * which had two faults. `insulationResistance` is the legacy consolidated
+ * field that no cell component writes, so the "either counts" fallback counted
+ * nothing — insulation was satisfiable only by L-E. And nothing in the rule
+ * recognised continuity at all, so a ring final measured properly (r₁, rₙ, r₂,
+ * insulation L-L, RCD time) registered as untested.
+ *
+ * That is the reported symptom: a board with a tick on every circuit showing
+ * "Complete 9" of 10 at "Progress 100%".
+ *
+ * Now delegated to `hasCoreResults` — continuity, insulation, polarity and Zs,
+ * each satisfied by a reading anywhere in its group. Deliberately excludes the
+ * RCD/AFDD and functional columns: a circuit with no RCD would otherwise never
+ * complete.
+ *
+ * A deliberate "N/A", "LIM" or "N/V" still counts as recorded. The electrician
+ * has answered the question; a limitation is a result, not a gap.
  */
-export const isCircuitTested = (circuit: TestResult): boolean =>
-  Boolean(
-    circuit.zs && circuit.polarity && (circuit.insulationLiveEarth || circuit.insulationResistance)
-  );
+export const isCircuitTested = (circuit: TestResult): boolean => hasCoreResults(circuit);
 
 export interface ScheduleProgress {
   /** Rows that can be tested — the denominator. */

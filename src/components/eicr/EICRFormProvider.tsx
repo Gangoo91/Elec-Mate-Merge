@@ -206,6 +206,10 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
       // ~90% of EICRs are periodic inspections — editable chip, safe default.
       purposeOfInspection: 'periodic',
       otherPurpose: '',
+      // ELE-1611 — what the installation is used for, and whether a change of
+      // occupancy should trigger re-inspection (IET GN3 3.1).
+      installationUse: '',
+      reinspectOnOccupancyChange: '',
       // Seeded to today on new certs — the inspection usually starts the day
       // the cert is opened; editable. Initial state only (ELE-882: no silent writes).
       inspectionDate: new Date().toISOString().split('T')[0],
@@ -1054,6 +1058,10 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
       // ~90% of EICRs are periodic inspections — editable chip, safe default.
       purposeOfInspection: 'periodic',
       otherPurpose: '',
+      // ELE-1611 — what the installation is used for, and whether a change of
+      // occupancy should trigger re-inspection (IET GN3 3.1).
+      installationUse: '',
+      reinspectOnOccupancyChange: '',
       // Seeded to today on new certs — the inspection usually starts the day
       // the cert is opened; editable. Initial state only (ELE-882: no silent writes).
       inspectionDate: new Date().toISOString().split('T')[0],

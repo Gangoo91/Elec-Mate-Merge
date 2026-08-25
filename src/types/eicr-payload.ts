@@ -235,6 +235,18 @@ export interface EICRPayload {
     next_inspection_date: string;
     inspection_interval: string;
     interval_reasons: string;
+    /** ELE-1611 — the interval in words ("3 years"), so "1 year" reads right. */
+    inspection_interval_display: string;
+    /** ELE-1611 — what the premises are used for (free text). */
+    installation_use: string;
+    /** ELE-1611 — 'Yes' when the electrician added the recommendation. */
+    reinspect_on_occupancy_change: string;
+    /**
+     * ELE-1611 — the recommendation as the finished sentence to print.
+     * Composed in the formatter so the template cannot reword advice given
+     * over the electrician's signature. Source: IET Guidance Note 3, 3.1.
+     */
+    reinspect_on_occupancy_change_note: string;
   };
 
   standards_compliance: {

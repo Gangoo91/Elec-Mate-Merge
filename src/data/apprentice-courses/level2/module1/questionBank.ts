@@ -5054,8 +5054,19 @@ export const getQuestionsByDifficulty = (
   difficulty: 'basic' | 'intermediate' | 'advanced'
 ): Question[] => module1Questions.filter((q) => q.difficulty === difficulty);
 
-const pick = <T,>(pool: T[], n: number): T[] =>
-  [...pool].sort(() => 0.5 - Math.random()).slice(0, Math.max(0, n));
+// Fisher-Yates, not `sort(() => 0.5 - Math.random())`. That idiom is not a
+// uniform permutation — the comparator is inconsistent, so the result depends
+// on the sort implementation and some positions are systematically favoured.
+// Taking the first n of a band that way makes some questions quietly likelier
+// to be examined than others.
+const pick = <T,>(pool: T[], n: number): T[] => {
+  const out = [...pool];
+  for (let i = out.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [out[i], out[j]] = [out[j], out[i]];
+  }
+  return out.slice(0, Math.max(0, n));
+};
 
 /**
  * Draw a paper with a deliberate difficulty mix.
@@ -5093,5 +5104,5 @@ export const getRandomQuestions = (
     selected.push(...pick(module1Questions.filter((q) => !chosen.has(q.id)), count - selected.length));
   }
 
-  return selected.sort(() => 0.5 - Math.random());
+  return pick(selected, selected.length);
 };

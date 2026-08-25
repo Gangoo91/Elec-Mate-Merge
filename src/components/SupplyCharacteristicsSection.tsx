@@ -289,6 +289,17 @@ const SupplyCharacteristicsSectionInner = ({
       ? formData.mainSwitchRating
       : '');
 
+  /*
+   * ELE-1608 — the panel's sub-fields lock for EITHER marker.
+   *
+   * They locked on 'LIM' only, so marking the section N/A stamped "N/A" into
+   * every field and then left them all editable — the section read as answered
+   * and behaved as unanswered. LIM ("could not inspect") and N/A ("there is no
+   * main switch") are different statements about the installation, but both
+   * are complete answers, and neither leaves sub-fields to fill in.
+   */
+  const mpdLocked = mpdLimit === 'LIM' || mpdLimit === 'N/A';
+
   // Check if custom input should be shown
   const showCustomProtectiveDevice =
     formData.mainProtectiveDeviceCustom === 'true' ||
@@ -655,13 +666,13 @@ const SupplyCharacteristicsSectionInner = ({
           <FormSelectSheet
             value={showCustomProtectiveDevice ? 'other' : formData.mainProtectiveDevice || ''}
             onValueChange={handleMainProtectiveDeviceChange}
-            disabled={mpdLimit === 'LIM'}
+            disabled={mpdLocked}
             label="Main protective device"
             placeholder="Select device"
             allowCustom
             customLabel="Other (specify)"
             options={mainProtectiveDeviceOptions}
-            className={cn(sheetTriggerCn, mpdLimit === 'LIM' && 'opacity-40')}
+            className={cn(sheetTriggerCn, mpdLocked && 'opacity-40')}
           />
         </div>
         </FormField>
@@ -696,8 +707,8 @@ const SupplyCharacteristicsSectionInner = ({
               value={formData.mainProtectiveDevice || ''}
               onChange={(e) => onUpdate('mainProtectiveDevice', e.target.value)}
               placeholder="e.g. 125A BS 88 Fuse"
-              disabled={mpdLimit === 'LIM'}
-              className={cn(inputCn, mpdLimit === 'LIM' && 'opacity-40')}
+              disabled={mpdLocked}
+              className={cn(inputCn, mpdLocked && 'opacity-40')}
             />
           </FormField>
         )}
@@ -728,13 +739,13 @@ const SupplyCharacteristicsSectionInner = ({
                   if (value === '__custom__') { onUpdate('breakingCapacity', '__custom__'); }
                   else { onUpdate('breakingCapacity', value); }
                 }}
-                disabled={mpdLimit === 'LIM'}
+                disabled={mpdLocked}
                 label="Breaking capacity (kA)"
                 placeholder="Select kA"
                 allowCustom
                 customLabel="Other (specify)"
                 options={currentBreakingCapacities.map((kA) => ({ value: kA, label: `${kA} kA` }))}
-                className={cn(sheetTriggerCn, mpdLimit === 'LIM' && 'opacity-40')}
+                className={cn(sheetTriggerCn, mpdLocked && 'opacity-40')}
               />
             ) : (
               <Input
@@ -748,8 +759,8 @@ const SupplyCharacteristicsSectionInner = ({
                 type="number"
                 min="0"
                 step="0.1"
-                disabled={mpdLimit === 'LIM'}
-                className={cn(inputCn, mpdLimit === 'LIM' && 'opacity-40')}
+                disabled={mpdLocked}
+                className={cn(inputCn, mpdLocked && 'opacity-40')}
               />
             )}
           </FormField>
@@ -770,8 +781,8 @@ const SupplyCharacteristicsSectionInner = ({
               value={formData.fuseDeviceRating || ''}
               onChange={(e) => onUpdate('fuseDeviceRating', e.target.value)}
               placeholder="100"
-              disabled={mpdLimit === 'LIM' || isFieldMarker(formData.fuseDeviceRating)}
-              className={cn(inputCn, (mpdLimit === 'LIM' || isFieldMarker(formData.fuseDeviceRating)) && 'opacity-40')}
+              disabled={mpdLocked || isFieldMarker(formData.fuseDeviceRating)}
+              className={cn(inputCn, (mpdLocked || isFieldMarker(formData.fuseDeviceRating)) && 'opacity-40')}
               inputMode="numeric"
             />
           </FormField>
@@ -792,8 +803,8 @@ const SupplyCharacteristicsSectionInner = ({
               value={formData.mainSwitchVoltageRating || ''}
               onChange={(e) => onUpdate('mainSwitchVoltageRating', e.target.value)}
               placeholder="230"
-              disabled={mpdLimit === 'LIM' || isFieldMarker(formData.mainSwitchVoltageRating)}
-              className={cn(inputCn, (mpdLimit === 'LIM' || isFieldMarker(formData.mainSwitchVoltageRating)) && 'opacity-40')}
+              disabled={mpdLocked || isFieldMarker(formData.mainSwitchVoltageRating)}
+              className={cn(inputCn, (mpdLocked || isFieldMarker(formData.mainSwitchVoltageRating)) && 'opacity-40')}
               inputMode="numeric"
             />
           </FormField>

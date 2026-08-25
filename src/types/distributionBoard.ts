@@ -31,8 +31,20 @@ export const BOARD_TYPES: { value: BoardType; label: string }[] = [
   { value: 'surface-mount', label: 'Surface Mount' },
 ];
 
-// Common board locations
+/**
+ * Common board locations — ELE-1609.
+ *
+ * The list was domestic-only (hallway, kitchen, utility, garage, cupboard,
+ * basement, loft), which left anyone doing a commercial or industrial EICR
+ * reaching for "Other" on nearly every board. Widened with the places boards
+ * actually live on those jobs.
+ *
+ * ⚠️ "Other" is a UI affordance, NOT a location. It must never reach the
+ * certificate — `isCustomBoardLocation` below is how the form tells a typed
+ * location from a picked one, and the typed text is what gets stored.
+ */
 export const BOARD_LOCATIONS = [
+  // Domestic
   'Hallway',
   'Kitchen',
   'Utility Room',
@@ -40,10 +52,44 @@ export const BOARD_LOCATIONS = [
   'Cupboard',
   'Basement',
   'Loft',
-  'Plant Room',
   'External',
+  // Commercial / industrial
+  'Plant Room',
+  'Intake Room',
+  'Switch Room',
+  'Riser',
+  'Corridor',
+  'Reception',
+  'Office',
+  'Workshop',
+  'Warehouse',
+  'Kitchen (commercial)',
+  'Boiler Room',
+  'Roof',
+  'Substation',
+  'Outbuilding',
+  // Always last — reveals the free-text box.
   'Other',
 ] as const;
+
+/** The picker entry that reveals the free-text box. Never a stored location. */
+export const BOARD_LOCATION_OTHER = 'Other';
+
+/**
+ * True when a board's stored location was typed rather than picked.
+ *
+ * There is no separate `locationOther` field on purpose: `location` stays the
+ * single value the PDF prints, so a custom location cannot be lost between the
+ * form and the certificate. The form works out which control to show by asking
+ * whether the stored value is one of the listed options — which also survives
+ * a reload, where a `locationOther` companion field would leave the picker
+ * looking unset while the data said otherwise (the ELE-1570 trap).
+ */
+export const isCustomBoardLocation = (location?: string | null): boolean => {
+  const value = (location || '').trim();
+  if (!value) return false;
+  return !(BOARD_LOCATIONS as readonly string[]).includes(value);
+};
 
 // Board size options (number of ways)
 export const BOARD_SIZES = [4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24] as const;
@@ -204,3 +250,20 @@ export const getNextSubBoardName = (boards: DistributionBoard[]): string => {
  */
 export const generateBoardId = (): string =>
   `board-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+
+/**
+ * The location as it should appear on a certificate — ELE-1609.
+ *
+ * 🔴 Strips the literal "Other". That string is a picker affordance, not a
+ * place, and **86 boards across 60 live certificates already hold it** because
+ * the form offered "Other" with nowhere to type the real location. Those
+ * certificates print "Location: Other" today.
+ *
+ * Returning '' lets the formatters' existing `na()` render it as N/A — which
+ * is at least true. The form no longer stores it going forward; this is for
+ * everything already saved.
+ */
+export const printableBoardLocation = (location?: string | null): string => {
+  const value = (location || '').trim();
+  return value.toLowerCase() === 'other' ? '' : value;
+};

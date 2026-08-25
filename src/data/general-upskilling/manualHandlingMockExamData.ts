@@ -77,10 +77,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     id: 2,
     question: 'Which of the following activities counts as manual handling under the MHOR 1992?',
     options: [
-      'Pressing buttons on a control panel',
-      'Operating a forklift truck',
+      'Pressing buttons on a control panel by hand',
+      'Operating a forklift truck from the seat',
       'Pushing a loaded trolley along a corridor',
-      'Typing at a desk workstation',
+      'Typing at a desk workstation all day',
     ],
     correctAnswer: 2,
     explanation:
@@ -218,10 +218,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     id: 10,
     question: 'What is the primary function of intervertebral discs in the spine?',
     options: [
-      'To produce red blood cells',
-      'To transmit nerve signals to the brain',
+      'To produce red blood cells for the bone marrow',
+      'To transmit nerve signals to the brain and back',
       'To act as shock absorbers between vertebrae',
-      'To store calcium for bone strength',
+      'To store calcium for bone strength only',
     ],
     correctAnswer: 2,
     explanation:
@@ -254,9 +254,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
       "Under MHOR 1992, what is an employer's first duty regarding manual handling operations?",
     options: [
       'Avoid hazardous manual handling operations so far as is reasonably practicable',
-      'Provide every worker with personal protective equipment before any lift',
-      'Set a fixed 25 kg maximum weight limit for all manual handling tasks',
-      'Issue written lifting instructions for every load handled on site',
+      'Provide every worker with personal protective equipment before any lift is made',
+      'Set a fixed 25 kg maximum weight limit for all manual handling tasks on the site',
+      'Issue written lifting instructions for every load handled on site by any worker',
     ],
     correctAnswer: 0,
     explanation:
@@ -325,9 +325,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
       'Under HASAWA 1974, employees also have duties. Which of the following is an employee duty?',
     options: [
       'Take reasonable care of their own health and safety and that of others',
-      'Carry out workplace inspections on behalf of the HSE',
-      'Write risk assessments for all manual handling tasks',
-      'Provide personal protective equipment to colleagues',
+      'Carry out workplace inspections on behalf of the HSE every twelve months',
+      'Write risk assessments for all manual handling tasks on the site',
+      'Provide personal protective equipment to colleagues on the site',
     ],
     correctAnswer: 0,
     explanation:
@@ -394,8 +394,8 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question: 'Which body parts are most commonly affected by manual handling injuries?',
     options: [
       'Back, neck, shoulders, arms, and legs',
-      'Eyes, ears, lungs, and skin',
-      'Heart, kidneys, liver, and stomach',
+      'Eyes, ears, lungs, and skin of the face',
+      'Heart, kidneys, liver, and stomach only',
       'Teeth, jaw, scalp, and fingernails',
     ],
     correctAnswer: 0,
@@ -462,9 +462,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question: 'Which of the following is an example of an acute manual handling injury?',
     options: [
       'A sudden muscle tear from lifting a heavy object incorrectly',
-      'Gradual onset of shoulder pain over several months',
-      'Carpal tunnel syndrome from repetitive wrist movements',
-      'Chronic lower back stiffness from years of bending',
+      'Gradual onset of shoulder pain over several months of repetitive work',
+      'Carpal tunnel syndrome from repetitive wrist movements at work',
+      'Chronic lower back stiffness from years of bending at a low bench',
     ],
     correctAnswer: 0,
     explanation:
@@ -478,10 +478,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     id: 25,
     question: "What does the 'T' in the TILE framework specifically ask you to consider?",
     options: [
-      'The temperature of the load and whether it is too hot or cold to grip safely',
+      'The temperature of the load and whether it is too hot or cold to grip with gloves on it',
       'The nature of the task — does it involve twisting, bending, reaching, or repetition?',
-      'The training record of the handler and whether it is up to date',
-      'The total combined weight of the load and the equipment used to move it',
+      'The training record of the handler and whether it is up to date for the task',
+      'The total combined weight of the load and the equipment used to move it safely',
     ],
     correctAnswer: 1,
     explanation:
@@ -495,10 +495,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     id: 26,
     question: "What does the 'I' in the TILE framework ask you to assess?",
     options: [
-      'The distance the load must be carried and the height it is lifted to',
-      'The shape, weight, and stability of the load being handled',
+      'The distance the load must be carried and the height it is lifted to from the floor',
+      'The shape, weight, and stability of the load during the lifting task itself',
       'The individual — their capability, fitness, training, and any health conditions',
-      'The condition of the floor and the amount of space available to work in',
+      'The condition of the floor and the amount of space available to work in safely',
     ],
     correctAnswer: 2,
     explanation:
@@ -530,9 +530,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question: "What factors does the 'E' in the TILE framework cover?",
     options: [
       'The environment — space, floor conditions, lighting, temperature, and obstacles',
-      'The frequency of the lift and whether the trunk must be twisted',
-      'The weight of the load and whether its centre of gravity is offset',
-      'The handler\'s physical fitness and any pre-existing health conditions',
+      'The frequency of the lift and whether the trunk must be twisted during each lift',
+      'The weight of the load and whether its centre of gravity is offset towards one side',
+      'The handler\'s physical fitness and any pre-existing health conditions they have',
     ],
     correctAnswer: 0,
     explanation:
@@ -547,9 +547,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question:
       'Which of the following is a musculoskeletal disorder (MSD) commonly caused by manual handling?',
     options: [
-      'Asthma',
+      'Conjunctivitis',
       'Tendonitis',
-      'Dermatitis',
+      'Hay fever',
       'Tinnitus',
     ],
     correctAnswer: 1,
@@ -565,10 +565,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question:
       "What is the purpose of the HSE's five-step approach to manual handling risk assessment?",
     options: [
-      'To set a fixed maximum weight limit that no load may legally exceed in the workplace',
-      'To record every minor handling task in a register available for HSE inspection',
+      'To set a fixed maximum weight limit that no load may legally exceed in the workplace at any one time',
+      'To record every minor handling task in a register available for HSE inspection at any time on request',
       'To provide a systematic method for identifying, assessing, and controlling manual handling risks',
-      'To certify each worker as competent before they are allowed to handle any load',
+      'To certify each worker as competent before they are allowed to handle any load of any kind on the site',
     ],
     correctAnswer: 2,
     explanation:
@@ -583,9 +583,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question:
       'An employee has a pre-existing back condition. Under MHOR 1992, what should the employer do?',
     options: [
-      'Require the employee to obtain a doctor\'s certificate before any lifting',
-      'Record the condition in the health file but keep the task and its controls unchanged',
-      'Move the employee permanently on to office duties without reassessing the task',
+      'Require the employee to obtain a doctor\'s certificate before any lifting work is done at all',
+      'Record the condition in the health file but keep the task and its controls unchanged as before',
+      'Move the employee permanently on to office duties without reassessing the task they were doing',
       'Take account of the individual\'s condition when assessing risk and adapt tasks accordingly',
     ],
     correctAnswer: 3,
@@ -618,10 +618,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question:
       'Under the Management of Health and Safety at Work Regulations 1999, what additional duty applies regarding young workers and manual handling?',
     options: [
-      'Young persons are exempt from manual handling duties until they reach 18',
+      'Young persons are exempt from manual handling duties until they reach 18 years of age at work',
       'A specific risk assessment must be carried out for young persons before they start work',
-      'Young persons may only handle loads below half the adult guideline weight',
-      'Young persons must hold a recognised lifting certificate before any handling',
+      'Young persons may only handle loads below half the adult guideline figure at all times',
+      'Young persons must hold a recognised lifting certificate before any handling work',
     ],
     correctAnswer: 1,
     explanation:
@@ -690,10 +690,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question:
       'Under MHOR 1992, Schedule 1 lists factors to consider in a risk assessment. Which of the following is NOT a Schedule 1 factor?',
     options: [
-      'The task involves twisting the trunk',
+      'The task involves twisting the trunk while the load is being carried',
       'The handler has less than one year of service with the employer',
-      'The load is unwieldy or difficult to grasp',
-      "The environment constrains the handler's posture",
+      'The load is unwieldy or difficult to grasp securely with both hands',
+      'The environment constrains the handler\'s posture at work',
     ],
     correctAnswer: 1,
     explanation:
@@ -726,9 +726,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question:
       "What is the legal significance of the phrase 'so far as is reasonably practicable' as used in MHOR 1992?",
     options: [
-      'It means employers must eliminate every risk, whatever the cost of doing so',
-      'It applies only to employers with more than fifty employees on the payroll',
-      'It means employers may accept a risk if controlling it would be inconvenient',
+      'It means employers must eliminate every risk, whatever the cost of doing so may be to the business',
+      'It applies only to employers with more than fifty employees on the payroll at any one time in the year',
+      'It means employers may accept a risk if controlling it would be inconvenient for the business at all',
       'It requires a balance between the level of risk and the cost, time, and effort of reducing it',
     ],
     correctAnswer: 3,
@@ -764,10 +764,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     id: 41,
     question: 'What is the first step in the kinetic lifting technique?',
     options: [
-      'Grip the load tightly and pull upwards',
+      'Grip the load tightly and pull upwards with the arms',
       'Plan the lift — assess the load, route, and destination',
-      'Bend at the waist and reach for the load',
-      'Take a deep breath and hold it throughout the lift',
+      'Bend at the waist and reach for the load on the floor',
+      'Take a deep breath and hold it throughout the lift itself',
     ],
     correctAnswer: 1,
     explanation:
@@ -798,9 +798,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     id: 43,
     question: "What does 'base of support' mean in the context of safe lifting?",
     options: [
-      'The shelf or surface the load rests on',
-      'The bottom of the load being lifted',
-      'The floor of the building where the lift takes place',
+      'The shelf or surface that the load is resting on before the lift begins',
+      'The bottom of the load being lifted and carried by the handlers',
+      'The floor of the building where the lift takes place today',
       'The area between and beneath your feet that provides stability',
     ],
     correctAnswer: 3,
@@ -900,10 +900,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     id: 49,
     question: 'What should you do if a load is too heavy for you to lift safely on your own?',
     options: [
-      'Try to lift it anyway using maximum effort',
+      'Try to lift it anyway using maximum effort alone',
       'Get help from others or use a mechanical aid',
-      'Leave it where it is and go home',
-      'Drag it along the floor',
+      'Leave it where it is and go home at the end of the shift',
+      'Drag it along the floor to where it is needed on site',
     ],
     correctAnswer: 1,
     explanation:
@@ -917,10 +917,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     id: 50,
     question: "What is the purpose of a 'test lift' before fully lifting a load?",
     options: [
-      "To warm up the back muscles immediately before the full lift",
-      "To demonstrate the correct technique to other workers nearby",
+      'To warm up the back muscles immediately before the full lift is attempted at all',
+      'To demonstrate the correct technique to other workers nearby on the job',
       "To check the load's weight and stability before committing to the full lift",
-      "To compress the load so it takes up less space while carrying",
+      'To compress the load so it takes up less space while carrying it about',
     ],
     correctAnswer: 2,
     explanation:
@@ -934,9 +934,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     id: 51,
     question: 'Why should you avoid twisting your trunk while carrying a load?',
     options: [
-      'Twisting under load helps distribute the weight evenly across the back',
-      'Twisting under load strengthens the core muscles over time',
-      'Twisting under load improves visibility of the route ahead',
+      'Twisting under load helps distribute the weight evenly across the back muscles',
+      'Twisting under load strengthens the core muscles and the back muscles',
+      'Twisting under load improves visibility of the route being taken ahead',
       'Twisting under load places shear forces on the spine, increasing injury risk',
     ],
     correctAnswer: 3,
@@ -1040,10 +1040,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question:
       'How should a long load (such as a length of conduit or pipe) be carried by two people?',
     options: [
-      'Both people should carry it on the same shoulder',
+      'Both people should carry it on the same shoulder at the same time as each other',
       'One person at each end, both on the same side, communicating clearly',
-      'One person should carry both ends while the other watches',
-      'The load should be carried vertically above head height',
+      'One person should carry both ends while the other watches from behind',
+      'The load should be carried vertically above head height by both people',
     ],
     correctAnswer: 1,
     explanation:
@@ -1057,8 +1057,8 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     id: 58,
     question: 'What is the correct technique for lowering a load to the ground?',
     options: [
-      'Keep the legs straight and bend forward from the waist to set it down',
-      'Drop the load the last few centimetres to save effort on the knees',
+      'Keep the legs straight and bend forward from the waist to set it down on the floor',
+      'Drop the load the last few centimetres to save effort on the knees and back',
       'Reverse the lifting technique — bend the knees and hips, keep the back straight',
       'Twist the trunk to place the load beside you without moving your feet',
     ],
@@ -1074,9 +1074,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     id: 59,
     question: 'Why should you tuck your chin in slightly when lifting?',
     options: [
-      'To allow you to see the floor directly beneath your feet',
-      'To brace the neck muscles so they take the weight of the load',
-      'To shift your centre of gravity backwards over your heels',
+      'To allow you to see the floor directly beneath your feet while lifting the load',
+      'To brace the neck muscles so they take the weight of the load that is being lifted',
+      'To shift your centre of gravity backwards over your heels as you lift',
       'To help maintain the natural curvature of the spine and keep the back straight',
     ],
     correctAnswer: 3,
@@ -1092,9 +1092,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question: "What is meant by the 'centre of gravity' when lifting?",
     options: [
       'The point at which the weight of the body (and load) is concentrated and balanced',
-      'The lowest point of the load, where it makes contact with the ground',
-      'The total combined weight of the handler and the load being carried',
-      'The vertical line running through the handler\'s spine while standing upright',
+      'The lowest point of the load, where it makes contact with the ground below the handler',
+      'The total combined weight of the handler and the load between the two of them',
+      'The vertical line running through the handler\'s spine while standing upright and still',
     ],
     correctAnswer: 0,
     explanation:
@@ -1144,9 +1144,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question:
       'When carrying a load up or down stairs, what additional precautions should be taken?',
     options: [
-      'Move as quickly as you can so as to minimise the time spent on the stairs',
-      'Carry the load above head height so that it stays clear of the steps below',
-      'Skip alternate steps so that fewer separate movements are needed overall',
+      'Move as quickly as you can so as to minimise the time spent carrying the load up the whole flight',
+      'Carry the load above head height so that it stays clear of the steps as you climb up towards the top',
+      'Skip alternate steps so that fewer separate movements are needed on the way to the top floor',
       'Ensure clear vision of the steps, use handrails where possible, and take one step at a time',
     ],
     correctAnswer: 3,
@@ -1163,9 +1163,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
       'What is the recommended technique for handling an awkward or bulky load that obscures your vision?',
     options: [
       'Use a mechanical aid, get help, or break the load into smaller manageable parts',
-      'Lift it higher so you can see the route beneath the load',
-      'Move quickly so you spend less time with restricted vision',
-      'Tilt the load to one side and look around the gap as you walk',
+      'Lift it higher so you can see the route beneath the load as you walk along with it',
+      'Move quickly so you spend less time with restricted vision on the route ahead of you',
+      'Tilt the load to one side and look around the gap as you walk along the route',
     ],
     correctAnswer: 0,
     explanation:
@@ -1180,10 +1180,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the main benefit of using smooth, controlled movements rather than jerky actions when lifting?',
     options: [
-      'It allows the lift to be completed in less time overall',
+      'It allows the lift to be completed in less time by the handler involved',
       'It reduces the peak forces on the spine and muscles, lowering injury risk',
-      'It increases the maximum weight that can safely be lifted',
-      'It removes the need to keep the load close to the body',
+      'It increases the maximum weight that can safely be lifted by a single handler',
+      'It removes the need to keep the load close to the body while it is carried',
     ],
     correctAnswer: 1,
     explanation:
@@ -1197,10 +1197,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     id: 66,
     question: 'How should you handle a load in a restricted or confined space?',
     options: [
-      'Lift the load as quickly as possible so that less time is spent working inside the space',
-      'Use a full forward stoop, since bending the knees takes up space that is not available',
+      'Lift the load as quickly as possible so that less time is spent working inside the space that is confined',
+      'Use a full forward stoop, since bending the knees takes up space that is not available there',
       'Adapt the technique, reduce load size where possible, and ensure adequate space to maintain good posture',
-      'Carry the maximum load on each trip so that fewer entries into the space are needed',
+      'Carry the maximum load on each trip so that fewer entries into the space are needed in total',
     ],
     correctAnswer: 2,
     explanation:
@@ -1214,9 +1214,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     id: 67,
     question: 'What is the recommended height range for push/pull handles to minimise injury risk?',
     options: [
-      'Below knee height, so the handler can use a low pushing stance',
-      'At head height, so the handler can see clearly over the load',
-      'At ankle height, to keep the centre of gravity as low as possible',
+      'Below knee height, so the handler can use a low pushing stance throughout',
+      'At head height, so the handler can see clearly over the load ahead',
+      'At ankle height, to keep the centre of gravity as low as possible for them',
       'Between knee height and shoulder height, ideally between hip and chest',
     ],
     correctAnswer: 3,
@@ -1233,9 +1233,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
       'When lifting, why is it important to breathe naturally rather than holding your breath?',
     options: [
       'Holding your breath can raise blood pressure dangerously and reduce stability',
-      'Holding your breath strengthens the abdominal muscles during the lift',
-      'Breathing out fully empties the lungs and lowers the centre of gravity',
-      'Holding your breath helps you lift heavier loads than you otherwise could',
+      'Holding your breath strengthens the abdominal muscles during the lift being made',
+      'Breathing out fully empties the lungs and lowers the centre of gravity of the body',
+      'Holding your breath helps you lift heavier loads than you otherwise could manage',
     ],
     correctAnswer: 0,
     explanation:
@@ -1249,10 +1249,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     id: 69,
     question: 'What happens to the effective weight of a load as it is held further from the body?',
     options: [
-      'The effective weight decreases',
+      'The effective weight decreases as the arms extend out',
       'The effective weight increases due to the lever effect',
-      'The effective weight stays the same',
-      "The effective weight becomes zero at arm's length",
+      'The effective weight stays the same at any distance',
+      'The effective weight becomes zero at arm\'s length from the body',
     ],
     correctAnswer: 1,
     explanation:
@@ -1266,10 +1266,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     id: 70,
     question: 'When lifting with a colleague, what should you do if the load begins to slip?',
     options: [
-      'Lunge quickly to catch the load before it can drop on to the floor below',
-      'Let go of your side of the load and allow your partner to take the full weight',
+      'Lunge quickly to catch the load before it can drop on to the floor at your feet',
+      'Let go of your side of the load and allow your partner to take the full weight of it alone',
       'Communicate immediately, lower the load to the ground in a controlled manner, and re-grip',
-      'Twist your body to bring the slipping side of the load back under control',
+      'Twist your body to bring the slipping side of the load back under control once again',
     ],
     correctAnswer: 2,
     explanation:
@@ -1284,9 +1284,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the biomechanical advantage of bending the knees rather than the back when lifting?',
     options: [
-      'It transfers the whole of the load on to the stronger muscles of the lower back',
-      'It lengthens the moment arm at the hip and so increases available lifting power',
-      'It locks the knee joints, giving a rigid platform from which to lift the load',
+      'It transfers the whole of the load on to the stronger muscles of the lower back and of the shoulders',
+      'It lengthens the moment arm at the hip and so increases lifting power available to the handler',
+      'It locks the knee joints, giving a rigid platform from which to lift the load up off the floor safely',
       'It uses the large quadriceps and gluteal muscles while reducing the moment arm on the lumbar spine',
     ],
     correctAnswer: 3,
@@ -1302,9 +1302,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question: "What does 'intra-abdominal pressure' contribute to during a manual lift?",
     options: [
       'It provides additional support and stability to the lumbar spine during exertion',
-      'It increases blood flow to the legs, powering the lift',
-      'It reduces the weight of the load by displacing internal organs',
-      'It lubricates the intervertebral discs to prevent friction damage',
+      'It increases blood flow to the legs, powering the lift from the floor upwards',
+      'It reduces the weight of the load by displacing internal organs in the abdomen',
+      'It lubricates the intervertebral discs to prevent friction damage between the vertebrae',
     ],
     correctAnswer: 0,
     explanation:
@@ -1319,10 +1319,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question:
       'A load with an offset centre of gravity (e.g. contents shifted to one side) presents what specific risk?',
     options: [
-      "The load becomes lighter on one side and easier to carry",
+      'The load becomes lighter on one side and easier to carry for the handler',
       "Unexpected twisting forces on the handler's spine as the load tilts",
-      "The load is impossible to lift without a mechanical aid by law",
-      "The handler's grip strength is doubled on the heavier side",
+      'The load is impossible to lift without a mechanical aid by law at all',
+      'The handler\'s grip strength is doubled on the heavier side of it',
     ],
     correctAnswer: 1,
     explanation:
@@ -1337,10 +1337,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question:
       'When comparing a stoop lift (bending at the waist) with a squat lift (bending at the knees), which statement is biomechanically correct?',
     options: [
-      'A stoop lift is safer for heavy loads because it can be performed more quickly',
-      'Both techniques place identical compressive forces on the lumbar spine discs',
+      'A stoop lift is safer for heavy loads because it can be performed more quickly on each occasion',
+      'Both techniques place identical compressive forces on the lumbar spine discs in every case at work',
       'A squat lift generally creates less compressive force on the lumbar spine for heavier loads',
-      'A stoop lift uses the leg muscles more effectively than a squat lift does',
+      'A stoop lift uses the leg muscles more effectively than a squat lift does for any heavy load',
     ],
     correctAnswer: 2,
     explanation:
@@ -1354,9 +1354,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     id: 75,
     question: "What is the 'Valsalva manoeuvre' and why is it a risk during heavy lifting?",
     options: [
-      'A two-person lifting method used for long, awkward loads such as conduit',
-      'Performing a stretching routine before starting any manual handling task',
-      'A grip technique using the fingers hooked through the handles of the load',
+      'A two-person lifting method used for long, awkward loads such as conduit or cable tray',
+      'Performing a stretching routine before starting any manual handling task on the site',
+      'A grip technique using the fingers hooked through the handles of the load that is being lifted',
       'Holding the breath while bearing down, which can cause a dangerous rise in blood pressure',
     ],
     correctAnswer: 3,
@@ -1372,9 +1372,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question: "In ergonomic terms, what does the 'moment of force' represent when lifting?",
     options: [
       'The rotational force around a joint, calculated as force multiplied by the perpendicular distance from the joint',
-      'The total weight of the load, measured in newtons at the point where the hands take hold of it',
-      'The brief instant at which the load first leaves the ground at the start of a lift',
-      'The downward pull of gravity acting vertically through the centre of the load',
+      'The total weight of the load, measured in newtons at the point where the hands take hold of it during the lift itself',
+      'The brief instant at which the load first leaves the ground at the start of a lift that is made by the handler at work',
+      'The downward pull of gravity acting vertically through the centre of the load being lifted by the handler',
     ],
     correctAnswer: 0,
     explanation:
@@ -1389,10 +1389,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question:
       'When handling loads on stairs, why is it recommended that the person at the lower end bears the greater share of the weight?',
     options: [
-      'The lower person can see the steps ahead and so should take more weight',
+      'The lower person can see the steps ahead and so should take more weight of the load being carried',
       'Gravity causes the load to shift downwards, so the lower person naturally takes more weight',
-      'The lower person has a shorter distance to travel to reach the destination',
-      'The upper person needs one hand free to hold the handrail at all times',
+      'The lower person has a shorter distance to travel to reach the destination at the top of the stairs',
+      'The upper person needs one hand free to hold the handrail while on the staircase itself',
     ],
     correctAnswer: 1,
     explanation:
@@ -1407,10 +1407,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question:
       'What effect does twisting combined with lateral bending have on the intervertebral discs during a loaded lift?',
     options: [
-      'It spreads the load evenly across all of the lumbar discs, reducing the peak stress on each of them',
-      'It has no measurable effect on the discs provided that the load being lifted is light',
+      'It spreads the load evenly across all of the lumbar discs, reducing the peak stress on each of them in each single case',
+      'It has no measurable effect on the discs provided that the load being lifted is light enough for one person',
       'It creates complex combined stresses including compression, shear, and torsion that greatly increase failure risk',
-      'It loads only the muscles of the trunk, leaving the intervertebral discs unloaded',
+      'It loads only the muscles of the trunk, leaving the intervertebral discs unloaded during the whole of the lift',
     ],
     correctAnswer: 2,
     explanation:
@@ -1425,9 +1425,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question:
       'When pushing a heavy wheeled load over a long distance, what is the physiological concern beyond musculoskeletal injury?',
     options: [
-      'Pushing over long distances causes the leg muscles to shorten permanently over time',
-      'Pushing over distance has no effect beyond the force needed to start it moving',
-      'Long-duration pushing gradually reduces grip strength in the dominant hand only',
+      'Pushing over long distances causes the leg muscles to shorten permanently over time spent at the workplace',
+      'Pushing over distance has no effect beyond the force needed to set the load moving in the first place',
+      'Long-duration pushing gradually reduces grip strength in the dominant hand of the handler only',
       'Sustained pushing increases cardiovascular demand and can lead to fatigue, increasing accident risk',
     ],
     correctAnswer: 3,
@@ -1518,9 +1518,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question: 'What does the HSE MAC tool stand for?',
     options: [
       'Manual Handling Assessment Charts',
-      'Mechanical Aid Compliance',
-      'Maximum Allowable Capacity',
-      'Manual Assessment Calculator',
+      'Mechanical Aid Compliance Checklist',
+      'Maximum Allowable Carrying Capacity',
+      'Manual Assessment Calculation Tool',
     ],
     correctAnswer: 0,
     explanation:
@@ -1534,10 +1534,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     id: 85,
     question: 'What does RAPP stand for in manual handling risk assessment?',
     options: [
-      'Record All Potential Problems',
+      'Record All Potential Physical Problems',
       'Risk Assessment for Pushing and Pulling',
-      'Reduce All Physical Pressures',
-      'Regulations and Practical Procedures',
+      'Reduce All Physical Pressure Risks',
+      'Regulations and Practical Procedures Tool',
     ],
     correctAnswer: 1,
     explanation:
@@ -1552,10 +1552,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question:
       'Which of the following is the most effective way to reduce manual handling risk, according to the hierarchy of controls?',
     options: [
-      'Provide personal protective equipment',
-      'Provide manual handling training',
+      'Provide personal protective equipment to all handlers',
+      'Provide manual handling training to every worker on site',
       'Eliminate the need for manual handling entirely',
-      'Display warning signs about heavy loads',
+      'Display warning signs about heavy loads here',
     ],
     correctAnswer: 2,
     explanation:
@@ -1588,9 +1588,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
       'When using the TILE framework, which factor would you assess first in most practical situations?',
     options: [
       'The task — what does it involve and can it be avoided or redesigned?',
-      'The load — how heavy and how stable is the object being handled?',
-      'The individual — is the handler fit and trained for this work?',
-      'The environment — is there enough space and is the floor sound?',
+      'The load — how heavy and how stable is the object that is being handled?',
+      'The individual — is the handler fit and trained for this particular work?',
+      'The environment — is there enough space and is the floor surface sound?',
     ],
     correctAnswer: 0,
     explanation:
@@ -1605,10 +1605,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question:
       "Under the 'Task' element of TILE, which of the following would increase the risk of injury?",
     options: [
-      'Short carrying distances',
+      'Short carrying distances over a level floor',
       'Repetitive lifting combined with twisting',
-      'Working at waist height',
-      'Handling loads within the power zone',
+      'Working at waist height at a fixed bench top',
+      'Handling loads within the power zone at the bench',
     ],
     correctAnswer: 1,
     explanation:
@@ -1623,10 +1623,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question:
       "Under the 'Individual' element of TILE, which of the following personal factors would require a risk assessment adjustment?",
     options: [
-      "The worker's favourite colour",
-      "The worker's lunchtime preferences",
+      'The worker\'s favourite colour of overalls on the site',
+      'The worker\'s lunchtime preferences in the site canteen',
       'The worker is pregnant or has recently given birth',
-      "The worker's commuting distance",
+      'The worker\'s commuting distance to the depot',
     ],
     correctAnswer: 2,
     explanation:
@@ -1660,9 +1660,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
       "When conducting a manual handling risk assessment, how should 'Environmental' factors be recorded?",
     options: [
       'Note floor conditions, space constraints, lighting, temperature, weather, and any obstacles or hazards',
-      'Record the weight of each load and the height to which it has to be lifted and lowered',
-      'Record the handler\'s age, general fitness and previous handling training',
-      'Record the frequency of the task and the distance the load is carried',
+      'Record the weight of each load and the height to which it has to be lifted on each occasion of handling',
+      'Record the handler\'s age, general fitness and any pre-existing health conditions that they may have at work',
+      'Record the frequency of the task and the height to which the load is lifted and lowered on each occasion',
     ],
     correctAnswer: 0,
     explanation:
@@ -1676,9 +1676,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     id: 93,
     question: 'The MAC tool uses a colour-coded system. What does a RED rating indicate?',
     options: [
-      'The task is low risk and no further action is required',
+      'The task is low risk and no further action is required at all',
       'The task is high risk and requires prompt action to reduce the risk',
-      'The task is medium risk and should be improved when convenient',
+      'The task is medium risk and should be improved when convenient to do so',
       'The task has not yet been assessed and must be observed again',
     ],
     correctAnswer: 1,
@@ -1693,10 +1693,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     id: 94,
     question: "Which of the following 'Load' factors under TILE would increase handling risk?",
     options: [
-      'A small, rigid container with a secure lid',
-      'A well-balanced load clearly marked with its weight',
+      'A small, rigid container with a secure lid and two handles',
+      'A well-balanced load clearly marked with its weight in kilograms',
       'A bulky, unstable load with no handholds and sharp edges',
-      'A compact, lightweight box with integral handles',
+      'A compact, lightweight box with integral handles on it',
     ],
     correctAnswer: 2,
     explanation:
@@ -1710,9 +1710,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     id: 95,
     question: "What is 'designing out' manual handling?",
     options: [
-      'Providing handlers with back support belts and grip gloves before each lifting task',
-      'Increasing the number of workers assigned to share each heavy load on site',
-      'Drawing up a written procedure describing the correct lifting technique to use',
+      'Providing handlers with back support belts and grip gloves before each lifting task begins on site each day',
+      'Increasing the number of workers assigned to share each heavy load on each and every working day',
+      'Drawing up a written procedure describing the correct lifting technique for each task on the site',
       'Redesigning processes, layouts, or equipment so that hazardous manual handling is eliminated at source',
     ],
     correctAnswer: 3,
@@ -1782,9 +1782,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question:
       'A risk assessment identifies that a manual handling task poses an unacceptable risk but cannot be eliminated. Following the MHOR hierarchy, what is the next step?',
     options: [
-      'Issue every handler with a back support belt and otherwise leave the task exactly as it is',
-      'Stop the activity permanently until the load can be removed from the workplace altogether',
-      'Report the unacceptable risk to the HSE and await their written instructions before the work continues',
+      'Issue every handler with a back support belt and otherwise leave the task exactly as it is at present on the site',
+      'Stop the activity permanently until the load can be removed from the workplace for good and for all time that is to come',
+      'Report the unacceptable risk to the HSE and await their written instructions before the work continues on the site itself',
       'Reduce the risk to the lowest level reasonably practicable through engineering controls, task redesign, and training',
     ],
     correctAnswer: 3,
@@ -1801,9 +1801,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
       'When using the RAPP tool to assess a pushing operation, which of the following factors does it specifically evaluate?',
     options: [
       'Floor surface, gradient, force required, handle height, distance, obstructions, and individual capability',
-      'The exact weight of the load in kilograms and the legal lifting limit for that worker',
-      'The lighting level and room temperature only, as these have the greatest effect on grip',
-      'The number of workers available and their combined years of handling experience',
+      'The exact weight of the load in kilograms and the legal lifting limit for that worker on the day of the task',
+      'The lighting level and room temperature only, as these have the greatest effect on grip strength in the hands',
+      'The number of workers available and their combined years of handling experience on the site that day',
     ],
     correctAnswer: 0,
     explanation:
@@ -1819,10 +1819,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     id: 101,
     question: 'What does the ART tool stand for in the context of manual handling risk assessment?',
     options: [
-      'Automated Risk Tracking',
+      'Automated Risk Tracking Register',
       'Assessment of Repetitive Tasks',
-      'Annual Review of Techniques',
-      'Assessment of Related Trauma',
+      'Annual Review of Lifting Techniques',
+      'Assessment of Related Trauma Risks',
     ],
     correctAnswer: 1,
     explanation:
@@ -1838,7 +1838,7 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
       'When using the ART tool, which of the following is NOT one of the main risk factor categories assessed?',
     options: [
       'Repetition',
-      'Posture',
+      'Awkward postures',
       "Worker's age",
       'Force',
     ],
@@ -1856,8 +1856,8 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
       'What is the primary purpose of workplace observation during a manual handling risk assessment?',
     options: [
       'To record the names of all workers present for training purposes',
-      'To check that the written procedure is filed in the correct folder',
-      'To measure the exact weight of every load using calibrated scales',
+      'To check that the written procedure is filed in the correct folder on site',
+      'To measure the exact weight of every load using calibrated scales on site',
       'To identify actual handling techniques and conditions in real time',
     ],
     correctAnswer: 3,
@@ -1874,9 +1874,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
       'Why is worker consultation a legal requirement during manual handling risk assessments?',
     options: [
       'Workers have first-hand knowledge of the tasks and associated difficulties',
-      'Workers are legally responsible for writing their own risk assessments',
-      'Consultation transfers all liability for injuries onto the workforce',
-      'Workers must approve the assessment before the employer can act on it',
+      'Workers are legally responsible for writing their own risk assessments at work',
+      'Consultation transfers all liability for injuries onto the workforce concerned',
+      'Workers must approve the assessment before the employer can act on it at all',
     ],
     correctAnswer: 0,
     explanation:
@@ -1891,10 +1891,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question:
       'When selecting a mechanical aid for a manual handling task, what is the MOST important factor to consider first?',
     options: [
-      'The brand name and purchase price of the aid above all else',
+      'The brand name and purchase price of the aid at the time of purchase on the site',
       'Whether the aid matches the specific task requirements and load characteristics',
-      'The colour of the aid so it is easily spotted on site',
-      'Whether the aid is the same model already used by competitors',
+      'The colour of the aid so it is easily spotted by the site workers who are on the site',
+      'Whether the aid is the same model already used by competitors on other sites nearby',
     ],
     correctAnswer: 1,
     explanation:
@@ -1926,9 +1926,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the main advantage of a pallet truck over a sack truck for warehouse operations?',
     options: [
-      'It is lighter and easier to carry up flights of stairs',
-      'It can be operated safely with one hand while carrying tools',
-      'It folds flat for storage in the back of a small van',
+      'It is lighter and easier to carry up flights of stairs between the floors',
+      'It can be operated safely with one hand while carrying tools in the other',
+      'It folds flat for storage in the back of a small van overnight',
       'It can move palletised loads of much greater weight with minimal effort',
     ],
     correctAnswer: 3,
@@ -1961,10 +1961,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the primary benefit of using a conveyor system in a repetitive manual handling environment?',
     options: [
-      'It increases the weight each worker can safely lift by hand',
+      'It increases the weight each worker can safely lift by hand on their own during a shift',
       'It eliminates or significantly reduces the need for carrying loads over distances',
-      'It removes the need to carry out a risk assessment for the area',
-      'It allows loads to be stacked higher without the use of ladders',
+      'It removes the need to carry out a risk assessment for the area that it serves at all',
+      'It allows loads to be stacked higher without the need to use ladders or steps at all',
     ],
     correctAnswer: 1,
     explanation:
@@ -2316,10 +2316,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     id: 129,
     question: 'What effect do wet conditions on site have on manual handling operations?',
     options: [
-      'They make loads lighter, so larger quantities can safely be carried in one trip',
+      'They make loads lighter, so larger quantities can safely be carried in one trip in the wet weather',
       'They reduce grip on loads and underfoot surfaces, increasing the risk of slips and dropped loads',
-      'They improve grip by adding moisture between the hands and the load surface',
-      'They have no effect indoors and matter only for outdoor lifting operations',
+      'They improve grip by adding moisture between the hands and the load being handled on site',
+      'They have no effect indoors and matter only for outdoor lifting in the rain on the site',
     ],
     correctAnswer: 1,
     explanation:
@@ -2334,10 +2334,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question:
       'Why must wind conditions be considered during manual handling of large, flat items such as sheet materials?',
     options: [
-      'Wind cools the hands and stiffens the fingers, weakening grip strength on the edges of the material being carried',
-      'Wind dries the material out, making it lighter and therefore harder to hold securely',
+      'Wind cools the hands and stiffens the fingers, weakening grip strength on the edges of the material being carried outdoors on the site',
+      'Wind dries the material out, making it lighter and therefore harder to hold securely in both hands on an exposed roof or on a scaffold deck',
       'Large flat items act as sails, making them extremely difficult to control and creating a risk of the handler being pulled off balance',
-      'Wind has no effect on rigid sheet materials unless the surface is already wet',
+      'Wind has no effect on rigid sheet materials unless the surface is already wet from rain or from spray blown across an exposed site',
     ],
     correctAnswer: 2,
     explanation:
@@ -2369,9 +2369,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question: 'What is the main challenge of manual handling on scaffold platforms?',
     options: [
       'Restricted space limits posture options, guardrails restrict movement, and platform bounce affects stability',
-      'The height alone makes any load feel heavier than it would at ground level, whatever its weight',
-      'Scaffold platforms are always wet, and this is the sole handling hazard present',
-      'The only concern is the electrical risk from overhead cables running nearby',
+      'The height alone makes any load feel heavier than it would at ground level, whatever its weight may be in reality',
+      'Scaffold platforms are always wet, and this is the sole handling hazard on any working platform at any height',
+      'The only concern is the electrical risk from overhead cables running near the scaffold platform on any site',
     ],
     correctAnswer: 0,
     explanation:
@@ -2386,10 +2386,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question:
       'When working in a loft space with limited headroom, what is the primary manual handling concern?',
     options: [
-      'The dust disturbed in the insulation is the main concern, rather than the postures adopted',
+      'The dust disturbed in the insulation is the main concern, rather than the postures adopted in the loft space',
       'The inability to stand upright forces stooped or kneeling postures, dramatically increasing spinal loading',
-      'Loads must be carried above head height at all times to keep them clear of the joists',
-      'The warmth of the loft space causes rapid fatigue whatever posture is adopted',
+      'Loads must be carried above head height at all times to keep them clear of the joists below them',
+      'The warmth of the loft space causes rapid fatigue whatever posture is adopted by the worker there',
     ],
     correctAnswer: 1,
     explanation:
@@ -2403,10 +2403,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     id: 134,
     question: 'What specific hazard exists when handling materials in ceiling voids?',
     options: [
-      'The temperature in the void is the controlling factor, so work must be limited to a few minutes at a time and no posture controls are needed',
-      'The hazard is limited to the electrical risk from existing wiring runs in the void',
+      'The temperature in the void is the controlling factor, so work must be limited to a few minutes at a time and no posture controls are needed at all',
+      'The hazard is limited to the electrical risk from existing wiring runs above the ceiling, and posture is not a concern there at any time',
       'Working above head height with restricted access means loads must be pushed up and manoeuvred in confined space, with risk of falling debris',
-      'Dropping loads through the opening from the floor above and collecting them later',
+      'Dropping loads through the opening from the floor above and collecting them once the ceiling grid has been closed up again from underneath',
     ],
     correctAnswer: 2,
     explanation:
@@ -2421,9 +2421,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question:
       'When handling materials in an under-floor crawl space, which posture-related risk is MOST significant?',
     options: [
-      'Frequent twisting of the trunk while standing upright at the hatch to pass loads into the space below the floor',
-      'Repeated overhead lifting of loads above shoulder height into the crawl space',
-      'Long carrying distances across open, well-lit and level floor surfaces',
+      'Frequent twisting of the trunk while standing upright at the hatch to pass loads into the space below the floor of the building',
+      'Repeated overhead lifting of loads above shoulder height into the crawl space through the access hatch cut in the floor above it',
+      'Long carrying distances across open, well-lit and level floor surfaces between the access hatch and the working position down there',
       'Prolonged crawling, lying, and dragging loads in extremely restricted space, with no ability to use normal lifting techniques',
     ],
     correctAnswer: 3,
@@ -2439,9 +2439,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question: 'What is the purpose of a rope and pulley system in a building riser?',
     options: [
       'To lift materials vertically through the riser shaft, avoiding the need to carry heavy items up ladders or stairs',
-      'To ventilate the riser shaft and clear away dust generated during the installation work below',
-      'To provide a fall-arrest anchor point for workers inside the riser shaft',
-      'To measure the vertical depth of the riser before the cables are pulled in',
+      'To ventilate the riser shaft and clear away dust generated during the installation work that is being carried out below',
+      'To provide a fall-arrest anchor point for workers inside the riser shaft during the installation of the services below',
+      'To measure the vertical depth of the riser before the cables are pulled in through it from the floor at the bottom',
     ],
     correctAnswer: 0,
     explanation:
@@ -2489,9 +2489,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     id: 139,
     question: 'How does cumulative spinal loading differ from a single traumatic injury?',
     options: [
-      'Cumulative loading affects only the muscles and never the spinal discs themselves',
-      'Cumulative loading always results from one very heavy lift that exceeds the tissue\'s tolerance in a single event on the day',
-      'Cumulative loading produces immediate, obvious symptoms at the moment the damage is done',
+      'Cumulative loading affects only the muscles and never the spinal discs, so repeated handling cannot damage them at all in the course of the work',
+      'Cumulative loading always results from one very heavy lift that exceeds the tissue\'s tolerance in a single event on the day on which it occurs',
+      'Cumulative loading produces immediate, obvious symptoms at the moment the damage is done to the tissue, and so it is always easy to recognise at once',
       'Cumulative loading causes gradual damage over weeks, months, or years through repeated sub-maximal forces, rather than a single overload event',
     ],
     correctAnswer: 3,
@@ -2508,9 +2508,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
       'Which of the following is the BEST example of fatigue management in a manual handling context?',
     options: [
       'Scheduling regular rest breaks, varying tasks throughout the shift, and monitoring workload to prevent overexertion',
-      'Scheduling all of the heavy lifting for the end of the shift, when the lighter work is finished',
-      'Providing energy drinks so that workers can sustain effort for longer periods',
-      'Removing rest breaks so that the task is finished as quickly as possible',
+      'Scheduling all of the heavy lifting for the end of the shift, when the lighter work is finished for the day and out of the way',
+      'Providing energy drinks so that workers can sustain effort for longer periods without taking any rest breaks during it',
+      'Removing rest breaks so that the task is finished as quickly as possible and the workers can then go home much earlier',
     ],
     correctAnswer: 0,
     explanation:
@@ -2524,10 +2524,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     id: 141,
     question: 'What is the purpose of job rotation in reducing manual handling injury risk?',
     options: [
-      'To increase total output by keeping every worker constantly busy on a different task each day',
+      'To increase total output by keeping every worker constantly busy on a different task each day of the working week',
       'To vary the physical demands on different muscle groups, reducing cumulative loading on any single body area',
-      'To ensure that every worker is trained on the heaviest task in the process',
-      'To allow the employer to avoid carrying out a manual handling risk assessment',
+      'To ensure that every worker is trained on the heaviest task in the process at some point in the year',
+      'To allow the employer to avoid carrying out a manual handling risk assessment for any of those tasks at all',
     ],
     correctAnswer: 1,
     explanation:
@@ -2541,10 +2541,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     id: 142,
     question: 'How frequently should micro-breaks be taken during sustained manual handling work?',
     options: [
-      'One short break at the start of the day and another at the end of the shift',
-      'Whenever a worker reports feeling pain or discomfort during the task',
+      'One short break at the start of the day and another at the end of the shift that is being worked',
+      'Whenever a worker reports feeling pain or discomfort during the task that they are carrying out',
       'Every 20-30 minutes, lasting 30 seconds to 2 minutes, involving stretching or posture change',
-      'Every four hours, in line with the statutory lunch break requirement',
+      'Every four hours, in line with the statutory lunch break requirement that applies at work',
     ],
     correctAnswer: 2,
     explanation:
@@ -2558,9 +2558,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     id: 143,
     question: 'What is the benefit of warm-up stretching before manual handling tasks?',
     options: [
-      'It permanently increases the maximum weight a worker is able to lift, so heavier loads can be handled safely',
-      'It removes the need to use correct lifting technique for the rest of the shift',
-      'It cools the muscles so that they are less likely to overheat during the task',
+      'It permanently increases the maximum weight a worker is able to lift, so heavier loads can be handled all day long after it',
+      'It removes the need to use correct lifting technique for the rest of the shift once the muscles have been fully warmed up through it',
+      'It cools the muscles so that they are less likely to overheat during the task and so they can then be worked a good deal harder',
       'It increases blood flow to muscles, improves flexibility, and prepares soft tissues for physical demands, reducing injury risk',
     ],
     correctAnswer: 3,
@@ -2577,9 +2577,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
       'A team of three electricians needs to carry a 4-metre length of heavy cable tray up a staircase. What is the correct approach?',
     options: [
       'The team leader assigns positions, the lower (rear) person bears more weight due to the angle, and clear commands are used throughout with the route checked beforehand',
-      'The tray should be cut down into three shorter sections so that each electrician can carry one piece separately up the staircase without assistance',
-      'The two strongest workers should carry the tray while the third watches for hazards and holds doors',
-      'The tray should be slid up the stair treads ahead of the team so that nobody takes its weight',
+      'The tray should be cut down into three shorter sections so that each electrician can carry one piece separately up the staircase without assistance from any of the others',
+      'The two strongest workers should carry the tray while the third watches for hazards and holds doors open all along the route up the staircase for the two of them',
+      'The tray should be slid up the stair treads ahead of the team so that nobody takes its weight at any point during the climb up to the landing on the floor above',
     ],
     correctAnswer: 0,
     explanation:
@@ -2611,10 +2611,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question:
       'When installing cable tray at height, what should be done to reduce manual handling risk?',
     options: [
-      'Carry each full-length section up the access ladder by hand, keeping one hand on the stiles at all times while climbing',
-      'Tie all of the sections together and haul the whole bundle up in a single lift',
+      'Carry each full-length section up the access ladder by hand, keeping one hand on the stiles at all times while climbing up and down the ladder',
+      'Tie all of the sections together and haul the whole bundle up in a single lift by hand from the level below without any mechanical aid at all',
       'Use a mobile elevated work platform (MEWP) with materials pre-loaded, or lift sections with a rope and pulley to the installation height',
-      'Throw the sections up to a colleague working on the level above',
+      'Throw the sections up to a colleague working on the level above who catches each one of them as it arrives at the edge of the platform',
     ],
     correctAnswer: 2,
     explanation:
@@ -2628,9 +2628,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     id: 147,
     question: 'Why is handling materials on a roof particularly hazardous on windy days?',
     options: [
-      'Wind cools the hands and weakens the grip on the materials, and this is the main hazard when working on a roof',
-      'Wind dries roofing materials out, making them lighter and easier to handle',
-      'Wind reduces visibility, and this is the only significant hazard when handling on a roof',
+      'Wind cools the hands and weakens the grip on the materials, and this is the main hazard when working on a roof in any windy weather',
+      'Wind dries roofing materials out, making them lighter and easier to handle near the edge of the roof, whatever the weather may bring',
+      'Wind reduces visibility, and this is the only significant hazard when handling on a roof at any height above the ground below it',
       'Wind can catch flat materials acting as sails, destabilising the handler near unprotected edges, with potential for fatal falls',
     ],
     correctAnswer: 3,
@@ -2646,9 +2646,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question: 'How should a heavy distribution board be lifted into position on a wall?',
     options: [
       'A temporary support bracket, mechanical lifter, or proprietary mounting aid should be used to take the weight while fixings are secured',
-      'One worker should hold the full weight of the board overhead while another places the first fixings into the wall behind',
-      'The board should be balanced on a stepladder rung while it is screwed into place',
-      'The board should be wedged against the wall with a length of timber while it is fixed',
+      'One worker should hold the full weight of the board overhead while another places the first fixings into the wall behind the board itself',
+      'The board should be balanced on a stepladder rung while it is screwed into place on the wall by a single worker standing below',
+      'The board should be wedged against the wall with a length of timber while it is fixed in its final position by a single worker',
     ],
     correctAnswer: 0,
     explanation:
@@ -2662,10 +2662,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     id: 149,
     question: 'What is the primary risk associated with using a sack truck on a slope?',
     options: [
-      'The wheels turn faster on the slope, so the load reaches the bottom of the ramp sooner',
+      'The wheels turn faster on the slope, so the load reaches the bottom of the ramp sooner than the handler expects',
       'The load can shift or the truck can run away if the handler loses control, particularly going downhill',
-      'The slope makes the load effectively lighter and therefore easier to control',
-      'Sack trucks are unaffected by slopes because the load sits directly over the axle',
+      'The slope makes the load effectively lighter and therefore easier to control on the way down the ramp itself',
+      'Sack trucks are unaffected by slopes because the load sits directly over the axle of the truck itself',
     ],
     correctAnswer: 1,
     explanation:
@@ -2680,10 +2680,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question:
       'An electrician needs to pull cable through a ceiling void while lying on a platform between joists. Which risk factor is most elevated?',
     options: [
-      'Long carrying distances over an open and level floor surface while standing fully upright throughout',
-      'Repeated overhead lifting of heavy loads above shoulder height into the void',
+      'Long carrying distances over an open and level floor surface while standing fully upright throughout the whole task',
+      'Repeated overhead lifting of heavy loads above shoulder height into the void above the ceiling grid from a platform',
       'Static posture with pulling force applied in a confined space, with no ability to use legs or core effectively',
-      'Frequent twisting of the trunk while pivoting on both feet at the hatch',
+      'Frequent twisting of the trunk while pivoting on both feet at the hatch opening into the ceiling void above the room',
     ],
     correctAnswer: 2,
     explanation:
@@ -2698,9 +2698,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the recommended approach for moving materials through an under-floor crawl space with less than 600 mm headroom?',
     options: [
-      'Carry the largest load that can be managed in a single trip, so as to minimise the total time spent inside the crawl space itself',
-      'Crawl forwards while dragging the load behind you where it cannot be seen',
-      'Use a standard sack truck wheeled ahead of you through the crawl space',
+      'Carry the largest load that can be managed in a single trip, so as to minimise the total time spent inside the crawl space itself on each visit to it',
+      'Crawl forwards while dragging the load behind you where it cannot be seen or reached easily, and then repeat that for every load that is moved',
+      'Use a standard sack truck wheeled ahead of you beneath the floor, loaded with as much material as it can carry safely through the crawl space',
       'Use a drag sheet or low-profile trolley, pushing materials ahead of you rather than carrying them, and minimise the quantity moved at any one time',
     ],
     correctAnswer: 3,
@@ -2717,9 +2717,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
       'When using a rope and pulley in a riser, what must be ensured before lifting begins?',
     options: [
       'The pulley is securely anchored, the rope is rated for the load weight, the area below is barriered off, and a banksman directs the operation',
-      'The rope is deliberately left slack so that the load is free to swing clear of the riser walls as it is raised up the shaft',
-      'The heaviest available worker is positioned at the bottom of the rope to act as a counterweight',
-      'The load is lifted as quickly as possible so as to reduce the time it spends under tension',
+      'The rope is deliberately left slack so that the load is free to swing clear of the riser walls as it is raised up the shaft above the working level',
+      'The heaviest available worker is positioned at the bottom of the rope to act as a counterweight for the load that is being raised up the riser shaft',
+      'The load is lifted as quickly as possible so as to reduce the time it spends under tension on the rope while it is inside the riser shaft',
     ],
     correctAnswer: 0,
     explanation:
@@ -2733,10 +2733,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     id: 153,
     question: 'How does wearing a full body harness affect manual handling capability?',
     options: [
-      'It has no effect on handling capability because the harness is worn close to the body at all times',
+      'It has no effect on handling capability because the harness is worn close to the body throughout the whole of the working day',
       'It restricts trunk movement, adds weight, and can interfere with grip positioning and load handling close to the body',
-      'It improves lifting capacity by supporting the lower back in the way a belt does',
-      'It affects handling only while the worker is actually clipped on to an anchor point',
+      'It improves lifting capacity by supporting the lower back in the way a belt does when it is worn correctly by the handler',
+      'It affects handling only while the worker is actually clipped on to an anchor point at height on the structure being worked on',
     ],
     correctAnswer: 1,
     explanation:
@@ -2750,10 +2750,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     id: 154,
     question: 'What specific challenge does scaffold board flex present during manual handling?',
     options: [
-      'The flex of the board makes any load feel lighter, which encourages workers to carry more weight than they should',
-      'The flex only matters when the boards are wet and presents no other handling risk',
+      'The flex of the board makes any load feel lighter, which encourages workers to carry more weight than they should do on the platform',
+      'The flex only matters when the boards are wet and presents no other handling risk to the worker at any time on the scaffold',
       'The bouncing motion destabilises the handler, requiring constant balance adjustments that increase muscle fatigue and injury risk',
-      'The flex improves grip by springing the load back towards the handler\'s body',
+      'The flex improves grip by springing the load back towards the handler\'s body during each lift that is made on the platform',
     ],
     correctAnswer: 2,
     explanation:
@@ -2768,9 +2768,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question:
       'Why is it important to vary manual handling tasks throughout a shift rather than performing the same task continuously?',
     options: [
-      'Repeating the same task builds strength in the muscles being used, so the risk of injury actually falls across the shift',
-      'Varying tasks matters for office and screen work, but not for physical handling',
-      'The same task done repeatedly is safer, because the worker becomes more skilled at it',
+      'Repeating the same task builds strength in the muscles being used, so the risk of injury actually falls as the shift goes on at work',
+      'Varying tasks matters for office and screen work, but not for physical handling work of the kind that is carried out on any construction site',
+      'The same task done repeatedly is safer, because the worker becomes more skilled at it as the shift wears on and the movement is learned',
       'Continuous repetitive loading on the same structures exceeds tissue recovery rates, leading to cumulative micro-damage and eventual injury',
     ],
     correctAnswer: 3,
@@ -2787,9 +2787,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
       'An electrician reports tingling and numbness in their fingers after a week of repetitive cable stripping. What should the employer do FIRST?',
     options: [
       'Investigate the task, review the risk assessment, consider the symptoms as a potential early sign of a WRULD, and refer the worker for occupational health assessment',
-      'Tell the worker that the symptoms are a normal response to unfamiliar work, and ask them to carry on with the task until the hands become accustomed to it',
-      'Wait until the symptoms become permanent before taking any further action on the task',
-      'Move the worker on to a heavier task so that their grip strength is built up',
+      'Tell the worker that the symptoms are a normal response to unfamiliar work, and ask them to carry on with the task until the hands become accustomed to it in due course',
+      'Wait until the symptoms become permanent before taking any further action on the task or on the risk assessment covering the cable stripping work being carried out on site',
+      'Move the worker on to a heavier task so that their grip strength is built up over the coming weeks and months of work on the site, and then review the position again later',
     ],
     correctAnswer: 0,
     explanation:
@@ -2804,10 +2804,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question:
       'What type of mechanical aid is most appropriate for positioning a heavy transformer on a concrete plinth?',
     options: [
-      "A four-person team lift using a coordinated kinetic technique",
+      'A four-person team lift using a coordinated kinetic technique on the day of the work',
       "A crane, chain block, or hydraulic gantry rated for the transformer's weight",
-      "A sack truck wheeled slowly across the level concrete floor",
-      "A simple rope sling held by two workers either side of the plinth",
+      'A sack truck wheeled slowly across the level concrete floor of the room',
+      'A simple rope sling held by two workers either side of the plinth itself',
     ],
     correctAnswer: 1,
     explanation:
@@ -2822,10 +2822,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the effect of muddy ground conditions on wheeled manual handling aids such as pallet trucks?',
     options: [
-      'Mud lubricates the wheels and the bearings, so the aid becomes easier to push and the force needed to move it falls away',
-      'Mud has no effect on a wheeled aid because the load sits directly over the axle',
+      'Mud lubricates the wheels and the bearings, so the aid becomes easier to push and the force needed to move it falls away very nearly completely',
+      'Mud has no effect on a wheeled aid because the load sits directly over the axle of the truck, and the wheels are quite unaffected by any of it',
       'Wheels can sink, stick, or lose traction in mud, dramatically increasing the pushing force required and the risk of musculoskeletal injury',
-      'Mud affects only the steering of the aid and never the force needed to push it',
+      'Mud affects only the steering of the aid and never the force needed to push it forward across the soft muddy ground on the site itself',
     ],
     correctAnswer: 2,
     explanation:
@@ -2839,9 +2839,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     id: 159,
     question: 'How should heavy materials be passed between scaffold lifts (levels)?',
     options: [
-      'Throwing each item up to a colleague who is standing on the scaffold level above',
-      'Carrying each item up the access ladder one piece at a time, keeping three points of contact on the ladder throughout the climb up and down',
-      'Passing the items hand to hand along a chain of workers positioned on the ladder',
+      'Throwing each item up to a colleague who is standing on the scaffold level above, who is waiting there to catch each one as it comes over the guardrail above',
+      'Carrying each item up the access ladder one piece at a time, keeping three points of contact on the ladder throughout the climb up and down the ladder each time',
+      'Passing the items hand to hand along a chain of workers positioned on the ladder itself between the two scaffold levels that are being worked on at that time',
       'Using a gin wheel, material hoist, or crane to lift materials mechanically between levels, with the receiving area clear and workers clear of the load path',
     ],
     correctAnswer: 3,
@@ -2858,9 +2858,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
       'An electrician must install conduit in a roof space with only 1.2 metres of headroom. What combination of controls best manages the manual handling risk?',
     options: [
       'Use shorter conduit sections to reduce load length, knee pads for joint protection, frequent micro-breaks, and pre-position materials at the access point to minimise carrying distance in the restricted space',
-      'Carry full-length conduit sections in a single trip, work as quickly as possible to limit the time spent in the roof space, and rely on the handler\'s own judgement to decide when a break is needed',
-      'Have a single experienced worker complete the whole task alone, so that there is no need to coordinate movements in the restricted space',
-      'Rely on a manual handling toolbox talk and the issue of knee pads, leaving the task itself unchanged',
+      'Carry full-length conduit sections in a single trip, work as quickly as possible to limit the time spent in the roof space, and rely on the handler\'s own judgement to decide when a break is needed during the work',
+      'Have a single experienced worker complete the whole task alone, so that there is no need to coordinate movements in the restricted space above the ceiling, and no further need to plan the work in any detail',
+      'Rely on a manual handling toolbox talk and the issue of knee pads, leaving the task itself unchanged and the conduit sections at their full length, since the workers have already been told what they must do',
     ],
     correctAnswer: 0,
     explanation:
@@ -2911,9 +2911,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     id: 163,
     question: 'What is carpal tunnel syndrome?',
     options: [
-      'Inflammation of the tendons on the outer side of the elbow, causing pain when gripping',
-      'Degeneration of the cartilage in the knee caused by prolonged kneeling',
-      'Compression of the rotator cuff tendons during repeated overhead reaching',
+      'Inflammation of the tendons on the outer side of the elbow, causing pain when gripping and when lifting loads',
+      'Degeneration of the cartilage in the knee caused by prolonged kneeling on hard floor surfaces during the work',
+      'Compression of the rotator cuff tendons during repeated overhead reaching and lifting movements at work',
       'Compression of the median nerve in the wrist causing pain, numbness, and tingling in the hand and fingers',
     ],
     correctAnswer: 3,
@@ -2946,10 +2946,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     id: 165,
     question: 'What is shoulder impingement syndrome?',
     options: [
-      'Compression of the median nerve as it passes through the wrist, causing numbness in the fingers',
+      'Compression of the median nerve as it passes through the wrist, causing numbness in the whole hand and in the fingers',
       'Compression of tendons and bursa in the shoulder when the arm is raised, causing pain during overhead movements',
-      'Inflammation of the tendons on the outer side of the elbow joint from gripping',
-      'Wearing of the cartilage in the hip joint from repeated heavy lifting',
+      'Inflammation of the tendons on the outer side of the elbow joint from gripping and from twisting movements at work',
+      'Wearing of the cartilage in the hip joint from repeated heavy lifting and from carrying loads over many years at work',
     ],
     correctAnswer: 1,
     explanation:
@@ -2964,10 +2964,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question:
       'What are the early symptoms of a developing musculoskeletal disorder that workers should be trained to recognise?',
     options: [
-      'Sudden high fever, a sore throat and a persistent dry cough that develop within a few hours of the handling task ending',
-      'A rapid heartbeat and shortness of breath that occur only when the worker is at rest',
+      'Sudden high fever, a sore throat and a persistent dry cough that develop within a few hours of the handling task ending for the day at work',
+      'A rapid heartbeat and shortness of breath that occur only when the worker is at rest at home and never during the handling task',
       'Persistent aching, stiffness, tingling, numbness, or weakness in the affected area, particularly after work or during repetitive tasks',
-      'Skin rashes and itching that appear immediately after handling any kind of load',
+      'Skin rashes and itching that appear immediately after handling any kind of load and which then clear up again within a few minutes',
     ],
     correctAnswer: 2,
     explanation:
@@ -2981,9 +2981,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     id: 167,
     question: 'Why is early reporting of manual handling-related symptoms so important?',
     options: [
-      'It allows the employer to issue a formal warning to the worker promptly, before the condition affects productivity',
-      'It transfers legal liability for the injury on to the worker who reported it',
-      'It is required only so that the worker can claim statutory sick pay early',
+      'It allows the employer to issue a formal warning to the worker promptly, before the condition affects productivity on the site at all',
+      'It transfers legal liability for the injury on to the worker who reported it to the employer in the first place, rather than the firm',
+      'It is required only so that the worker can claim statutory sick pay early from the employer during any absence from the work',
       'Early intervention allows workplace modifications and treatment before the condition becomes chronic and potentially irreversible',
     ],
     correctAnswer: 3,
@@ -3000,9 +3000,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
       'What is the typical first-line treatment approach for a work-related musculoskeletal disorder?',
     options: [
       'A combination of activity modification, physiotherapy, anti-inflammatory treatment, and ergonomic workplace adjustments',
-      'Immediate surgery in every case, so that the damaged soft tissue can be repaired before it worsens further',
-      'Complete bed rest with no movement at all until every symptom has disappeared',
-      'A course of antibiotics to clear the inflammation causing the symptoms',
+      'Immediate surgery in every case, so that the damaged soft tissue can be repaired before it worsens over any period of time',
+      'Complete bed rest with no movement at all until every symptom has disappeared completely and for good in each and every case',
+      'A course of antibiotics to clear the inflammation causing the symptoms in the affected joint or in the tendon that is involved',
     ],
     correctAnswer: 0,
     explanation:
@@ -3017,10 +3017,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question:
       'What does a phased return-to-work programme for a worker recovering from a manual handling injury typically involve?',
     options: [
-      'Returning the worker immediately to full duties, so that their fitness for the original job can be proved',
+      'Returning the worker immediately to full duties, so that their fitness for the original job can be proved at once on their return',
       'Gradually increasing work hours and physical demands over an agreed period, with regular review and modified duties as needed',
-      'Keeping the worker off all duties until they are completely free of symptoms',
-      'Permanently reassigning the worker to administrative tasks and light duties',
+      'Keeping the worker off all duties until they are completely free of symptoms and are fully recovered from the injury',
+      'Permanently reassigning the worker to administrative tasks and light duties for the whole of the rest of their career',
     ],
     correctAnswer: 1,
     explanation:
@@ -3051,9 +3051,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     id: 171,
     question: 'How does the hormone relaxin affect manual handling risk during pregnancy?',
     options: [
-      'It strengthens the spinal ligaments and stabilises the pelvis, so heavier loads can safely be lifted during pregnancy',
-      'It increases muscle mass and so improves the worker\'s overall lifting capacity',
-      'It has no effect on the musculoskeletal system and acts only on the uterus',
+      'It strengthens the spinal ligaments and stabilises the pelvis, so heavier loads can safely be lifted during pregnancy itself',
+      'It increases muscle mass and so improves the worker\'s overall lifting capacity throughout the entire pregnancy and afterwards',
+      'It has no effect on the musculoskeletal system and acts only on the uterus during the whole of the pregnancy itself',
       'It softens ligaments and increases joint laxity, making the spine and pelvis more vulnerable to injury from manual handling',
     ],
     correctAnswer: 3,
@@ -3070,9 +3070,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
       "How does pregnancy change a woman's centre of gravity and why does this matter for manual handling?",
     options: [
       'The centre of gravity shifts forward and upward as the bump grows, increasing spinal loading, reducing balance, and making lifting more awkward',
-      'The centre of gravity shifts backwards as the bump grows, which makes the worker more stable and reduces the load on the spine',
-      'The centre of gravity drops towards the floor, which lowers the risk of losing balance',
-      'The centre of gravity does not change during pregnancy, so manual handling risk is unaffected',
+      'The centre of gravity shifts backwards as the bump grows, which makes the worker more stable and reduces the load on the spine and on the pelvis',
+      'The centre of gravity drops towards the floor, which lowers the risk of losing balance while lifting or while carrying any load at work on the site',
+      'The centre of gravity does not change during pregnancy, so manual handling risk is unaffected by it at any stage of the pregnancy from start to finish',
     ],
     correctAnswer: 0,
     explanation:
@@ -3087,10 +3087,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question:
       'Under the MHOR 1992, what specific requirement exists for pregnant workers regarding manual handling?',
     options: [
-      'Pregnant workers must be suspended from all duties on full pay for the whole of the pregnancy, whatever the risk assessment finds',
+      'Pregnant workers must be suspended from all duties on full pay for the whole of the pregnancy, whatever the risk assessment finds at the time of the work',
       'A specific risk assessment must be carried out for pregnant workers, and the task must be modified or avoided if a significant risk is identified',
-      'No special requirement applies, because the general risk assessment already covers it',
-      'Pregnant workers may handle loads only up to the 16 kg guideline weight for women',
+      'No special requirement applies, because the general risk assessment already covers it for every one of the workers who are employed on the site',
+      'Pregnant workers may handle loads only up to the 16 kg guideline weight that is set out in the HSE guidance for the lifting of loads at work',
     ],
     correctAnswer: 1,
     explanation:
@@ -3104,10 +3104,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     id: 174,
     question: 'Which type of manual handling injury is MOST commonly reported under RIDDOR?',
     options: [
-      'Eye injuries caused by dust and debris thrown up while handling dirty or dusty loads on site',
-      'Crush injuries to the feet caused by dropped loads landing on the toes',
+      'Eye injuries caused by dust and debris thrown up while handling dirty or dusty loads during a working day',
+      'Crush injuries to the feet caused by dropped loads landing on the toes of the handler during any lift on the site',
       'Over-7-day injuries, most frequently involving back sprains and strains from lifting, carrying, or moving loads',
-      'Cuts and lacerations to the hands from sharp edges on packaging and banding',
+      'Cuts and lacerations to the hands from sharp edges on packaging and banding straps on delivered goods',
     ],
     correctAnswer: 2,
     explanation:
@@ -3141,9 +3141,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
       'What is the purpose of an incident investigation following a manual handling injury?',
     options: [
       'To identify the root causes of the injury so that corrective actions can prevent recurrence',
-      'To establish which individual worker was at fault so they can be disciplined',
-      'To calculate the financial cost of the injury for the insurance claim',
-      'To satisfy the worker\'s request for an apology from the employer',
+      'To establish which individual worker was at fault so they can be disciplined for the incident',
+      'To calculate the financial cost of the injury for the insurance claim that follows the injury',
+      'To satisfy the worker\'s request for an apology from the employer after the injury',
     ],
     correctAnswer: 0,
     explanation:
@@ -3158,10 +3158,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question:
       'What is root cause analysis in the context of a manual handling injury investigation?',
     options: [
-      'A method of calculating the total compensation payable to the injured worker and their family',
+      'A method of calculating the total compensation payable to the injured worker and their family after a serious manual handling accident has occurred at the workplace',
       'A systematic process of looking beyond the immediate cause to identify the underlying organisational, procedural, or design failures that allowed the injury to occur',
-      'A technique for establishing which individual worker was responsible for the incident, so that retraining and any disciplinary action can be targeted correctly',
-      'A statutory form that must be submitted to the HSE within 15 days of any reportable injury',
+      'A technique for establishing which individual worker was responsible for the incident, so that retraining and any disciplinary action can be targeted correctly at the time',
+      'A statutory form that must be submitted to the HSE within 15 days of any reportable injury that occurs at the workplace during any part of a normal working day',
     ],
     correctAnswer: 1,
     explanation:
@@ -3194,9 +3194,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question:
       'What specific information must an employer provide to workers about loads they are required to handle?',
     options: [
-      'The retail value of each load and the name of the supplier who delivered it to site',
-      'The colour coding and packaging type of the load that is being handled',
-      'The date the load was delivered and the location in which it is stored',
+      'The retail value of each load and the name of the supplier who delivered it to site on the day of delivery',
+      'The colour coding and packaging type of the load that is being handled on the site during that working day',
+      'The date the load was delivered and the location in which it is stored on the site before use',
       'The weight of the load and, if the centre of gravity is not central, the location of the heaviest side',
     ],
     correctAnswer: 3,
@@ -3212,9 +3212,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question: "What are the employee's duties under the MHOR 1992?",
     options: [
       'Employees must make full and proper use of systems of work provided, cooperate with their employer on health and safety, and report any hazards or concerns',
-      'Employees must write and sign their own manual handling risk assessment for each task before any lifting is carried out on the site itself',
-      'Employees must provide their own personal protective equipment and any lifting aids they need',
-      'Employees must refuse any load that is heavier than the 25 kg guideline weight',
+      'Employees must write and sign their own manual handling risk assessment for each task before any lifting is carried out on the site itself on that working day',
+      'Employees must provide their own personal protective equipment and any lifting aids they need for the work at their own expense, and must maintain them as well',
+      'Employees must refuse any load that is heavier than the 25 kg guideline weight and must report each such refusal to their own employer straight away in writing',
     ],
     correctAnswer: 0,
     explanation:
@@ -3228,10 +3228,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     id: 181,
     question: "Who is a 'competent person' in relation to manual handling risk assessment?",
     options: [
-      'Any employee who has worked for the company for more than five years in a role that involves handling loads',
+      'Any employee who has worked for the company for more than five years in a role that involves handling loads on a daily basis at work',
       'Someone with sufficient training, knowledge, experience, and skills to carry out a manual handling risk assessment effectively',
-      'The most senior manager present on the site at the time the assessment is made',
-      'An external HSE inspector, who must sign off every assessment before work starts',
+      'The most senior manager present on the site at the time the assessment is made and then recorded in writing for the file',
+      'An external HSE inspector, who must sign off every assessment before work starts on the site, whatever the task involved',
     ],
     correctAnswer: 1,
     explanation:
@@ -3245,10 +3245,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     id: 182,
     question: 'How often should manual handling training be refreshed?',
     options: [
-      'Once at induction, since the techniques taught do not change and the worker retains them for their career',
-      'Every six months without exception, whatever work the employee actually carries out',
+      'Once at induction, since the techniques taught do not change and the worker retains them for their career right through it',
+      'Every six months without exception, whatever work the employee actually carries out on the site during each working day',
       'Every 1-3 years, or sooner if there are changes in tasks, equipment, or the working environment, or after an incident',
-      'After a worker has been involved in a reportable injury, but not otherwise',
+      'After a worker has been involved in a reportable injury, but not otherwise at any point during their employment',
     ],
     correctAnswer: 2,
     explanation:
@@ -3262,9 +3262,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     id: 183,
     question: 'What is a toolbox talk in the context of manual handling?',
     options: [
-      'A formal full-day classroom course leading to a recognised qualification, delivered away from the workplace by an external trainer',
-      'A written log in which workers record every load they have handled during the shift',
-      'A toolbox containing the lifting aids and accessories required for a particular task',
+      'A formal full-day classroom course leading to a recognised qualification, delivered away from the workplace by an external trainer each year',
+      'A written log in which workers record every load they have handled during the shift and the weight and dimensions of each one of those loads',
+      'A toolbox containing the lifting aids and accessories required for a particular task that is to be carried out by the team working on the site',
       'A short, focused, informal training session delivered at the workplace covering a specific manual handling topic relevant to current work',
     ],
     correctAnswer: 3,
@@ -3281,9 +3281,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
       'An employer has completed a manual handling risk assessment for a specific task. When must the assessment be reviewed?',
     options: [
       'When there is a significant change in the task, equipment, working environment, or workforce, after an incident, or if the assessment is suspected to be no longer valid',
-      'When an HSE inspector requests a review during an inspection visit, or when the insurer asks for one as part of a periodic review of the site policy',
-      'Exactly once every ten years, whatever changes have been made to the task in the meantime',
-      'After a worker has left the company and been replaced, so that the new starter can sign it',
+      'When an HSE inspector requests a review during an inspection visit, or when the insurer asks for one as part of a periodic review of the site policy carried out each year',
+      'Exactly once every ten years, whatever changes have been made to the task in the meantime or to the equipment, to the workforce or to the whole working environment',
+      'After a worker has left the company and been replaced, so that the new starter can sign it and confirm in writing that they have read and understood it in full',
     ],
     correctAnswer: 0,
     explanation:
@@ -3297,10 +3297,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     id: 185,
     question: 'What is the most common type of back pain associated with manual handling at work?',
     options: [
-      'Cervical disc herniation affecting the neck and shoulders',
+      'Cervical disc herniation affecting the neck and shoulders of the handler at work',
       'Non-specific lower back pain (mechanical back pain) affecting the lumbar region',
-      'Carpal tunnel syndrome affecting the wrist and hand',
-      'Tennis elbow affecting the tendons on the outside of the elbow',
+      'Carpal tunnel syndrome affecting the wrist and hand of the handler at work',
+      'Tennis elbow affecting the tendons on the outside of the elbow joint of the arm itself',
     ],
     correctAnswer: 1,
     explanation:
@@ -3314,10 +3314,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     id: 186,
     question: 'What is the role of occupational health in managing manual handling injuries?',
     options: [
-      'To carry out the manual handling risk assessments on behalf of the employer and to decide which control measures are put in place on each site',
-      'To deliver all manual handling training and competence assessments on site',
+      'To carry out the manual handling risk assessments on behalf of the employer and to decide which control measures are put in place on each site in every year of work',
+      'To deliver all manual handling training and competence assessments on site for every worker who is employed on the site, and to certify each one of them as competent',
       'To assess fitness for work, recommend workplace adjustments, support rehabilitation, advise on phased return, and conduct health surveillance where appropriate',
-      'To submit RIDDOR reports to the enforcing authority on the employer\'s behalf',
+      'To submit RIDDOR reports to the enforcing authority on the employer\'s behalf whenever any reportable injury or reportable disease occurs at any of the workplaces',
     ],
     correctAnswer: 2,
     explanation:
@@ -3332,9 +3332,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question:
       'Which age-related physiological change MOST increases vulnerability to manual handling injury in older workers?',
     options: [
-      'Increased muscle mass and bone density, which together make heavy lifting easier with age',
-      'Improved disc hydration, which gives the spine greater shock absorption',
-      'Faster tissue repair, which allows quicker recovery between handling tasks',
+      'Increased muscle mass and bone density, which together make heavy lifting easier as the years pass at work',
+      'Improved disc hydration, which gives the spine greater shock absorption during lifting at work on the site',
+      'Faster tissue repair, which allows quicker recovery between handling tasks on the site each working day',
       'Reduced disc hydration, decreased muscle mass, and slower tissue repair combined with accumulated wear',
     ],
     correctAnswer: 3,
@@ -3351,9 +3351,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
       'Is a worker legally entitled to refuse to carry out a manual handling task they believe is unsafe?',
     options: [
       'Yes — under Section 7 of the Health and Safety at Work Act 1974, workers have a duty not to put themselves or others at risk, and should report concerns to their employer',
-      'No — workers must always follow a direct instruction from a supervisor, and any concern about risk has to be raised afterwards through the grievance procedure',
-      'No — only a trade union appointed safety representative has the right to stop unsafe work',
-      'Yes — but only where the load is heavier than the 25 kg HSE guideline weight',
+      'No — workers must always follow a direct instruction from a supervisor, and any concern about risk has to be raised afterwards through the grievance procedure that applies',
+      'No — only a trade union appointed safety representative has the right to stop unsafe work of any kind on the site, and every other worker must simply carry on with the task',
+      'Yes — but only where the load is heavier than the 25 kg HSE guideline weight that applies to men lifting close to the body at knuckle height during the working day',
     ],
     correctAnswer: 0,
     explanation:
@@ -3367,10 +3367,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     id: 189,
     question: 'What constitutes an adequate initial manual handling training programme?',
     options: [
-      'A single online video covering lifting technique, followed by a multiple-choice quiz and a printed certificate, with the practical element left to the worker to pick up from colleagues on site',
+      'A single online video covering lifting technique, followed by a multiple-choice quiz and a printed certificate, with the practical element left to the worker to pick up from colleagues as time goes on',
       'Theory on legislation and anatomy, practical demonstration of techniques, supervised practice with actual workplace loads, assessment of competence, and task-specific elements for the worker\'s actual role',
-      'A leaflet handed to the worker on their first day for them to read in their own time',
-      'A verbal reminder from a supervisor to lift with the legs rather than the back',
+      'A leaflet handed to the worker on their first day for them to read in their own time, with no practical demonstration, no supervised practice and no assessment of competence at any stage of their employment',
+      'A verbal reminder from a supervisor to lift with the legs rather than the back, given on the first day of work and never repeated or checked at any later point during that worker\'s employment on the site at all',
     ],
     correctAnswer: 1,
     explanation:
@@ -3385,10 +3385,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question:
       'What is health surveillance in relation to manual handling, and when is it required?',
     options: [
-      'A one-off medical examination given to every new starter before they begin work, required by law for all employees whatever their role and whatever the risk assessment for the task concludes',
-      'Routine observation of workers performing tasks to check they are using the correct lifting technique, required on every site daily',
+      'A one-off medical examination given to every new starter before they begin work, required by law for all employees whatever their role and whatever the risk assessment for the task concludes about the work involved',
+      'Routine observation of workers performing tasks to check they are using the correct lifting technique, required on every site daily by a supervisor, whatever the findings of the risk assessment for the task',
       'Systematic monitoring of workers\' health through questionnaires, physical checks, or clinical examinations to detect early signs of MSDs, required where the risk assessment identifies a residual risk of MSDs',
-      'An annual fitness test to confirm workers can still lift the maximum guideline weight, required only for workers over the age of 50',
+      'An annual fitness test to confirm workers can still lift the maximum guideline weight, required only for workers over the age of 50 who are still handling loads in the ordinary course of their daily work',
     ],
     correctAnswer: 2,
     explanation:
@@ -3403,9 +3403,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the legal standard for how far an employer must go to reduce manual handling risk?',
     options: [
-      'They must eliminate every manual handling risk completely, whatever the cost or disruption involved',
-      'They need only act once a worker has actually suffered a reportable handling injury',
-      'They must reduce the risk only where it is cheap and convenient for them to do so',
+      'They must eliminate every manual handling risk completely, whatever the cost or disruption involved in doing so at work',
+      'They need only act once a worker has actually suffered a reportable handling injury at the workplace during the work',
+      'They must reduce the risk only where it is cheap and convenient for them to do so at the time of the handling work',
       'So far as is reasonably practicable, meaning the risk reduction measures must be proportionate to the level of risk',
     ],
     correctAnswer: 3,
@@ -3422,9 +3422,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
       'How can fatigue be identified as a contributing factor in a manual handling incident investigation?',
     options: [
       'By examining shift patterns, working hours, break frequency, workload distribution, time of day, and the worker\'s reported physical state before the incident',
-      'By measuring the exact weight of the load being handled at the time and comparing it against the 25 kg guideline figure for a single handler',
-      'By checking whether the worker had completed their manual handling induction training',
-      'By reviewing the worker\'s commuting distance and their method of travel to work',
+      'By measuring the exact weight of the load being handled at the time and comparing it against the 25 kg guideline figure for a single handler working alone at work',
+      'By checking whether the worker had completed their manual handling induction training before they first started work on the site, and nothing else at all besides',
+      'By reviewing the worker\'s commuting distance and their method of travel to work each morning, and nothing else at all about the hours or the shifts they had worked',
     ],
     correctAnswer: 0,
     explanation:
@@ -3439,10 +3439,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question:
       "What is a key difference between an 'over-7-day' injury and a 'specified injury' under RIDDOR?",
     options: [
-      'A specified injury is one that affects the back only, while an over-7-day injury may affect any part of the body at all',
+      'A specified injury is one that affects the back only, while an over-7-day injury may affect any part of the body of a worker injured at work',
       'A specified injury (such as a fracture or dislocation) must be reported immediately, while an over-7-day injury must be reported within 15 days',
-      'A specified injury must be reported within 15 days, while an over-7-day injury must be reported immediately',
-      'A specified injury applies only to visitors and members of the public, while an over-7-day injury applies only to employees',
+      'A specified injury must be reported within 15 days, while an over-7-day injury must be reported immediately to the enforcing authority for the area',
+      'A specified injury applies only to visitors and members of the public, while an over-7-day injury applies only to employees who work at the site',
     ],
     correctAnswer: 1,
     explanation:
@@ -3457,10 +3457,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question:
       'An employer provides manual handling training but does not assess whether workers can apply the techniques in practice. Is this adequate?',
     options: [
-      'Yes — delivering the training is enough, because the workers are then responsible for applying the techniques correctly',
-      'Yes — provided that the training was delivered by an external accredited trainer',
+      'Yes — delivering the training is enough, because the workers are then responsible for applying the techniques correctly in their own work',
+      'Yes — provided that the training was delivered by an external accredited trainer who holds a recognised qualification in manual handling',
       'No — training must include assessment of competence to ensure workers can actually apply the techniques in their real workplace tasks',
-      'Yes — as long as the training session lasted at least a full working day',
+      'Yes — as long as the training session lasted at least a full working day and covered the correct lifting techniques in detail',
     ],
     correctAnswer: 2,
     explanation:
@@ -3475,9 +3475,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question:
       'What topics should a manual handling toolbox talk cover before a specific task, such as unloading a delivery of cable drums?',
     options: [
-      'The history of manual handling legislation from the nineteenth century onwards and the case law that shaped the current regulations',
-      'A detailed account of spinal anatomy and the biomechanics of the intervertebral disc',
-      'The company\'s annual accident statistics and its employers\' liability insurance arrangements',
+      'The history of manual handling legislation from the nineteenth century onwards and the case law that shaped the current regulations in force',
+      'A detailed account of spinal anatomy and the biomechanics of the intervertebral disc under compressive and shear loading during a lift at work',
+      'The company\'s annual accident statistics and its employers\' liability insurance arrangements for the financial year that has just come to an end',
       'The specific risks of the task, the control measures in place, correct techniques, equipment to be used, and what to do if problems arise',
     ],
     correctAnswer: 3,
@@ -3494,9 +3494,9 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
       'A worker develops chronic lower back pain that they attribute to years of manual handling at work. What type of RIDDOR report might this trigger?',
     options: [
       'A report of an occupational disease — specifically, work-related musculoskeletal disorder affecting the back',
-      'A report of a dangerous occurrence, even though nobody was actually injured at the time on site',
-      'A report of an over-7-day injury, which must be filed with the HSE within 15 days',
-      'No RIDDOR report at all, because chronic back pain is never a reportable condition',
+      'A report of a dangerous occurrence, even though nobody was actually injured at the time on site on that working day',
+      'A report of an over-7-day injury, which must be filed with the HSE within 15 days of the injury occurring',
+      'No RIDDOR report at all, because chronic back pain is never a reportable condition under the regulations',
     ],
     correctAnswer: 0,
     explanation:
@@ -3511,10 +3511,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question:
       "What is the employer's duty regarding manual handling for workers returning from a musculoskeletal injury?",
     options: [
-      'The employer may dismiss the worker on capability grounds if they can no longer lift the guideline weight, provided notice and pay are given correctly',
+      'The employer may dismiss the worker on capability grounds if they can no longer lift the guideline weight, provided that notice and pay are given correctly on dismissal',
       'The employer must carry out a return-to-work assessment, consider workplace adjustments, and update the risk assessment to reflect the worker\'s changed capability',
-      'The employer has no further duty once the worker has been signed fit by their own doctor',
-      'The employer must permanently bar the worker from all manual handling tasks in future',
+      'The employer has no further duty once the worker has been signed fit by their own doctor and has returned to the very work they were doing before the injury occurred',
+      'The employer must permanently bar the worker from all manual handling tasks in future at any of its workplaces, whatever the medical advice may afterwards say',
     ],
     correctAnswer: 1,
     explanation:
@@ -3529,10 +3529,10 @@ export const manualHandlingQuestionBank: StandardMockQuestion[] = [
     question:
       'During pregnancy, from which trimester should manual handling tasks typically be reassessed?',
     options: [
-      'From the third trimester onwards, once the bump has become visibly large and the worker\'s balance is noticeably affected while walking and lifting',
-      'After the worker reports back pain or other difficulties with handling loads',
+      'From the third trimester onwards, once the bump has become visibly large and the worker\'s balance is noticeably affected while walking and lifting loads at work',
+      'After the worker reports back pain or other difficulties with handling loads at work, and not at any point before such a report has been made by the worker herself',
       'From notification of pregnancy onwards — the risk assessment should be carried out as soon as the employer is notified and reviewed as the pregnancy progresses',
-      'On the worker\'s return to work after maternity leave has come to an end',
+      'On the worker\'s return to work after maternity leave has come to an end, and at no point during the pregnancy itself or at any time before the pregnancy had begun',
     ],
     correctAnswer: 2,
     explanation:

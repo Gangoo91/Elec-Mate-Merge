@@ -706,6 +706,25 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
             />
           </FormField>
         )}
+
+        {/*
+          ELE-1611 — what the installation is used for.
+          Requested as "change of tenency or what its used for please?". The
+          purpose chips above say why THIS inspection happened; this says what
+          the installation actually is, which is what determines a sensible
+          interval and what the next inspector needs to know.
+        */}
+        <FormField
+          label="Intended use of the installation"
+          hint="What the premises are used for — the next inspector reads this to judge whether the interval still fits."
+        >
+          <Input
+            value={formData.installationUse || ''}
+            onChange={(e) => onUpdate('installationUse', e.target.value)}
+            placeholder="e.g. Rented domestic dwelling · Retail unit · Light industrial workshop"
+            className={inputCn}
+          />
+        </FormField>
       </div>
 
       {/* Inspection dates */}
@@ -733,7 +752,14 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
               className={inputCn}
             />
           </FormField>
-          <FormField label="Next inspection">
+          <FormField
+            label="Next inspection"
+            hint={
+              formData.inspectionInterval
+                ? `${intervalOptions.find((o) => o.value === formData.inspectionInterval)?.label ?? `${formData.inspectionInterval} years`} from the date of inspection`
+                : undefined
+            }
+          >
             <Input
               type="date"
               data-field="nextInspectionDate"
@@ -760,6 +786,55 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
             )}
           </FormField>
         </div>
+
+        {/*
+          ELE-1611 — re-inspection on a change of occupancy.
+
+          User: "if they leave then it needs to be looked at again but dont
+          think the report covers that?" — and it did not. The purpose chips
+          record why THIS inspection happened; nothing carried a recommendation
+          about the next one.
+
+          Grounded, not invented: IET Guidance Note 3 §3.1 says periodic
+          inspection and testing should be considered "on a change of occupancy
+          of the premises (especially for rented domestic accommodation)" and
+          "on a change of use of the premises". ⚠️ It is GN3 guidance, not a
+          BS 7671 regulation — BS 7671 651.1 makes the duty conditional on
+          requirements set out elsewhere, so citing a 65x number here would be
+          a false citation.
+
+          Off by default and never auto-set: this file already learned that
+          lesson under ELE-882 — the interval suggestion is offered, not
+          written. A recommendation the electrician did not make must not
+          appear over their signature.
+        */}
+        <FormField label="Re-inspection on change of occupancy">
+          <button
+            type="button"
+            onClick={() => {
+              haptic.light();
+              onUpdate(
+                'reinspectOnOccupancyChange',
+                formData.reinspectOnOccupancyChange ? '' : 'yes'
+              );
+            }}
+            className={cn(
+              'h-11 w-full rounded-xl px-4 text-sm transition-all touch-manipulation active:scale-[0.98]',
+              formData.reinspectOnOccupancyChange ? chipOn : chipOff
+            )}
+          >
+            {formData.reinspectOnOccupancyChange
+              ? 'Recommended — will print on the certificate'
+              : 'Add this recommendation'}
+          </button>
+          {formData.reinspectOnOccupancyChange ? (
+            <span className="mt-1.5 block text-[11px] text-white">
+              Prints: “Further inspection is recommended on a change of occupancy or change of
+              use of the premises, in addition to the interval above.” (IET Guidance Note 3,
+              3.1)
+            </span>
+          ) : null}
+        </FormField>
 
         <FormField label="Inspection interval" required>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">

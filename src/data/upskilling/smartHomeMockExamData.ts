@@ -26,10 +26,10 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 2,
     question: 'Which of the following is NOT a core component of a smart home system?',
     options: [
-      'Smart devices and sensors',
+      'Connected devices and sensors',
       'Communication network',
       'Traditional light switches',
-      'Central hub or controller',
+      'Central hub controller',
     ],
     correctAnswer: 2,
     explanation:
@@ -61,9 +61,9 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     question: 'Which factor is most important when designing a smart home system?',
     options: [
       "Understanding the customer's lifestyle and needs",
-      'Installing as many devices as possible',
-      'Using the cheapest devices available',
-      'Using only wireless devices',
+      'Installing as many devices as possible in one visit',
+      'Using only the cheapest devices available',
+      'Using wireless devices only throughout the property',
     ],
     correctAnswer: 0,
     explanation:
@@ -77,10 +77,10 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 5,
     question: "What is meant by 'interoperability' in smart home systems?",
     options: [
-      'The ability of a single device to run multiple apps at once',
+      'The ability of a single device to run several different apps simultaneously',
       'The ability for different devices to work together regardless of manufacturer',
-      'The ability of a system to recover automatically after a power cut',
-      'The ability of one device to control the speed of another',
+      'The ability of a whole system to recover automatically after a mains power cut',
+      'The ability of one device to control the running speed of another connected device',
     ],
     correctAnswer: 1,
     explanation:
@@ -111,9 +111,9 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 7,
     question: 'What is the primary purpose of a smart home gateway?',
     options: [
-      'To supply mains power to all connected smart devices',
-      'To store all recorded video footage from security cameras',
-      'To boost the Wi-Fi signal strength throughout the property',
+      'To supply mains power to every connected smart device in the home',
+      'To store all recorded video footage from the security cameras',
+      'To boost the Wi-Fi signal strength throughout the whole of the property',
       'To translate between different protocols and connect to the internet',
     ],
     correctAnswer: 3,
@@ -162,10 +162,10 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 10,
     question: 'Which approach ensures the best user experience in smart home installation?',
     options: [
-      'Installing every available device in a single visit',
-      'Hiding all controls behind advanced configuration menus',
+      'Installing every available device during a single first visit',
+      'Hiding all the controls behind advanced configuration menus',
       'Starting with basic functionality and expanding gradually',
-      'Requiring users to learn the full system before any use',
+      'Requiring users to learn the whole system before any use',
     ],
     correctAnswer: 2,
     explanation:
@@ -213,10 +213,10 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 13,
     question: "What does 'mesh networking' provide in smart home systems?",
     options: [
-      'Faster internet speeds',
+      'Much faster internet speeds for every device',
       'Better device coverage and reliability',
-      'Lower installation costs',
-      'Simpler device pairing',
+      'Lower installation costs on every project',
+      'Simpler device pairing during commissioning',
     ],
     correctAnswer: 1,
     explanation:
@@ -230,10 +230,10 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 14,
     question: 'Which consideration is most important for smart home cybersecurity?',
     options: [
-      'Using the same password for all devices',
-      'Keeping devices always connected',
+      'Using one shared password across all of the devices',
+      'Keeping every device permanently connected',
       'Regular firmware updates and strong authentication',
-      'Using only wired connections',
+      'Using wired connections for all smart devices',
     ],
     correctAnswer: 2,
     explanation:
@@ -265,8 +265,8 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     question: 'Which smart home feature has the greatest impact on accessibility?',
     options: [
       'Voice control systems',
-      'Smart door bells',
-      'Smart speakers',
+      'Smart video door bells',
+      'Wall-mounted smart speakers',
       'Automated blinds',
     ],
     correctAnswer: 0,
@@ -333,9 +333,9 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     question: 'Which approach provides the best long-term value in smart home systems?',
     options: [
       'Selecting open standards and quality components',
-      'Using proprietary systems only',
-      'Choosing the cheapest options',
-      'Installing maximum devices initially',
+      'Using proprietary systems from a single manufacturer',
+      'Choosing the cheapest option available at every stage',
+      'Installing the maximum number of devices initially',
     ],
     correctAnswer: 0,
     explanation:
@@ -366,10 +366,10 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 22,
     question: 'Which element is essential for effective smart home user interface design?',
     options: [
-      'Complex menu structures',
-      'Technical terminology',
+      'Complex nested menu structures',
+      'Heavy use of technical terminology',
       'Intuitive and consistent navigation',
-      'Multiple login requirements',
+      'Multiple separate logins for every user',
     ],
     correctAnswer: 2,
     explanation:
@@ -401,9 +401,9 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     question: 'Which approach ensures optimal smart home system performance?',
     options: [
       'Regular maintenance and monitoring',
-      'Ignoring network capacity',
-      'Adding devices continuously',
-      'Never updating software',
+      'Ignoring the available network capacity',
+      'Adding new devices continuously',
+      'Never updating firmware or software',
     ],
     correctAnswer: 0,
     explanation:
@@ -417,10 +417,10 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 25,
     question: 'What is the most important consideration for smart home future-proofing?',
     options: [
-      'Choosing the cheapest devices available at install',
+      'Choosing the cheapest devices available at the time of install',
       'Designing flexible infrastructure with upgrade capabilities',
-      'Committing entirely to one proprietary ecosystem',
-      'Installing the maximum number of devices on day one',
+      'Committing entirely to a single proprietary ecosystem supplier',
+      'Installing the maximum possible number of devices on the first day',
     ],
     correctAnswer: 1,
     explanation:
@@ -573,7 +573,7 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     question:
       'Which protocol feature makes Zigbee particularly suitable for large smart home networks?',
     options: [
-      'High data rates',
+      'High data rates over the air',
       'Long battery life',
       'Self-healing mesh topology',
       'Simple pairing process',
@@ -692,10 +692,10 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 41,
     question: "What is 'beaconing' in Zigbee networks?",
     options: [
-      'Encrypting each data packet with a unique key',
+      'Encrypting each data packet with a unique session key',
       'Periodic synchronization signals from coordinators',
-      'Boosting transmission power to extend range',
-      'Assigning permanent IP addresses to every device',
+      'Boosting transmission power to extend the range',
+      'Assigning permanent IP addresses to every joined device',
     ],
     correctAnswer: 1,
     explanation:
@@ -726,9 +726,9 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 43,
     question: 'What is the primary benefit of using multiple protocols in a smart home system?',
     options: [
-      "Guaranteeing every device uses the same frequency band",
-      "Removing the need for a central hub or controller",
-      "Reducing the total number of devices that can connect",
+      'Guaranteeing that every device uses the same radio frequency band',
+      'Removing the need for any central hub or controller in the home',
+      'Reducing the total number of devices that can be connected at once',
       "Leveraging each protocol's strengths for specific applications",
     ],
     correctAnswer: 3,
@@ -777,8 +777,8 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 46,
     question: 'Which protocol feature helps reduce smart home network congestion?',
     options: [
-      'Larger antennas',
-      'More access points',
+      'Larger external antennas',
+      'More wireless access points',
       'Adaptive frequency hopping',
       'Higher transmission power',
     ],
@@ -828,10 +828,10 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 49,
     question: "What is 'sub-GHz' communication's main advantage in smart homes?",
     options: [
-      'Much higher data rates than 2.4 GHz protocols',
+      'Much higher data rates than 2.4 GHz protocols offer',
       'Better penetration through walls and longer range',
-      'Complete immunity to all radio interference',
-      'Support for far more devices per network',
+      'Complete immunity to every kind of radio interference',
+      'Support for far more devices on each network',
     ],
     correctAnswer: 1,
     explanation:
@@ -845,10 +845,10 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 50,
     question: 'Which protocol requires internet connectivity for basic device control?',
     options: [
-      'Zigbee mesh devices',
-      'Z-Wave mesh devices',
+      'Locally paired Zigbee mesh devices',
+      'Locally paired Z-Wave mesh devices',
       'Wi-Fi (cloud-dependent devices)',
-      'Thread border-routed devices',
+      'Thread devices behind a border router',
     ],
     correctAnswer: 2,
     explanation:
@@ -914,9 +914,9 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     question: 'Which feature makes Matter particularly appealing for smart home installations?',
     options: [
       'It provides the longest wireless range available',
-      'It removes the need for any hub or controller',
+      'It removes the need for any hub or controller at all',
       'Works with existing ecosystems (Alexa, Google, Apple)',
-      'It offers the highest bandwidth for video streaming',
+      'It offers the highest bandwidth for streaming video files',
     ],
     correctAnswer: 2,
     explanation:
@@ -950,9 +950,9 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     question: 'What is the primary advantage of LED dimming over incandescent dimming?',
     options: [
       'Energy efficiency maintained across dimming range',
-      'Warmer colour shift as the light is dimmed down',
-      'No need for a compatible dimmer switch',
-      'Higher light output at full brightness',
+      'A warmer colour shift as the light is dimmed down low',
+      'No need to fit a compatible dimmer switch of any kind',
+      'Higher light output when at full brightness',
     ],
     correctAnswer: 0,
     explanation:
@@ -1034,10 +1034,10 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 61,
     question: 'Which lighting control method provides the fastest response time?',
     options: [
-      'Wi-Fi controlled',
+      'Wi-Fi controlled switching',
       'Hardwired/direct control',
-      'Bluetooth controlled',
-      'Cloud-based control',
+      'Bluetooth controlled switching',
+      'Cloud-based remote control',
     ],
     correctAnswer: 1,
     explanation:
@@ -1051,8 +1051,8 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 62,
     question: "What is the purpose of a 'master off' scene in smart lighting?",
     options: [
-      'Enable security mode',
-      'Set lights to maximum brightness',
+      'Enable the alarm security mode',
+      'Set all lights to maximum brightness',
       'Turn off all lights in the system',
       'Switch to energy saving mode',
     ],
@@ -1086,9 +1086,9 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     question: "What is 'adaptive lighting' in smart home systems?",
     options: [
       'Lighting that adjusts based on occupancy and ambient conditions',
-      'Lighting that stays at a fixed level regardless of conditions',
-      'Lighting that can only be controlled by a wall switch',
-      'Lighting that changes colour in time with music',
+      'Lighting that stays at one fixed level regardless of the conditions',
+      'Lighting that can only be controlled from a wall switch plate',
+      'Lighting that changes colour in time with the music being played',
     ],
     correctAnswer: 0,
     explanation:
@@ -1103,10 +1103,10 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     question:
       'Which lighting control topology provides the most flexibility for scene programming?',
     options: [
-      'Simple on/off switches',
+      'Simple on/off switches at each point',
       'Centralized lighting control system',
-      'Individual dimmer switches',
-      'Motion sensor controls only',
+      'Individual dimmer switches at each point',
+      'Motion sensor controls used on their own',
     ],
     correctAnswer: 1,
     explanation:
@@ -1171,10 +1171,10 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 69,
     question: 'Which approach provides the best user experience for bedroom lighting scenes?',
     options: [
-      'A single bright setting used for every activity',
+      'A single bright lighting setting used for every activity in the house',
       'Multiple scenes for different activities (sleeping, reading, etc.)',
-      'Lights that can only be controlled from a phone app',
-      'Cool, high-brightness lighting maintained at all times',
+      'Lights that can be controlled only from a mobile phone app',
+      'Cool, high-brightness lighting maintained at all times of the day',
     ],
     correctAnswer: 1,
     explanation:
@@ -1188,10 +1188,10 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 70,
     question: "What is 'daylight harvesting' in smart lighting control?",
     options: [
-      'Storing solar energy in batteries to power lights',
-      'Gradually warming the colour of lights after sunset',
+      'Storing solar energy in batteries to power the lights overnight',
+      'Gradually warming the colour temperature of lights after sunset',
       'Adjusting artificial lighting based on available natural light',
-      'Switching lights on automatically at dawn each day',
+      'Switching the lights on automatically at dawn each day',
     ],
     correctAnswer: 2,
     explanation:
@@ -1223,9 +1223,9 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     question: "What is the purpose of 'pre-heat' in fluorescent dimming systems?",
     options: [
       'Extend lamp life by warming filaments before ignition',
-      'Increase brightness above the rated lamp output',
-      'Allow the lamp to be dimmed below 1% output',
-      'Shift the lamp colour temperature to warm white',
+      'Increase the light output above the rated lamp wattage',
+      'Allow the lamp to be dimmed below 1% of its rated output',
+      'Shift the lamp colour temperature towards a warm white',
     ],
     correctAnswer: 0,
     explanation:
@@ -1256,10 +1256,10 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 74,
     question: "What is 'zonal lighting control'?",
     options: [
-      'Controlling each individual bulb from its own switch',
-      'Adjusting brightness based on outdoor weather data',
+      'Controlling every individual bulb from its own separate switch',
+      'Adjusting brightness based on the outdoor weather data',
       'Organizing lights into logical groups for coordinated control',
-      'Dimming all lights in the home to the same level',
+      'Dimming all the lights in the home to exactly the same level',
     ],
     correctAnswer: 2,
     explanation:
@@ -1273,9 +1273,9 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 75,
     question: 'Which lighting control feature is most valuable for energy management?',
     options: [
-      'Maximum brightness levels',
-      'Color changing capability',
-      'Multiple switch locations',
+      'Maximum brightness levels everywhere',
+      'Colour changing capability on all the lamps',
+      'Multiple switch locations within each room',
       'Occupancy sensing with automatic shutoff',
     ],
     correctAnswer: 3,
@@ -1291,9 +1291,9 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     question: "What is 'tunable white' lighting technology?",
     options: [
       'Lights that can change between different white color temperatures',
-      'Lights that can display any colour across the spectrum',
-      'Lights that automatically dim when a room is empty',
-      'Lights that maintain a single fixed warm white output',
+      'Lights that can display any colour across the whole visible spectrum',
+      'Lights that automatically dim whenever a room is found to be empty',
+      'Lights that always maintain one single fixed warm white output level',
     ],
     correctAnswer: 0,
     explanation:
@@ -1324,10 +1324,10 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 78,
     question: 'What is the recommended method for testing lighting scenes during commissioning?',
     options: [
-      'Test each scene only once in full daylight',
-      'Test scenes only after the customer has moved in',
+      'Test each scene once only, in full daylight, on handover day',
+      'Test the scenes only after the customer has already moved in',
       'Test at different times of day and with various ambient conditions',
-      'Test scenes only at maximum brightness settings',
+      'Test every scene only at the maximum brightness setting while on site',
     ],
     correctAnswer: 2,
     explanation:
@@ -1359,9 +1359,9 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     question: "What is 'light pollution reduction' in outdoor smart lighting?",
     options: [
       'Directing light downward and using appropriate timing',
-      'Using the brightest possible floodlights all night',
-      'Aiming fittings upward to illuminate the sky',
-      'Leaving outdoor lights on permanently for security',
+      'Using the brightest possible floodlights all night long',
+      'Aiming fittings upward to illuminate the night sky',
+      'Leaving all outdoor lights on permanently for security',
     ],
     correctAnswer: 0,
     explanation:
@@ -1377,10 +1377,10 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 81,
     question: 'What is the primary benefit of zoned HVAC control in smart homes?',
     options: [
-      'A single thermostat controlling the whole house',
+      'A single thermostat controlling the whole of the house',
       'Individual temperature control for different areas',
-      'Faster heating by running the boiler continuously',
-      'Eliminating the need for any temperature sensors',
+      'Faster heating by running the boiler continuously all day',
+      'Eliminating the need for any temperature sensors at all',
     ],
     correctAnswer: 1,
     explanation:
@@ -1394,10 +1394,10 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 82,
     question: 'Which sensor type is most important for smart thermostat operation?',
     options: [
-      'Light level sensors',
-      'Glass break sensors',
+      'Ambient light level sensors',
+      'Glass break detection sensors',
       'Temperature and humidity sensors',
-      'Water leak sensors',
+      'Water leak and flood detection sensors',
     ],
     correctAnswer: 2,
     explanation:
@@ -1411,9 +1411,9 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 83,
     question: "What is 'thermal mass' and how does it affect smart HVAC control?",
     options: [
-      "The total air volume the HVAC system must heat",
-      "The rate at which warm air rises within a room",
-      "The mass of refrigerant held in the cooling circuit",
+      'The total air volume that the HVAC system must heat',
+      'The rate at which warm air rises within a heated building',
+      'The mass of refrigerant held within the cooling circuit',
       "Building's ability to store and release thermal energy",
     ],
     correctAnswer: 3,
@@ -1445,10 +1445,10 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 85,
     question: "What is 'demand response' in smart HVAC systems?",
     options: [
-      'Increasing heating output when demand is highest',
+      'Increasing the heating output whenever demand is at its highest',
       'Automatically reducing energy usage during peak demand periods',
-      'Adjusting temperature based on the number of occupants',
-      'Switching the system off whenever the house is occupied',
+      'Adjusting the temperature based on the number of occupants present',
+      'Switching the whole system off whenever the house is fully occupied',
     ],
     correctAnswer: 1,
     explanation:
@@ -1481,7 +1481,7 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     options: [
       'Running the system at full power only when occupied',
       'Maintaining a fixed temperature regardless of schedule',
-      'Switching the system off as soon as occupants leave',
+      'Switching the whole system off as soon as occupants leave',
       'Adjusting temperature before occupancy based on schedule',
     ],
     correctAnswer: 3,
@@ -1497,9 +1497,9 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     question: 'Which ventilation strategy is most effective for indoor air quality?',
     options: [
       'Demand-controlled ventilation based on occupancy and air quality',
-      'Running extractor fans continuously at full speed',
-      'Keeping all windows and vents permanently sealed',
-      'Ventilating only when outdoor temperatures are warm',
+      'Running all the extractor fans continuously at full speed',
+      'Keeping all windows and air vents permanently sealed shut all year',
+      'Ventilating only when the outdoor air temperature feels warm enough',
     ],
     correctAnswer: 0,
     explanation:
@@ -1513,10 +1513,10 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 89,
     question: "What is 'humidity control' important for in smart homes?",
     options: [
-      'Reducing electricity consumption only',
+      'Reducing electricity consumption and nothing else',
       'Comfort and preventing mold/mildew growth',
-      'Improving Wi-Fi signals',
-      'Enhancing lighting quality',
+      'Improving the Wi-Fi signal strength indoors',
+      'Enhancing the quality of the lighting scenes',
     ],
     correctAnswer: 1,
     explanation:
@@ -1547,9 +1547,9 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 91,
     question: "What is 'economizer mode' in smart HVAC systems?",
     options: [
-      'Running cooling at the lowest fan speed to save energy',
-      'Recirculating indoor air to retain conditioned air',
-      'Heating and cooling simultaneously to balance zones',
+      'Running the cooling at the lowest fan speed to save energy',
+      'Recirculating the indoor air to retain the conditioned air',
+      'Heating and cooling simultaneously to balance out all the zones',
       'Using outdoor air for cooling when conditions are favorable',
     ],
     correctAnswer: 3,
@@ -1565,9 +1565,9 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     question: 'Which approach optimizes both comfort and energy efficiency in smart HVAC?',
     options: [
       'Learning algorithms that adapt to occupant behavior',
-      'A single fixed temperature setpoint held all year',
+      'A single fixed temperature setpoint held all year round',
       'Manually switching the system on and off as needed',
-      'Running the system only during off-peak hours',
+      'Running the system only during the off-peak hours each day',
     ],
     correctAnswer: 0,
     explanation:
@@ -1581,10 +1581,10 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 93,
     question: "What is the purpose of 'duct pressure monitoring' in smart HVAC?",
     options: [
-      'Measuring the temperature of supply air',
+      'Measuring the temperature of the supply air at each grille',
       'Detecting leaks and optimizing airflow distribution',
-      'Monitoring humidity levels in each room',
-      'Controlling the speed of the cooling compressor',
+      'Monitoring the humidity level in each individual room',
+      'Controlling the speed of the cooling compressor motor',
     ],
     correctAnswer: 1,
     explanation:
@@ -1599,9 +1599,9 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     question: 'Which integration provides the most value in smart environmental control?',
     options: [
       'Entertainment systems',
-      'Social media connections',
+      'Social media accounts',
       'Weather forecasting data',
-      'Kitchen appliances only',
+      'Kitchen appliance controls',
     ],
     correctAnswer: 2,
     explanation:
@@ -1615,9 +1615,9 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 95,
     question: "What is 'thermal comfort modeling' in smart HVAC systems?",
     options: [
-      'Measuring the energy efficiency of the boiler',
-      'Tracking the lifespan of HVAC filters',
-      'Calculating the airflow rate through each duct',
+      'Measuring the energy efficiency of the boiler and its own controls',
+      'Tracking the remaining lifespan of the HVAC filters fitted',
+      'Calculating the airflow rate through every duct in the building',
       'Calculating optimal temperature and humidity for human comfort',
     ],
     correctAnswer: 3,
@@ -1633,9 +1633,9 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     question: 'Which maintenance feature is most valuable in smart HVAC systems?',
     options: [
       'Predictive maintenance alerts based on system performance',
-      'A reminder to replace the whole system every year',
-      'Automatic shutdown whenever a fault is suspected',
-      'Manual inspection only after a breakdown occurs',
+      'A reminder to replace the whole system once every single year',
+      'Automatic shutdown whenever any kind of fault is suspected',
+      'Manual inspection only after a complete breakdown has occurred',
     ],
     correctAnswer: 0,
     explanation:
@@ -1666,10 +1666,10 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 98,
     question: 'Which approach provides the best indoor air quality monitoring?',
     options: [
-      'A single temperature sensor at the thermostat',
-      'Monitoring only the outdoor air quality',
+      'A single temperature sensor mounted at the thermostat',
+      'Monitoring only the outdoor air quality at the site',
       'Multi-parameter sensors (CO2, VOCs, particulates, humidity)',
-      'Periodic manual checks with a handheld meter',
+      'Periodic manual spot checks with a handheld meter twice a year',
     ],
     correctAnswer: 2,
     explanation:
@@ -2212,10 +2212,10 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 130,
     question: 'What is the most important consideration for smart security system cybersecurity?',
     options: [
-      'Using default passwords for ease of access',
-      'Connecting all devices to one open guest network',
+      'Using the manufacturer default passwords for easy access',
+      'Connecting all the devices to one open guest network',
       'Strong encryption, regular updates, and network segmentation',
-      'Disabling firmware updates to avoid breaking changes',
+      'Disabling all firmware updates so as to avoid breaking changes',
     ],
     correctAnswer: 2,
     explanation:
@@ -2231,9 +2231,9 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 131,
     question: 'What is the primary function of a smart home hub?',
     options: [
-      'Supplying mains power to all connected devices',
-      'Storing recorded video from security cameras',
-      'Providing broadband internet to the property',
+      'Supplying mains power to all of the connected devices',
+      'Storing all the recorded video from the security cameras',
+      'Providing the broadband internet service to the property',
       'Acting as a central controller and protocol translator',
     ],
     correctAnswer: 3,
@@ -2265,10 +2265,10 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 133,
     question: "What is 'protocol bridging' in smart home hubs?",
     options: [
-      'Boosting the wireless range of a single protocol',
+      'Boosting the wireless range of a single chosen protocol',
       'Translating between different communication protocols',
-      'Encrypting all data sent over the home network',
-      'Splitting one device into several virtual devices',
+      'Encrypting all of the data sent across the home network',
+      'Splitting one device into several separate virtual devices',
     ],
     correctAnswer: 1,
     explanation:
@@ -2285,7 +2285,7 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
       'A touchscreen requiring physical interaction',
       'A mobile app needing precise finger gestures',
       'Hands-free device control for mobility-limited users',
-      'A wall-mounted keypad for entering commands',
+      'A wall-mounted keypad for entering each typed command',
     ],
     correctAnswer: 2,
     explanation:
@@ -2299,9 +2299,9 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 135,
     question: "What is 'edge processing' in smart home hubs?",
     options: [
-      'Sending all automation logic to a remote data centre',
-      'Processing voice commands only on the manufacturer\'s servers',
-      'Routing every command through the internet first',
+      'Sending all the automation logic to a remote data centre',
+      'Processing voice commands only on the maker\'s own remote servers',
+      'Routing every single command out through the internet servers first',
       'Processing at the network edge/locally rather than in the cloud',
     ],
     correctAnswer: 3,
@@ -2333,10 +2333,10 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 137,
     question: "What is 'wake word' technology in voice assistants?",
     options: [
-      'A password used to unlock the assistant app',
+      'A password that must be entered to unlock the assistant app first',
       'Activation phrase recognition that starts voice processing',
-      'A scheduled time when the assistant turns on',
-      'A command that shuts the assistant down completely',
+      'A scheduled time of day at which the assistant turns itself on',
+      'A spoken command that shuts the whole assistant down completely',
     ],
     correctAnswer: 1,
     explanation:
@@ -2367,9 +2367,9 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 139,
     question: "What is 'natural language processing' in voice assistants?",
     options: [
-      'Converting text commands into wireless radio signals',
+      'Converting typed text commands into wireless radio signals',
       'Translating between different device communication protocols',
-      'Recognising individual faces from camera footage',
+      'Recognising individual faces from the recorded security camera footage',
       'Understanding and interpreting human speech patterns and intent',
     ],
     correctAnswer: 3,
@@ -2386,8 +2386,8 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     options: [
       'Unified control with voice commands executing hub automations',
       'Keeping the voice assistant and hub on separate networks',
-      'Using the voice assistant only for music playback',
-      'Requiring a separate app for each connected device',
+      'Using the voice assistant purely for music and radio streaming',
+      'Requiring a separate mobile app for every single connected device',
     ],
     correctAnswer: 0,
     explanation:
@@ -2401,10 +2401,10 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 141,
     question: "What is 'contextual awareness' in smart home voice assistants?",
     options: [
-      'Responding identically regardless of the time of day or room location',
+      'Responding identically regardless of the time of day or the room location in use',
       'Understanding environmental context and user habits for relevant responses',
-      'Limiting responses to a fixed list of preset phrases and commands',
-      'Requiring the wake word to be repeated before every single command',
+      'Limiting all responses to a fixed list of preset phrases and stock commands',
+      'Requiring the wake word to be repeated before each and every single command',
     ],
     correctAnswer: 1,
     explanation:
@@ -2455,7 +2455,7 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
       'Intuitive mobile apps with logical organization',
       'Command-line configuration for every change',
       'A separate physical remote for each device',
-      'Deeply nested menus with technical terminology',
+      'Deeply nested menus full of technical terminology',
     ],
     correctAnswer: 0,
     explanation:
@@ -2469,10 +2469,10 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 145,
     question: "What is 'multi-room audio' coordination through smart hubs?",
     options: [
-      'Playing different songs from a single speaker at once',
+      'Playing several different songs from a single speaker at once',
       'Synchronized audio playback across multiple rooms/devices',
-      'Boosting speaker volume above its rated output',
-      'Recording audio from microphones in each room',
+      'Boosting the speaker volume above its rated output level',
+      'Recording the audio from microphones fitted in every single room',
     ],
     correctAnswer: 1,
     explanation:
@@ -2486,10 +2486,10 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 146,
     question: 'Which factor most affects voice recognition accuracy?',
     options: [
-      'The colour of the smart speaker casing',
-      'The wireless protocol the speaker uses',
+      'The colour chosen for the smart speaker outer casing',
+      'The wireless protocol that the smart speaker happens to use',
       'Background noise levels and microphone placement',
-      'The brand of router on the home network',
+      'The brand of the router used on the home Wi-Fi network',
     ],
     correctAnswer: 2,
     explanation:
@@ -2504,8 +2504,8 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     question: "What is 'routine automation' in voice assistant integration?",
     options: [
       'Requiring a separate command for each device action',
-      'Limiting the assistant to one action per day',
-      'Running actions only when manually confirmed each time',
+      'Limiting the assistant to a single action each day',
+      'Running actions only when each one is manually confirmed',
       'Triggering multiple actions with single voice commands',
     ],
     correctAnswer: 3,
@@ -2521,9 +2521,9 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     question: 'Which hub feature provides the most troubleshooting value?',
     options: [
       'Comprehensive logging and diagnostic capabilities',
-      'A brighter status LED on the hub casing',
+      'A brighter status LED on the front of the hub casing',
       'Support for more colour-changing light bulbs',
-      'A larger number of scenes that can be stored',
+      'A larger number of scenes that can be stored on it',
     ],
     correctAnswer: 0,
     explanation:
@@ -2537,10 +2537,10 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 149,
     question: "What is 'voice profile recognition' in smart assistants?",
     options: [
-      'Adjusting speaker volume to match room acoustics',
+      'Adjusting the speaker volume to match the room acoustics',
       'Identifying individual users for personalized responses',
-      'Filtering out background noise during commands',
-      'Recognising the wake word in different languages',
+      'Filtering out background noise during every spoken command',
+      'Recognising the wake word in several different languages',
     ],
     correctAnswer: 1,
     explanation:
@@ -2555,9 +2555,9 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     question: 'Which approach ensures optimal hub performance over time?',
     options: [
       'Leaving firmware unchanged to avoid disruption',
-      'Adding as many devices as possible to the hub',
+      'Adding as many devices as possible onto the hub',
       'Regular updates, monitoring, and periodic restarts',
-      'Disabling logging to free up hub memory',
+      'Disabling all logging to free up memory space on the hub',
     ],
     correctAnswer: 2,
     explanation:
@@ -2590,8 +2590,8 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     options: [
       'Network security, encryption, and access controls',
       'Mounting the hub in a visible central location',
-      'Connecting the hub directly to the open internet',
-      'Using the manufacturer\'s default admin password',
+      'Connecting the hub directly to the open public internet',
+      'Leaving the manufacturer default admin password in place',
     ],
     correctAnswer: 0,
     explanation:
@@ -2622,10 +2622,10 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 154,
     question: 'Which voice assistant deployment provides the best coverage?',
     options: [
-      'Using a single high-power assistant in the hallway',
-      'Mounting one assistant centrally and relying on its range',
+      'Using just one single high-power assistant in the downstairs hallway',
+      'Mounting one assistant centrally and relying entirely on its own range',
       'Distributed devices throughout the home with coordinated responses',
-      'Placing all assistants in one room for redundancy',
+      'Placing all of the assistants in one single room for extra redundancy',
     ],
     correctAnswer: 2,
     explanation:
@@ -2639,9 +2639,9 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 155,
     question: 'What is the most important consideration for voice assistant placement?',
     options: [
-      'Placing it next to a noisy appliance for testing',
-      'Hiding it inside a cabinet to protect the microphone',
-      'Mounting it as high on the wall as possible',
+      'Placing it next to a noisy kitchen appliance for convenience',
+      'Hiding it inside a closed cabinet to protect the microphone',
+      'Mounting it as high on the wall as the cabling will physically allow',
       'Acoustic environment and central location for optimal voice pickup',
     ],
     correctAnswer: 3,
@@ -2711,9 +2711,9 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 159,
     question: 'Which document must be provided to customers after smart home installation?',
     options: [
-      'A copy of the manufacturer\'s marketing brochure',
-      'Only a verbal handover of the system controls',
-      'A receipt listing the devices purchased',
+      'A copy of the manufacturer\'s own product marketing brochure',
+      'A verbal handover of the system controls on the day',
+      'A dated receipt listing every device that was purchased',
       'Electrical Installation Certificate and user documentation',
     ],
     correctAnswer: 3,
@@ -2729,9 +2729,9 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     question: 'What is the purpose of RCD protection in smart home installations?',
     options: [
       'Personal protection against electric shock',
-      'Protection of devices from voltage surges',
-      'Correction of the circuit power factor',
-      'Regulation of the supply voltage level',
+      'Protection of equipment from transient voltage surges',
+      'Correction of the power factor of the circuit',
+      'Regulation of the incoming supply voltage level',
     ],
     correctAnswer: 0,
     explanation:
@@ -2748,7 +2748,7 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
       'Earth fault loop impedance first, then continuity and insulation last',
       'BS 7671 specified sequence: continuity, insulation, polarity, earth fault loop',
       'Any convenient order, since the sequence has no effect on the results',
-      'Insulation resistance only, with no continuity or polarity testing needed',
+      'Insulation resistance testing only, with no continuity or polarity checks needed',
     ],
     correctAnswer: 1,
     explanation:
@@ -2779,9 +2779,9 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 163,
     question: 'Which consideration is essential for smart device cable routing?',
     options: [
-      'Routing all cables along the shortest visible path',
-      'Bundling power and data cables tightly together',
-      'Using the cheapest cable type to reduce cost',
+      'Routing all of the cables along the shortest visible route',
+      'Bundling the mains power cables and the data cables tightly together',
+      'Using the cheapest available cable type in order to reduce the cost',
       'Protection from mechanical damage and appropriate cable selection',
     ],
     correctAnswer: 3,
@@ -2797,9 +2797,9 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     question: "What is the purpose of 'safe isolation' procedures?",
     options: [
       'Ensuring electrical supply is disconnected and cannot be re-energized during work',
-      'Separating data cabling from mains cabling within shared trunking',
-      'Providing each smart device with its own individual final circuit',
-      'Reducing the supply voltage to a safe touch level before working',
+      'Separating the data cabling from the mains cabling within any shared trunking route',
+      'Providing every smart device in the property with its own individual final circuit',
+      'Reducing the incoming supply voltage down to a safe touch level before work begins',
     ],
     correctAnswer: 0,
     explanation:
@@ -2881,10 +2881,10 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 169,
     question: 'Which factor determines the current-carrying capacity of cables?',
     options: [
-      'The colour of the cable outer sheath',
+      'The colour of the outer sheath fitted to the cable run',
       'Installation method, ambient temperature, and grouping factors',
-      'The brand of consumer unit supplying the circuit',
-      'The total length of every circuit in the building',
+      'The brand of consumer unit that supplies the final circuit',
+      'The total length of every other circuit run in the whole building',
     ],
     correctAnswer: 1,
     explanation:
@@ -2898,10 +2898,10 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 170,
     question: 'What is the purpose of equipotential bonding in electrical installations?',
     options: [
-      'Increasing the current-carrying capacity of the circuit conductors',
-      'Reducing the supply voltage to a safe level for smart devices',
+      'Increasing the current-carrying capacity of every one of the circuit conductors',
+      'Reducing the supply voltage to a safe working level for all smart devices',
       'Ensuring metallic parts are at same potential to prevent dangerous voltages',
-      'Providing surge protection for sensitive electronic equipment',
+      'Providing surge protection for every piece of sensitive electronic equipment',
     ],
     correctAnswer: 2,
     explanation:
@@ -2915,9 +2915,9 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 171,
     question: 'Which documentation must be maintained for smart home installations?',
     options: [
-      'Original purchase receipts and warranty cards for the devices',
-      'Manufacturer app screenshots showing each device online',
-      'A verbal handover record kept by the installer',
+      'Original purchase receipts and warranty cards for every one of the devices',
+      'Manufacturer app screenshots showing every device online and correctly paired',
+      'A verbal handover record kept on file by the installing electrician alone',
       'Certificates, test results, maintenance records, and as-built drawings',
     ],
     correctAnswer: 3,
@@ -2935,8 +2935,8 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     options: [
       'Change default passwords, enable encryption, update firmware',
       'Leave default passwords so the customer can remember them',
-      'Connect all devices to an open, unsecured network',
-      'Disable firmware updates to keep the system stable',
+      'Connect all of the devices to an open, unsecured network',
+      'Disable all firmware updates in order to keep the system stable',
     ],
     correctAnswer: 0,
     explanation:
@@ -2950,10 +2950,10 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 173,
     question: 'Which testing instrument is required for insulation resistance testing?',
     options: [
-      'A low-resistance ohmmeter for continuity testing',
+      'A low-resistance ohmmeter used for continuity testing',
       'Insulation resistance tester (500V DC for 230V circuits)',
-      'An earth fault loop impedance tester',
-      'A clamp meter for measuring load current',
+      'An earth fault loop impedance tester with a two-wire lead',
+      'A clamp meter for measuring the load current on a circuit',
     ],
     correctAnswer: 1,
     explanation:
@@ -2967,10 +2967,10 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 174,
     question: 'What is the primary purpose of circuit protective conductors (CPCs)?',
     options: [
-      'Carrying the normal load current to appliances',
-      'Reducing voltage drop along the circuit',
+      'Carrying the normal working load current out to all the connected appliances',
+      'Reducing the voltage drop along the whole length of every final circuit run',
       'Providing path for fault current to enable protective device operation',
-      'Returning neutral current to the supply transformer',
+      'Returning the neutral load current back to the supply transformer winding',
     ],
     correctAnswer: 2,
     explanation:
@@ -2984,9 +2984,9 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 175,
     question: 'Which consideration is critical for smart home device power supply design?',
     options: [
-      'Sizing the supply to the smallest connected device',
-      'Ignoring diversity to keep calculations simple',
-      'Matching the supply colour to the decor',
+      'Sizing the supply to suit the smallest connected device',
+      'Ignoring diversity in order to keep calculations simple',
+      'Matching the colour of the supply cable to the room decor scheme',
       'Adequate capacity, diversity factors, and future expansion',
     ],
     correctAnswer: 3,
@@ -3018,10 +3018,10 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 177,
     question: 'Which safety precaution is essential when working near water?',
     options: [
-      'Working quickly to limit exposure to moisture',
+      'Working quickly in order to limit exposure to any moisture',
       'Ensure power is isolated and use appropriate IP-rated equipment',
-      'Drying surfaces before energising the circuit',
-      'Wearing rubber gloves while the supply stays live',
+      'Drying all the surfaces down before energising the circuit again',
+      'Wearing rubber gloves and boots while the supply is left switched on',
     ],
     correctAnswer: 1,
     explanation:
@@ -3035,10 +3035,10 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 178,
     question: 'What is the purpose of surge protection devices (SPDs) in smart homes?',
     options: [
-      'Providing protection against electric shock to persons',
-      'Correcting the power factor of inductive loads',
+      'Providing protection against electric shock to persons and livestock',
+      'Correcting the power factor of the large inductive loads on site',
       'Protecting sensitive electronic equipment from voltage surges',
-      'Limiting the current drawn by connected devices',
+      'Limiting the current drawn by each connected device on the circuit',
     ],
     correctAnswer: 2,
     explanation:
@@ -3052,9 +3052,9 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 179,
     question: 'Which approach ensures proper smart home system commissioning?',
     options: [
-      'Energising the system and leaving it to the customer',
-      'Testing only the devices that appear faulty',
-      'Skipping documentation to speed up handover',
+      'Energising the system and then leaving it all to the customer',
+      'Testing only the devices that appear to be faulty on the day',
+      'Skipping the documentation entirely in order to speed up handover time',
       'Systematic testing of all functions, documentation, and user training',
     ],
     correctAnswer: 3,
@@ -3070,9 +3070,9 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     question: 'What is the most critical safety consideration for DIY smart home installations?',
     options: [
       'Understanding electrical safety requirements and knowing when to use qualified electricians',
-      'Choosing devices with the most attractive design and the best app interface',
-      'Buying the cheapest available devices to keep the project cost down',
-      'Selecting devices that pair fastest with the hub and need least setup',
+      'Choosing the devices with the most attractive design and the very best mobile phone app interface',
+      'Buying the cheapest available devices on the market to keep the overall project cost down',
+      'Selecting the devices that pair fastest with the hub and need the least amount of setup work',
     ],
     correctAnswer: 0,
     explanation:
@@ -3088,10 +3088,10 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 181,
     question: 'What is the first step in troubleshooting smart home connectivity issues?',
     options: [
-      'Immediately replace the affected device',
+      'Immediately replace the affected device with a new one',
       'Check network connectivity and signal strength',
-      'Reset the entire system to factory defaults',
-      'Re-run a full insulation resistance test',
+      'Reset the entire system back to its factory defaults',
+      'Re-run a full insulation resistance test on the circuit',
     ],
     correctAnswer: 1,
     explanation:
@@ -3108,7 +3108,7 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
       'An earth fault loop impedance tester',
       'A standard Wi-Fi signal strength app',
       'Network analyzer with Zigbee capabilities',
-      'A multimeter set to measure DC voltage',
+      'A multimeter set to measure DC voltage only',
     ],
     correctAnswer: 2,
     explanation:
@@ -3158,8 +3158,8 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     options: [
       'Deleting all automations and starting from scratch',
       'Systematic checking of triggers, conditions, and actions',
-      'Replacing the hub before investigating the cause',
-      'Disabling the affected devices permanently',
+      'Replacing the hub before investigating the underlying cause',
+      'Disabling the affected devices permanently and then moving on',
     ],
     correctAnswer: 1,
     explanation:
@@ -3190,9 +3190,9 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 187,
     question: 'What is the best practice for smart home system backup and recovery?',
     options: [
-      'Relying on memory to re-enter settings after a failure',
-      'Backing up once at install and never again',
-      'Storing backups without ever testing a restore',
+      'Relying on memory to re-enter all of the settings after a failure',
+      'Backing the configuration up once at install and then never again',
+      'Storing the backups off site without ever testing a full restore',
       'Regular configuration backups with tested restore procedures',
     ],
     correctAnswer: 3,
@@ -3209,9 +3209,9 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
       'Which diagnostic approach is most effective for identifying device compatibility issues?',
     options: [
       'Checking protocol specifications and certification compatibility',
-      'Replacing every device with the same brand',
-      'Assuming all wireless devices are interoperable',
-      'Testing devices only after the warranty expires',
+      'Replacing every device in the home with the same single brand',
+      'Assuming that all wireless devices are fully interoperable',
+      'Testing the devices only after the manufacturer warranty has expired',
     ],
     correctAnswer: 0,
     explanation:
@@ -3227,8 +3227,8 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     options: [
       'Using too few scenes in the lighting system',
       'Improper sensor placement or sensitivity settings',
-      'Setting the alarm volume too low to hear',
-      'Choosing a hub with insufficient storage',
+      'Setting the alarm sounder volume far too low to hear',
+      'Choosing a hub that has insufficient storage capacity',
     ],
     correctAnswer: 1,
     explanation:
@@ -3242,10 +3242,10 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 190,
     question: 'Which maintenance task should be performed monthly on smart home systems?',
     options: [
-      'Replacing all wireless devices with new ones',
-      'Resetting the hub to factory defaults',
+      'Replacing all of the wireless devices with brand new ones',
+      'Resetting the hub back to its original factory defaults',
       'Battery level checks and system health monitoring',
-      'Re-running the full BS 7671 test sequence',
+      'Re-running the full BS 7671 test sequence on each circuit',
     ],
     correctAnswer: 2,
     explanation:
@@ -3259,9 +3259,9 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 191,
     question: 'What is the most effective method for resolving mesh network connectivity issues?',
     options: [
-      'Removing all repeater devices from the network',
-      'Increasing the number of stored scenes',
-      'Disabling encryption to speed up communication',
+      'Removing all of the repeater devices from the network',
+      'Increasing the number of scenes stored in the hub memory',
+      'Disabling the encryption in order to speed up communication',
       'Analyzing network topology and optimizing device placement',
     ],
     correctAnswer: 3,
@@ -3278,8 +3278,8 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     options: [
       'Proactive monitoring and preventive maintenance',
       'Waiting for devices to fail before acting',
-      'Running every device at maximum settings',
-      'Avoiding all firmware and software updates',
+      'Running every device at its maximum settings always',
+      'Avoiding all firmware and software updates entirely',
     ],
     correctAnswer: 0,
     explanation:
@@ -3293,10 +3293,10 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 193,
     question: 'What is the recommended response to smart home cybersecurity alerts?',
     options: [
-      'Ignoring alerts unless they recur several times',
+      'Ignoring the alerts unless they happen to recur several times in a week',
       'Immediate investigation and response following security procedures',
-      'Disabling alerts to reduce notification fatigue',
-      'Waiting for the next scheduled maintenance visit',
+      'Disabling the alerts entirely in order to reduce notification fatigue',
+      'Waiting until the next scheduled maintenance visit comes round again',
     ],
     correctAnswer: 1,
     explanation:

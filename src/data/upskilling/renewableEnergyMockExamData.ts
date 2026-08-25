@@ -46,7 +46,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
       'Reducing household electricity bills',
       'Legally binding carbon reduction commitments',
       'Increasing domestic manufacturing output',
-      'Improving rural broadband coverage',
+      'Improving rural broadband coverage nationally',
     ],
     correctAnswer: 1,
     explanation:
@@ -61,9 +61,9 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     question: "Which Act established the UK's legally binding net-zero target?",
     options: [
       'Climate Change Act 2008',
-      'Clean Growth Strategy',
-      'Energy Act 2013',
-      'Environment Act 2021',
+      'The Clean Growth Strategy',
+      'The Energy Act 2013',
+      'The Environment Act 2021',
     ],
     correctAnswer: 0,
     explanation:
@@ -112,9 +112,9 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     id: 7,
     question: 'Which solar cell technology offers the highest efficiency but at higher cost?',
     options: [
-      'Thin-film',
-      'Polycrystalline',
-      'Bifacial',
+      'Thin-film silicon',
+      'Polycrystalline silicon',
+      'Bifacial modules',
       'Monocrystalline',
     ],
     correctAnswer: 3,
@@ -146,10 +146,10 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     id: 9,
     question: 'What causes the photovoltaic effect in a solar cell?',
     options: [
-      'Heat raising the temperature of the cell',
+      'Heat raising the temperature of the cell material',
       'Photons knocking electrons free in the semiconductor',
       'A magnetic field induced across the junction',
-      'Chemical reactions within the cell material',
+      'Chemical reactions taking place within the cell material',
     ],
     correctAnswer: 1,
     explanation:
@@ -182,8 +182,8 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     question: 'What is the primary function of a solar inverter?',
     options: [
       'Store energy',
-      'Provide earthing',
-      'Regulate voltage',
+      'Provide system earthing',
+      'Regulate the voltage',
       'Convert DC to AC',
     ],
     correctAnswer: 3,
@@ -335,9 +335,9 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     question: 'What is the purpose of rapid shutdown in solar installations?',
     options: [
       'To reduce DC voltage quickly for emergency responders',
-      'To increase array output during peak demand',
-      'To divert power into battery storage on a fault',
-      'To synchronise the inverter with the grid frequency',
+      'To increase the array output during periods of peak demand',
+      'To divert the power into battery storage when a fault occurs',
+      'To synchronise the inverter output with the grid frequency',
     ],
     correctAnswer: 0,
     explanation:
@@ -353,10 +353,10 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     id: 21,
     question: 'What does G99 regulation cover?',
     options: [
-      'Planning permission',
+      'Planning permission rules',
       'Grid connection requirements',
-      'Safety standards',
-      'Environmental impact',
+      'Site safety standards',
+      'Environmental impact assessment',
     ],
     correctAnswer: 1,
     explanation:
@@ -387,10 +387,10 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     id: 23,
     question: 'Which device is used to actively limit the power exported to the grid from a solar installation?',
     options: [
-      'A surge protective device on the a.c. side',
-      'A Type B residual current device',
+      'A surge protective device fitted on the a.c. side',
+      'A Type B residual current device fitted on the a.c. supply',
       'An export limitation device with a current/power sensor',
-      'A maximum power point tracker in the inverter',
+      'A maximum power point tracker built into the string inverter',
     ],
     correctAnswer: 2,
     explanation:
@@ -421,10 +421,10 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     id: 25,
     question: 'Which body must approve a G99 connection application before energisation?',
     options: [
-      'The local building control office',
+      'The local authority building control office',
       'The Distribution Network Operator (DNO)',
-      'The Health and Safety Executive',
-      'The manufacturer of the inverter',
+      'The Health and Safety Executive inspector',
+      'The manufacturer of the installed inverter',
     ],
     correctAnswer: 1,
     explanation:
@@ -508,9 +508,9 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     question: 'Which document must be issued to the client to certify a completed PV electrical installation?',
     options: [
       'An Electrical Installation Certificate',
-      'A G99 export application form',
-      'A structural loading report',
-      'A planning permission notice',
+      'A G99 export application form copy',
+      'A structural roof loading report',
+      'A local planning permission consent notice',
     ],
     correctAnswer: 0,
     explanation:
@@ -544,8 +544,8 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     options: [
       'Soiling and debris',
       'Inverter failure',
-      'Module degradation',
-      'Shading',
+      'Gradual module degradation',
+      'Shading from nearby trees',
     ],
     correctAnswer: 0,
     explanation:
@@ -577,9 +577,9 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     question: 'During routine PV maintenance, why are DC connections inspected for signs of overheating?',
     options: [
       'Loose or corroded DC joints can arc and cause fire',
-      'DC connectors must be replaced annually by law',
-      'DC voltage rises sharply as connectors age',
-      'Overheating connectors improve array efficiency',
+      'All DC connectors must be replaced once every year by law',
+      'DC string voltage rises sharply as the connectors age',
+      'Overheating connectors improve the overall array efficiency',
     ],
     correctAnswer: 0,
     explanation:
@@ -595,7 +595,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     options: [
       'Monthly',
       'Quarterly',
-      'Annually',
+      'Once each year',
       'Twice yearly',
     ],
     correctAnswer: 3,
@@ -646,10 +646,10 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     id: 38,
     question: 'What does round-trip efficiency measure in a battery storage system?',
     options: [
-      'The maximum power the battery can deliver',
-      'The total installed cost per kWh of capacity',
+      'The maximum power that the battery is able to deliver',
+      'The total installed cost per kWh of the usable capacity fitted',
       'The proportion of energy lost over a charge/discharge cycle',
-      'The number of full cycles before end of life',
+      'The number of full charge cycles before the end of service life',
     ],
     correctAnswer: 2,
     explanation:
@@ -680,9 +680,9 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     question: 'Why is adequate ventilation important for a domestic battery storage installation?',
     options: [
       'It disperses heat and any gases, reducing thermal-runaway risk',
-      'It increases the round-trip efficiency of the battery',
-      'It allows the battery to charge from the grid more quickly',
-      'It is needed to cool the solar inverter mounted nearby',
+      'It increases the round-trip efficiency of the whole battery system',
+      'It allows the battery to charge from the mains grid much more quickly',
+      'It is needed to cool the solar inverter that is mounted alongside',
     ],
     correctAnswer: 0,
     explanation:
@@ -751,7 +751,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
       'Higher daytime self-consumption of generated power',
       'Access to higher export tariffs than households',
       'Exemption from G99 connection requirements',
-      'Shorter panel warranties reduce up-front cost',
+      'Shorter panel warranties that reduce the up-front cost',
     ],
     correctAnswer: 0,
     explanation:
@@ -799,9 +799,9 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     id: 47,
     question: 'How does rising cell temperature typically affect a solar panel rated at standard test conditions?',
     options: [
-      'Output increases roughly in proportion to temperature',
-      'Output is unaffected by cell temperature',
-      'Output fluctuates randomly with temperature',
+      'Output increases roughly in proportion to cell temperature',
+      'Output is unaffected by the cell temperature at all',
+      'Output fluctuates randomly with changes in cell temperature',
       'Output decreases by roughly 0.4% per degree above 25°C',
     ],
     correctAnswer: 3,
@@ -884,9 +884,9 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     question: 'What is maximum power point tracking (MPPT)?',
     options: [
       'Efficiency optimisation',
-      'Safety feature',
-      'Grid synchronisation',
-      'Temperature control',
+      'A safety cut-out feature',
+      'Grid synchronisation control',
+      'Panel temperature control',
     ],
     correctAnswer: 0,
     explanation: 'MPPT optimises the operating point to extract maximum power from solar panels.',
@@ -1082,9 +1082,9 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     question: 'What is a key benefit of module-level power electronics (MLPE) such as optimisers or microinverters?',
     options: [
       'They optimise output per module and enable module-level shutdown',
-      'They eliminate the need for DC isolation',
+      'They eliminate the need for any DC isolation on the roof',
       'They lower the up-front cost compared with a string inverter',
-      'They allow the array to operate without an inverter',
+      'They allow the whole array to operate without any inverter at all',
     ],
     correctAnswer: 0,
     explanation:
@@ -1115,9 +1115,9 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     question: 'Why should a solar inverter be installed in a cool, well-ventilated location?',
     options: [
       'High ambient temperatures reduce its efficiency and lifespan',
-      'It needs direct sunlight to track maximum power',
-      'Cool air increases the DC voltage it can accept',
-      'Ventilation is required to vent battery gases',
+      'It needs direct sunlight in order to track maximum power',
+      'Cool air increases the DC input voltage that the unit can accept',
+      'Ventilation is required in order to vent away the battery gases',
     ],
     correctAnswer: 0,
     explanation:
@@ -1213,9 +1213,9 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     question: 'What does a generation meter on a solar installation measure?',
     options: [
       'The total energy generated by the PV system',
-      'Only the energy exported to the grid',
-      'The energy imported from the grid',
-      'The instantaneous irradiance on the array',
+      'Only the energy exported out to the grid supply',
+      'The energy imported from the grid supply meter',
+      'The instantaneous irradiance falling on the array',
     ],
     correctAnswer: 0,
     explanation:
@@ -1245,10 +1245,10 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     id: 74,
     question: 'What is the main advantage of distributed generation over centralised power plants?',
     options: [
-      'It guarantees a constant, firm output',
-      'It removes the need for any grid connection',
+      'It guarantees a constant, firm output at all times',
+      'It removes the need for any grid connection at all',
       'It reduces transmission losses by generating near demand',
-      'It eliminates the need for protection devices',
+      'It eliminates the need for any protection devices on site',
     ],
     correctAnswer: 2,
     explanation:
@@ -1395,8 +1395,8 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     options: [
       'To improve the conversion efficiency of the cells',
       'To provide protection against electric shock under fault',
-      'To increase the open-circuit voltage of the string',
-      'To reduce the operating temperature of the panels',
+      'To increase the open-circuit voltage of the complete string',
+      'To reduce the operating temperature of the panels in summer',
     ],
     correctAnswer: 1,
     explanation:
@@ -1426,10 +1426,10 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     id: 85,
     question: 'What is the main benefit of smart inverters?',
     options: [
-      'Lower cost',
+      'Lower installed unit cost',
       'Grid support functions',
-      'Easier installation',
-      'Higher efficiency',
+      'Easier installation on site',
+      'Higher conversion efficiency',
     ],
     correctAnswer: 1,
     explanation:
@@ -1443,10 +1443,10 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     id: 86,
     question: 'What is the typical maintenance cost for solar systems?',
     options: [
-      '2-3% of initial cost per year',
-      '1-2% of initial cost per year',
+      '2-3% of the initial cost each year',
+      '1-2% of initial cost yearly',
       '0.5-1% of initial cost per year',
-      '3-5% of initial cost per year',
+      '3-5% of initial cost a year',
     ],
     correctAnswer: 2,
     explanation:
@@ -1494,9 +1494,9 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     question: 'Which factor most directly determines the usable kWh capacity needed when sizing a home battery?',
     options: [
       'The household evening and overnight energy consumption',
-      'The open-circuit voltage of the PV string',
-      'The total roof area available for the array',
-      'The short-circuit current rating of the modules',
+      'The open-circuit voltage of the whole PV string',
+      'The total roof area that is available for the whole array',
+      'The short-circuit current rating of the modules installed',
     ],
     correctAnswer: 0,
     explanation:
@@ -1527,9 +1527,9 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     question: 'What does an insulation (isolation) monitoring device on the DC side of a PV system detect?',
     options: [
       'A deterioration of insulation resistance to earth',
-      'The instantaneous power output of the array',
-      'The frequency of the AC grid supply',
-      'The tilt angle of the modules',
+      'The instantaneous power output of the complete array',
+      'The frequency of the incoming AC grid supply voltage',
+      'The tilt angle of the modules mounted on the roof slope',
     ],
     correctAnswer: 0,
     explanation:
@@ -1559,10 +1559,10 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     id: 93,
     question: 'What is the main benefit of distributed (module-level) MPPT?',
     options: [
-      'It removes the need for a central inverter',
+      'It removes the need for any central string inverter at all',
       'It optimises each panel individually, reducing mismatch losses',
-      'It increases the open-circuit voltage of the array',
-      'It eliminates the need for DC isolation',
+      'It increases the open-circuit voltage of the whole array',
+      'It eliminates the need for any DC isolation anywhere on the roof',
     ],
     correctAnswer: 1,
     explanation:
@@ -1594,8 +1594,8 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     options: [
       'Actual energy yield as a fraction of the theoretical yield',
       'The peak DC power divided by the AC inverter rating',
-      'The cost per kWh generated over the system life',
-      'The tilt angle relative to the site latitude',
+      'The cost per kWh generated over the whole life of the system',
+      'The tilt angle of the array relative to the local site latitude',
     ],
     correctAnswer: 0,
     explanation:
@@ -1643,9 +1643,9 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     question: 'How does long-term data logging help diagnose faults in a solar PV system?',
     options: [
       'It records trends so deviations from expected output are visible',
-      'It physically resets the inverter when a fault occurs',
-      'It increases the array output during cloudy periods',
-      'It removes the need for any on-site inspection',
+      'It physically resets the inverter whenever a fault occurs on the site',
+      'It increases the array output during the long cloudy winter periods',
+      'It removes the need for any on-site inspection of the whole system',
     ],
     correctAnswer: 0,
     explanation:
@@ -1678,7 +1678,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
       'The quality and durability of the components installed',
       'The rated peak power printed on the module label',
       'The number of strings combined at the inverter',
-      'The size of the export limit agreed with the DNO',
+      'The size of the export limit that is agreed with the DNO',
     ],
     correctAnswer: 0,
     explanation:
@@ -1713,10 +1713,10 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     question:
       'Which battery chemistry typically offers the longest cycle life for grid-scale energy storage?',
     options: [
-      'Lead-acid (flooded)',
-      'Nickel-cadmium (NiCd)',
+      'Flooded lead-acid (vented type)',
+      'Nickel-cadmium (NiCd) cell chemistry',
       'Lithium iron phosphate (LiFePO4)',
-      'Lithium cobalt oxide (LCO)',
+      'Lithium cobalt oxide (LCO) chemistry',
     ],
     correctAnswer: 2,
     explanation:
@@ -1731,9 +1731,9 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the primary advantage of microinverters over string inverters in solar PV systems?',
     options: [
-      'Simplified installation',
-      'Lower cost',
-      'Higher efficiency',
+      'Simplified installation on site',
+      'Lower installed cost per panel',
+      'Higher conversion efficiency',
       'Module-level monitoring',
     ],
     correctAnswer: 3,
@@ -1751,7 +1751,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
       'Actual energy output versus the theoretical maximum',
       'The peak power the turbine can produce in a gust',
       'The wind speed at which the turbine shuts down',
-      'The ratio of blade length to tower height',
+      'The ratio of the blade length to the overall tower height',
     ],
     correctAnswer: 0,
     explanation:
@@ -1801,9 +1801,9 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     id: 107,
     question: 'What is the primary purpose of a solar irradiance sensor in a PV monitoring system?',
     options: [
-      'Measure temperature',
-      'Detect faults',
-      'Monitor inverter efficiency',
+      'Measure cell temperature',
+      'Detect faults in the whole array',
+      'Monitor the inverter efficiency',
       'Calculate performance ratio',
     ],
     correctAnswer: 3,
@@ -1870,9 +1870,9 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     id: 111,
     question: 'What is the main advantage of bifacial solar panels?',
     options: [
-      'Reduced transmission losses',
-      'Better self-consumption rates',
-      'Omnidirectional operation',
+      'Reduced transmission losses overall',
+      'Better self-consumption rates on site',
+      'Omnidirectional light collection',
       'Capture light from both sides',
     ],
     correctAnswer: 3,
@@ -1890,7 +1890,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
       'Energy retrieved as a fraction of energy stored',
       'The maximum power the battery can deliver',
       'The number of cycles before end of life',
-      'The self-discharge rate while idle',
+      'The self-discharge rate of the battery while idle',
     ],
     correctAnswer: 0,
     explanation:
@@ -1906,8 +1906,8 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     options: [
       'Excessive heat output during disposal',
       'Toxic metal contamination of soil and water',
-      'Release of ozone into the atmosphere',
-      'Generation of high-frequency noise',
+      'Release of ozone gas into the upper atmosphere',
+      'Generation of high-frequency audible noise nearby',
     ],
     correctAnswer: 1,
     explanation:
@@ -1921,10 +1921,10 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     id: 114,
     question: 'Which wind turbine design is most common for utility-scale installations?',
     options: [
-      'Vertical axis with a Savonius rotor',
-      'Horizontal axis with a downwind rotor',
+      'Vertical axis fitted with a Savonius drag-type rotor',
+      'Horizontal axis fitted with a two-blade downwind rotor',
       'Horizontal axis with a three-blade upwind rotor',
-      'Ducted shrouded turbine',
+      'A ducted and shrouded turbine with a fixed design',
     ],
     correctAnswer: 2,
     explanation:
@@ -1956,9 +1956,9 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     question: "In solar PV systems, what does 'Maximum Power Point Tracking' (MPPT) optimise?",
     options: [
       'Power extraction from the panels under varying conditions',
-      'The export limit agreed with the DNO',
-      'The fault disconnection time of the array',
-      'The earthing arrangement of the system',
+      'The export limit that is agreed with the local DNO',
+      'The fault disconnection time of the complete array',
+      'The earthing arrangement chosen for the whole installation',
     ],
     correctAnswer: 0,
     explanation:
@@ -1973,10 +1973,10 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the primary advantage of distributed generation over centralized power plants?',
     options: [
-      'It always provides firm, dispatchable output',
+      'It always provides a firm, dispatchable grid output',
       'Reduced transmission losses from generating near demand',
-      'It removes the need for grid protection devices',
-      'It guarantees a lower cost than central generation',
+      'It removes the need for any grid protection devices at all',
+      'It guarantees a lower cost than any central generation plant',
     ],
     correctAnswer: 1,
     explanation:
@@ -2026,9 +2026,9 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
       'In grid-scale battery storage, what is the primary purpose of the Battery Management System (BMS)?',
     options: [
       'Safety monitoring and control',
-      'Grid synchronisation',
-      'Power conversion',
-      'Energy forecasting',
+      'Grid synchronisation and control',
+      'Power conversion and DC inversion',
+      'Energy demand forecasting for the site',
     ],
     correctAnswer: 0,
     explanation:
@@ -2046,7 +2046,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
       'The high cost of the panels themselves',
       'Intermittency and variability of generation',
       'A lack of available connection points',
-      'The weight of the equipment on rooftops',
+      'The weight of the equipment placed on rooftops',
     ],
     correctAnswer: 1,
     explanation:
@@ -2078,8 +2078,8 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     question: 'What is the primary function of a grid-forming inverter?',
     options: [
       'Monitor performance',
-      'Maximize efficiency',
-      'Convert DC to AC',
+      'Maximise site efficiency',
+      'Convert DC power into AC',
       'Provide grid stability',
     ],
     correctAnswer: 3,
@@ -2095,9 +2095,9 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     question: "In wind energy, what does 'wake effect' refer to?",
     options: [
       'Reduced wind speed and turbulence behind a turbine',
-      'The delay between a gust and the blade response',
-      'The loss of power when blades ice up',
-      'The vibration felt at the turbine base',
+      'The delay between a gust and the blade pitch response',
+      'The loss of power output when the blades begin to ice up',
+      'The vibration that is felt at the base of the turbine tower',
     ],
     correctAnswer: 0,
     explanation:
@@ -2126,7 +2126,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
       'The speed at which output reaches its rated maximum',
       'The minimum wind speed at which it starts generating',
       'The speed at which it shuts down to avoid damage',
-      'The average wind speed over a year at the site',
+      'The average wind speed measured over a year at the site',
     ],
     correctAnswer: 1,
     explanation:
@@ -2140,10 +2140,10 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     id: 127,
     question: 'What is the most significant limitation currently holding back commercial perovskite solar cells?',
     options: [
-      'Their very low laboratory efficiency',
+      'Their very low efficiency in laboratory testing',
       'Long-term stability and degradation in real conditions',
-      'The very high cost of raw materials',
-      'An inability to be made in thin layers',
+      'The very high cost of the raw materials that are required',
+      'An inability to be manufactured in very thin layers at all',
     ],
     correctAnswer: 1,
     explanation:
@@ -2191,10 +2191,10 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     id: 130,
     question: 'Which renewable energy source has the highest capacity factor globally?',
     options: [
-      'Solar PV',
-      'Onshore wind',
+      'Solar PV arrays',
+      'Onshore wind farms',
       'Hydroelectric',
-      'Offshore wind',
+      'Offshore wind farms',
     ],
     correctAnswer: 2,
     explanation:
@@ -2208,9 +2208,9 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     id: 131,
     question: 'What is the primary benefit of using power optimisers in solar PV systems?',
     options: [
-      'Lower cost',
+      'Lower unit cost',
       'Higher voltage',
-      'Simplified wiring',
+      'Simplified array wiring',
       'Module-level MPPT',
     ],
     correctAnswer: 3,
@@ -2226,9 +2226,9 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     question: 'In wind turbine design, what does pitch control do in high wind conditions?',
     options: [
       'It feathers the blades to limit power and protect the turbine',
-      'It increases blade angle to capture more energy',
-      'It locks the rotor to prevent any movement',
-      'It tilts the whole tower away from the wind',
+      'It increases the blade angle in order to capture yet more energy',
+      'It locks the rotor completely to prevent any movement at all',
+      'It tilts the whole tower away from the prevailing wind direction',
     ],
     correctAnswer: 0,
     explanation:
@@ -2259,10 +2259,10 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     id: 134,
     question: 'Which solar cell technology currently holds the world record for efficiency?',
     options: [
-      'Standard polycrystalline silicon',
-      'Amorphous thin-film silicon',
+      'Standard polycrystalline silicon cells',
+      'Amorphous thin-film silicon modules',
       'Multi-junction concentrator cells',
-      'Single-junction cadmium telluride',
+      'Single-junction cadmium telluride cells',
     ],
     correctAnswer: 2,
     explanation:
@@ -2294,9 +2294,9 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     question: "In battery energy storage systems, what does 'C-rate' measure?",
     options: [
       'Charge/discharge rate relative to capacity',
-      'The internal cell temperature',
-      'The total energy capacity in kWh',
-      'The self-discharge rate while idle',
+      'The internal cell temperature reading',
+      'The total stored energy capacity in kWh',
+      'The self-discharge rate of the cells while idle',
     ],
     correctAnswer: 0,
     explanation:
@@ -2312,8 +2312,8 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     options: [
       'Lower wind speeds',
       'High installation costs',
-      'Environmental impact',
-      'Grid connection',
+      'Environmental impact concerns',
+      'Grid connection distance',
     ],
     correctAnswer: 1,
     explanation:
@@ -2328,9 +2328,9 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     question: 'Which mechanism is a leading cause of accelerated solar panel degradation in hot, humid climates?',
     options: [
       'Repeated thermal cycling combined with moisture ingress',
-      'Exposure to artificial indoor lighting',
-      'Operating below the rated open-circuit voltage',
-      'Frequent cleaning with deionised water',
+      'Prolonged exposure to artificial indoor lighting over time',
+      'Operating below the rated open-circuit voltage of the string',
+      'Frequent cleaning of the module glass with deionised water',
     ],
     correctAnswer: 0,
     explanation:
@@ -2398,7 +2398,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
       'Average wind speed',
       'Maximum wind speed',
       'Wind speed distribution',
-      'Wind direction',
+      'Wind direction variation',
     ],
     correctAnswer: 2,
     explanation:
@@ -2412,9 +2412,9 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     id: 143,
     question: 'What is the primary advantage of using silicon heterojunction (HJT) solar cells?',
     options: [
-      'Lower manufacturing cost than standard silicon',
-      'No need for any anti-reflective coating',
-      'Tolerance of much higher operating voltages',
+      'Lower manufacturing cost than for standard silicon',
+      'No need for any anti-reflective coating on the module glass',
+      'Tolerance of much higher operating voltages across the array',
       'Higher efficiency and a better temperature coefficient',
     ],
     correctAnswer: 3,
@@ -2431,9 +2431,9 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
       "In energy storage economics, what does 'levelized cost of storage' (LCOS) represent?",
     options: [
       'Total lifetime cost divided by energy delivered, per kWh',
-      'The purchase price of the battery alone',
-      'The round-trip efficiency of the system',
-      'The peak power rating of the storage unit',
+      'The initial purchase price of the battery system on its own',
+      'The round-trip efficiency of the whole storage system alone',
+      'The peak power rating of the whole storage unit on its own',
     ],
     correctAnswer: 0,
     explanation:
@@ -2484,7 +2484,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     options: [
       'Increase efficiency',
       'Enable storage',
-      'Reduce costs',
+      'Reduce the running costs',
       'Improve power quality',
     ],
     correctAnswer: 3,
@@ -2571,8 +2571,8 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     options: [
       'Store thermal energy',
       'Increase efficiency',
-      'Improve durability',
-      'Reduce costs',
+      'Improve tank durability',
+      'Reduce the running costs',
     ],
     correctAnswer: 0,
     explanation:
@@ -2586,10 +2586,10 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     id: 153,
     question: 'What is a notable benefit of floating solar (floatovoltaics) on reservoirs?',
     options: [
-      'It raises the open-circuit voltage of each string',
+      'It raises the open-circuit voltage of every single string',
       'It avoids using land while the water cools the panels',
-      'It removes the need for any inverter',
-      'It allows panels to track the sun without motors',
+      'It removes the need for any inverter anywhere on the site',
+      'It allows the panels to track the sun without any motors at all',
     ],
     correctAnswer: 1,
     explanation:
@@ -2641,7 +2641,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
       'Control system faults',
       'Generator issues',
       'Gearbox failure',
-      'Blade damage',
+      'Blade leading-edge damage',
     ],
     correctAnswer: 0,
     explanation:
@@ -2709,8 +2709,8 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     options: [
       'The percentage of capacity currently remaining',
       'The maximum power the battery can deliver',
-      'The number of cycles completed to date',
-      'The ambient temperature of the enclosure',
+      'The total number of charge cycles completed to date',
+      'The ambient temperature inside the battery enclosure',
     ],
     correctAnswer: 0,
     explanation:
@@ -2741,10 +2741,10 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     id: 162,
     question: 'Which wind turbine component typically requires the most frequent maintenance?',
     options: [
-      'Blades',
-      'Gearbox',
+      'Rotor blades',
+      'Main gearbox',
       'Yaw system',
-      'Generator',
+      'Generator windings',
     ],
     correctAnswer: 2,
     explanation:
@@ -2758,9 +2758,9 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     id: 163,
     question: 'What is the primary purpose of a solar combiner box?',
     options: [
-      'To convert the DC output to AC',
-      'To store surplus energy during the day',
-      'To track the maximum power point of each panel',
+      'To convert the DC output of the whole array to AC',
+      'To store surplus energy generated during the day',
+      'To track the maximum power point of every single panel',
       'To combine multiple DC string circuits into one feed',
     ],
     correctAnswer: 3,
@@ -2845,8 +2845,8 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     options: [
       'Turbine operational time',
       'Wind resource quality',
-      'Economic viability',
-      'Grid connection',
+      'Economic viability of the site',
+      'Grid connection availability',
     ],
     correctAnswer: 0,
     explanation:
@@ -2860,10 +2860,10 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     id: 169,
     question: 'Why is recycling end-of-life solar panels technically challenging?',
     options: [
-      'Panels contain no recoverable materials at all',
+      'The panels contain no recoverable materials of any value',
       'The laminated layers are hard to separate economically',
-      'Glass cannot be recycled by any process',
-      'The panels remain electrically live indefinitely',
+      'The glass cannot be recycled by any known industrial process',
+      'The panels remain electrically live indefinitely afterwards',
     ],
     correctAnswer: 1,
     explanation:
@@ -2912,9 +2912,9 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     question: 'What is the primary purpose of the nacelle cover on a wind turbine?',
     options: [
       'To protect the gearbox and generator from the weather',
-      'To generate additional power from the wind',
-      'To house the battery storage for the turbine',
-      'To act as the main structural support for the blades',
+      'To generate additional power directly from the wind',
+      'To house the battery storage used by the turbine',
+      'To act as the main structural support for the rotor blades',
     ],
     correctAnswer: 0,
     explanation:
@@ -2929,10 +2929,10 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the main benefit of using blockchain technology in renewable energy trading?',
     options: [
-      'Better security',
+      'Better data security',
       'Transparent transactions',
-      'Faster processing',
-      'Lower costs',
+      'Faster settlement processing',
+      'Lower transaction fees overall',
     ],
     correctAnswer: 1,
     explanation:
@@ -2981,9 +2981,9 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     question: "In solar PV systems, what does 'clipping' refer to?",
     options: [
       'Inverter power limiting',
-      'System grounding',
-      'Wire management',
-      'Panel mounting',
+      'System earthing arrangement',
+      'Cable management on the roof',
+      'Panel mounting arrangement',
     ],
     correctAnswer: 0,
     explanation:
@@ -2997,10 +2997,10 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     id: 177,
     question: 'What is the main driver behind the rapid growth of grid-scale battery storage?',
     options: [
-      'A surplus of cheap fossil-fuel generation',
+      'A large surplus of cheap fossil-fuel generation',
       'The need to balance variable renewable generation',
-      'A fall in electricity demand worldwide',
-      'New rules banning conventional generators',
+      'A fall in electricity demand across the world',
+      'New rules banning all conventional generators outright',
     ],
     correctAnswer: 1,
     explanation:
@@ -3015,9 +3015,9 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     question: 'Which wind measurement parameter is most critical for turbine design loads?',
     options: [
       'Average wind speed',
-      'Wind shear',
+      'Wind shear across the rotor',
       'Turbulence intensity',
-      'Gust factors',
+      'Peak gust load factors',
     ],
     correctAnswer: 2,
     explanation:
@@ -3031,9 +3031,9 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     id: 179,
     question: 'What is the main advantage of heterojunction solar cell technology?',
     options: [
-      'It needs no inverter to feed the a.c. grid supply',
-      'It can be manufactured entirely without silicon',
-      'It tolerates far higher d.c. string voltages',
+      'It needs no inverter of any kind to feed into the a.c. grid supply',
+      'It can be manufactured entirely without using any silicon material',
+      'It tolerates far higher d.c. string voltages right across the array',
       'It offers higher efficiency and a better temperature coefficient',
     ],
     correctAnswer: 3,
@@ -3049,9 +3049,9 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     question: "In battery energy storage, what does 'state of health' (SOH) measure?",
     options: [
       'Present maximum capacity versus original rated capacity',
-      'The charge level remaining at this moment',
-      'The instantaneous power being delivered',
-      'The ambient temperature around the cells',
+      'The charge level that remains at this moment in time',
+      'The instantaneous power being delivered right now',
+      'The ambient temperature measured around the battery cells',
     ],
     correctAnswer: 0,
     explanation:
@@ -3133,10 +3133,10 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     id: 185,
     question: 'What is the defining benefit of agrivoltaics (combining solar with farming)?',
     options: [
-      'It removes the need for any grid connection',
+      'It removes the need for any grid connection at all',
       'The same land is used for both crops and generation',
-      'It eliminates the cost of mounting structures',
-      'It guarantees higher yields for every crop type',
+      'It eliminates the cost of all the mounting structures',
+      'It guarantees higher yields for every type of crop grown',
     ],
     correctAnswer: 1,
     explanation:
@@ -3151,9 +3151,9 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     question: 'Why does cycle life have such a strong influence on the economics of battery storage?',
     options: [
       'More usable cycles spread the capital cost over more energy delivered',
-      'A longer cycle life increases the round-trip efficiency',
-      'Cycle life sets the maximum power the battery can deliver',
-      'Cycle life determines the VAT rate applied to the system',
+      'A longer cycle life directly increases the round-trip efficiency of the cells',
+      'Cycle life alone sets the maximum power that the battery is able to deliver',
+      'Cycle life determines the VAT rate that is applied to the whole storage system',
     ],
     correctAnswer: 0,
     explanation:
@@ -3169,7 +3169,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
       'What is the typical response time for battery storage to provide frequency regulation?',
     options: [
       'Days',
-      'Minutes',
+      'Several minutes',
       'Hours',
       'Seconds',
     ],
@@ -3186,9 +3186,9 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     question: "In wind turbine operation, what is 'curtailment'?",
     options: [
       'Intentional power reduction',
-      'Blade adjustment',
-      'Planned maintenance',
-      'Emergency shutdown',
+      'Blade pitch adjustment',
+      'Planned maintenance shutdown',
+      'Emergency turbine shutdown trip',
     ],
     correctAnswer: 0,
     explanation:
@@ -3202,10 +3202,10 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     id: 189,
     question: 'What is a key concern for owners considering vehicle-to-grid (V2G) participation?',
     options: [
-      'V2G can only be used while the vehicle is moving',
+      'V2G can only be used while the vehicle is actually being driven',
       'Frequent grid cycling may accelerate battery degradation',
-      'V2G prevents the vehicle from being charged at all',
-      'V2G requires the vehicle to be permanently off-grid',
+      'V2G prevents the vehicle from ever being charged again at all',
+      'V2G requires the vehicle to be kept permanently off the grid',
     ],
     correctAnswer: 1,
     explanation:
@@ -3219,10 +3219,10 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     id: 190,
     question: 'Which solar panel mounting system is most common for utility-scale installations?',
     options: [
-      'Fixed tilt',
-      'Roof-mounted',
+      'Fixed tilt frames',
+      'Roof-mounted rails',
       'Single-axis tracking',
-      'Dual-axis tracking',
+      'Dual-axis sun tracking',
     ],
     correctAnswer: 2,
     explanation:
@@ -3254,9 +3254,9 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     question: "In wind energy, what does 'wind shear' describe?",
     options: [
       'Variation of wind speed with height',
-      'Charging/discharging speed',
-      'Wind speed vs. power output',
-      'Reduced wind speed behind turbines',
+      'Charging and discharging speed',
+      'Wind speed measured against power output',
+      'Reduced wind speed behind the turbines',
     ],
     correctAnswer: 0,
     explanation:
@@ -3356,10 +3356,10 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     id: 198,
     question: 'Which factor is most important for wind turbine blade design?',
     options: [
-      'Manufacturing cost',
-      'Material strength',
+      'Manufacturing cost per blade',
+      'Material tensile strength',
       'Aerodynamic efficiency',
-      'Weight optimisation',
+      'Overall weight optimisation',
     ],
     correctAnswer: 2,
     explanation:
@@ -3373,10 +3373,10 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     id: 199,
     question: 'Why is long-duration seasonal energy storage so difficult to deploy economically?',
     options: [
-      'The stored energy cannot legally be exported',
-      'It must be charged and discharged within a single day',
+      'The stored energy cannot legally be exported to the grid at all',
+      'It must always be charged and discharged within one single day',
       'The very large capacity is used so rarely that costs per kWh are high',
-      'Seasonal storage offers near-perfect round-trip efficiency',
+      'Seasonal storage always offers near-perfect round-trip efficiency figures',
     ],
     correctAnswer: 2,
     explanation:
@@ -3391,9 +3391,9 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     question: "In grid-scale renewable energy integration, what is 'system inertia'?",
     options: [
       'Grid stability characteristic',
-      'Resistance to change',
-      'Energy storage capacity',
-      'Transmission capacity',
+      'Resistance to any change',
+      'The total energy storage capacity',
+      'Transmission network capacity limit',
     ],
     correctAnswer: 0,
     explanation:
@@ -3408,10 +3408,10 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     question:
       'Which photovoltaic arrangements fall within the scope of Section 712 of BS 7671:2018+A4:2026?',
     options: [
-      'Grid-parallel PV systems and no other arrangement whatever',
+      'Grid-parallel PV systems only, and no other arrangement whatever',
       'Standalone, grid-parallel and alternative-to-supply PV systems',
-      'Only PV systems exceeding a stated inverter power rating',
-      'PV systems mounted on roofs but not those at ground level',
+      'Only PV systems exceeding a stated inverter power output rating',
+      'PV systems mounted on roofs but not those installed at ground level',
     ],
     correctAnswer: 1,
     explanation:
@@ -3429,7 +3429,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
       'The DC isolator mounted next to the inverter enclosure',
       'The AC terminals of the inverter at the supply interface',
       'The PV modules in series with cables supplied by the maker',
-      'The consumer unit where the generation circuit is landed',
+      'The consumer unit where the generation circuit is finally landed',
     ],
     correctAnswer: 2,
     explanation:
@@ -3480,10 +3480,10 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     question:
       'Where the insulation monitoring function is built into the PV inverter rather than provided as a separate device, which standards does Regulation 712.538.101 accept?',
     options: [
-      'BS EN 62109-2 alone, since it covers inverter equipment',
-      'Any standard chosen by the designer for the installation',
+      'BS EN 62109-2 alone, since it covers the inverter equipment',
+      'Any standard chosen by the designer of the installation',
       'BS EN 62109-2 or BS EN 61557-8 for the built-in function',
-      'BS EN 61557-8 alone, since it covers monitoring devices',
+      'BS EN 61557-8 alone, since it covers the monitoring devices',
     ],
     correctAnswer: 2,
     explanation:

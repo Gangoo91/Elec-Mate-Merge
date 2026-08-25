@@ -160,7 +160,14 @@ function discoverAllBanks() {
 function analyse(file) {
   const src = readFileSync(file, 'utf8');
   const rows = [];
-  for (const m of src.matchAll(/options:\s*\[(.*?)\]\s*,\s*correctAnswer:\s*(\d)/gs)) {
+  // `as const` after the options array is legal TypeScript and three banks use
+  // it. Requiring `],` immediately made 600 questions invisible to this gate —
+  // all 200 in emotionalIntelligence, and 200 each in mentalHealth and
+  // communicationConfidence, which were instead mis-parsed as two giant
+  // "questions" with 2004 options. Measured and fixed 2026-08-25.
+  for (const m of src.matchAll(
+    /options:\s*\[(.*?)\]\s*(?:as const\s*)?,\s*correctAnswer:\s*(\d)/gs
+  )) {
     const opts = [...m[1].matchAll(OPT_RE)].map((o) => o[1] ?? o[2] ?? '');
     const ca = Number(m[2]);
     if (opts.length < 4 || !opts[ca]) continue;
@@ -344,6 +351,31 @@ const CHANCE = 25; // four options
  * Ties share credit: options of equal length occupy the same rank, so the
  * strategy picks among them uniformly.
  */
+/**
+ * PUNCTUATION TELL. The correct answer gets written more carefully than the
+ * distractors, so it picks up an acronym expansion, a parenthetical clarifier
+ * or a joined clause that the throwaways never get. Measured 2026-08-25 across
+ * 17,383 questions: on the 1,004 where only some options contain a bracket,
+ * the key was the bracketed one 80.9% of the time. Semicolons: 70.0% over 287.
+ * Chance is 25%.
+ *
+ * This is independent of length and survived the entire length-rebalancing
+ * pass, because "XLPE (Cross-linked polyethylene)" is a tell about precision,
+ * not about size. Same root cause as the length tell, different surface.
+ */
+const punctuationTell = (marker) => {
+  let applies = 0;
+  let hit = 0;
+  for (const r of all) {
+    const opts = [r.correct, ...r.wrong];
+    const withMark = opts.filter((o) => o.includes(marker));
+    if (!withMark.length || withMark.length === opts.length) continue; // no signal
+    applies++;
+    if (r.correct.includes(marker)) hit += 1 / withMark.length;
+  }
+  return { applies, pct: applies ? (100 * hit) / applies : 0 };
+};
+
 const rankProfile = (() => {
   const acc = [0, 0, 0, 0];
   for (const r of all) {
@@ -387,6 +419,13 @@ console.log(
   `  ...SHORTER by >20 chars (inverse) : ${pct((r) => r.inverseTell).toFixed(1)}%   <-- "pick the shortest" is gameable too`
 );
 console.log(`  2+ "Only ..." distractors        : ${pct((r) => r.onlyTell).toFixed(1)}%`);
+for (const mk of ['(', ';']) {
+  const t = punctuationTell(mk);
+  if (t.applies >= 50)
+    console.log(
+      `  key is the "${mk}" option           : ${t.pct.toFixed(1)}%   over ${t.applies} questions where only some options have one`
+    );
+}
 // Bank-level, so it cannot be expressed as a % of questions.
 const recycledBanks = perBank.filter((b) => b.recycled > 0).sort((a, b) => b.recycled - a.recycled);
 if (recycledBanks.length) {

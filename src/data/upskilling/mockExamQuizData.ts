@@ -91,9 +91,9 @@ export const mockExamQuestions: QuizQuestion[] = [
       'How does BS 7671:2018+A4:2026 require the effectiveness of a 30mA RCD to be verified?',
     options: [
       'A single AC test at IΔn, whatever the RCD type',
-      'A test at 5x IΔn on both half-cycles',
-      'Tests at ½x, 1x and 5x IΔn in sequence',
-      'The integral test button alone',
+      'A test at 5x IΔn on each half-cycle only',
+      'Tests at ½x, 1x and 5x IΔn on both half-cycles only',
+      'The integral test button pressed once only',
     ],
     correctAnswer: 0,
     explanation:
@@ -146,9 +146,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'When should dead testing be performed?',
     options: [
       'After visual inspection but before live testing',
-      'Only after the installation has been energised',
-      'Before any visual inspection is carried out',
-      'At the same time as functional testing',
+      'Only after the whole installation has been energised',
+      'Before any visual inspection has been carried out',
+      'At the same time as the functional testing',
     ],
     correctAnswer: 0,
     explanation:
@@ -160,10 +160,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 13,
     question: 'What is the purpose of verifying polarity on final circuits?',
     options: [
-      'To confirm the earth fault loop impedance is low enough',
+      'To confirm the earth fault loop impedance is low enough at each point',
       'To ensure switches and fuses are in the line conductor only',
-      'To prove the insulation resistance meets the minimum value',
-      'To measure the prospective fault current at the origin',
+      'To prove that the insulation resistance meets the minimum value',
+      'To measure the prospective fault current at the origin of the supply',
     ],
     correctAnswer: 1,
     explanation:
@@ -223,8 +223,8 @@ export const mockExamQuestions: QuizQuestion[] = [
     options: [
       'Identify, isolate, secure the isolation, then prove dead with a tester proved before and after',
       'Identify, isolate, prove dead, then secure the isolation once the circuit is confirmed dead',
-      'Isolate, prove dead, start work, then secure the isolation before leaving the area',
-      'Prove dead, identify the circuit, isolate it, then secure the isolation',
+      'Isolate the supply, prove dead, start work, then secure the isolation before leaving site',
+      'Prove dead with the tester first, then identify the circuit, isolate it and secure the isolation',
     ],
     correctAnswer: 0,
     explanation:
@@ -235,7 +235,7 @@ export const mockExamQuestions: QuizQuestion[] = [
   {
     id: 18,
     question: 'When proving dead, the voltage indicator should be tested:',
-    options: ['Once before use', 'Only if faulty', 'Before and after use', 'Once after use'],
+    options: ['Once immediately before use', 'Only if it appears faulty', 'Before and after use', 'Once after use only'],
     correctAnswer: 2,
     explanation: 'Voltage indicators must be proven on a known live source before and after use.',
     category: 'Safe Isolation',
@@ -245,9 +245,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 19,
     question: 'What PPE is essential when carrying out live electrical testing?',
     options: [
-      'A hard hat and steel toe-cap boots',
-      'Hi-vis vest and ear defenders',
-      'A dust mask and knee pads',
+      'A hard hat and steel toe-capped boots',
+      'A hi-vis vest and a set of ear defenders',
+      'A dust mask and gel-filled knee pads',
       'Safety glasses and insulated gloves',
     ],
     correctAnswer: 3,
@@ -279,7 +279,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     options: [
       'Excessive prospective fault current',
       'High resistance in the earth fault path',
-      'A neutral-to-earth fault on the circuit',
+      'A neutral-to-earth fault on the final circuit',
       'An oversized protective conductor',
     ],
     correctAnswer: 1,
@@ -292,10 +292,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 22,
     question: 'What might cause insulation resistance values to read abnormally low?',
     options: [
-      'Using too high a test voltage',
-      'A protective conductor of large cross-section',
+      'Using too high a test voltage on the circuit',
+      'A protective conductor of a large cross-sectional area',
       'Damp conditions or connected loads not removed',
-      'Testing a very short cable run',
+      'Testing a very short cable run at reduced voltage',
     ],
     correctAnswer: 2,
     explanation:
@@ -307,9 +307,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 23,
     question: 'During RCD testing, what would indicate a faulty RCD?',
     options: [
-      'Trips within required time',
-      'Trips at rated current',
-      'Reset button functions',
+      'Trips within the required time',
+      'Trips at its rated load current',
+      'The reset button operates correctly',
       'Fails to trip at test current',
     ],
     correctAnswer: 3,
@@ -323,9 +323,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'When testing a ring final circuit, what indicates a break in the ring?',
     options: [
       'Infinite resistance reading',
-      'All readings are identical',
+      'All the readings are identical',
       'Low resistance readings',
-      'Normal continuity',
+      'Normal continuity readings',
     ],
     correctAnswer: 0,
     explanation: 'An infinite resistance reading indicates an open circuit or break in the ring.',
@@ -336,9 +336,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 25,
     question: 'You discover a protective conductor is not continuous. What action should you take?',
     options: [
-      'Increase the protective device rating to compensate',
+      'Increase the rating of the protective device to compensate',
       'Record the defect and inform the responsible person',
-      'Continue testing and note it on the next inspection',
+      'Continue testing and note it on the next inspection report',
       'Replace the conductor with a larger line conductor',
     ],
     correctAnswer: 1,
@@ -384,9 +384,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'Who is responsible for signing the inspection and testing section of an EIC?',
     options: [
       'The person who carried out the inspection and testing',
-      'The client who ordered the work',
-      'The building control body',
-      'The distribution network operator',
+      'The client who ordered the work, rather than the tester',
+      'The building control body for the relevant local authority',
+      'The distribution network operator supplying the premises',
     ],
     correctAnswer: 0,
     explanation:
@@ -399,10 +399,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     question:
       "What information is required in the 'extent of installation covered' section of an EICR?",
     options: [
-      'The estimated value of the installation',
+      'The estimated replacement value of the installation',
       'The specific areas and circuits inspected and tested',
-      'The names of all previous occupiers',
-      'The original date of installation only',
+      'The names of all the previous occupiers of the property',
+      'The original date of installation and its designer',
     ],
     correctAnswer: 1,
     explanation:
@@ -414,10 +414,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 30,
     question: 'In what circumstances should a Limitation be recorded on a certificate?',
     options: [
-      'When the installation is fully accessible and tested',
-      'When all test results are within acceptable limits',
+      'When the installation is fully accessible and has been tested',
+      'When all of the test results fall within the acceptable limits',
       'When areas could not be accessed as agreed with the client',
-      'When the client requests a discount on the work',
+      'When the client asks for a discount on the work done',
     ],
     correctAnswer: 2,
     explanation:
@@ -441,9 +441,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: "What does the observation code 'FI' mean?",
     options: [
       'Further Investigation required',
-      'Fault Indicated on the supply',
-      'Fully Insulated equipment',
-      'Final Inspection completed',
+      'Fault Indicated on the supply side',
+      'Fully Insulated equipment fitted',
+      'Final Inspection has been completed',
     ],
     correctAnswer: 0,
     explanation:
@@ -479,9 +479,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 35,
     question: 'A C3 observation indicates:',
     options: [
-      'Immediate danger',
+      'Immediate danger present',
       'Potentially dangerous',
-      'Satisfactory',
+      'Satisfactory result',
       'Improvement recommended',
     ],
     correctAnswer: 3,
@@ -517,10 +517,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 38,
     question: "Define the term 'Zs' and explain its significance:",
     options: [
-      'Source impedance - determines voltage regulation',
-      'Supply impedance - affects power factor',
+      'Source impedance - determines the voltage regulation at the load',
+      'Supply impedance - affects the power factor of the load',
       'Total earth fault loop impedance - ensures disconnection times',
-      'Short circuit impedance - limits fault current',
+      'Short circuit impedance - limits the fault current at the origin',
     ],
     correctAnswer: 2,
     explanation:
@@ -532,9 +532,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 39,
     question: "What does 'PFC' stand for and why is it measured?",
     options: [
-      'Power Factor Correction - improves efficiency',
-      'Protective Function Check - verifies safety',
-      'Primary Feed Circuit - identifies supply',
+      'Power Factor Correction - improves the supply efficiency',
+      'Protective Function Check - verifies the circuit safety',
+      'Primary Feed Circuit - identifies the incoming supply cable',
       'Prospective Fault Current - confirms equipment rating',
     ],
     correctAnswer: 3,
@@ -550,7 +550,7 @@ export const mockExamQuestions: QuizQuestion[] = [
       'Measure each leg end-to-end, then cross-connect and test',
       'Apply 500V DC between line and the protective conductor',
       'Measure the loop impedance at the furthest socket only',
-      'Inject 1.5x the device rating and time the disconnection',
+      'Inject 1.5 times the device rating and time the disconnection',
     ],
     correctAnswer: 0,
     explanation:
@@ -603,10 +603,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 45,
     question: 'Supplementary bonding may be omitted in bathrooms if:',
     options: [
-      'Metal parts are painted',
+      'Every metal part in the room is painted',
       'All circuits have RCD protection',
-      'Only plastic fittings are used',
-      'The bathroom is small',
+      'Plastic fittings are used throughout',
+      'The bathroom is a small room',
     ],
     correctAnswer: 1,
     explanation:
@@ -629,9 +629,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 47,
     question: 'Before using a multimeter for voltage testing, you should:',
     options: [
-      'Check battery level only',
-      'Check the fuse rating',
-      'Clean the probes',
+      'Check the battery level only',
+      'Check the rating of the internal fuse',
+      'Clean the test probes and leads',
       'Test on a known live source',
     ],
     correctAnswer: 3,
@@ -705,8 +705,8 @@ export const mockExamQuestions: QuizQuestion[] = [
     options: [
       'Only the electrician who carried out the work',
       'The person ordering the work and relevant authorities',
-      'The distribution network operator only',
-      'The manufacturer of the consumer unit',
+      'The distribution network operator and nobody else',
+      'The manufacturer of the consumer unit that was installed',
     ],
     correctAnswer: 1,
     explanation: 'A copy must be given to the person ordering the work, with notification to building control or the competent person scheme as relevant authorities.',
@@ -779,9 +779,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'When testing an IT system, what additional test is required?',
     options: [
       'A second earth electrode resistance measurement',
-      'A higher insulation resistance test voltage of 1000V',
+      'An insulation resistance test at 1000V rather than 500V',
       'Insulation monitoring device functional verification',
-      'A repeat of the ring final continuity test',
+      'A repeat of the ring final circuit continuity readings',
     ],
     correctAnswer: 2,
     explanation:
@@ -793,9 +793,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 59,
     question: 'What is the purpose of functional testing?',
     options: [
-      'To measure the insulation resistance of each circuit',
-      'To record the prospective fault current at the origin',
-      'To confirm the earth fault loop impedance is low enough',
+      'To measure the insulation resistance of every final circuit',
+      'To record the prospective fault current at the origin of supply',
+      'To confirm that the earth fault loop impedance is low enough',
       'To verify operation of switches, isolators and controls',
     ],
     correctAnswer: 3,
@@ -810,8 +810,8 @@ export const mockExamQuestions: QuizQuestion[] = [
     options: [
       'By simulating mains failure to verify operation',
       'Only with the normal supply fully energised',
-      'At 500V DC insulation resistance only',
-      'By measuring phase rotation at the luminaire',
+      'By a 500V DC insulation resistance test only',
+      'By measuring the phase rotation at each luminaire',
     ],
     correctAnswer: 0,
     explanation:
@@ -839,10 +839,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 62,
     question: 'Intermittent RCD tripping could indicate:',
     options: [
-      'Correct operation',
+      'Correct operation of the device',
       'High earth loop impedance',
       'Earth leakage or N-E fault',
-      'Low insulation resistance',
+      'Low insulation resistance value',
     ],
     correctAnswer: 2,
     explanation:
@@ -899,10 +899,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 66,
     question: 'The purpose of main protective bonding is to:',
     options: [
-      'Limit the prospective fault current at the origin',
-      'Provide a return path for normal load current',
+      'Limit the prospective fault current at the origin of the supply',
+      'Provide a return path for the normal load current of the circuit',
       'Connect extraneous-conductive-parts to the main earth terminal',
-      'Reduce the insulation resistance of the installation',
+      'Reduce the insulation resistance measured across the installation',
     ],
     correctAnswer: 2,
     explanation:
@@ -948,10 +948,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 70,
     question: 'What is meant by prospective short circuit current?',
     options: [
-      'The normal full-load current of the circuit',
-      'The leakage current that operates the RCD',
+      'The normal full-load current drawn by the circuit',
+      'The leakage current that operates the RCD in service',
       'Maximum current between live conductors during a fault',
-      'The current measured during functional testing',
+      'The current measured during functional testing of a circuit',
     ],
     correctAnswer: 2,
     explanation:
@@ -1049,9 +1049,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 79,
     question: 'What test is used to check polarity at a light switch?',
     options: [
-      'Insulation resistance test at 500V DC',
-      'Earth fault loop impedance measurement',
-      'RCD trip-time test at 5x rated current',
+      'An insulation resistance test at 500V DC on the wiring',
+      'An earth fault loop impedance measurement at the lamp',
+      'An RCD trip-time test at the rated current',
       'Continuity testing through the switch to the lamp',
     ],
     correctAnswer: 3,
@@ -1148,9 +1148,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 87,
     question: 'What type of cable should be used for an underground installation?',
     options: [
-      'Standard flat twin-and-earth PVC cable',
-      'Single-insulated tri-rated panel wire',
-      'Unsheathed mineral-insulated conductors',
+      'Standard flat twin-and-earth PVC cable clipped direct',
+      'Single-insulated tri-rated panel wire in free air',
+      'Unsheathed mineral-insulated conductors laid direct',
       'Armoured cable or cable in suitable conduit',
     ],
     correctAnswer: 3,
@@ -1164,9 +1164,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'The purpose of an equipotential bonding system is to:',
     options: [
       'Ensure simultaneously accessible metalwork is at the same potential',
-      'Carry the normal load current back to the supply',
-      'Reduce the prospective fault current at the origin',
-      'Raise the insulation resistance of the installation',
+      'Carry the normal load current back to the supply transformer',
+      'Reduce the prospective fault current at the origin of supply',
+      'Raise the insulation resistance measured across the whole installation',
     ],
     correctAnswer: 0,
     explanation:
@@ -1178,9 +1178,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 89,
     question: 'What happens to the current-carrying capacity of cables when grouped together?',
     options: [
-      'It is unaffected by grouping',
+      'It is unaffected by grouping the cables together',
       'It decreases due to mutual heating effects',
-      'It increases because heat is shared',
+      'It increases because the heat is shared between them',
       'It must be doubled to allow for grouping',
     ],
     correctAnswer: 1,
@@ -1220,9 +1220,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'In a PME (TN-C-S) supply, the installation earth is derived from:',
     options: [
       'The combined neutral and earth (PEN) conductor',
-      'A local earth electrode at the installation',
-      'A separate earth conductor run by the DNO',
-      'The metallic water service pipe',
+      'A local earth electrode at the installation origin',
+      'A separate earth conductor run by the distributor',
+      'The metallic water service pipe entering the building',
     ],
     correctAnswer: 0,
     explanation:
@@ -1275,9 +1275,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'The purpose of an isolation device is to:',
     options: [
       'Completely cut off the supply for safe maintenance',
-      'Limit the fault current to a safe level',
+      'Limit the fault current flowing to a safe level',
       'Switch the circuit on and off in normal use',
-      'Detect earth leakage and trip automatically',
+      'Detect earth leakage and trip the circuit automatically',
     ],
     correctAnswer: 0,
     explanation:
@@ -1365,9 +1365,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'Building Regulations Part P notification is NOT required for:',
     options: [
       'Like-for-like accessory replacement',
-      'Consumer unit replacement',
-      'New circuit installation',
-      'Bathroom electrical work',
+      'Consumer unit replacement work',
+      'New circuit installation in a dwelling',
+      'Bathroom electrical installation work',
     ],
     correctAnswer: 0,
     explanation:
@@ -1430,10 +1430,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 110,
     question: 'The Electricity Safety, Quality and Continuity Regulations 2002 primarily govern:',
     options: [
-      'Installation standards',
-      'Electrical contractors',
+      'Installation and wiring standards',
+      'Electrical contractors and installers',
       'Distribution network operators',
-      'Testing procedures',
+      'Inspection and testing procedures',
     ],
     correctAnswer: 2,
     explanation:
@@ -1525,10 +1525,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 117,
     question: 'Insulation resistance should be tested between:',
     options: [
-      'The line conductor and the protective device only',
+      'The line conductor and the casing of the protective device only',
       'Each live conductor and earth, then between live conductors',
-      'The neutral and the main earthing terminal only',
-      'Two adjacent socket-outlets on the same circuit',
+      'The neutral conductor and the main earthing terminal',
+      'Two adjacent socket-outlets on the same final circuit',
     ],
     correctAnswer: 1,
     explanation:
@@ -1601,9 +1601,9 @@ export const mockExamQuestions: QuizQuestion[] = [
       'When testing installations with photovoltaic systems, additional safety measures include:',
     options: [
       'Testing only the AC side, as the DC side is always safe',
-      'Using AC-only rated instruments on the array',
+      'Using AC-only rated instruments on the DC side of an array',
       'DC and AC isolation with appropriately rated test equipment',
-      'Disconnecting the array earth before any test',
+      'Disconnecting the array earthing before any test is carried out',
     ],
     correctAnswer: 2,
     explanation:
@@ -1614,9 +1614,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 123,
     question: 'Functional testing of safety services must include:',
     options: [
-      'Insulation resistance testing only',
-      'A single test under normal supply conditions',
-      'Visual inspection without any operation',
+      'Insulation resistance testing of the circuits only',
+      'A single test carried out under normal supply conditions',
+      'Visual inspection without operating the equipment at all',
       'Operation under both normal and emergency conditions',
     ],
     correctAnswer: 3,
@@ -1630,9 +1630,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'When testing installations with inverters or UPS systems:',
     options: [
       'They may keep circuits live after mains isolation',
-      'The DC side never needs to be considered',
-      'No isolation is required as output is low voltage',
-      'Phase rotation is irrelevant on any output',
+      'The DC side never needs to be considered when testing',
+      'No isolation is required as the output is low voltage',
+      'Phase rotation is irrelevant on any inverter output',
     ],
     correctAnswer: 0,
     explanation:
@@ -1658,10 +1658,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 126,
     question: 'When testing circuits with surge protective devices (SPDs):',
     options: [
-      'SPDs should remain connected',
-      "SPDs don't affect testing",
+      'SPDs should remain connected throughout',
+      'SPDs do not affect the test readings',
       'SPDs must be disconnected before testing',
-      'Special test equipment required',
+      'Special test equipment is required for them',
     ],
     correctAnswer: 2,
     explanation:
@@ -1690,8 +1690,8 @@ export const mockExamQuestions: QuizQuestion[] = [
     options: [
       'Allow discharge time before testing',
       'Test immediately after isolation',
-      "Capacitors don't affect testing",
-      'Remove all capacitors',
+      'Capacitors do not affect the readings',
+      'Remove all capacitors from the circuit',
     ],
     correctAnswer: 0,
     explanation:
@@ -1735,9 +1735,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 131,
     question: 'An RCD that trips at 15mA when tested at 30mA indicates:',
     options: [
-      'Faulty RCD requiring replacement',
-      'High sensitivity setting',
-      'Incorrect test procedure',
+      'A faulty RCD requiring replacement',
+      'An unusually high sensitivity setting',
+      'An incorrect test procedure was used',
       'Normal operation within tolerance',
     ],
     correctAnswer: 3,
@@ -1751,9 +1751,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'Type A RCDs are designed to detect:',
     options: [
       'AC and pulsating DC residual currents',
-      'DC residual currents only',
-      'High frequency currents only',
-      'AC residual currents only',
+      'Smooth DC residual currents alone',
+      'High frequency residual current only',
+      'Sinusoidal AC residual currents and no others',
     ],
     correctAnswer: 0,
     explanation:
@@ -1794,9 +1794,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 135,
     question: 'When should a Type B RCD be specified?',
     options: [
-      'On any standard domestic lighting circuit',
-      'Where only sinusoidal AC residual current can occur',
-      'On all circuits to save on device cost',
+      'On every socket-outlet circuit, whatever equipment is connected',
+      'Where pulsating DC residual current may occur, such as a washing machine',
+      'Where the residual current can only ever be alternating and sinusoidal',
       'Where smooth DC residual current may occur (e.g. VSDs, EV chargers)',
     ],
     correctAnswer: 3,
@@ -1810,9 +1810,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'The unwanted tripping of RCDs can be reduced by:',
     options: [
       'Dividing circuits across multiple RCDs to reduce cumulative leakage',
-      'Fitting a single 30mA RCD to protect the whole board',
-      'Increasing the rating of the main switch',
-      'Removing the protective conductor from sensitive loads',
+      'Fitting a single 30mA RCD to protect the whole of the distribution board',
+      'Increasing the current rating of the main switch at the distribution board',
+      'Removing the circuit protective conductor from the more sensitive loads',
     ],
     correctAnswer: 0,
     explanation:
@@ -1823,10 +1823,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 137,
     question: 'RCD protection for socket-outlets may be omitted (other than in a dwelling) if:',
     options: [
-      'The circuit is rated above 16A',
+      'The socket-outlet circuit is rated above 16A',
       'A documented risk assessment justifies omission',
-      'The premises are occupied during the day only',
-      'A standalone MCB is fitted instead',
+      'The premises are occupied during daylight hours only',
+      'A standalone MCB is fitted in place of the RCD',
     ],
     correctAnswer: 1,
     explanation:
@@ -1853,9 +1853,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 139,
     question: 'When testing RCDs in IT systems:',
     options: [
-      'No RCD test is ever required',
-      'The same TN test method always applies directly',
-      'The RCD must be tested at 500% only',
+      'No RCD test is ever required on this type of system',
+      'Exactly the same test method as a TN system always applies',
+      'The RCD must be tested at five times its rated residual current',
       'Special procedures apply due to the earthing arrangement',
     ],
     correctAnswer: 3,
@@ -1906,9 +1906,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 143,
     question: 'When installing RCDs in circuits with high standing leakage currents:',
     options: [
-      'Remove the RCD and rely on the MCB',
-      'Connect several circuits to one 30mA RCD',
-      'Reduce the protective conductor size',
+      'Remove the RCD altogether and rely on the MCB for protection',
+      'Connect several more circuits onto the same single 30mA RCD',
+      'Reduce the cross-sectional area of the protective conductor',
       'Consider higher-rated RCDs or division into more circuits',
     ],
     correctAnswer: 3,
@@ -1973,8 +1973,8 @@ export const mockExamQuestions: QuizQuestion[] = [
     options: [
       'Improve the earth fault path or reduce cable length',
       'Increase the rating of the protective device',
-      'Remove the RCD from the circuit',
-      'Raise the supply voltage at the origin',
+      'Remove the RCD from the affected final circuit',
+      'Increase the supply voltage at the origin of the circuit',
     ],
     correctAnswer: 0,
     explanation:
@@ -1986,10 +1986,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 149,
     question: 'The 0.8 (80%) rule-of-thumb applied to measured Zs accounts for:',
     options: [
-      'A safety margin for instrument calibration drift',
+      'A safety margin allowed for instrument calibration drift',
       'The rise in conductor resistance at operating temperature',
-      'The reduction in earth electrode resistance over time',
-      'The tolerance band of the protective device',
+      'The gradual reduction in earth electrode resistance over time',
+      'The tolerance band on the operating characteristic of the device',
     ],
     correctAnswer: 1,
     explanation:
@@ -2001,10 +2001,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 150,
     question: 'In a TT system, the earth fault loop impedance comprises mainly:',
     options: [
-      'The supply PEN conductor running back to the supply transformer',
-      'The line conductor and the neutral return conductor only',
+      'The supply PEN conductor running all the way back to the supply transformer',
+      'The line conductor and the neutral return conductor of the final circuit',
       'The installation electrode, the mass of earth and the supply electrode',
-      'The internal resistance of the protective device only',
+      'The internal resistance of the protective device at the origin of the circuit',
     ],
     correctAnswer: 2,
     explanation:
@@ -2056,10 +2056,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 154,
     question: 'High earth fault loop impedance readings may indicate:',
     options: [
-      'An oversized line conductor',
-      'Excessive prospective fault current',
+      'An oversized line conductor at the origin',
+      'An excessive prospective fault current',
       'Loose connections or poor earth continuity',
-      'Too sensitive an RCD',
+      'An RCD that is far too sensitive for the load',
     ],
     correctAnswer: 2,
     explanation:
@@ -2072,8 +2072,8 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'The earth fault loop impedance test effectively verifies:',
     options: [
       'The insulation resistance of the final circuit',
-      'The polarity of every accessory',
-      'The voltage drop under full load',
+      'The polarity of every accessory on the final circuit',
+      'The voltage drop of the circuit under full load conditions',
       'The complete earth fault path and CPC continuity',
     ],
     correctAnswer: 3,
@@ -2089,9 +2089,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'When testing insulation resistance on circuits with neon indicators:',
     options: [
       'Disconnect or short out neon indicators',
-      'Test with indicators connected',
-      'Use lower test voltage',
-      'Test indicators separately',
+      'Test with all the indicators left connected',
+      'Use a much lower insulation test voltage',
+      'Test each neon indicator on its own afterwards',
     ],
     correctAnswer: 0,
     explanation:
@@ -2113,9 +2113,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'Under BS 7671:2018+A4:2026, how is the effectiveness of an RCD verified?',
     options: [
       'A single alternating current test at IΔn, whatever the RCD type',
-      'Tests at ½x, 1x and 5x IΔn on both half-cycles',
-      'A test at 5x IΔn on both half-cycles only',
-      'The integral test button, operated twice',
+      'Tests at ½x, 1x and 5x IΔn carried out on both of the half-cycles',
+      'A test at five times IΔn carried out on both half-cycles',
+      'The integral test button alone, operated twice by the user',
     ],
     correctAnswer: 0,
     explanation:
@@ -2126,9 +2126,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 159,
     question: 'Low insulation resistance readings may be caused by:',
     options: [
-      'Proper terminations',
-      'Good installation practices',
-      'New cable installation',
+      'Correctly made terminations',
+      'Good installation practice throughout',
+      'Newly installed cable in dry conditions',
       'High temperature and humidity',
     ],
     correctAnswer: 3,
@@ -2167,10 +2167,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 162,
     question: 'Step voltage testing for cable insulation involves:',
     options: [
-      'Single voltage application',
-      'Alternating test voltages',
+      'A single application of the full test voltage',
+      'Alternating test voltages applied in turn',
       'Gradual voltage increase to test voltage',
-      'Decreasing voltage steps',
+      'Decreasing voltage steps down from the maximum',
     ],
     correctAnswer: 2,
     explanation:
@@ -2197,9 +2197,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'When insulation resistance is measured as infinity (∞):',
     options: [
       'Perfect insulation is indicated',
-      'Test voltage is too low',
-      'Test instrument is faulty',
-      'The circuit has failed',
+      'The test voltage is too low',
+      'The test instrument is faulty',
+      'The circuit has failed the IR test',
     ],
     correctAnswer: 0,
     explanation:
@@ -2228,10 +2228,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 166,
     question: 'The maximum resistance value for a protective conductor in a ring final circuit is:',
     options: [
-      'Same as live conductors',
+      'Identical to the live conductor resistance',
       'Double the live conductor resistance',
       '1.67 times the live conductor resistance',
-      'Half the live conductor resistance',
+      'Half of the live conductor resistance value',
     ],
     correctAnswer: 2,
     explanation:
@@ -2244,9 +2244,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question:
       'When testing protective conductor continuity in installations with multiple earth electrodes:',
     options: [
-      'Visual inspection only',
-      'Test the combined resistance',
-      'Testing not required',
+      'Visual inspection is sufficient',
+      'Test the combined resistance only',
+      'No continuity testing is required',
       'Test each electrode separately',
     ],
     correctAnswer: 3,
@@ -2290,10 +2290,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     question:
       'When testing the continuity of ring circuit protective conductors, readings should be:',
     options: [
-      'Progressively higher towards the furthest point',
-      'Infinite at every socket on the ring',
+      'Progressively higher towards the furthest point on the ring',
+      'Infinite at every socket-outlet on the ring circuit',
       'Approximately equal at each point with slight variation',
-      'Exactly zero at every accessory',
+      'Exactly zero at every accessory on the ring circuit',
     ],
     correctAnswer: 2,
     explanation:
@@ -2334,10 +2334,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 173,
     question: 'When testing protective conductor continuity in armoured cables:',
     options: [
-      'Test combined resistance only',
+      'Test the combined resistance of both',
       'Test armour and internal CPC separately',
-      'Armour testing not required',
-      'Visual inspection sufficient',
+      'Armour testing is not required on these cables',
+      'Visual inspection of the gland is sufficient',
     ],
     correctAnswer: 1,
     explanation:
@@ -2349,10 +2349,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 174,
     question: 'The protective conductor resistance in a radial circuit should be:',
     options: [
-      'Always exactly equal to the line conductor resistance',
-      'Always half the line conductor resistance regardless of size',
+      'Always exactly equal to the measured resistance of the line conductor',
+      'Always half of the line conductor resistance, whatever the size used',
       'Related to line conductor resistance by cross-sectional area ratio',
-      'Independent of the conductor cross-sectional areas',
+      'Completely independent of the cross-sectional areas of the conductors',
     ],
     correctAnswer: 2,
     explanation:
@@ -2364,9 +2364,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 175,
     question: 'Functional earth conductors should be tested for:',
     options: [
-      'Their ability to carry full fault current',
-      'Insulation resistance above 100 MΩ',
-      'Correct phase rotation at the terminal',
+      'Their ability to carry the full fault current to earth',
+      'An insulation resistance value of above 100 MΩ throughout',
+      'Correct phase rotation measured at every functional earth terminal',
       'Continuity and correct separation from protective conductors',
     ],
     correctAnswer: 3,
@@ -2381,9 +2381,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'An EICR must include a recommendation for the next inspection interval based on:',
     options: [
       'Installation type, use, and condition',
-      'Insurance requirements',
-      'Client preference only',
-      'Standard 5-year period',
+      'The insurance requirements of the owner',
+      'The preference of the client alone',
+      'A standard five-year period in all cases',
     ],
     correctAnswer: 0,
     explanation:
@@ -2409,10 +2409,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 178,
     question: "The 'extent and limitations' section of an EICR should specify:",
     options: [
-      'The estimated cost of any remedial works needed',
-      'Only the overall satisfactory or unsatisfactory result',
+      'The estimated cost of all the remedial works found to be needed on site',
+      'Only the overall satisfactory or unsatisfactory result of the inspection',
       'Areas inspected, limitations, and percentage of installation sampled',
-      'The names of all previous owners of the property',
+      'The names of all the previous owners and occupiers of the whole property',
     ],
     correctAnswer: 2,
     explanation:
@@ -2424,9 +2424,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 179,
     question: "An EICR classification of 'Unsatisfactory' means:",
     options: [
-      'Minor defects present',
-      'Testing not possible',
-      'Documentation incomplete',
+      'Only minor defects present',
+      'Some testing was not possible',
+      'The documentation is incomplete',
       'C1 or C2 observations recorded',
     ],
     correctAnswer: 3,
@@ -2463,10 +2463,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 182,
     question: "The 'Summary of the Installation' section must include:",
     options: [
-      'The full schedule of every circuit test result obtained on site',
-      'The cost and programme for any recommended remedial works',
+      'The full schedule of all the circuit test results obtained on the site visit',
+      'The costs and the programme for all of the recommended remedial works',
       'Earthing arrangements, supply characteristics and main protective devices',
-      'The names of all previous owners and occupiers of the property',
+      'The names of every previous owner and occupier of the property since it was built',
     ],
     correctAnswer: 2,
     explanation:
@@ -2477,9 +2477,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 183,
     question: 'Distribution circuit details in Schedule of Test Results should show:',
     options: [
-      'Only a pass or fail result recorded for each circuit',
-      'The name of the manufacturer of each cable installed',
-      'The estimated remaining service life of each circuit',
+      'Only a pass or a fail result recorded against every circuit tested',
+      'The name of the manufacturer of every cable and accessory installed',
+      'The estimated remaining service life of every circuit on the board',
       'Circuit designation, cable details and protection characteristics',
     ],
     correctAnswer: 3,
@@ -2507,10 +2507,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 185,
     question: 'The duty holder for electrical safety in commercial premises is typically:',
     options: [
-      'The distribution network operator',
+      'The distribution network operator for the area',
       'The building owner or person in control of the premises',
-      'The original installing contractor indefinitely',
-      'The manufacturer of the consumer unit',
+      'The original installing contractor, indefinitely',
+      'The manufacturer of the consumer unit that was installed',
     ],
     correctAnswer: 1,
     explanation:
@@ -2521,10 +2521,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 186,
     question: 'Competency for inspection and testing is demonstrated by:',
     options: [
-      'Owning a calibrated multifunction tester',
-      'Length of time served in the trade alone',
+      'Ownership of a calibrated multifunction test instrument',
+      'The length of time that a person has served in the trade alone',
       'Knowledge, training, experience and understanding of hazards',
-      'Membership of any trade body',
+      'Membership of any trade body, whatever its own entry requirements',
     ],
     correctAnswer: 2,
     explanation:
@@ -2536,9 +2536,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 187,
     question: 'Records of electrical maintenance should be kept for:',
     options: [
-      'A maximum of twelve months after issue',
-      'Until the next periodic inspection only',
-      'No longer than is convenient for the duty holder',
+      'A maximum of twelve months after the date they were issued',
+      'Until the next periodic inspection has been carried out',
+      'No longer than is convenient for the duty holder to keep',
       'The life of the installation plus a reasonable period',
     ],
     correctAnswer: 3,
@@ -2551,9 +2551,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'When an EICR identifies immediate danger (C1), the inspector should:',
     options: [
       'Advise the person ordering the report without delay',
-      'Wait until the report is formally issued',
-      'Note it for the next periodic inspection',
-      'Leave the decision entirely to the client',
+      'Wait until the report has been formally issued',
+      'Note it down for the next periodic inspection',
+      'Leave the decision on it entirely to the client to make',
     ],
     correctAnswer: 0,
     explanation:
@@ -3339,10 +3339,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 241,
     question: 'For electric vehicle supply equipment (EVSE), what current monitoring is required?',
     options: [
-      'Only the AC frequency at the supply terminals',
+      'Only the AC supply frequency measured at the incoming terminals',
       'Pilot signal integrity and protective conductor current measurement',
-      'The earth electrode resistance of the charge point',
-      'Phase rotation of the single-phase vehicle inlet',
+      'The earth electrode resistance measured at the charge point',
+      'Phase rotation measured at the single-phase vehicle inlet',
     ],
     correctAnswer: 1,
     explanation:
@@ -3401,7 +3401,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     options: [
       'A 1000V insulation test on the detector wiring only',
       'Alarm activation sequences and communication backup systems',
-      'Phase rotation testing of the single-phase control panel',
+      'Phase rotation testing of the single-phase alarm control panel',
       'The earth electrode resistance of the alarm bell box',
     ],
     correctAnswer: 1,
@@ -3415,10 +3415,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     question:
       'What consideration applies to testing electric underfloor heating with smart controls?',
     options: [
-      'The earth electrode resistance of the floor mat',
-      'A reduced insulation test voltage of 100V DC',
+      'The earth electrode resistance of the heating floor mat',
+      'A reduced insulation resistance test voltage of 100V DC throughout',
       'Temperature sensor calibration and zone control verification',
-      'Phase rotation of the single-phase heating supply',
+      'Phase rotation testing of the single-phase heating circuit supply',
     ],
     correctAnswer: 2,
     explanation:
@@ -3446,9 +3446,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'What testing challenge is presented by electric towel rails with smart controls?',
     options: [
       'Temperature control accuracy and timer function verification',
-      'A reduced earth fault loop impedance of 0.1 ohms',
-      'A 1000V insulation test on the heating element',
-      'Phase rotation of the single-phase rail supply',
+      'A reduced earth fault loop impedance limit of 0.1 ohms at the rail',
+      'A 1000V insulation resistance test applied to the heating element',
+      'Phase rotation testing of the single-phase towel rail supply cable',
     ],
     correctAnswer: 0,
     explanation:
@@ -3463,7 +3463,7 @@ export const mockExamQuestions: QuizQuestion[] = [
       'Only a visual inspection of the connector housing',
       'Pilot wire integrity and in-cable control box function',
       'Phase rotation testing of the single-phase lead',
-      'The earth electrode resistance at the vehicle inlet',
+      'The earth electrode resistance taken at the vehicle inlet',
     ],
     correctAnswer: 1,
     explanation:
@@ -3475,10 +3475,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 250,
     question: 'What verification is needed for smart garage door systems?',
     options: [
-      'A 1000V insulation test on the motor windings only',
-      'Phase rotation testing of the single-phase door motor',
+      'A 1000V insulation resistance test on the motor windings',
+      'Phase rotation testing of the single-phase garage door motor',
       'Safety sensors, obstruction detection and emergency release',
-      'The earth electrode resistance of the garage structure',
+      'The earth electrode resistance measured at the garage structure',
     ],
     correctAnswer: 2,
     explanation:
@@ -3492,9 +3492,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 251,
     question: 'What is the primary purpose of a risk assessment before electrical testing?',
     options: [
-      'To estimate the cost of the testing work',
-      'To select which certificate to issue',
-      'To schedule the work around the client',
+      'To estimate the cost of carrying out the testing work',
+      'To select which certificate should be issued afterwards',
+      'To schedule the work around the daily routine of the client',
       'To identify hazards and implement control measures',
     ],
     correctAnswer: 3,
@@ -3508,9 +3508,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'When working on installations above 1kV, what additional qualification is required?',
     options: [
       'High voltage competency certification',
-      'No additional qualification',
-      'Standard electrical qualification',
-      'First aid training only',
+      'No additional qualification is needed at all',
+      'A standard electrical qualification',
+      'First aid training and nothing else',
     ],
     correctAnswer: 0,
     explanation: 'High voltage work requires specific competency certification and authorisation.',
@@ -3530,10 +3530,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 254,
     question: 'Arc flash risk is highest when:',
     options: [
-      'Working on an isolated and proved-dead circuit',
-      'Carrying out insulation resistance testing',
+      'Working on a circuit that is isolated and proved dead',
+      'Carrying out insulation resistance testing on an isolated circuit',
       'Working live on equipment with high available fault current',
-      'Measuring earth electrode resistance outdoors',
+      'Measuring the earth electrode resistance outdoors in dry weather',
     ],
     correctAnswer: 2,
     explanation:
@@ -3595,7 +3595,7 @@ export const mockExamQuestions: QuizQuestion[] = [
   {
     id: 259,
     question: 'What environmental factor most increases electrical safety risk?',
-    options: ['Bright sunlight', 'Windy conditions', 'High temperature', 'Wet or damp conditions'],
+    options: ['Bright, direct sunlight', 'Windy but dry conditions', 'High ambient temperature', 'Wet or damp conditions'],
     correctAnswer: 3,
     explanation:
       'Moisture significantly reduces insulation effectiveness and increases shock risk.',
@@ -3606,9 +3606,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'A method statement for electrical work must include:',
     options: [
       'Step-by-step procedures and the associated risk controls',
-      'Only the names of the operatives involved',
-      'A list of every test instrument owned',
-      'The client billing and payment terms',
+      'Only the names of the operatives who are involved',
+      'A list of every test instrument owned by the firm',
+      'The billing arrangements and the payment terms for the client',
     ],
     correctAnswer: 0,
     explanation: 'A method statement sets out the sequence of work and the risk control measures so the task is carried out safely.',
@@ -3618,10 +3618,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 261,
     question: 'What is the hierarchy of risk control in electrical safety?',
     options: [
-      'Continuity, Insulation, Polarity, Earth loop, RCD, Functional',
+      'PPE, administrative controls, engineering controls, substitution, elimination',
       'Elimination, substitution, engineering controls, administrative, PPE',
-      'Between live conductors and between each live conductor and earth',
-      'Access restrictions and conservation requirements',
+      'Identification, isolation, securing the isolation and proving dead',
+      'Substitution, elimination, engineering controls, PPE, then administrative',
     ],
     correctAnswer: 1,
     explanation:
@@ -3632,10 +3632,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 262,
     question: 'When is it acceptable to work live on electrical equipment?',
     options: [
-      'Whenever it is quicker than isolating and proving dead',
-      'On any circuit operating below 230V to earth',
+      'Whenever it is quicker to do that than isolating and proving the circuit dead',
+      'On any circuit operating at below 230V to earth, whatever work is being done',
       'Only when dead working is not practicable and it is properly risk assessed',
-      'When the client requests it in order to avoid downtime on site',
+      'When the client requests it in order to avoid any loss of production on site',
     ],
     correctAnswer: 2,
     explanation:
@@ -3674,10 +3674,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 265,
     question: 'What information must be included in electrical safety documentation?',
     options: [
-      'Only the names of the operatives on site',
+      'Only the names of the operatives working on the site',
       'Hazard identification, risk assessment and control measures',
-      'Just the calibration dates of the test instruments',
-      'A list of every cable installed on the job',
+      'Just the calibration dates of the test instruments used',
+      'A list of every cable and accessory installed on the whole job',
     ],
     correctAnswer: 1,
     explanation:
@@ -3689,10 +3689,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     question:
       'When working in confined spaces with electrical equipment, what additional risk applies?',
     options: [
-      'Improved natural ventilation and easy escape',
-      'A lower risk of electric shock than open areas',
+      'Improved natural ventilation and an easy escape route',
+      'A lower risk of electric shock than in open areas',
       'Reduced oxygen levels and restricted escape routes',
-      'No need for any additional risk assessment',
+      'No need for any additional risk assessment to be made',
     ],
     correctAnswer: 2,
     explanation:
@@ -3703,9 +3703,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 267,
     question: 'What is the recommended maximum working time for detailed electrical work?',
     options: [
-      'Work continuously until the task is fully complete',
-      'No limit, provided enough coffee is available',
-      'Twelve hours without a break to keep momentum',
+      'Work continuously until the whole task is fully complete',
+      'No limit at all, provided the work is inspected afterwards',
+      'Twelve hours without a break in order to keep momentum',
       'Regular breaks to maintain concentration and safety',
     ],
     correctAnswer: 3,
@@ -3718,9 +3718,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'Emergency procedures for electrical incidents must include:',
     options: [
       'Safe isolation, first aid and evacuation arrangements',
-      'A schedule of future inspection dates',
-      'The calibration records of test instruments',
-      'A full inventory of installed cables',
+      'A schedule of the future periodic inspection dates',
+      'The calibration records of the test instruments',
+      'A full inventory of the cables and accessories installed',
     ],
     correctAnswer: 0,
     explanation:
@@ -3734,8 +3734,8 @@ export const mockExamQuestions: QuizQuestion[] = [
     options: [
       'Light cloud cover and a gentle breeze',
       'Lightning risk and heavy precipitation',
-      'Dry, mild and settled conditions',
-      'Cool temperatures with good visibility',
+      'Dry, mild and settled conditions overhead',
+      'Cool temperatures with good visibility overhead',
     ],
     correctAnswer: 1,
     explanation:
@@ -3746,10 +3746,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 270,
     question: 'Competency assessment for electrical workers must evaluate:',
     options: [
-      'Only the number of years in the trade',
-      'Membership of a trade body alone',
+      'Only the number of years served in the trade',
+      'Membership of a recognised trade body alone',
       'Knowledge, skills and safety understanding',
-      'Ownership of a calibrated test instrument',
+      'Ownership of a set of calibrated test instruments',
     ],
     correctAnswer: 2,
     explanation:
@@ -3762,8 +3762,8 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'What communication is essential during complex electrical testing?',
     options: [
       'No communication, so each person works independently',
-      'Only written notes left for the next shift',
-      'Verbal instructions given once at the start of the day',
+      'Only written notes left behind for the following shift',
+      'Verbal instructions given once at the start of the working day',
       'Clear coordination between team members and other trades',
     ],
     correctAnswer: 3,
@@ -3789,10 +3789,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 273,
     question: 'What verification is required before recommissioning electrical systems?',
     options: [
-      'Only a quick visual glance at the consumer unit',
+      'Only a quick visual glance over the whole consumer unit',
       'Complete testing sequence and safety system verification',
-      'No verification, as the system worked before',
-      'Just confirming the supply voltage is present',
+      'No verification at all, since the system had worked before',
+      'Just confirming that the supply voltage is present at the board',
     ],
     correctAnswer: 1,
     explanation:
@@ -3804,10 +3804,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 274,
     question: 'Safety barriers during electrical testing must:',
     options: [
-      'Be removed as soon as the first test is taken',
-      'Only be used on three-phase installations',
+      'Be taken down as soon as the first test has been completed',
+      'Only be used where the installation is three-phase and above 400V',
       'Prevent unauthorised access and clearly indicate hazards',
-      'Carry the fault current during a short circuit',
+      'Carry the fault current safely during a short circuit at the board',
     ],
     correctAnswer: 2,
     explanation:
@@ -3819,9 +3819,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 275,
     question: 'What consideration applies to electrical work in healthcare facilities?',
     options: [
-      'No special consideration beyond a domestic install',
-      'Only the reception and office areas need attention',
-      'A reduced standard of earthing in clinical areas',
+      'No special consideration beyond a domestic installation',
+      'Only the reception and the office areas need attention',
+      'A reduced standard of earthing throughout the clinical areas',
       'Patient safety, life support systems and infection control',
     ],
     correctAnswer: 3,
@@ -3836,9 +3836,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'The 18th Edition of BS 7671 introduced new requirements for:',
     options: [
       'Arc fault detection devices (AFDD) in certain circumstances',
-      'Mandatory rewireable fuses on all final circuits',
-      'A reduction in the minimum insulation resistance value',
-      'Removal of RCD protection from socket-outlets',
+      'Mandatory rewireable fuses on all of the final circuits',
+      'A reduction in the minimum insulation resistance value allowed',
+      'The removal of RCD protection from all of the socket-outlets',
     ],
     correctAnswer: 0,
     explanation:
@@ -3864,10 +3864,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 278,
     question: 'Building Regulations Part P requires notification for:',
     options: [
-      'Like-for-like replacement of a damaged socket front',
-      'Replacing a single blown lamp in a light fitting',
+      'Like-for-like replacement of a damaged socket-outlet front plate',
+      'Replacing a single blown lamp in an existing luminaire fitting',
       'New circuits, consumer unit changes and bathroom/kitchen work',
-      'Resetting a tripped circuit breaker after a fault',
+      'Resetting a tripped circuit breaker after a transient earth fault',
     ],
     correctAnswer: 2,
     explanation:
@@ -3895,9 +3895,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'Competent person scheme registration requires:',
     options: [
       'Demonstrated competency, insurance and quality procedures',
-      'Only a one-off payment of a registration fee',
-      'Membership of any single trade union',
-      'A minimum of twenty years served in the trade',
+      'Only a one-off payment of the annual registration fee',
+      'Membership of any single recognised trade union body',
+      'A minimum of twenty years served in the trade before applying',
     ],
     correctAnswer: 0,
     explanation:
@@ -4009,8 +4009,8 @@ export const mockExamQuestions: QuizQuestion[] = [
     options: [
       'Accessible heights for switches and controls',
       'Larger cable sizes for every final circuit',
-      'A second consumer unit in every dwelling',
-      'Higher insulation resistance on all circuits',
+      'A second consumer unit fitted in every dwelling',
+      'Higher insulation resistance values on all circuits',
     ],
     correctAnswer: 0,
     explanation:
@@ -4022,10 +4022,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 289,
     question: 'Environmental regulations affecting electrical work include:',
     options: [
-      'The minimum earth fault loop impedance permitted',
+      'The minimum earth fault loop impedance that is to be permitted',
       'Waste electrical equipment disposal and energy efficiency',
-      'The colour coding used for protective conductors',
-      'The test sequence for initial verification',
+      'The colour coding to be used for every protective conductor',
+      'The test sequence to be followed during initial verification',
     ],
     correctAnswer: 1,
     explanation:
@@ -4067,8 +4067,8 @@ export const mockExamQuestions: QuizQuestion[] = [
     options: [
       'Equipment not to cause or be susceptible to interference',
       'Equipment to draw the same current on every phase',
-      'Equipment to be earthed through a functional earth only',
-      'Equipment to be tested at 1000V insulation voltage',
+      'Equipment to be earthed through a functional earth conductor',
+      'Equipment to be tested at 1000V insulation test voltage',
     ],
     correctAnswer: 0,
     explanation:
@@ -4081,8 +4081,8 @@ export const mockExamQuestions: QuizQuestion[] = [
     options: [
       'Comprehensive testing schedules and a signed declaration',
       'A pass or fail statement without the measured values',
-      'Measured values, but no signature from the tester',
-      'The client\'s name and the date the work was completed',
+      'Measured values recorded, but no signature from the tester',
+      'The name of the client and the date on which the work finished',
     ],
     correctAnswer: 0,
     explanation:
@@ -4107,9 +4107,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 295,
     question: 'The latest ventilation requirements affect electrical installations by:',
     options: [
-      'A reduction in the cable sizes used for fan circuits',
-      'The removal of RCD protection from extract fans',
-      'A higher earth fault loop impedance limit for fans',
+      'A reduction in the cable sizes used for all of the extract fan circuits',
+      'The complete removal of RCD protection from all of the extract fans',
+      'A higher earth fault loop impedance limit for all the extract fans',
       'Integration with mechanical ventilation and air quality systems',
     ],
     correctAnswer: 3,
@@ -4138,7 +4138,7 @@ export const mockExamQuestions: QuizQuestion[] = [
       'Exemption from RCD protection on all socket-outlets',
       'Enhanced protection and frequent inspection schedules',
       'Less protection than a permanent installation needs',
-      'A single inspection at the end of the project only',
+      'A single inspection at the end of the whole project only',
     ],
     correctAnswer: 1,
     explanation:
@@ -4180,8 +4180,8 @@ export const mockExamQuestions: QuizQuestion[] = [
     options: [
       'Risk assessment, competency management and performance monitoring',
       'A register of the test instruments in use and their calibration',
-      'A single annual inspection of the fixed installation',
-      'A record of the operatives attending each site',
+      'A single annual inspection of the whole of the fixed installation only',
+      'A record of all of the operatives attending each site and every job',
     ],
     correctAnswer: 0,
     explanation:
@@ -4220,10 +4220,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 303,
     question: 'What does R2 represent in the expression R1+R2?',
     options: [
-      'The resistance of the neutral conductor',
-      'The resistance of the second line conductor',
+      'The resistance of the neutral conductor of the circuit',
+      'The resistance of the second line conductor in a ring',
       'The resistance of the circuit protective conductor',
-      'The external earth fault loop impedance',
+      'The external earth fault loop impedance of the supply',
     ],
     correctAnswer: 2,
     explanation:
@@ -4359,9 +4359,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'In a room containing a bath or shower, what must supplementary protective equipotential bonding connect together?',
     options: [
       'The protective conductor terminals of each circuit supplying Class I and Class II equipment to accessible extraneous-conductive-parts',
-      'The line and neutral conductors of every circuit entering the room, back to the main earthing terminal at the origin',
-      'The metallic pipework only, since circuit protective conductors are already bonded at the board',
-      'Every exposed-conductive-part in the room to a local earth electrode installed immediately outside the building',
+      'The line and neutral conductors of every circuit entering the room, taken back to the main earthing terminal at the origin',
+      'The metallic pipework in the room only, since the circuit protective conductors are already bonded at the distribution board',
+      'Every exposed-conductive-part in the room to a separate local earth electrode installed immediately outside the building wall',
     ],
     correctAnswer: 0,
     explanation:
@@ -4428,9 +4428,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'Why does BS 7671 require the maximum demand of an installation to be determined?',
     options: [
       'For economic and reliable design within thermal limits and admissible voltage drop',
-      'To fix the size of the distributor\'s cut-out fuse and the metering equipment used',
+      'To fix the size of the cut-out fuse and the metering equipment to be installed',
       'To establish the prospective fault current at the origin of the installation',
-      'To decide how many final circuits the consumer unit will need to accommodate',
+      'To decide how many final circuits the consumer unit will need to accommodate in total',
     ],
     correctAnswer: 0,
     explanation:
@@ -4459,10 +4459,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 318,
     question: 'Regulation 314.1 requires every installation to be divided into circuits. For what two purposes?',
     options: [
-      'To balance the load evenly across the three phases and to reduce the prospective fault current at the origin',
+      'To balance the load evenly across the three phases and to reduce the prospective fault current at the supply origin',
       'To avoid danger and minimize inconvenience on a fault, and to facilitate safe inspection, testing and maintenance',
-      'To allow each circuit to be metered separately and to simplify the billing arrangements for the occupier',
-      'To keep every final circuit under 100 A and to limit the number of points on each one',
+      'To allow each circuit to be metered separately and to simplify the billing arrangements made for the occupier on site',
+      'To keep every final circuit under 100 A and to limit the number of points that may be supplied by each one',
     ],
     correctAnswer: 1,
     explanation:
@@ -4491,10 +4491,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 320,
     question: 'What governs the number of final circuits required and the number of points supplied by each?',
     options: [
-      'The floor area of the premises and the number of rooms to be served from the distribution board',
-      'The rating of the distributor\'s cut-out and the size of the supply tails installed',
+      'The floor area of the premises and the number of rooms that are to be served from the main distribution board at the origin',
+      'The rating of the cut-out provided by the distributor and the size of the supply tails that have been installed at the origin',
       'Compliance with the requirements for overcurrent protection, isolation and switching, and current-carrying capacity',
-      'The manufacturer\'s stated maximum for the consumer unit and the rating of its busbar arrangement',
+      'The stated maximum given by the manufacturer of the consumer unit and the rating of the busbar arrangement inside it',
     ],
     correctAnswer: 2,
     explanation:
@@ -4559,9 +4559,9 @@ export const mockExamQuestions: QuizQuestion[] = [
       'What status does Regulation 421.1.7 give to arc fault detection devices (AFDDs) in AC final circuits?',
     options: [
       'They are required in all final circuits of higher risk premises',
-      'They are required in every AC final circuit of a fixed installation',
+      'They are required in every AC final circuit of an installation',
       'They are recommended to mitigate the risk of fire in those circuits',
-      'They are permitted where the designer records a written assessment',
+      'They are permitted only where the designer records a written assessment',
     ],
     correctAnswer: 2,
     explanation:

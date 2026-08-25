@@ -255,8 +255,14 @@ export function useSafetyPDFExport() {
       const filename = toFilename(documentTitle || type);
       const shareTitle = documentTitle || 'Safety Document';
 
-      if (result?.url) {
-        await deliverPDF(result.url, false, filename, shareTitle);
+      // The PDF functions don't agree on a key for the finished file: the
+      // safety-record ones return `url`, the PDF Monkey ones (rams, method
+      // statement, briefing) return `downloadUrl`/`publicUrl`. Accept any of
+      // them — a success that only differs by key name is still a success.
+      const pdfUrl = result?.url ?? result?.downloadUrl ?? result?.publicUrl;
+
+      if (pdfUrl) {
+        await deliverPDF(pdfUrl, false, filename, shareTitle);
         if (!Capacitor.isNativePlatform()) {
           toast({ title: 'PDF ready', description: 'Your document has been downloaded.' });
         }
@@ -269,6 +275,17 @@ export function useSafetyPDFExport() {
         toast({
           title: 'PDF Service Unavailable',
           description: 'The PDF service is not currently configured. Please try again later.',
+          variant: 'destructive',
+        });
+      } else {
+        // No recognised payload. Never fall through silently — an unhandled
+        // response shape is how this failed invisibly for rams, method
+        // statements and briefings: the PDF generated, the key didn't match,
+        // and the user saw nothing at all.
+        console.error('[PDF Export] Unrecognised response shape:', result);
+        toast({
+          title: 'Export Failed',
+          description: 'Could not generate PDF. Please try again.',
           variant: 'destructive',
         });
       }

@@ -11,7 +11,9 @@
 import { supabase } from '@/integrations/supabase/client';
 import { normalisePdfDates } from '@/utils/certDate';
 import { normalizeEICDefectCode } from '@/hooks/useEICObservations';
-import { getBoardWays } from '@/types/distributionBoard';
+import { getBoardWays,
+  printableBoardLocation,
+} from '@/types/distributionBoard';
 import { formatDesignStandard } from '@/data/standards';
 import type { EICPayload } from '@/types/eic-payload';
 
@@ -387,6 +389,23 @@ export async function formatEicJson(
     },
 
     main_protective_device: {
+      /*
+       * ELE-1608 — say WHY the fields below all read N/A.
+       *
+       * The toggle stamps every sub-field 'N/A', which is correct but
+       * ambiguous: it cannot distinguish "there is no main switch, the supply
+       * feeds the board directly" from "someone typed N/A into eight boxes".
+       * This is the sentence that resolves it.
+       *
+       * Deliberately ONE key. A first cut also emitted the raw marker as
+       * `limitation`, which nothing rendered — a payload field no template
+       * reads is the orphaned-data-path bug this repo keeps re-finding, and
+       * `check:cert-mapping` caught it as an unprinted field straight away.
+       */
+      not_applicable:
+        formData.mainProtectiveDeviceLimit === 'N/A'
+          ? 'Not applicable — the supply feeds the distribution board directly; no separate main switch, isolator or RCD is installed.'
+          : '',
       device_type: formData.mainProtectiveDevice || formData.mainProtectiveDeviceType || 'N/A',
       main_switch_rating: formData.mainSwitchRating || formData.mainSwitchCurrentRating || 'N/A',
       main_switch_location: formData.mainSwitchLocation || 'N/A',
@@ -427,7 +446,7 @@ export async function formatEicJson(
     distribution_board: {
       board_size: formData.boardSize || '',
       board_type: formData.boardType || '',
-      board_location: formData.boardLocation || '',
+      board_location: printableBoardLocation(formData.boardLocation as string) || '',
       // Board-scan autofill writes top-level boardBrand/boardModel
       // (EICFormProvider handleBoardScanComplete) — read them here so the
       // scanned make/model actually print.
@@ -438,7 +457,7 @@ export async function formatEicJson(
     // Multi-board array — SPD simplified to operational + N/A (no T1/T2/T3)
     distribution_boards: (formData.distributionBoards || []).map((board: any, index: number) => ({
       db_reference: board.dbReference || board.reference || `DB${index + 1}`,
-      location: board.location || '',
+      location: printableBoardLocation(board.location),
       board_type: board.boardType || board.type || '',
       // ELE-1388 — the EIC now captures one free-text "Board details" line
       // (e.g. "Wylex 10way"); fall back to it for make so the board still prints.

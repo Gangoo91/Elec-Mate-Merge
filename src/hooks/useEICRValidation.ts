@@ -1,4 +1,6 @@
 import { useMemo } from 'react';
+import { hasAnyReading } from '@/utils/testReadings';
+import { isTestableRow } from '@/utils/scheduleProgress';
 
 /** The parts of an observation this gate reads. */
 interface CodedObservation {
@@ -55,7 +57,15 @@ export const useEICRValidation = (formData: any): EICRValidationResult => {
     // A recorded limitation (LIM chip) is a legitimate answer — the meter
     // cupboard may be sealed. The chip clears the device field and stamps
     // mainProtectiveDeviceLimit instead, so accept either as "filled".
-    if (!formData.mainProtectiveDevice && formData.mainProtectiveDeviceLimit !== 'LIM') {
+    // ELE-1608 — N/A ("the supply feeds the board directly, there is no main
+    // switch") is as complete an answer as LIM. It currently also stamps the
+    // device field, so this gate would pass either way; naming it explicitly
+    // means the gate no longer depends on that side effect continuing.
+    if (
+      !formData.mainProtectiveDevice &&
+      formData.mainProtectiveDeviceLimit !== 'LIM' &&
+      formData.mainProtectiveDeviceLimit !== 'N/A'
+    ) {
       errors.push({ field: 'mainProtectiveDevice', message: 'Main protective device', severity: 'error', tab: 'details' });
     }
     // Bonding compliance — warn if missing, not block
@@ -96,44 +106,29 @@ export const useEICRValidation = (formData: any): EICRValidationResult => {
     const scheduleOfTests: any[] = formData.scheduleOfTests || [];
 
     /*
-     * Every column the schedule of tests can hold a reading in.
+     * ELE-1610 — the reading rule now lives in `utils/testReadings.ts`.
      *
-     * The old check looked at five fields — `zs`, `polarity`,
-     * `insulationResistance`, `insulationLiveEarth`, `r1r2` — and one of those
-     * five can never be true: `insulationResistance` is the legacy consolidated
-     * field on `TestResult`, and the grid does not write it. `InsulationCells`
-     * writes `insulationTestVoltage` / `insulationLiveNeutral` /
-     * `insulationLiveEarth`.
+     * It was defined here (ELE-1605) and, independently, three more times:
+     * `scheduleProgress.isCircuitTested`, `TestAnalytics.completionPercentage`
+     * and the TestAnalytics compliance panel. They disagreed on screen — a
+     * board with every circuit ticked showed "Complete 9" of 10 at "100%".
+     * One definition, imported by all of them.
      *
-     * So a properly tested ring final — r₁, rₙ, r₂, insulation L-L and the RCD
-     * disconnection time all recorded — counted as untested purely because Zs,
-     * polarity, L-E and R1+R2 happened to be blank.
+     * The gate wants the loosest question — has this circuit been touched at
+     * all — because missing readings warn here and never block.
      */
-    const READING_FIELDS = [
-      // Continuity
-      'ringR1', 'ringRn', 'ringR2', 'r1r2', 'r2',
-      'ringContinuityLive', 'ringContinuityNeutral',
-      // Insulation resistance
-      'insulationTestVoltage', 'insulationLiveNeutral', 'insulationLiveEarth',
-      'insulationNeutralEarth', 'insulationResistance',
-      // Polarity / earth fault loop impedance
-      'polarity', 'zs',
-      // RCD + AFDD
-      'rcdOneX', 'rcdTestButton', 'afddTest', 'rcdHalfX', 'rcdFiveX',
-      // Other
-      'pfc', 'functionalTesting',
-    ] as const;
-
-    const hasReading = (t: Record<string, unknown>): boolean =>
-      READING_FIELDS.some((f) => String(t[f] ?? '').trim() !== '');
-
     /*
      * A spare way has no circuit in it and an RCD/SPD/main-switch row protects
      * other ways rather than occupying one — neither has anything to test, so
      * counting them as "untested" only inflates the advisory.
+     *
+     * `isTestableRow` rather than a local `isSpare/isDeviceRow` test: ELE-1610
+     * is precisely the bug where each surface decided row applicability for
+     * itself and the tiles disagreed. It also catches spares marked only by
+     * description ("SPARE"), which the flag test misses.
      */
-    const testableCircuits = scheduleOfTests.filter((t) => !t.isSpare && !t.isDeviceRow);
-    const untested = testableCircuits.filter((t) => !hasReading(t));
+    const testableCircuits = scheduleOfTests.filter(isTestableRow);
+    const untested = testableCircuits.filter((t) => !hasAnyReading(t));
 
     if (scheduleOfTests.length === 0) {
       errors.push({

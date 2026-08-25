@@ -19,6 +19,12 @@ export interface QuestionBank {
 //   5.2.2 = AC 2.2 (workplace info)              5.3.3 = AC 3.3 (conflict)
 //   5.3.4 = AC 3.4 (effects of poor communication)
 //   5.X.1 = cross-cutting (CDM Worker, GDPR, mental health, BS 7671 514.13/514.12, PIDA, Equality Act, ACAS)
+import {
+  drawWeighted,
+  LEVEL2_WEIGHTS,
+  type DifficultyWeights,
+} from '@/utils/apprenticeQuestionDraw';
+
 export const module5QuestionBank: QuestionBank[] = [
   // ─────────────────────────────────────────────────────────────────────────
   // §5.1.1 — AC 1.1 Site management team & roles (25 questions)
@@ -5942,33 +5948,20 @@ export const module5QuestionBank: QuestionBank[] = [
  * @param difficultyDistribution Optional distribution of difficulty levels (percentages)
  * @returns Array of random questions
  */
+/**
+ * Draws a paper honouring the difficulty tags.
+ *
+ * Previously shuffled each band with `sort(() => 0.5 - Math.random())`, which is
+ * not a uniform permutation, and had no backfill — a band holding fewer
+ * questions than its weight demanded returned a SHORT paper with no error and
+ * no warning. Both fixed by the shared helper.
+ * See src/utils/apprenticeQuestionDraw.ts.
+ */
 export function getRandomQuestions(
   count: number = 30,
-  difficultyDistribution: { basic: number; intermediate: number; advanced: number } = {
-    basic: 40,
-    intermediate: 45,
-    advanced: 15,
-  }
+  difficultyDistribution: DifficultyWeights = LEVEL2_WEIGHTS
 ): QuestionBank[] {
-  const basicCount = Math.round((count * difficultyDistribution.basic) / 100);
-  const intermediateCount = Math.round((count * difficultyDistribution.intermediate) / 100);
-  const advancedCount = count - basicCount - intermediateCount;
-
-  const basicQuestions = module5QuestionBank.filter((q) => q.difficulty === 'basic');
-  const intermediateQuestions = module5QuestionBank.filter((q) => q.difficulty === 'intermediate');
-  const advancedQuestions = module5QuestionBank.filter((q) => q.difficulty === 'advanced');
-
-  const selectedBasic = basicQuestions.sort(() => 0.5 - Math.random()).slice(0, basicCount);
-  const selectedIntermediate = intermediateQuestions
-    .sort(() => 0.5 - Math.random())
-    .slice(0, intermediateCount);
-  const selectedAdvanced = advancedQuestions
-    .sort(() => 0.5 - Math.random())
-    .slice(0, advancedCount);
-
-  return [...selectedBasic, ...selectedIntermediate, ...selectedAdvanced].sort(
-    () => 0.5 - Math.random()
-  );
+  return drawWeighted(module5QuestionBank, count, difficultyDistribution);
 }
 
 /**

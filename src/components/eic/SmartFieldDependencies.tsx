@@ -14,6 +14,28 @@ const UNREPRESENTABLE_DEFAULTS: Record<string, string[]> = {
   rcdMainSwitch: ['recommended'],
 };
 
+/**
+ * Fields this component must NEVER auto-fill — ELE-1612.
+ *
+ * 🔴 These are measurements and observations, not conventions. The inspector
+ * reads them off the installation and signs for them. A property type cannot
+ * imply them, and a value nobody measured is one un-touched field away from
+ * printing on a certificate as though it had been.
+ *
+ * They were removed from `updateSmartFieldDependencies` itself; this list is
+ * the second line of defence, because that helper is shared and the next
+ * person to add a "sensible default" there will not read this file.
+ */
+const NEVER_AUTOFILL = new Set([
+  'mainSwitchRating',
+  'mainBondingSize',
+  'supplyDeviceRating',
+  'breakingCapacity',
+  'ze',
+  'ipf',
+  'supplementaryBondingSize',
+]);
+
 const SmartFieldDependencies: React.FC<SmartFieldDependenciesProps> = ({ formData, onUpdate }) => {
   useEffect(() => {
     // Auto-set all smart field dependencies based on property type
@@ -26,6 +48,7 @@ const SmartFieldDependencies: React.FC<SmartFieldDependenciesProps> = ({ formDat
       if (smartDefaults) {
         // Only update fields that are empty to avoid overriding user choices
         Object.entries(smartDefaults).forEach(([field, value]) => {
+          if (NEVER_AUTOFILL.has(field)) return;
           if (UNREPRESENTABLE_DEFAULTS[field]?.includes(String(value))) return;
           if (!formData[field] || formData[field] === '') {
             onUpdate(field, value);

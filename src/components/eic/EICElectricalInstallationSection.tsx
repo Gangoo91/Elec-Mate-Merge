@@ -26,6 +26,24 @@ const pickerTriggerCn =
 
 const chipBase =
   'h-11 rounded-xl text-xs transition-all touch-manipulation active:scale-[0.98]';
+/**
+ * The fields the Main switch panel owns — ELE-1608.
+ *
+ * Stamped 'N/A' together when the panel is marked not applicable, and cleared
+ * together when it is unmarked (only the ones still reading 'N/A', so a value
+ * typed since is never destroyed).
+ */
+const MAIN_SWITCH_FIELDS = [
+  'mainProtectiveDevice',
+  'mainSwitchLocation',
+  'mainSwitchBsEn',
+  'mainSwitchPoles',
+  'mainSwitchRating',
+  'mainSwitchFuseRating',
+  'mainSwitchVoltageRating',
+  'breakingCapacity',
+] as const;
+
 const chipOn = 'bg-elec-yellow border border-elec-yellow text-black font-semibold';
 const chipOff = 'bg-white/[0.06] border border-white/[0.12] text-white font-medium';
 
@@ -86,6 +104,13 @@ const EICElectricalInstallationSection = ({
     'fuse': 'BS 88-2',
     'isolator': 'BS EN 60947-3',
   };
+
+  /*
+   * ELE-1608 — the panel's not-applicable state. Stored in the same
+   * `mainProtectiveDeviceLimit` field the EICR uses (ELE-855) so the two
+   * certificates agree and a conversion between them carries it.
+   */
+  const mainSwitchNA = formData.mainProtectiveDeviceLimit === 'N/A';
 
   const handleDeviceTypeChange = (value: string) => {
     const newValue = formData.mainProtectiveDevice === value ? '' : value;
@@ -297,10 +322,54 @@ const EICElectricalInstallationSection = ({
     >
       {/* Main Switch */}
       <div className={cardCn}>
-        <SectionHeading title="Main switch / circuit-breaker / RCD" />
+        {/*
+          ELE-1608 — N/A for installations with no separate main switch.
+          On a three-phase service head with BS 88 fuses feeding DB1 directly
+          there is no isolator, switch or RCD to record, and the form gave no
+          way to say so: "there is no main switch isolator or rcd? It goes
+          straight to db1? But there is no where to say N/A. Cant work it out?"
+
+          The EICR has had this since ELE-855 and stores it in
+          `mainProtectiveDeviceLimit`. Same field here so a certificate
+          converted between the two carries the state across.
+        */}
+        <div className="mb-3 flex items-center justify-between gap-2">
+          <h2 className="text-[15px] font-semibold tracking-tight text-white">
+            Main switch / circuit-breaker / RCD
+          </h2>
+          <button
+            type="button"
+            onClick={() => {
+              haptic.light();
+              if (mainSwitchNA) {
+                onUpdate('mainProtectiveDeviceLimit', '');
+                MAIN_SWITCH_FIELDS.forEach((f) => {
+                  if (formData[f] === 'N/A') onUpdate(f, '');
+                });
+              } else {
+                onUpdate('mainProtectiveDeviceLimit', 'N/A');
+                // Stamp N/A rather than leaving blanks: a blank reads as "not
+                // filled in yet", and prints as nothing. "N/A" is the answer.
+                MAIN_SWITCH_FIELDS.forEach((f) => onUpdate(f, 'N/A'));
+              }
+            }}
+            className={cn(
+              'h-11 shrink-0 rounded-xl px-4 text-xs touch-manipulation transition-all active:scale-[0.98]',
+              mainSwitchNA ? chipOn : chipOff
+            )}
+          >
+            N/A
+          </button>
+        </div>
+
+        {mainSwitchNA && (
+          <p className="mb-3 text-[12px] font-medium text-white">
+            Recorded as not applicable — the supply feeds the board directly.
+          </p>
+        )}
 
         {/* Device Type as toggle buttons */}
-        <div className="grid grid-cols-4 gap-2">
+        <div className={cn('grid grid-cols-4 gap-2', mainSwitchNA && 'pointer-events-none opacity-40')}>
           {[
             { value: 'main-switch', label: 'Switch' },
             { value: 'circuit-breaker', label: 'CB' },
@@ -310,6 +379,7 @@ const EICElectricalInstallationSection = ({
             <button
               key={opt.value}
               type="button"
+              disabled={mainSwitchNA}
               onClick={() => handleDeviceTypeChange(opt.value)}
               className={cn(
                 chipBase,
@@ -327,7 +397,8 @@ const EICElectricalInstallationSection = ({
             value={(formData.mainSwitchLocation as string) || ''}
             onChange={(e) => onUpdate('mainSwitchLocation', e.target.value)}
             placeholder="e.g., Under stairs cupboard"
-            className={inputCn}
+            disabled={mainSwitchNA}
+            className={cn(inputCn, mainSwitchNA && 'opacity-40')}
           />
         </FormField>
 
@@ -341,7 +412,8 @@ const EICElectricalInstallationSection = ({
               options={bsEnOptions}
               placeholder="Select BS"
               title="BS (EN) Standard"
-              triggerClassName={pickerTriggerCn}
+              disabled={mainSwitchNA}
+              triggerClassName={cn(pickerTriggerCn, mainSwitchNA && 'opacity-40')}
             />
           </FormField>
           <FormField label="Poles">
@@ -353,7 +425,8 @@ const EICElectricalInstallationSection = ({
               options={polesOptions}
               placeholder="Poles"
               title="Number of Poles"
-              triggerClassName={pickerTriggerCn}
+              disabled={mainSwitchNA}
+              triggerClassName={cn(pickerTriggerCn, mainSwitchNA && 'opacity-40')}
             />
           </FormField>
         </div>
@@ -368,7 +441,8 @@ const EICElectricalInstallationSection = ({
               options={currentRatingOptions}
               placeholder="Rating"
               title="Current Rating"
-              triggerClassName={pickerTriggerCn}
+              disabled={mainSwitchNA}
+              triggerClassName={cn(pickerTriggerCn, mainSwitchNA && 'opacity-40')}
             />
           </FormField>
           <FormField label="Fuse setting (A)">
@@ -380,7 +454,8 @@ const EICElectricalInstallationSection = ({
               options={fuseSettingOptions}
               placeholder="Setting"
               title="Fuse/Device Setting"
-              triggerClassName={pickerTriggerCn}
+              disabled={mainSwitchNA}
+              triggerClassName={cn(pickerTriggerCn, mainSwitchNA && 'opacity-40')}
             />
           </FormField>
         </div>
@@ -395,7 +470,8 @@ const EICElectricalInstallationSection = ({
               options={voltageOptions}
               placeholder="Voltage"
               title="Voltage Rating"
-              triggerClassName={pickerTriggerCn}
+              disabled={mainSwitchNA}
+              triggerClassName={cn(pickerTriggerCn, mainSwitchNA && 'opacity-40')}
             />
           </FormField>
           <FormField label="Breaking capacity (kA)">
@@ -407,7 +483,8 @@ const EICElectricalInstallationSection = ({
               options={breakingCapacityOptions}
               placeholder="Select capacity"
               title="Breaking Capacity"
-              triggerClassName={pickerTriggerCn}
+              disabled={mainSwitchNA}
+              triggerClassName={cn(pickerTriggerCn, mainSwitchNA && 'opacity-40')}
             />
           </FormField>
         </div>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHaptic } from '@/hooks/useHaptic';
 import { Input } from '@/components/ui/input';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
@@ -10,6 +10,8 @@ import {
   isMainBoard as isMainBoardFn,
   getBoardWays,
   BOARD_LOCATIONS,
+  BOARD_LOCATION_OTHER,
+  isCustomBoardLocation,
   BoardType,
 } from '@/types/distributionBoard';
 
@@ -164,6 +166,29 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
   className,
   certType,
 }) => {
+  /*
+   * ELE-1609 — "Other" reveals a free-text box.
+   *
+   * Held as UI state rather than a stored field: once the user types, the text
+   * IS `board.location`, so on reload `isCustomBoardLocation` recognises a
+   * value that is not one of the listed options and re-opens the box with it.
+   * The picker then shows "Other" selected instead of appearing blank.
+   */
+  const [otherSelected, setOtherSelected] = useState(false);
+  const showLocationOther = otherSelected || isCustomBoardLocation(board.location);
+
+  const handleLocationChange = (value: string) => {
+    if (value === BOARD_LOCATION_OTHER) {
+      // Do NOT write "Other" to the board — it would print on the certificate.
+      setOtherSelected(true);
+      if (isCustomBoardLocation(board.location)) return;
+      onUpdate('location', '');
+      return;
+    }
+    setOtherSelected(false);
+    onUpdate('location', value);
+  };
+
   const isEicr = certType === 'eicr';
   // ELE-1388 — the EIC collapses Make/Model/From/Ways into a single free-text
   // "Board details" line (e.g. "Wylex 10way"). The individual data fields are
@@ -271,8 +296,33 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
           </div>
           <div>
             <label className={labelCn}>Location</label>
-            <MobileSelectPicker value={board.location || ''} onValueChange={(value) => onUpdate('location', value)} options={BOARD_LOCATIONS.map((loc) => ({ value: loc, label: loc }))} placeholder="Select" title="Location" triggerClassName={pickerTriggerCn} />
+            <MobileSelectPicker
+              /*
+               * ELE-1609 — a typed location shows the picker on "Other" and the
+               * text in the box below. `location` itself always holds the real
+               * location, never the word "Other", because that string is what
+               * the PDF prints ({{board.location}}).
+               */
+              value={showLocationOther ? BOARD_LOCATION_OTHER : board.location || ''}
+              onValueChange={handleLocationChange}
+              options={BOARD_LOCATIONS.map((loc) => ({ value: loc, label: loc }))}
+              placeholder="Select"
+              title="Location"
+              triggerClassName={pickerTriggerCn}
+            />
           </div>
+          {showLocationOther && (
+            <div>
+              <label className={labelCn}>Location (specify)</label>
+              <Input
+                value={isCustomBoardLocation(board.location) ? board.location || '' : ''}
+                onChange={(e) => onUpdate('location', e.target.value)}
+                placeholder="e.g. Sub-station 2, north elevation"
+                className={inputCn}
+                autoFocus
+              />
+            </div>
+          )}
         </div>
 
         {/* ELE-1388 — EIC: one free-text board line instead of Make/Model/From/Ways. */}

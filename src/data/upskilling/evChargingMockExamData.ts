@@ -61,9 +61,9 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     question:
       'Which residual current device characteristic must EV charging equipment provide to detect smooth DC residual currents?',
     options: [
-      'Detection of AC residual current only (Type AC)',
-      'Time-delayed selective operation (Type S)',
-      'Pulsating DC sensitivity only (Type A)',
+      'Detection of alternating residual current only (Type AC)',
+      'Time-delayed selective operation, giving selectivity (Type S)',
+      'Pulsating DC residual current sensitivity only, as in Type A units',
       'Detection of DC residual current (Type B or Type A with RDC-DD)',
     ],
     correctAnswer: 3,
@@ -148,8 +148,8 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
       'Why does BS 7671 Section 722 impose special measures where an EV charge point is supplied from a PME (TN-C-S) earthing arrangement?',
     options: [
       'An open PEN conductor could raise exposed metalwork to a dangerous voltage',
-      'A PME supply cannot achieve a low enough Zs for a 32A charge point circuit',
-      'PME earthing prevents the use of a Type A RCD with 6mA DC detection',
+      'A PME supply cannot achieve a low enough Zs for any 32A charge point circuit',
+      'PME earthing prevents the use of any Type A RCD with 6mA DC fault detection',
       'PME earthing forbids any earth electrode being installed at the premises',
     ],
     correctAnswer: 0,
@@ -217,9 +217,9 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     question: 'Which factor most significantly slows the rate of charge as a lithium-ion battery approaches full capacity?',
     options: [
       'Battery state of charge',
-      'Ambient air pressure',
-      'Supply cable length',
-      'Grid frequency',
+      'Ambient air pressure outside',
+      'Supply cable length to the unit',
+      'Grid supply frequency drift',
     ],
     correctAnswer: 0,
     explanation:
@@ -286,9 +286,9 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     question: 'Which test verifies that a Type B RCD will operate on a smooth DC residual current?',
     options: [
       'Ramp test applied with a superimposed DC component',
-      'Insulation resistance test',
-      'Integral push-button test only',
-      'Earth fault loop impedance test',
+      'Insulation resistance test between line and earth',
+      'Operating the integral push-button test only',
+      'Earth fault loop impedance test at the charge point',
     ],
     correctAnswer: 0,
     explanation:
@@ -320,10 +320,10 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     id: 19,
     question: 'Which connector arrangement does the CCS (Combined Charging System) use?',
     options: [
-      'A standalone CHAdeMO coupler',
-      'Type 1 inlet with separate DC pins',
+      'A standalone CHAdeMO coupler with its own pins',
+      'A Type 1 inlet with separate DC pins alone',
       'Type 2 connector with two additional DC pins',
-      'A Tesla-proprietary single connector',
+      'A Tesla-proprietary single connector with no DC pins',
     ],
     correctAnswer: 2,
     explanation:
@@ -356,9 +356,9 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     question: 'In an AC charging session, which element ultimately limits the actual charging current?',
     options: [
       'The lowest rating among EVSE, vehicle onboard charger and cable',
-      'The fixed rating of the supply MCB alone',
-      'The cross-sectional area of the SWA cable alone',
-      'The vehicle onboard charger rating alone',
+      'The fixed rating of the supply MCB alone, whatever else is fitted',
+      'The cross-sectional area of the buried SWA supply cable on its own',
+      'The vehicle onboard charger rating alone, whatever the EVSE gives',
     ],
     correctAnswer: 0,
     explanation:
@@ -372,10 +372,10 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     id: 22,
     question: 'What does the Proximity Pilot (PP) signal indicate in an EV charging system?',
     options: [
-      'The integrity of the earth connection',
+      'The integrity of the earth connection at the plug',
       'That the cable is connected and its current rating',
-      'The cable and connector temperature',
-      'The distance between vehicle and charge point',
+      'The cable and connector contact temperature',
+      'The distance between the vehicle and the charge point',
     ],
     correctAnswer: 1,
     explanation:
@@ -406,9 +406,9 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     id: 24,
     question: 'Why is the supply cable length to an AC charge point a key design constraint?',
     options: [
-      'It sets the charge point’s maximum power rating',
-      'It fixes the rating of the protective device required',
-      'It determines the supply frequency at the charge point',
+      'It sets the maximum power rating that the charge point is able to deliver',
+      'It fixes the rating of the protective device that will be required',
+      'It determines the supply frequency that will be available at the charge point',
       'It determines the cumulative voltage drop, which must stay within limits',
     ],
     correctAnswer: 3,
@@ -424,9 +424,9 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     question: 'Which mechanism prevents an EV from being driven away while the charging cable is still connected and locked?',
     options: [
       'The Control Pilot / connector lock interlock',
-      'The emergency stop button',
-      'The supply contactor coil voltage',
-      'The upstream RCD',
+      'The emergency stop button fitted on the charge point',
+      'The supply contactor coil operating voltage level',
+      'The upstream residual current device at the origin',
     ],
     correctAnswer: 0,
     explanation:
@@ -495,7 +495,7 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
       'Available grid/supply capacity at the point of connection',
       'The number of spare ways in the existing consumer unit',
       'The total length of cable used across the installation',
-      'The number of RFID cards issued to site users',
+      'The number of RFID access cards issued to all the site users',
     ],
     correctAnswer: 0,
     explanation:
@@ -509,10 +509,10 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     id: 30,
     question: 'What is the primary purpose of load balancing across multiple charge points?',
     options: [
-      'To raise the supply voltage during periods of high demand',
+      'To raise the incoming supply voltage during periods of high demand',
       'To share a limited supply capacity dynamically between active sessions',
-      'To guarantee each charge point always runs at its full rated power',
-      'To give every active session a fixed equal share regardless of demand',
+      'To guarantee that each charge point always runs at its full rated power',
+      'To give every active session a fixed equal share regardless of the demand',
     ],
     correctAnswer: 1,
     explanation:
@@ -648,10 +648,10 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     id: 38,
     question: 'What is the purpose of the pre-charge sequence in a DC fast charging system?',
     options: [
-      'To meter the energy delivered before the session begins',
+      'To meter all of the energy delivered to the vehicle before the session begins',
       'To gradually bring the DC link up to the battery voltage and limit inrush',
-      'To warm the battery to its optimum temperature before charging',
-      'To confirm the back-office network connection is live',
+      'To warm the vehicle battery up to its optimum temperature before charging starts',
+      'To confirm that the back-office network connection is live and still working',
     ],
     correctAnswer: 1,
     explanation:
@@ -751,8 +751,8 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     question: 'What is the primary purpose of vehicle/user identification at a charge point?',
     options: [
       'To monitor the charging cable temperature while in use',
-      'To set the IP rating required for the enclosure',
-      'To select the correct connector type for the vehicle',
+      'To set the IP rating required for the outdoor enclosure',
+      'To select the correct connector type for the parked vehicle',
       'To authorise the session and attribute energy for billing',
     ],
     correctAnswer: 3,
@@ -784,10 +784,10 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     id: 46,
     question: 'Which charging profile is standard for lithium-ion EV batteries?',
     options: [
-      'Constant power throughout',
+      'Constant power throughout the whole charge session',
       'CC-CV (constant current then constant voltage)',
-      'A single fixed-voltage trickle',
-      'Pure exponential charge',
+      'A single fixed-voltage trickle charge throughout',
+      'A purely exponential charge curve throughout',
     ],
     correctAnswer: 1,
     explanation:
@@ -853,10 +853,10 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     id: 50,
     question: 'What does dynamic load management primarily protect against at a multi-charger site?',
     options: [
-      'Nuisance tripping of the individual charge point RCDs',
+      'Nuisance tripping of the individual charge point RCDs at the site',
       'Overloading the incoming supply during simultaneous charging',
-      'Corrosion of the connector contacts in wet conditions',
-      'Charging cables being bent below their minimum radius',
+      'Corrosion of the connector contacts in wet and salty conditions',
+      'Charging cables being bent below their minimum permitted radius',
     ],
     correctAnswer: 1,
     explanation:
@@ -870,10 +870,10 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     id: 51,
     question: 'How is a Type 2 connector typically secured to the vehicle inlet during a charging session?',
     options: [
-      'By friction between the contacts',
-      'By a manual padlock fitted by the user',
+      'By friction between the mating contacts alone',
+      'By a manual padlock fitted by the vehicle driver',
       'By an automatic electronically controlled locking pin',
-      'By a spring clip only',
+      'By a spring clip which the driver has to close by hand',
     ],
     correctAnswer: 2,
     explanation:
@@ -906,8 +906,8 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     options: [
       'The diversity (simultaneity) factor',
       'The power factor of each charger',
-      'The cable voltage-drop factor',
-      'The earth fault loop impedance',
+      'The cable voltage-drop correction factor',
+      'The earth fault loop impedance figure',
     ],
     correctAnswer: 0,
     explanation:
@@ -921,10 +921,10 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     id: 54,
     question: 'What is the main purpose of temperature monitoring within a charging cable and connector?',
     options: [
-      'To authenticate the user before the session starts',
+      'To authenticate the user and the vehicle before the session starts',
       'To detect overheating at the contacts and reduce or stop current',
-      'To meter the energy used for billing purposes',
-      'To set the tariff applied to the charging session',
+      'To meter all of the energy used for billing and settlement purposes',
+      'To set the tariff that will be applied to the whole charging session',
     ],
     correctAnswer: 1,
     explanation:
@@ -1023,9 +1023,9 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     id: 60,
     question: 'What is the primary purpose of an MID-approved energy meter in a public charge point?',
     options: [
-      'To set the connector lock state at the end of a session',
-      'To detect DC residual current in the charging circuit',
-      'To control the cooling fans inside the charger enclosure',
+      'To set the connector lock state at the end of every charging session',
+      'To detect DC residual current within the charging point circuit',
+      'To control the running speed of the cooling fans in the charger cabinet',
       'To provide a legally traceable basis for billing the energy delivered',
     ],
     correctAnswer: 3,
@@ -1041,9 +1041,9 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     question: 'Which monitoring function prevents charging continuing if the cable’s protective conductor is broken?',
     options: [
       'Control Pilot earth/continuity monitoring',
-      'Tariff metering',
-      'Connector temperature logging',
-      'RFID authentication',
+      'Tariff metering at the charge point',
+      'Connector contact temperature data logging',
+      'RFID card authentication before charging starts',
     ],
     correctAnswer: 0,
     explanation:
@@ -1109,9 +1109,9 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     question: 'Which device provides protection against series and parallel arc faults in a fixed installation?',
     options: [
       'An arc fault detection device (AFDD)',
-      'A standard RCBO',
-      'A surge protective device',
-      'A standard MCB',
+      'A standard RCBO on the charging circuit',
+      'A surge protective device at the origin',
+      'A standard MCB on the charging circuit',
     ],
     correctAnswer: 0,
     explanation:
@@ -1128,7 +1128,7 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
       'They allow AC charging to be carried out at a higher voltage',
       'They reduce the connector size required for very high current',
       'They remove the need for an RCD in the charging circuit',
-      'They remove the need for a Control Pilot conductor',
+      'They remove any need for a Control Pilot conductor in the cable',
     ],
     correctAnswer: 1,
     explanation:
@@ -1159,9 +1159,9 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     id: 68,
     question: 'What is the simplest user check recommended on an EV charge point RCD between formal inspections?',
     options: [
-      'Measuring insulation resistance monthly',
-      'Carrying out a loop impedance test weekly',
-      'Replacing the device every quarter',
+      'Measuring the insulation resistance monthly',
+      'Carrying out a full loop impedance test every week',
+      'Replacing the whole device once every three months',
       'Operating the integral test button periodically',
     ],
     correctAnswer: 3,
@@ -1193,10 +1193,10 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     id: 70,
     question: 'What is the primary purpose of insulation/earth fault monitoring in a DC charging system?',
     options: [
-      'To lock the connector into the vehicle inlet while charging',
+      'To lock the connector into the vehicle inlet while it is charging',
       'To detect a loss of insulation and protect personnel from shock',
-      'To meter the energy delivered for billing purposes',
-      'To select the charging tariff applied to the session',
+      'To meter the energy delivered to the vehicle for billing purposes',
+      'To select the charging tariff that will be applied to the session',
     ],
     correctAnswer: 1,
     explanation:
@@ -1210,10 +1210,10 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     id: 71,
     question: 'Which component within a DC fast charger converts the incoming AC supply into controlled DC for the vehicle?',
     options: [
-      'A grid-tied inverter',
-      'A mechanical commutator',
+      'A grid-tied export inverter stage',
+      'A mechanical rotary commutator',
       'An AC/DC converter (rectifier) module',
-      'A passive transformer alone',
+      'A passive isolating transformer on its own',
     ],
     correctAnswer: 2,
     explanation:
@@ -1245,9 +1245,9 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     question: 'Why can a single CCS inlet not perform AC and DC charging simultaneously?',
     options: [
       'The connector and control logic select one charging mode at a time',
-      'The AC and DC pins share the same physical contacts',
-      'The vehicle has two separate batteries',
-      'DC charging needs a higher IP rating',
+      'The AC and DC pins all share the same physical contacts inside',
+      'The vehicle has two separate batteries which cannot both be charged',
+      'DC charging needs a higher IP rating than AC charging does at the inlet',
     ],
     correctAnswer: 0,
     explanation:
@@ -1278,10 +1278,10 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     id: 75,
     question: 'Which combination of factors governs the selection of a charging cable’s conductor size?',
     options: [
-      'The shortest possible cable run to cut cost',
-      'The connector type fitted to the vehicle inlet',
+      'The shortest possible cable run, chosen simply to cut down the cost',
+      'The connector type that is fitted to the vehicle inlet, and nothing else',
       'Current rating, voltage drop and installation/temperature derating',
-      'The design current alone, ignoring voltage drop',
+      'The design current alone, ignoring voltage drop and all grouping factors',
     ],
     correctAnswer: 2,
     explanation:
@@ -1295,9 +1295,9 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     id: 76,
     question: 'What does contactor (welded-contact) monitoring detect in an EV charging system?',
     options: [
-      'That the enclosure temperature has exceeded its rated limit',
-      'That the vehicle battery state of charge has reached 100%',
-      'That the incoming supply voltage has dropped below 207V',
+      'That the enclosure temperature has exceeded its rated upper limit',
+      'That the vehicle battery state of charge has now reached 100% full',
+      'That the incoming mains supply voltage has dropped below 207V at the unit',
       'That the supply contactor has failed to open and remains stuck closed',
     ],
     correctAnswer: 3,
@@ -1346,10 +1346,10 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     id: 79,
     question: 'Which characteristic makes an MCB curve suitable for a dedicated EV charge point final circuit?',
     options: [
-      'A magnetic trip set well below the normal charging current drawn',
-      'A single pole leaving the neutral conductor unswitched at the unit',
+      'A magnetic trip setting well below the normal charging current that is drawn',
+      'A single pole device leaving the neutral conductor unswitched at the charge point itself',
       'A trip curve that tolerates normal load without nuisance tripping yet clears faults',
-      'The lowest available breaking capacity to keep installed cost down',
+      'The lowest available breaking capacity, chosen simply to keep the installed cost down',
     ],
     correctAnswer: 2,
     explanation:
@@ -1381,9 +1381,9 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     question: 'Which architecture allows several chargers on one site to share a supply intelligently?',
     options: [
       'A networked load-management controller linking the charge points',
-      'A separate dedicated DNO supply for each charge point',
-      'A manual time switch fitted to each individual socket-outlet',
-      'Disabling all but one charger whenever demand is high',
+      'A separate dedicated DNO supply provided for each individual charge point',
+      'A manual time switch fitted to each individual socket-outlet on site',
+      'Disabling all but one of the chargers whenever site demand is high',
     ],
     correctAnswer: 0,
     explanation:
@@ -1397,10 +1397,10 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     id: 82,
     question: 'What does insulation monitoring confirm before a DC charging session begins?',
     options: [
-      'That the supply power factor is close to unity',
+      'That the supply power factor at the unit is close enough to unity',
       'That insulation resistance between the DC conductors and earth is adequate',
-      'That the vehicle battery is below 20% state of charge',
-      'That the connector contacts have reached operating temperature',
+      'That the vehicle traction battery is already below 20% state of charge',
+      'That the connector contacts have reached their normal operating temperature',
     ],
     correctAnswer: 1,
     explanation:
@@ -1431,9 +1431,9 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     id: 84,
     question: 'Which sequence correctly describes commissioning an EV charging installation?',
     options: [
-      'Live tests first, then a visual inspection of the completed work',
-      'Functional checks of the charger only, with no electrical testing',
-      'Energise the unit, then inspect for damage and complete the tests',
+      'Live tests first, then a visual inspection of all the completed work',
+      'Functional checks of the charger only, with no electrical testing done at all',
+      'Energise the unit first, then inspect for damage and complete all the tests',
       'Visual inspection, then dead tests, then live tests and functional checks',
     ],
     correctAnswer: 3,
@@ -1449,9 +1449,9 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     question: 'Which quantity primarily determines the heat that must be dissipated from a DC charger cabinet?',
     options: [
       'The power-conversion losses at the operating output',
-      'The nominal DC output voltage on its own',
-      'The number of vehicles charged that day',
-      'The length of the buried supply cable',
+      'The nominal DC output voltage of the charger on its own',
+      'The number of vehicles charged at the site during the day',
+      'The length of the buried supply cable feeding the unit',
     ],
     correctAnswer: 0,
     explanation:
@@ -1465,10 +1465,10 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     id: 86,
     question: 'What happens when the vehicle-to-EVSE communication times out mid-session?',
     options: [
-      'The connector unlocks immediately while still under load',
+      'The connector unlocks immediately while the cable is still under load',
       'The charger safely terminates the session and de-energises the connector',
-      'The charger continues to deliver full power regardless',
-      'The charger holds the session open and retries the link indefinitely',
+      'The charger continues to deliver full power to the vehicle regardless',
+      'The charger holds the session open and keeps retrying the link indefinitely',
     ],
     correctAnswer: 1,
     explanation:
@@ -1483,9 +1483,9 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     question: 'Which construction feature provides the best electromagnetic shielding in a high-power charging cable?',
     options: [
       'No shield at all',
-      'A loose plastic wrap',
+      'A loose plastic wrapping',
       'A braided copper screen',
-      'A single drain wire',
+      'A single drain wire only',
     ],
     correctAnswer: 2,
     explanation:
@@ -1499,9 +1499,9 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     id: 88,
     question: 'How does the reactive power demand of a power-factor-corrected EV charger behave across its load range?',
     options: [
-      'It is always strongly inductive across the whole load range',
-      'It is always strongly capacitive across the whole load range',
-      'It is exactly zero at every load because PFC removes it entirely',
+      'It remains strongly inductive across the whole of the charger load range',
+      'It remains strongly capacitive across the whole of the charger load range',
+      'It is exactly zero at every load point because PFC removes it entirely',
       'It varies but stays small because PFC holds power factor near unity',
     ],
     correctAnswer: 3,
@@ -1517,9 +1517,9 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     question: 'Which capability is central to predictive maintenance of a charging network?',
     options: [
       'Trend analysis of remotely monitored operating data to anticipate faults',
-      'Waiting for each unit to fail before acting',
-      'Replacing all cables annually regardless of condition',
-      'Relying solely on user-reported faults',
+      'Waiting for each unit to fail completely before taking any action',
+      'Replacing all of the cables every year regardless of their condition',
+      'Relying solely on faults that users happen to report to the network operator',
     ],
     correctAnswer: 0,
     explanation:
@@ -1568,8 +1568,8 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     question: 'What is the principal safety benefit of cable temperature monitoring during high-current charging?',
     options: [
       'It allows the maximum charging voltage to be increased safely',
-      'It compensates for the voltage drop on long charging cables',
-      'It shortens the constant-voltage taper phase at the end of a charge',
+      'It compensates for the voltage drop along the longest charging cables',
+      'It shortens the constant-voltage taper phase at the end of the charge',
       'It prevents the cable and connector overheating by limiting current',
     ],
     correctAnswer: 3,
@@ -1585,9 +1585,9 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     question: 'Which charging behaviour most increases the peak grid impact of a residential EV charging cluster?',
     options: [
       'Many vehicles starting to charge at full power at the same evening time',
-      'Vehicles charging slowly through the night on a spread schedule',
-      'A single vehicle charging at 3.6kW',
-      'Charging only from on-site solar at midday',
+      'Vehicles charging slowly right through the night on a widely spread schedule',
+      'A single vehicle charging at 3.6kW on its own overnight at a single house',
+      'Charging only from the on-site solar generation in the middle of the day',
     ],
     correctAnswer: 0,
     explanation:
@@ -1601,10 +1601,10 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     id: 94,
     question: 'Which design approach best supports cost-effective future expansion of a charging site?',
     options: [
-      'Hard-wiring every unit with no isolation',
+      'Hard-wiring every unit in with no means of isolation at all',
       'Installing oversized supply and containment ready for added units',
       'Installing the minimum possible supply with no spare capacity',
-      'Avoiding any cable containment',
+      'Avoiding any cable containment so that the units can be added later',
     ],
     correctAnswer: 1,
     explanation:
@@ -1619,9 +1619,9 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     question: 'Which component enables two-way power flow between vehicle and grid in a V2G charger?',
     options: [
       'A mechanical change-over switch',
-      'A passive rectifier only',
+      'A passive rectifier module on its own',
       'A bi-directional inverter/converter',
-      'A simple isolating transformer',
+      'A simple isolating transformer alone',
     ],
     correctAnswer: 2,
     explanation:
@@ -1653,9 +1653,9 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     question: 'Which safety signal prevents charging if the vehicle inlet or cable is not correctly engaged?',
     options: [
       'The combined Control Pilot and Proximity Pilot status',
-      'The energy meter pulse output signal',
-      'The tariff selection signal from the back office',
-      'The cooling fan tachometer feedback signal',
+      'The energy meter pulse output signal from the charge point',
+      'The tariff selection signal sent by the back office system',
+      'The cooling fan tachometer feedback signal inside the unit',
     ],
     correctAnswer: 0,
     explanation:
@@ -1737,10 +1737,10 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     id: 102,
     question: 'How does the charging efficiency of a lithium-ion battery typically change as it nears full charge?',
     options: [
-      'It becomes negative once the cells are almost full',
+      'It becomes negative once the cells are almost completely full',
       'It decreases as the current tapers in the constant-voltage phase',
-      'It rises sharply as the cells approach full charge',
-      'It stays constant right through to the end of the charge',
+      'It rises sharply as the cells approach a full state of charge',
+      'It stays exactly constant right through to the very end of the charge',
     ],
     correctAnswer: 1,
     explanation:
@@ -1754,10 +1754,10 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     id: 103,
     question: 'Which sensor type is commonly embedded in a charging connector for thermal protection?',
     options: [
-      'A photodiode',
-      'A piezoelectric sensor',
+      'A light-sensitive photodiode sensing element',
+      'A piezoelectric vibration sensing crystal element',
       'A negative-temperature-coefficient thermistor',
-      'A Hall-effect current sensor',
+      'A Hall-effect current measuring transducer unit',
     ],
     correctAnswer: 2,
     explanation:
@@ -1771,9 +1771,9 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     id: 104,
     question: 'Which approach best ensures interoperability across different EV charging networks?',
     options: [
-      'Using a unique proprietary protocol per operator',
-      'Avoiding any network connection',
-      'Issuing a different connector per network',
+      'Using a unique proprietary protocol for each network operator',
+      'Avoiding any network connection between the different operators',
+      'Issuing a different connector type for each separate network',
       'Adopting open communication standards such as OCPP and OCPI',
     ],
     correctAnswer: 3,
@@ -1805,10 +1805,10 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     id: 106,
     question: 'What is the chief purpose of earth/insulation fault interruption in a DC charging system?',
     options: [
-      'To regulate the connector temperature',
+      'To regulate the connector contact temperature in use',
       'To protect personnel from electric shock under a fault',
-      'To raise the charging voltage',
-      'To meter the energy delivered',
+      'To raise the charging voltage at the vehicle inlet',
+      'To meter the energy delivered during each whole session',
     ],
     correctAnswer: 1,
     explanation:
@@ -1839,9 +1839,9 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     id: 108,
     question: 'How should the cable routing method for a charging installation be chosen?',
     options: [
-      'Always overhead regardless of the site',
-      'Always surface-clipped regardless of the site',
-      'Always direct-buried with no containment to cut cost',
+      'Always run overhead, regardless of the site conditions present',
+      'Always run surface-clipped, regardless of the conditions found on site',
+      'Always direct-buried with no containment at all, simply to cut the cost',
       'Based on the site conditions, mechanical risk and access requirements',
     ],
     correctAnswer: 3,
@@ -1941,10 +1941,10 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     id: 114,
     question: 'What inspection practice is recommended for detachable EV charging cable assemblies?',
     options: [
-      'Replacement of the whole cable assembly after every charging session',
+      'Replacement of the whole cable assembly after every single charging session',
       'A user visual check for damage before each use, with periodic formal inspection',
-      'No checks are needed for the working life of the cable assembly',
-      'A full insulation resistance test of the cable before every single use',
+      'No checks at all are needed during the working life of the cable assembly',
+      'A full insulation resistance test of the whole cable assembly before every single use',
     ],
     correctAnswer: 1,
     explanation:
@@ -1958,10 +1958,10 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     id: 115,
     question: 'How are firmware updates most commonly delivered to networked public charge points?',
     options: [
-      'By the user’s vehicle during charging',
-      'They cannot be updated once installed',
+      'By the vehicle itself during each charging session',
+      'They cannot be updated at all once they have been installed',
       'Over the air via the unit’s back-office network connection',
-      'By physically swapping a memory chip on site',
+      'By physically swapping a memory chip over on each site visit',
     ],
     correctAnswer: 2,
     explanation:
@@ -1975,9 +1975,9 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     id: 116,
     question: 'What is the primary purpose of authentication at a public charge point?',
     options: [
-      'To set the minimum bend radius allowed for the charging cable',
-      'To choose the connector type presented to the vehicle',
-      'To measure the ambient temperature around the charge point',
+      'To set the minimum bend radius that is allowed for the charging cable run on site',
+      'To choose which connector type is presented to the vehicle at the inlet point',
+      'To measure the ambient air temperature around the whole charge point enclosure',
       'To confirm an authorised, payable account before energising the connector',
     ],
     correctAnswer: 3,
@@ -2027,10 +2027,10 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     id: 119,
     question: 'Which mechanism best supports automatic selection of the cheapest charging tariff for a user?',
     options: [
-      'Fixing a single flat price for every charging session',
+      'Fixing one single flat price for every session on the network',
       'Letting the vehicle choose the tariff with no network data',
       'Plug-and-charge identification combined with time-of-use scheduling',
-      'Always charging at full power the moment the cable is plugged in',
+      'Always charging at full power from the moment the cable is plugged in',
     ],
     correctAnswer: 2,
     explanation:
@@ -2044,9 +2044,9 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     id: 120,
     question: 'What does full commissioning of an EV charging installation confirm?',
     options: [
-      'That the unit powers up and delivers current to a connected vehicle',
-      'That the RCD test button operates and the status LEDs illuminate',
-      'That the connector locks and unlocks on demand at each charging bay',
+      'That the unit powers up and delivers charging current to a vehicle connected to it',
+      'That the RCD test button operates and that the status LEDs all illuminate',
+      'That the connector locks and unlocks on demand at each of the charging bays on site',
       'That every component and protective function works correctly together and safely',
     ],
     correctAnswer: 3,
@@ -2078,10 +2078,10 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     id: 122,
     question: 'Why may charging cables be pre-heated or specially rated in very cold climates?',
     options: [
-      'Cold makes the connector contacts expand and jam in the vehicle inlet',
+      'Cold makes the connector contacts expand and jam tight in the vehicle charging inlet socket',
       'Cold makes the insulation stiff and brittle, raising the risk of cracking when flexed',
-      'Cold raises the charging voltage the vehicle will accept, stressing the cable',
-      'Cold raises the conductor resistance enough to melt the cable sheath',
+      'Cold raises the charging voltage that the vehicle will accept, stressing the cable core',
+      'Cold raises the conductor resistance far enough to melt through the outer cable sheath',
     ],
     correctAnswer: 1,
     explanation:
@@ -2095,10 +2095,10 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     id: 123,
     question: 'Which consideration is most important when choosing a payment method for public charging?',
     options: [
-      'Accepting only a single operator’s RFID card',
-      'Offering cash payment only at an on-site kiosk',
+      'Accepting only a single network operator RFID card at a unit',
+      'Offering cash payment only at an on-site staffed kiosk desk',
       'Ease of use and acceptance for occasional and overseas drivers',
-      'Requiring a network-specific app for every transaction',
+      'Requiring a network-specific mobile app for every single transaction',
     ],
     correctAnswer: 2,
     explanation:
@@ -2112,9 +2112,9 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     id: 124,
     question: 'Which approach best supports analytics and remote management of a large charging network’s data?',
     options: [
-      'Storing data only on each unit with no central copy',
-      'Printing usage logs on paper at each site',
-      'Discarding data after each session',
+      'Storing data only on each unit, with no central copy kept',
+      'Printing usage logs on paper at each site office',
+      'Discarding all of the data after each charging session',
       'Centralised cloud-based data storage and processing',
     ],
     correctAnswer: 3,
@@ -2130,9 +2130,9 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     question: 'Which feature prevents an EVSE energising a connector that has failed its pre-charge safety checks?',
     options: [
       'Pre-energisation self-checks that must pass before the contactor closes',
-      'A manual override that bypasses all checks',
-      'A simple fixed time delay before energising',
-      'Energising first and monitoring for faults afterwards',
+      'A manual override switch that bypasses all of the pre-energisation self-checks',
+      'A simple fixed time delay before the supply contactor is energised at all',
+      'Energising the connector first and then monitoring for any faults afterwards',
     ],
     correctAnswer: 0,
     explanation:
@@ -2180,9 +2180,9 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     id: 128,
     question: 'What is the primary purpose of a connector/cable locking mechanism during charging?',
     options: [
-      'To increase the charging voltage',
-      'To select the tariff',
-      'To improve the IP rating of the supply cable',
+      'To increase the charging voltage at the vehicle inlet',
+      'To select the tariff charged for the whole session',
+      'To improve the IP rating of the whole supply cable at the unit',
       'To prevent disconnection under load and deter cable theft',
     ],
     correctAnswer: 3,
@@ -2198,9 +2198,9 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     question: 'Which input is most critical when planning a depot charging schedule for a vehicle fleet?',
     options: [
       'The vehicles’ operational duty cycles and required state of charge by departure',
-      'Charging every vehicle at full power as soon as it returns to the depot',
-      'The mounting height of the charge points across the depot yard',
-      'The number of staff RFID access cards currently in circulation',
+      'Charging every vehicle at full power as soon as it gets back to the depot',
+      'The mounting height of every one of the charge points across the whole depot yard',
+      'The total number of staff RFID access cards that are currently in circulation on site',
     ],
     correctAnswer: 0,
     explanation:
@@ -2214,10 +2214,10 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     id: 130,
     question: 'Which monitoring strategy gives the earliest warning of a developing fault at an unattended charging site?',
     options: [
-      'A monthly download of session logs reviewed at head office',
+      'A monthly download of the session logs reviewed at head office',
       'Continuous automated monitoring with alarms to the operator',
-      'A single annual manual inspection visit to the site',
-      'Waiting for users to report faults through the charging app',
+      'A single annual manual inspection visit to each one of the sites',
+      'Waiting for users to report faults through the charging network app',
     ],
     correctAnswer: 1,
     explanation:
@@ -2234,7 +2234,7 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
       'Plain brass only',
       'Bare aluminium',
       'Silver-plated copper',
-      'Galvanised steel',
+      'Galvanised steel pins',
     ],
     correctAnswer: 2,
     explanation:
@@ -2248,9 +2248,9 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     id: 132,
     question: 'What is the main purpose of integrating EV charging with grid demand-response schemes?',
     options: [
-      'To boost charging load whenever the grid is most heavily loaded',
-      'To force every vehicle to charge at maximum power',
-      'To make charging ignore wholesale electricity prices entirely',
+      'To boost the charging load whenever the grid is at its most heavily loaded',
+      'To force every vehicle to charge at its maximum power at all times',
+      'To make charging ignore the wholesale electricity prices and grid needs',
       'To shift or curtail charging load in response to grid needs and prices',
     ],
     correctAnswer: 3,
@@ -2266,9 +2266,9 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     question: 'Which capability underpins predictive fault detection in a charging network?',
     options: [
       'Analysing historical and live operating data to spot abnormal trends',
-      'Waiting for a unit to fail before investigating',
-      'Recording only the cumulative energy delivered',
-      'Replacing every component on a fixed annual cycle',
+      'Waiting for a unit to fail completely before investigating the root cause',
+      'Recording only the cumulative energy delivered at each unit in each month',
+      'Replacing each and every component on a fixed annual replacement cycle',
     ],
     correctAnswer: 0,
     explanation:
@@ -2299,10 +2299,10 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     id: 135,
     question: 'In the UK, which legislation primarily drives accessible design requirements for public charge points?',
     options: [
-      'ISO 14040 life-cycle assessment methodology',
-      'IEC 62196 connector dimensions and interfaces',
+      'The ISO 14040 life-cycle assessment methodology alone',
+      'The IEC 62196 connector dimensions and interfaces alone',
       'The Equality Act 2010 and related guidance (e.g. PAS 1899)',
-      'The Americans with Disabilities Act 1990 (ADA)',
+      'The United States Americans with Disabilities Act 1990 (ADA)',
     ],
     correctAnswer: 2,
     explanation:
@@ -2316,9 +2316,9 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     id: 136,
     question: 'What is the primary role of battery thermal management during fast charging?',
     options: [
-      'To raise the DC supply voltage delivered to the vehicle inlet',
-      'To meter the energy delivered during the charging session',
-      'To authenticate the user before the charging session begins',
+      'To raise the DC supply voltage delivered to the vehicle inlet pins',
+      'To meter all the energy delivered to the vehicle during the charging session',
+      'To authenticate the user and the vehicle before the charging session begins',
       'To hold the cells in their safe temperature window to allow high current',
     ],
     correctAnswer: 3,
@@ -2334,9 +2334,9 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     question: 'Which input most improves the accuracy of short-term load forecasting for a charging network?',
     options: [
       'Historical charging patterns combined with calendar and weather data',
-      'The cumulative lifetime energy delivered by the site',
-      'The number of connectors physically fitted',
-      'The nameplate rating of each unit alone',
+      'The total cumulative lifetime energy delivered by the site since it opened',
+      'The total number of connectors physically fitted across the whole network',
+      'The nameplate power rating of each individual unit on the network alone',
     ],
     correctAnswer: 0,
     explanation:
@@ -2352,8 +2352,8 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     options: [
       'Publishing the back-office credentials to all site users',
       'Encrypting communications and applying timely firmware updates',
-      'Leaving the manufacturer default passwords in place',
-      'Disabling monitoring so the system generates fewer alerts',
+      'Leaving the manufacturer default passwords in place unchanged',
+      'Disabling the monitoring so that the system generates fewer alerts',
     ],
     correctAnswer: 1,
     explanation:
@@ -2367,10 +2367,10 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     id: 139,
     question: 'Which property most influences the choice of outer sheath material for an EV charging cable?',
     options: [
-      'The smoothest finish for an attractive appearance',
-      'The thinnest possible sheath to save weight',
+      'The smoothest possible finish for an attractive appearance',
+      'The thinnest possible sheath, chosen simply to save on weight and cost',
       'Resistance to abrasion, UV and oils with good cold flexibility',
-      'The lowest material cost regardless of durability',
+      'The lowest possible material cost, regardless of poor durability',
     ],
     correctAnswer: 2,
     explanation:
@@ -2384,9 +2384,9 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     id: 140,
     question: 'What is the main benefit of pairing battery energy storage with an EV charging site?',
     options: [
-      'It removes the need for any grid connection to the site at all times',
-      'It allows charging to continue with no protective devices fitted at the site',
-      'It increases the DC output voltage beyond the vehicle battery rating',
+      'It removes the need for the site to have any grid connection or supply agreement at all',
+      'It allows the charging to continue with no protective devices fitted at the site at all',
+      'It increases the DC output voltage well beyond the vehicle traction battery voltage rating',
       'It enables peak shaving so high charging power is met without a larger grid connection',
     ],
     correctAnswer: 3,
@@ -2402,9 +2402,9 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     question: 'Which element is essential for automatic remote meter reading at a charge point?',
     options: [
       'A communications module linking the meter to the back office',
-      'A larger connector fitted to the charge point',
-      'A brighter status LED on the front of the unit',
-      'A longer charging cable fitted to the unit',
+      'A larger connector fitted to the front of the charge point',
+      'A brighter status LED on the front panel of the unit',
+      'A longer charging cable fitted permanently to the charge point',
     ],
     correctAnswer: 0,
     explanation:
@@ -2452,9 +2452,9 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     id: 144,
     question: 'Which design principle best supports cost-effective scaling of a charging network?',
     options: [
-      'Bespoke, non-standard hardware specified for every individual site',
-      'No spare ducting or supply capacity provided at first fit',
-      'A unique connector type chosen for each site in the network',
+      'Bespoke, non-standard hardware specified separately for every individual site',
+      'No spare ducting or spare supply capacity provided at the first fit',
+      'A unique connector type chosen for each individual site in the whole network',
       'Modular hardware and pre-installed spare capacity in supply and containment',
     ],
     correctAnswer: 3,
@@ -2486,10 +2486,10 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     id: 146,
     question: 'What is the primary purpose of charging session analytics for a network operator?',
     options: [
-      'To schedule routine repainting of the enclosures',
+      'To schedule the routine repainting of all of the outdoor unit enclosures',
       'To optimise utilisation, pricing and reliability across the estate',
-      'To meter energy purely for individual user billing',
-      'To set the maximum output current of each unit',
+      'To meter all of the energy purely for individual user billing purposes',
+      'To set the maximum output current of each individual unit on the network',
     ],
     correctAnswer: 1,
     explanation:
@@ -2504,9 +2504,9 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     question: 'Which factor most directly limits the achievable density of rapid charge points in a given location?',
     options: [
       'The choice of back-office management software',
-      'The mounting height of the charge points',
+      'The mounting height of each of the charge points',
       'The available grid capacity at the connection point',
-      'The number of parking bays that physically fit',
+      'The number of parking bays that will physically fit in',
     ],
     correctAnswer: 2,
     explanation:
@@ -2520,9 +2520,9 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     id: 148,
     question: 'Which maintenance strategy uses live equipment data to schedule service just before a fault is likely?',
     options: [
-      'Run-to-failure maintenance',
-      'Fixed-calendar maintenance only',
-      'No maintenance',
+      'Run-to-failure maintenance after each fault',
+      'Fixed-calendar maintenance intervals',
+      'No planned maintenance of any kind at any time',
       'Predictive (condition-based) maintenance',
     ],
     correctAnswer: 3,
@@ -2554,10 +2554,10 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     id: 150,
     question: 'What is the overarching goal of developing smart EV charging infrastructure?',
     options: [
-      'Reducing the number of connector types available to drivers',
+      'Reducing the number of connector types made available to all drivers',
       'Enabling reliable, grid-friendly, sustainable transport at scale',
-      'Maximising peak demand on the distribution network',
-      'Minimising hardware cost above every other consideration',
+      'Maximising the peak demand placed on the local distribution network',
+      'Minimising the hardware cost above every other design consideration',
     ],
     correctAnswer: 1,
     explanation:
@@ -2579,7 +2579,7 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
       'To any charging point rated above 32 A, wherever in the installation it is sited',
       'Those located outdoors, or that might reasonably be expected to charge a vehicle outdoors',
       'To charging points fitted with a socket-outlet, but not to those with a tethered lead',
-      'All charging points on a TN-C-S supply, including those wholly inside a building',
+      'All charging points supplied from a TN-C-S system, including those wholly inside a building',
     ],
     correctAnswer: 1,
     explanation:
@@ -2630,10 +2630,10 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     question:
       'Why is a device that measures voltage between the circuit protective conductor and the neutral unsuitable for detecting an open PEN conductor?',
     options: [
-      'Because harmonic distortion on the neutral conductor corrupts the voltage measurement',
+      'Because harmonic distortion on the neutral conductor corrupts the measured voltage reading',
       'On a PEN failure the neutral is no longer reliably earthed, so both points rise together',
       'Because BS 7671 prohibits neutral-to-earth measurements anywhere on a TN-C-S supply',
-      'Because the voltage is too small to measure without a dedicated instrument',
+      'Because the voltage present is far too small to measure without a dedicated test instrument',
     ],
     correctAnswer: 1,
     explanation:
@@ -2648,10 +2648,10 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     question:
       'A designer proposes a 30 mA Type A RCD as the sole means of protecting against a broken PEN conductor at a domestic charging point. Why does this fail?',
     options: [
-      'A Type A RCD is too slow to operate within the required 5 s',
+      'A Type A RCD is far too slow to operate within the 5 s required for safe disconnection',
       'An open PEN produces no residual current, so there is nothing for an RCD to detect',
-      'The RCD would need to be rated at 10 mA to detect the imbalance',
-      'RCDs are not permitted on final circuits supplying charging equipment',
+      'The RCD would need to be rated at 10 mA instead in order to detect the current imbalance',
+      'RCDs are not permitted at all on a final circuit that supplies EV charging equipment',
     ],
     correctAnswer: 1,
     explanation:
@@ -2667,9 +2667,9 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
       'In the separated-system arrangement of Figure A722, what makes protective conductor monitoring necessary?',
     options: [
       'The transformer removes the earth reference, so a broken protective conductor goes unnoticed',
-      'The transformer introduces a DC component that a Type A RCD cannot clear',
+      'The transformer introduces a DC component that a Type A RCD device cannot clear at all',
       'Separated systems are installed outdoors, so the protective conductor corrodes faster',
-      'The monitoring replaces the need for any residual current device on the circuit',
+      'The monitoring device replaces the need for any residual current device on the charging circuit',
     ],
     correctAnswer: 0,
     explanation:
@@ -2720,10 +2720,10 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     question:
       'Reg 722.411.4(e) permits an alternative device to those described in (c) and (d). What is the test it must meet?',
     options: [
-      'It must be listed by name in an appendix to BS 7671',
+      'It must be listed by name in an appendix to BS 7671 before it may be used at all',
       'It must not result in a lesser degree of safety than the devices in (c) or (d)',
-      'It must operate within 0.4 s rather than 5 s',
-      'It must be approved in writing by the distribution network operator',
+      'It must operate within 0.4 s rather than the 5 s stated in the regulation',
+      'It must first be approved in writing by the local distribution network operator',
     ],
     correctAnswer: 1,
     explanation:
@@ -2756,10 +2756,10 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     question:
       'NOTE 1 to Reg 722.411.4 addresses equipment not covered by a British or Harmonized Standard. Where does responsibility sit?',
     options: [
-      'With the manufacturer, who must obtain a standard before the product is sold',
+      'With the manufacturer, who must obtain a British or Harmonized Standard before the product may be sold',
       'With the electrical installation designer, or whoever is responsible for specifying the installation',
-      'With the distribution network operator, imposed as a condition of the connection agreement',
-      'With the certifying body that issues the installation certificate',
+      'With the distribution network operator, imposed as a written condition of the new connection agreement',
+      'With the certifying body that issues the electrical installation certificate covering the completed work',
     ],
     correctAnswer: 1,
     explanation:
@@ -2774,10 +2774,10 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     question:
       'An installer measures 0 V between the cpc and the main earthing terminal at a charging point and concludes the PME earthing arrangement is healthy. What is wrong with that conclusion?',
     options: [
-      'The measurement should have been taken with the supply energised',
+      'The measurement should have been taken with the supply left energised at the time',
       'A reading of 0 V is expected whether the PEN is intact or open, so it proves nothing',
-      'The instrument should have been set to measure current rather than voltage',
-      'The cpc and main earthing terminal are never connected, so 0 V indicates a fault',
+      'The instrument should have been set to measure current rather than the voltage',
+      'The cpc and the main earthing terminal are never connected, so 0 V indicates a fault here',
     ],
     correctAnswer: 1,
     explanation:
@@ -2792,10 +2792,10 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     question:
       'A 7.4 kW charge point is fed by 25 m of SWA on a 32 A circuit. Which conductor operating temperature should be used when checking voltage drop from the tabulated mV/A/m figures?',
     options: [
-      '70 degC, as for thermoplastic (PVC) insulated cable',
+      '70 degC, as it would be for a thermoplastic (PVC) insulated cable type',
       '90 degC, because the armoured cable is XLPE (thermosetting) insulated',
-      '60 degC, the ambient-corrected figure for buried cable',
-      '105 degC, the short-circuit limit for the conductor',
+      '60 degC, taken as the ambient-corrected figure for a buried cable',
+      '105 degC, taken as the short-circuit limit for the cable conductor itself',
     ],
     correctAnswer: 1,
     explanation:
@@ -2811,9 +2811,9 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
       'A charging circuit is protected by a 30 mA RCD. What additional fault current type must the arrangement handle for Mode 3 charging?',
     options: [
       'Smooth DC residual current, which can blind a Type AC or Type A device',
-      'High-frequency switching current above 20 kHz only',
-      'Third-harmonic current in the neutral conductor',
-      'Transient overvoltage from the vehicle traction battery',
+      'High-frequency switching current above 20 kHz coming from the charger unit',
+      'Third-harmonic current flowing in the shared neutral conductor of the circuit',
+      'Transient overvoltage coming back from the vehicle traction battery pack',
     ],
     correctAnswer: 0,
     explanation:
@@ -2828,10 +2828,10 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     question:
       'What distinguishes Mode 3 from Mode 2 charging?',
     options: [
-      'Mode 3 uses DC at the vehicle inlet, Mode 2 uses AC',
+      'Mode 3 uses DC at the vehicle inlet, while Mode 2 uses AC at the same vehicle inlet',
       'Mode 3 is fixed EVSE with a control pilot; Mode 2 is an in-cable box on a standard socket',
       'Mode 3 is limited to 3.7 kW at the vehicle inlet, whereas Mode 2 carries no power limit',
-      'Mode 3 requires a tethered lead, Mode 2 requires a socket-outlet',
+      'Mode 3 always requires a tethered lead, whereas Mode 2 always requires a fixed socket-outlet',
     ],
     correctAnswer: 1,
     explanation:
@@ -2846,10 +2846,10 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the function of the control pilot conductor in a Mode 3 installation?',
     options: [
-      'It carries the earth reference that the vehicle chassis is bonded to during charging',
+      'It carries the earth reference that the vehicle chassis is bonded to throughout charging',
       'It carries a PWM signal giving the available current and confirming correct connection',
-      'It supplies auxiliary power to the vehicle telematics unit',
-      'It provides the metering pulse output used for billing and back-office reconciliation',
+      'It supplies auxiliary power to the vehicle telematics unit while it is connected',
+      'It provides the metering pulse output used for billing and for back-office reconciliation',
     ],
     correctAnswer: 1,
     explanation:
@@ -2864,10 +2864,10 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     question:
       'A domestic installation has a maximum demand close to the supply capacity and the client wants a 32 A charge point. Which approach does BS 7671 support?',
     options: [
-      'Fit the charge point anyway and rely on the main fuse to manage overload',
+      'Fit the charge point anyway and rely on the main supply fuse to manage any overload on the installation',
       'Apply load curtailment so the charging current is reduced when the rest of the installation demands it',
-      'Uprate the meter tails to 35 mm2, which raises the capacity enough to need no further action',
-      'Split the charge point across two 16 A circuits to halve the demand',
+      'Uprate the meter tails to 35 mm2, which raises the available supply capacity enough to need no further action',
+      'Split the charge point across two separate 16 A circuits so that the total demand on each of them is halved',
     ],
     correctAnswer: 1,
     explanation:
@@ -2882,10 +2882,10 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     question:
       'On a TT installation supplying a charge point, what is the practical consequence of the earth electrode resistance for the design?',
     options: [
-      'The electrode must be below 1 ohm to satisfy Chapter 72',
+      'The electrode resistance must be measured as below 1 ohm in order to satisfy the requirements of Chapter 72',
       'Disconnection relies on the RCD, and the electrode must be low and stable enough to satisfy Ra x IdeltaN <= 50 V',
-      'An electrode is not required, because the charging equipment establishes its own earth reference',
-      'The electrode resistance only matters for lightning protection',
+      'An electrode is not required at all, because the charging equipment establishes its own local earth reference',
+      'The electrode resistance only matters for lightning protection and has no bearing on the disconnection time at all',
     ],
     correctAnswer: 1,
     explanation:
@@ -2918,10 +2918,10 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     question:
       'What does the proximity requirement in Reg 722.531.3.101 for siting the transformer aim to limit?',
     options: [
-      'The cost of the installation',
+      'The overall cost of the installation work and of all the equipment used to complete it',
       'Supply conductor length, and with it voltage drop, fault level and maintenance access problems',
-      'The audible transformer noise reaching habitable rooms elsewhere in the building',
-      'The number of joints permitted in the protective conductor of the separated circuit',
+      'The audible transformer noise reaching any habitable rooms located elsewhere in the same building',
+      'The total number of joints permitted in the protective conductor of the separated final circuit',
     ],
     correctAnswer: 1,
     explanation:
@@ -2937,9 +2937,9 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
       'A three-phase 22 kW charge point is installed. Which consideration applies to the RCD arrangement that does not arise on a single-phase unit?',
     options: [
       'A four-pole device is needed so the neutral is switched with the lines',
-      'Three separate single-phase RCDs may be used in place of one device',
-      'The residual current rating must be increased to 100 mA',
-      'RCD protection is not required on three-phase charging equipment',
+      'Three separate single-phase RCDs may be used in place of one four-pole device',
+      'The residual current rating must be increased to 100 mA on a three-phase unit',
+      'RCD protection is not required at all on any three-phase charging equipment',
     ],
     correctAnswer: 0,
     explanation:
@@ -2954,10 +2954,10 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     question:
       'During initial verification of a charge point, which test confirms that the protective conductor contact in the vehicle connector is continuous?',
     options: [
-      'Insulation resistance at 500 V DC between line and earth',
+      'Insulation resistance measured at 500 V DC between the line conductors and earth at the origin point',
       'Continuity of the protective conductor measured to the connector earth pin, using the appropriate adaptor',
-      'Earth fault loop impedance measured at the origin of the installation with the supply live',
-      'Polarity confirmed at the consumer unit with the charging circuit isolated and locked off',
+      'Earth fault loop impedance measured at the origin of the whole installation with the supply left live',
+      'Polarity confirmed at the consumer unit with the charging circuit isolated and safely locked off at the origin',
     ],
     correctAnswer: 1,
     explanation:
@@ -2972,10 +2972,10 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     question:
       'Why can an insulation resistance test on a charge point circuit give a misleadingly low reading if carried out without preparation?',
     options: [
-      'The steel wire armour behaves as a capacitor and stores charge during the applied test voltage',
+      'The steel wire armour behaves as a very large capacitor and stores charge during the whole of the applied test voltage',
       'Electronic components inside the charging equipment provide parallel paths and may be damaged by the test voltage',
-      'The control pilot conductor is always bonded to earth',
-      'The test is invalid on any circuit longer than 20 m because of distributed cable capacitance',
+      'The control pilot conductor inside the charging cable is always bonded directly to the main earth terminal',
+      'The test is invalid on any circuit longer than 20 m because of the distributed capacitance of the cable and its armour',
     ],
     correctAnswer: 1,
     explanation:
@@ -2991,9 +2991,9 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
       'What is the purpose of the proximity pilot conductor in a Type 2 charging cable?',
     options: [
       'It signals the current-carrying capacity of the cable assembly and detects that the plug is latched',
-      'It carries the residual current signal back to the RCD',
-      'It provides the protective earth path that the vehicle body relies on while connected',
-      'It transmits session and billing data from the charging point to the back office',
+      'It carries the residual current signal from the charging equipment back to the RCD in the consumer unit',
+      'It provides the protective earth path that the vehicle body relies on while it is connected to the charge point',
+      'It transmits the session and billing data from the charging point back to the back office network system',
     ],
     correctAnswer: 0,
     explanation:
@@ -3008,10 +3008,10 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     question:
       'A charge point installed in 2023 relied on the former exception permitting PME earthing where an alternative was not reasonably practicable. What is the position under A4:2026?',
     options: [
-      'The exception remains available where a TT island is impractical',
+      'The exception still remains available in any case where a TT island would be impractical',
       'That route has been removed, so the design must satisfy the current requirements of 722.411.4',
       'The exception has been narrowed so that it now applies to three-phase installations alone',
-      'Existing installations must be disconnected from supply until they have been modified',
+      'Existing installations must be disconnected from the supply until they have been fully modified',
     ],
     correctAnswer: 1,
     explanation:
@@ -3028,8 +3028,8 @@ export const evChargingQuestionBank: StandardMockQuestion[] = [
     options: [
       'The correction factors for grouping and ambient temperature reduce Iz below the design current',
       'The circuit protective conductor is undersized for the adiabatic equation at that length',
-      'The cable colour code does not satisfy the requirements for a dedicated supply',
-      'The voltage drop limit for a final circuit is 3% rather than the 5% commonly applied',
+      'The cable colour code does not satisfy the requirements set out for a dedicated EV charging supply',
+      'The voltage drop limit for a final circuit is 3% rather than the 5% figure that is commonly applied',
     ],
     correctAnswer: 0,
     explanation:
