@@ -7,6 +7,7 @@
 // Streams via SSE — same pattern as ai-assessor.
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
+import { withSentry } from '../_shared/sentry.ts';
 import {
   loadLearnerContext,
   loadQualificationKit,
@@ -520,7 +521,7 @@ ${GROUNDING_RULES}
 Return via the submit_next_actions tool. Each action's "kind" must match a known kind so the UI can deep-link. Each action's "ac_refs" must list every AC code from the supplied catalogue that this action targets.`;
 }
 
-Deno.serve(async (req) => {
+Deno.serve(withSentry('ai-next-best-action', async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
   if (req.method !== 'POST') {
     return new Response('Method not allowed', { status: 405, headers: corsHeaders });
@@ -721,4 +722,4 @@ Deno.serve(async (req) => {
       connection: 'keep-alive',
     },
   });
-});
+}));

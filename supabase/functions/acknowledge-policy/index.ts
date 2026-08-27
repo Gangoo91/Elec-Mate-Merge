@@ -10,6 +10,7 @@
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
+import { withSentry } from '../_shared/sentry.ts';
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers':
@@ -34,7 +35,7 @@ function extractClientIp(req: Request): string | null {
   return null;
 }
 
-Deno.serve(async (req) => {
+Deno.serve(withSentry('acknowledge-policy', async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders });
   }
@@ -170,4 +171,4 @@ Deno.serve(async (req) => {
     }),
     { status: 200, headers: { ...corsHeaders, 'content-type': 'application/json' } }
   );
-});
+}));

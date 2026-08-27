@@ -1,6 +1,7 @@
 import { serve } from '../_shared/deps.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 
+import { withSentry } from '../_shared/sentry.ts';
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers':
@@ -30,7 +31,7 @@ interface AIRecommendation {
   potentialSavings?: string;
 }
 
-serve(async (req) => {
+serve(withSentry('ai-tool-recommendations', async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -94,7 +95,7 @@ serve(async (req) => {
       }
     );
   }
-});
+}));
 
 function analyzeTools(tools: ToolItem[]) {
   const categories = [...new Set(tools.map((tool) => tool.category))];

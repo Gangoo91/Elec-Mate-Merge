@@ -17,6 +17,7 @@
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'jsr:@supabase/supabase-js@2';
 
+import { withSentry } from '../_shared/sentry.ts';
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
@@ -157,7 +158,7 @@ async function suppressEmail(
 }
 
 // ─── Handler ───────────────────────────────────────────────────────
-Deno.serve(async (req) => {
+Deno.serve(withSentry('outreach-unsubscribe', async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders });
   }
@@ -241,7 +242,7 @@ Deno.serve(async (req) => {
     console.error('[unsub] error:', err instanceof Error ? err.message : err);
     return htmlResponse(errorPage('Something went wrong. Please try again.'), 500);
   }
-});
+}));
 
 // ─── Pages ─────────────────────────────────────────────────────────
 function htmlResponse(html: string, status: number) {

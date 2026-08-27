@@ -1,8 +1,9 @@
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'jsr:@supabase/supabase-js@2';
 
+import { withSentry } from '../_shared/sentry.ts';
 // Track launch email click and redirect to signup
-Deno.serve(async (req) => {
+Deno.serve(withSentry('track-launch-click', async (req) => {
   const url = new URL(req.url);
   const token = url.searchParams.get('token');
   const siteUrl = Deno.env.get('SITE_URL') || 'https://elec-mate.com';
@@ -45,4 +46,4 @@ Deno.serve(async (req) => {
     status: 302,
     headers: { Location: redirectUrl },
   });
-});
+}));

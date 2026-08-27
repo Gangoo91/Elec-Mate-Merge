@@ -24,6 +24,7 @@
 import { serve } from 'https://deno.land/std@0.190.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
+import { withSentry } from '../_shared/sentry.ts';
 // 1x1 transparent GIF
 const TRACKING_PIXEL = new Uint8Array([
   0x47, 0x49, 0x46, 0x38, 0x39, 0x61, 0x01, 0x00, 0x01, 0x00, 0x80, 0x00, 0x00, 0xff, 0xff, 0xff,
@@ -437,4 +438,4 @@ const handler = async (req: Request): Promise<Response> => {
   return pixelResponse();
 };
 
-serve(handler);
+serve(withSentry('email-open', handler));

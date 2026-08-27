@@ -14,6 +14,7 @@
 // context on follow-ups.
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
+import { withSentry } from '../_shared/sentry.ts';
 import {
   loadLearnerContext,
   loadQualificationKit,
@@ -830,7 +831,7 @@ interface StructureArgs {
 
 /* ───────────────────────── handler ────────────────────────────────────── */
 
-Deno.serve(async (req) => {
+Deno.serve(withSentry('ai-notebook', async (req) => {
   if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers: corsHeaders });
   if (req.method !== 'POST')
     return new Response(JSON.stringify({ error: 'method_not_allowed' }), {
@@ -1462,4 +1463,4 @@ Deno.serve(async (req) => {
       'x-accel-buffering': 'no',
     },
   });
-});
+}));

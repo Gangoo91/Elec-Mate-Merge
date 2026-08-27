@@ -6,6 +6,7 @@
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
 
+import { withSentry } from '../_shared/sentry.ts';
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
@@ -113,7 +114,7 @@ async function snapshotForCollege(
   };
 }
 
-Deno.serve(async (req) => {
+Deno.serve(withSentry('submit-benchmark-snapshot', async (req) => {
   if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers: corsHeaders });
 
   const SUPABASE_URL = Deno.env.get('SUPABASE_URL');
@@ -208,4 +209,4 @@ Deno.serve(async (req) => {
   return new Response(JSON.stringify({ month, results }), {
     headers: { ...corsHeaders, 'content-type': 'application/json' },
   });
-});
+}));

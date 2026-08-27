@@ -20,6 +20,7 @@
 import { serve } from 'https://deno.land/std@0.190.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
 
+import { withSentry } from '../_shared/sentry.ts';
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL') ?? 'https://jtwygbeceundfgnkirof.supabase.co';
 const SERVICE_ROLE = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '';
 
@@ -55,7 +56,7 @@ function parseRef(stored: string): { bucket: string; path: string } | null {
   return null;
 }
 
-serve(async (req) => {
+serve(withSentry('sign-verification-evidence', async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
 
   try {
@@ -106,4 +107,4 @@ serve(async (req) => {
     // Never hard-fail: fall back to the stored (public) URLs.
     return json({ signed: {}, error: String(e) });
   }
-});
+}));

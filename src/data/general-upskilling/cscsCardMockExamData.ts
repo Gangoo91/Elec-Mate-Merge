@@ -47,10 +47,10 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 1,
     question: 'What does CSCS stand for?',
     options: [
-      'Construction Sector Card Scheme',
+      'Construction Sector Skills Certification Body',
       'Construction Skills Certification Scheme',
-      'Construction Safety Card System',
-      'Certified Site Competence Scheme',
+      'Construction Site Safety Card System',
+      'Certified Site Competence Standard',
     ],
     correctAnswer: 1,
     explanation:
@@ -81,9 +81,9 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 3,
     question: 'What is the primary purpose of the CSCS card?',
     options: [
-      'To guarantee the holder a job on any construction site that operates a carded workforce',
-      'To provide the holder with personal accident insurance cover while working on site',
-      'To replace the need for a site-specific induction on any site the holder attends',
+      'To guarantee the holder a job on any construction site that operates a carded workforce policy',
+      'To provide the holder with personal accident insurance cover while working on any site at all',
+      'To replace the need for a site-specific induction on any site the holder attends to work',
       'To prove that the holder has the required training and qualifications for their occupation',
     ],
     correctAnswer: 3,
@@ -132,10 +132,10 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 6,
     question: 'What does the gold CSCS card signify?',
     options: [
-      'A new entrant on their first day on site before any training',
-      'A skilled worker holding an NVQ/SVQ Level 2 qualification',
+      'A new entrant on their first day on site before any training at all',
+      'A skilled worker holding an NVQ/SVQ Level 2 qualification only',
       'An advanced craft or supervisory worker with NVQ/SVQ Level 3',
-      'A labourer holding only a Level 1 health and safety award',
+      'A labourer holding only a Level 1 health and safety award card',
     ],
     correctAnswer: 2,
     explanation:
@@ -168,9 +168,9 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     question: 'Which CSCS card is white and issued to professionally qualified persons?',
     options: [
       'The Academically Qualified Person (AQP) card',
-      'The Provisional Operative card',
+      'The Provisional Construction Operative green card',
       'The Experienced Technical Supervisor card',
-      'The Construction Site Operative card',
+      'The Construction Site Operative gold card',
     ],
     correctAnswer: 0,
     explanation:
@@ -252,9 +252,9 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 13,
     question: 'Where is the HS&E test taken?',
     options: [
-      'Online at home',
+      'Online at home on your own computer',
       'At a Pearson VUE test centre',
-      'At the CITB head office only',
+      'At the CITB head office site only',
       'On the construction site',
     ],
     correctAnswer: 1,
@@ -321,10 +321,10 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     question:
       'A worker holds a CPCS card for operating a 360-degree excavator. Does this mean they also need a CSCS card to work on a construction site?',
     options: [
-      'Yes, every plant operator must hold both a CPCS card and a CSCS card',
+      'Yes, every plant operator must hold both a CPCS card and a CSCS card at the same time on site',
       'No, CPCS is a partner scheme that is accepted in place of a CSCS card for plant operations',
-      'Yes, but only the green CSCS Labourer card is required in addition',
-      'No, the CPCS card must first be endorsed by CSCS before it is valid on site',
+      'Yes, but only the green CSCS Labourer card is required in addition on any construction site',
+      'No, the CPCS card must first be endorsed by CSCS before it is valid for any plant operations',
     ],
     correctAnswer: 1,
     explanation:
@@ -408,10 +408,10 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 22,
     question: 'How many versions of the HS&E test are available?',
     options: [
-      'One — a single test taken by everyone',
-      'Two — Operatives and Managers only',
+      'One — a single test that is taken by everyone in the whole industry',
+      'Two — one for the Operatives and one for the Managers only',
       'Three — Operatives, Specialists, and Managers & Professionals',
-      'Four — Labourer, Operatives, Specialists, and Managers',
+      'Four — Labourer, Operatives, Specialists and Managers only',
     ],
     correctAnswer: 2,
     explanation:
@@ -444,9 +444,9 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     question: "What is the 'Experienced Worker' route to obtaining a CSCS card?",
     options: [
       'A route allowing experienced workers to obtain an NVQ through on-site assessment without attending college',
-      'A fast-track route that waives the HS&E test for workers aged over 60 who have long service records',
-      'A scheme granting an automatic gold card to anyone with 20 or more years of experience',
-      'A government programme providing free college training to older construction workers',
+      'A fast-track route that waives the HS&E test for workers aged over 60 who have long service records behind them',
+      'A scheme granting an automatic gold card to anyone with 20 or more years of experience behind them in the trade',
+      'A government programme providing free college training to older construction workers in the industry',
     ],
     correctAnswer: 0,
     explanation:
@@ -477,10 +477,10 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 26,
     question: 'A behavioural case study question in the HS&E test typically asks you to:',
     options: [
-      'Recall the exact wording of a specific regulation from a piece of legislation',
-      'Calculate the correct safe working load rating for a piece of lifting equipment',
+      'Recall the exact wording of a specific regulation from a piece of legislation correctly',
+      'Calculate the correct safe working load rating for a piece of lifting equipment on site',
       'Identify what a worker should or should not do in a described workplace scenario',
-      'List the contents of a standard construction site first-aid kit from memory',
+      'List the contents of a standard construction site first-aid kit without any help at all',
     ],
     correctAnswer: 2,
     explanation:
@@ -513,9 +513,9 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     question: 'What is the green CSCS Provisional card intended for?',
     options: [
       'Workers who have passed the HS&E test but not yet achieved their full qualification',
-      'Workers who have a qualification but have not yet passed the HS&E test',
-      'Workers on their first day on site before any training',
-      'Self-employed workers who do not need qualifications',
+      'Workers who have a qualification but have not yet passed the HS&E test for their trade',
+      'Workers on their very first day on site before any training has been given to them',
+      'Self-employed workers who do not need any qualifications of any kind at all',
     ],
     correctAnswer: 0,
     explanation:
@@ -583,9 +583,9 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
       'An employer on a major construction project insists that all workers carry a valid CSCS card. Is this a legal requirement?',
     options: [
       'No, it is not a legal requirement but is widely accepted as best practice and required by most principal contractors',
-      'Yes, holding a valid CSCS card is a legal requirement under the Health and Safety at Work etc. Act 1974',
-      'Yes, the CDM Regulations 2015 make a CSCS card compulsory for every worker who enters a construction site',
-      'No, and most principal contractors actively discourage the use of CSCS cards on their projects',
+      'Yes, holding a valid CSCS card is a legal requirement under the Health and Safety at Work etc. Act 1974 in England only',
+      'Yes, the CDM Regulations 2015 make a CSCS card compulsory for every worker who enters a construction site of any kind',
+      'No, and most principal contractors actively discourage the use of CSCS cards on their own projects these days',
     ],
     correctAnswer: 0,
     explanation:
@@ -653,9 +653,9 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
       'A new entrant to the construction industry wants to obtain a Labourer card. They have passed the HS&E Operatives test but have no qualifications. Can they apply?',
     options: [
       'Yes, the red Labourer card requires Level 1 or the CSCS Health and Safety Awareness course',
-      'Yes, a pass in the HS&E test alone is enough to obtain the red Labourer card',
-      'No, an NVQ Level 2 in a construction occupation is needed for any CSCS card',
-      'No, a completed apprenticeship framework must be held before applying',
+      'Yes, a pass in the HS&E test alone is enough to obtain the red Labourer card with nothing more',
+      'No, an NVQ Level 2 in a construction occupation is needed for any CSCS card of any colour at all',
+      'No, a completed apprenticeship framework must be held before applying for any card of any kind',
     ],
     correctAnswer: 0,
     explanation:
@@ -686,10 +686,10 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 38,
     question: 'A worker holds a valid CISRS scaffolding card. Which of the following is true?',
     options: [
-      'They must also hold a CSCS card to work on any construction site',
-      'They can only work on scaffolding-specific sites, not general construction sites',
+      'They must also hold a CSCS card to work on any construction site anywhere in the whole country',
+      'They can only work on scaffolding-specific sites, not general construction sites at all',
       'Their CISRS card is recognised as a CSCS partner card and is accepted on site in the same way',
-      'Their CISRS card must be endorsed by CSCS before it is accepted',
+      'Their CISRS card must be endorsed by CSCS before it is accepted on any construction site',
     ],
     correctAnswer: 2,
     explanation:
@@ -703,9 +703,9 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 39,
     question: 'What happens if you fail the HS&E test?',
     options: [
-      'You are banned from retaking it for 12 months',
-      'You automatically receive a Provisional card while you prepare to retake it',
-      'You must complete a mandatory training course before retaking it',
+      'You are banned from retaking it for 12 months from the date of the failed attempt',
+      'You automatically receive a Provisional card while you prepare to retake it again',
+      'You must complete a mandatory training course before retaking it once more',
       'You can rebook and retake the test after a waiting period of at least 24 hours',
     ],
     correctAnswer: 3,
@@ -776,9 +776,9 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 43,
     question: "Under HASAWA 1974, which of the following is an employer's duty?",
     options: [
-      'To complete all risk assessments personally without delegation',
-      'To guarantee that no accidents will ever occur',
-      "To provide unlimited PPE of the worker's choice",
+      'To complete all risk assessments personally without delegation to anyone else',
+      'To guarantee in writing that no accidents will ever occur on the site at any time',
+      'To provide an unlimited supply of PPE chosen by the worker at any time on the site',
       'To provide a safe working environment, so far as is reasonably practicable',
     ],
     correctAnswer: 3,
@@ -794,9 +794,9 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     question: 'Under HASAWA 1974, employees have a duty to:',
     options: [
       'Take reasonable care of their own health and safety and that of others who may be affected by their acts or omissions',
-      'Carry out their own written risk assessment for each task before starting work, and keep a copy on site',
-      'Provide and pay for their own personal protective equipment, and replace it when it becomes worn',
-      'Report directly to the Health and Safety Executive any breach of safety they observe at work',
+      'Carry out their own written risk assessment for each task before starting work, and keep a copy on site for inspection',
+      'Provide and pay for their own personal protective equipment, and replace it when it becomes worn out with use',
+      'Report directly to the Health and Safety Executive any breach of safety they observe at work on the site each day',
     ],
     correctAnswer: 0,
     explanation:
@@ -895,10 +895,10 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 50,
     question: 'Which of the following is NOT considered PPE?',
     options: [
-      'A pair of safety goggles',
-      'A high-visibility vest',
+      'A pair of safety goggles worn on site',
+      'A high-visibility vest worn on site',
       'A guard rail around an open edge',
-      'A set of ear defenders',
+      'A set of ear defenders worn',
     ],
     correctAnswer: 2,
     explanation:
@@ -930,9 +930,9 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     question: 'What is the purpose of a method statement?',
     options: [
       'To describe the step-by-step safe procedure for carrying out a specific task',
-      'To list all the workers on site together with their qualifications and cards',
-      'To record all the accidents and near misses that have occurred on the site',
-      'To provide a financial breakdown of the project costs for the client',
+      'To list all the workers on site together with their qualifications and cards held',
+      'To record all the accidents and near misses that have occurred on the site this year',
+      'To provide a financial breakdown of the project costs for the client each month',
     ],
     correctAnswer: 0,
     explanation:
@@ -999,9 +999,9 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     question: 'Under RIDDOR, which of the following must be reported to the HSE?',
     options: [
       'A worker being off work for more than 7 consecutive days due to a workplace injury',
-      'A worker taking a single day off work because of a minor cut to the hand',
-      'A near miss in which a load was dropped but nobody was actually harmed',
-      'A worker resigning from the company after an argument with a supervisor',
+      'A worker taking a single day off work because of a minor cut to the hand or the wrist',
+      'A near miss in which a load was dropped but nobody was actually harmed by it',
+      'A worker resigning from the company after an argument with a supervisor on site',
     ],
     correctAnswer: 0,
     explanation:
@@ -1015,10 +1015,10 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 57,
     question: 'What is the purpose of an accident book on a construction site?',
     options: [
-      'To list the names and qualifications of every worker on site',
+      'To list the names and the qualifications of every worker on the site each day',
       'To record all workplace accidents, injuries, and incidents, however minor',
-      'To record the daily delivery of materials to the site',
-      'To log the hours worked by each operative for payroll',
+      'To record the daily delivery of all materials arriving at the main site gate',
+      'To log the hours worked by each operative for the payroll each week',
     ],
     correctAnswer: 1,
     explanation:
@@ -1067,9 +1067,9 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     question: 'What is the purpose of a site induction?',
     options: [
       'To inform workers about site-specific hazards, rules, emergency procedures, and welfare facilities before they begin work',
-      'To assess each worker so that the correct type of CSCS card can be applied for on their behalf before they start',
-      'To provide the formal training that replaces the need for an NVQ qualification in the worker\'s trade',
-      'To record the daily attendance of every worker on the site for payroll and timesheet purposes',
+      'To assess each worker so that the correct type of CSCS card can be applied for on their behalf before they start work on site',
+      'To provide the formal training that replaces the need for an NVQ qualification in the trade of the worker concerned on site',
+      'To record the daily attendance of every worker on the site for payroll and timesheet purposes at the end of each working week',
     ],
     correctAnswer: 0,
     explanation:
@@ -1083,10 +1083,10 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 61,
     question: 'What is a toolbox talk?',
     options: [
-      "A formal examination of workers' knowledge",
+      'A formal written examination of the knowledge held by the workers on site',
       'A short, informal safety briefing on a specific topic delivered on site',
-      'A meeting to discuss the budget for purchasing new tools',
-      'An annual safety review held at head office',
+      'A meeting to discuss the budget for purchasing new tools for the site',
+      'An annual safety review meeting held at the head office each year',
     ],
     correctAnswer: 1,
     explanation:
@@ -1101,10 +1101,10 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     question:
       'Under CDM 2015, Schedule 2 requires the provision of which of the following welfare facilities?',
     options: [
-      'A canteen serving hot meals free of charge to every worker on the site each day',
-      'On-site sleeping accommodation for any worker who is on the night shift',
+      'A canteen serving hot meals free of charge to every worker on the site each day of the week',
+      'On-site sleeping accommodation provided for any worker who is on the night shift each week',
       'Sanitary conveniences, washing facilities, drinking water, changing rooms, and rest areas',
-      'A fully equipped gymnasium and recreation area for use after each shift',
+      'A fully equipped gymnasium and recreation area for use after each shift on the site',
     ],
     correctAnswer: 2,
     explanation:
@@ -1189,9 +1189,9 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     question:
       'A construction worker notices a large puddle of oil on a site walkway. No one has been injured. What should they do FIRST?',
     options: [
-      'Note it in the site diary at the end of the day, since nobody has been injured by it so far',
-      'Attempt to clean up the whole spill themselves using rags from the store before telling anyone',
-      'Wait until the end of the shift and then mention it to a colleague on the next shift',
+      'Note it in the site diary at the end of the day, since nobody has been injured by it at all so far today',
+      'Attempt to clean up the whole spill themselves using rags from the store before telling anyone else on site',
+      'Wait until the end of the shift and then mention it to a colleague coming on to site on the next shift',
       'Take immediate action to warn others (e.g., barrier the area) and then report it to their supervisor',
     ],
     correctAnswer: 3,
@@ -1207,9 +1207,9 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     question: 'An employer must carry out a risk assessment. When should it be reviewed?',
     options: [
       'Regularly, and whenever there is a significant change in the work activity, equipment, or following an incident',
-      'Once at the very start of the project, at which point it is filed and does not need to be looked at again',
-      'Exactly every five years, regardless of any change in the work or the equipment used',
-      'When the HSE specifically requests a review during an inspection of the site',
+      'Once at the very start of the project, at which point it is filed and does not need to be looked at again at all',
+      'Exactly every five years, regardless of any change in the work or the equipment used on the site in that time',
+      'When the HSE specifically requests a review during an inspection of the site and at no other time at all',
     ],
     correctAnswer: 0,
     explanation:
@@ -1223,10 +1223,10 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 69,
     question: 'Who is responsible for providing PPE on a construction site?',
     options: [
-      'The worker must buy their own PPE',
+      'The worker must buy their own PPE from a local shop',
       'The employer must provide PPE free of charge',
-      'The local authority provides PPE',
-      'The HSE issues PPE to workers',
+      'The local authority provides PPE to the workers',
+      'The HSE issues the PPE to all the workers',
     ],
     correctAnswer: 1,
     explanation:
@@ -1241,10 +1241,10 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     question:
       "Which of the following is an example of an 'engineering control' in the hierarchy of controls?",
     options: [
-      'Rotating workers so that no one is exposed to the hazard for too long',
-      'Issuing respiratory protective equipment to every worker on site',
+      'Rotating workers so that no one is exposed to the hazard for too long at a time',
+      'Issuing respiratory protective equipment to every worker on site each day',
       'Installing a local exhaust ventilation system to capture dust at source',
-      'Displaying warning signs to alert workers to the presence of dust',
+      'Displaying warning signs to alert workers to the presence of dust on the site',
     ],
     correctAnswer: 2,
     explanation:
@@ -1258,9 +1258,9 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 71,
     question: 'What is the main purpose of traffic management on a construction site?',
     options: [
-      'To reduce the amount of fuel used by plant and vehicles on site',
-      'To speed up deliveries by removing all speed restrictions on site',
-      'To ensure vehicles are parked neatly at the end of each shift',
+      'To reduce the amount of fuel that is used by plant and vehicles on the site each week',
+      'To speed up deliveries by removing all speed restrictions on site altogether',
+      'To ensure vehicles are parked neatly at the end of each shift on the site',
       'To separate pedestrians from vehicles and ensure safe movement of people and plant',
     ],
     correctAnswer: 3,
@@ -1277,9 +1277,9 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
       'A worker on site develops a persistent cough and breathing difficulties that their GP links to occupational dust exposure. Under RIDDOR, does this need to be reported?',
     options: [
       'Yes, certain occupational diseases including those linked to dust exposure must be reported under RIDDOR',
-      'No, occupational diseases are never reportable because they develop over a long period',
-      'No, only injuries from sudden accidents are reportable under RIDDOR',
-      'Yes, but only the worker themselves can make the report, not the employer',
+      'No, occupational diseases are never reportable because they develop over a long period of many years at work',
+      'No, only injuries that are caused by a sudden accident at work are reportable to the HSE under RIDDOR 2013',
+      'Yes, but only the worker themselves can make the report, not the employer or the site manager on site',
     ],
     correctAnswer: 0,
     explanation:
@@ -1294,10 +1294,10 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     question:
       "Which of the following describes an 'administrative control' in the hierarchy of controls?",
     options: [
-      'Fitting a guard or enclosure around a piece of moving machinery',
+      'Fitting a guard or enclosure around a piece of moving machinery on the site',
       'Implementing permit-to-work systems, job rotation, or safe work procedures',
-      'Replacing a hazardous solvent with a water-based alternative',
-      'Installing local exhaust ventilation to remove dust at source',
+      'Replacing a hazardous solvent with a water-based alternative that is much safer',
+      'Installing local exhaust ventilation to remove dust at source in the workshop',
     ],
     correctAnswer: 1,
     explanation:
@@ -1311,10 +1311,10 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 74,
     question: "On a construction site, a banksman's primary role is to:",
     options: [
-      'Operate the heaviest items of plant and machinery on site',
-      'Carry out the daily inspection of all site vehicles',
+      'Operate the heaviest items of plant and machinery on the whole site',
+      'Carry out the daily inspection of all site vehicles on site',
       'Guide the safe movement of vehicles, especially when reversing',
-      'Control access to the site at the main entrance gate',
+      'Control all access to the site at the main entrance gate',
     ],
     correctAnswer: 2,
     explanation:
@@ -1328,9 +1328,9 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 75,
     question: 'What is occupational health in the context of construction?',
     options: [
-      'The treatment of sudden injuries caused by accidents on site, and the provision of on-site first aid',
-      'The provision of private medical insurance and health screening for site workers and their families',
-      'The medical screening of workers to confirm they are fit before they are issued with a CSCS card',
+      'The treatment of sudden injuries caused by accidents on site, and the provision of on-site first aid cover for them',
+      'The provision of private medical insurance and health screening for the site workers and their families each year',
+      'The medical screening of workers to confirm they are fit before they are issued with a CSCS card at all',
       'The branch of health care concerned with preventing and managing work-related ill health, disease, and injury',
     ],
     correctAnswer: 3,
@@ -1398,9 +1398,9 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 79,
     question: 'Under HASAWA 1974, Section 8, it is an offence for any person to:',
     options: [
-      'Refuse to attend the site safety induction provided by the employer before starting work on the site',
-      'Fail to record a minor injury in the site accident book before the end of the working day',
-      'Carry out a task without first reading the method statement covering that particular activity',
+      'Refuse to attend the site safety induction provided by the employer before starting work at the start of the day on the site',
+      'Fail to record a minor injury in the site accident book before the end of the working day on which it actually happened',
+      'Carry out a task without first reading the method statement covering that particular activity at the start of the task',
       'Intentionally or recklessly interfere with or misuse anything provided in the interests of health, safety, or welfare',
     ],
     correctAnswer: 3,
@@ -1417,9 +1417,9 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
       'How quickly must a fatal accident on a construction site be reported to the HSE under RIDDOR?',
     options: [
       'Immediately by the quickest practicable means (usually telephone), followed by written notification within 10 days',
-      'Within 15 days of the incident, using the online F2508 form in the same way as an over-seven-day injury',
-      'Within 28 days of the incident, by raising it at the next scheduled site safety committee meeting',
-      'In the annual return submitted by the company to the HSE at the end of the reporting year',
+      'Within 15 days of the incident, using the online F2508 form in the same way as an over-seven-day injury would be reported',
+      'Within 28 days of the incident, by raising it at the next scheduled site safety committee meeting held on site',
+      'In the annual return that is submitted by the company to the HSE at the end of the reporting year in question',
     ],
     correctAnswer: 0,
     explanation:
@@ -1437,10 +1437,10 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 81,
     question: "What do the Work at Height Regulations 2005 define as 'work at height'?",
     options: [
-      'Work carried out more than 2 metres above the ground or the nearest permanent floor level',
+      'Work carried out more than 2 metres above the ground or the nearest permanent floor level below the work',
       'Any work where a person could fall a distance liable to cause personal injury, regardless of height',
-      'Work carried out on scaffolding or from a mobile elevating platform of any description',
-      'Work carried out above the height of the first floor of the building being worked on',
+      'Work carried out on scaffolding or from a mobile elevating platform of any description used on the site',
+      'Work carried out above the height of the first floor of the building being worked on at the time',
     ],
     correctAnswer: 1,
     explanation:
@@ -1507,10 +1507,10 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     question:
       'How often must scaffolding be formally inspected under the Work at Height Regulations?',
     options: [
-      'Once a month by the scaffolders who erected it, and after any alteration to the structure',
+      'Once a month by the scaffolders who erected it, and after any alteration to the structure has been made',
       'At least every 7 days by a competent person, and after any event likely to have affected its stability',
-      'Whenever a worker reports a problem, since the tag confirms it was safe when handed over',
-      'At least every 30 days by an HSE inspector visiting the site to check the structure',
+      'Whenever a worker reports a problem, since the tag confirms it was safe when handed over to the trades on site',
+      'At least every 30 days by an HSE inspector visiting the site to check the structure that has been erected',
     ],
     correctAnswer: 1,
     explanation:
@@ -1524,10 +1524,10 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 86,
     question: 'What does a green tag on scaffolding indicate?',
     options: [
-      'The scaffold is incomplete and must not be used',
-      'The scaffold is for loading materials only',
+      'The scaffold is incomplete and must not be used by any person on site',
+      'The scaffold is to be used for the loading of materials only',
       'The scaffold has been inspected, is complete, and is safe to use',
-      'The scaffold requires modification before use',
+      'The scaffold requires some modification before it can be used',
     ],
     correctAnswer: 2,
     explanation:
@@ -1594,10 +1594,10 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     question:
       'What does the Manual Handling Operations Regulations 1992 require employers to do as a first priority?',
     options: [
-      'Provide back-support belts to every worker who has to lift loads by hand during the shift',
-      'Train all workers in the correct manual lifting technique before they handle any load',
+      'Provide back-support belts to every worker who has to lift loads by hand during the shift at work',
+      'Train all workers in the correct manual lifting technique before they handle any load at all',
       'Avoid the need for hazardous manual handling operations so far as is reasonably practicable',
-      'Set a fixed maximum weight in kilograms that no worker may ever lift on their own',
+      'Set a fixed maximum weight in kilograms that no worker may ever lift on their own at work',
     ],
     correctAnswer: 2,
     explanation:
@@ -1629,9 +1629,9 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     question: 'When lifting a heavy object from the ground, what is the correct starting position?',
     options: [
       'Stand with feet apart, bend at the knees and hips, keep the back straight, and grip the load firmly',
-      'Stand with the feet together, bend at the waist, and lift quickly using the back muscles',
-      'Keep the legs straight, bend forward from the hips, and twist at the waist while lifting',
-      'Hold the load at arm\'s length away from the body and lift it with a sharp jerk upwards',
+      'Stand with the feet together, bend at the waist, and lift quickly using the muscles of the back alone',
+      'Keep the legs straight, bend forward from the hips, and twist at the waist while lifting the load up',
+      'Hold the load at arm length away from the body and lift it with a sharp jerk from the ground each time',
     ],
     correctAnswer: 0,
     explanation:
@@ -1646,9 +1646,9 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     question:
       'A worker needs to move a heavy radiator across a site. Which mechanical aid would be most appropriate?',
     options: [
-      'A gin wheel and rope',
+      'A gin wheel and a rope from the site store',
       'A sack trolley or platform trolley',
-      'A scissor lift',
+      'A scissor lift working platform',
       'A mobile elevated work platform',
     ],
     correctAnswer: 1,
@@ -1663,10 +1663,10 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 94,
     question: 'A scaffold has a red tag attached. What does this mean?',
     options: [
-      'The scaffold is reserved for a specific contractor',
-      'The scaffold is for materials only, not personnel',
+      'The scaffold is reserved for a specific named contractor only',
+      'The scaffold is for materials only, and not for any personnel',
       'The scaffold is incomplete or unsafe and must NOT be used',
-      'The scaffold is safe to use but requires care',
+      'The scaffold is safe to use but requires extra care',
     ],
     correctAnswer: 2,
     explanation:
@@ -1717,10 +1717,10 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     question:
       'Under the Work at Height Regulations 2005, who is responsible for planning and organising work at height?',
     options: [
-      'The HSE inspector assigned to the construction site, who must sign off the work at height plan',
+      'The HSE inspector assigned to the construction site, who must sign off the work at height plan before it starts at all',
       'Every employer and any person who controls the work of others must plan, organise, and supervise work at height',
-      'The individual workers who are actually working at height, since they can see the risks',
-      'The client who commissioned the project, as the person who ultimately pays for the work',
+      'The individual workers who are actually working at height, since they can see the risks for themselves at the time',
+      'The client who commissioned the project, as the person who ultimately pays for the work that is being carried out',
     ],
     correctAnswer: 1,
     explanation:
@@ -1735,10 +1735,10 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     question:
       'A worker is using a mobile tower scaffold. Before moving the tower, what must they ensure?',
     options: [
-      'That the tower is fully loaded with materials so that the extra weight keeps it stable while it is being pushed across the slab',
-      'That at least one worker remains on the platform to steer the tower and watch for overhead obstructions',
+      'That the tower is fully loaded with materials so that the extra weight keeps it stable while it is being pushed across the slab by the whole gang',
+      'That at least one worker remains on the platform to steer the tower and watch for overhead obstructions while it is being moved along',
       'That all persons and loose materials have been removed from the platform, and the tower height does not exceed the safe height-to-base ratio',
-      'That the wheel brakes are locked so that the tower cannot roll away while it is being pushed into position',
+      'That the wheel brakes are locked so that the tower cannot roll away while it is being pushed into position by the gang across the slab',
     ],
     correctAnswer: 2,
     explanation:
@@ -1753,9 +1753,9 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the second step in the work at height hierarchy, to be considered when working at height cannot be avoided?',
     options: [
-      'Provide safety netting beneath the work area to catch anyone who falls from it',
-      'Issue a personal fall arrest harness and lanyard to each worker at height',
-      'Mitigate the consequences of a fall by using soft landing systems below',
+      'Provide safety netting beneath the work area to catch anyone who falls from it from above',
+      'Issue a personal fall arrest harness and lanyard to each worker working on the site at all',
+      'Mitigate the consequences of a fall by using soft landing systems below the work',
       'Prevent falls by using collective protection such as guard rails and working platforms',
     ],
     correctAnswer: 3,
@@ -1827,9 +1827,9 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 103,
     question: "What is 'suspension trauma' and why is it a serious risk after a fall arrest?",
     options: [
-      'It is the shock loading transmitted through the lanyard to the anchor point during the arrest of a fall from height',
-      'It is the psychological stress and anxiety a worker feels in the days after surviving a fall from height',
-      'It is the stretching of the lanyard webbing as the shock absorber deploys and takes the load of the fall',
+      'It is the shock loading transmitted through the lanyard to the anchor point during the arrest of a fall from height on a construction site',
+      'It is the psychological stress and anxiety a worker feels in the days after surviving a fall from height on a busy construction site nearby',
+      'It is the stretching of the lanyard webbing as the shock absorber deploys and takes the load during the arrest of a fall from a height',
       'It is a potentially fatal condition where blood pools in the legs due to harness suspension, restricting return flow to vital organs',
     ],
     correctAnswer: 3,
@@ -1896,9 +1896,9 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 107,
     question: 'What must be in place before any work at height begins?',
     options: [
-      'A weather forecast for the next 48 hours',
-      'A written quote from the client',
-      'Permission from the local authority',
+      'A weather forecast for the next 48 hours of work',
+      'A written quote from the client for work',
+      'Permission from the local authority to work',
       'A rescue plan for retrieving a fallen worker',
     ],
     correctAnswer: 3,
@@ -1948,10 +1948,10 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 110,
     question: 'When a team lift is necessary, what is the most important factor?',
     options: [
-      'Having the strongest person at the heaviest end',
-      'Using at least four people regardless of load weight',
+      'Having the strongest person positioned at the heaviest end of the load',
+      'Using at least four people regardless of the total weight of the load',
       'Ensuring all team members lift and lower on a coordinated signal',
-      'Wearing matching PPE to identify the team',
+      'Wearing matching PPE so that the whole team can be identified',
     ],
     correctAnswer: 2,
     explanation:
@@ -2524,8 +2524,8 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     question:
       'What document must accompany the transfer of hazardous waste from a construction site?',
     options: [
-      'A building regulations certificate',
-      'A COSHH assessment',
+      'A building regulations approval notice',
+      'A COSHH assessment record sheet',
       'A planning permission document',
       'A hazardous waste consignment note',
     ],
@@ -2542,9 +2542,9 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     question: 'What is the main purpose of a dust suppression system on a construction site?',
     options: [
       'To reduce airborne dust levels and protect workers from respiratory diseases such as silicosis',
-      'To keep the site clean and tidy for visitors, clients and inspecting officers alike',
-      'To cool the cutting discs and prevent the tools from overheating during use',
-      'To reduce the noise generated by cutting and grinding equipment on the site',
+      'To keep the site clean and tidy for visitors, clients and inspecting officers alike on site each day',
+      'To cool the cutting discs and prevent the tools from overheating during use on the site each day',
+      'To reduce the noise generated by cutting and grinding equipment on the site during the day',
     ],
     correctAnswer: 0,
     explanation:
@@ -2559,10 +2559,10 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     question:
       'Which of the following materials generates the most hazardous dust when cut or drilled?',
     options: [
-      'Softwood timber such as pine or spruce',
+      'Softwood timber such as pine or spruce board',
       'Concrete and sandstone (containing silica)',
-      'Plasterboard and gypsum sheeting',
-      'Mild steel sheet and box section',
+      'Plasterboard and gypsum wall board sheeting',
+      'Mild steel sheet and hollow box section tube',
     ],
     correctAnswer: 1,
     explanation:
@@ -2577,10 +2577,10 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the primary environmental risk of allowing cement-contaminated water to enter a watercourse?',
     options: [
-      'It is strongly acidic and dissolves the beds of rivers and streams',
-      'It is flammable and creates a fire risk on the water surface',
+      'It is strongly acidic and dissolves the beds of rivers and streams close by',
+      'It is flammable and creates a fire risk on the water surface nearby',
       'It is highly alkaline and toxic to aquatic life, and can block fish gills',
-      'It evaporates quickly and releases harmful fumes into the air',
+      'It evaporates quickly and releases harmful fumes into the air above',
     ],
     correctAnswer: 2,
     explanation:
@@ -2595,9 +2595,9 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the correct method for storing diesel fuel on a construction site to prevent water pollution?',
     options: [
-      'In open-topped containers stacked beside the nearest surface water drain so that any spills run away quickly',
-      'In a single-skinned tank placed directly on bare soil away from the site buildings',
-      'In sealed drums buried below ground level so that they are out of sight and secure',
+      'In open-topped containers stacked beside the nearest surface water drain so that any spills run away into the drain nearby',
+      'In a single-skinned tank placed directly on bare soil some way away from the site buildings and the site offices close by',
+      'In sealed drums buried below ground level so that they are out of sight and secure from anyone on site or from theft',
       'In a double-skinned (bunded) tank with a capacity of 110% of the stored volume, sited away from drains and watercourses',
     ],
     correctAnswer: 3,
@@ -2630,10 +2630,10 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 149,
     question: 'What is an environmental permit required for?',
     options: [
-      'Employment of workers on a construction site for the first time within the area of a new local authority',
+      'Employment of workers on a construction site for the first time within the area of a new local authority within that county',
       'Activities that may pollute the environment, such as waste operations, water discharges, or certain industrial processes',
-      'Storage of more than a set quantity of building materials, fuel oil or gas cylinders within a site compound',
-      'Any work at height above 2 metres carried out on a site adjoining a public highway',
+      'Storage of more than a set quantity of building materials, fuel oil or gas cylinders within a site compound on the project',
+      'Any work at height above 2 metres carried out on a site adjoining a public highway, a footpath or a public right of way nearby',
     ],
     correctAnswer: 1,
     explanation:
@@ -2648,10 +2648,10 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     question:
       'What action must a construction site take if a protected species such as great crested newts or nesting birds is discovered during works?',
     options: [
-      'Continue working but try to move the species to a safer location',
-      'Carry on as normal, as protected species do not affect construction',
+      'Continue working but try to move the species to a safer location nearby yourself instead',
+      'Carry on as normal, as protected species do not affect construction work at all',
       'Stop work in the affected area immediately and seek advice from a qualified ecologist',
-      'Report the sighting to the HSE before resuming the work',
+      'Report the sighting to the HSE before resuming the work on the site once again',
     ],
     correctAnswer: 2,
     explanation:
@@ -2683,9 +2683,9 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     question: 'Which of the following is a symptom of Hand-Arm Vibration Syndrome (HAVS)?',
     options: [
       'Fingers turning white and losing sensation, especially in cold conditions',
-      'Persistent ringing in the ears after using power tools',
-      'Shortness of breath and a persistent dry cough',
-      'Lower back pain that worsens when sitting for long periods',
+      'Persistent ringing in the ears after using power tools for a long period of time',
+      'Shortness of breath and a persistent dry cough that will not clear too',
+      'Lower back pain that worsens when sitting for long periods at a desk each day',
     ],
     correctAnswer: 0,
     explanation:
@@ -2717,10 +2717,10 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 154,
     question: 'What is the key requirement for RPE to be effective?',
     options: [
-      'It must be the most expensive type of mask available on the market',
-      'It must be shared between workers to reduce the cost of provision',
+      'It must be the most expensive type of mask available on the market at the time',
+      'It must be shared between workers to reduce the cost of provision to the employer',
       'It must be face-fit tested to the individual wearer and properly maintained',
-      'It must be worn over the top of a beard to improve the seal',
+      'It must be worn over the top of a beard to improve the seal of the wearer properly',
     ],
     correctAnswer: 2,
     explanation:
@@ -2787,10 +2787,10 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     question:
       'What colour-coded label identifies hazardous waste containers for asbestos on a construction site?',
     options: [
-      "A plain yellow label with black hazard text",
-      "A green cross on a white background",
+      'A plain yellow warning label with black hazard text printed on it',
+      'A large green cross printed on a plain white background',
       "A white lowercase 'a' on a blue background with a red border",
-      "An orange diamond with a flame symbol",
+      'An orange diamond containing a black flame symbol on it',
     ],
     correctAnswer: 2,
     explanation:
@@ -2804,9 +2804,9 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 159,
     question: 'What is the purpose of an asbestos register in a building?',
     options: [
-      'To list the names of every contractor who has worked in the building and the dates they attended',
-      'To record the dates on which the building was last redecorated and refurbished internally',
-      'To track the disposal of all general waste leaving the building under duty of care',
+      'To list the names of every contractor who has worked in the building and the dates they attended to carry out any work',
+      'To record the dates on which the building was last redecorated and refurbished internally over the past few years',
+      'To track the disposal of all general waste leaving the building under duty of care arrangements each year too',
       'To document the location, type, and condition of known or presumed asbestos-containing materials in the building',
     ],
     correctAnswer: 3,
@@ -2822,9 +2822,9 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     question: 'What is the main purpose of a COSHH assessment?',
     options: [
       'To identify hazardous substances, assess the risks of exposure, and determine the control measures needed to protect workers\' health',
-      'To record the purchase cost of every chemical used on the site and the budget that has been allocated to buying it',
-      'To list the suppliers from whom the hazardous substances were bought and the dates of each delivery to site',
-      'To certify that every worker has been trained to handle the hazardous substances kept on site',
+      'To record the purchase cost of every chemical used on the site and the budget that has been allocated to buying it over the whole year',
+      'To list the suppliers from whom the hazardous substances were bought and the dates of each delivery that was made over the whole of the year',
+      'To certify that every worker has been trained to handle the hazardous substances kept on site safely and correctly before any use of them',
     ],
     correctAnswer: 0,
     explanation:
@@ -2838,10 +2838,10 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 161,
     question: 'According to HSG47, what is the first step before any excavation work begins?',
     options: [
-      'Excavating a small test pit using a mechanical digger to check the ground',
+      'Excavating a small test pit using a mechanical digger to check the ground conditions on site first',
       'Identifying the location of underground services using plans, a CAT scanner, and trial holes',
-      'Erecting edge protection around the planned excavation area',
-      'Notifying the local authority that excavation work is about to start',
+      'Erecting edge protection around the planned excavation area on site before it starts at all',
+      'Notifying the local authority that excavation work is about to start on the site nearby',
     ],
     correctAnswer: 1,
     explanation:
@@ -2855,10 +2855,10 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 162,
     question: 'What is the purpose of a Cable Avoidance Tool (CAT)?',
     options: [
-      'To measure the depth of an excavation accurately before workers enter it',
-      'To test the strength of an overhead power line before work starts nearby',
+      'To measure the depth of an excavation accurately before workers enter it safely at all',
+      'To test the strength of an overhead power line before work starts nearby on the site',
       'To detect the presence and approximate position of underground cables and pipes',
-      'To check the load rating of lifting equipment before it is used on site',
+      'To check the load rating of lifting equipment before it is used today on site',
     ],
     correctAnswer: 2,
     explanation:
@@ -2872,9 +2872,9 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 163,
     question: 'What does a signal generator (Genny) do when used alongside a CAT?',
     options: [
-      'It measures the voltage carried by a buried power cable so it can be identified',
-      'It records the depth of each buried service and prints it onto a site plan',
-      'It marks the ground above a detected service with paint as the CAT passes over',
+      'It measures the voltage carried by a buried power cable so it can be identified on the site plan',
+      'It records the depth of each buried service and prints it onto a site plan automatically as it goes',
+      'It marks the ground above a detected service with paint as the CAT passes over the ground above it',
       'It applies a detectable signal to a specific service, making it easier for the CAT to locate',
     ],
     correctAnswer: 3,
@@ -2908,10 +2908,10 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     question:
       'What physical method can be used to prevent vehicles and plant from encroaching beneath overhead power lines?',
     options: [
-      'Posting warning signs at the site entrance stating the height of the overhead power lines above the ground',
+      'Posting warning signs at the site entrance stating the height of the overhead power lines above the ground at each gate',
       'Installing goal posts (barrier gates) with a visible height restriction to prevent tall plant from passing underneath',
-      'Asking drivers to lower their vehicle booms and tipper bodies before approaching the lines',
-      'Painting the ground beneath the lines in a bright warning colour visible to all drivers',
+      'Asking drivers to lower their vehicle booms and tipper bodies before approaching the lines as they arrive on site',
+      'Painting the ground beneath the lines in a bright warning colour visible to all drivers approaching the lines',
     ],
     correctAnswer: 1,
     explanation:
@@ -2926,10 +2926,10 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     question:
       'What are the three main methods of supporting the sides of an excavation to prevent collapse?',
     options: [
-      'Dewatering, capping, and surcharging the excavation walls',
-      'Compacting, grading, and rolling the sides of the trench',
+      'Dewatering, capping, and surcharging the excavation walls of the trench',
+      'Compacting, grading, and rolling the sides of the trench before digging',
       'Battering (sloping), shoring (propping), and trench boxes (shielding)',
-      'Fencing, signing, and lighting the edges of the excavation',
+      'Fencing, signing, and lighting the edges of the excavation on site',
     ],
     correctAnswer: 2,
     explanation:
@@ -2943,9 +2943,9 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 167,
     question: 'Who must inspect an excavation under CDM 2015 and HSG47?',
     options: [
-      'Any competent worker, once a week, with no need to record the findings in writing',
-      'An HSE inspector, but only where the excavation exceeds 2 metres in depth',
-      'The site manager, once at the start of the works and once at the end of the project',
+      'Any competent worker, once a week, with no need to record the findings in writing that has been made at all',
+      'An HSE inspector, but only where the excavation exceeds 2 metres below the ground level on site in depth',
+      'The site manager, once at the start of the works and once at the end of the works on the site each time',
       'A competent person, at the start of each shift and after any event likely to have affected stability',
     ],
     correctAnswer: 3,
@@ -2961,9 +2961,9 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     question: 'What is a confined space as defined by the Confined Spaces Regulations 1997?',
     options: [
       'Any enclosed or partially enclosed space where there is a reasonably foreseeable risk of serious injury from hazardous conditions',
-      'Any room or area that does not have a window or other permanent opening to the outside air and needs mechanical ventilation',
-      'Any space smaller than 2 metres in any single dimension in which a worker has to kneel or crouch to carry out the work',
-      'Any area below ground level on a construction site that a worker has to climb down into using a ladder or steps',
+      'Any room or area that does not have a window or other permanent opening to the outside air and needs mechanical ventilation in place',
+      'Any space smaller than 2 metres in any single dimension in which a worker has to kneel or crouch to carry out the work in it',
+      'Any area below ground level on a construction site that a worker has to climb down into using a ladder or steps down into it',
     ],
     correctAnswer: 0,
     explanation:
@@ -2994,10 +2994,10 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 170,
     question: 'Before entering a confined space, what atmospheric monitoring must be carried out?',
     options: [
-      'The oxygen level must be tested before entry, since the other gases will disperse on opening',
-      'The temperature and humidity of the space must be checked before anyone is allowed to enter',
+      'The oxygen level must be tested before entry, since the other gases will disperse on opening of the lid',
+      'The temperature and humidity of the space must be checked before anyone is allowed to enter first of all',
       'Oxygen, flammable gases, and toxic gases must all be tested using a calibrated multi-gas detector',
-      'No testing is needed provided the space has been mechanically ventilated before entry',
+      'No testing is needed provided the space has been mechanically ventilated properly beforehand',
     ],
     correctAnswer: 2,
     explanation:
@@ -3114,10 +3114,10 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 177,
     question: 'Why is 110 V CTE safer than 230 V for portable tools on construction sites?',
     options: [
-      'It allows the tools to run more powerfully than they would from a standard 230 V site supply',
+      'It allows the tools to run more powerfully than they would from a standard 230 V site supply used on the site',
       'In a fault condition, the maximum voltage to earth is only 55 V, reducing the risk of fatal electric shock',
-      'It uses less electricity, which reduces the running costs of the site generator',
-      'It removes the need to fit an RCD to the power supply feeding the site tools',
+      'It uses less electricity, which reduces the running costs of the site generator on the site over each week of work',
+      'It removes the need to fit an RCD to the power supply feeding the site tools on any construction site at all',
     ],
     correctAnswer: 1,
     explanation:
@@ -3131,10 +3131,10 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 178,
     question: 'What do the Electricity at Work Regulations 1989 require?',
     options: [
-      'That every portable electrical tool used on the site is PAT tested every three months without exception',
-      'That only qualified electricians may enter a construction site while the temporary supply is live',
+      'That every portable electrical tool used on the site is PAT tested every three months by a competent person each time',
+      'That only qualified electricians may enter a construction site while the temporary supply is live at any time at all on site',
       'That all electrical systems are constructed, maintained, and used to prevent danger, so far as is reasonably practicable',
-      'That all electrical work must be reported to the local authority building control',
+      'That all electrical work must be reported to the local authority building control before any work starts on site',
     ],
     correctAnswer: 2,
     explanation:
@@ -3148,8 +3148,8 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 179,
     question: 'What does PAT testing stand for?',
     options: [
-      'Power Acceptance Testing',
-      'Periodic Amp Testing',
+      'Power Acceptance Testing System',
+      'Periodic Amperage Test Check',
       'Pre-Assembly Testing',
       'Portable Appliance Testing',
     ],
@@ -3217,9 +3217,9 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 183,
     question: 'Under RIDDOR 2013, which of the following must be reported to the HSE?',
     options: [
-      'A worker taking a single day off work after a minor sprain to the wrist or ankle',
-      'A small cut that is cleaned and treated with a plaster from the site first-aid kit',
-      'A bruise sustained when a worker bumps into a wall while carrying materials',
+      'A worker taking a single day off work after a minor sprain to the wrist or ankle on the site',
+      'A small cut that is cleaned and treated with a plaster from the site first-aid kit on the site',
+      'A bruise sustained when a worker bumps into a wall while carrying materials across the site nearby',
       'A fracture of any bone (other than fingers, thumbs, or toes) caused by a workplace accident',
     ],
     correctAnswer: 3,
@@ -3235,9 +3235,9 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     question: "Which of the following is a RIDDOR 'dangerous occurrence' that must be reported?",
     options: [
       'The collapse or partial collapse of a scaffold over 5 metres in height',
-      'A worker tripping over a trailing cable and grazing their knee',
+      'A worker tripping over a trailing cable and grazing their knee on the site',
       'A delivery vehicle arriving late and blocking the site entrance',
-      'A worker being signed off for two days with a sprained wrist',
+      'A worker being signed off for two days with a sprained wrist at work',
     ],
     correctAnswer: 0,
     explanation:
@@ -3251,10 +3251,10 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 185,
     question: 'How soon must a fatal or specified injury be reported to the HSE under RIDDOR?',
     options: [
-      'Within 10 days using only the online F2508 form',
+      'Within 10 days of it happening, using only the online F2508 report form',
       'Without delay — by the quickest practicable means (usually telephone)',
-      'Within 15 days at the next scheduled site safety meeting',
-      'Within 28 days in the company\'s monthly accident return',
+      'Within 15 days at the next scheduled site safety meeting held on the site',
+      'Within 28 days in the monthly accident return from the company',
     ],
     correctAnswer: 1,
     explanation:
@@ -3287,9 +3287,9 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the correct procedure if someone receives an electric shock from a live conductor?',
     options: [
-      'Grab the person immediately and pull them clear of the live conductor by hand, then lay them down in the recovery position and call for help on the site radio',
-      'Throw water over the person to cool the burn caused by the electric shock, then keep them warm and reassured until help arrives',
-      'Wait at a safe distance until the person frees themselves from the conductor before going over to help them and calling an ambulance',
+      'Grab the person immediately and pull them clear of the live conductor by hand, then lay them down in the recovery position and call for help on the site radio for help',
+      'Throw water over the person to cool the burn caused by the electric shock, then keep them warm and reassured until help arrives and monitor them closely until they arrive',
+      'Wait at a safe distance until the person frees themselves from the conductor before going over to help them and calling an ambulance and take over the care of the casualty',
       'Isolate the electrical supply if possible, or use a non-conductive object to separate the person from the source, then call emergency services and begin first aid',
     ],
     correctAnswer: 3,
@@ -3305,7 +3305,7 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     question: 'Which regulation governs the safety requirements for work in confined spaces?',
     options: [
       'The Confined Spaces Regulations 1997',
-      'The COSHH Regulations 2002',
+      'The COSHH Regulations 2002 and guidance',
       'The Work at Height Regulations 2005',
       'The PPE at Work Regulations 1992',
     ],
@@ -3356,9 +3356,9 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 191,
     question: 'What are the main hazards associated with excavation work?',
     options: [
-      'Noise, vibration and dust generated by the excavation plant working in a confined part of the site compound',
-      'Sunburn, dehydration and insect bites affecting the workers spending the whole day outdoors',
-      'Theft of materials, vandalism of plant and trespass onto the site outside working hours',
+      'Noise, vibration and dust generated by the excavation plant working in a confined part of the site compound during the works',
+      'Sunburn, dehydration and insect bites affecting the workers spending the whole day outdoors in the warm summer months on site',
+      'Theft of materials, vandalism of plant and trespass onto the site outside working hours and during the night as well',
       'Collapse of the sides, contact with underground services, flooding, falling into the excavation, and hazardous atmospheres',
     ],
     correctAnswer: 3,
@@ -3375,9 +3375,9 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
       'A confined space is found to have an oxygen level of 17%. What action should be taken?',
     options: [
       'Entry is prohibited — the space must be ventilated and retested before entry is considered',
-      'Entry is safe as the minimum acceptable level is 16%',
-      'Entry is permitted but workers must take regular breaks outside the space',
-      'Entry is safe provided workers carry an emergency breathing apparatus',
+      'Entry is perfectly safe, as the minimum acceptable oxygen level for entry is 16% by volume of air',
+      'Entry is permitted but workers must take regular breaks outside the space in the fresh air regularly',
+      'Entry is safe provided workers carry an emergency breathing apparatus with them at all times',
     ],
     correctAnswer: 0,
     explanation:
@@ -3391,10 +3391,10 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 193,
     question: 'What is the purpose of a permit to work system for confined space entry?',
     options: [
-      'To record the time each worker spends inside the space so that the payroll and timesheets can be calculated correctly',
+      'To record the time each worker spends inside the space so that the payroll and timesheets can be calculated correctly at the end of the job',
       'To ensure that a formal, documented check has been carried out confirming all safety precautions are in place before entry is authorised',
-      'To grant general permission for any trained worker to enter the space at any time during the works',
-      'To list the tools and materials taken into the confined space so that none are left behind',
+      'To grant general permission for any trained worker to enter the space at any time during the works without any further checks at all',
+      'To list the tools and materials taken into the confined space so that none are left behind inside there when the work is finished',
     ],
     correctAnswer: 1,
     explanation:
@@ -3408,10 +3408,10 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 194,
     question: "What is a 'top person' or 'attendant' in confined space entry?",
     options: [
-      'The most senior worker in the team, who goes into the space first and then directs the rest of the task from inside',
-      'The person who carries out the atmospheric testing before entry and then joins the rest of the team inside',
+      'The most senior worker in the team, who goes into the space first and then directs the rest of the task from inside over the radio link',
+      'The person who carries out the atmospheric testing before entry and then joins the rest of the team inside to help carry out the work',
       'A trained person stationed outside the confined space to maintain communication, monitor conditions, and initiate rescue if needed',
-      'The contractor who issued the permit to work for the entry and countersigns it on completion',
+      'The contractor who issued the permit to work for the entry and countersigns it on completion of the entry work on the site itself',
     ],
     correctAnswer: 2,
     explanation:
@@ -3425,9 +3425,9 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 195,
     question: 'What is the purpose of a fire assembly point on a construction site?',
     options: [
-      'The location on site where all the firefighting equipment and extinguishers are stored ready for use in an emergency',
-      'The point at which the fire brigade enters the site and sets up its appliances in an emergency',
-      'The area where workers wait at the start of each shift to receive their instructions',
+      'The location on site where all the firefighting equipment and extinguishers are stored ready for use in an emergency on the whole site',
+      'The point at which the fire brigade enters the site and sets up its appliances in an emergency and where it starts to fight the fire',
+      'The area where workers wait at the start of each shift to receive their instructions from the site supervisor for the day ahead of them',
       'A predetermined safe location where all personnel gather after evacuation so that a roll call can confirm everyone is accounted for',
     ],
     correctAnswer: 3,
@@ -3443,9 +3443,9 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     question: "Under the Electricity at Work Regulations 1989, what does 'dead working' mean?",
     options: [
       'Working on electrical equipment that has been isolated, locked off, proved dead, and earthed where necessary',
-      'Working on electrical equipment while it remains energised, but wearing insulating gloves and mats',
-      'Working only on equipment that has been permanently disconnected and is due to be scrapped',
-      'Working on low-voltage circuits where isolation is not considered necessary by the operative',
+      'Working on electrical equipment while it remains energised, but wearing insulating gloves and mats at all times',
+      'Working only on equipment that has been permanently disconnected and is due to be scrapped later on',
+      'Working on low-voltage circuits where isolation is not considered necessary by the operative in charge',
     ],
     correctAnswer: 0,
     explanation:
@@ -3477,10 +3477,10 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 198,
     question: "What is 'battering' in the context of excavation support?",
     options: [
-      'Compacting the bottom of the excavation with a plate compactor',
-      'Using a mechanical hammer to drive sheet piles into the ground',
+      'Compacting the bottom of the excavation with a plate compactor before concreting',
+      'Using a mechanical hammer to drive sheet piles into the ground along the edge',
       'Cutting the sides of an excavation back to a safe angle to prevent collapse',
-      'Breaking up hard ground with a hydraulic breaker before excavation',
+      'Breaking up hard ground with a hydraulic breaker before excavation begins',
     ],
     correctAnswer: 2,
     explanation:
@@ -3495,9 +3495,9 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     question:
       'According to HSG47, what method must be used to excavate within 500 mm of a known underground service?',
     options: [
-      'A mechanical excavator fitted with a toothless ditching bucket',
-      'A mechanical excavator operated slowly under a banksman\'s direction',
-      'A pneumatic breaker to loosen the ground before digging by machine',
+      'A mechanical excavator fitted with a toothless ditching bucket fitted to it',
+      'A mechanical excavator operated slowly under the direction of a banksman',
+      'A pneumatic breaker to loosen the ground before digging by machine bucket',
       'Hand digging using non-metallic tools (hand tools or vacuum excavation)',
     ],
     correctAnswer: 3,
@@ -3513,9 +3513,9 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     question: 'What information must be displayed on the site fire safety notice board?',
     options: [
       'The fire evacuation procedure, assembly point location, fire warden names, emergency contact numbers, and the location of firefighting equipment',
-      'The daily delivery schedule, the names of the material suppliers, the contact numbers for each of them and the agreed gate times',
-      'The CSCS card numbers and qualifications held by every worker currently signed in on the site, and their trades',
-      'The project programme, the key milestone dates, the planned date for practical completion and the contract value',
+      'The daily delivery schedule, the names of the material suppliers, the contact numbers for each of them and the agreed gate times for each of them',
+      'The CSCS card numbers and qualifications held by every worker currently signed in on the site, their trades and their card expiry dates',
+      'The project programme, the key milestone dates, the planned date for practical completion and the contract value agreed with the client',
     ],
     correctAnswer: 0,
     explanation:
@@ -3550,9 +3550,9 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 202,
     question: 'An HSE inspector serves a prohibition notice on a site activity and the company appeals. What is the effect of that appeal?',
     options: [
-      'The work may continue while an employment tribunal hears the appeal',
+      'The work may continue while an employment tribunal hears the appeal fully',
       'The requirement stands during the appeal because the risk is serious',
-      'The notice is withdrawn until the inspector reinspects the activity',
+      'The notice is withdrawn until the inspector reinspects the activity again',
       'The notice converts to an improvement notice for the appeal period',
     ],
     correctAnswer: 1,
@@ -3618,10 +3618,10 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 206,
     question: 'Under CDM 2015, which of these on its own makes a construction project notifiable to HSE?',
     options: [
-      'Work involving two or more contractors under an appointed principal designer',
+      'Work involving two or more contractors under an appointed principal designer only',
       'Work scheduled to last over 30 working days with more than 20 workers at once',
-      'Work scheduled to last more than 15 working days whatever the headcount',
-      'Work with a contract value that exceeds five hundred thousand pounds',
+      'Work scheduled to last more than 15 working days whatever the headcount on the job',
+      'Work with a contract value that exceeds five hundred thousand pounds in total value',
     ],
     correctAnswer: 1,
     explanation:
@@ -3635,7 +3635,7 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 207,
     question: 'Under CDM 2015, what is the main duty of a client on a project with more than one contractor?',
     options: [
-      'Supervise the daily activities of every contractor working on the site',
+      'Supervise the daily activities of every contractor working on the site daily',
       'Prepare the construction phase plan and issue it to each contractor',
       'Make suitable arrangements for managing the project and check they work',
       'Carry out the site inductions and the weekly toolbox talks in person',
@@ -3670,8 +3670,8 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     question: 'What must the record of a RIDDOR-reportable event contain?',
     options: [
       'Date and method of reporting, plus details of the event and those involved',
-      'The name of the injured person and the date they returned to work',
-      'A copy of the site insurance policy and the client contract reference',
+      'The name of the injured person and the date they returned to work afterwards',
+      'A copy of the site insurance policy and the client contract reference number',
       'The full medical notes issued by the treating hospital or GP practice',
     ],
     correctAnswer: 0,
@@ -3754,10 +3754,10 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 214,
     question: 'What standard should traffic signs and road markings on a construction site follow?',
     options: [
-      'A layout designed by the site manager to suit that particular site',
+      'A layout designed by the site manager to suit that particular site each week',
       'Standard road traffic signs and the Safety Signs and Signals Regulations',
-      'Red lettering on a white ground so they stand out against the mud',
-      'Verbal instructions given at the daily briefing instead of any signs',
+      'Red lettering on a white ground so they stand out against the mud on the road',
+      'Verbal instructions given at the daily briefing instead of any signs being used',
     ],
     correctAnswer: 1,
     explanation:
@@ -3771,7 +3771,7 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 215,
     question: 'In health and safety law, describing someone as a competent person means they have:',
     options: [
-      'a valid card of any colour plus a current site induction record',
+      'a valid card of any colour plus a current site induction record on file',
       'at least five years of continuous employment in the same trade',
       'the skills, knowledge, experience and training for that specific task',
       'been formally appointed in writing by the client on that project',
@@ -3788,8 +3788,8 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 216,
     question: 'Which of these must be provided as welfare arrangements on a construction site?',
     options: [
-      'A subsidised hot meal service at the start of every working shift',
-      'Private car parking within fifty metres of each work area on site',
+      'A subsidised hot meal service at the start of every working shift on site',
+      'Private car parking within fifty metres of each work area on the site',
       'A quiet room reserved solely for use by supervisory staff on site',
       'A supply of drinking water, washing facilities and clothing storage',
     ],
@@ -3806,9 +3806,9 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     question: 'Under the Check stage of the HSE management framework, an employer should:',
     options: [
       'measure performance and investigate accidents, incidents and near misses',
-      'write the health and safety policy and set the objectives for the year',
-      'buy the personal protective equipment needed for the coming contract',
-      'appoint the principal designer and issue the pre-construction pack',
+      'write the health and safety policy and set the objectives for the year ahead',
+      'buy the personal protective equipment needed for the coming contract period',
+      'appoint the principal designer and issue the pre-construction pack to the team',
     ],
     correctAnswer: 0,
     explanation:
@@ -3839,7 +3839,7 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 219,
     question: 'A signaller is used to direct a reversing lorry on site. What does HSG144 require of that signaller?',
     options: [
-      'They hold the same category of driving licence as the vehicle driver',
+      'They hold the same category of driving licence as the vehicle driver holds',
       'They stand directly behind the vehicle so the driver can see them',
       'They are competent in the methods used to keep themselves and others safe',
       'They are the site manager, as nobody else can stop a vehicle move',
@@ -3907,8 +3907,8 @@ export const cscsCardQuestionBank: StandardMockQuestion[] = [
     id: 223,
     question: 'A worker must wear thick gloves and a full body suit to handle a load. What must the manual handling assessment do?',
     options: [
-      'Exclude the PPE, since it is covered by separate regulations',
-      'Treat the PPE as a control that halves the assessed handling risk',
+      'Exclude the PPE, since it is covered by separate regulations entirely',
+      'Treat the PPE as a control that halves the assessed handling risk involved',
       'Take account of how the PPE restricts movement and grip when lifting',
       'Require the PPE to be removed for the duration of each lift made',
     ],

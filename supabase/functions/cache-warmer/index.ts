@@ -7,7 +7,8 @@ import { serve } from '../_shared/deps.ts';
 import { createClient } from '../_shared/deps.ts';
 import { corsHeaders } from '../_shared/v3-core.ts';
 
-serve(async (req) => {
+import { withSentry } from '../_shared/sentry.ts';
+serve(withSentry('cache-warmer', async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -83,4 +84,4 @@ serve(async (req) => {
     }),
     { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
   );
-});
+}));

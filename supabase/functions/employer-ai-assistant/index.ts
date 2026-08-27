@@ -11,6 +11,7 @@
  */
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.1';
 
+import { withSentry } from '../_shared/sentry.ts';
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers':
@@ -795,7 +796,7 @@ async function runTool(admin: any, uid: string, openAiKey: string, authHeader: s
   }
 }
 
-Deno.serve(async (req) => {
+Deno.serve(withSentry('employer-ai-assistant', async (req) => {
   if (req.method === 'OPTIONS') return new Response(null, { headers: corsHeaders });
   try {
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
@@ -913,4 +914,4 @@ Deno.serve(async (req) => {
     console.error('employer-ai-assistant error:', e);
     return json({ error: e instanceof Error ? e.message : 'unknown' }, 500);
   }
-});
+}));

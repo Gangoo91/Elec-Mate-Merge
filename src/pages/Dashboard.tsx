@@ -18,7 +18,7 @@
  * Apprentice and electrician roles each see their own variant.
  */
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
@@ -33,15 +33,12 @@ import { ReferralRaceCard } from '@/components/referrals/ReferralRaceCard';
 import { MateBar } from '@/components/business-hub/MateBar';
 import { Assistant } from '@/components/business-hub/Assistant';
 import { useSparkTasks } from '@/hooks/useSparkTasks';
-import { useUnfinishedCertificates } from '@/hooks/useUnfinishedCertificates';
-import { certificateHref, certificateTypeLabel } from '@/utils/certificate-href';
+import DiaryPanel from '@/components/calendar/DiaryPanel';
 import {
   HubQuickStart,
-  HubWorkList,
   HubKpi,
   HubKpiRow,
   type HubQuickAction,
-  type HubWorkItem,
 } from '@/components/hub/HubPrimitives';
 
 import { DashboardDataProvider, useSharedDashboardData } from '@/hooks/useDashboardData';
@@ -58,13 +55,16 @@ const FIRST_STOP_DISMISSED_KEY = 'elec-mate-first-stop-dismissed';
 const money = (v: number) =>
   `£${Math.round(v).toLocaleString('en-GB')}`;
 
+// `as const` on the spring type: framer-motion's Variants wants the literal
+// 'spring', and a widened `string` fails to satisfy AnimationGeneratorType —
+// which is why this whole object would not assign to Variants.
 const sectionVariants = {
   hidden: { opacity: 0, y: 16 },
   visible: (delay: number) => ({
     opacity: 1,
     y: 0,
     transition: {
-      type: 'spring',
+      type: 'spring' as const,
       stiffness: 300,
       damping: 24,
       delay: delay * 0.08,
@@ -225,7 +225,6 @@ function EditorialDashboard() {
 
   const [mateOpen, setMateOpen] = useState(false);
   const { tasks, saveTask, updateTask, deleteTask, markDone } = useSparkTasks('all');
-  const unfinishedCerts = useUnfinishedCertificates();
 
   // ⌘K opens Mate here too — same binding as every hub, so the shortcut does
   // not change meaning depending on which page you happen to be on.
@@ -241,55 +240,6 @@ function EditorialDashboard() {
   }, []);
 
   const { business, certificates, learning } = data;
-
-  /*
-   * Needs you — the verdict sentence, itemised.
-   *
-   * Deliberately short and cross-cutting: this is the front door, not the
-   * Business Hub. Money gets one summary row that hands off rather than
-   * listing four invoices the Business Hub already lists.
-   */
-  const needsYou = useMemo<HubWorkItem[]>(() => {
-    if (isApprentice) return [];
-    const items: HubWorkItem[] = [];
-
-    if (business.overdueInvoices > 0) {
-      items.push({
-        id: 'overdue',
-        title: `${business.overdueInvoices} invoice${business.overdueInvoices === 1 ? '' : 's'} overdue`,
-        reason: 'Chase before the weekend',
-        trailing: money(business.overdueValue),
-        urgent: true,
-        to: '/electrician/invoices?filter=overdue',
-      });
-    }
-
-    // The oldest unfinished certificates — unbilled work, and for anything
-    // already tested on site, a client waiting on their paperwork.
-    unfinishedCerts.slice(0, 3).forEach((c) => {
-      const age = Math.floor((Date.now() - c.updatedAt.getTime()) / 86_400_000);
-      items.push({
-        id: `cert-${c.id}`,
-        title: c.clientName
-          ? `${certificateTypeLabel(c.reportType)} — ${c.clientName}`
-          : `${certificateTypeLabel(c.reportType)} (no client yet)`,
-        reason: age === 0 ? 'Started today, not issued' : `Untouched for ${age} days`,
-        urgent: age >= 30,
-        to: certificateHref(c.reportType, c.reportId),
-      });
-    });
-
-    if (business.draftQuotes > 0) {
-      items.push({
-        id: 'draft-quotes',
-        title: `${business.draftQuotes} quote${business.draftQuotes === 1 ? '' : 's'} priced up, not sent`,
-        reason: 'Nothing wins until it goes out',
-        to: '/electrician/quotes',
-      });
-    }
-
-    return items;
-  }, [isApprentice, business, unfinishedCerts]);
 
   // ── Start something ──────────────────────────────────────────────────
   const quickStart: HubQuickAction[] = isApprentice
@@ -350,6 +300,10 @@ function EditorialDashboard() {
           far more often here to start a cert than to read a figure, and the
           figures are still one scroll away. */}
       <HubQuickStart label="Start something" items={quickStart} />
+
+      {/* What is next, before the figures. An apprentice has no diary to keep,
+          so they get the KPI row straight away. */}
+      {!isApprentice && <DiaryPanel variant="compact" />}
 
       <HubKpiRow>
         {isApprentice ? (
@@ -427,8 +381,6 @@ function EditorialDashboard() {
           </>
         )}
       </HubKpiRow>
-
-      <HubWorkList items={needsYou} unit="job" />
 
       {/* Where was I. Renders nothing when there is nothing in flight. */}
       <ResumeCard />

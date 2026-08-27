@@ -126,9 +126,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     id: 5,
     question: 'Which of the following best describes the purpose of the recovery position?',
     options: [
-      'To realign the spine after a fall',
+      'To realign the spine of a casualty after a fall from height',
       'To maintain an open airway and allow fluids to drain',
-      'To reduce swelling in the limbs',
+      'To reduce the swelling in the injured limbs quickly',
       'To keep the casualty warm while waiting for help',
     ] as [string, string, string, string],
     correctAnswer: 1,
@@ -161,9 +161,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'A colleague collapses at their desk and is unresponsive. What is the first thing you should do?',
     options: [
-      'Start chest compressions immediately',
-      'Place them in the recovery position',
-      'Call 999 and wait for the ambulance',
+      'Start chest compressions on the casualty immediately',
+      'Place them into the recovery position straight away',
+      'Call 999 and wait for the ambulance crew',
       'Check for danger and then check for a response',
     ] as [string, string, string, string],
     correctAnswer: 3,
@@ -282,10 +282,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'A person faints in a warm, crowded room. Once they are on the ground and responsive, what should you do?',
     options: [
-      'Sit them upright immediately and give them water',
-      'Place them in the recovery position and call 999',
+      'Sit them upright immediately and give them a drink of water',
+      'Place them in the recovery position and then call 999 at once',
       'Raise their legs, ensure fresh air, and monitor them',
-      'Begin CPR as they may go into cardiac arrest',
+      'Begin CPR at once, as they may go into cardiac arrest soon',
     ] as [string, string, string, string],
     correctAnswer: 2,
     explanation:
@@ -299,9 +299,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     id: 15,
     question: 'Where should AED pads be placed on an adult casualty?',
     options: [
-      'Both pads side by side in the centre of the chest over the breastbone',
-      'One pad on each shoulder, just below the collarbones',
-      'One pad over the navel and one over the upper back',
+      'Both pads side by side in the centre of the chest over the breastbone itself',
+      'One pad on each shoulder, just below the collarbone on each side',
+      'One pad over the navel and one over the middle of the upper back',
       'One pad below the right collarbone, one on the left side below the armpit',
     ] as [string, string, string, string],
     correctAnswer: 3,
@@ -317,8 +317,8 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question: 'What is agonal breathing?',
     options: [
       'Occasional, irregular gasps that should not be mistaken for normal breathing',
-      'Slow, deep breathing seen in a casualty who is asleep but otherwise well',
-      'Rapid, shallow breathing brought on by a panic attack or hyperventilation',
+      'Slow and deep breathing seen in a casualty who is fast asleep but otherwise well',
+      'Rapid, shallow breathing brought on by a sudden panic attack or hyperventilation',
       'Noisy, snoring breathing caused by the tongue partially blocking the airway',
     ] as [string, string, string, string],
     correctAnswer: 0,
@@ -336,10 +336,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       "You are performing CPR on a colleague when an AED arrives. The AED analyses the rhythm and advises 'no shock'. What should you do?",
     options: [
-      'Stop CPR and place the casualty in the recovery position',
+      'Stop CPR and place the casualty into the recovery position straight away',
       'Immediately resume CPR for 2 minutes, then allow the AED to re-analyse',
-      'Turn off the AED and continue CPR without it',
-      'Check for a pulse before deciding what to do next',
+      'Turn off the AED and carry on with chest compressions without using it at all',
+      'Check the casualty for a carotid pulse first before deciding what to do next',
     ] as [string, string, string, string],
     correctAnswer: 1,
     explanation:
@@ -390,9 +390,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question: 'A choking adult becomes unconscious. What is the correct sequence of actions?',
     options: [
       'Lower them to the ground, call 999, and begin CPR starting with compressions',
-      'Give 5 more abdominal thrusts, then call 999',
-      'Attempt a blind finger sweep then give rescue breaths',
-      'Place them in the recovery position and wait for the ambulance',
+      'Give five more abdominal thrusts and then call 999 to ask for an ambulance crew',
+      'Attempt a blind finger sweep of the mouth and then give rescue breaths',
+      'Place them in the recovery position and wait for the ambulance crew',
     ] as [string, string, string, string],
     correctAnswer: 0,
     explanation:
@@ -406,10 +406,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     id: 21,
     question: 'Which of the following is the correct sequence for the Chain of Survival?',
     options: [
-      'Early CPR → Early recognition → Early defibrillation → Post-resuscitation care',
+      'Early CPR → Early recognition and a call for help → Early defibrillation → Post-resuscitation care',
       'Early recognition and call for help → Early CPR → Early defibrillation → Post-resuscitation care',
-      'Early defibrillation → Early CPR → Early recognition → Hospital treatment',
-      'Call for help → Recovery position → Early defibrillation → Early CPR',
+      'Early defibrillation → Early CPR → Early recognition and call for help → Hospital treatment on a ward',
+      'Call for help → Recovery position → Early defibrillation → Early CPR → Hospital treatment',
     ] as [string, string, string, string],
     correctAnswer: 1,
     explanation:
@@ -442,9 +442,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'When performing abdominal thrusts on a conscious choking adult, where should you position your fist?',
     options: [
-      'Directly over the bottom tip of the breastbone (sternum)',
-      'On the centre of the chest, between the nipples',
-      'On the lower back, level with the bottom of the ribs',
+      'Directly over the very bottom tip of the breastbone (sternum)',
+      'On the centre of the chest, directly midway between the nipples',
+      'On the middle of the lower back, level with the bottom of the ribs',
       'Between the navel and the bottom of the breastbone (sternum)',
     ] as [string, string, string, string],
     correctAnswer: 3,
@@ -495,8 +495,8 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     id: 26,
     question: 'Why is it important to allow full chest recoil between compressions during CPR?',
     options: [
-      'It prevents the rescuer from tiring as quickly during CPR',
-      'It reduces the risk of fracturing the casualty’s ribs',
+      'It prevents the rescuer from tiring quite so quickly during the CPR',
+      'It reduces the risk of fracturing the ribs of the casualty',
       'It allows the heart to refill with blood, maximising blood flow',
       'It keeps the compression rate steady at 100–120 per minute',
     ] as [string, string, string, string],
@@ -532,9 +532,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
       'You are alone with an unresponsive adult who is not breathing normally. In what order should you act?',
     options: [
       'Call 999 (put phone on speaker) → begin CPR → send someone for the AED when possible',
-      'Begin CPR → after 1 minute, call 999 → continue CPR',
-      'Run to fetch an AED → return and begin CPR → call 999 after 2 minutes',
-      'Give 5 rescue breaths → call 999 → begin chest compressions',
+      'Begin CPR at once → after 1 minute, stop and call 999 → then continue CPR until help arrives',
+      'Run to fetch an AED yourself → return and begin CPR → then call 999 after 2 minutes of CPR',
+      'Give 5 rescue breaths first → then call 999 → then begin all the chest compressions',
     ] as [string, string, string, string],
     correctAnswer: 0,
     explanation:
@@ -549,10 +549,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'During CPR, you attempt to give rescue breaths but the chest does not rise. What should you do?',
     options: [
-      'Abandon rescue breaths entirely and continue with chest compressions only for the rest of the resuscitation',
+      'Abandon rescue breaths entirely and continue with chest compressions only for the rest of the resuscitation attempt',
       'Recheck the head tilt–chin lift, ensure a good seal, and attempt one more breath before returning to compressions',
-      'Perform a blind finger sweep of the mouth to clear any obstruction before trying the breath again',
-      'Give three further breaths in quick succession to force air past the obstruction',
+      'Perform a blind finger sweep right around the mouth to clear any obstruction before trying to give the breath again',
+      'Give three further rescue breaths in quick succession in order to force some air past the obstruction in the airway',
     ] as [string, string, string, string],
     correctAnswer: 1,
     explanation:
@@ -566,10 +566,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     id: 30,
     question: 'What is the primary purpose of an AED?',
     options: [
-      "To pump blood around the body in place of the rescuer's compressions",
-      "To deliver oxygen directly into the casualty's lungs",
+      'To pump the blood around the body in place of the chest compressions given by a rescuer',
+      'To deliver oxygen directly into the lungs of a casualty who has stopped breathing',
       "To analyse the heart's rhythm and deliver a shock to correct certain abnormal rhythms",
-      "To restart a heart that has stopped completely (asystole)",
+      'To restart a heart that has stopped completely and is showing asystole on screen',
     ] as [string, string, string, string],
     correctAnswer: 2,
     explanation:
@@ -602,8 +602,8 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
       'You have been performing CPR for several minutes and are becoming exhausted. What should you do?',
     options: [
       'Swap with another trained rescuer, minimising any pause in compressions',
-      'Switch to compression-only CPR so that you can conserve energy',
-      'Stop CPR and wait for the ambulance crew to arrive and take over',
+      'Switch to compression-only CPR so that you are able to conserve your energy',
+      'Stop the CPR and wait for the ambulance crew to arrive and then take over',
       'Slow the compression rate to about 60 per minute to pace yourself',
     ] as [string, string, string, string],
     correctAnswer: 0,
@@ -621,10 +621,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'You are about to apply AED pads to a casualty who is lying in a shallow puddle of water. What should you do?',
     options: [
-      'Do not use the AED near water under any circumstances',
+      'Do not use the AED anywhere near standing water under any circumstances at all on the site',
       'Move the casualty to a dry area, dry their chest, then apply the pads and use the AED',
-      'Apply the pads but stand further away when the shock is delivered',
-      'Use the AED in the water — modern AEDs are waterproof',
+      'Apply the pads as normal but stand further away from the casualty when the shock is given',
+      'Use the AED in the water where the casualty is lying, as modern AEDs are fully waterproof',
     ] as [string, string, string, string],
     correctAnswer: 1,
     explanation:
@@ -656,8 +656,8 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     id: 35,
     question: 'The two shockable rhythms that an AED can treat are:',
     options: [
-      'Asystole (flatline) and pulseless electrical activity (PEA)',
-      'Sinus bradycardia and third-degree (complete) heart block',
+      'Asystole (flatline) and pulseless electrical activity (PEA) on the monitor',
+      'Sinus bradycardia and third-degree (complete) atrioventricular block',
       'Atrial fibrillation (AF) and supraventricular tachycardia (SVT)',
       'Ventricular fibrillation (VF) and pulseless ventricular tachycardia (pVT)',
     ] as [string, string, string, string],
@@ -675,9 +675,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
       'A pregnant woman in her third trimester collapses and is in cardiac arrest. How should CPR be modified?',
     options: [
       'Perform standard CPR but manually displace the uterus to the left to relieve pressure on the inferior vena cava',
-      'Place her flat on her back and perform compressions at the normal depth without any modification',
-      'Avoid using an AED, as defibrillation is unsafe during pregnancy',
-      'Compress higher up the breastbone to avoid the abdomen and unborn baby',
+      'Place her flat on her back and perform the compressions at the normal depth without any modification being made at all',
+      'Avoid using an AED at any point, as defibrillation is unsafe during pregnancy and could harm the unborn baby as well',
+      'Compress much higher up the breastbone in order to avoid the abdomen and the unborn baby inside altogether',
     ] as [string, string, string, string],
     correctAnswer: 0,
     explanation:
@@ -692,10 +692,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'A first aider gives abdominal thrusts to a choking casualty and the obstruction is cleared. Should the casualty still be assessed at hospital?',
     options: [
-      'No — once the object is cleared and they are breathing normally, no further action is needed',
+      'No — once the object is cleared and they are breathing normally again, no further action is needed at all',
       'Yes — abdominal thrusts can cause internal injuries and the casualty should be assessed by a clinician',
-      'No — they only need to rest at home for the remainder of the day',
-      'Yes — but only if they continue to cough after the obstruction has cleared',
+      'No — they only need to rest quietly at home for the remainder of the day and the whole of the evening as well',
+      'Yes — but only if they continue to cough or complain of pain after the obstruction has been cleared away',
     ] as [string, string, string, string],
     correctAnswer: 1,
     explanation:
@@ -710,10 +710,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'An AED is available but only has adult pads, and the casualty is a child aged 6 years. What should you do?',
     options: [
-      'Do not use the AED, as adult pads must never be used on a child under eight years old',
-      "Cut the adult pads down to a smaller size so they fit the child's chest without touching",
+      'Do not use the AED at all, because adult pads must never be used on a child who is under eight years old in any case',
+      'Cut the adult pads down to a smaller size so that they fit the chest of the child without touching each other',
       'Use the adult pads; place one on the chest and one on the back if they are too large to fit without overlapping',
-      'Wait for paediatric pads to arrive before attempting defibrillation, and continue CPR in the meantime',
+      'Wait for paediatric pads to arrive before attempting defibrillation, and continue with CPR in the meantime',
     ] as [string, string, string, string],
     correctAnswer: 2,
     explanation:
@@ -747,9 +747,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
       'Which of the following is a non-shockable cardiac arrest rhythm, and what is the primary treatment?',
     options: [
       'Pulseless electrical activity (PEA) — treated with high-quality CPR and addressing reversible causes',
-      'Ventricular fibrillation — treated with continuous chest compressions and no defibrillation',
-      'Pulseless ventricular tachycardia — treated with synchronised cardioversion rather than CPR',
-      'Asystole — treated with a single AED shock followed by two minutes of CPR',
+      'Ventricular fibrillation — treated with continuous chest compressions and no defibrillation at any point',
+      'Pulseless ventricular tachycardia — treated with synchronised cardioversion rather than with any CPR at all',
+      'Asystole — treated with one single AED shock followed by two minutes of chest compressions only',
     ] as [string, string, string, string],
     correctAnswer: 0,
     explanation:
@@ -806,9 +806,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the first action a first aider should take when managing severe external bleeding?',
     options: [
-      'Apply a tourniquet immediately',
-      'Elevate the limb above heart level',
-      'Pack the wound with gauze',
+      'Apply a tourniquet to the limb at once',
+      'Elevate the injured limb above heart level',
+      'Pack the wound tightly with a sterile gauze swab',
       'Apply direct pressure over the wound',
     ] as [string, string, string, string],
     correctAnswer: 3,
@@ -825,9 +825,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
       'When applying direct pressure to a wound, which of the following is correct practice?',
     options: [
       'Apply pressure and maintain it for at least 10 minutes without lifting the dressing',
-      'Lift the dressing every minute to check whether the bleeding has stopped',
-      'Remove a blood-soaked dressing and replace it with a clean one',
-      'Apply pressure for 30 seconds, then release to let the wound clot',
+      'Lift the dressing every single minute in order to check whether the bleeding has stopped',
+      'Remove any blood-soaked dressing at once and replace it with a clean dry one',
+      'Apply firm pressure for 30 seconds, then release it to let the wound start to clot',
     ] as [string, string, string, string],
     correctAnswer: 0,
     explanation:
@@ -859,10 +859,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     id: 46,
     question: 'Why should a first aider wear disposable gloves when treating a bleeding wound?',
     options: [
-      'To keep the wound completely sterile and prevent any infection',
-      'To allow firmer pressure to be applied directly over the wound',
+      'To keep the wound completely sterile and so prevent any infection from setting in',
+      'To allow much firmer pressure to be applied directly over the open wound',
       'To prevent cross-contamination between the casualty and the first aider',
-      'To stop the blood from clotting too quickly on the dressing',
+      'To stop the blood from clotting too quickly onto the sterile dressing',
     ] as [string, string, string, string],
     correctAnswer: 2,
     explanation:
@@ -876,9 +876,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     id: 47,
     question: 'Capillary bleeding typically presents as:',
     options: [
-      'A forceful jet of bright red blood',
-      'A steady flow of dark red blood',
-      'Blood that changes colour from red to blue',
+      'A forceful jet of bright red blood from the wound',
+      'A steady, even flow of dark red blood from the wound',
+      'Blood that changes colour from bright red to blue',
       'A slow ooze of blood from the wound surface',
     ] as [string, string, string, string],
     correctAnswer: 3,
@@ -894,9 +894,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question: "In the C-ABC approach to trauma management, what does the initial 'C' stand for?",
     options: [
       'Catastrophic bleeding',
-      'Consciousness',
-      'Cervical spine',
-      'Circulation',
+      'Level of consciousness',
+      'Cervical spine care',
+      'Circulation check',
     ] as [
       string,
       string,
@@ -915,10 +915,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     id: 49,
     question: 'When should a tourniquet be considered for bleeding control?',
     options: [
-      'As the first measure for any wound that is bleeding heavily',
+      'As the very first measure for any wound on a limb that is bleeding heavily at all',
       'Only when direct pressure has failed to control catastrophic limb bleeding',
-      'Whenever a casualty shows the early signs of hypovolaemic shock',
-      'For any deep wound to the neck, torso, or groin',
+      'Whenever a casualty begins to show any early sign of hypovolaemic shock at all',
+      'For any deep or gaping wound to the neck, the torso or the groin area',
     ] as [string, string, string, string],
     correctAnswer: 1,
     explanation:
@@ -983,10 +983,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     id: 53,
     question: 'Haemostatic dressings work by:',
     options: [
-      'Providing an antibacterial barrier that seals the wound from infection',
+      'Providing an antibacterial barrier that seals the wound off from infection',
       'Promoting rapid clot formation through agents such as kaolin or chitosan',
-      'Absorbing the blood so that the wound surface appears dry to the eye',
-      'Cooling the wound rapidly, which constricts the damaged blood vessels',
+      'Absorbing all the blood so that the wound surface appears dry to the naked eye',
+      'Cooling the wound very rapidly, which constricts the damaged blood vessels in it',
     ] as [string, string, string, string],
     correctAnswer: 1,
     explanation:
@@ -1023,9 +1023,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     id: 55,
     question: 'A puncture wound is particularly dangerous because:',
     options: [
-      'The wound edges are clean and straight, so the wound will not close without stitching',
-      'They always bleed profusely and the bleeding is very hard to control with direct pressure',
-      'They heal over too quickly at the surface, trapping bacteria in the deeper tissue',
+      'The wound edges are clean and straight, so the wound will not close at all without stitching in hospital',
+      'They always bleed profusely and the bleeding is very hard to control with direct pressure alone',
+      'They heal over too quickly at the surface, trapping bacteria in the deeper tissue below the skin',
       'The entry wound may appear small while internal damage can be extensive, and infection risk is high',
     ] as [string, string, string, string],
     correctAnswer: 3,
@@ -1042,9 +1042,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
       'If a finger has been amputated in a workplace accident, how should the severed part be managed?',
     options: [
       'Wrap it in damp gauze, place it in a sealed plastic bag, and put the bag on ice',
-      'Place it directly onto ice to keep the tissue as cold as possible',
-      'Wash it thoroughly in antiseptic and wrap it in a dry bandage',
-      'Keep it warm against the casualty’s body to preserve the tissue',
+      'Place it directly onto crushed ice in order to keep the tissue as cold as it can be',
+      'Wash it thoroughly in antiseptic solution and then wrap it in a dry sterile bandage',
+      'Keep it warm against the body of the casualty so as to preserve the tissue',
     ] as [string, string, string, string],
     correctAnswer: 0,
     explanation:
@@ -1059,10 +1059,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'When managing a partial amputation where the body part is still attached by a flap of tissue, the first aider should:',
     options: [
-      'Cut through the remaining tissue to fully separate the part for storage on ice',
+      'Cut through the remaining flap of tissue in order to separate the part fully for storage on ice',
       'Realign the part as best as possible, control bleeding, and support in position with dressings',
-      'Leave the part hanging and apply a tourniquet above it without realigning',
-      'Push the part firmly back into place and bandage tightly over it',
+      'Leave the part hanging where it is and apply a tourniquet above it without realigning it at all',
+      'Push the part firmly back into place by hand and then bandage it tightly over the top of the wound',
     ] as [string, string, string, string],
     correctAnswer: 1,
     explanation:
@@ -1095,9 +1095,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'In a mass casualty incident, a first aider encounters a casualty with catastrophic bilateral leg bleeding. Direct pressure is impractical due to the extent of injuries. What is the most appropriate action?',
     options: [
-      'Apply haemostatic dressings to both legs and elevate',
-      'Focus on airway management as bleeding control is hopeless',
-      'Pack both wounds with clothing and wait for the ambulance',
+      'Apply haemostatic dressings to both of the legs and then elevate them fully',
+      'Focus on airway management, as bleeding control is now hopeless',
+      'Pack both wounds with spare clothing and wait for the ambulance',
       'Apply a tourniquet to each leg 5–7 cm above the highest wound on each limb',
     ] as [string, string, string, string],
     correctAnswer: 3,
@@ -1173,9 +1173,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'Why must cling film be applied lengthways in strips rather than wrapped circumferentially around a burnt limb?',
     options: [
-      'Lengthways application sticks better to the skin',
-      'Wrapping around a limb causes the cling film to melt',
-      'Lengthways strips are easier to see through for assessment',
+      'Lengthways application sticks much better to the surface of the burnt skin',
+      'Wrapping it around a limb makes the cling film melt onto the burnt skin',
+      'Lengthways strips are easier to see through for later assessment',
       'Circumferential wrapping can act as a tourniquet if the burn swells',
     ] as [string, string, string, string],
     correctAnswer: 3,
@@ -1294,10 +1294,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     id: 70,
     question: 'A casualty has a burn with intact blisters. What should the first aider do?',
     options: [
-      'Burst the blisters to release the fluid and relieve pressure',
-      'Pierce each blister with a sterile needle and cover with a plaster',
+      'Burst each of the blisters to release the fluid and so relieve the pressure inside',
+      'Pierce each blister with a sterile needle and then cover it over with a dry plaster',
       'Leave the blisters intact as they protect the underlying tissue from infection',
-      'Apply antiseptic cream to the blisters to prevent infection',
+      'Apply antiseptic cream over each of the blisters in order to prevent infection setting in',
     ] as [string, string, string, string],
     correctAnswer: 2,
     explanation:
@@ -1311,9 +1311,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     id: 71,
     question: 'When treating a chemical burn to the skin, the first aider should:',
     options: [
-      'Apply a neutralising agent to counteract the acid or alkali',
-      'Cover the burn immediately without flushing to avoid spreading the chemical',
-      'Flush for no more than 2 minutes, then apply a burn dressing',
+      'Apply a suitable neutralising agent in order to counteract the acid or the alkali concerned',
+      'Cover the burn immediately without flushing it at all, to avoid spreading the chemical',
+      'Flush the area for no more than 2 minutes and then apply a dry burn dressing over it',
       'Brush off any dry chemical, then flush with copious running water for at least 20 minutes',
     ] as [string, string, string, string],
     correctAnswer: 3,
@@ -1329,9 +1329,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question: 'Electrical burns are particularly dangerous because:',
     options: [
       'They cause deep internal tissue damage along the current pathway, often with small entry and exit wounds',
-      'They are confined to the surface of the skin and rarely cause any lasting harm to the casualty',
-      'They never bleed, which makes the true extent of the injury easy to underestimate',
-      'They heal faster than thermal burns because the current cauterises the wound as it passes',
+      'They are confined to the surface of the skin and rarely cause any lasting harm at all to the casualty involved',
+      'They never bleed at any point, which makes the true extent of the injury very easy to underestimate on site',
+      'They heal faster than thermal burns because the current cauterises the wound as it passes through it',
     ] as [string, string, string, string],
     correctAnswer: 0,
     explanation:
@@ -1346,10 +1346,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'When assessing a casualty with an electrical burn, which TWO wound sites should the first aider look for?',
     options: [
-      'The wound closest to the heart and the wound furthest from the heart',
+      'The wound closest to the heart and the one that is furthest away from the heart',
       'An entry wound where current entered and an exit wound where it left the body',
-      'The largest wound and the smallest wound',
-      'A wound on the left side and a corresponding wound on the right side',
+      'The largest wound found on the body and the smallest wound that can be seen on it',
+      'A wound on the left side of the body and a matching wound on the right side of it',
     ] as [string, string, string, string],
     correctAnswer: 1,
     explanation:
@@ -1420,7 +1420,7 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     id: 77,
     question: 'Which of the following is an early sign of shock?',
     options: [
-      'Hot, flushed skin with a slow pulse',
+      'Hot, flushed skin with a slow and bounding pulse',
       'Pale, cold, clammy skin with a rapid pulse',
       'High blood pressure and slow breathing',
       'Constricted pupils and warm extremities',
@@ -1456,9 +1456,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       "If a casualty's anaphylaxis symptoms have not improved after the first adrenaline auto-injector dose, what should the first aider do?",
     options: [
-      'Give a sugary drink to help raise the casualty’s blood pressure back to normal',
-      'Lay the casualty flat and wait at least 30 minutes before considering a second dose',
-      'Assume the first dose has failed and begin CPR while the casualty is still breathing',
+      'Give the casualty a sugary drink in order to raise their blood pressure back up towards normal levels again',
+      'Lay the casualty flat and wait for at least 30 minutes before considering giving them a second dose at all',
+      'Assume that the first dose has failed and begin CPR while the casualty is still breathing normally',
       'Administer a second auto-injector after 5 minutes if symptoms persist and a second device is available',
     ] as [string, string, string, string],
     correctAnswer: 3,
@@ -1475,9 +1475,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
       'Which combination of signs would most strongly suggest a casualty is developing anaphylactic shock rather than a simple localised allergic reaction?',
     options: [
       'Widespread urticarial rash, swollen tongue, wheezing, and rapidly falling blood pressure',
-      'Redness and itching confined to the skin immediately around a bee sting',
-      'A mild headache with localised swelling at the site of contact and no rash',
-      'Nausea and a single episode of vomiting with a stable pulse and blood pressure',
+      'Redness and itching confined to the area of skin immediately around a single bee sting site',
+      'A mild headache with some localised swelling at the site of contact and no rash anywhere at all',
+      'Nausea and a single episode of vomiting with a stable pulse and a normal blood pressure throughout',
     ] as [string, string, string, string],
     correctAnswer: 0,
     explanation:
@@ -1498,10 +1498,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'Which of the following is the most characteristic description of chest pain during a heart attack?',
     options: [
-      'A burning sensation localised to the upper abdomen',
+      'A burning sensation localised to the upper part of the abdomen only',
       'A crushing or tight band-like pain in the centre of the chest',
-      'A sharp, stabbing pain that worsens when breathing in',
-      'A dull ache that only occurs during physical exertion',
+      'A sharp, stabbing pain that gets worse when breathing in',
+      'A dull ache that occurs only during heavy physical exertion',
     ],
     correctAnswer: 1,
     explanation:
@@ -1570,10 +1570,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'In what position should you place a conscious casualty who is suspected of having a heart attack?',
     options: [
-      "Lying completely flat on their back with their legs raised",
+      'Lying completely flat on their back with both of their legs raised up high',
       "Sitting upright, ideally in a comfortable 'W' position with knees bent",
-      "On their side in the recovery position",
-      "Standing up and walking slowly to keep the circulation moving",
+      'On their side in the recovery position with their head tilted well back',
+      'Standing up and walking slowly about to keep the circulation moving',
     ],
     correctAnswer: 1,
     explanation:
@@ -1624,9 +1624,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
       'A worker with a known history of angina uses their GTN spray but their chest pain has not eased after 5 minutes. What should a first aider do next?',
     options: [
       'Call 999 immediately, as the pain may indicate a heart attack',
-      'Administer a second dose of GTN and wait another 10 minutes',
-      'Give them paracetamol and advise them to rest for 30 minutes',
-      'Drive them to the nearest hospital yourself',
+      'Administer a second dose of GTN and then wait another 10 minutes',
+      'Give them paracetamol and advise them to rest quietly for 30 minutes',
+      'Drive them to the nearest hospital yourself in your own works van',
     ],
     correctAnswer: 0,
     explanation:
@@ -1676,9 +1676,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     id: 91,
     question: 'What is a transient ischaemic attack (TIA)?',
     options: [
-      'A permanent loss of brain function caused by bleeding into the brain, with lasting symptoms',
-      'A type of heart attack that briefly reduces the blood flow reaching the brain',
-      'A seizure caused by a sudden drop in blood pressure that lasts under a minute',
+      'A permanent loss of brain function caused by bleeding into the brain, with lasting symptoms afterwards',
+      'A type of heart attack that briefly reduces the flow of blood reaching the brain tissue itself',
+      'A seizure caused by a sudden drop in the blood pressure which lasts for under a minute in all',
       'A temporary disruption to the blood supply to the brain, with symptoms that resolve within 24 hours',
     ],
     correctAnswer: 3,
@@ -1713,10 +1713,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the most important thing a first aider should do during a tonic-clonic seizure?',
     options: [
-      "Hold the casualty's limbs firmly to stop the jerking movements",
+      'Hold down the limbs of the casualty firmly in order to stop the jerking movements altogether',
       'Protect the casualty from injury by clearing the area around them, but do NOT restrain them',
-      "Pour cold water on the casualty's face to bring them round more quickly",
-      'Place something in their mouth to prevent them biting their tongue',
+      'Pour cold water over the face of the casualty in order to bring them round more quickly again',
+      'Place something soft in their mouth to prevent them from biting their tongue again',
     ],
     correctAnswer: 1,
     explanation:
@@ -1749,9 +1749,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'A worker has a tonic-clonic seizure that has lasted for 6 minutes and shows no signs of stopping. What is this condition called and what should you do?',
     options: [
-      'Postictal state — let them sleep it off without calling for help',
-      'Febrile convulsion — cool the casualty and wait for it to pass',
-      'Absence seizure — reassure them and monitor without intervention',
+      'Postictal state — let them sleep it off quietly without calling for any help at all',
+      'Febrile convulsion — cool the casualty down and then simply wait for it to pass off',
+      'Absence seizure — reassure them and monitor them without any intervention on your part',
       'Status epilepticus — call 999 immediately as this is a life-threatening emergency',
     ],
     correctAnswer: 3,
@@ -1768,9 +1768,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
       'After a tonic-clonic seizure ends, the casualty is breathing but remains unconscious. What should you do?',
     options: [
       'Place them in the recovery position, monitor their breathing, and stay with them',
-      'Sit them upright and give them a drink of water to help them come round',
-      'Shake them firmly by the shoulders to try to wake them up quickly',
-      'Leave them where they are and go to another room to call for help',
+      'Sit them upright and give them a drink of cold water to help them come round again',
+      'Shake them firmly by both shoulders to try to wake them up more quickly',
+      'Leave them where they are and go into another room in order to call for help',
     ],
     correctAnswer: 0,
     explanation:
@@ -2255,9 +2255,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     id: 123,
     question: 'What is the primary purpose of immobilising a suspected fracture?',
     options: [
-      'To diagnose the exact type of fracture',
-      'To allow the casualty to continue working',
-      'To realign the bone ends before the ambulance arrives',
+      'To diagnose the exact type of fracture that has occurred to the bone',
+      'To allow the casualty to keep working for the rest of the day',
+      'To realign the bone ends before the ambulance arrives on site',
       'To prevent further injury, reduce pain, and minimise blood loss',
     ],
     correctAnswer: 3,
@@ -2273,9 +2273,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question: 'When should an elevated sling be used instead of a standard arm sling?',
     options: [
       'When the casualty has a hand, finger, or forearm injury where elevation is needed to reduce swelling or control bleeding',
-      'When the casualty has a suspected fracture of the upper arm or elbow that must be supported at rest',
-      'When the casualty has injured their shoulder and cannot bend the elbow far enough for a standard sling',
-      'When the casualty has a suspected spinal injury and the arm must be kept completely still',
+      'When the casualty has a suspected fracture of the upper arm or of the elbow that must be supported at rest against the chest',
+      'When the casualty has injured a shoulder and cannot bend the elbow far enough for a standard arm sling to be applied properly',
+      'When the casualty has a suspected spinal injury and the injured arm must be kept completely still at all times on site',
     ],
     correctAnswer: 0,
     explanation:
@@ -2302,10 +2302,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     id: 126,
     question: 'What should a first aider do if they suspect a casualty has a dislocated joint?',
     options: [
-      'Attempt to push the joint back into its normal position',
-      'Apply firm pressure to the joint to reduce swelling',
+      'Attempt to push the joint back into its normal position by hand straight away',
+      'Apply firm pressure directly to the joint in order to reduce the swelling around it',
       'Immobilise the joint in the position found and arrange transport to hospital',
-      'Ask the casualty to move the joint to see how far it can go',
+      'Ask the casualty to move the joint themselves to see how far it will go before it hurts',
     ],
     correctAnswer: 2,
     explanation:
@@ -2339,9 +2339,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
       'A worker gets a small piece of grit in their eye. What is the correct first aid approach?',
     options: [
       'Irrigate the eye with clean water or sterile saline, flowing from the inner corner outward',
-      'Use a cotton bud to lift the grit directly off the surface of the eyeball',
-      'Ask the casualty to rub the eye vigorously to dislodge the piece of grit',
-      'Cover both eyes with firm bandages and wait for medical help to arrive',
+      'Use a dry cotton bud to lift the piece of grit directly off the surface of the eyeball itself',
+      'Ask the casualty to rub the eye vigorously in order to dislodge the piece of grit',
+      'Cover both of the eyes with firm bandages and wait for medical help to arrive on site',
     ],
     correctAnswer: 0,
     explanation:
@@ -2374,10 +2374,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'A colleague has inhaled fumes from a chemical spill in a poorly ventilated area. What is the first priority?',
     options: [
-      'Enter the area immediately and carry the casualty out as fast as possible',
-      'Give the casualty water to drink to dilute the inhaled chemical',
+      'Enter the area immediately and carry the casualty out of it as fast as possible',
+      'Give the casualty water to drink in order to dilute the chemical they inhaled',
       'Move the casualty into fresh air, ensuring it is safe for you to approach',
-      'Lay the casualty down where they are and begin rescue breaths',
+      'Lay the casualty down where they are and begin giving rescue breaths',
     ],
     correctAnswer: 2,
     explanation:
@@ -2391,9 +2391,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     id: 131,
     question: 'What does the acronym COSHH stand for?',
     options: [
-      'Control of Substances Harmful to Health',
-      'Caution of Spillages Hazardous to Health',
-      'Care of Substances Hazardous to Humans',
+      'Control of Substances Harmful to Health at Work',
+      'Caution over Spillages Hazardous to Health at Work',
+      'Careful Storage of Substances Hazardous to Health',
       'Control of Substances Hazardous to Health',
     ],
     correctAnswer: 3,
@@ -2409,9 +2409,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question: 'What is a concussion?',
     options: [
       'A temporary disturbance in brain function caused by a blow or jolt to the head',
-      'A fracture of the skull that always causes bleeding from the ears',
-      'A permanent loss of brain function following a severe head injury',
-      'A bruise to the scalp that heals without any effect on the brain',
+      'A fracture of the skull which always causes bleeding from both ears and the nose',
+      'A permanent loss of brain function following a severe head injury at work',
+      'A bruise to the scalp that heals without having any effect on the brain',
     ],
     correctAnswer: 0,
     explanation:
@@ -2426,10 +2426,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'Why is it important for first aiders to have access to debriefing after a traumatic incident?',
     options: [
-      'To ensure they have completed the accident book entry correctly',
+      'To ensure that they have completed the accident book entry fully and correctly',
       'To help them process the emotional impact and maintain their own wellbeing',
-      'To allow managers to assess how well the first aider performed',
-      'To decide whether the casualty is fit to return to work',
+      'To allow managers to assess how well the first aider actually performed on the day',
+      'To decide whether the casualty is fit to return to their work on the site',
     ],
     correctAnswer: 1,
     explanation:
@@ -2500,10 +2500,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'A construction worker falls from a ladder and is lying on the ground complaining of severe pain in their lower leg. You can see an obvious bend in the shin and the skin is intact. How should you manage this injury?',
     options: [
-      'Gently straighten the leg to realign the bone before splinting it, then help the casualty walk to the site office',
+      'Gently straighten the leg to realign the bone before splinting it, then help the casualty to walk slowly to the site office for a rest',
       'Immobilise the leg in the position found using padding and bandages, support the joints above and below the fracture, and call 999',
-      'Help the casualty stand and take a few steps on it to confirm whether the leg is actually broken',
-      'Elevate the leg above heart level, apply a firm pressure bandage over the deformity, and call 999',
+      'Help the casualty to stand up and take a few steps on it to confirm whether the leg is actually broken or is only badly bruised instead',
+      'Elevate the leg above heart level, apply a firm pressure bandage over the deformity, and then call 999 for an ambulance to attend the site',
     ],
     correctAnswer: 1,
     explanation:
@@ -2518,10 +2518,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'You are treating a casualty with a suspected broken collarbone. Which sling is most appropriate?',
     options: [
-      'An elevated sling holding the hand high against the opposite shoulder to reduce swelling',
-      'A tightly bound bandage strapping the whole arm flat against the chest and abdomen',
+      'An elevated sling holding the hand high against the opposite shoulder in order to reduce the swelling in it',
+      'A tightly bound bandage strapping the whole arm flat against the chest and the abdomen underneath',
       'A broad arm sling supporting the arm on the injured side, with the hand slightly higher than the elbow',
-      'No sling — the arm should hang freely so that its weight keeps the collarbone aligned',
+      'No sling — the arm should hang freely so that its own weight keeps the broken collarbone aligned',
     ],
     correctAnswer: 2,
     explanation:
@@ -2554,9 +2554,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
       'A casualty who banged their head 30 minutes ago was initially alert but is now becoming increasingly confused and drowsy. What does this pattern suggest?',
     options: [
       'A possible compression of the brain, which is a life-threatening emergency',
-      'A minor concussion that is resolving normally',
-      'Normal tiredness following a stressful event',
-      'A psychological reaction that does not need medical attention',
+      'A minor concussion that is resolving in the normal way without any complication',
+      'Normal tiredness following a stressful event earlier in the day on the site',
+      'A psychological reaction that does not need any medical attention at all',
     ],
     correctAnswer: 0,
     explanation:
@@ -2571,10 +2571,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'You suspect a casualty may have a spinal injury after a fall. They are conscious and breathing. What is the correct approach?',
     options: [
-      'Help them sit up slowly to assess whether they can feel their legs',
+      'Help them to sit up slowly in order to assess whether they can still feel their legs at all',
       'Keep them still, apply manual inline stabilisation to the head and neck, and call 999',
-      'Roll them onto their side into the recovery position immediately',
-      'Place a pillow under their head for comfort and wait',
+      'Roll them onto their side into the recovery position immediately and then monitor them closely',
+      'Place a pillow under their head to make them comfortable and then wait for the ambulance crew',
     ],
     correctAnswer: 1,
     explanation:
@@ -2589,8 +2589,8 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       "A chemical has been splashed into a colleague's eyes. How long should you irrigate the affected eye(s)?",
     options: [
-      'For about 2 minutes, then cover the eye with a sterile pad and send them home',
-      'Only until the casualty tells you that the pain in the eye has stopped',
+      'For about 2 minutes, then cover the eye with a sterile pad and send them home to rest it',
+      'Only until the casualty tells you that the pain in the affected eye has stopped',
       'At least 20 minutes continuously, ensuring water flows away from the unaffected eye',
       'For 5 minutes, then apply a neutralising agent recommended for that chemical',
     ],
@@ -2606,9 +2606,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     id: 143,
     question: "An object is embedded in a casualty's eye. What is the correct first aid treatment?",
     options: [
-      'Gently pull the object out with tweezers and irrigate the eye with clean water',
-      'Ask the casualty to blink rapidly to produce tears that will dislodge the object naturally',
-      'Cover only the injured eye, tell the casualty to keep it closed, and send them home',
+      'Gently pull the object out with a pair of tweezers and then irrigate the eye thoroughly with clean running water',
+      'Ask the casualty to blink rapidly to produce tears that will dislodge the object naturally on its own in time',
+      'Cover only the injured eye, tell the casualty to keep it firmly closed, and then send them home to rest',
       'Do not attempt to remove the object; pad around it, cover both eyes, and arrange urgent hospital transfer',
     ],
     correctAnswer: 3,
@@ -2625,9 +2625,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
       'Under the COSHH Regulations 2002, what must an employer do before using a hazardous substance in the workplace?',
     options: [
       'Carry out a risk assessment and implement appropriate control measures',
-      'Simply provide gloves to all employees',
-      'Write the name of the chemical on a whiteboard in the staff room',
-      'Ensure that at least one first aider has handled the substance before',
+      'Simply provide disposable gloves to all of the employees on the site each day',
+      'Write the name of the chemical up on a whiteboard in the staff room on site',
+      'Ensure that at least one of the first aiders has handled the substance before',
     ],
     correctAnswer: 0,
     explanation:
@@ -2642,10 +2642,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'A casualty has swallowed a corrosive cleaning product. They are conscious and complaining of burning in their mouth and throat. What should you do?',
     options: [
-      'Make the casualty drink plenty of water to dilute the product',
+      'Make the casualty drink plenty of water in order to dilute the product that they have swallowed',
       'Do not induce vomiting; call 999, keep the casualty calm, and try to identify the product',
-      'Encourage the casualty to make themselves sick to bring the product back up',
-      'Give the casualty milk to neutralise the chemical and ease the burning',
+      'Encourage the casualty to make themselves sick in order to bring the product back up',
+      'Give the casualty milk to neutralise the chemical and to ease the burning sensation',
     ],
     correctAnswer: 1,
     explanation:
@@ -2660,8 +2660,8 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'When applying a splint to a suspected fracture of the lower leg, which joints should the splint immobilise?',
     options: [
-      'The ankle only, as it is closest to the lower leg fracture',
-      'The hip and the knee, to control the whole limb from above',
+      'The ankle only, as it is the joint closest to the lower leg fracture',
+      'The hip and the knee, in order to control the whole limb from above',
       'The knee and the ankle (the joints above and below the fracture)',
       'No joints — only the fracture site itself should be supported',
     ],
@@ -2678,9 +2678,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'A worker reports feeling anxious, shaky, and unable to concentrate after witnessing a serious accident on site. What should you do?',
     options: [
-      'Tell them to pull themselves together and get straight back to work with the rest of the crew',
-      'Send them home immediately with no follow-up, debrief, or offer of further support',
-      'Move them to another task on site and say nothing more about it',
+      'Tell them to pull themselves together and get straight back to work alongside the rest of the crew on site today',
+      'Send them home immediately with no follow-up, no debrief and no offer of any further support at all afterwards',
+      'Move them on to another task on the site and say nothing further about the incident to them at all afterwards',
       'Remove them from the scene, listen without judgement, and ensure they are referred for appropriate support',
     ],
     correctAnswer: 3,
@@ -2696,9 +2696,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question: 'Why should both eyes be covered when an object is embedded in one eye?',
     options: [
       'Because both eyes move together (consensual movement), so covering both reduces movement of the injured eye',
-      'Because covering both eyes blocks out the light, which greatly reduces the pain of the injury',
-      'Because the uninjured eye will become infected too if it is left uncovered',
-      'Because covering both eyes stops the casualty seeing the injury and starting to panic',
+      'Because covering both of the eyes blocks out all the light, which greatly reduces the pain of the injury itself',
+      'Because the uninjured eye will very quickly become infected too if it is left uncovered by the eye pad',
+      'Because covering both eyes stops the casualty from seeing the injury and starting to panic about it',
     ],
     correctAnswer: 0,
     explanation:
@@ -2731,10 +2731,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'A first aider notices a casualty with a suspected arm fracture also has numbness and tingling in their fingers. What does this indicate?',
     options: [
-      'The tingling is a normal part of the healing process and can be safely ignored',
-      'The casualty is anxious and the numbness is purely psychological in origin',
+      'The tingling is a normal part of the healing process and can be safely ignored by the first aider',
+      'The casualty is simply anxious and the numbness they report is entirely psychological in origin',
       'The fracture may be compressing or damaging nerves or blood vessels — this is an urgent sign',
-      'The numbness confirms the bone is only bruised rather than actually broken',
+      'The numbness confirms that the bone is only badly bruised rather than actually broken',
     ],
     correctAnswer: 2,
     explanation:
@@ -2749,9 +2749,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'When communicating with a casualty who is disoriented after a head injury, which technique is most helpful?',
     options: [
-      'Repeat the same question loudly and firmly until they answer it correctly',
-      'Ask them complex questions to test how well their brain is functioning',
-      'Give a detailed explanation of what happened to help them remember the incident',
+      'Repeat exactly the same question loudly and firmly until they are able to answer it correctly for you',
+      'Ask them a series of complex questions in order to test how well their brain is actually functioning',
+      'Give a detailed explanation of what happened in order to help them remember the incident afterwards',
       'Ask short, simple questions; repeat information calmly; and avoid overwhelming them with choices',
     ],
     correctAnswer: 3,
@@ -2768,9 +2768,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
       'Under what circumstances should a first aider move a casualty with a suspected spinal injury?',
     options: [
       "Only if the casualty's airway is compromised or they are in immediate life-threatening danger",
-      'If the casualty asks to be moved to a more comfortable position',
-      'If the ambulance is expected to take longer than 15 minutes',
-      'A suspected spinal injury casualty should never be moved under any circumstances',
+      'If the casualty asks to be moved into a more comfortable position while they wait for the ambulance',
+      'If the ambulance is expected to take longer than 15 minutes to reach the site of the fall',
+      'A suspected spinal injury casualty should never be moved under any circumstances at all',
     ],
     correctAnswer: 0,
     explanation:
@@ -2787,10 +2787,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'A casualty has an open fracture of the forearm with a bone end protruding through the skin. The wound is bleeding moderately. How should you manage this injury?',
     options: [
-      'Push the protruding bone back beneath the skin, cover the wound with a sterile dressing, then bandage firmly over the top and call 999 for an ambulance',
+      'Push the protruding bone back beneath the skin, cover the wound with a sterile dressing, then bandage firmly over the top and call 999 for an ambulance to attend the scene',
       'Cover the wound and bone end with a sterile dressing without pressing directly on the protruding bone, build up padding around it, immobilise the limb, and call 999',
-      'Apply firm direct pressure over the protruding bone until the bleeding stops, then bandage tightly over the bone end and call 999',
-      'Pull the forearm straight to realign the bone, dress the wound, immobilise the arm in a sling, and drive the casualty to hospital',
+      'Apply firm direct pressure over the protruding bone until the bleeding stops, then bandage tightly over the bone end and call 999 for an ambulance to attend the scene',
+      'Pull the forearm straight to realign the bone, dress the wound, immobilise the arm in a sling, and then drive the casualty to the hospital yourself in your own van',
     ],
     correctAnswer: 1,
     explanation:
@@ -2823,9 +2823,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       "A colleague working in a confined space is found unresponsive. Other workers report a 'rotten eggs' smell. A carbon monoxide detector has not alarmed. What should you suspect and how should you respond?",
     options: [
-      'Suspect carbon monoxide despite the silent detector; enter the space, ventilate it, and drag the casualty out to fresh air',
-      'Hold your breath, enter quickly, and drag the casualty out before the gas has time to affect you as well',
-      'Assume the smell is from the drains and is harmless; enter and check the casualty for injuries before calling for help',
+      'Suspect carbon monoxide despite the silent detector; enter the space, ventilate it, and then drag the casualty out into the fresh air at once',
+      'Hold your breath, enter the confined space quickly, and drag the casualty out before the gas has any time to affect you in the same way as well',
+      'Assume the smell is coming from the drains and is harmless; enter the space and check the casualty for injuries before calling for help from anyone',
       'Suspect hydrogen sulphide (H2S); do NOT enter the confined space without breathing apparatus; call 999 and the confined space rescue team',
     ],
     correctAnswer: 3,
@@ -2842,9 +2842,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
       'During a site incident, a first aider is managing a casualty with a head injury who suddenly develops unequal pupils (one dilated, one normal), increasing drowsiness, and weakness on one side of the body. What is the most likely cause and correct action?',
     options: [
       'Raised intracranial pressure from an intracranial haemorrhage — call 999 immediately, maintain the airway, and monitor for deterioration',
-      'A simple concussion that will settle with rest — let the casualty sleep it off and review them in the morning',
-      'A panic attack triggered by the shock of the head injury — reassure them, monitor their breathing, and keep them still',
-      'A stroke unrelated to the injury — give aspirin, sit them upright, and arrange transport to hospital',
+      'A simple concussion that will settle with rest — let the casualty sleep it off in the site office and review them again in the morning shift',
+      'A panic attack triggered by the shock of the head injury — reassure them, monitor their breathing, and keep them still and calm on site',
+      'A stroke unrelated to the head injury — give them aspirin, sit them upright, and arrange transport to hospital straight away by car',
     ],
     correctAnswer: 0,
     explanation:
@@ -2877,10 +2877,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       "A Safety Data Sheet (SDS) for a workplace chemical states in Section 4: 'In case of eye contact, irrigate immediately with water for at least 15 minutes. In case of ingestion, do NOT induce vomiting. Seek immediate medical advice.' However, your first aid training says to irrigate eyes for 20 minutes. Which guidance should you follow?",
     options: [
-      'Always follow the Safety Data Sheet exactly, as it is the legally binding instruction for that chemical',
-      'Stop irrigating as soon as the casualty reports that the pain in the eye has eased',
+      'Always follow the Safety Data Sheet exactly, as it is the legally binding instruction for that particular chemical on site',
+      'Stop irrigating the eye as soon as the casualty reports to you that the pain in the eye has eased off completely again',
       'Follow whichever gives the greater protection — in this case, irrigate for at least 20 minutes as per your training',
-      'Split the difference and irrigate for around 17 minutes, then cover the eye with a sterile pad',
+      'Split the difference and irrigate for around 17 minutes, then cover the eye with a sterile pad and send them home',
     ],
     correctAnswer: 2,
     explanation:
@@ -2895,9 +2895,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'A first aider has dealt with three serious incidents in one month, including a fatality. They are struggling to sleep, experiencing intrusive thoughts, and avoiding areas of the workplace where the incidents occurred. What should happen?',
     options: [
-      'They should be told these feelings are a normal part of the job, be kept on the first aid rota, and be reassured that the symptoms will fade without any outside help',
-      'They should be permanently removed from the first aid rota, have the incidents recorded on their personnel file, and be referred to a disciplinary process for failing to cope',
-      'They should be signed off sick indefinitely without an occupational health referral, have their first aid certificate withdrawn, and be told to reapply once fully recovered',
+      'They should be told these feelings are a normal part of the job, be kept on the first aid rota, and be reassured that the symptoms will fade in time without any outside help at all',
+      'They should be permanently removed from the first aid rota, have the incidents recorded on their personnel file, and be referred to a disciplinary process for failing to cope with it',
+      'They should be signed off sick indefinitely without an occupational health referral, have their first aid certificate withdrawn, and be told to reapply once they are fully recovered',
       'They should be offered professional psychological support such as trauma counselling, have their first aid duties reassigned if needed, and be assured their reaction is normal',
     ],
     correctAnswer: 3,
@@ -2914,9 +2914,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
       'During a multi-casualty incident on a construction site, a first aider is managing a casualty with a suspected spinal injury when a second casualty nearby begins having a seizure. The first aider is the only trained responder. What should they do?',
     options: [
       'Maintain manual inline stabilisation on the spinal casualty, shout for help, and instruct a bystander to clear the area around the seizing casualty to prevent injury',
-      'Immediately leave the spinal casualty, restrain the seizing casualty by holding their limbs still, and return to the spinal casualty once the seizure has stopped',
-      'Roll the spinal casualty into the recovery position so both hands are free, then move the seizing casualty away from the spinal casualty',
-      'Wait until the seizure stops on its own before doing anything for either casualty, as moving either one risks making their injuries worse',
+      'Immediately leave the spinal casualty, restrain the seizing casualty by holding their limbs still, and return to the spinal casualty once the seizure has finally stopped',
+      'Roll the spinal casualty into the recovery position so that both hands are free, then move the seizing casualty well away from the spinal casualty on the ground',
+      'Wait until the seizure stops on its own before doing anything for either casualty, as moving either one of them now risks making their injuries worse than they are',
     ],
     correctAnswer: 0,
     explanation:
@@ -3109,8 +3109,8 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'Before approaching a collapsed casualty, what is the very first thing a first aider should check?',
     options: [
-      'Whether the casualty is breathing',
-      'Whether bystanders can help',
+      'Whether the casualty is breathing normally',
+      'Whether any bystanders are able to help',
       'Whether the casualty is conscious',
       'Whether the scene is safe (DANGER)',
     ],
@@ -3178,9 +3178,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     id: 175,
     question: 'What is the purpose of a first aid needs assessment?',
     options: [
-      'To determine how many first aid kits to order',
-      'To comply with fire safety regulations',
-      'To check whether existing first aiders need retraining',
+      'To determine how many first aid kits should be ordered for the whole site',
+      'To comply with the fire safety regulations that apply to the whole premises',
+      'To check whether any of the existing first aiders are now in need of retraining',
       'To identify the first aid provision required for a specific workplace',
     ],
     correctAnswer: 3,
@@ -3216,10 +3216,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'According to the Approved Code of Practice L74, which of the following factors must be considered in a first aid needs assessment?',
     options: [
-      'The brand of first aid kit already purchased',
+      'The brand of the first aid kit that has already been purchased',
       'The proximity of the workplace to emergency medical services',
-      'The political views of the workforce',
-      'The religious practices of employees',
+      'The political views held by the workforce on the site',
+      'The religious practices of the employees on the site',
     ],
     correctAnswer: 1,
     explanation:
@@ -3304,8 +3304,8 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     id: 182,
     question: 'Under GDPR, how should completed pages of the Accident Book (BI 510) be handled?',
     options: [
-      'They should be displayed on the health and safety noticeboard',
-      'They should be sent to the HSE within 7 days',
+      'They should be displayed on the health and safety noticeboard on site',
+      'They should be sent on to the HSE within 7 days of the accident happening',
       'They should be removed and stored securely to protect personal data',
       'They should be shredded immediately after the accident is resolved',
     ],
@@ -3357,10 +3357,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the key difference between a first aid record kept by a first aider and a RIDDOR report?',
     options: [
-      'A first aid record is sent to the HSE; a RIDDOR report is kept internally by the employer',
+      'A first aid record is sent straight to the HSE; a RIDDOR report is kept internally by the employer on file',
       'A first aid record is kept internally; a RIDDOR report is submitted to the HSE for qualifying incidents',
-      'There is no difference; the two documents contain the same information and are interchangeable',
-      'A first aid record is a legal requirement; a RIDDOR report is submitted voluntarily by the employer',
+      'There is no difference; the two documents contain exactly the same information and are interchangeable in law',
+      'A first aid record is a legal requirement; a RIDDOR report is submitted voluntarily by the employer if it wishes',
     ],
     correctAnswer: 1,
     explanation:
@@ -3375,10 +3375,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'An employer has a FAW certificate holder whose certificate expires in two months. What should the employer arrange?',
     options: [
-      'Nothing — the first aider can continue practising after expiry',
-      'An annual refresher course and no further action',
+      'Nothing — the first aider can continue practising after the certificate expires',
+      'An annual refresher course and no further action of any kind at all',
       'A requalification course to be completed before the certificate expires',
-      'A one-day EFAW course to extend the certificate',
+      'A one-day EFAW course in order to extend the existing certificate held',
     ],
     correctAnswer: 2,
     explanation:
@@ -3393,8 +3393,8 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'When conducting a first aid needs assessment, which of the following workplace characteristics would most likely increase the level of first aid provision required?',
     options: [
-      'A small low-risk office with fewer than five employees',
-      'A single-storey shop located next door to an A&E department',
+      'A small, low-risk office with fewer than five employees working in it',
+      'A single-storey shop located right next door to a busy A&E department',
       'A quiet workplace where staff work only standard daytime hours',
       'A multi-storey factory using hazardous chemicals with shift workers',
     ],
@@ -3412,9 +3412,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
       'Under the Health and Safety (First-Aid) Regulations 1981, what must an employer provide if a first aid needs assessment identifies that a first aid room is necessary?',
     options: [
       'A lockable room with a telephone, running water, a couch, and first aid equipment',
-      'A shared store cupboard containing a single first aid kit',
-      'A clearly signed area of the car park with an outdoor seat',
-      'Any spare office, provided it has a chair and a first aid poster',
+      'A shared store cupboard containing only a single first aid kit and nothing else at all',
+      'A clearly signed area of the site car park with an outdoor seat and a small side table',
+      'Any spare office, provided that it has a chair in it and a first aid poster on the wall',
     ],
     correctAnswer: 0,
     explanation:
@@ -3429,10 +3429,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'An AED (Automated External Defibrillator) is provided in a workplace. Who is permitted to use it?',
     options: [
-      'A qualified doctor or paramedic alone may operate it',
+      'A qualified doctor or a qualified paramedic alone may operate the device while on site',
       'Any person — AEDs are designed to be used by anyone, including untrained bystanders',
-      'A current first aid at work (FAW) certificate holder, and no one else',
-      'Only staff who have completed a separate AED training course',
+      'A current first aid at work (FAW) certificate holder, and nobody else at all',
+      'Only staff who have completed a separate AED training course beforehand on site',
     ],
     correctAnswer: 1,
     explanation:
@@ -3447,10 +3447,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'Which of the following items would you expect to find in a standard BS 8599-1:2019 workplace first aid kit?',
     options: [
-      'Paracetamol tablets, antiseptic cream, and a bottle of antihistamine',
-      'A blood pressure monitor, a stethoscope, and suturing equipment',
+      'Paracetamol tablets, antiseptic cream, a bottle of antihistamine and a digital thermometer',
+      'A blood pressure monitor, a stethoscope and a full set of suturing equipment for wounds',
       'Sterile dressings, disposable gloves, a foil blanket, and a resuscitation face shield',
-      'Prescription adrenaline auto-injectors and a bottle of aspirin',
+      'Prescription adrenaline auto-injectors and a large bottle of soluble aspirin tablets',
     ],
     correctAnswer: 2,
     explanation:
@@ -3465,9 +3465,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'A casualty is unconscious after a fall from height. You suspect a spinal injury. How does this affect the primary survey?',
     options: [
-      'Skip the airway step to avoid moving the head',
-      'Roll the casualty into the recovery position immediately',
-      'Do not assess the casualty — wait for the ambulance',
+      'Skip the airway step entirely in order to avoid moving the head or the neck at all',
+      'Roll the casualty into the recovery position immediately and then monitor them closely',
+      'Do not assess the casualty at all — simply wait for the ambulance crew to arrive',
       'Use a jaw-thrust manoeuvre instead of head-tilt chin-lift to open the airway',
     ],
     correctAnswer: 3,
@@ -3484,9 +3484,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
       'What information should be recorded in a first aid treatment record after attending to a casualty?',
     options: [
       "The casualty's name, date, time, nature of injury or illness, treatment given, and the outcome",
-      "Only the casualty's name and the date of the incident, to keep the record brief",
-      "The first aider's personal opinion on who was at fault for causing the incident",
-      "The casualty's full medical history and a complete list of their current medications",
+      'Only the name of the casualty and the date of the incident, so as to keep the record short and simple',
+      'The personal opinion of the first aider on who was at fault for causing the incident on site',
+      'The full medical history of the casualty and a complete list of their current medications',
     ],
     correctAnswer: 0,
     explanation:
@@ -3503,9 +3503,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'A construction company operates two sites: Site A has 48 workers and Site B has 55 workers. Using HSE construction guidance, what is the minimum FAW provision across both sites?',
     options: [
-      '2 FAW holders at each site',
+      '2 FAW holders at Site A and 2 FAW holders at Site B',
       '1 FAW holder at Site A and 2 FAW holders at Site B',
-      '1 FAW holder shared between both sites',
+      '1 FAW holder shared between both of the sites in use',
       '1 FAW holder at Site A and 1 FAW holder at Site B',
     ],
     correctAnswer: 1,
@@ -3521,10 +3521,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'A worker suffers a serious burn and is taken to hospital, where they are admitted for observation for 26 hours. Under RIDDOR 2013, how should this be classified and when must it be reported?',
     options: [
-      'It is not reportable, as a burn is never classed as a specified injury under RIDDOR 2013',
-      'It is reportable only as an over-7-day injury because the worker was off work, and must be submitted within 15 days of the accident',
+      'It is not reportable at all, as a burn is never classed as a specified injury under RIDDOR 2013 whatever the treatment given in the hospital',
+      'It is reportable only as an over-7-day injury because the worker was off work, and must be submitted within 15 days of the accident happening',
       'It is reportable as a specified injury because the worker was admitted to hospital for over 24 hours, and must be reported without delay',
-      'It is recordable in the accident book only; it does not need to be reported to the HSE at all',
+      'It is recordable in the accident book only; it does not need to be reported to the HSE at all, whatever the length of the stay in hospital was',
     ],
     correctAnswer: 2,
     explanation:
@@ -3539,8 +3539,8 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'An employer completes a first aid needs assessment and determines that EFAW provision is sufficient. Six months later, the company introduces a new process involving molten metal. What action is required?',
     options: [
-      'The employer should purchase additional plasters for the first aid kit',
-      'No action — the original assessment remains valid for three years',
+      'The employer should purchase some additional plasters and burn dressings for the first aid kit',
+      'No action — the original needs assessment remains valid for a further three years at least',
       'The employer should wait until the annual health and safety audit to review provision',
       'The employer must review and update the first aid needs assessment to reflect the new hazard',
     ],
@@ -3558,9 +3558,9 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
       'A 15-year-old work experience student collapses at a workplace. They are unconscious and a parent is not present. What is the legal position regarding consent for first aid treatment?',
     options: [
       'Implied consent applies — a first aider may treat an unconscious minor in their best interests under the principle of necessity',
-      'No treatment may be given until a parent or guardian arrives and gives consent on the student’s behalf',
-      'Treatment is permitted only if a manager signs a consent form on the parent’s behalf first',
-      'The first aider must wait for the ambulance crew to arrive, as only a clinician can consent on behalf of a minor',
+      'No treatment may be given until a parent or guardian arrives and gives consent on behalf of the student in person at the workplace',
+      'Treatment is permitted only if a senior manager on the site signs a consent form on behalf of the parent of the student first of all',
+      'The first aider must wait for the ambulance crew to arrive, as only a clinician can consent on behalf of a minor under the law',
     ],
     correctAnswer: 0,
     explanation:
@@ -3575,10 +3575,10 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       "An employee requests access to another colleague's accident record entry under a Subject Access Request (SAR) citing GDPR. How should the employer respond?",
     options: [
-      "Provide the colleague's full accident record, as accident records at work are not personal data",
+      'Provide the full accident record of the colleague, since accident records held at work are not personal data at all in law',
       "Provide only the requesting employee's own records; another person's data cannot be disclosed without their consent",
-      'Refuse the request entirely, as no accident record can ever be disclosed under a subject access request',
-      "Provide the colleague's record only if the requester gives a written reason for wanting to see it",
+      'Refuse the request entirely, as no accident record can ever be disclosed under a subject access request of any kind at all',
+      'Provide the record of the colleague only if the requester gives a written reason for wanting to see it in the first place',
     ],
     correctAnswer: 1,
     explanation:

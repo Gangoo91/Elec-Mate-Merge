@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Users, Clock, ChevronRight } from 'lucide-react';
-import { Customer } from '@/hooks/useCustomers';
+import { Customer } from '@/hooks/inspection/useCustomers';
 import { format, isThisMonth, parseISO } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';

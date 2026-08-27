@@ -18,6 +18,7 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { PDFDocument } from 'https://esm.sh/pdf-lib@1.17.1';
 
+import { withSentry } from '../_shared/sentry.ts';
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers':
@@ -46,7 +47,7 @@ interface DocRef {
   url: string | null;
 }
 
-Deno.serve(async (req) => {
+Deno.serve(withSentry('assemble-project-pack', async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
 
   try {
@@ -226,4 +227,4 @@ Deno.serve(async (req) => {
   } catch (err) {
     return json({ error: (err as Error)?.message || 'Unexpected error' }, 500);
   }
-});
+}));

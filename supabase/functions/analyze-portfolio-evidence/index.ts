@@ -9,6 +9,7 @@
 
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
 import { searchFacets } from '../_shared/bs7671-facets-rag.ts';
+import { withSentry } from '../_shared/sentry.ts';
 import {
   buildAcWhitelist,
   groundMatchedCriteria,
@@ -242,7 +243,7 @@ async function imageUrlToBase64(url: string): Promise<{
   }
 }
 
-serve(async (req: Request) => {
+serve(withSentry('analyze-portfolio-evidence', async (req: Request) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -577,4 +578,4 @@ ${GROUNDING_RULES}`;
       }
     );
   }
-});
+}));

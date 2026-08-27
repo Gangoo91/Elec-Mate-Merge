@@ -17,6 +17,7 @@
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
 
+import { withSentry } from '../_shared/sentry.ts';
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
@@ -302,7 +303,7 @@ const ASSESSOR_TOOL_SCHEMA = {
   },
 };
 
-Deno.serve(async (req) => {
+Deno.serve(withSentry('ai-assessor', async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
   if (req.method !== 'POST') {
     return new Response('Method not allowed', { status: 405, headers: corsHeaders });
@@ -512,4 +513,4 @@ Deno.serve(async (req) => {
       connection: 'keep-alive',
     },
   });
-});
+}));

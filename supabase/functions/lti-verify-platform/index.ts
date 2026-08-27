@@ -9,6 +9,7 @@
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
 
+import { withSentry } from '../_shared/sentry.ts';
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
@@ -105,7 +106,7 @@ function checkHostConsistency(platform: {
   }
 }
 
-Deno.serve(async (req: Request) => {
+Deno.serve(withSentry('lti-verify-platform', async (req: Request) => {
   if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers: corsHeaders });
   if (req.method !== 'POST') {
     return new Response(JSON.stringify({ error: 'method_not_allowed' }), {
@@ -210,4 +211,4 @@ Deno.serve(async (req: Request) => {
     }),
     { status: 200, headers: { ...corsHeaders, 'content-type': 'application/json' } }
   );
-});
+}));

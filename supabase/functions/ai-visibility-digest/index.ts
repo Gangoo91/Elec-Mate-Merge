@@ -13,6 +13,7 @@
  */
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
+import { withSentry } from '../_shared/sentry.ts';
 const DIGEST_TO = { email: 'founder@elec-mate.com', name: 'Andrew Moore' };
 
 async function sendBrevo(opts: { subject: string; html: string }) {
@@ -57,7 +58,7 @@ function table(rows: Array<[string, string, string]>, headers: [string, string, 
 // omitted here: this endpoint is service-role-gated and pg_cron-only, and
 // browsers must never be able to call it. No CORS = browser calls fail at
 // preflight, which is the correct behaviour for this function.
-Deno.serve(async (req) => {
+Deno.serve(withSentry('ai-visibility-digest', async (req) => {
   try {
     if (req.method !== 'POST') return new Response('method not allowed', { status: 405 });
 
@@ -151,4 +152,4 @@ Deno.serve(async (req) => {
       headers: { 'content-type': 'application/json' },
     });
   }
-});
+}));

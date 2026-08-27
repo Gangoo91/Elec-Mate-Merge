@@ -36,6 +36,7 @@
 
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
 import { searchFacets, type BS7671Facet } from '../_shared/bs7671-facets-rag.ts';
+import { withSentry } from '../_shared/sentry.ts';
 import {
   buildAcWhitelist,
   groundMatchedCriteria,
@@ -408,7 +409,7 @@ function sse(event: string, data: unknown): Uint8Array {
   return new TextEncoder().encode(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`);
 }
 
-serve(async (req: Request) => {
+serve(withSentry('portfolio-capture-stream', async (req: Request) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -614,4 +615,4 @@ serve(async (req: Request) => {
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
-});
+}));

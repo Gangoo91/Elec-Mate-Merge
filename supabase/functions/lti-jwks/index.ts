@@ -8,13 +8,15 @@
 // Keys are stored in Supabase secret `LTI_JWKS_JSON` as a pre-baked JWK set
 // string. Supporting multiple keys in the set enables zero-downtime rotation.
 
+import { withSentry } from '../_shared/sentry.ts';
+
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET, OPTIONS',
   'Access-Control-Allow-Headers': 'content-type',
 };
 
-Deno.serve((req: Request) => {
+Deno.serve(withSentry('lti-jwks', (req: Request) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { status: 204, headers: corsHeaders });
   }
@@ -51,4 +53,4 @@ Deno.serve((req: Request) => {
       'cache-control': 'public, max-age=3600, must-revalidate',
     },
   });
-});
+}));

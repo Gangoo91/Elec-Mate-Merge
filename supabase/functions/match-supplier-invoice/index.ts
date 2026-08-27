@@ -7,6 +7,7 @@
  */
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.1';
 
+import { withSentry } from '../_shared/sentry.ts';
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers':
@@ -29,7 +30,7 @@ interface Variance {
   amount: number;
 }
 
-Deno.serve(async (req) => {
+Deno.serve(withSentry('match-supplier-invoice', async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
   try {
     const supabase = createClient(
@@ -157,4 +158,4 @@ invoice_total is the grand total payable (inc VAT if shown). Numbers only, no cu
   } catch (e) {
     return json({ error: e instanceof Error ? e.message : 'Unknown error' }, 500);
   }
-});
+}));

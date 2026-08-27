@@ -2,6 +2,7 @@ import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { corsHeaders } from '../_shared/cors.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
+import { withSentry } from '../_shared/sentry.ts';
 interface PackageRequest {
   conversationId?: string;
   messages: Array<{ role: string; content: string }>;
@@ -13,7 +14,7 @@ interface PackageRequest {
   selectedDocuments?: string[];
 }
 
-serve(async (req) => {
+serve(withSentry('generate-professional-package', async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -189,7 +190,7 @@ serve(async (req) => {
       }
     );
   }
-});
+}));
 
 function extractDataFromConversation(messages: any[], designData: any) {
   // Extract key information from AI conversation

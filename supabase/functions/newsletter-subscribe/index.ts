@@ -22,6 +22,7 @@ import { serve, corsHeaders, createClient } from '../_shared/deps.ts';
 import { fireCapiEvent } from '../_shared/meta-capi.ts';
 import { sendCheatSheetEmail } from '../_shared/cheatsheet-email.ts';
 import { sendLeadMagnetEmail, type LeadMagnet } from '../_shared/lead-magnet-email.ts';
+import { withSentry } from '../_shared/sentry.ts';
 import {
   sendMockResultEmail,
   type MockResultPayload,
@@ -208,7 +209,7 @@ async function addToBrevoList(
   }
 }
 
-serve(async (req) => {
+serve(withSentry('newsletter-subscribe', async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
   if (req.method !== 'POST') {
     return new Response(JSON.stringify({ error: 'Method not allowed' }), {
@@ -427,4 +428,4 @@ serve(async (req) => {
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
-});
+}));

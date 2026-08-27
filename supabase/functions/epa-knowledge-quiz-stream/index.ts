@@ -22,6 +22,7 @@
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
 import { searchFacets, type BS7671Facet } from '../_shared/bs7671-facets-rag.ts';
 
+import { withSentry } from '../_shared/sentry.ts';
 const MODEL = 'gpt-5.4-mini-2026-03-17';
 
 const singleQuestionTool = {
@@ -196,7 +197,7 @@ function sseEvent(event: string, data: unknown): Uint8Array {
   );
 }
 
-serve(async (req: Request) => {
+serve(withSentry('epa-knowledge-quiz-stream', async (req: Request) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -378,4 +379,4 @@ serve(async (req: Request) => {
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
-});
+}));

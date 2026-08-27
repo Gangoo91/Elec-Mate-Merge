@@ -226,8 +226,22 @@ export const useInvoiceStorage = () => {
             const isKnownBindingsMismatch = lowered.includes('mismatch between server and client bindings');
             const isExpiredJwt =
               lowered.includes('invalidjwttoken') || lowered.includes('token has expired');
+            //   - "socket closed: <code>" — the channel closed and Supabase
+            //     reconnects. 1000 is literally "Normal Closure" and 1005 is
+            //     "No Status Received", i.e. the user navigated away or
+            //     backgrounded the tab. Reporting those as errors made this
+            //     the loudest issue in Sentry (549 events, 68 users) while
+            //     nothing was wrong. Fixed at source as well as in the
+            //     beforeSend filter, so it cannot come back through a
+            //     different channel.
+            const isSocketClose = /socket closed: \d+/.test(lowered);
             if (isKnownBindingsMismatch) {
               addBreadcrumb('Realtime bindings mismatch (recoverable)', 'realtime', {
+                channel: 'invoice-realtime',
+                status,
+              });
+            } else if (isSocketClose) {
+              addBreadcrumb('Realtime socket closed (reconnecting)', 'realtime', {
                 channel: 'invoice-realtime',
                 status,
               });

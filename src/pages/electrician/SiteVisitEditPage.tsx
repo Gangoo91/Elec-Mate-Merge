@@ -13,9 +13,11 @@ import type { SiteVisit, SiteVisitPhoto } from '@/types/siteVisit';
 import { Eyebrow, StatStrip, Pill, Dot } from '@/components/college/primitives';
 import { cn } from '@/lib/utils';
 
-type StatusKey = 'in_progress' | 'completed' | 'scope_sent' | 'signed' | 'post_job';
+// `scheduled` — booked from the calendar, not yet walked. See SiteVisitsHubPage.
+type StatusKey = 'scheduled' | 'in_progress' | 'completed' | 'scope_sent' | 'signed' | 'post_job';
 
 const statusToneMap: Record<StatusKey, 'amber' | 'green' | 'blue' | 'emerald' | 'purple'> = {
+  scheduled: 'blue',
   in_progress: 'amber',
   completed: 'green',
   scope_sent: 'blue',
@@ -24,6 +26,7 @@ const statusToneMap: Record<StatusKey, 'amber' | 'green' | 'blue' | 'emerald' | 
 };
 
 const statusLabelMap: Record<StatusKey, string> = {
+  scheduled: 'Booked in',
   in_progress: 'In progress',
   completed: 'Completed',
   scope_sent: 'Scope sent',
@@ -46,6 +49,7 @@ const itemVariants = {
 
 // Status order for the horizontal stepper.
 const STATUS_STEPS: { key: StatusKey; label: string }[] = [
+  { key: 'scheduled', label: 'Booked' },
   { key: 'in_progress', label: 'Captured' },
   { key: 'completed', label: 'Scoped' },
   { key: 'scope_sent', label: 'Sent' },

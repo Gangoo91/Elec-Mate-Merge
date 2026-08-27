@@ -3,6 +3,7 @@ import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { autoRecoverStuckBatches } from './watchdog.ts';
 
+import { withSentry } from '../_shared/sentry.ts';
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers':
@@ -247,7 +248,7 @@ addEventListener('beforeunload', (ev) => {
   console.log(`Active workers at shutdown: ${activeWorkers.size}`);
 });
 
-serve(async (req) => {
+serve(withSentry('master-enrichment-scheduler', async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -1850,7 +1851,7 @@ serve(async (req) => {
       }
     );
   }
-});
+}));
 
 /**
  * PHASE 2: Continuous Processing Loop

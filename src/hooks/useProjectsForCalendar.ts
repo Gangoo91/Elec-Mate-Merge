@@ -46,6 +46,10 @@ export function useProjectsForCalendar(dateFrom: string, dateTo: string) {
         .from('spark_projects')
         .select('id, title, start_date, due_date, status, location')
         .eq('user_id', user.id)
+        // Same reason as useSiteVisitsForCalendar: a job started from a booking
+        // is already drawn as that booking, and its synthetic "Starts:" event
+        // would double it up on the day.
+        .is('calendar_event_id', null)
         .not('status', 'in', '("completed","cancelled")')
         .or(
           `and(start_date.gte.${fromDate},start_date.lte.${toDate}),and(due_date.gte.${fromDate},due_date.lte.${toDate})`

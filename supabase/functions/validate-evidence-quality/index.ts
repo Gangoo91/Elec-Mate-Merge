@@ -9,6 +9,7 @@
 
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
 import { searchFacets } from '../_shared/bs7671-facets-rag.ts';
+import { withSentry } from '../_shared/sentry.ts';
 import {
   buildAcWhitelist,
   findUnknownClaimedAcs,
@@ -231,7 +232,7 @@ async function imageUrlToBase64(url: string): Promise<{ base64: string; mimeType
   }
 }
 
-serve(async (req: Request) => {
+serve(withSentry('validate-evidence-quality', async (req: Request) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -511,4 +512,4 @@ ${acContext}${bs7671Context}${practicalContext}`;
       }
     );
   }
-});
+}));

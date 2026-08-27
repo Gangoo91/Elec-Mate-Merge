@@ -55,7 +55,7 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
   {
     id: 1,
     question: "What is the literal meaning of the word 'asbestos' derived from ancient Greek?",
-    options: ['White mineral', 'Indestructible', 'Fireproof', 'Strong fibre'],
+    options: ['White mineral', 'Indestructible', 'Fireproof', 'Strong flexible fibre'],
     correctAnswer: 1,
     explanation:
       "The word 'asbestos' comes from the ancient Greek 'asbestos' meaning 'indestructible' or 'unquenchable', reflecting the material's remarkable durability and resistance to fire.",
@@ -99,8 +99,8 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question: 'Into which two mineral groups are the six types of asbestos divided?',
     options: [
       'Serpentine and amphibole groups',
-      'Silicate and carbonate groups',
-      'Calcium and magnesium groups',
+      'Silicate and carbonate mineral groups',
+      'Calcium and magnesium mineral groups',
       'Organic and inorganic groups',
     ],
     correctAnswer: 0,
@@ -278,9 +278,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
       'In which of the following locations would you be LEAST likely to find asbestos in a building constructed in the 1970s?',
     options: [
       'Modern PVC window frames installed in 2020',
-      'Pipe and boiler thermal insulation lagging',
-      'Corrugated cement roofing sheets',
-      'Textured decorative ceiling coatings',
+      'Thermal insulation lagging to pipes and boilers',
+      'Corrugated cement roof sheets over a garage',
+      'Textured decorative coating to ceilings and walls',
     ],
     correctAnswer: 0,
     explanation:
@@ -307,10 +307,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     id: 18,
     question: 'What is mesothelioma?',
     options: [
-      'A reversible inflammation of the airways caused by short-term dust exposure',
-      'A benign thickening of the skin on the hands of manual workers',
+      'A reversible inflammation of the airways that settles once the dust exposure stops',
+      'A benign thickening of the skin on the hands and forearms of building trade workers',
       'A cancer of the lining of the lungs or abdomen almost exclusively caused by asbestos exposure',
-      'A bacterial lung infection treatable with a course of antibiotics',
+      'A bacterial infection of the lung that clears completely with a standard course of antibiotics',
     ],
     correctAnswer: 2,
     explanation:
@@ -338,9 +338,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question: 'What is asbestosis?',
     options: [
       'A serious scarring and fibrosis of the lung tissue caused by heavy asbestos exposure',
-      'A skin irritation caused by direct contact with raw asbestos fibres',
-      'A temporary loss of voice caused by inhaling fine mineral dust',
-      'An allergic reaction to the wetting agents used in asbestos removal',
+      'A short-lived skin irritation caused by direct contact with raw asbestos fibres',
+      'A temporary loss of voice caused by inhaling fine mineral dust during a working shift',
+      'An allergic reaction to the wetting agents sprayed on material during asbestos removal',
     ],
     correctAnswer: 0,
     explanation:
@@ -372,10 +372,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     id: 22,
     question: 'How do asbestos fibres typically enter the body and cause disease?',
     options: [
-      'Through absorption via the skin',
-      'Through ingestion of contaminated food only',
+      'Through absorption of the fibres through unbroken skin',
+      'Through ingestion of contaminated food and drink only',
       'Through inhalation of airborne fibres into the lungs',
-      'Through contact with the eyes',
+      'Through direct contact with the moist surface of the eyes',
     ],
     correctAnswer: 2,
     explanation:
@@ -425,10 +425,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question:
       'A building was constructed in 1965. Which statement is most accurate regarding asbestos?',
     options: [
-      'It can be assumed asbestos-free because it predates the peak years of asbestos use',
+      'It can be assumed to be asbestos-free because it predates the peak years of asbestos use',
       'It should be presumed to contain asbestos-containing materials until a survey proves otherwise',
-      'It only needs checking if the original construction records have been lost',
-      'It is exempt from the duty to manage because of its age',
+      'It only needs to be checked where the original construction records for the building have been lost',
+      'It is exempt from the duty to manage asbestos because of the age of the building itself',
     ],
     correctAnswer: 1,
     explanation:
@@ -444,9 +444,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
       'Which of the following domestic locations is a common place to find asbestos-containing materials?',
     options: [
       'Solid hardwood internal doors fitted in the 1970s and 1980s',
-      'uPVC double-glazed window units installed during the 1990s',
+      'uPVC double-glazed window units installed during the mid 1990s onwards',
       'Textured decorative coatings (such as Artex) applied before 2000',
-      'Laminated chipboard kitchen worktops fitted before 2000',
+      'Laminated chipboard kitchen worktops fitted during the 1980s and 1990s',
     ],
     correctAnswer: 2,
     explanation:
@@ -460,7 +460,7 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     id: 27,
     question:
       'What type of asbestos was commonly used in thermal insulation lagging for pipes and boilers?',
-    options: ['Chrysotile only', 'Tremolite only', 'Crocidolite only', 'Amosite and chrysotile'],
+    options: ['Chrysotile and nothing else', 'Tremolite and nothing else', 'Crocidolite and nothing else', 'Amosite and chrysotile'],
     correctAnswer: 3,
     explanation:
       'Thermal insulation lagging for pipes and boilers commonly contained amosite (brown) asbestos and chrysotile (white) asbestos, often mixed together. This type of lagging is considered high risk because it is friable and easily releases fibres when disturbed.',
@@ -488,7 +488,7 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
       'Yes — white, brown and blue asbestos are always clearly distinguishable to the naked eye',
       'No — asbestos type cannot be reliably identified by colour and requires laboratory analysis',
       'Yes, but only by a trained surveyor carrying out a close visual inspection in good light',
-      'No — but a simple on-site chemical spot test can confirm the type before work begins',
+      'No — but a simple on-site chemical spot test will confirm the asbestos type before work begins',
     ],
     correctAnswer: 1,
     explanation:
@@ -515,9 +515,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     id: 31,
     question: 'Tremolite asbestos is most commonly encountered in the UK as what?',
     options: [
-      'A primary commercial product widely sold for use in pipe lagging',
-      'A modern synthetic replacement for chrysotile in brake linings',
-      'The main binder used in asbestos cement roof sheeting',
+      'A primary commercial product widely sold for use in pipe and boiler lagging',
+      'A modern synthetic replacement for chrysotile used in vehicle brake linings',
+      'The main binder used in asbestos cement roofing and wall sheeting',
       'A contaminant found in other minerals such as vermiculite and talc',
     ],
     correctAnswer: 3,
@@ -551,10 +551,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question:
       'In a typical domestic property built in the 1970s, which of the following would be a common location for asbestos-containing materials?',
     options: [
-      'Solid wood internal doors',
+      'Solid wood internal doors and frames',
       'Garage roof sheets and soffits',
-      'Copper water pipes',
-      'Glazed ceramic bathroom tiles',
+      'Copper water pipes and fittings',
+      'Glazed ceramic bathroom wall tiles',
     ],
     correctAnswer: 1,
     explanation:
@@ -568,10 +568,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     id: 34,
     question: 'What was asbestos insulating board (AIB) commonly used for in buildings?',
     options: [
-      'Damp-proof courses in external brickwork',
-      'Load-bearing structural foundations',
+      'Damp-proof courses within external cavity brickwork',
+      'Load-bearing structural foundations and ground slabs',
       'Ceiling tiles, partition walls, and fire protection panels',
-      'Glazing putty around window panes',
+      'Glazing putty and bedding compound around external window panes',
     ],
     correctAnswer: 2,
     explanation:
@@ -605,9 +605,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
       'Approximately how many commercial, public, and industrial buildings in the UK are estimated to contain asbestos?',
     options: [
       'Approximately half a million or more',
-      'Approximately five thousand',
-      'Approximately fifty thousand',
-      'Fewer than one thousand',
+      'Approximately five thousand in all',
+      'Approximately fifty thousand buildings',
+      'Fewer than one thousand in the whole UK',
     ],
     correctAnswer: 0,
     explanation:
@@ -622,10 +622,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question:
       'Sprayed asbestos coatings (limpet spray) are considered especially dangerous because they are:',
     options: [
-      'Tightly bound within a cement matrix that rarely releases fibres',
+      'Tightly bound within a dense cement matrix that rarely releases any fibres',
       'Highly friable and can release large quantities of fibres when disturbed',
-      'Only ever found in inaccessible underground locations',
-      'Manufactured exclusively from the least hazardous white asbestos',
+      'Only ever applied in inaccessible underground locations such as service ducts',
+      'Manufactured exclusively from chrysotile, the least hazardous asbestos type',
     ],
     correctAnswer: 1,
     explanation:
@@ -640,10 +640,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the approximate diameter of a single asbestos fibre compared to a human hair?',
     options: [
-      'About the same thickness as a human hair',
-      'About half the thickness of a human hair',
+      'About the same thickness as a typical human hair',
+      'About half the thickness of a typical human hair',
       'Approximately 700 times thinner than a human hair',
-      'Approximately 10 times thinner than a human hair',
+      'Approximately 10 times thinner than an average human hair',
     ],
     correctAnswer: 2,
     explanation:
@@ -658,9 +658,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question:
       'Which of the following tradespeople is statistically at highest risk of asbestos exposure when working in older buildings?',
     options: [
-      'Painters and decorators working only on external surfaces',
-      'Office cleaners and reception staff in modern buildings',
-      'Landscape gardeners and groundskeeping staff',
+      'Painters and decorators working only on external walls and windows',
+      'Office cleaners and reception staff working in modern air-conditioned offices',
+      'Landscape gardeners and groundskeeping staff who work outdoors all year round',
       'Plumbers, electricians, and heating engineers who disturb building fabric',
     ],
     correctAnswer: 3,
@@ -677,9 +677,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
       'Which statement best describes the relationship between asbestos exposure dose and disease risk?',
     options: [
       'Risk increases with cumulative exposure — higher doses and longer durations increase the likelihood of disease',
-      'There is a clearly defined safe dose of asbestos, below which no asbestos-related disease can develop',
-      'Risk depends only on a single exposure event, regardless of how long that exposure lasted',
-      'Once a person has been exposed at all, the level of disease risk is the same for everyone',
+      'There is a clearly defined safe dose of asbestos exposure, below which no asbestos-related disease can ever develop',
+      'Risk depends only on the single largest exposure event, no matter how long or how often that exposure has lasted',
+      'Once a person has been exposed to asbestos at all, the level of disease risk is identical for every person exposed',
     ],
     correctAnswer: 0,
     explanation:
@@ -727,8 +727,8 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question: "Who does Regulation 4 of CAR 2012 identify as the 'dutyholder'?",
     options: [
       'The HSE inspector assigned to the local enforcement area, or the environmental health officer where the local authority enforces',
-      'The licensed asbestos removal contractor appointed for the site, or the analyst who carries out the clearance testing afterwards',
-      'The most senior employee physically present in the building, or the appointed first aider where no manager is on site that day',
+      'The licensed asbestos removal contractor appointed for the site, or the analyst who carries out the four-stage clearance testing afterwards',
+      'The most senior employee physically present in the building, or the appointed first aider where no manager is on site on that day',
       'The person or organisation responsible for the maintenance or repair of non-domestic premises, or who has control of those premises',
     ],
     correctAnswer: 3,
@@ -777,10 +777,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     id: 46,
     question: 'What are the three categories of asbestos work defined under CAR 2012?',
     options: [
-      'Removal, encapsulation, and management in situ',
-      'High-risk, medium-risk, and negligible-risk',
+      'Removal, encapsulation, and management of the material in situ',
+      'High-risk, medium-risk, and negligible-risk categories',
       'Licensed, notifiable non-licensed (NNLW), and non-licensed',
-      'Commercial, industrial, and domestic premises',
+      'Commercial premises, industrial premises, and domestic premises',
     ],
     correctAnswer: 2,
     explanation:
@@ -813,9 +813,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
       'What must a dutyholder produce as part of their duty to manage asbestos under Regulation 4?',
     options: [
       'A written plan (management plan) that sets out how the risk from asbestos is to be managed',
-      'A signed waiver releasing the dutyholder from liability for asbestos',
-      'A planning application submitted to the local authority before any work',
-      'A certificate confirming the building is entirely free of asbestos',
+      'A signed waiver releasing the dutyholder from all liability for the asbestos in the building',
+      'A planning application submitted to the local authority before any work in the premises begins',
+      'A certificate from a UKAS-accredited laboratory confirming that the premises are asbestos-free',
     ],
     correctAnswer: 0,
     explanation:
@@ -829,10 +829,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     id: 49,
     question: 'What is an asbestos register?',
     options: [
-      'A log recording the name, employer and arrival time of every worker who enters the building each day',
+      'A log recording the name, employer, trade and time of arrival of every person who enters the building on each working day',
       'A document recording the location, type, condition, and extent of asbestos-containing materials (or presumed ACMs) in a building',
-      'A record of all the maintenance and cleaning contracts held by the building owner, and the dates they fall due for renewal',
-      'A list of the HSE-licensed asbestos removal contractors approved to work in the local authority area',
+      'A record of all the maintenance and cleaning contracts held by the building owner, together with the dates they fall due for renewal',
+      'A list of the HSE-licensed asbestos removal contractors and analysts approved to work in the area of the local authority',
     ],
     correctAnswer: 1,
     explanation:
@@ -863,9 +863,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     id: 51,
     question: 'What are the two types of asbestos survey described in HSG264?',
     options: [
-      'Visual survey and intrusive survey',
-      'Preliminary survey and final clearance survey',
-      'Domestic survey and commercial survey',
+      'Non-intrusive visual survey and fully intrusive destructive survey',
+      'Preliminary site survey and final four-stage clearance survey',
+      'Domestic premises survey and commercial premises survey',
       'Management survey and refurbishment/demolition (R&D) survey',
     ],
     correctAnswer: 3,
@@ -881,9 +881,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question: 'When is a refurbishment and demolition (R&D) survey required?',
     options: [
       'Before any refurbishment or demolition work is carried out in premises, or parts of premises',
-      'Only after asbestos has already been accidentally disturbed during site work',
-      'At the routine annual review of the asbestos management plan and register',
-      'Whenever a building changes ownership, regardless of whether any work is planned',
+      'Only after asbestos has already been accidentally disturbed by workers during work on the site',
+      'At each routine annual review of the asbestos management plan, the register and survey reports',
+      'Whenever a building changes ownership or tenancy, regardless of whether any work is being planned',
     ],
     correctAnswer: 0,
     explanation:
@@ -897,10 +897,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     id: 53,
     question: 'What is the purpose of a management survey?',
     options: [
-      'To locate every ACM in the building by fully intrusive opening up of the structure, including sealed voids, ducts and roof spaces',
+      'To locate every ACM in the building by fully intrusive opening up of the structure, including sealed voids, service ducts and roof spaces',
       'To locate ACMs that could be disturbed or damaged during normal occupancy, including foreseeable maintenance, and to assess their condition',
-      'To measure airborne fibre concentrations throughout the building before it can be reoccupied after removal work',
-      'To confirm that every ACM has been completely removed from the premises and to issue a clearance certificate',
+      'To measure the airborne fibre concentrations throughout the building before it can be reoccupied following licensed asbestos removal work',
+      'To confirm that every asbestos-containing material has been completely removed from the premises and to issue the four-stage clearance certificate',
     ],
     correctAnswer: 1,
     explanation:
@@ -914,10 +914,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     id: 54,
     question: 'What accreditation must asbestos survey organisations hold in the UK?',
     options: [
-      'ISO 9001 certification',
-      'BREEAM certification',
+      'ISO 9001 quality management certification',
+      'BREEAM environmental certification',
       'UKAS accreditation to ISO 17020',
-      'CHAS accreditation',
+      'CHAS contractor accreditation',
     ],
     correctAnswer: 2,
     explanation:
@@ -950,9 +950,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
       'Regulation 5 of CAR 2012 requires employers to carry out what before work with asbestos begins?',
     options: [
       'An identification of the type of asbestos involved',
-      'A clearance air test of the surrounding area',
-      'A medical examination of every worker on site',
-      'A consignment note for the resulting waste',
+      'A clearance air test of the whole of the surrounding area',
+      'A medical examination of every worker present on the site',
+      'A consignment note covering the resulting hazardous waste',
     ],
     correctAnswer: 0,
     explanation:
@@ -970,7 +970,7 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
       'That all workers undergo a face-fit test on the day of the work',
       'That a suitable and sufficient assessment of the risk is carried out',
       'That the building is fully evacuated for the duration of the work',
-      'That a copy of the asbestos licence is displayed at the entrance',
+      'That a copy of the asbestos licence is displayed at the site entrance',
     ],
     correctAnswer: 1,
     explanation:
@@ -985,10 +985,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question:
       'What does Regulation 10 of CAR 2012 require regarding information, instruction, and training?',
     options: [
-      'Training need only be given to the supervisors and managers who plan the work, not to the operatives carrying it out on site',
-      'Training is required once at induction and, once it has been given, never needs to be repeated during that employment',
+      'Training need only be given to the supervisors and managers who plan the work, and not to the operatives who actually carry the work out on site',
+      'Training is required once at induction and, once it has been given, never needs to be repeated at any time during the rest of that employment',
       'Employers must give adequate information, instruction and training to employees who are or may be exposed to asbestos, and to their supervisors',
-      'Training is the responsibility of the individual worker, who must arrange and pay for their own refresher courses',
+      'Training is the responsibility of the individual worker, who must arrange and pay for their own initial training course and any later refresher courses',
     ],
     correctAnswer: 2,
     explanation:
@@ -1003,9 +1003,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question:
       'Under Regulation 11 of CAR 2012, what must an employer ensure when work with asbestos is being carried out?',
     options: [
-      'That exposure is permitted up to twice the control limit provided suitable RPE is worn throughout the task',
-      'That exposure is acceptable provided each period of work lasts less than four hours in any seven days',
-      'That exposure may be disregarded where the workers involved have signed a written consent form beforehand',
+      'That exposure is permitted up to twice the control limit provided that suitable RPE is worn throughout the whole of the task',
+      'That exposure is acceptable provided that each period of work lasts less than four hours in any period of seven consecutive days',
+      'That exposure may be disregarded where the workers involved have signed a written consent form before the work begins on site',
       'That exposure is prevented or, where this is not reasonably practicable, reduced to the lowest level reasonably practicable',
     ],
     correctAnswer: 3,
@@ -1022,9 +1022,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
       'In the material assessment scoring system used for asbestos surveys, which four factors are typically considered?',
     options: [
       'Product type, extent of damage/deterioration, surface treatment, and asbestos type',
-      'Building age, occupancy level, ventilation, and maintenance frequency',
-      'Fibre colour, manufacturer, installation date, and replacement cost',
-      'Number of occupants, foot traffic, room size, and lighting level',
+      'Building age, occupancy level, ventilation rate, and maintenance frequency',
+      'Fibre colour, manufacturer\'s name, installation date, and replacement cost',
+      'Number of occupants, level of foot traffic, size of the room, and the lighting level',
     ],
     correctAnswer: 0,
     explanation:
@@ -1038,10 +1038,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     id: 61,
     question: 'What is the purpose of a priority assessment in asbestos management?',
     options: [
-      'To calculate the cost of removing each asbestos-containing material and to prioritise the removal budget for the year',
+      'To calculate the cost of removing each asbestos-containing material and to prioritise the removal budget for the coming financial year',
       'To assess how likely ACMs are to release fibres, given their location, the use made of the area and the likelihood of disturbance',
-      'To identify the type of asbestos present in a sampled material and record it in the asbestos register',
-      'To confirm the structural condition of the building fabric before refurbishment work is planned',
+      'To identify the type of asbestos present in a sampled material and to record the type found in the asbestos register for the building',
+      'To confirm the structural condition of the building fabric before any refurbishment or demolition work is planned or carried out',
     ],
     correctAnswer: 1,
     explanation:
@@ -1072,9 +1072,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     id: 63,
     question: 'What does CAR 2012 apply to?',
     options: [
-      'Only work with blue and brown asbestos; work with white asbestos falls outside its scope entirely',
-      'Buildings constructed before 1999 only, when the final ban took effect',
-      'Licensed asbestos removal contractors only; other trades fall under CDM 2015',
+      'Only work with blue and brown asbestos; work with white asbestos falls outside the scope of the regulations entirely',
+      'Buildings constructed before 1999 only, that being the year in which the final UK asbestos ban came into effect',
+      'Licensed asbestos removal contractors only; every other trade falls under CDM 2015 instead of CAR 2012 entirely',
       'All work with asbestos-containing materials, and also to the duty to manage asbestos in non-domestic premises',
     ],
     correctAnswer: 3,
@@ -1090,9 +1090,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question: 'Regulation 4 (duty to manage) applies to which type of premises?',
     options: [
       'Non-domestic premises only (including the common areas of domestic buildings such as shared hallways and stairwells)',
-      'Private dwellings only, such as houses and individual flats occupied by a single family or household',
-      'Buildings owned or occupied by central government departments and local authorities, and no others',
-      'New-build premises constructed after the 1999 asbestos ban, where construction records are still held',
+      'Private dwellings only, such as terraced houses and individual flats occupied by a single family or household',
+      'Buildings owned or occupied by central government departments and local authorities, and no other premises at all',
+      'New-build premises constructed after the 1999 asbestos ban, where the original construction records are all still held',
     ],
     correctAnswer: 0,
     explanation:
@@ -1106,10 +1106,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     id: 65,
     question: 'What is the first step a dutyholder should take under Regulation 4?',
     options: [
-      'Immediately arrange for all suspect materials to be removed from the building by a licensed contractor',
+      'Immediately arrange for all suspect materials to be removed from the building by a licensed asbestos removal contractor',
       'Take reasonable steps to find out whether ACMs are present in the premises, commissioning a survey where appropriate',
-      'Notify the HSE in writing that the building may contain asbestos, at least 14 days before any work',
-      'Evacuate all occupants from the building until a four-stage clearance certificate has been issued',
+      'Notify the HSE in writing that the building may contain asbestos, at least 14 days before any work is carried out there',
+      'Evacuate all occupants from the building until a four-stage clearance certificate has been issued by an analyst',
     ],
     correctAnswer: 1,
     explanation:
@@ -1141,9 +1141,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     id: 67,
     question: 'How often should an asbestos management plan be reviewed?',
     options: [
-      'Only once, when the plan is first created and issued to the dutyholder',
-      "Every ten years, in line with the building's structural survey cycle",
-      'Whenever the building is sold or let, and at no other time',
+      'Only once, when the plan is first created and issued to the dutyholder for the building concerned',
+      'Every ten years, in line with the structural condition survey cycle for the building itself',
+      'Whenever the building is sold or let to a new tenant or occupier, and at no other time at all',
       'At regular intervals, and whenever there is reason to believe the plan is no longer valid',
     ],
     correctAnswer: 3,
@@ -1159,9 +1159,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question: 'What should be included in an asbestos management plan?',
     options: [
       'The location and condition of ACMs, the monitoring arrangements, who is responsible, and how the information reaches anyone liable to disturb them',
-      'The names, job titles and home addresses of everyone who occupies the building, together with a record of their working hours',
-      'A complete inventory of all the electrical and mechanical plant on site, with the date each item was last serviced and tested',
-      'The architectural drawings, the original planning consents and the building control approvals for the premises and any later extensions',
+      'The names, job titles and home addresses of everyone who occupies the building, together with a record of their normal daily working hours',
+      'A complete inventory of all the electrical and mechanical plant on site, with the date on which each item was last serviced and fully tested',
+      'The architectural drawings, the original planning consents and the building control approvals for the premises and for any later extensions to them',
     ],
     correctAnswer: 0,
     explanation:
@@ -1175,10 +1175,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     id: 69,
     question: 'Which body is responsible for enforcing the Control of Asbestos Regulations 2012?',
     options: [
-      'The Environment Agency',
+      'The Environment Agency (waste regulator)',
       'The Health and Safety Executive (HSE)',
-      'The Building Safety Regulator',
-      'The Care Quality Commission',
+      'The Building Safety Regulator for England',
+      'The Care Quality Commission (CQC)',
     ],
     correctAnswer: 1,
     explanation:
@@ -1193,10 +1193,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question:
       'What enforcement action can the HSE take if a dutyholder fails to comply with Regulation 4?',
     options: [
-      'The HSE can only issue written advice and has no formal enforcement powers',
-      'The HSE can revoke the building owner’s planning permission',
+      'The HSE can only issue written advice, having no formal powers of enforcement at all',
+      'The HSE can revoke the planning permission granted to the owner of the building itself',
       'The HSE can issue improvement notices, prohibition notices, and prosecute offenders',
-      'The HSE can order the immediate demolition of the affected building',
+      'The HSE can order the immediate demolition of the affected part of the building at once',
     ],
     correctAnswer: 2,
     explanation:
@@ -1210,9 +1210,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     id: 71,
     question: 'Under CAR 2012, what is notifiable non-licensed work (NNLW)?',
     options: [
-      'Any asbestos work carried out by an HSE-licensed contractor, whether or not the material itself would otherwise be licensable under CAR 2012',
-      'Work that requires no notification, no records and no medical surveillance, because exposure is sporadic, of low intensity and below the control limit',
-      'Work that may only be carried out after a refurbishment and demolition survey has been completed and its results recorded in the register',
+      'Any asbestos work carried out by an HSE-licensed contractor, whether or not the material itself would otherwise be licensable under CAR 2012 at all',
+      'Work that requires no notification, no records and no medical surveillance, because the exposure is sporadic, of low intensity and well below the control limit',
+      'Work that may only be carried out after a refurbishment and demolition survey has been fully completed and its results recorded in the asbestos register',
       'Work that does not require a licence but must be notified to the HSE, and is subject to extra requirements including medical surveillance and record-keeping',
     ],
     correctAnswer: 3,
@@ -1229,9 +1229,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
       'Which of the following is an example of non-licensed asbestos work (the lowest risk category)?',
     options: [
       'Short-duration, low-disturbance work such as drilling a single hole through an asbestos cement product while using appropriate controls',
-      'Removing sprayed asbestos coating (limpet) from structural steelwork inside a full enclosure under negative pressure',
-      'Stripping asbestos pipe lagging from a heating system in an occupied plant room, working inside a glove bag throughout',
-      'Removing large areas of asbestos insulating board from a ceiling void before the building is refurbished and reoccupied',
+      'Removing sprayed asbestos coating (limpet) from structural steelwork inside a fully sealed enclosure held under negative pressure throughout',
+      'Stripping asbestos pipe lagging from a heating system in an occupied plant room, working inside a glove bag throughout the whole of the task',
+      'Removing large areas of asbestos insulating board from a ceiling void before the building is refurbished and reoccupied by staff',
     ],
     correctAnswer: 0,
     explanation:
@@ -1264,10 +1264,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question:
       'How does the Construction (Design and Management) Regulations 2015 (CDM 2015) relate to asbestos management?',
     options: [
-      'CDM 2015 replaces CAR 2012 entirely on notifiable construction projects, so the asbestos regulations no longer apply to that work',
-      'CDM 2015 has no relevance to asbestos; it applies only to work at height, excavations and site traffic management on notifiable projects',
+      'CDM 2015 replaces CAR 2012 entirely on notifiable construction projects, so the asbestos regulations no longer apply to any of the work on that site at all',
+      'CDM 2015 has no relevance to asbestos; it applies only to work at height, excavations and site traffic management on notifiable construction projects only',
       'CDM 2015 requires pre-construction information, including details of any asbestos present, to be provided and the risks managed throughout the project',
-      'CDM 2015 exempts construction projects from the duty to manage asbestos once a principal contractor has been formally appointed',
+      'CDM 2015 exempts construction projects from the duty to manage asbestos once a principal contractor has been formally appointed to run the project on site',
     ],
     correctAnswer: 2,
     explanation:
@@ -1301,9 +1301,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
       'What should a dutyholder do with the asbestos register when contractors are carrying out work in the building?',
     options: [
       'Make the relevant information available to anyone liable to disturb the ACMs, including contractors and maintenance workers',
-      'Keep the register strictly confidential and withhold it from contractors, as it is commercially sensitive',
-      'Hand the original register to the HSE for approval before any contractor is allowed to start work on site',
-      'Destroy the register once the contractors have finished on site and start a fresh one for the next job',
+      'Keep the register strictly confidential and withhold it from all contractors, as it is commercially sensitive information',
+      'Hand the original register to the HSE for formal approval before any contractor is allowed to start work on the site',
+      'Destroy the register once the contractors have finished on site and start a completely fresh one for the next job that arises',
     ],
     correctAnswer: 0,
     explanation:
@@ -1317,10 +1317,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     id: 77,
     question: 'A material assessment gives a high score. What does this indicate?',
     options: [
-      'The material is sealed, in good condition and presents a low risk of fibre release during normal occupancy of the building',
+      'The material is sealed, in good condition and presents a very low risk of fibre release during the normal occupancy of the building itself',
       'The material is likely to release fibres readily given its type, condition and surface treatment, and needs urgent management action',
-      'The material has already been removed under a licence and the area has passed its four-stage clearance testing',
-      'The material has been confirmed by a UKAS-accredited laboratory analysis to be free from any asbestos fibres',
+      'The material has already been removed under a licence and the area has since passed its four-stage clearance testing and air monitoring',
+      'The material has been confirmed by a UKAS-accredited laboratory analysis to be entirely free from any asbestos fibres whatsoever',
     ],
     correctAnswer: 1,
     explanation:
@@ -1353,9 +1353,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question:
       'If there are multiple dutyholders for a single building (e.g. a landlord and several tenants), what does Regulation 4 require?',
     options: [
-      'Only the freeholder holds any duty under Regulation 4; the individual tenants are exempt from it',
-      'Each party may rely entirely on the others to manage the asbestos and need take no action itself',
-      'The duty automatically transfers to whichever party last carried out building work on the premises',
+      'Only the freeholder of the building holds any duty under Regulation 4; the individual tenants are exempt from it entirely',
+      'Each of the parties may rely entirely on the others to manage the asbestos and need take no further action itself at all',
+      'The duty automatically transfers to whichever party last carried out any building work on the premises in question',
       'Each dutyholder must cooperate with the others so far as is necessary to enable them to comply with their duties',
     ],
     correctAnswer: 3,
@@ -1448,8 +1448,8 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     options: [
       'AIB is always blue in colour whereas AC is always white',
       'AIB is softer and less dense; AC is harder and more dense',
-      'There is no physical difference between AIB and AC',
-      'AIB is always found outdoors; AC is always found indoors',
+      'There is no real physical difference between AIB and AC',
+      'AIB is always found outdoors, while AC is always found indoors',
     ],
     correctAnswer: 1,
     explanation:
@@ -1481,8 +1481,8 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     id: 87,
     question: "What is 'limpet asbestos' another name for?",
     options: [
-      'Asbestos insulating board',
-      'Asbestos floor tiles',
+      'Asbestos insulating boards',
+      'Asbestos vinyl floor tiles',
       'Asbestos cement sheeting',
       'Sprayed asbestos coatings',
     ],
@@ -1529,10 +1529,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     id: 90,
     question: 'Where would you most likely find asbestos rope seals and gaskets?',
     options: [
-      'Under carpets and floor coverings in living areas',
-      'Inside double-glazed window cavities',
+      'Underneath carpets and other floor coverings in living areas',
+      'Inside the sealed cavities of double-glazed window units',
       'Around boilers, flues, heating systems and pipe joints',
-      'Within external rainwater downpipes and guttering',
+      'Within external rainwater downpipes and plastic guttering',
     ],
     correctAnswer: 2,
     explanation:
@@ -1546,9 +1546,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     id: 91,
     question: 'What is asbestos millboard typically used for?',
     options: [
-      'Decorative wall panelling in living rooms and hallways',
-      'Damp-proof membranes beneath concrete floor slabs',
-      'External cladding on system-built tower blocks',
+      'Decorative wall panelling in living rooms, hallways and staircases',
+      'Damp-proof membranes laid beneath solid concrete ground floor slabs',
+      'External cladding panels fixed to system-built tower blocks and maisonettes',
       'Fire protection linings behind heaters, boilers and in fire surrounds',
     ],
     correctAnswer: 3,
@@ -1565,8 +1565,8 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
       'In which common domestic electrical fitting have asbestos flash guards historically been found?',
     options: [
       'Consumer units (fuse boxes)',
-      'Plastic light switches',
-      'Ceiling rose connectors',
+      'Plastic light switch faceplates',
+      'Ceiling rose connector blocks',
       'Socket outlet faceplates',
     ],
     correctAnswer: 0,
@@ -1582,10 +1582,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question:
       "What is the 'presumption approach' under Regulation 5 of the Control of Asbestos Regulations?",
     options: [
-      'Presuming that a material is asbestos-free unless a survey proves otherwise',
+      'Presuming that a material is asbestos-free unless a survey of the premises later proves otherwise',
       'Presuming that a material contains asbestos unless there is strong evidence that it does not',
-      'Presuming that only friable materials need to be treated as asbestos',
-      'Presuming that materials installed after 1985 are always asbestos-free',
+      'Presuming that only friable materials such as sprayed coatings need to be treated as asbestos',
+      'Presuming that materials installed after 1985 are always asbestos-free and need no further checking',
     ],
     correctAnswer: 1,
     explanation:
@@ -1635,9 +1635,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question: 'What is the primary purpose of bulk sampling in asbestos surveys?',
     options: [
       'To collect a physical sample of material for laboratory identification of asbestos type and content',
-      'To measure the concentration of asbestos fibres in the air surrounding the work area',
-      'To estimate the age of the building from the type of construction materials used in it',
-      'To confirm that an area is clean enough to be reoccupied after asbestos removal work',
+      'To measure the concentration of asbestos fibres in the air surrounding the work area during work',
+      'To estimate the age of the building from the type of construction materials used in it when it was built',
+      'To confirm that an area is clean enough to be reoccupied after asbestos removal work is finished',
     ],
     correctAnswer: 0,
     explanation:
@@ -1651,10 +1651,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     id: 97,
     question: 'What does air monitoring measure in relation to asbestos?',
     options: [
-      'The percentage of asbestos in bulk material samples',
+      'The percentage of asbestos present in a bulk sample of the suspect material',
       'The concentration of airborne asbestos fibres in a given volume of air',
-      'The type of asbestos present in a material',
-      'The age of asbestos-containing materials',
+      'The type of asbestos present in a material sampled from the building',
+      'The age of the asbestos-containing materials found within the building fabric',
     ],
     correctAnswer: 1,
     explanation:
@@ -1668,10 +1668,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     id: 98,
     question: "What is the purpose of maintaining a 'chain of custody' for asbestos samples?",
     options: [
-      'To ensure samples are delivered to the laboratory by a licensed courier service',
-      'To record the financial cost of the sampling and analysis process for the client',
+      'To ensure that the samples are delivered to the analysing laboratory by a licensed courier service',
+      'To record the full financial cost of the sampling and analysis process for the client\'s own records',
       'To provide an unbroken documented record of who handled the sample from collection to analysis',
-      'To track how many samples have been taken from a single building in one visit',
+      'To track how many separate samples have been taken from a single building during one survey visit',
     ],
     correctAnswer: 2,
     explanation:
@@ -1704,9 +1704,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question: 'When should sampling of a suspect material for asbestos be carried out?',
     options: [
       'When the material cannot be positively identified as non-asbestos and a presumption is not appropriate',
-      'Only after asbestos fibres have already been released into the air of the work area',
-      'Whenever any building work is planned, regardless of the material involved or its age',
-      'Once the material has already been removed and double-bagged',
+      'Only after asbestos fibres have already been released into the air of the surrounding work area',
+      'Whenever any building work is planned, regardless of the material involved or of the age of the building',
+      'Once the material has already been removed from the site and double-bagged for disposal as waste',
     ],
     correctAnswer: 0,
     explanation:
@@ -1738,10 +1738,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     id: 102,
     question: 'Asbestos electrical backing boards were commonly found in which locations?',
     options: [
-      'Underneath suspended timber ground floors',
-      'Inside double-skinned external cavity walls',
+      'Underneath suspended timber ground floors and joists',
+      'Inside the cavities of double-skinned external walls',
       'Behind electrical switchboards, fuse boxes and meter cupboards',
-      'Within the loft insulation of pitched roofs',
+      'Within the loft insulation laid in pitched roof spaces',
     ],
     correctAnswer: 2,
     explanation:
@@ -1773,9 +1773,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question: 'What role did asbestos play in switchgear arc shields?',
     options: [
       'To provide protection against the intense heat generated by electrical arcing',
-      'To improve the electrical conductivity of the busbars',
-      'To reduce the operating noise of the switchgear mechanism',
-      'To act as a decorative cosmetic finish on the enclosure',
+      'To improve the electrical conductivity of the copper busbar connections',
+      'To reduce the operating noise of the switchgear operating mechanism',
+      'To act as a decorative cosmetic finish on the outside of the enclosure',
     ],
     correctAnswer: 0,
     explanation:
@@ -1808,10 +1808,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question:
       'Under the presumption approach, what should a duty holder do if they are unable to confirm whether a material contains asbestos?',
     options: [
-      'Remove the material immediately using in-house staff',
-      'Assume it is safe if the building was built after 1990',
+      'Remove the material immediately using the in-house maintenance staff',
+      'Assume that it is safe if the building was constructed after 1990',
       'Treat the material as if it contains asbestos and manage it accordingly',
-      'Seal the room permanently and prohibit all access',
+      'Seal the room permanently and prohibit any further access to it',
     ],
     correctAnswer: 2,
     explanation:
@@ -2022,10 +2022,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question:
       'Why might a surveyor choose to presume a material contains asbestos rather than take a sample?',
     options: [
-      'Because presumption is always cheaper and quicker than sending samples away for UKAS-accredited laboratory analysis',
-      'Because sampling is only permitted on non-domestic premises where a management survey has already been carried out',
+      'Because presumption is always cheaper and quicker for the client than sending samples away for UKAS-accredited laboratory analysis',
+      'Because sampling is only permitted in non-domestic premises where a management survey of the building has already been carried out',
       'Because the act of sampling may release fibres, and if the material will be managed in situ, presumption avoids unnecessary disturbance',
-      'Because the HSE prohibits the sampling of friable materials such as pipe lagging and sprayed coatings altogether',
+      'Because the HSE prohibits the sampling of friable materials such as pipe and boiler lagging and sprayed coatings altogether',
     ],
     correctAnswer: 2,
     explanation:
@@ -2238,9 +2238,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     id: 131,
     question: 'What is the purpose of wet working methods when dealing with asbestos?',
     options: [
-      'To dissolve the asbestos fibres completely',
-      'To test whether the material contains asbestos',
-      'To wash the asbestos down the drain',
+      'To dissolve the asbestos fibres in the material completely',
+      'To test whether the material actually contains asbestos',
+      'To wash the loose asbestos debris away down the drain',
       'To suppress airborne fibre release by keeping the material damp',
     ],
     correctAnswer: 3,
@@ -2256,9 +2256,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question: 'What is a Class H vacuum cleaner designed for?',
     options: [
       'Filtering hazardous dusts including asbestos fibres using a HEPA filter',
-      'Collecting general construction dust and rubble on site',
-      'Wet-vacuuming spilled liquids and standing water',
-      'Cleaning ordinary office and domestic carpets',
+      'Collecting general construction dust and rubble on a building site',
+      'Wet-vacuuming spilled liquids and standing water from a hard floor',
+      'Cleaning ordinary office and domestic carpets, rugs and soft furnishings',
     ],
     correctAnswer: 0,
     explanation:
@@ -2290,10 +2290,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     id: 134,
     question: 'What is shadow vacuuming?',
     options: [
-      'Vacuuming the whole of the work area with a Class H vacuum once the task has been finished',
-      'Spraying water in a fine mist over the material to keep it damp throughout the work',
+      'Vacuuming the whole of the work area with a Class H vacuum once the whole task has been completely finished',
+      'Spraying water in a fine mist over the material to keep it damp throughout the whole of the work',
       'Holding the nozzle of a Class H vacuum close to the point of work to capture fibres as they are released',
-      'Sweeping the floor of the enclosure with a soft brush while wearing suitable RPE and coveralls',
+      'Sweeping the floor of the enclosure with a soft brush while wearing suitable RPE and disposable coveralls',
     ],
     correctAnswer: 2,
     explanation:
@@ -2347,10 +2347,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question:
       'Which of the following is the correct order for the 7-step decontamination sequence when leaving an asbestos work area?',
     options: [
-      'Remove RPE, remove coveralls, wash hands, vacuum coveralls, remove boot covers, remove gloves, shower',
-      'Remove coveralls, remove gloves, remove RPE, remove boot covers, shower, wash hands, dry off',
+      'Remove RPE, remove coveralls, wash the hands, vacuum coveralls, remove boot covers, remove gloves, then shower',
+      'Remove coveralls, remove gloves, remove RPE, remove boot covers, shower, wash the hands, and then dry off properly',
       'Vacuum coveralls, remove boot covers, remove outer gloves, remove coveralls, remove inner gloves, wash/shower, remove RPE',
-      'Shower, remove RPE, remove coveralls, remove gloves, remove boot covers, vacuum down, wash hands',
+      'Shower, remove RPE, remove coveralls, remove gloves, remove boot covers, vacuum down, then wash the hands last',
     ],
     correctAnswer: 2,
     explanation:
@@ -2364,9 +2364,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     id: 139,
     question: 'Why must RPE be the last item of PPE removed during decontamination?',
     options: [
-      'Because the RPE is the most expensive item and must be protected from damage',
-      'Because the RPE must be kept clean so that it can be reused on the following day’s job',
-      "Because removing the RPE first would trigger the negative pressure unit's low-pressure alarm",
+      'Because the RPE is the most expensive item of PPE that is issued and must be protected from damage on site',
+      'Because the RPE must be kept clean so that it can be reused on the following day\'s job at the premises',
+      'Because removing the RPE first would trigger the low-pressure alarm on the negative pressure unit outside',
       "Because airborne fibres may still be present on the worker's body and clothing during decontamination",
     ],
     correctAnswer: 3,
@@ -2382,9 +2382,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question: 'What is the glove bag technique used for?',
     options: [
       'Enclosing small-scale asbestos removal tasks such as removing lagging from pipes',
-      'Collecting bulk samples of soil for contamination testing',
-      'Storing contaminated clothing at the end of the working day',
-      'Protecting the hands when handling sharp asbestos cement sheets',
+      'Collecting bulk samples of soil for laboratory contamination analysis',
+      'Storing contaminated clothing and footwear at the end of each work shift',
+      'Protecting the hands of workers when handling sharp broken asbestos cement sheets',
     ],
     correctAnswer: 0,
     explanation:
@@ -2399,10 +2399,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question:
       'When preparing a work area for asbestos removal, which of the following measures should be taken?',
     options: [
-      'Open all the windows and doors to ventilate the work area before the work starts',
+      'Open all the windows and the doors to ventilate the work area thoroughly before the work starts',
       'Seal off the area with polythene sheeting and warning signs, and set up a decontamination unit',
-      'Switch on the building’s air conditioning system to dilute any fibres released',
-      'Leave the area open so that the other trades on site can carry on working nearby',
+      'Switch on the building\'s air conditioning system to dilute and disperse any fibres that are released',
+      'Leave the area open so that the other trades on the site can carry on working close nearby',
     ],
     correctAnswer: 1,
     explanation:
@@ -2417,10 +2417,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question:
       'Which of the following is a prohibited practice when working with asbestos-containing materials?',
     options: [
-      'Using a pump-action spray to dampen materials',
-      'Using a Class H vacuum for dust collection',
+      'Using a pump-action spray to dampen the materials',
+      'Using a Class H vacuum for collecting the dust safely',
       'Using compressed air to clean dust from surfaces',
-      'Using hand tools for careful removal',
+      'Using hand tools for careful removal of the material',
     ],
     correctAnswer: 2,
     explanation:
@@ -2434,9 +2434,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     id: 143,
     question: 'What is the primary purpose of a dynamic risk assessment during asbestos work?',
     options: [
-      'To calculate the financial cost of the asbestos removal project',
-      'To replace the need for a written risk assessment',
-      'To determine whether the building should be demolished',
+      'To calculate the financial cost of the asbestos removal project on site',
+      'To replace the need for a written risk assessment on the job',
+      'To determine whether the building should be demolished instead',
       'To continuously reassess risks as conditions change during the work',
     ],
     correctAnswer: 3,
@@ -2453,9 +2453,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
       'A task-specific risk assessment for asbestos work must consider which of the following?',
     options: [
       'The type of asbestos, its condition, the extent of work, and the likelihood of fibre release',
-      'The market value of the building and the annual rental income it produces',
-      'The names of all the previous contractors who have worked in the building',
-      'The colour scheme and decorative finish of the surrounding rooms and corridors',
+      'The current market value of the building and the annual rental income that it produces',
+      'The names of all the previous contractors who have worked in the building over the last ten years',
+      'The colour scheme and decorative finish of the surrounding rooms and corridors in the building',
     ],
     correctAnswer: 0,
     explanation:
@@ -2469,10 +2469,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     id: 145,
     question: 'For non-licensed asbestos work, which of the following statements is correct?',
     options: [
-      'No risk assessment, no training and no RPE are required for non-licensed asbestos work',
+      'No risk assessment, no training and no RPE of any kind are required for non-licensed asbestos work',
       'Workers must still follow safe working procedures but do not need an HSE licence or to notify HSE',
-      'Non-licensed work may be carried out without any controls, training or supervision',
-      'Non-licensed work always requires 14 days’ written notice to be given to the HSE',
+      'Non-licensed work may be carried out without any controls, training or supervision of the workers involved',
+      'Non-licensed work always requires 14 days\' written notice to be given to the HSE before the work starts',
     ],
     correctAnswer: 1,
     explanation:
@@ -2486,10 +2486,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     id: 146,
     question: 'Which type of enclosure is used for large-scale licensed asbestos removal?',
     options: [
-      'An open work area cordoned off with barrier tape and asbestos warning signs at each entrance',
-      'A simple polythene dust sheet draped loosely over the work area and taped down at the edges',
+      'An open work area cordoned off with barrier tape and asbestos warning signs at each of the entrances',
+      'A simple polythene dust sheet draped loosely over the work area and taped down around all of the edges',
       'A full enclosure constructed from polythene sheeting with an airlock entry, maintained under negative pressure',
-      'A glove bag sealed over the individual section of structural steelwork being worked on at the time',
+      'A glove bag sealed over each individual section of structural steelwork that is being worked on at any one time',
     ],
     correctAnswer: 2,
     explanation:
@@ -2503,9 +2503,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     id: 147,
     question: 'Why should two pairs of gloves be worn during asbestos work?',
     options: [
-      'To provide extra insulation against the cold when working inside an unheated enclosure for long periods',
-      'To double the chemical resistance of the gloves against the wetting agent sprayed on the material',
-      'Because a single pair of disposable gloves is dissolved by contact with asbestos fibres and dust',
+      'To provide extra insulation against the cold when working inside an unheated enclosure for long periods in the winter',
+      'To double the chemical resistance of the gloves against the wetting agent that is sprayed onto the material surface',
+      'Because a single pair of disposable gloves is dissolved by contact with the asbestos fibres and dust alone',
       'To allow the outer pair to be removed during decontamination while maintaining hand protection with the inner pair',
     ],
     correctAnswer: 3,
@@ -2521,9 +2521,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question: 'What must happen before any tight-fitting RPE is used for asbestos work?',
     options: [
       'The wearer must pass a qualitative or quantitative face-fit test for that specific make and model of RPE',
-      'The wearer must be examined by an occupational health doctor and declared fit to wear RPE',
-      'The mask must be soaked in a disinfectant solution for 24 hours before it is first used',
-      'The wearer must obtain written permission from the HSE for that particular make and model',
+      'The wearer must be examined by an occupational health doctor and formally declared fit to wear RPE at work',
+      'The mask must be soaked in a disinfectant solution for 24 hours before it is used for the very first time',
+      'The wearer must obtain written permission from the HSE for that particular make and model of the RPE first',
     ],
     correctAnswer: 0,
     explanation:
@@ -2537,10 +2537,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     id: 149,
     question: 'HSG210 Asbestos Essentials provides task sheets categorised by which system?',
     options: [
-      'Numbered chapters arranged by the age of the building and its construction date',
+      'Numbered chapters arranged by the age of the building and by its date of construction',
       'Equipment and method (EM) sheets and task guidance sheets organised by material type and task',
-      'Colour-coded cards arranged by the type of asbestos-related disease involved',
-      'Regional sheets arranged by the local HSE enforcement office covering the site',
+      'Colour-coded cards arranged by the type of asbestos-related disease that may be involved',
+      'Regional sheets arranged by the local HSE enforcement office that covers the site being worked on',
     ],
     correctAnswer: 1,
     explanation:
@@ -2555,10 +2555,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question:
       'Which of the following actions should be taken during a face-fit check (seal check) each time RPE is put on?',
     options: [
-      'Blow outward hard and check for any leaks around the edge of the face seal',
-      'Spray a perfumed aerosol close to the mask and check for any odour penetration',
+      'Blow outward hard and check for any leaks around the edge of the face seal of the mask itself',
+      'Spray a perfumed aerosol close to the mask and check for any odour penetration inside the mask',
       'Inhale sharply while covering the filters to check the mask draws inward against the face',
-      'Shake the head vigorously from side to side to see if the mask falls off',
+      'Shake the head vigorously from side to side to see if the mask falls off the face at all',
     ],
     correctAnswer: 2,
     explanation:
@@ -2573,9 +2573,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question:
       'Why are standard domestic or commercial vacuum cleaners prohibited for cleaning up asbestos dust?',
     options: [
-      'They are not powerful enough to lift the heavier asbestos debris from the enclosure floor',
-      'They are too expensive to write off after being used on a single asbestos removal job',
-      'They generate static electricity in the hose that can ignite airborne asbestos fibres',
+      'They are not powerful enough to lift the heavier asbestos debris from the floor of the enclosure itself',
+      'They are far too expensive to write off after being used on just a single asbestos removal job on site',
+      'They generate static electricity in the suction hose that can ignite the airborne asbestos fibres inside',
       'Their filters cannot trap asbestos fibres, so they exhaust contaminated air back into the environment',
     ],
     correctAnswer: 3,
@@ -2604,10 +2604,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question:
       'A worker discovers that the asbestos material they are working on is in significantly worse condition than described in the risk assessment. What should they do?',
     options: [
-      'Carry on working faster so as to finish the task before conditions get any worse still',
+      'Carry on working faster so as to finish the task before conditions get any worse than they are',
       'Stop work immediately, leave the area, and report the situation so the risk assessment can be reviewed',
       'Quietly amend the method statement on site and carry on with the work as originally planned',
-      'Note the difference in the site diary and raise it at the end of the shift',
+      'Note the difference in the site diary and raise it with the supervisor at the end of that working shift',
     ],
     correctAnswer: 1,
     explanation:
@@ -2622,10 +2622,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question:
       'During a licensed asbestos removal project, the negative pressure unit fails. What is the correct immediate action?',
     options: [
-      'Open the enclosure to let fresh air in and carry on working until the end of the shift, then report the fault to the supervisor',
-      'Carry on working, but ask everyone inside the enclosure to fit a second respirator over the first and work faster to finish sooner',
+      'Open the enclosure to let fresh air in and carry on working until the end of the shift, and then report the fault to the site supervisor',
+      'Carry on working, but ask everyone inside the enclosure to fit a second respirator over the first and work faster so as to finish the job sooner',
       'Stop all work immediately, seal the enclosure, and do not resume until the NPU is repaired or replaced and negative pressure is re-established',
-      'Switch the NPU off at the mains and finish the job without it, double-bagging the waste as the work proceeds to avoid delay',
+      'Switch the NPU off at the mains and finish the job without it, double-bagging all of the waste as the work proceeds so as to avoid any further delay',
     ],
     correctAnswer: 2,
     explanation:
@@ -2694,10 +2694,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question:
       'During a smoke test of an asbestos removal enclosure, smoke is seen escaping from a corner joint. What must happen?',
     options: [
-      'The smoke is harmless, so work can begin while the leak is monitored from outside the enclosure',
-      'A small leak is acceptable provided the negative pressure unit is left running throughout the work',
+      'The smoke is harmless, so the work can begin while the leak is simply monitored from outside the enclosure instead',
+      'A small leak is acceptable provided that the negative pressure unit is left running throughout the whole of the work',
       'The leak must be sealed and the smoke test repeated — the enclosure must pass before any asbestos work can begin',
-      'The enclosure should be dismantled and the job carried out in the open air with wet methods instead',
+      'The enclosure should be dismantled and the whole of the job carried out in the open air using wet methods instead',
     ],
     correctAnswer: 2,
     explanation:
@@ -2785,9 +2785,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     id: 163,
     question: "What constitutes an 'accidental disturbance' of asbestos?",
     options: [
-      'A planned removal of asbestos carried out under an HSE licence and a plan of work',
-      'A scheduled survey visit to sample suspect materials for laboratory analysis',
-      'The natural weathering of asbestos cement roof sheeting left undisturbed outdoors',
+      'A planned removal of asbestos carried out under an HSE licence and a written plan of work',
+      'A scheduled survey visit to sample suspect materials for accredited laboratory analysis',
+      'The natural weathering of asbestos cement roof sheeting left undisturbed outdoors over many years',
       'Any unplanned activity that damages or disturbs known or suspected asbestos-containing materials',
     ],
     correctAnswer: 3,
@@ -2804,9 +2804,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
       'When sealing an area after accidental asbestos disturbance, what is the primary purpose?',
     options: [
       'To prevent the spread of asbestos fibres to other areas',
-      'To allow ventilation systems to clear the fibres',
-      'To create a workspace for immediate repairs',
-      'To hide the damage from inspectors',
+      'To allow the ventilation systems to clear the fibres from the air',
+      'To create a clear workspace for carrying out immediate repairs',
+      'To hide the damage from the inspectors and the client',
     ],
     correctAnswer: 0,
     explanation:
@@ -2821,10 +2821,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question:
       'After stopping work following accidental asbestos disturbance, what should you do with any mechanical ventilation or air conditioning systems in the area?',
     options: [
-      'Turn them up to maximum to dilute the fibres in the air',
+      'Turn them up to maximum to dilute the fibres in the room air',
       'Switch them off to prevent fibre spread through ductwork',
-      'Leave them running exactly as they are and ignore them',
-      'Open all the air vents to draw fresh air into the area',
+      'Leave them running exactly as they are and simply ignore them',
+      'Open all the air vents to draw fresh air into the work area',
     ],
     correctAnswer: 1,
     explanation:
@@ -2839,10 +2839,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question:
       'Who should be summoned as specialist help following an accidental asbestos disturbance involving licensable work materials?',
     options: [
-      "The building's maintenance team",
-      'The local fire brigade',
+      'The building\'s own maintenance team',
+      'The local fire and rescue service',
       'A licensed asbestos removal contractor',
-      'An environmental health officer only',
+      'The local environmental health officer only',
     ],
     correctAnswer: 2,
     explanation:
@@ -2856,9 +2856,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     id: 167,
     question: 'Which of the following must be recorded as part of an asbestos incident report?',
     options: [
-      'The resale value of the damaged material and the cost of repair',
-      'The weather forecast and outdoor temperature on the day',
-      'The names of every contractor who has ever worked in the building',
+      'The resale value of the damaged material and the cost of repairing or replacing it',
+      'The weather forecast and the outdoor temperature recorded on the day of the incident',
+      'The names of every contractor who has ever worked in the building before',
       'The date, time, location, people exposed, material involved, and actions taken',
     ],
     correctAnswer: 3,
@@ -2910,10 +2910,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the first step in the personal decontamination sequence after potential asbestos exposure?',
     options: [
-      'Shower thoroughly',
-      'Remove all clothing and place in a labelled bag',
+      'Shower thoroughly in the site decontamination unit',
+      'Remove all clothing and place it in a labelled bag',
       'Move to a clean area away from the contamination',
-      'Wipe down boots and hard surfaces with damp rags',
+      'Wipe down the boots and hard surfaces with damp rags',
     ],
     correctAnswer: 2,
     explanation:
@@ -2928,9 +2928,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question:
       'During personal decontamination after asbestos exposure, why should contaminated clothing be dampened before removal?',
     options: [
-      'To make the clothing easier to fold and pack away',
-      'To cool the worker down after working in a hot enclosure',
-      'To dissolve the asbestos fibres trapped in the fabric',
+      'To make the clothing easier to fold up and pack it away',
+      'To cool the worker down after working inside a hot sealed enclosure',
+      'To dissolve the asbestos fibres trapped within the fabric',
       'To reduce the release of fibres into the air during removal',
     ],
     correctAnswer: 3,
@@ -2947,8 +2947,8 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
       'After removing contaminated clothing during decontamination, what should be done with it?',
     options: [
       'Place it in a clearly labelled asbestos waste bag for disposal',
-      'Brush it down thoroughly and wear it again the next day',
-      'Take it home and wash it with the normal household laundry',
+      'Brush it down thoroughly and then wear it again on the next day',
+      'Take it home and wash it with the normal household laundry there',
       'Put it in the general site rubbish skip with other waste',
     ],
     correctAnswer: 0,
@@ -2981,10 +2981,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     id: 174,
     question: 'What is Stage 1 of the 4-stage clearance procedure?',
     options: [
-      'Final dismantling of the enclosure and removal of all equipment',
-      'Reassurance air monitoring to confirm fibre levels are acceptable',
+      'Final dismantling of the enclosure and the removal of all the equipment from site',
+      'Reassurance air monitoring to confirm that the fibre levels are acceptable again',
       'A preliminary check of the site and a visual inspection inside the enclosure',
-      'Issuing the certificate of reoccupation to the building owner',
+      'Issuing the certificate of reoccupation to the building owner or the occupier',
     ],
     correctAnswer: 2,
     explanation:
@@ -2999,9 +2999,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question:
       'Who must carry out the Stage 2 visual inspection of the 4-stage clearance procedure?',
     options: [
-      'The site labourer who carried out the removal work',
-      'The building owner or their managing agent',
-      'The HSE inspector for the local enforcement area',
+      'The site labourer who actually carried out the removal work himself',
+      'The building owner or their own appointed managing agent',
+      'The HSE inspector for the local enforcement area concerned',
       'An independent analyst holding appropriate UKAS accreditation',
     ],
     correctAnswer: 3,
@@ -3017,9 +3017,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question: 'What does Stage 3 of the 4-stage clearance procedure involve?',
     options: [
       'Air monitoring (reassurance air testing) to confirm fibre levels are below the clearance indicator',
-      'A preliminary visual check by the removal supervisor before the final clean begins',
-      'Bulk sampling of any remaining materials for UKAS-accredited laboratory analysis',
-      'Final dismantling of the enclosure and disposal of the polythene as asbestos waste',
+      'A preliminary visual check by the removal supervisor before the final clean of the enclosure begins',
+      'Bulk sampling of any remaining materials inside the enclosure for UKAS-accredited laboratory analysis',
+      'Final dismantling of the enclosure and disposal of all the polythene as hazardous asbestos waste',
     ],
     correctAnswer: 0,
     explanation:
@@ -3046,10 +3046,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     id: 178,
     question: 'Under UK waste regulations, how is asbestos waste classified?',
     options: [
-      'General commercial waste',
-      'Recyclable construction waste',
+      'General commercial waste destined for landfill',
+      'Recyclable construction and demolition waste',
       'Hazardous waste (special waste in Scotland)',
-      'Controlled but non-hazardous waste',
+      'Controlled waste but not classed as hazardous',
     ],
     correctAnswer: 2,
     explanation:
@@ -3063,9 +3063,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     id: 179,
     question: 'What is the purpose of double-bagging asbestos waste?',
     options: [
-      'To make the waste lighter and easier to carry off site',
-      'To allow the waste to be recycled rather than sent to landfill',
-      'To keep the asbestos dry during outdoor storage',
+      'To make the waste lighter and easier for one person to carry off the site',
+      'To allow the waste to be recycled locally rather than being sent away to landfill',
+      'To keep the asbestos waste dry while it is stored outdoors on the site',
       'To provide an additional layer of containment in case the inner bag is punctured',
     ],
     correctAnswer: 3,
@@ -3081,9 +3081,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question: 'What colour are the inner bags used for asbestos waste disposal?',
     options: [
       'Red with the asbestos warning label',
-      'Yellow with a biohazard symbol',
-      'Green with a recycling symbol',
-      'Black with no markings',
+      'Yellow with a biohazard warning symbol',
+      'Green with a plastics recycling symbol',
+      'Black with no markings at all',
     ],
     correctAnswer: 0,
     explanation:
@@ -3098,10 +3098,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question:
       'What document must accompany asbestos waste during transportation to a licensed disposal site?',
     options: [
-      'A copy of the asbestos survey report',
+      'A copy of the asbestos survey report for those premises',
       'A consignment note (hazardous waste consignment note)',
-      'A clearance certificate for reoccupation',
-      'A face-fit test record for the driver',
+      'A clearance certificate for reoccupation of the building',
+      'A face-fit test record for the driver of the vehicle used',
     ],
     correctAnswer: 1,
     explanation:
@@ -3127,9 +3127,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     id: 183,
     question: 'Who is legally permitted to transport asbestos waste?',
     options: [
-      'Any member of the public with a suitable vehicle',
-      'The site labourer who removed the asbestos, in their own van',
-      'Any general builders’ merchant delivering to the site',
+      'Any member of the public who owns a suitable vehicle',
+      'The site labourer who removed the asbestos, using their own van',
+      'Any general builders\' merchant delivering to the site',
       'A registered waste carrier holding appropriate authorisation',
     ],
     correctAnswer: 3,
@@ -3146,9 +3146,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
       'What specific packaging requirement applies to asbestos-containing waste that could release fibres during handling?',
     options: [
       'It must be sealed in UN-approved packaging or double-bagged in heavy-duty polythene',
-      'It may be placed loose in any ordinary builders’ rubble skip',
-      'It can be wrapped in a single layer of newspaper and taped',
-      'It must be left uncovered so inspectors can identify the contents',
+      'It may be placed loose in any ordinary builders\' rubble skip on the site with other waste',
+      'It can be wrapped in a single layer of newspaper and taped up before disposal',
+      'It must be left uncovered so that any inspectors can identify the contents on arrival',
     ],
     correctAnswer: 0,
     explanation:
@@ -3175,10 +3175,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     id: 186,
     question: 'What does a medical examination for asbestos workers typically include?',
     options: [
-      'An eyesight test and a hearing assessment carried out by an occupational nurse',
-      'A blood test to measure the level of asbestos fibres circulating in the body',
+      'An eyesight test and a hearing assessment carried out by an occupational health nurse on site',
+      'A blood test to measure the level of asbestos fibres circulating in the worker\'s bloodstream',
       'A questionnaire on respiratory symptoms, a physical examination, and lung function tests',
-      'A skin allergy test for sensitivity to the wetting agents used on site',
+      'A skin allergy test to check for sensitivity to the wetting agents that are used on the site',
     ],
     correctAnswer: 2,
     explanation:
@@ -3207,9 +3207,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
       'What is the purpose of lung function testing (spirometry) in asbestos health surveillance?',
     options: [
       'To establish a baseline and detect any decline in lung capacity that may indicate asbestos-related disease',
-      "To measure the concentration of asbestos fibres in the air of the worker's workplace over a shift",
-      'To confirm that the worker has passed the face-fit test for the RPE they have been issued',
-      "To check the worker's blood pressure and resting heart rate before each asbestos removal job",
+      'To measure the concentration of asbestos fibres in the air of the worker\'s workplace over a whole working shift',
+      'To confirm that the worker has passed the face-fit test for the RPE that they have been issued with',
+      'To check the worker\'s blood pressure and resting heart rate before each asbestos removal job on site',
     ],
     correctAnswer: 0,
     explanation:
@@ -3223,10 +3223,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     id: 189,
     question: 'When a worker is exposed to asbestos at work, should their GP be informed?',
     options: [
-      'No, exposure is confidential and should not be shared with a GP',
+      'No, exposure at work is confidential and should not be shared with a GP at all',
       'Yes, the worker should inform their GP so it can be noted on their medical records',
-      'No, the GP can only be told if the worker develops symptoms',
-      'Only if the worker is over 50 years of age at the time',
+      'No, the GP can only be told if the worker later develops any symptoms of ill health',
+      'Only if the worker is over 50 years of age at the time when the exposure took place',
     ],
     correctAnswer: 1,
     explanation:
@@ -3258,9 +3258,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     id: 191,
     question: 'What is IIDB in the context of asbestos-related compensation?',
     options: [
-      'Independent Inspection of Demolition Buildings — a voluntary pre-demolition survey scheme run by the HSE',
-      'Internal Industry Database of Banned substances — a register of banned materials held by the HSE',
-      'Initial Identification of Damaged Boards — a stage in a refurbishment and demolition survey',
+      'Independent Inspection of Demolition Buildings — a voluntary pre-demolition survey scheme run by the HSE itself',
+      'Internal Industry Database of Banned substances — a register of banned building materials held by the HSE itself',
+      'Initial Identification of Damaged Boards — a first stage in a refurbishment and demolition survey of the premises',
       'Industrial Injuries Disablement Benefit — a government benefit for people with prescribed industrial diseases',
     ],
     correctAnswer: 3,
@@ -3276,9 +3276,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question: 'What is the Diffuse Mesothelioma Payment Scheme (DMPS)?',
     options: [
       'A compensation scheme for mesothelioma sufferers who cannot trace a liable employer or their insurer',
-      'A government scheme that funds the removal of asbestos from privately owned homes',
-      'A training scheme for workers entering the licensed asbestos removal industry in the UK',
-      'A medical research scheme that develops new treatments for mesothelioma patients',
+      'A government scheme that funds the removal of asbestos from privately owned homes at public expense',
+      'A training scheme for workers entering the licensed asbestos removal industry in the UK for the first time',
+      'A medical research scheme that develops new treatments for mesothelioma patients across the UK',
     ],
     correctAnswer: 0,
     explanation:
@@ -3293,10 +3293,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question:
       "Under the Control of Asbestos Regulations 2012, which of the following is an employer's duty?",
     options: [
-      'To require workers to purchase their own RPE and arrange their own training',
+      'To require workers to purchase their own RPE and to arrange their own training courses',
       'To provide suitable RPE, training, and health surveillance for workers exposed to asbestos',
-      'To personally carry out the laboratory analysis of any samples that are taken',
-      'To report directly to the HSE in writing before each individual asbestos task',
+      'To personally carry out the laboratory analysis of any samples that are taken from the premises',
+      'To report directly to the HSE in writing before each individual asbestos task begins on site',
     ],
     correctAnswer: 1,
     explanation:
@@ -3310,10 +3310,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     id: 194,
     question: "What is an employee's duty regarding asbestos safety at work?",
     options: [
-      "To write the company's asbestos management plan and its risk assessments",
-      'To carry out their own medical examinations and keep their own records',
+      'To write the company\'s own asbestos management plan and all of its risk assessments as well',
+      'To carry out their own medical examinations and to keep their own health records up to date',
       "To cooperate with their employer's safety measures and use PPE and RPE provided correctly",
-      'To purchase and maintain all of the control equipment used on the site',
+      'To purchase and maintain all of the control equipment that is used on the site by the employer',
     ],
     correctAnswer: 2,
     explanation:
@@ -3328,9 +3328,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question:
       "Under Regulation 4 of the Control of Asbestos Regulations 2012, who is the 'dutyholder' responsible for managing asbestos in non-domestic premises?",
     options: [
-      'The HSE inspector who is responsible for enforcement in the local authority area',
-      'The independent analyst who carries out the four-stage clearance and air testing',
-      'The licensed contractor who is appointed to remove the asbestos from the premises',
+      'The HSE inspector who is responsible for the enforcement in that particular local authority area',
+      'The independent analyst who carries out the four-stage clearance and the air testing on site',
+      'The licensed contractor who is appointed to remove the asbestos from the premises before the work starts',
       'The person who has the duty to maintain or repair the premises, or who has control of the premises',
     ],
     correctAnswer: 3,
@@ -3347,9 +3347,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
       'Under CDM 2015, what duty does a client have regarding asbestos before commissioning construction work?',
     options: [
       'To provide pre-construction information including details of any known asbestos in the building',
-      'To personally remove any asbestos from the building before contractors arrive',
-      'To carry out the clearance air testing once the construction work is complete',
-      'To obtain an HSE licence on behalf of the appointed principal contractor first',
+      'To personally remove any asbestos from the building before the contractors arrive on site',
+      'To carry out the clearance air testing once all of the construction work has been completed on site',
+      'To obtain an HSE licence on behalf of the appointed principal contractor for the construction project',
     ],
     correctAnswer: 0,
     explanation:
@@ -3363,10 +3363,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     id: 197,
     question: 'What is an HSE Improvement Notice?',
     options: [
-      'A notice that immediately stops a dangerous work activity on the spot, with no time limit for compliance',
+      'A notice that immediately stops a dangerous work activity on the spot, with no time limit given for compliance at all',
       'A formal notice requiring a dutyholder to remedy a contravention of health and safety law within a specified time',
-      'A voluntary letter setting out suggested good practice, which carries no legal force at all in itself',
-      'A notice that automatically prosecutes the dutyholder in the Crown Court without any hearing',
+      'A voluntary letter setting out suggested good practice, which carries no legal force at all and is not enforceable',
+      'A notice that automatically prosecutes the dutyholder in the Crown Court without any hearing of the evidence taking place',
     ],
     correctAnswer: 1,
     explanation:
@@ -3380,10 +3380,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     id: 198,
     question: 'When can an HSE inspector issue a Prohibition Notice in relation to asbestos work?',
     options: [
-      'Only after the work has finished and a breach of the regulations has been confirmed in writing',
-      'Where minor paperwork errors have been found in the site records and the asbestos register',
+      'Only after the work has finished and a breach of the regulations has been confirmed in writing to the dutyholder',
+      'Where minor paperwork errors have been found in the site records and in the asbestos register itself',
       'When there is a risk of serious personal injury from the work activity, requiring it to stop immediately',
-      'When the dutyholder has already been prosecuted for a similar breach on a previous site',
+      'When the dutyholder has already been prosecuted for a similar breach on a previous site some years ago',
     ],
     correctAnswer: 2,
     explanation:
@@ -3398,9 +3398,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question:
       'Under the Public Interest Disclosure Act 1998 (PIDA), what protection is given to a worker who reports unsafe asbestos practices?',
     options: [
-      'A cash reward equal to any fine that is imposed on the employer following a prosecution',
-      'Automatic promotion to a supervisory health and safety role within the same organisation',
-      'Exemption from any further asbestos work for that employer, without any loss of pay or status',
+      'A cash reward equal to any fine that is imposed on the employer following a successful prosecution in court',
+      'Automatic promotion to a supervisory health and safety role within the same employing organisation straight away',
+      'Exemption from any further asbestos work for that employer, without any loss of pay or status at all',
       'Protection from dismissal or detriment for making a qualifying disclosure about health and safety dangers',
     ],
     correctAnswer: 3,
@@ -3417,9 +3417,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
       'How often should asbestos awareness refresher training be provided to workers who may encounter asbestos-containing materials?',
     options: [
       'At least annually, or whenever there is a significant change in working practices or legislation',
-      'Once only, at induction, with no further refresher training needed after that at all',
-      'Every five years, regardless of any change in working practices or in the law',
-      'Only after a worker has been accidentally exposed to asbestos fibres on a job',
+      'Once only, at induction, with no further refresher training needed at any point after that at all',
+      'Every five years, regardless of any change in the working practices on site or in the law itself at all',
+      'Only after a particular worker has been accidentally exposed to asbestos fibres during a job on site',
     ],
     correctAnswer: 0,
     explanation:
@@ -3466,10 +3466,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     id: 203,
     question: 'The duty to manage asbestos applies to which premises?',
     options: [
-      'Domestic dwellings only, where built before 2000',
-      'All premises constructed before 1985 without exception',
+      'Domestic dwellings only, where these were built before the year 2000',
+      'All premises constructed before the year 1985 without exception',
       'Non-domestic premises, including the common parts of residential blocks',
-      'Only premises where an asbestos survey has already identified ACMs',
+      'Only premises where an asbestos survey has already identified ACMs present',
     ],
     correctAnswer: 2,
     explanation:
@@ -3501,9 +3501,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
       'Why is asbestos cement generally treated as lower risk than asbestos insulating board?',
     options: [
       'Its fibres are bound in a matrix that prevents most from being released',
-      'It contains only chrysotile, which is not classed as hazardous',
-      'It was manufactured after the 1985 amphibole ban',
-      'It is always found externally where fibres disperse safely',
+      'It contains only chrysotile, which is not classed as hazardous to health',
+      'It was manufactured only after the 1985 ban on the amphibole asbestos types',
+      'It is always found externally where the fibres disperse safely away',
     ],
     correctAnswer: 0,
     explanation:
@@ -3516,10 +3516,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     id: 206,
     question: 'Which survey type is required before refurbishment or demolition work?',
     options: [
-      'A management survey, as it covers all accessible areas',
+      'A management survey, since it already covers all accessible areas',
       'A refurbishment and demolition survey, which is fully intrusive',
-      'A visual inspection recorded in the asbestos register',
-      'No survey, provided the register shows no ACMs recorded',
+      'A visual inspection recorded in the asbestos register for the site',
+      'No survey at all, provided the register shows no ACMs recorded there',
     ],
     correctAnswer: 1,
     explanation:
@@ -3536,7 +3536,7 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
       'The age of the building, in particular pre-2000 work',
       'The number of electrical circuits in the building',
       'Whether the building has a suspended timber floor',
-      'The type of heating system fitted to the building',
+      'The type of heating system that is fitted to the building',
     ],
     correctAnswer: 0,
     explanation:
@@ -3551,8 +3551,8 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question:
       'What is asbestos awareness training intended to enable an electrician to do?',
     options: [
-      'Carry out minor removal of asbestos insulating board',
-      'Take air samples and interpret fibre counts on site',
+      'Carry out minor removal of asbestos insulating boards',
+      'Take air samples and interpret the fibre counts on site',
       'Recognise and avoid work that would disturb asbestos',
       'Issue a clearance certificate after a removal job',
     ],
@@ -3569,10 +3569,10 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question:
       'Under regulation 4 of the Control of Asbestos Regulations 2012, which premises does the duty to manage cover?',
     options: [
-      'All domestic dwellings including private family homes',
+      'All domestic dwellings, including any private family homes',
       'Non-domestic premises and common parts of domestic ones',
-      'Only premises built before the year 1980 in England',
-      'Any building where more than five people are employed',
+      'Only premises built before the year 1980 in England alone',
+      'Any building where more than five people are employed there',
     ],
     correctAnswer: 1,
     explanation:
@@ -3588,9 +3588,9 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
       'A tenancy agreement makes the tenant responsible for repairs and maintenance of a leased industrial unit. Who holds the duty to manage asbestos?',
     options: [
       'The tenant, because they control repair and maintenance',
-      'The building owner, because ownership always decides it',
-      'The electrical contractor working in the unit that week',
-      'The local authority as the enforcing body for the site',
+      'The building owner, because ownership always decides',
+      'The electrical contractor working in the unit that day',
+      'The local authority as the enforcing body for the premises',
     ],
     correctAnswer: 0,
     explanation:

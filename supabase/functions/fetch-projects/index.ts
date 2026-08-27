@@ -1,5 +1,6 @@
 import { corsHeaders } from '../_shared/cors.ts';
 
+import { withSentry } from '../_shared/sentry.ts';
 interface TenderProject {
   status: string;
   category: string;
@@ -88,7 +89,7 @@ async function fetchTenders(): Promise<TenderProject[]> {
   }
 }
 
-Deno.serve(async (req) => {
+Deno.serve(withSentry('fetch-projects', async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -123,4 +124,4 @@ Deno.serve(async (req) => {
       }
     );
   }
-});
+}));

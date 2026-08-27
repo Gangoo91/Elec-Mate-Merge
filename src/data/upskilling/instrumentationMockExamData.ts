@@ -72,7 +72,7 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 3,
     question: 'What does SCADA stand for?',
     options: [
-      'System Control And Data Acquisition',
+      'System Control And Digital Data Acquisition',
       'Signal Control And Digital Automation',
       'Standard Control And Data Analysis',
       'Supervisory Control And Data Acquisition',
@@ -93,8 +93,8 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     options: [
       'RTD (Resistance Temperature Detector)',
       'Thermocouple (Type K base-metal)',
-      'Bimetallic strip (dial gauge)',
-      'Thermistor (NTC bead type)',
+      'Bimetallic strip (dial indicating gauge)',
+      'Thermistor (NTC encapsulated bead type)',
     ],
     correctAnswer: 0,
     explanation:
@@ -142,9 +142,9 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 7,
     question: 'Which pressure measurement principle uses a diaphragm and strain gauges?',
     options: [
-      'Bourdon tube',
-      'Capacitive',
-      'Magnetic',
+      'Bourdon tube gauge',
+      'Capacitive sensing',
+      'Magnetostrictive',
       'Piezoresistive',
     ],
     correctAnswer: 3,
@@ -195,10 +195,10 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 10,
     question: 'Why is 4mA used as the minimum signal instead of 0mA?',
     options: [
-      'To reduce the power consumed by the transmitter',
+      'To reduce the power consumed by the field transmitter',
       'To increase the resolution of the upper part of the range',
       'To distinguish between a zero reading and a fault condition',
-      'To make the signal compatible with 0-10V voltage inputs',
+      'To make the signal directly compatible with 0-10V voltage inputs',
     ],
     correctAnswer: 2,
     explanation:
@@ -212,9 +212,9 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 11,
     question: 'What does the HART protocol allow?',
     options: [
-      'Transmission of the 4-20mA signal over a wireless link',
+      'Transmission of the whole 4-20mA signal over a wireless radio link',
       'Conversion of an analogue signal into a pneumatic output',
-      'Connection of up to 250 devices on a single high-speed bus',
+      'Connection of up to 250 field devices on a single high-speed bus',
       'Digital communication over the same wires as the 4-20mA signal',
     ],
     correctAnswer: 3,
@@ -264,10 +264,10 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 14,
     question: 'What effect does increasing the integral (I) gain have on a control loop?',
     options: [
-      'Eliminates noise',
-      'Reduces overshoot',
+      'Eliminates measurement noise',
+      'Reduces overshoot and settling time',
       'Reduces steady-state error',
-      'Increases response speed',
+      'Increases the response speed',
     ],
     correctAnswer: 2,
     explanation:
@@ -299,9 +299,9 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     question: "What is a control valve's Cv rating?",
     options: [
       'Flow coefficient - gallons per minute of water at 1 psi pressure drop',
-      'The maximum pressure the valve body can withstand before rupture',
-      'The percentage of stroke at which the valve begins to open',
-      'The leakage rate of the valve when fully closed',
+      'The maximum pressure that the valve body can withstand before it ruptures',
+      'The percentage of the stroke at which the valve first begins to open',
+      'The leakage rate past the seat when the valve is fully shut off',
     ],
     correctAnswer: 0,
     explanation:
@@ -351,8 +351,8 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 19,
     question: 'What is IS barrier in instrumentation?',
     options: [
-      'Insulation Separator',
-      'Impedance Stabiliser',
+      'Insulated Signal Separator',
+      'Impedance Stabiliser unit',
       'Isolation Switch',
       'Intrinsic Safety barrier',
     ],
@@ -421,9 +421,9 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 23,
     question: "What is 'hysteresis' in instrument calibration?",
     options: [
-      'The gradual drift of the reading away from the true value over time',
-      'The smallest change in input that produces a detectable output change',
-      'The deviation of the output from a perfect straight-line response',
+      'The gradual drift of the reading away from the true value over a period of time',
+      'The smallest change in the input that produces a detectable change in output',
+      'The deviation of the output from a perfect straight-line ideal response curve',
       'The difference between upscale and downscale readings at the same input',
     ],
     correctAnswer: 3,
@@ -527,10 +527,10 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 29,
     question: 'If a 4-20mA loop signal sits steadily at 3.8mA, what is the most likely cause?',
     options: [
-      'The process variable has exceeded the upper range value',
+      'The process variable has exceeded the upper range value set on it',
       'An under-range fault or transmitter diagnostic alarm condition',
-      'Excessive supply voltage applied to the loop',
-      'Electrical noise coupled onto the signal cable',
+      'Excessive supply voltage applied across the loop terminals',
+      'Electrical noise coupled onto the signal cable in the tray',
     ],
     correctAnswer: 1,
     explanation:
@@ -544,8 +544,8 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 30,
     question: 'What tool is used to simulate a transmitter output for testing?',
     options: [
-      'Multimeter',
-      'Oscilloscope',
+      'Digital multimeter',
+      'Digital oscilloscope',
       'Loop calibrator',
       'Power supply',
     ],
@@ -581,9 +581,9 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     question: 'What is the purpose of a current-to-pneumatic (I/P) converter?',
     options: [
       'To convert a current signal to a proportional pneumatic pressure',
-      'To convert a pneumatic pressure to a proportional 4-20mA signal',
-      'To boost the air supply pressure to a valve actuator',
-      'To filter and dry the instrument air before use',
+      'To convert a pneumatic pressure into a proportional 4-20mA signal',
+      'To boost the instrument air supply pressure feeding a valve actuator',
+      'To filter and dry the instrument air supply before it reaches the valve',
     ],
     correctAnswer: 0,
     explanation:
@@ -597,7 +597,7 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 33,
     question: "What is 'dead time' in a control system?",
     options: [
-      'The period during start-up when the controller is in manual mode',
+      'The period during start-up when the controller is still in manual mode',
       'The delay between an input change and any measurable output response',
       'The time taken for the output to reach 63.2% of its final value',
       'The interval between successive samples of the process variable',
@@ -614,10 +614,10 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 34,
     question: "What does 'ranging' mean in transmitter configuration?",
     options: [
-      'Selecting cable length',
-      'Positioning the transmitter',
+      'Selecting the cable length',
+      'Positioning the transmitter head',
       'Setting the measurement span',
-      'Adjusting power consumption',
+      'Adjusting the power consumption',
     ],
     correctAnswer: 2,
     explanation:
@@ -649,9 +649,9 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     question: "What causes 'windup' in integral control action?",
     options: [
       'Continued error accumulation while the output is saturated',
-      'A sudden step change in the controller setpoint',
-      'Excessive derivative gain amplifying measurement noise',
-      'A proportional band set too wide for the process',
+      'A sudden step change made in the controller setpoint setting',
+      'Excessive derivative gain amplifying the measurement noise present',
+      'A proportional band that has been set too wide for the process',
     ],
     correctAnswer: 0,
     explanation:
@@ -683,10 +683,10 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     question:
       'In a differential pressure flow measurement, what relationship exists between flow and pressure drop?',
     options: [
-      'Linear',
-      'Logarithmic',
+      'Directly linear',
+      'Purely logarithmic',
       'Square root',
-      'Exponential',
+      'Purely exponential',
     ],
     correctAnswer: 2,
     explanation:
@@ -718,9 +718,9 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     question: 'What safety consideration is most important when working on pressurised systems?',
     options: [
       'Proper isolation and full depressurisation before work begins',
-      'Wearing anti-static clothing to prevent ignition',
-      'Ensuring all instruments are intrinsically safe certified',
-      'Maintaining minimum conductivity of the process fluid',
+      'Wearing anti-static clothing to prevent an ignition source forming',
+      'Ensuring that all the instruments are intrinsically safe certified',
+      'Maintaining a minimum conductivity in the process fluid',
     ],
     correctAnswer: 0,
     explanation:
@@ -734,7 +734,7 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 41,
     question: 'What is the main advantage of using smart valve positioners?',
     options: [
-      'They remove the need for an instrument air supply',
+      'They remove the need for any instrument air supply at all',
       'They provide diagnostics and precise valve positioning',
       'They allow the valve to operate without an actuator',
       'They convert the valve to a fail-open configuration',
@@ -751,10 +751,10 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 42,
     question: "What causes 'cavitation' in control valves?",
     options: [
-      'Excessive static friction in the valve stem packing',
-      'Air entrained in the instrument air supply line',
+      'Excessive static friction within the valve stem packing gland',
+      'Air entrained in the instrument air supply feeding the actuator',
       'Pressure dropping below the liquid vapour pressure then recovering',
-      'A mismatch between actuator and positioner air pressures',
+      'A mismatch between the actuator and the positioner air supply pressures',
     ],
     correctAnswer: 2,
     explanation:
@@ -768,8 +768,8 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 43,
     question: 'What is the purpose of a signal isolator?',
     options: [
-      'To amplify a weak signal back to full 4-20mA range',
-      'To convert an analogue signal into a digital protocol',
+      'To amplify a weak signal back up to the full 4-20mA loop range',
+      'To convert an analogue signal into a digital fieldbus protocol',
       'To split one signal so it can drive several indicators',
       'To provide electrical isolation between input and output',
     ],
@@ -802,10 +802,10 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 45,
     question: "What does 'common mode rejection' mean in instrumentation?",
     options: [
-      'Rejecting AC power frequency',
+      'Rejecting the mains power frequency interference',
       'Rejecting signals common to both input lines',
-      'Rejecting high frequency noise',
-      'Rejecting temperature effects',
+      'Rejecting all of the high frequency noise pickup',
+      'Rejecting ambient temperature effects on the cable',
     ],
     correctAnswer: 1,
     explanation:
@@ -872,8 +872,8 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     options: [
       'They respond faster than metal sensors to step changes',
       'They have superior chemical and high-temperature resistance',
-      'They require no calibration over their service life',
-      'They are inherently intrinsically safe without barriers',
+      'They require no calibration over their whole service life',
+      'They are inherently intrinsically safe without any barriers at all',
     ],
     correctAnswer: 1,
     explanation:
@@ -922,9 +922,9 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     question: 'What happens to a 4-20mA signal if the loop resistance is too high?',
     options: [
       'The transmitter cannot maintain the current and the signal falls below range',
-      'The signal becomes noisy but stays within the 4-20mA band',
-      'The current rises above 20mA to overcome the extra resistance',
-      'The polarity of the loop reverses and the reading inverts',
+      'The signal becomes noisy but still stays within the normal 4-20mA band',
+      'The loop current rises above 20mA to overcome the extra resistance in the cable',
+      'The polarity of the loop reverses and the indicated reading inverts on the display',
     ],
     correctAnswer: 0,
     explanation:
@@ -991,9 +991,9 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     question: 'In level measurement using hydrostatic pressure, what factor must be considered?',
     options: [
       'Fluid density and its variations with temperature',
-      'The dielectric constant of the stored fluid',
-      'The electrical conductivity of the stored fluid',
-      'The speed of sound through the vapour space',
+      'The dielectric constant of the fluid stored in the vessel',
+      'The electrical conductivity of the fluid in the vessel',
+      'The speed of sound travelling through the vapour space',
     ],
     correctAnswer: 0,
     explanation:
@@ -1007,9 +1007,9 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 57,
     question: "What is 'cascade control'?",
     options: [
-      'One controller driving two valves in sequence over a split range',
+      'One controller driving two separate valves in sequence over a split range',
       'A primary controller setting the setpoint of a secondary controller',
-      'Two controllers voting to select the safest output',
+      'Two controllers voting together to select the safest valve output',
       'A controller acting on a disturbance before it affects the process',
     ],
     correctAnswer: 1,
@@ -1024,10 +1024,10 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 58,
     question: 'What personal protective equipment is essential when working with cryogenic fluids?',
     options: [
-      'Anti-static footwear and wrist straps',
-      'Hearing protection and a hard hat',
+      'Anti-static footwear and earthed wrist straps only',
+      'Hearing protection and a site hard hat',
       'Insulated cryogenic gloves and a face shield',
-      'A self-contained breathing apparatus only',
+      'A self-contained breathing apparatus set only',
     ],
     correctAnswer: 2,
     explanation:
@@ -1041,9 +1041,9 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 59,
     question: "What is the 'turndown ratio' of a flow measurement device?",
     options: [
-      'The pressure drop the device adds at maximum flow',
-      'The percentage error at the bottom of the range',
-      'The time taken to respond to a step change in flow',
+      'The pressure drop that the device adds at the maximum flow rate',
+      'The percentage error at the very bottom of the measuring range',
+      'The time taken to respond to a step change in the measured flow',
       'The ratio of maximum to minimum accurately measurable flow',
     ],
     correctAnswer: 3,
@@ -1095,7 +1095,7 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
       'Control that reacts only after an error appears at the output',
       'Control where the output of one loop sets the setpoint of another',
       'Control action based on a disturbance before it affects the process',
-      'Control that switches between manual and automatic automatically',
+      'Control that switches between manual and automatic modes automatically',
     ],
     correctAnswer: 2,
     explanation:
@@ -1109,9 +1109,9 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 63,
     question: 'What precaution is necessary when installing electromagnetic flow meters?',
     options: [
-      'Ensure the meter bore is always partially filled',
-      'Install the meter immediately downstream of a pump',
-      'Use it only on non-conductive process fluids',
+      'Ensure that the meter bore is always kept only partially filled',
+      'Install the meter immediately downstream of the discharge pump',
+      'Use it only on process fluids that are non-conductive',
       'Ensure the process fluid has adequate electrical conductivity',
     ],
     correctAnswer: 3,
@@ -1127,9 +1127,9 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     question: "What is 'process gain' in control systems?",
     options: [
       'The steady-state change in output per unit change in input',
-      'The proportional gain setting dialled into the controller',
-      'The ratio of measurement noise to true signal',
-      'The total time delay around the control loop',
+      'The proportional gain setting dialled into the controller loop',
+      'The ratio of the measurement noise to the true measured signal',
+      'The total time delay measured around the whole of the control loop',
     ],
     correctAnswer: 0,
     explanation:
@@ -1143,10 +1143,10 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 65,
     question: 'What advantage do ultrasonic level sensors offer?',
     options: [
-      'Highest accuracy',
+      'The highest accuracy',
       'Non-contact measurement',
-      'Lowest cost',
-      'Fastest response',
+      'The lowest installed cost',
+      'The fastest response',
     ],
     correctAnswer: 1,
     explanation:
@@ -1228,10 +1228,10 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 70,
     question: "What is 'linearisation' in transmitter programming?",
     options: [
-      'Scaling the 4-20mA output to match a different range',
-      'Applying damping to smooth a fluctuating output',
+      'Scaling the 4-20mA output to match a different measurement range',
+      'Applying damping to smooth a fluctuating output signal',
       'Mathematical compensation for a non-linear sensor response',
-      'Setting the failure mode the output adopts on a fault',
+      'Setting the failure mode the output adopts on a detected fault',
     ],
     correctAnswer: 2,
     explanation:
@@ -1263,9 +1263,9 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     question: "What does the 'response time' (time constant) of a temperature sensor define?",
     options: [
       'The time to reach 63.2% of the final value after a step change',
-      'The time to reach 100% of the final value after a step change',
-      'The delay before the sensor first begins to respond at all',
-      'The interval between successive readings being taken',
+      'The time taken to reach 100% of the final value after a step change',
+      'The delay before the sensor first begins to respond to the change',
+      'The interval between successive readings being taken by the instrument',
     ],
     correctAnswer: 0,
     explanation:
@@ -1279,7 +1279,7 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 73,
     question: "What causes 'drift' in instrument readings?",
     options: [
-      'A sudden step error caused by a loose connection',
+      'A sudden step error caused by a loose terminal connection',
       'Gradual change in instrument characteristics over time',
       'Random noise superimposed on the measured signal',
       'A fixed offset introduced during initial calibration',
@@ -1313,9 +1313,9 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 75,
     question: 'What documentation is essential for instrument maintenance?',
     options: [
-      'Only the manufacturer\'s original purchase invoice',
-      'The latest process and instrumentation diagram alone',
-      'The operator shift logs kept for the unit',
+      'Only the original purchase invoice supplied by the manufacturer',
+      'The latest process and instrumentation diagram for that unit',
+      'The operator shift logs that are kept for the process unit',
       'Calibration certificates, maintenance records and configuration data',
     ],
     correctAnswer: 3,
@@ -1435,7 +1435,7 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     question:
       'What safety device is required when using electric heating elements in potentially explosive atmospheres?',
     options: [
-      'Temperature controller only',
+      'Temperature controller',
       'Pressure relief valve',
       'Surface temperature limiter',
       'Emergency stop button',
@@ -1452,9 +1452,9 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 83,
     question: "What is 'batch control' in process automation?",
     options: [
-      'Holding a process variable at a constant setpoint indefinitely',
+      'Holding a process variable at a fixed setpoint indefinitely',
       'Controlling several identical loops from one controller',
-      'Averaging readings over a fixed time window',
+      'Averaging the readings taken over a fixed time window',
       'Sequential control of discrete manufacturing steps to a recipe',
     ],
     correctAnswer: 3,
@@ -1486,7 +1486,7 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 85,
     question: "What is the purpose of a 'totaliser' in flow measurement?",
     options: [
-      'To display the instantaneous flow rate in real time',
+      'To display the instantaneous flow rate directly',
       'To accumulate total volume or mass passed over time',
       'To convert volumetric flow into mass flow',
       'To linearise the square-root flow signal',
@@ -1503,10 +1503,10 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 86,
     question: "What is 'dead band' in a controller?",
     options: [
-      "The maximum error allowed before the controller alarms",
-      "The delay before the controller responds to an error",
+      'The maximum error allowed before the controller raises an alarm',
+      'The delay before the controller responds to an error appearing',
       "A range of input around setpoint over which the output does not change",
-      "The fixed offset added to the controller output",
+      'The fixed offset that is added to the controller output signal',
     ],
     correctAnswer: 2,
     explanation:
@@ -1589,7 +1589,7 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     question: "What is 'fail-safe' design in instrumentation?",
     options: [
       'Designing equipment that can never fail in service',
-      'Providing a backup transmitter for every measurement',
+      'Providing a backup transmitter for every point',
       'Duplicating control loops so one can take over',
       'Designing systems to move to a safe state on failure',
     ],
@@ -1675,9 +1675,9 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     question: "What causes 'ground loops' in instrumentation systems?",
     options: [
       'Multiple earth connections at different potentials causing circulating current',
-      'The cable screen left disconnected at both ends of the run',
-      'A burden resistor value set too high for the loop supply voltage',
-      'Excessive damping configured within the transmitter software',
+      'The cable screen left disconnected at both ends of the instrument run',
+      'A burden resistor value that has been set too high for the available loop supply',
+      'Excessive damping configured within the field transmitter software settings',
     ],
     correctAnswer: 0,
     explanation:
@@ -1691,10 +1691,10 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 97,
     question: "What is 'smart positioner' technology in valve control?",
     options: [
-      'A mechanical cam that sets a fixed valve position',
+      'A mechanical cam that fixes the valve in one set position',
       'Digital positioning with diagnostics and precise stem control',
-      'A pneumatic relay that boosts actuator air pressure',
-      'A limit switch that confirms the valve is fully open or shut',
+      'A pneumatic relay that boosts the actuator air supply pressure',
+      'A limit switch that confirms the valve is fully open or fully shut',
     ],
     correctAnswer: 1,
     explanation:
@@ -1725,9 +1725,9 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 99,
     question: "What is 'fieldbus power' in digital communication systems?",
     options: [
-      'The data transmission rate of the fieldbus segment',
-      'The maximum number of devices allowed on one segment',
-      'A separate mains supply run to each field device',
+      'The rate of data transmission achieved on the whole fieldbus segment',
+      'The maximum number of field devices permitted on any one segment',
+      'A separate mains supply cable run out to each of the field devices',
       'Power supplied to field devices through the communication cable',
     ],
     correctAnswer: 3,
@@ -1743,9 +1743,9 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     question: 'What safety protocol is essential when calibrating pressure instruments?',
     options: [
       'Proper isolation, venting and pressure relief before work',
-      'Connecting the cable screen at both ends',
+      'Connecting the cable screen at both ends of the run',
       'Limiting the excitation current to avoid self-heating',
-      'Ensuring the process fluid stays electrically conductive',
+      'Ensuring that the process fluid stays electrically conductive',
     ],
     correctAnswer: 0,
     explanation:
@@ -1759,10 +1759,10 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 101,
     question: "What is 'flow compensation' in mass flow measurement?",
     options: [
-      'Correcting the reading for the pressure loss across the element',
+      'Correcting the reading for the pressure loss across the primary flow element',
       'Adjusting volumetric flow for temperature and pressure effects on density',
-      'Linearising the square-root differential pressure signal',
-      'Zeroing the transmitter at no-flow conditions',
+      'Linearising the square-root differential pressure signal from the transmitter',
+      'Zeroing the transmitter output when the line is at no-flow conditions',
     ],
     correctAnswer: 1,
     explanation:
@@ -1776,10 +1776,10 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 102,
     question: "What causes 'thermal shock' in temperature sensors?",
     options: [
-      'Prolonged exposure to a steady high temperature',
-      'Self-heating from excessive excitation current',
+      'Prolonged exposure to a steady and very high process temperature',
+      'Self-heating caused by an excessive excitation current in the element',
       'Rapid temperature change causing material stress and cracking',
-      'Electrical noise coupled onto the sensor leads',
+      'Electrical noise coupled onto the sensor leads running in the tray',
     ],
     correctAnswer: 2,
     explanation:
@@ -1793,9 +1793,9 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 103,
     question: "What is 'multivariable' transmission in smart instruments?",
     options: [
-      'Sending the same variable to several controllers at once',
-      'Switching the output between two ranges automatically',
-      'Transmitting one variable over two redundant cables',
+      'Sending the same measured process variable to several controllers at once',
+      'Switching the output between two measuring ranges automatically',
+      'Transmitting one variable over two redundant cables to the panel',
       'A single transmitter measuring and sending several process variables',
     ],
     correctAnswer: 3,
@@ -1844,10 +1844,10 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 106,
     question: "What is 'linearisation' in signal processing?",
     options: [
-      'Filtering high-frequency noise from the measured signal',
-      'Amplifying a weak signal back to full scale',
+      'Filtering the high-frequency noise out of the measured signal',
+      'Amplifying a weak input signal back up to the full scale range',
       'Converting a curved sensor response into a linear output',
-      'Isolating the signal to break an earth loop',
+      'Isolating the signal in order to break an earth loop',
     ],
     correctAnswer: 2,
     explanation:
@@ -1861,9 +1861,9 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 107,
     question: "What causes 'galvanic corrosion' in instrumentation installations?",
     options: [
-      'Stray DC currents flowing through buried pipework',
-      'High process temperatures accelerating oxidation',
-      'Prolonged exposure to ultraviolet light',
+      'Stray DC currents flowing through the buried steel process pipework',
+      'High process temperatures accelerating the oxidation of the metalwork',
+      'Prolonged exposure to strong ultraviolet light from direct sunlight',
       'Dissimilar metals in contact in the presence of an electrolyte',
     ],
     correctAnswer: 3,
@@ -1879,9 +1879,9 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     question: "What is 'trim' in control valve terminology?",
     options: [
       'The internal components (plug, seat, cage) that control flow',
-      'The body casting that contains the process pressure',
-      'The actuator that moves the valve stem',
-      'The positioner that sets the valve opening',
+      'The body casting that contains the full process pressure inside',
+      'The actuator assembly that moves the valve stem up and down',
+      'The positioner that sets the required opening of the valve',
     ],
     correctAnswer: 0,
     explanation:
@@ -1895,10 +1895,10 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 109,
     question: "What is the advantage of using 'force balance' transmitters?",
     options: [
-      'They need no external power to operate',
+      'They need no external electrical power at all to operate',
       'High accuracy from minimal sensing-element movement',
-      'They are inherently intrinsically safe',
-      'They respond instantly with zero dead time',
+      'They are inherently intrinsically safe without any barrier',
+      'They respond instantly and have zero dead time',
     ],
     correctAnswer: 1,
     explanation:
@@ -1912,10 +1912,10 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 110,
     question: 'What precaution is essential when working in oxygen-enriched atmospheres?',
     options: [
-      'Using oil-based lubricants on all fittings',
-      'Increasing ventilation with compressed oxygen',
+      'Using oil-based lubricants on all the pipe fittings',
+      'Increasing the ventilation with compressed oxygen gas',
       'Using spark-proof tools and anti-static clothing',
-      'Wearing additional thermal-insulating gloves',
+      'Wearing additional thermal-insulating gloves at all times',
     ],
     correctAnswer: 2,
     explanation:
@@ -1929,9 +1929,9 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 111,
     question: "What is 'hysteresis error' in measurement systems?",
     options: [
-      'The gradual change in output for a fixed input over time',
-      'A constant offset added to every reading',
-      'Random scatter in repeated readings of the same input',
+      'The gradual change in the output for one fixed input over time',
+      'A constant offset that is added on to every one of the readings',
+      'Random scatter seen in the repeated readings of exactly the same input',
       'The difference between readings approached from opposite directions',
     ],
     correctAnswer: 3,
@@ -1947,9 +1947,9 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     question: "What is 'purging' in instrumentation installations?",
     options: [
       'Introducing clean fluid to protect instruments from process contamination',
-      'Bleeding trapped air out of a filled impulse line',
-      'Flushing a transmitter back to its zero reading before use',
-      'Venting a vessel down to atmosphere before maintenance work',
+      'Bleeding the trapped air out of a filled impulse line to the cell',
+      'Flushing the transmitter back to its zero reading before it is put into use',
+      'Venting the vessel down to atmosphere before any maintenance work begins',
     ],
     correctAnswer: 0,
     explanation:
@@ -1980,10 +1980,10 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 114,
     question: "What is 'fugitive emission' monitoring in instrumentation?",
     options: [
-      'Measuring the stack emissions from a combustion process',
-      'Tracking energy losses through poorly insulated pipework',
+      'Measuring the stack emissions from a large combustion process plant',
+      'Tracking the energy losses through the poorly insulated pipework',
       'Detecting unintended releases of gases or vapours from leaks',
-      'Recording overpressure events at relief valves',
+      'Recording the overpressure events occurring at the relief valves',
     ],
     correctAnswer: 2,
     explanation:
@@ -1997,9 +1997,9 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 115,
     question: 'What advantage do ceramic pressure sensors offer?',
     options: [
-      'The fastest response time of any pressure sensor',
-      'Inherent intrinsic safety without barriers',
-      'No requirement for periodic recalibration',
+      'The fastest response time of any pressure sensor available',
+      'Inherent intrinsic safety with no need for any barrier at all',
+      'No requirement for periodic recalibration throughout its service life',
       'Excellent corrosion resistance and high temperature capability',
     ],
     correctAnswer: 3,
@@ -2015,9 +2015,9 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     question: "What is 'process chromatography' used for in instrumentation?",
     options: [
       'Analysing the chemical composition of process streams',
-      'Measuring the colour of a liquid product',
-      'Detecting suspended particles in a gas flow',
-      'Monitoring the pH of an aqueous process stream',
+      'Measuring the colour of a finished liquid product',
+      'Detecting the suspended particles carried in a flowing gas',
+      'Monitoring the pH value of a single aqueous process stream',
     ],
     correctAnswer: 0,
     explanation:
@@ -2048,10 +2048,10 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 118,
     question: "What is 'cavitation' and how does it affect flow measurement?",
     options: [
-      'Solids settling out of the flow and coating the sensor',
-      'Air leaking into the line and diluting the reading',
+      'Solids settling out of the flow and coating the whole sensor element',
+      'Air leaking into the impulse line and diluting the flow reading taken',
       'Vapour bubbles forming and collapsing, causing errors and damage',
-      'Turbulence from an upstream bend distorting the profile',
+      'Turbulence from an upstream bend distorting the whole flow profile',
     ],
     correctAnswer: 2,
     explanation:
@@ -2065,9 +2065,9 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 119,
     question: "What is 'mesh networking' in wireless instrumentation?",
     options: [
-      'A single base station serving all field devices directly',
-      'A fixed daisy-chain of devices in series',
-      'A point-to-point link between two devices only',
+      'A single base station serving all of the field devices directly',
+      'A fixed daisy-chain of the field devices connected in series',
+      'A single point-to-point radio link between just two field devices',
       'Multiple interconnected paths giving redundancy and self-healing',
     ],
     correctAnswer: 3,
@@ -2099,10 +2099,10 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 121,
     question: "What is 'loop-powered' operation in transmitters?",
     options: [
-      'The transmitter needs a separate mains supply for power',
+      'The transmitter needs a separate mains supply in order to power it',
       'The transmitter draws its power from the 4-20mA loop itself',
-      'The transmitter is powered by an internal battery',
-      'The transmitter harvests power from process vibration',
+      'The transmitter is powered by an internal replaceable battery pack',
+      'The transmitter harvests its power from process vibration',
     ],
     correctAnswer: 1,
     explanation:
@@ -2151,9 +2151,9 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     question: 'What environmental factor most affects the accuracy of gas density measurement?',
     options: [
       'Process temperature and pressure acting on the gas',
-      'The electrical conductivity of the gas',
-      'The dielectric constant of the gas',
-      'Vibration transmitted through the pipework',
+      'The electrical conductivity of the gas within the pipe',
+      'The dielectric constant of the gas inside the pipework',
+      'Vibration transmitted through the pipework to the meter',
     ],
     correctAnswer: 0,
     explanation:
@@ -2167,10 +2167,10 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 125,
     question: "What is 'differential pressure' flow measurement principle?",
     options: [
-      'Measuring absolute pressure only',
+      'Measuring the absolute line pressure at a single tapping',
       'Measuring pressure drop across a flow restriction',
-      'Measuring temperature difference',
-      'Measuring velocity directly',
+      'Measuring the temperature difference across the element',
+      'Measuring the velocity of the fluid directly',
     ],
     correctAnswer: 1,
     explanation:
@@ -2202,9 +2202,9 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     question: 'What does a thermocouple produce when its two junctions are at different temperatures?',
     options: [
       'A small EMF that varies with the temperature difference',
-      'A resistance change that varies with the applied heat',
-      'A capacitance change that varies with the hot junction',
-      'A frequency output that varies with the junction metals',
+      'A resistance change that varies with the heat that is applied',
+      'A capacitance change that varies with the hot end',
+      'A frequency output that varies with the two junction metals',
     ],
     correctAnswer: 0,
     explanation:
@@ -2218,9 +2218,9 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 128,
     question: 'What distinguishes a closed loop control system from an open loop system?',
     options: [
-      'It runs continuously rather than in timed batch steps',
-      'It uses electronic rather than pneumatic final elements',
-      'It has more than one controller sharing a single output',
+      'It runs continuously rather than in a series of timed batch steps',
+      'It uses electronic rather than pneumatic final elements throughout',
+      'It has more than one controller sharing a single common output signal',
       'It measures the result and feeds that back to the controller',
     ],
     correctAnswer: 3,
@@ -2252,10 +2252,10 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 130,
     question: 'A loop indicates a steady 4.00 mA and will not move although the process is known to be hot. What is the most likely cause?',
     options: [
-      'The loop wiring is open circuit between field and panel',
-      'The loop power supply has failed and delivers no voltage',
+      'The loop wiring is open circuit somewhere between the field and panel',
+      'The loop power supply has failed and now delivers no voltage',
       'The transmitter is powered but its input is at or below range',
-      'The receiving card input resistor has gone open circuit',
+      'The receiving card input resistor has now gone open circuit',
     ],
     correctAnswer: 2,
     explanation:
@@ -2286,9 +2286,9 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 132,
     question: 'Why can bonding an instrument cable screen at both ends make noise worse rather than better?',
     options: [
-      'The screen loses its ability to intercept electrostatic pickup',
+      'The screen loses its ability to intercept any electrostatic pickup',
       'A difference in earth potential drives current along the screen',
-      'The screen adds capacitance that slows the signal excessively',
+      'The screen adds capacitance that slows the signal down excessively',
       'The screen becomes a parallel path for the signal conductors',
     ],
     correctAnswer: 1,
@@ -2303,10 +2303,10 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 133,
     question: 'What does the third wire of a three-wire RTD connection achieve?',
     options: [
-      'It supplies power to the sensing element from the panel',
-      'It provides a spare in case one of the two others fails',
+      'It supplies the power to the sensing element from the panel end',
+      'It provides a spare in case one of the other two conductors fails',
       'It lets the measuring circuit cancel the lead resistance',
-      'It carries the screen connection back to the panel earth',
+      'It carries the screen connection back to the panel earth bar',
     ],
     correctAnswer: 2,
     explanation:
@@ -2322,7 +2322,7 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     options: [
       'It sends its measurement as a voltage rather than a current',
       'It needs no earth connection because it is double insulated',
-      'It carries two separate measurements on the same pair',
+      'It carries two separate measurements on the same single pair of cores',
       'It takes its own supply from the same pair that carries signal',
     ],
     correctAnswer: 3,
@@ -2372,9 +2372,9 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     question: 'What does derivative action contribute to a PID controller?',
     options: [
       'It anticipates by responding to the rate of change of error',
-      'It accumulates error over time until the offset is removed',
-      'It scales the output in direct proportion to the error',
-      'It filters the measurement before the controller can see it',
+      'It accumulates the error over time until the whole offset is removed',
+      'It scales the controller output in proportion to the error',
+      'It filters the measurement signal before the controller can see it',
     ],
     correctAnswer: 0,
     explanation:
@@ -2405,10 +2405,10 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 139,
     question: 'A control loop hunts, cycling above and below setpoint continuously. What should be checked first?',
     options: [
-      'Whether an operator has recently altered the setpoint value',
+      'Whether an operator has recently altered the setpoint value used',
       'Whether the controller gain is set too high for the process',
-      'Whether the transmitter has been ranged in the wrong units',
-      'Whether the signal cable screen is bonded at the field end',
+      'Whether the transmitter has been ranged in the wrong process units',
+      'Whether the signal cable screen has been bonded at the field end',
     ],
     correctAnswer: 1,
     explanation:
@@ -2423,7 +2423,7 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     question: 'A flow reading has crept upward over several weeks while plant output is unchanged. How is calibration drift distinguished from a real process change?',
     options: [
       'Compare the reading against an independent check of the same flow',
-      'Increase the controller gain and watch whether the reading falls',
+      'Increase the controller gain and watch whether the reading falls back',
       'Replace the transmitter and see whether the trend disappears',
       'Widen the alarm limits until the reading sits inside them again',
     ],
@@ -2439,9 +2439,9 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 141,
     question: 'What is being adjusted when the zero and span of a transmitter are set?',
     options: [
-      'The speed at which the output responds to an input step',
+      'The speed at which the output responds to an input step change',
       'The input values that correspond to bottom and top of scale',
-      'The supply voltage the transmitter needs to drive the loop',
+      'The supply voltage the transmitter needs to drive the whole loop',
       'The damping applied to smooth out a noisy measured signal',
     ],
     correctAnswer: 1,
@@ -2456,10 +2456,10 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 142,
     question: 'A loop input reads above 20 mA and stays there. What is the most useful first interpretation?',
     options: [
-      'The loop resistance has risen above the supply capability',
-      'The receiving input card has lost its connection to common',
+      'The loop resistance has risen above the supply voltage capability',
+      'The receiving input card has lost its connection to the panel common',
       'The measurement is over range or the transmitter is upscale',
-      'The transmitter has lost its power and defaulted downscale',
+      'The transmitter has lost its power and has defaulted downscale',
     ],
     correctAnswer: 2,
     explanation:
@@ -2525,7 +2525,7 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     question: 'Why does a thermocouple measuring circuit need cold junction compensation?',
     options: [
       'Because the sensor draws current that heats its own junction',
-      'Because the cable screen shifts the reading when it is earthed',
+      'Because the cable screen shifts the reading when earthed',
       'Because the instrument input resistance changes as it warms',
       'Because the EMF depends on both junction temperatures, not one',
     ],
@@ -2610,7 +2610,7 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     question: 'Instrument cables are run along the same tray as the motor cable from a variable speed drive. Why is that a problem?',
     options: [
       'The drive output is DC and cannot share a tray with AC cables',
-      'The drive cable heats the tray and derates the instrument pair',
+      'The drive cable heats the tray and derates the signal pair',
       'The drive output switches fast and couples noise into the pair',
       'The drive draws harmonics that raise the instrument supply',
     ],
@@ -2626,7 +2626,7 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 152,
     question: 'A 4-20 mA input shows small varying errors that follow plant activity, and its screen is bonded at both ends. What is the likely mechanism?',
     options: [
-      'Insufficient burden resistance at the receiving input card',
+      'Insufficient burden resistance at the receiving card',
       'Excessive damping configured inside the field transmitter',
       'Reversed polarity on the pair at the field terminal block',
       'Current circulating in the screen between two earth points',
@@ -2645,7 +2645,7 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     options: [
       'That the process fluid is at its correct working pressure',
       'That the valve travels correctly over the full signal range',
-      'That the controller tuning constants have been set properly',
+      'That the controller tuning constants have been set well',
       'That the transmitter reading matches an independent check',
     ],
     correctAnswer: 1,
@@ -2864,10 +2864,10 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 166,
     question: 'A pressure indication no longer follows the plant although the loop tests healthy at the transmitter. What should be suspected?',
     options: [
-      'The controller has been left in manual with a fixed output',
+      'The controller has been left in manual with a set output',
       'The impulse line is blocked or its isolating valve is shut',
       'The input card has failed and frozen the last good value',
-      'The screen has been left unbonded at the panel gland plate',
+      'The screen has been left unbonded at the panel gland',
     ],
     correctAnswer: 1,
     explanation:
@@ -2934,7 +2934,7 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     options: [
       'Individual screens allow each pair to carry a higher current',
       'Individual screens limit crosstalk between pairs in the cable',
-      'Individual screens remove the need to bond the overall screen',
+      'Individual screens remove the need to bond the outer screen',
       'Individual screens identify each pair without core numbering',
     ],
     correctAnswer: 1,

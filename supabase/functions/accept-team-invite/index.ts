@@ -12,7 +12,8 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.1';
 import { corsHeaders } from '../_shared/cors.ts';
 
-Deno.serve(async (req) => {
+import { withSentry } from '../_shared/sentry.ts';
+Deno.serve(withSentry('accept-team-invite', async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
 
   const json = (body: unknown, status = 200) =>
@@ -101,4 +102,4 @@ Deno.serve(async (req) => {
     console.error('accept-team-invite error:', error);
     return json({ error: error instanceof Error ? error.message : 'Unknown error' }, 500);
   }
-});
+}));

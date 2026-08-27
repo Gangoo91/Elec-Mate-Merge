@@ -6,6 +6,7 @@
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { Resend } from '../_shared/mailer.ts';
 
+import { withSentry } from '../_shared/sentry.ts';
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
@@ -218,7 +219,7 @@ function buildHtml(firstName: string, unsubUrl: string): string {
 </body></html>`;
 }
 
-Deno.serve(async (req) => {
+Deno.serve(withSentry('send-test-college-q2', async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
 
   const url = new URL(req.url);
@@ -249,4 +250,4 @@ Deno.serve(async (req) => {
   return new Response(JSON.stringify({ ok: true, to, id: data?.id }), {
     headers: { ...corsHeaders, 'Content-Type': 'application/json' },
   });
-});
+}));

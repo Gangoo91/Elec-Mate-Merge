@@ -6,6 +6,7 @@
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
 
+import { withSentry } from '../_shared/sentry.ts';
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
@@ -526,7 +527,7 @@ Rules:
 Return via the submit_ilp_draft tool.`;
 }
 
-Deno.serve(async (req) => {
+Deno.serve(withSentry('ai-generate-ilp', async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
   if (req.method !== 'POST')
     return new Response('Method not allowed', { status: 405, headers: corsHeaders });
@@ -691,4 +692,4 @@ Deno.serve(async (req) => {
       connection: 'keep-alive',
     },
   });
-});
+}));

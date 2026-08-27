@@ -97,6 +97,29 @@ export function compareEvents(a: CalendarEvent, b: CalendarEvent): number {
   return new Date(a.start_at).getTime() - new Date(b.start_at).getTime();
 }
 
+/**
+ * The next thing that has not finished yet, in CLOCK order.
+ *
+ * Deliberately not `events[0]` off a `compareEvents` sort. That sort is display
+ * order — all-day work first, because that is how a day is read top to bottom —
+ * and taking its head as "what's next" meant an all-day job on Friday outranked
+ * the callout you have in twenty minutes. Both the dashboard's "next up" and the
+ * Business Hub's diary tile were doing exactly that.
+ */
+export function nextEventFrom(events: CalendarEvent[], from: Date = new Date()): CalendarEvent | null {
+  let best: CalendarEvent | null = null;
+  let bestStart = Infinity;
+  for (const event of events) {
+    if (effectiveEnd(event) < from) continue;
+    const start = new Date(event.start_at).getTime();
+    if (start < bestStart) {
+      best = event;
+      bestStart = start;
+    }
+  }
+  return best;
+}
+
 /** Where a given day sits within a multi-day run — drives the bar's shape. */
 export interface DaySegment {
   isStart: boolean;
@@ -224,3 +247,216 @@ export const isSyntheticEvent = (event: CalendarEvent): boolean =>
  */
 export const occupiesTime = (event: CalendarEvent): boolean =>
   !event.id.startsWith('task-') && !event.id.startsWith('project-');
+
+/**
+ * A stretch of a day at a constant level of load.
+ *
+ * `busy` means AT CAPACITY, not "something is on". With three jobs able to run
+ * at once, an hour holding one job is still an hour you can book into, and a
+ * calendar that calls it busy will lose its owner two thirds of their week.
+ */
+export interface DayBlock {
+  kind: 'busy' | 'free';
+  start: Date;
+  end: Date;
+  /** What is booked over it. A free block can still hold events. */
+  events: CalendarEvent[];
+  /** How many jobs run concurrently across this stretch. */
+  running: number;
+  /** How many more will fit before it is full. */
+  spare: number;
+}
+
+export interface DayShape {
+  /** All-day events — they colour the day rather than occupy an hour of it. */
+  allDay: CalendarEvent[];
+  /**
+   * Deadlines landing on the day: task due times and project start/due dates.
+   * They say something is owed, not that the time is spent, so they are listed
+   * apart from the rail rather than blocking a slot (see `occupiesTime`).
+   */
+  markers: CalendarEvent[];
+  /** Booked before the working day opens. */
+  before: CalendarEvent[];
+  /** The working day itself, busy and free in chronological order. */
+  blocks: DayBlock[];
+  /** Booked after the working day closes. */
+  after: CalendarEvent[];
+  /**
+   * Wall-clock minutes with room for another job.
+   *
+   * Answers "when could I fit them in", which is the question asked on the
+   * phone. NOT the same as spare capacity: on a day able to run three jobs at
+   * once, an hour already holding two of them is still wall-clock free.
+   */
+  freeMinutes: number;
+  /**
+   * Spare LANE minutes — capacity that goes unsold if nothing else lands.
+   *
+   * A different question with a much bigger answer: an empty day at capacity
+   * three has ten hours free and thirty lane-hours spare. Kept separate because
+   * showing one and labelling it the other is how a diary starts lying.
+   */
+  spareLaneMinutes: number;
+  /** Wall-clock minutes inside the working day that are at capacity. */
+  busyMinutes: number;
+  /** The most jobs running at once at any point in the day. */
+  peakRunning: number;
+  /** Jobs that can run at once — echoed back so callers can phrase it. */
+  capacity: number;
+}
+
+/**
+ * The shape of one day: what is booked, and — the part that matters when
+ * someone rings asking for a slot — exactly where the gaps are.
+ *
+ * Built by walking the working day in `stepMinutes` and asking whether anything
+ * occupies each step, then collapsing the run into blocks. A walk rather than an
+ * interval merge because overlapping and back-to-back bookings both have to
+ * collapse into one busy stretch, and the walk gets that for free.
+ *
+ * All-day events do NOT black out the rail. An electrician with an all-day job
+ * on Tuesday can still take a 20-minute call at four o'clock, and a day sheet
+ * that refuses to offer one is a day sheet they will stop opening. The all-day
+ * event is stated at the top instead, and the clash warning on the event sheet
+ * is what catches a genuine double-booking.
+ */
+export function buildDayShape(
+  events: CalendarEvent[],
+  day: Date,
+  workStart: number,
+  workEnd: number,
+  stepMinutes = 30,
+  capacity = 1
+): DayShape {
+  const onDay = eventsOnDay(events, day);
+
+  /*
+   * Split on what a thing IS, not on its all_day flag.
+   *
+   * `useTasksForCalendar` and `useProjectsForCalendar` both mint their events
+   * with `all_day: true` — a due date has no hour to it. Filtering markers as
+   * "not all_day and not occupying time" therefore matched nothing at all, and
+   * every task deadline and project start date came out in the all-day banner
+   * labelled "All day", which says the day is spoken for when it is not.
+   */
+  const markers = onDay.filter((e) => !occupiesTime(e));
+  const allDay = onDay.filter((e) => e.all_day && occupiesTime(e));
+  const timed = onDay.filter((e) => !e.all_day && occupiesTime(e));
+
+  const windowStart = new Date(day.getFullYear(), day.getMonth(), day.getDate(), workStart, 0, 0);
+  const windowEnd = new Date(day.getFullYear(), day.getMonth(), day.getDate(), workEnd, 0, 0);
+
+  // Clamped to the day first — a job running Mon–Wed occupies all of Tuesday,
+  // and its raw start_at is on Monday.
+  const spans = timed.map((event) => ({ event, ...clampToDay(event, day) }));
+
+  const before = spans.filter((s) => s.end <= windowStart).map((s) => s.event);
+  const after = spans.filter((s) => s.start >= windowEnd).map((s) => s.event);
+
+  const seats = Math.max(1, Math.floor(capacity));
+  const stepMs = stepMinutes * 60_000;
+  const blocks: DayBlock[] = [];
+
+  for (let t = windowStart.getTime(); t < windowEnd.getTime(); t += stepMs) {
+    const stepStart = t;
+    const stepEnd = Math.min(t + stepMs, windowEnd.getTime());
+    const over = spans.filter(
+      (s) => s.start.getTime() < stepEnd && s.end.getTime() > stepStart
+    );
+    const running = over.length;
+    const kind: DayBlock['kind'] = running >= seats ? 'busy' : 'free';
+    const last = blocks[blocks.length - 1];
+
+    /*
+     * Grouped by load, not just by kind.
+     *
+     * "09:00–11:00 free" and "11:00–12:00, one job on, one slot left" are
+     * different offers and the person on the phone is being told which one they
+     * can have. Merging them into one green stretch would hide the fact that
+     * half of it is already spoken for.
+     */
+    if (last && last.kind === kind && last.running === running) {
+      last.end = new Date(stepEnd);
+      over.forEach((s) => {
+        if (!last.events.includes(s.event)) last.events.push(s.event);
+      });
+    } else {
+      blocks.push({
+        kind,
+        start: new Date(stepStart),
+        end: new Date(stepEnd),
+        events: over.map((s) => s.event),
+        running,
+        spare: Math.max(0, seats - running),
+      });
+    }
+  }
+
+  const minutesIn = (kind: DayBlock['kind']) =>
+    blocks
+      .filter((b) => b.kind === kind)
+      .reduce((sum, b) => sum + (b.end.getTime() - b.start.getTime()) / 60_000, 0);
+
+  return {
+    allDay,
+    markers,
+    before,
+    blocks,
+    after,
+    freeMinutes: minutesIn('free'),
+    spareLaneMinutes: blocks.reduce(
+      (sum, b) => sum + (b.spare * (b.end.getTime() - b.start.getTime())) / 60_000,
+      0
+    ),
+    busyMinutes: minutesIn('busy'),
+    peakRunning: blocks.reduce((peak, b) => Math.max(peak, b.running), 0),
+    capacity: seats,
+  };
+}
+
+/**
+ * The start times on offer inside a free block.
+ *
+ * Capped, because a nine-hour empty Monday would otherwise render eighteen
+ * chips and bury the rest of the day underneath them. Tapping the block itself
+ * always books at its start, so the chips are a shortcut rather than the only
+ * way in.
+ */
+export function slotStarts(block: DayBlock, stepMinutes = 30, limit = 8): Date[] {
+  const out: Date[] = [];
+  const stepMs = stepMinutes * 60_000;
+  for (let t = block.start.getTime(); t < block.end.getTime() && out.length < limit; t += stepMs) {
+    out.push(new Date(t));
+  }
+  return out;
+}
+
+/**
+ * `count` working days from `start`, inclusive of the start day.
+ *
+ * Weekends skipped: "book the week out" means Monday to Friday, and an all-day
+ * event stretched over the Sunday says the job is on when nobody is on site.
+ * A booking that starts on a Saturday keeps its Saturday — the electrician has
+ * evidently chosen to work it — and counts forward from there.
+ */
+export function addWorkingDays(start: Date, count: number): Date {
+  const out = new Date(start);
+  let remaining = Math.max(1, Math.floor(count)) - 1;
+  while (remaining > 0) {
+    out.setDate(out.getDate() + 1);
+    const day = out.getDay();
+    if (day !== 0 && day !== 6) remaining -= 1;
+  }
+  return out;
+}
+
+/** "3h", "45m", "2h 30m" — durations as an electrician would say them. */
+export function humanMinutes(minutes: number): string {
+  const m = Math.max(0, Math.round(minutes));
+  const hours = Math.floor(m / 60);
+  const rest = m % 60;
+  if (hours === 0) return `${rest}m`;
+  if (rest === 0) return `${hours}h`;
+  return `${hours}h ${rest}m`;
+}

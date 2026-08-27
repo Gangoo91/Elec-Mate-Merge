@@ -29,6 +29,14 @@ export interface CalendarEvent {
    */
   project_id?: string;
   event_type: CalendarEventType;
+  /**
+   * Who is on it. Free text, deliberately.
+   *
+   * The Electrician Hub has no people model — every worker table belongs to the
+   * Employer Hub, which is kept separate — so someone running three jobs at
+   * once types the names. No vocabulary to maintain, nothing to keep in step.
+   */
+  crew?: string;
   colour: string;
   recurring: boolean;
   recurrence_rule?: string;

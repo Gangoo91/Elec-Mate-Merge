@@ -13,6 +13,7 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
 import { aiFetch } from '../_shared/ai-log.ts';
 
+import { withSentry } from '../_shared/sentry.ts';
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
@@ -72,7 +73,7 @@ async function embedBatch(
   return json.data.map((d) => d.embedding);
 }
 
-Deno.serve(async (req) => {
+Deno.serve(withSentry('embed-qualification-requirements', async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
   if (req.method !== 'POST')
     return new Response(JSON.stringify({ error: 'method_not_allowed' }), {
@@ -177,4 +178,4 @@ Deno.serve(async (req) => {
     }),
     { headers: { ...corsHeaders, 'content-type': 'application/json' } }
   );
-});
+}));

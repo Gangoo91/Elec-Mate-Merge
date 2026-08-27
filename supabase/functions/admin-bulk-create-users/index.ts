@@ -1,6 +1,7 @@
 import { serve } from 'https://deno.land/std@0.190.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 
+import { withSentry } from '../_shared/sentry.ts';
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers':
@@ -22,7 +23,7 @@ interface CreateResult {
   failed: { email: string; reason: string }[];
 }
 
-serve(async (req: Request) => {
+serve(withSentry('admin-bulk-create-users', async (req: Request) => {
   if (req.method === 'OPTIONS') return new Response(null, { headers: corsHeaders });
 
   try {
@@ -170,4 +171,4 @@ serve(async (req: Request) => {
     console.error('[admin-bulk-create-users] Error:', error);
     return json({ error: error instanceof Error ? error.message : 'unknown' }, 500);
   }
-});
+}));

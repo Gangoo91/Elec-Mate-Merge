@@ -16,6 +16,7 @@
 
 import { createClient, corsHeaders } from '../_shared/deps.ts';
 
+import { withSentry } from '../_shared/sentry.ts';
 const VPS_URL = Deno.env.get('VPS_MCP_URL') || 'http://89.167.69.251:3100';
 const VPS_API_KEY = Deno.env.get('VPS_API_KEY') || '';
 const ANDREW_PHONE = '+447507241303';
@@ -129,7 +130,7 @@ async function checkVpsMcp(): Promise<ServiceCheck> {
 
 // ── Main handler ────────────────────────────────────────────────────
 
-Deno.serve(async (req) => {
+Deno.serve(withSentry('system-health', async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -237,4 +238,4 @@ Deno.serve(async (req) => {
       { status: 503, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
-});
+}));

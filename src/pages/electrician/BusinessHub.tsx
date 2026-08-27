@@ -44,7 +44,9 @@ import { useTimeTracker, formatDuration } from '@/hooks/useTimeTracker';
 import { usePortalBookings, splitBookings } from '@/hooks/usePortalBookings';
 import { Assistant } from '@/components/business-hub/Assistant';
 import { MateBar } from '@/components/business-hub/MateBar';
-import { NeedsYou } from '@/components/business-hub/NeedsYou';
+import DiaryPanel from '@/components/calendar/DiaryPanel';
+import { eventsOnDay, nextEventFrom } from '@/components/calendar/eventUtils';
+import { useDiaryEvents, diaryRange, DIARY_WINDOW_DAYS } from '@/hooks/useDiaryEvents';
 import { useBusinessInsights } from '@/hooks/useBusinessInsights';
 import { useHubToolCounts } from '@/hooks/useHubToolCounts';
 import {
@@ -114,58 +116,40 @@ const BusinessHub = () => {
    * already knows, and it sat in the slot every other card uses for its live
    * figure.
    *
-   * Deliberately NOT derived from usePortalBookings, which is already loaded
-   * on this page: that hook returns only bookings taken through the public
-   * link (it filters on the note the edge function writes), so a job entered
-   * by hand — most of them — would be missing and the card would confidently
-   * report a free day.
+   * Now read through `useDiaryEvents`, the same source the panel at the top of
+   * this page uses. It was a pair of hand-rolled queries against
+   * `calendar_events` alone, which meant the tile and the calendar could — and
+   * did — disagree: site visits, task due dates and project dates are all drawn
+   * on the calendar and none of them are rows in that table, so a day holding
+   * three of them reported "Nothing booked in".
+   *
+   * Deliberately NOT derived from usePortalBookings, which is already loaded on
+   * this page: that hook returns only bookings taken through the public link
+   * (it filters on the note the edge function writes), so a job entered by hand
+   * — most of them — would be missing for the opposite reason.
+   *
+   * Asks for exactly the window `DiaryPanel` asks for, so React Query serves it
+   * from the same cache entry and the second call costs nothing. Widening it
+   * here would not widen the panel — it would just fetch everything twice.
    */
-  const [diary, setDiary] = useState<{ today: number; next: { title: string; at: Date } | null }>({
-    today: 0,
-    next: null,
-  });
-  useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (!user || cancelled) return;
-      const startOfToday = new Date();
-      startOfToday.setHours(0, 0, 0, 0);
-      const endOfToday = new Date(startOfToday);
-      endOfToday.setDate(endOfToday.getDate() + 1);
-
-      const [todayRes, nextRes] = await Promise.all([
-        supabase
-          .from('calendar_events')
-          .select('id', { count: 'exact', head: true })
-          .eq('user_id', user.id)
-          .gte('start_at', startOfToday.toISOString())
-          .lt('start_at', endOfToday.toISOString()),
-        supabase
-          .from('calendar_events')
-          .select('title, start_at')
-          .eq('user_id', user.id)
-          .gte('start_at', endOfToday.toISOString())
-          .order('start_at', { ascending: true })
-          .limit(1)
-          .maybeSingle(),
-      ]);
-
-      if (cancelled) return;
-      const row = nextRes.data as { title: string | null; start_at: string } | null;
-      setDiary({
-        today: todayRes.count ?? 0,
-        next: row?.start_at
-          ? { title: row.title || 'Booked in', at: new Date(row.start_at) }
-          : null,
-      });
-    })();
-    return () => {
-      cancelled = true;
+  const diaryWindow = useMemo(() => diaryRange(DIARY_WINDOW_DAYS), []);
+  const { events: diaryEvents } = useDiaryEvents(diaryWindow.dateFrom, diaryWindow.dateTo);
+  const diary = useMemo(() => {
+    const today = eventsOnDay(diaryEvents, new Date());
+    const endOfToday = new Date();
+    endOfToday.setHours(23, 59, 59, 999);
+    // Clock order, not display order: `diaryEvents` is sorted with all-day
+    // work first, so `.find()` returned an all-day job later in the week ahead
+    // of tomorrow morning's eight o'clock.
+    const next = nextEventFrom(
+      diaryEvents.filter((e) => new Date(e.start_at) > endOfToday),
+      endOfToday
+    );
+    return {
+      today: today.length,
+      next: next ? { title: next.title || 'Booked in', at: new Date(next.start_at) } : null,
     };
-  }, []);
+  }, [diaryEvents]);
 
   const { tasks, saveTask, updateTask, deleteTask, markDone } = useSparkTasks('all');
   const { customers, saveCustomer, updateCustomer, deleteCustomer } = useCustomers();
@@ -462,7 +446,9 @@ const BusinessHub = () => {
                 day: 'numeric',
                 month: 'short',
               })}`
-            : 'Nothing booked in. Jobs, appointments and bookings.',
+            : // Only the week ahead is loaded (see DIARY_WINDOW_DAYS), so this
+              // is "nothing in the next seven days" and must not claim more.
+              'Nothing booked in this week. Jobs, appointments and bookings.',
       alert: diary.today > 0,
     },
     {
@@ -665,6 +651,12 @@ const BusinessHub = () => {
             figures are still one scroll away. */}
         <HubQuickStart label="Start something" items={quickStart} />
 
+        {/* The diary, above the money. If you run a business the calendar is
+            the first thing you look at in the morning and the last thing at
+            night — it does not belong six scrolls down as a tile with a count
+            on it. */}
+        <DiaryPanel />
+
         {/* Four KPIs, capped at four on purpose. The hub used to open with
             twenty equally-weighted launcher cards and no sense of whether the
             business was going well or badly. */}
@@ -736,17 +728,6 @@ const BusinessHub = () => {
             onClick={() => navigate('/electrician/projects')}
           />
         </HubKpiRow>
-
-        {/* The work itself, straight after the numbers that flagged it. The
-            KPI row says "4 overdue, oldest 153 days" — this is where you go
-            and do something about it, rather than hunting through Invoices. */}
-        <NeedsYou
-          invoices={invoices}
-          quotes={quotes}
-          tasks={tasks}
-          snags={snags}
-          draftVisitCount={draftVisitCount}
-        />
 
         <HubToolGrid label="Money" cards={money} columns="four" />
 

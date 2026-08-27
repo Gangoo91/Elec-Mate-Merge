@@ -18,6 +18,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { Resend, htmlToPlainText } from '../_shared/mailer.ts';
 import { sendSmartPush } from '../_shared/notification-engine.ts';
 
+import { withSentry } from '../_shared/sentry.ts';
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers':
@@ -77,7 +78,7 @@ function emailHtml(stage: Stage, days: number, client: string, address: string, 
   </div></body></html>`;
 }
 
-serve(async (req: Request) => {
+serve(withSentry('part-p-deadline-reminders', async (req: Request) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
 
   const supabaseUrl = Deno.env.get('SUPABASE_URL') as string;
@@ -208,4 +209,4 @@ serve(async (req: Request) => {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   }
-});
+}));

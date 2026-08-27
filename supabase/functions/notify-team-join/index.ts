@@ -12,9 +12,10 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.1';
 import { corsHeaders } from '../_shared/cors.ts';
 import { sendEmail } from '../_shared/mailer.ts';
 
+import { withSentry } from '../_shared/sentry.ts';
 const FOUNDER_EMAIL = 'andrewgangoo91@gmail.com';
 
-Deno.serve(async (req) => {
+Deno.serve(withSentry('notify-team-join', async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
   try {
     const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '';
@@ -78,4 +79,4 @@ Deno.serve(async (req) => {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   }
-});
+}));

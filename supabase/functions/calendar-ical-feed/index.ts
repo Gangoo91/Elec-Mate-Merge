@@ -9,10 +9,11 @@
 
 import { createClient } from '../_shared/deps.ts';
 
+import { withSentry } from '../_shared/sentry.ts';
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL')!;
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 
-Deno.serve(async (req: Request) => {
+Deno.serve(withSentry('calendar-ical-feed', async (req: Request) => {
   const url = new URL(req.url);
   const token = url.searchParams.get('token');
 
@@ -126,7 +127,7 @@ Deno.serve(async (req: Request) => {
       'Cache-Control': 'no-cache, no-store, must-revalidate',
     },
   });
-});
+}));
 
 // Format ISO date to iCalendar UTC format: 20260301T120000Z
 function formatIcsDate(isoDate: string): string {

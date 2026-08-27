@@ -10,6 +10,7 @@
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
 
+import { withSentry } from '../_shared/sentry.ts';
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET, OPTIONS',
@@ -18,7 +19,7 @@ const corsHeaders = {
 
 const VERSION = '16.1.0';
 
-Deno.serve(async (req: Request) => {
+Deno.serve(withSentry('lti-health', async (req: Request) => {
   if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers: corsHeaders });
   if (req.method !== 'GET') {
     return new Response(JSON.stringify({ error: 'method_not_allowed' }), {
@@ -106,4 +107,4 @@ Deno.serve(async (req: Request) => {
       'cache-control': 'no-store',
     },
   });
-});
+}));

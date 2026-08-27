@@ -194,10 +194,10 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     id: 10,
     question: 'Which document provides guidance on fire safety risk assessment?',
     options: [
-      'IET Wiring Regulations BS 7671',
-      'Building Regulations Approved Document M',
+      'The IET Wiring Regulations published as BS 7671',
+      'The Building Regulations Approved Document M on access',
       'HM Government Fire Safety Risk Assessment guides',
-      'CDM Regulations 2015 guidance',
+      'Guidance issued with the CDM Regulations 2015',
     ],
     correctAnswer: 2,
     explanation:
@@ -299,8 +299,8 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     options: [
       'Limited Detection 2',
       'Life Detection 2',
-      'Large Detection 2',
-      'Low-risk Domestic 2',
+      'Local Area Detection 2',
+      'Low-risk Dwelling Grade 2',
     ],
     correctAnswer: 0,
     explanation:
@@ -366,9 +366,9 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     question: 'What type of building would benefit most from a Category P1 system?',
     options: [
       'Warehouse storing valuable goods',
-      'Single-storey domestic bungalow',
-      'Open-air car park',
-      'Temporary site welfare cabin',
+      'A single-storey domestic bungalow home',
+      'An open-air car park serving offices',
+      'A temporary site welfare cabin on a site',
     ],
     correctAnswer: 0,
     explanation:
@@ -453,7 +453,7 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     options: [
       'Optical smoke detector',
       'Ionisation smoke detector',
-      'Heat detector',
+      'Fixed temperature heat detector',
       'Multi-sensor detector',
     ],
     correctAnswer: 1,
@@ -518,9 +518,9 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     id: 29,
     question: 'Which detector technology combines smoke and heat detection?',
     options: [
-      'Aspirating detector',
+      'Aspirating smoke detector',
       'Multi-sensor detector',
-      'Beam detector',
+      'Optical beam smoke detector',
       'Linear heat detector',
     ],
     correctAnswer: 1,
@@ -685,9 +685,9 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     id: 39,
     question: 'Which parameter is most important when selecting heat detectors?',
     options: [
-      'Response time',
-      'Power consumption',
-      'Physical size',
+      'The speed of the response',
+      'The power consumption figure',
+      'The physical size of the head',
       'Operating temperature',
     ],
     correctAnswer: 3,
@@ -719,10 +719,10 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     id: 41,
     question: 'Which visual alarm device characteristic is most important for effectiveness?',
     options: [
-      'Colour',
+      'The colour',
       'Light intensity',
-      'Flash rate',
-      'Physical size',
+      'The flash rate',
+      'The physical size',
     ],
     correctAnswer: 1,
     explanation:
@@ -787,9 +787,9 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     id: 45,
     question: 'Which type of manual call point requires a key to reset?',
     options: [
-      'Glass break type',
+      'Break glass element type',
       'Resettable element type',
-      'Key operated type',
+      'Key operated switch type',
       'Push button type',
     ],
     correctAnswer: 1,
@@ -841,9 +841,9 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     question: 'In open-plan offices, what factor determines detector spacing?',
     options: [
       'Both ceiling height and furniture layout',
-      'The colour of the floor covering',
-      'The number of staff employed',
-      'The brand of detector fitted',
+      'The colour of the floor covering that is used',
+      'The number of staff employed in the open-plan area',
+      'The brand of detector the contractor has fitted',
     ],
     correctAnswer: 0,
     explanation:
@@ -891,10 +891,10 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     id: 51,
     question: 'What is the recommended zone indication method for large complex buildings?',
     options: [
-      'A single common audible sounder',
+      'A single common audible sounder in each zone',
       'A zone plan combined with a text or graphic display',
       'Colour-coded indicator lamps with no labelling',
-      'A printed handout given to occupants',
+      'A printed handout given to the occupants of the building',
     ],
     correctAnswer: 1,
     explanation:
@@ -910,8 +910,8 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     options: [
       'Logically by floor/area',
       'By building function',
-      'Random arrangement',
-      'By detector type',
+      'In a completely random order',
+      'By the type of detector fitted',
     ],
     correctAnswer: 0,
     explanation:
@@ -958,9 +958,9 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     id: 55,
     question: 'In sloped ceiling applications, where should detectors be positioned?',
     options: [
-      'At the lowest point',
-      'At the highest point',
-      'Evenly distributed',
+      'At the lowest point of the ceiling',
+      'At the very highest point of the ceiling',
+      'Evenly spread across the whole ceiling',
       'Within 1m of the highest point',
     ],
     correctAnswer: 3,
@@ -1010,9 +1010,9 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     question: 'Which environmental condition most commonly causes false alarms in optical smoke detectors?',
     options: [
       'Steam and high humidity',
-      'Stable room temperature',
-      'Low background lighting',
-      'Constant air pressure',
+      'Stable room warmth',
+      'Low background light',
+      'Steady air pressure levels',
     ],
     correctAnswer: 0,
     explanation:
@@ -1027,8 +1027,8 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     question: 'In areas with high ceilings (>6m), what detection strategy is recommended?',
     options: [
       'Standard point detectors',
-      'Heat detectors only',
-      'More sensitive detectors',
+      'Heat detectors used on their own',
+      'More sensitive point detectors',
       'Aspirating detection systems',
     ],
     correctAnswer: 3,
@@ -1044,9 +1044,9 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     question: 'What is the purpose of detection zones in fire alarm design?',
     options: [
       'Location identification',
-      'Cost reduction',
-      'System redundancy',
-      'Maintenance scheduling',
+      'Reduction of installation cost',
+      'Redundancy within the system',
+      'Scheduling of maintenance visits',
     ],
     correctAnswer: 0,
     explanation:
@@ -1080,7 +1080,7 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
       'Use average dimensions',
       'Apply safety factors',
       'Divide into regular sections',
-      'Use engineering judgment',
+      'Use engineering judgement alone',
     ],
     correctAnswer: 2,
     explanation:
@@ -1232,9 +1232,9 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     id: 71,
     question: 'What type of cable is required for critical fire alarm circuits?',
     options: [
-      'Standard PVC twin-and-earth cable',
-      'Steel-wire armoured power cable',
-      'Screened data cable',
+      'Standard PVC twin-and-earth wiring cable',
+      'Steel-wire armoured power supply cable',
+      'Screened data transmission cable',
       'Fire-resistant (fire-rated) cable',
     ],
     correctAnswer: 3,
@@ -1284,10 +1284,10 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     id: 74,
     question: 'Which factor most affects battery standby time calculations?',
     options: [
-      'Ambient temperature',
-      'Battery age',
+      'The ambient temperature',
+      'The age of the battery set',
       'System load current',
-      'Cable length',
+      'The length of the cable run',
     ],
     correctAnswer: 2,
     explanation:
@@ -1387,9 +1387,9 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     question: 'Which cable installation method provides best fire resistance?',
     options: [
       'Embedded in structure',
-      'Conduit installation',
-      'Cable tray',
-      'Surface mounting',
+      'Installed in conduit',
+      'On cable tray',
+      'Mounted on the surface',
     ],
     correctAnswer: 0,
     explanation:
@@ -1419,7 +1419,7 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
   {
     id: 82,
     question: 'Which battery type is most commonly used in fire alarm systems?',
-    options: ['Nickel-cadmium', 'Lithium', 'Sealed lead-acid', 'Alkaline'],
+    options: ['Nickel-cadmium cells', 'Lithium-ion cells', 'Sealed lead-acid', 'Alkaline cells'],
     correctAnswer: 2,
     explanation:
       'Sealed lead-acid batteries are most commonly used in fire alarm systems due to their reliability and cost-effectiveness.',
@@ -1450,9 +1450,9 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     question: 'How should fire alarm cable joints be made?',
     options: [
       'Crimped connections',
-      'Soldered joints',
-      'Screw terminals',
-      'Wire nuts',
+      'Soldered joints in line',
+      'Screw terminals in a box',
+      'Twisted wire nut connectors',
     ],
     correctAnswer: 0,
     explanation:
@@ -1555,8 +1555,8 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     options: [
       'Verbally handed over to the client',
       'On the as-fitted zone and device drawings',
-      'Only inside each detector head',
-      'Solely in the manufacturer datasheet',
+      'Written inside each detector head only',
+      'Solely in the manufacturer product datasheet',
     ],
     correctAnswer: 1,
     explanation:
@@ -1570,9 +1570,9 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     id: 91,
     question: 'What training should be provided to building occupants?',
     options: [
-      'No training required',
+      'No training of any kind is required',
       'Evacuation procedures only',
-      'System operation only',
+      'System operation training only',
       'Both operation and evacuation',
     ],
     correctAnswer: 3,
@@ -1672,10 +1672,10 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     id: 97,
     question: 'What should happen if a detector fails commissioning tests?',
     options: [
-      'Isolate device',
+      'Isolate the device only',
       'Replace immediately',
-      'Adjust sensitivity',
-      'Record and continue',
+      'Adjust the sensitivity setting',
+      'Record it and carry on',
     ],
     correctAnswer: 1,
     explanation:
@@ -1774,10 +1774,10 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     id: 103,
     question: 'Which health and safety hazard is most often associated with installing detectors at ceiling level?',
     options: [
-      'Manual handling of heavy plant',
+      'Manual handling of heavy items of site plant',
       'Falls from height when working on access equipment',
-      'Exposure to asbestos in floor screed',
-      'Noise-induced hearing loss',
+      'Exposure to asbestos contained within the floor screed',
+      'Noise-induced hearing loss caused by the work',
     ],
     correctAnswer: 1,
     explanation:
@@ -1792,9 +1792,9 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     question: 'Which tool is essential for commissioning addressable systems?',
     options: [
       'Programming software',
-      'Multimeter',
-      'Oscilloscope',
-      'Insulation tester',
+      'A hand-held multimeter',
+      'An oscilloscope',
+      'An insulation test set',
     ],
     correctAnswer: 0,
     explanation:
@@ -1808,10 +1808,10 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     id: 105,
     question: 'What should be done if building works continue after system installation?',
     options: [
-      'Remove and reinstall',
+      'Remove it and reinstall it later',
       'Protect installed equipment',
-      'Temporary disconnection',
-      'No special measures',
+      'Disconnect the system temporarily',
+      'No special measures are needed',
     ],
     correctAnswer: 1,
     explanation:
@@ -1946,10 +1946,10 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     id: 113,
     question: 'What is the purpose of the weekly test?',
     options: [
-      'Full sensitivity testing of every detector',
+      'Full sensitivity testing of every detector head',
       'Basic operation verification of the system',
       'Replacement of the standby batteries',
-      'Recalibration of the control panel',
+      'Recalibration of the main control panel',
     ],
     correctAnswer: 1,
     explanation:
@@ -1980,9 +1980,9 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     id: 115,
     question: 'What level of training should a fire alarm service technician hold?',
     options: [
-      'General building maintenance experience only',
-      'A single half-day fire awareness session',
-      'No formal training if supervised remotely',
+      'General building maintenance experience and nothing else',
+      'A single half-day fire awareness session on site',
+      'No formal training at all where work is supervised remotely',
       'Fire alarm specific and product-specific competence',
     ],
     correctAnswer: 3,
@@ -2031,10 +2031,10 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     id: 118,
     question: 'Which test verifies that sounders achieve adequate audibility throughout the building?',
     options: [
-      'Insulation resistance test',
-      'Earth continuity test',
+      'An insulation resistance test of the wiring',
+      'An earth continuity test on the fixed cabling',
       'Sound pressure level (audibility) test',
-      'Battery load test',
+      'A load test on the standby batteries at the panel',
     ],
     correctAnswer: 2,
     explanation:
@@ -2048,9 +2048,9 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     id: 119,
     question: 'How often should evacuation drills be conducted?',
     options: [
-      'Weekly',
-      'Monthly',
-      'Quarterly',
+      'Once every week',
+      'Once every month',
+      'Once every three months',
       'Depends on building type',
     ],
     correctAnswer: 3,
@@ -2099,10 +2099,10 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     id: 122,
     question: 'Which document is most essential for a technician to consult during a routine service visit?',
     options: [
-      'The site fire risk assessment author CV',
+      'The CV of the author of the fire risk assessment',
       'The fire alarm log book and previous service records',
-      'The building lease agreement',
-      'The electrical installation condition report',
+      'The lease agreement covering the whole building',
+      'The electrical installation condition report for the site',
     ],
     correctAnswer: 1,
     explanation:
@@ -2134,9 +2134,9 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     question: 'What constitutes a fire alarm system failure?',
     options: [
       'Any safety-critical fault',
-      'Power supply failure',
-      'Single detector fault',
-      'Control panel fault',
+      'A power supply failure only',
+      'A single detector fault only',
+      'A control panel fault',
     ],
     correctAnswer: 0,
     explanation:
@@ -2150,10 +2150,10 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     id: 125,
     question: 'Which environmental factor most affects detector performance over time?',
     options: [
-      'Temperature',
+      'The ambient temperature',
       'Dust accumulation',
-      'Humidity',
-      'Light levels',
+      'The relative humidity',
+      'The level of background light',
     ],
     correctAnswer: 1,
     explanation:
@@ -2204,9 +2204,9 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     question: 'What is the maximum penalty for serious fire safety offences?',
     options: [
       'An unlimited fine and up to 2 years imprisonment',
-      'A fixed penalty notice of £5,000',
-      'A formal written warning only',
-      'A maximum fine of £1,000',
+      'A fixed penalty notice for a sum of £5,000',
+      'A formal written warning and nothing further',
+      'A maximum fine of £1,000 with no other penalty at all',
     ],
     correctAnswer: 0,
     explanation:
@@ -2220,10 +2220,10 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     id: 129,
     question: 'How often must fire risk assessments be reviewed?',
     options: [
-      'Once every ten years and no more often',
+      'Once in every ten years and no more often than that',
       'Whenever circumstances change that affect fire safety',
-      'Only when the building is sold to a new owner',
-      'Never, once it is first completed',
+      'Only when the building is sold on to a new owner or tenant',
+      'Never again, once it has been completed for the first time',
     ],
     correctAnswer: 1,
     explanation:
@@ -2254,9 +2254,9 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     id: 131,
     question: "What does 'third-party certification' mean for fire alarm companies?",
     options: [
-      'Self-declaration of competence by the installer',
-      'Approval granted by the equipment manufacturer',
-      'A guarantee from the client that work is acceptable',
+      'Self-declaration of competence made by the installing company',
+      'Approval granted by the manufacturer of the equipment installed',
+      'A guarantee from the client that the work carried out is acceptable',
       'Independent assessment of competence by an accredited body',
     ],
     correctAnswer: 3,
@@ -2389,9 +2389,9 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     id: 139,
     question: "What constitutes 'general fire precautions' under fire safety legislation?",
     options: [
-      'The provision of portable extinguishers alone',
-      'Only the structural fire resistance of the building',
-      'Solely the fire alarm detection system',
+      'The provision of portable fire extinguishers and nothing else',
+      'Only the structural fire resistance designed into the building',
+      'Solely the fire alarm and detection system installed within the building',
       'Measures for prevention, detection, warning, escape and firefighting',
     ],
     correctAnswer: 3,
@@ -2423,10 +2423,10 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     id: 141,
     question: 'What insurance implications arise from non-compliant fire alarm systems?',
     options: [
-      'No implications',
+      'No implications at all',
       'Policy voidance possible',
-      'Higher premiums only',
-      'Claim reduction only',
+      'Higher renewal premiums only',
+      'Reduction of any claim only',
     ],
     correctAnswer: 1,
     explanation:
@@ -2457,9 +2457,9 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     id: 143,
     question: 'What professional development is required for fire alarm engineers?',
     options: [
-      'A one-off qualification with no further training',
-      'Annual replacement of all hand tools',
-      'A single manufacturer induction course only',
+      'A one-off qualification with no further training at all',
+      'Annual replacement of all of the hand tools carried',
+      'A single manufacturer induction course at the outset',
       'Ongoing Continuing Professional Development (CPD)',
     ],
     correctAnswer: 3,
@@ -2475,9 +2475,9 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     question: 'How should conflicts between different standards be resolved?',
     options: [
       'Seek specialist advice',
-      'Use newest standard',
-      'Engineering judgment',
-      'Use oldest standard',
+      'Use the newest one',
+      'Engineering judgement',
+      'Use the oldest standard',
     ],
     correctAnswer: 0,
     explanation:
@@ -2493,8 +2493,8 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     options: [
       'Mandatory requirements',
       'Deemed-to-satisfy guidance',
-      'Historical reference',
-      'Optional recommendations',
+      'A historical reference only',
+      'Purely optional recommendations',
     ],
     correctAnswer: 1,
     explanation:
@@ -2525,9 +2525,9 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     id: 147,
     question: "What constitutes 'material change of use' requiring building control approval?",
     options: [
-      'Change in occupancy type',
-      'Increased fire risk',
-      'Any building modification',
+      'A change in the type of occupancy only',
+      'An increase in the fire risk only',
+      'Any modification made to the building',
       'Both occupancy and risk changes',
     ],
     correctAnswer: 3,
@@ -2579,7 +2579,7 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
       'Minimum cost',
       'Latest technology',
       'Fitness for purpose',
-      'Maximum features',
+      'The maximum features',
     ],
     correctAnswer: 2,
     explanation:
@@ -2595,9 +2595,9 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
       'An insurer requires automatic detection covering only the two areas identified as high fire risk, leaving the rest of the warehouse undetected. Which system category best describes this?',
     options: [
       'A Category P2 property protection system',
-      'A Category P1 property protection system',
+      'A Category P1 property protection system fitted',
       'A Category L2 life protection system',
-      'A Category L4 life protection system',
+      'A Category L4 life protection system fitted',
     ],
     correctAnswer: 0,
     explanation:
@@ -2630,10 +2630,10 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     question:
       'What does a Category M fire alarm system rely on to raise the alarm in a building?',
     options: [
-      'Automatic smoke detectors in circulation spaces',
+      'Automatic smoke detectors sited in circulation spaces',
       'Manual call points operated by building occupants',
-      'Automatic heat detectors in all high risk rooms',
-      'Aspirating detection sampling from occupied rooms',
+      'Automatic heat detectors fitted in every high risk room',
+      'Aspirating detection sampling air from the occupied rooms',
     ],
     correctAnswer: 1,
     explanation:

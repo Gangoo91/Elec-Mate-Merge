@@ -3,11 +3,13 @@ import { addDays, isSameDay, max as maxDate, min as minDate, startOfDay } from '
 import { useUpcomingEvents } from '@/hooks/useCalendarEvents';
 import { useSiteVisitsForCalendar } from '@/hooks/useSiteVisitsForCalendar';
 import {
+  buildDayShape,
   effectiveEnd,
   eventsOnDay,
   occupiesTime,
   totalHours,
 } from '@/components/calendar/eventUtils';
+import { useCalendarSettings } from '@/hooks/useCalendarSettings';
 import type { CalendarEvent } from '@/types/calendar';
 
 /** How far ahead the strip looks. Long enough to find a free day in a busy
@@ -20,7 +22,7 @@ export interface CalendarPulse {
   todayCount: number;
   /** Hours booked across today and the next six days. */
   weekHours: number;
-  /** First day from today with nothing booked on it, or null if the horizon is full. */
+  /** First day from today with room left on it, or null if the horizon is full. */
   nextFreeDay: Date | null;
   /** The next event still to come, today included. */
   nextEvent: CalendarEvent | null;
@@ -41,7 +43,11 @@ export interface CalendarPulse {
  * `occupiesTime`).
  */
 export function useCalendarPulse(): CalendarPulse {
+  const { settings } = useCalendarSettings();
   const today = startOfDay(new Date());
+  // Extracted so the dependency array below is a plain identifier — eslint
+  // cannot statically check `today.getTime()` inside one.
+  const todayMs = today.getTime();
   const from = today.toISOString();
   const to = addDays(today, HORIZON_DAYS).toISOString();
 
@@ -65,10 +71,28 @@ export function useCalendarPulse(): CalendarPulse {
         end_at: minDate([effectiveEnd(e), weekEnd]).toISOString(),
       }));
 
+    /*
+     * The first day with ROOM on it, not the first empty one.
+     *
+     * This was `eventsOnDay(...).length === 0`, which is only the same question
+     * when you can run one job at a time. Someone who has told the app they can
+     * run three was being sent past every Tuesday that had a single callout on
+     * it, to the first completely empty day three weeks out — the exact opposite
+     * of what "next free" is for. Same `buildDayShape` walk the day sheet uses,
+     * so the strip and the sheet cannot disagree about whether Tuesday is free.
+     */
     let nextFreeDay: Date | null = null;
     for (let i = 0; i < HORIZON_DAYS; i++) {
       const day = addDays(today, i);
-      if (eventsOnDay(booked, day).length === 0) {
+      const shape = buildDayShape(
+        eventsOnDay(booked, day),
+        day,
+        settings.workingHoursStart,
+        settings.workingHoursEnd,
+        30,
+        settings.jobsAtOnce
+      );
+      if (shape.freeMinutes > 0) {
         nextFreeDay = day;
         break;
       }
@@ -88,7 +112,18 @@ export function useCalendarPulse(): CalendarPulse {
       loading: isLoading || visitsLoading,
     };
     // `today` is derived from the clock; keying on its timestamp keeps the memo
-    // stable within a day instead of recomputing on every render.
+    // stable within a day instead of recomputing on every render. The three
+    // settings are listed individually for the same reason — `settings` is a
+    // fresh object on every render of the hook that owns it.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [events, visits, today.getTime(), isLoading, visitsLoading]);
+  }, [
+    events,
+    visits,
+    todayMs,
+    isLoading,
+    visitsLoading,
+    settings.workingHoursStart,
+    settings.workingHoursEnd,
+    settings.jobsAtOnce,
+  ]);
 }

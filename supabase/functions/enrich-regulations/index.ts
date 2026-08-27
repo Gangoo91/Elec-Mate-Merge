@@ -10,6 +10,7 @@ import { serve } from '../_shared/deps.ts';
 import { createClient } from '../_shared/deps.ts';
 import { withTimeout, Timeouts, TimeoutError } from '../_shared/timeout.ts';
 
+import { withSentry } from '../_shared/sentry.ts';
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers':
@@ -18,7 +19,7 @@ const corsHeaders = {
 
 const ENRICHMENT_VERSION = 'v1';
 
-serve(async (req) => {
+serve(withSentry('enrich-regulations', async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -66,7 +67,7 @@ serve(async (req) => {
       }
     );
   }
-});
+}));
 
 // Background worker function
 async function processInBackground(

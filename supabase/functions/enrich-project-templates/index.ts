@@ -2,6 +2,7 @@ import 'https://deno.land/x/xhr@0.1.0/mod.ts';
 import { serve } from '../_shared/deps.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
+import { withSentry } from '../_shared/sentry.ts';
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers':
@@ -10,7 +11,7 @@ const corsHeaders = {
 
 const ENRICHMENT_VERSION = 'v1';
 
-serve(async (req) => {
+serve(withSentry('enrich-project-templates', async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -218,7 +219,7 @@ Extract project frameworks and templates. Return JSON array:
       }
     );
   }
-});
+}));
 
 /**
  * Call OpenAI with timeout (60s) and retry (3 attempts)

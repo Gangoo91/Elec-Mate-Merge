@@ -151,10 +151,10 @@ export const emotionalIntelligenceQuestionBank: StandardMockQuestion[] = [
     question:
       'In the Salovey-Mayer four-branch model, what is the correct sequence of emotional abilities from most basic to most complex?',
     options: [
-      'Using emotions → Managing emotions → Perceiving emotions → Understanding emotions',
-      'Managing emotions → Understanding emotions → Using emotions → Perceiving emotions',
+      'Using emotions to facilitate thought → Managing emotions → Perceiving emotions → Understanding emotions',
+      'Managing emotions → Understanding emotions → Using emotions to facilitate thought → Perceiving emotions',
       'Perceiving emotions → Using emotions to facilitate thought → Understanding emotions → Managing emotions',
-      'Understanding emotions → Perceiving emotions → Managing emotions → Using emotions',
+      'Understanding emotions → Perceiving emotions → Managing emotions → Using emotions to facilitate thought',
     ] as const,
     correctAnswer: 2,
     explanation:

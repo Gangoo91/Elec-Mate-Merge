@@ -831,9 +831,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question: "What is Covey's Habit 5?",
     options: [
       'Seek first to understand, then to be understood',
-      'Begin with the end in mind',
-      'Put first things first',
-      'Sharpen the saw',
+      'Begin with the end in mind, then delegate the detail',
+      'Put first things first, before seeking to understand',
+      'Sharpen the saw by renewing yourself in four areas',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -1861,9 +1861,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question:
       'Regarding Amy Cuddy research on body language and confidence, which statement is most accurate?',
     options: [
-      'The hormonal effects of power posing have been fully confirmed by repeated studies',
-      'Power posing has been shown to reliably improve audience perception of the speaker',
-      'The research proved that posture has no effect on confidence whatsoever',
+      'The hormonal effects reported in the original power posing study have been confirmed by repeated independent replications, and are now the best-supported part of the finding',
+      'Power posing reliably improves how an audience perceives the speaker, while its effect on the speaker\'s own subjective feelings of confidence has never found any support',
+      'The replication studies established that posture has no effect on either hormone levels or subjective feelings of confidence, leaving no supported element of the claim',
       'The original hormonal claims have been debated in replication studies, but the finding that expansive postures can increase subjective feelings of confidence has more support',
     ] as const,
     correctAnswer: 3,
@@ -2090,9 +2090,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
       'A project manager needs a reluctant electrician to deliver a toolbox talk. Applying all four Bandura self-efficacy sources, which approach is most effective?',
     options: [
       'Let them observe a colleague (vicarious), encourage them (social persuasion), help them prepare to reduce anxiety (emotional state), then start with a small group (mastery)',
-      'Order them to deliver the talk to the whole site immediately with no preparation',
-      'Provide written notes and leave them to deliver the talk without any support',
-      'Wait until they volunteer, since confidence cannot be developed deliberately',
+      'Order them to deliver the talk to the whole site immediately with no preparation (mastery), and treat any nerves beforehand as a sign the job should go to somebody else',
+      'Provide written notes (vicarious), tell them their nerves are irrelevant (emotional state), and leave them to deliver the talk to the full site without watching anyone',
+      'Wait until they volunteer, since Bandura treats self-efficacy as a fixed trait that cannot be raised by practice, encouragement or watching a colleague deliver a talk',
     ] as const,
     correctAnswer: 0,
     explanation:
@@ -2142,9 +2142,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the relationship between Bandura self-efficacy theory and Toastmasters Pathways?',
     options: [
-      'Toastmasters contradicts Bandura theory by relying solely on social persuasion',
-      'Toastmasters and Bandura theory address completely unrelated skills',
-      'Toastmasters predates Bandura and inspired his self-efficacy research',
+      'Toastmasters contradicts Bandura theory by relying solely on social persuasion through evaluations, with no progressive challenges, no observation of other speakers and no anxiety management',
+      'Toastmasters and Bandura theory address unrelated skills, since Pathways develops written material for print while self-efficacy concerns physical performance in sport rather than speaking',
+      'Toastmasters predates Bandura and inspired his self-efficacy research, which he built from its evaluation system rather than from mastery experiences, and it therefore omits vicarious learning',
       'Toastmasters operationalises Bandura theory: mastery through progressive challenges, vicarious learning, social persuasion through evaluations, and managing anxiety through practice',
     ] as const,
     correctAnswer: 3,
@@ -2161,9 +2161,9 @@ export const communicationConfidenceQuestionBank: StandardMockQuestion[] = [
       'A contractor avoids speaking in meetings, claiming "I am not a natural speaker." Using Dweck growth mindset, how should this be addressed?',
     options: [
       'Help them reframe from "I am not a speaker" (fixed) to "I have not developed this skill yet" (growth), then create opportunities for gradual practice',
-      'Accept that some people are simply not built for speaking and excuse them from meetings',
-      'Insist they speak at every meeting until the fear is forced out of them',
-      'Reassure them that speaking skills are irrelevant to their trade anyway',
+      'Accept that speaking ability is a fixed trait some people are born without, and excuse them from meetings so that the fear is never triggered at work',
+      'Insist they speak at every meeting until the fear is forced out of them, treating repeated exposure without preparation as the fastest route to confidence',
+      'Reassure them that speaking skills are irrelevant to a trade where the work speaks for itself, and pass their points to the site supervisor instead',
     ] as const,
     correctAnswer: 0,
     explanation:

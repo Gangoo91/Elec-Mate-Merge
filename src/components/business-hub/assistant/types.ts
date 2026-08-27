@@ -7,7 +7,7 @@ import type {
   SparkProject,
   CreateProjectInput,
 } from '@/hooks/useSparkProjects';
-import type { Customer } from '@/hooks/useCustomers';
+import type { Customer } from '@/hooks/inspection/useCustomers';
 
 export type ChatRole = 'user' | 'assistant';
 

@@ -69,6 +69,17 @@ export function useEICRSmartForm(formData: any, onUpdate?: (field: string, value
       });
     }
 
+    /*
+     * ⚠️ Checks 3 and 4 are INERT — formData.intakeCableSize has not been
+     * populated since the field was cut on 8 Jun 2026 (67b569a3b). Left in
+     * place rather than deleted: they are correct, and they start working
+     * again the moment a supply-CSA input exists.
+     *
+     * What is switched off: Reg 433.1 supply-cable-vs-device coordination,
+     * and the Table 54.8 main-bonding check. Under PME the bonding conductor
+     * is selected from the PEN conductor of the supply, so tailsSize is NOT
+     * a substitute — different conductor. 582 of 729 live EICRs are TN-C-S.
+     */
     // 3. Intake cable vs main fuse coordination
     if (formData.intakeCableSize && formData.mainSwitchRating) {
       const cableSize = formData.intakeCableSize.replace('mm²', '').replace('mm', '').trim();

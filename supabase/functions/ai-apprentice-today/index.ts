@@ -7,6 +7,7 @@
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
 
+import { withSentry } from '../_shared/sentry.ts';
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
@@ -117,7 +118,7 @@ async function authorise(req: Request) {
   return { ok: true as const, uid: data.user.id, email: data.user.email };
 }
 
-Deno.serve(async (req) => {
+Deno.serve(withSentry('ai-apprentice-today', async (req) => {
   if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers: corsHeaders });
   if (req.method !== 'POST')
     return new Response(JSON.stringify({ error: 'method_not_allowed' }), {
@@ -296,4 +297,4 @@ Pick 1-3 things to do TODAY. Quality over quantity.`;
   return new Response(JSON.stringify({ brief: stored, cached: false }), {
     headers: { ...corsHeaders, 'content-type': 'application/json' },
   });
-});
+}));

@@ -81,10 +81,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     id: 2,
     question: 'Which of the following is a key characteristic of a confined space?',
     options: [
-      'It must be completely sealed with no openings to the outside atmosphere',
-      'It must be smaller than the minimum dimensions specified in the regulations',
+      'It must be completely sealed on every side with no openings at all to the outside atmosphere',
+      'It must be smaller than the minimum internal dimensions specified in the regulations',
       'It must be substantially enclosed and have a reasonably foreseeable risk of serious injury',
-      'It must be situated underground or below the surrounding ground level',
+      'It must be situated underground or below the level of the surrounding ground level',
     ],
     correctAnswer: 2,
     explanation:
@@ -133,10 +133,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       'A room with poor ventilation that is used for spray painting could be classified as a confined space. Why?',
     options: [
-      'Because any room in which industrial coating or paint spraying is carried out is automatically classed as a confined space',
+      'Because any room in which industrial coating or paint spraying is carried out is automatically classed as a confined space by the regulations',
       'Because the build-up of flammable vapours or toxic fumes in a substantially enclosed space creates a foreseeable risk of serious injury',
-      'Because spray painting always requires self-contained breathing apparatus, and any BA task counts as a confined space entry',
-      'Because the room is too small for two workers to occupy at once, and single-occupancy rooms are classed as confined spaces',
+      'Because spray painting always requires self-contained breathing apparatus, and any BA task counts as a confined space entry under the regulations',
+      'Because the room is too small for two workers to occupy at once, and all single-occupancy rooms are classed as confined spaces in law',
     ],
     correctAnswer: 1,
     explanation:
@@ -150,10 +150,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     id: 6,
     question: 'True or false: A confined space must always be small or cramped.',
     options: [
-      'False — only spaces less than two metres in height are classed as confined',
-      'True — a confined space is by definition physically restrictive and cramped',
+      'False — only spaces that are less than two metres in height are classed as confined spaces',
+      'True — a confined space is by definition physically restrictive and cramped to work in',
       'False — a confined space can be any size; it is the risk and enclosure that define it',
-      'True — if you can stand fully upright and move freely it is not confined',
+      'True — if you can stand fully upright inside and move about freely it is not confined at all',
     ],
     correctAnswer: 2,
     explanation:
@@ -168,9 +168,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       'Which of the following best describes why manholes and inspection chambers can be confined spaces?',
     options: [
-      'They are almost always sited in the public highway, and any excavation in the highway falls within the confined spaces rules',
-      'They are fitted with a removable cover, and any substantially enclosed space with a liftable lid counts as a confined space',
-      'They are entered only occasionally, so the atmosphere is always safe provided the cover has been left off for a few minutes',
+      'They are almost always sited in the public highway, and any excavation made in the public highway falls within the confined spaces rules',
+      'They are fitted with a removable cover, and any substantially enclosed space with a liftable lid counts as a confined space in law',
+      'They are entered only occasionally, so the atmosphere is always safe provided the cover has been left off for a few minutes first',
       'They are substantially enclosed with limited access, and may contain hazardous atmospheres from decomposing material or leaked services',
     ],
     correctAnswer: 3,
@@ -220,10 +220,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       'A vat that was recently emptied of a solvent-based product is being prepared for maintenance. What makes it a confined space?',
     options: [
-      'Once the bulk product has been drained out, the residual film on the walls is harmless and the vessel can be entered freely',
-      'It only becomes a confined space at the moment maintenance work actually starts inside it, not while it is standing empty',
+      'Once the bulk product has been drained out, the residual film on the walls is harmless and the vessel can then be entered freely at once',
+      'It only becomes a confined space at the moment maintenance work actually starts inside it, not while it is simply standing empty and idle',
       'It is substantially enclosed and residual vapours create a foreseeable risk of serious injury from flammable or toxic atmospheres',
-      'It is large enough for a person to stand upright inside, and any vessel a person can stand in is classed as a confined space',
+      'It is large enough for a person to stand upright inside, and any vessel a person can stand up in is classed as a confined space',
     ],
     correctAnswer: 2,
     explanation:
@@ -237,9 +237,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     id: 11,
     question: 'Why might a large open-topped water tank still be considered a confined space?',
     options: [
-      'Because any vessel that holds more than a set volume of water is automatically classed as confined',
-      'Because an open top means natural ventilation can never reach a safe level inside the tank',
-      'Because water always gives off oxygen-depleting vapours regardless of how the tank is treated',
+      'Because any tank that holds more than a set volume of water is automatically classed as a confined space in law',
+      'Because an open top means that natural ventilation can never reach a safe level inside the tank itself at all',
+      'Because stored water always gives off oxygen-depleting vapours regardless of how the tank has been treated or lined',
       'Because the depth and limited access could trap a person, and biological or chemical hazards may be present',
     ],
     correctAnswer: 3,
@@ -256,9 +256,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
       'Which of the following scenarios describes a space that could become a confined space due to the work activity?',
     options: [
       'A basement room where solvent-based coatings are being applied, causing a build-up of vapours',
-      'An outdoor car park where cable trenches are being excavated in the open air',
-      'A well-ventilated workshop where bench testing of equipment is taking place',
-      'A naturally ventilated corridor where light fittings are being replaced from a stepladder',
+      'An outdoor car park where cable trenches are being excavated and then backfilled in the open air',
+      'A well-ventilated workshop where bench testing of electrical equipment is taking place',
+      'A naturally ventilated corridor where light fittings are being changed from a stepladder',
     ],
     correctAnswer: 0,
     explanation:
@@ -272,10 +272,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     id: 13,
     question: "In the context of confined spaces, what does 'substantially enclosed' mean?",
     options: [
-      'The space must be completely sealed on all sides with no openings whatsoever',
+      'The space must be completely sealed on all sides, with no openings of any kind for entry or for ventilation purposes',
       'The space is mostly enclosed by walls, floor, or ceiling, though it may have openings for entry or ventilation',
-      'The space contains a substantial quantity of hazardous material or stored energy',
-      'The space is enclosed by a structure that is substantial enough to support a person climbing on it',
+      'The space contains a substantial quantity of hazardous material or of stored energy of some kind held within it',
+      'The space is enclosed by a structure that is substantial enough to support a person climbing up on it safely',
     ],
     correctAnswer: 1,
     explanation:
@@ -290,10 +290,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       'A cable duct runs beneath a factory floor and is accessed via a hatch. Why is this a confined space?',
     options: [
-      'Because it carries electrical cables, and any duct or enclosure containing live cables is classed as confined by default',
-      'Because it lies below a factory floor, and every sub-floor void is automatically a confined space whatever its condition',
+      'Because it carries electrical cables, and any duct or enclosure containing live cables is classed as confined by default on site',
+      'Because it lies below a factory floor, and every sub-floor void is automatically a confined space whatever its actual condition may be',
       'Because it is substantially enclosed with limited access, and could contain hazardous atmospheres, flooding, or cable faults',
-      'Because the access hatch can be locked from above, and any space that can be locked from outside is treated as confined',
+      'Because the access hatch can be locked from above, and any space that can be locked from the outside is treated as confined in law',
     ],
     correctAnswer: 2,
     explanation:
@@ -307,9 +307,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     id: 15,
     question: 'Which of the following is NOT a reason a space may be classified as confined?',
     options: [
-      'Risk of oxygen depletion',
-      'Risk of flooding or engulfment',
-      'Risk of exposure to toxic gases',
+      'Risk of oxygen depletion inside the space',
+      'Risk of flooding or of engulfment',
+      'Risk of exposure to toxic gas',
       'Risk of getting a mobile phone signal',
     ],
     correctAnswer: 3,
@@ -325,9 +325,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question: 'What role does ventilation play in determining whether a space is confined?',
     options: [
       'Limited natural ventilation can allow hazardous atmospheres to accumulate, contributing to the foreseeable risk that defines a confined space',
-      'Ventilation has no bearing on classification, which depends solely on the dimensions of the space and its access openings',
-      'A space is confined only where it has no ventilation openings of any kind, so a single airbrick removes it from the scope',
-      'Running mechanical ventilation permanently removes a space from the scope of the regulations, so no assessment is needed',
+      'Ventilation has no bearing on classification, which depends solely on the physical dimensions of the space and on the size of its access openings',
+      'A space is confined only where it has no ventilation openings of any kind, so a single airbrick is enough to remove it from the scope of the rules',
+      'Running mechanical ventilation permanently removes a space from the scope of the regulations, so no assessment of the space is needed at all',
     ],
     correctAnswer: 0,
     explanation:
@@ -377,9 +377,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     id: 19,
     question: "What is meant by the term 'specified risk' in relation to confined spaces?",
     options: [
-      'A risk that has been specifically written onto the entry permit and countersigned by the authorised person issuing it',
-      'A minor, trade-specific risk that applies only to the contractor carrying out the work rather than to the space itself',
-      'A risk that is identified only after an incident has occurred inside the space and has been formally investigated by the enforcing authority',
+      'A risk that has been specifically written onto the entry permit and then countersigned by the authorised person who issues the permit for the entry',
+      'A minor, trade-specific risk that applies only to the contractor who is carrying out the work rather than to the space itself or to its own contents',
+      'A risk that is identified only after an incident has occurred inside the space and has been formally investigated by the enforcing authority afterwards',
       'A serious risk of injury arising from conditions in or associated with a confined space, such as flammable atmospheres, toxic gases, or engulfment',
     ],
     correctAnswer: 3,
@@ -396,9 +396,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
       'Which of the following correctly lists examples of confined spaces an electrician might work in?',
     options: [
       'Cable ducts, distribution board cupboards in basements, underground chambers, and switch rooms with restricted ventilation',
-      'Open rooftops, external scaffold lifts, exposed cable trays, and naturally ventilated plant yards outside the building',
-      'Domestic living rooms, retail shop floors, open-plan offices, and ground-floor reception areas with mechanical ventilation',
-      'Car park ramps, loading bays, external service yards, and covered walkways that are open to the air at both of their ends',
+      'Open rooftops, external scaffold lifts, exposed cable trays, and naturally ventilated plant yards outside the main building',
+      'Domestic living rooms, retail shop floors, open-plan offices, and ground-floor receptions with mechanical ventilation',
+      'Car park ramps, loading bays, external service yards, and covered walkways that are open to the air at both of the ends',
     ],
     correctAnswer: 0,
     explanation:
@@ -412,10 +412,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     id: 21,
     question: 'Can a space that is not normally classified as confined become one temporarily?',
     options: [
-      'No — a space is classified once when it is first surveyed and that classification can never be changed afterwards',
+      'No — a space is classified once when it is first surveyed and that classification can never be changed again afterwards',
       'Yes — work activities or changing conditions can introduce foreseeable risks that temporarily make a space confined',
-      'No — only spaces that are below ground level or fully sealed can ever be classified as confined spaces',
-      'Yes — but only where the space is physically altered by building work so that its internal volume is reduced',
+      'No — only spaces that are sited below ground level or are fully sealed can ever be classified as confined spaces in law',
+      'Yes — but only where the space is physically altered by building work so that its own internal volume is reduced',
     ],
     correctAnswer: 1,
     explanation:
@@ -430,10 +430,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       'A silo containing grain is an example of a confined space. What specific risks does it present?',
     options: [
-      'Electric shock from buried cables, arc flash, and excessive ambient noise',
-      'Flooding from water mains, leptospirosis from rats, and exposure to raw sewage',
+      'Electric shock from buried live cables, arc flash burns, and excessive levels of ambient noise and vibration',
+      'Flooding from burst water mains, leptospirosis from rats, and exposure to raw untreated sewage and sludge',
       'Engulfment by free-flowing grain, oxygen depletion from grain respiration, and dust explosion risk',
-      'Oxygen enrichment from leaking cylinders, chemical burns, and exposure to solvent vapours',
+      'Oxygen enrichment from leaking gas cylinders, chemical burns, and exposure to solvent vapours and fumes',
     ],
     correctAnswer: 2,
     explanation:
@@ -448,9 +448,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       "What is the significance of 'limited means of access or egress' when identifying a confined space?",
     options: [
-      'It means the opening is sized so that only one worker may be inside the space at a time, so a second entrant can never be authorised on the permit',
-      'It indicates the space is small enough for atmospheric monitoring to be omitted, because any hazardous gas would escape through the opening',
-      'It shows the space is sealed well enough to keep contaminants out, so hazardous substances are unlikely to be present inside it',
+      'It means the opening is sized so that only one worker may be inside the space at a time, so a second entrant can never be authorised on the entry permit at all',
+      'It indicates the space is small enough for atmospheric monitoring to be omitted, because any hazardous gas present would escape through the opening',
+      'It shows the space is sealed well enough to keep contaminants out, so hazardous substances are very unlikely to be present inside it during the work',
       'Restricted entry and exit points make it harder to escape in an emergency and harder for rescuers to reach a casualty, increasing the severity of any incident',
     ],
     correctAnswer: 3,
@@ -501,10 +501,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     id: 26,
     question: "What does the term 'engulfment' mean in the context of confined spaces?",
     options: [
-      'Being overcome by a build-up of toxic gas released from disturbed sludge',
-      'Being unable to move because bulky breathing apparatus blocks the hatch',
+      'Being overcome by a sudden build-up of toxic gas released from sludge that is disturbed',
+      'Being unable to move because a bulky breathing apparatus set blocks the access hatch',
       'Being trapped or buried by a free-flowing substance such as grain, sand, or liquid',
-      'Being trapped by the sudden closing of a self-latching access cover',
+      'Being trapped by the sudden closing of a heavy self-latching access cover above',
     ],
     correctAnswer: 2,
     explanation:
@@ -518,9 +518,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     id: 27,
     question: 'Why are sewers particularly hazardous confined spaces?',
     options: [
-      'Because the continuous flow of effluent keeps the atmosphere ventilated at all times, so a single pre-entry gas test taken at the surface is valid for the whole shift',
-      'Because water standing in the invert absorbs any toxic gas produced, leaving oxygen depletion from rusting ironwork as the only real hazard',
-      'Because they are built from brick and concrete, which are non-conductive, so static charge builds up and provides the main source of ignition',
+      'Because the continuous flow of effluent keeps the atmosphere ventilated at all times, so a single pre-entry gas test taken at the surface remains valid for the whole shift of work',
+      'Because the water standing in the invert absorbs any toxic gas that is produced, leaving oxygen depletion from rusting ironwork as the only real hazard to entrants inside the sewer',
+      'Because they are built from brick and concrete, which are non-conductive, so static charge builds up on the walls and provides the main source of ignition in the sewer network itself',
       'Because they contain decomposing organic matter producing toxic gases such as hydrogen sulphide, methane, and carbon dioxide, with oxygen depletion and risk of sudden flooding',
     ],
     correctAnswer: 3,
@@ -537,9 +537,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
       'How does a risk assessment determine whether a space should be treated as a confined space?',
     options: [
       'By evaluating whether the space is substantially enclosed and whether there is a foreseeable risk of serious injury from hazardous conditions',
-      'By measuring whether the floor area and headroom of the space fall below the dimensional thresholds set out in the regulations',
-      'By checking whether the space has more than one means of access and egress, since two openings remove it from the definition',
-      'By confirming whether the space has previously been the subject of a reportable incident or an HSE improvement notice',
+      'By measuring whether the floor area and the headroom of the space fall below the minimum dimensional thresholds set out in the regulations themselves',
+      'By checking whether the space has more than one means of access and egress, since two such openings remove it from the definition altogether',
+      'By confirming whether the space has previously been the subject of a reportable incident or of an HSE improvement notice being served on it',
     ],
     correctAnswer: 0,
     explanation:
@@ -554,10 +554,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       'Which of the following scenarios demonstrates why confined space awareness is critical for electrical workers?',
     options: [
-      'An electrician replacing a ceiling luminaire in a well-ventilated open-plan office using a mobile access platform',
+      'An electrician replacing a ceiling luminaire in a well-ventilated open-plan office using a mobile elevating work platform indoors',
       'An electrician entering a below-ground cable chamber that has accumulated heavier-than-air gases from a nearby gas main leak',
-      'An electrician terminating cables at a distribution board in an open plant room with opening windows on two walls',
-      'An electrician fitting external floodlights from a mobile scaffold tower in the open air at the rear of a building',
+      'An electrician terminating cables at a distribution board in an open plant room with opening windows and doors on two of the walls',
+      'An electrician fitting external floodlights from a mobile scaffold tower in the open air at the rear of a large building',
     ],
     correctAnswer: 1,
     explanation:
@@ -571,10 +571,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     id: 30,
     question: "What is the difference between a 'confined space' and a 'restricted space'?",
     options: [
-      'A confined space is always located below ground level, while a restricted space is any cramped working area situated above ground inside a building or plant',
-      'A confined space requires a permit to work in every case, while a restricted space requires only a verbal briefing from the supervisor',
+      'A confined space is always located below ground level, while a restricted space is any cramped working area situated above ground inside a building or a plant room on site',
+      'A confined space requires a permit to work in every single case, while a restricted space requires only a verbal briefing from the supervisor on site before entry is made',
       'A confined space has foreseeable risks of serious injury from hazardous conditions, while a restricted space simply has limited physical room to work but no such risks',
-      'A confined space is one that is kept locked, while a restricted space is one where access is controlled by a card or pass system',
+      'A confined space is one that is kept locked at all times, while a restricted space is one where access is controlled by a card or a pass system at the door into it instead',
     ],
     correctAnswer: 2,
     explanation:
@@ -589,9 +589,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       'In multi-service utility tunnels, what confined space hazards might combine to create an especially dangerous environment?',
     options: [
-      'Bright permanent lighting, dry conditions, and forced fresh air, which together make any hazard easy to detect before entry',
-      'Grain engulfment, dust explosion, and oxygen depletion caused by decomposition of agricultural material stored in the tunnel',
-      'Static build-up from plastic ducting and the risk of slipping on smooth painted floors while carrying heavy cable drums',
+      'Bright permanent lighting, dry conditions, and forced fresh air, which together make any hazard easy to detect before entry is made at all',
+      'Grain engulfment, dust explosion, and oxygen depletion caused by the decomposition of agricultural material stored in the tunnel',
+      'Static build-up from plastic ducting and the risk of slipping on smooth painted floors while carrying heavy cable drums along it',
       'Gas leaks from gas mains, oxygen depletion, flooding from water mains, electrical hazards from HV/LV cables, and limited egress points',
     ],
     correctAnswer: 3,
@@ -607,9 +607,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question: "What is meant by 'foreseeable risk' in the confined spaces definition?",
     options: [
       'A risk that a reasonable, competent person could anticipate might occur given the nature of the space and the work to be done',
-      'A risk that has already caused at least one reportable incident in that particular space within the previous three years',
-      'A risk that only becomes relevant once atmospheric monitoring at the entry point has confirmed that it is actually present',
-      'A risk so severe that entry to the space must be prohibited under all circumstances, whatever precautions are available',
+      'A risk that has already caused at least one reportable incident in that particular space within the previous three years or so',
+      'A risk that only becomes relevant once atmospheric monitoring at the entry point has confirmed that it is actually present inside',
+      'A risk so severe that entry to the space must be prohibited under all circumstances, whatever precautions may be available',
     ],
     correctAnswer: 0,
     explanation:
@@ -624,10 +624,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       'Why is it important to consider adjacent spaces and activities when assessing whether a space is confined?',
     options: [
-      'Because every space adjoining the one being entered must be evacuated and locked out before the entry permit can be issued',
+      'Because every space adjoining the one being entered must be evacuated and locked out completely before the entry permit can be issued at all',
       'Because hazards from nearby processes, storage, or services can migrate into the space being assessed through walls, pipes, or the ground',
-      'Because the regulations require each adjoining room to hold its own separate entry permit for the duration of the work',
-      'Because the activities next door determine how many rescue personnel must be held on standby at the entry point',
+      'Because the regulations require each adjoining room to hold its own separate entry permit for the whole of the duration of the work itself',
+      'Because the activities going on next door determine how many rescue personnel must be held on standby at the entry point throughout the entry',
     ],
     correctAnswer: 1,
     explanation:
@@ -641,10 +641,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     id: 34,
     question: 'Which of the following is true about confined spaces in domestic settings?',
     options: [
-      'Confined spaces cannot exist in domestic premises, because the Confined Spaces Regulations 1997 apply only to industrial and commercial workplaces',
-      'Any room in a domestic dwelling automatically counts as a confined space while contractors are carrying out work inside it',
+      'Confined spaces cannot exist in domestic premises, because the Confined Spaces Regulations 1997 apply only to industrial and commercial workplaces of any kind at all',
+      'Any room in a domestic dwelling counts as a confined space while contractors of any trade are carrying out any kind of work inside it at the time on site',
       'Domestic loft spaces and cellars can be confined spaces if they are substantially enclosed with foreseeable risks such as poor ventilation and gas accumulation',
-      'Domestic confined spaces are exempt from the regulations provided the householder gives written permission for the work',
+      'Domestic confined spaces are exempt from the regulations provided that the householder has given their written permission for the work to go ahead beforehand',
     ],
     correctAnswer: 2,
     explanation:
@@ -658,9 +658,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     id: 35,
     question: 'What makes a void above a false ceiling a potential confined space?',
     options: [
-      'Any void located above head height is automatically classed as a confined space, whatever its size, ventilation or contents',
-      'The void contains lighting and power cables, and the presence of live cables alone is enough to define a confined space',
-      'The void can only be reached from a ladder, and any space needing ladder access is treated as a confined space by default',
+      'Any void that is located above head height is automatically classed as a confined space, whatever its size, ventilation or contents might be',
+      'The void contains lighting and power cables, and the presence of those live cables alone is enough to define a confined space in law',
+      'The void can only be reached from a ladder, and any space needing ladder access is treated as a confined space by default at all times on site',
       'The void is substantially enclosed, may have poor ventilation, and could contain accumulations of gases from building services or materials',
     ],
     correctAnswer: 3,
@@ -677,9 +677,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
       'An excavation that is 1.2 metres deep with steep sides is being assessed. Under what circumstances might it be treated as a confined space?',
     options: [
       'If heavier-than-air gases accumulate at the bottom, or if the work introduces fumes (e.g. solvent jointing), or if there is a risk of side collapse creating engulfment',
-      'It becomes a confined space only once it passes the 1.5 metre depth at which trench support becomes a requirement; below that depth an excavation never can',
-      'It is treated as a confined space whenever it is left open and unattended overnight without edge protection or barriers',
-      'It is treated as a confined space if it is dug in clay rather than sand or other free-draining ground, as clay holds gas in',
+      'It becomes a confined space only once it passes the 1.5 metre depth at which trench support becomes a requirement; below that depth an excavation never can be one at all',
+      'It is treated as a confined space whenever it is left open and unattended overnight without any edge protection or any barriers being placed around it at the surface itself',
+      'It is treated as a confined space if it is dug in clay rather than in sand or other free-draining ground, as clay holds in any gas that is present in the ground well below',
     ],
     correctAnswer: 0,
     explanation:
@@ -694,10 +694,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       "Which category of risk specifically defines a space as 'confined' rather than simply 'enclosed'?",
     options: [
-      'The risk of the space being too small for a person to move around freely inside it',
+      'The risk of the space being too small for a person to move around freely while inside it',
       'The risk of serious injury from hazardous substances or conditions within the space',
-      'The risk of the space being located below the surrounding ground level',
-      'The risk of the space having only a single point of access and egress',
+      'The risk of the space being located below the level of the surrounding ground',
+      'The risk of the space having only a single point of access and egress from it',
     ],
     correctAnswer: 1,
     explanation:
@@ -712,10 +712,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       "What is the HSE's recommended first step when work in a confined space is being considered?",
     options: [
-      'Order the most expensive breathing apparatus available',
-      'Send in the most junior member of the team first',
+      'Order the most expensive breathing apparatus that is available to buy',
+      'Send in the most junior member of the work team to have a look first',
       'Avoid entry entirely if the work can be done from outside the space',
-      'Open all the access points and wait 24 hours',
+      'Open all of the access points and then wait there for 24 hours',
     ],
     correctAnswer: 2,
     explanation:
@@ -729,9 +729,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     id: 39,
     question: 'Why might a cold store or freezer room be classified as a confined space?',
     options: [
-      'Because low temperature alone is enough to classify any insulated room as confined, so ventilation and contents are ignored',
-      'Because rooms used for the storage of food are always treated as confined spaces under food hygiene legislation rather than under health and safety law',
-      'Because the room is kept locked for stock security, and any room routinely locked from the outside is classed as confined',
+      'Because a low temperature alone is enough to classify any insulated room as a confined space, so the ventilation and the contents of the room are ignored entirely in law at all',
+      'Because rooms used for the storage of food are always treated as confined spaces under the food hygiene legislation rather than under the health and safety law at all times',
+      'Because the room is kept locked for stock security reasons, and any room that is routinely locked from the outside is classed as a confined space in law at all times on site',
       'Because the refrigeration system may leak gases that displace oxygen, the insulated room is substantially enclosed, and there may be risk of entrapment if the door locks',
     ],
     correctAnswer: 3,
@@ -747,9 +747,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question: 'Which of the following statements about confined spaces is correct?',
     options: [
       'The classification of a space can change depending on the work being done, the contents of the space, and environmental conditions',
-      'A space must be physically small and cramped to work in before it can be classified as confined under the regulations',
-      'A space is confined only where it is permanently sealed and is never opened to the outside atmosphere during normal use',
-      'A space permanently loses its confined classification as soon as it has been mechanically ventilated on one occasion',
+      'A space must be physically small and cramped to work in before it can ever be classified as a confined space under the regulations at all',
+      'A space is confined only where it is permanently sealed and is never opened to the outside atmosphere at all during normal use',
+      'A space permanently loses its confined space classification as soon as it has been mechanically ventilated on one occasion only',
     ],
     correctAnswer: 0,
     explanation:
@@ -802,9 +802,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     id: 43,
     question: 'What does Regulation 3 of the Confined Spaces Regulations 1997 require?',
     options: [
-      'That every confined space entry must be notified to the HSE at least 24 hours beforehand',
-      'That at least two trained rescuers must be present for any confined space entry',
-      'That breathing apparatus must be worn for all confined space entries without exception',
+      'That every confined space entry must be notified to the HSE at least 24 hours beforehand in writing',
+      'That at least two trained rescuers must be present on site for any confined space entry at all times',
+      'That breathing apparatus must be worn for all confined space entries without any exception',
       'That no person at work shall enter a confined space to carry out work unless entry is unavoidable',
     ],
     correctAnswer: 3,
@@ -821,9 +821,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
       'What does Regulation 4 of the Confined Spaces Regulations 1997 require when entry is necessary?',
     options: [
       'That a safe system of work must be established before entry',
-      'That the space must be heated to at least 15°C',
-      'That work must be completed within 30 minutes',
-      'That a doctor must be present on site',
+      'That the space must be heated to at least 15°C before any entry',
+      'That the work inside must be completed within 30 minutes of entry',
+      'That a doctor must be present on the site throughout the whole entry',
     ],
     correctAnswer: 0,
     explanation:
@@ -837,10 +837,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     id: 45,
     question: 'What does Regulation 5 of the Confined Spaces Regulations 1997 require?',
     options: [
-      'That a risk assessment must be carried out for every confined space before entry is allowed',
+      'That a suitable written risk assessment must be carried out for every confined space before entry is allowed',
       'That suitable and sufficient emergency arrangements must be in place before anyone enters a confined space',
-      'That a permit to work must be issued and signed before any confined space entry takes place',
-      'That continuous atmospheric monitoring must be maintained throughout the duration of the work',
+      'That a permit to work must be issued and signed off before any confined space entry can take place',
+      'That continuous atmospheric monitoring must be maintained throughout the whole duration of the work',
     ],
     correctAnswer: 1,
     explanation:
@@ -890,9 +890,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question: 'What is the purpose of L101 in relation to confined space work?',
     options: [
       'It is the HSE\'s Approved Code of Practice and guidance that helps duty holders comply with the Confined Spaces Regulations 1997',
-      'It is the statutory instrument itself, which created the Confined Spaces Regulations 1997 and gives them legal force',
-      'It is a British Standard specifying the design and testing requirements for confined space rescue and retrieval equipment',
-      'It is the HSE enforcement notice template used by inspectors to prohibit unsafe confined space entry on a site',
+      'It is the statutory instrument itself, which created the Confined Spaces Regulations 1997 and which gives them their full legal force',
+      'It is a British Standard specifying the design and the testing requirements for confined space rescue and retrieval equipment used on site',
+      'It is the HSE enforcement notice template used by inspectors to prohibit any unsafe confined space entry on any site in the UK',
     ],
     correctAnswer: 0,
     explanation:
@@ -906,10 +906,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     id: 49,
     question: 'What legal status does an Approved Code of Practice (ACoP) such as L101 have?',
     options: [
-      'It is fully binding law in its own right, so any deviation from the wording of an ACoP is automatically a criminal offence in the courts',
+      'It is fully binding law in its own right, so any deviation from the wording of an ACoP is automatically treated as a criminal offence in the courts of law itself',
       'It has a special legal status — failure to follow it is not an offence in itself, but it can be used as evidence of failing to comply with the regulations',
-      'It is purely advisory guidance carrying no legal weight at all, so a duty holder may disregard it without any consequence',
-      'It is an international treaty obligation, enforced through the civil courts rather than by the HSE and its inspectors',
+      'It is purely advisory guidance carrying no legal weight of any kind, so a duty holder may disregard it entirely without any consequence in law or in practice',
+      'It is an international treaty obligation, which is enforced through the civil courts rather than by the HSE and by its own inspectors in this country at all',
     ],
     correctAnswer: 1,
     explanation:
@@ -959,9 +959,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question: 'What is the first step in a confined space risk assessment?',
     options: [
       'Identifying whether the space meets the definition of a confined space',
-      'Issuing the permit to work so that entry can begin without delay',
-      'Selecting and fitting the breathing apparatus for the entrants',
-      'Setting up the rescue tripod and winch over the entry point',
+      'Issuing the permit to work so that the entry can begin without any delay',
+      'Selecting and fitting the breathing apparatus sets for the entrants',
+      'Setting up the rescue tripod and winch over the entry point above',
     ],
     correctAnswer: 0,
     explanation:
@@ -976,10 +976,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       'Once a space has been confirmed as confined, what must the risk assessment evaluate?',
     options: [
-      'The physical dimensions of the space, the number of access points, and the ladder or step arrangements at each opening',
+      'The physical dimensions of the space, the number of access points, and the ladder or the step arrangements at each of the openings',
       'The specific hazards present, who might be harmed, the likelihood and severity of harm, and what control measures are needed',
-      'The cost of the equipment needed and the time the work will take, so the job can be priced and programmed correctly',
-      'Whether the emergency services can attend the site within their published target response time for that area',
+      'The cost of the equipment needed and the time the work will take, so that the job can be priced and programmed correctly in advance',
+      'Whether the emergency services can attend the site within their published target response time for that particular area',
     ],
     correctAnswer: 1,
     explanation:
@@ -993,10 +993,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     id: 54,
     question: 'What is a permit-to-work system in the context of confined spaces?',
     options: [
-      'A verbal agreement between the entrant and the supervisor, recorded in the site diary, confirming that entry may go ahead',
-      'A licence issued by the HSE granting a company permission to operate confined space entry and rescue equipment on site',
+      'A verbal agreement between the entrant and the supervisor, recorded in the site diary, confirming that the entry may go ahead safely that day',
+      'A licence issued by the HSE granting a company permission to operate its confined space entry and rescue equipment on any site in the UK',
       'A formal, documented system that authorises certain people to carry out specific work in a confined space under controlled conditions',
-      'A certificate of competence confirming that a named worker has completed accredited confined space entry training',
+      'A certificate of competence confirming that a named worker has completed an accredited course of confined space entry training at a centre',
     ],
     correctAnswer: 2,
     explanation:
@@ -1010,9 +1010,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     id: 55,
     question: 'Is a permit to work always required for confined space entry?',
     options: [
-      'Yes — a permit to work is a strict legal requirement under the regulations for every single confined space entry',
-      'Yes — but only where the entry is expected to last longer than one working shift or involves more than one entrant',
-      'No — permits are never used for confined space work, because a suitable and sufficient risk assessment replaces them',
+      'Yes — a permit to work is a strict legal requirement under the regulations for every single confined space entry that is made on site',
+      'Yes — but only where the entry is expected to last longer than one full working shift or involves more than one entrant at a time',
+      'No — permits are never used for confined space work, because a suitable and sufficient risk assessment replaces them instead',
       'No — the regulations require a safe system of work, which may or may not include a permit to work depending on the risk assessment',
     ],
     correctAnswer: 3,
@@ -1028,9 +1028,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question: 'What information should a confined space permit to work typically contain?',
     options: [
       'The work to be done, hazards identified, precautions required, gas test results, emergency procedures, time limits, and authorisation signatures',
-      'The name of each entrant, the date and time of entry, and the signature of the supervisor who briefed the team before the shift began',
-      'The manufacturer, model and serial numbers of all gas detection and ventilation equipment issued for use during the entry',
-      'The postal address of the site, the grid reference of the space, and the contact number for the emergency services',
+      'The name of each entrant, the date and time of entry, and the signature of the supervisor who briefed the whole team before the shift began that day',
+      'The manufacturer, the model and the serial numbers of all of the gas detection and ventilation equipment issued for use during the entry itself on site',
+      'The postal address of the site, the grid reference of the confined space, and the contact number for the emergency services in that local area',
     ],
     correctAnswer: 0,
     explanation:
@@ -1044,10 +1044,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     id: 57,
     question: "What does the term 'competent person' mean in the context of confined space work?",
     options: [
-      'The most senior manager present on site, whatever their knowledge of confined space work may be',
+      'The most senior manager present on the site, whatever their own knowledge of confined space work may be on the day',
       'A person who has the necessary training, experience, and knowledge to carry out the specific task safely',
-      'Any worker who holds a current first aid at work certificate issued in the last three years',
-      'The longest-serving member of the work crew, who is assumed to know the space best',
+      'Any worker who holds a current first aid at work certificate that was issued within the last three years or so',
+      'The longest-serving member of the work crew on site, who is assumed to know the confined space best of all',
     ],
     correctAnswer: 1,
     explanation:
@@ -1062,10 +1062,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       'Which of the following is a key element of a safe system of work for confined space entry?',
     options: [
-      'Working as quickly as possible so that the total time each entrant spends inside the space is minimised',
-      'Relying on the entrant to detect hazards by smell and report anything unusual to the top person',
+      'Working as quickly as possible so that the total amount of time that each entrant spends inside the space is minimised',
+      'Relying on the entrant to detect any hazards by smell and report anything unusual to the top person above ground',
       'Ensuring the space is adequately isolated from all connected services, pipelines, and energy sources before entry',
-      'Limiting the number of breaks entrants take so that the work is completed within the permit period',
+      'Limiting the number of breaks that the entrants take so that the work is completed within the permit period',
     ],
     correctAnswer: 2,
     explanation:
@@ -1079,9 +1079,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     id: 59,
     question: 'What is the legal hierarchy of control measures for confined space work?',
     options: [
-      'Issue the permit → provide breathing apparatus for all entrants → notify the fire and rescue service before entry',
-      'Test the atmosphere → enter the space and work → carry out a rescue if any entrant is overcome during the work',
-      'Train the workers → buy the necessary equipment → record the entry in the site logbook once the work is finished',
+      'Issue the permit → provide breathing apparatus for all of the entrants → notify the fire and rescue service before any entry is made at all',
+      'Test the atmosphere → enter the space and start work → carry out a rescue if any one of the entrants is overcome during the work inside',
+      'Train the workers → buy the necessary equipment → record the entry in the site logbook once all the work is finished for the day',
       'Avoid entry if reasonably practicable → if entry is unavoidable, follow a safe system of work → have emergency arrangements in place',
     ],
     correctAnswer: 3,
@@ -1097,9 +1097,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question: 'Which other UK regulations may also apply when working in a confined space?',
     options: [
       'The Electricity at Work Regulations 1989, COSHH 2002, PUWER 1998, and the CDM Regulations 2015 may all be relevant depending on the work',
-      'No other regulations apply, as the Confined Spaces Regulations 1997 cover every aspect of confined space work on their own',
-      'The Working Time Regulations 1998 and the National Minimum Wage Act 1998, which govern the hours entrants may work inside',
-      'The Data Protection Act 2018 and the Equality Act 2010, which govern the records kept about each authorised entrant',
+      'No other regulations apply, as the Confined Spaces Regulations 1997 cover every single aspect of confined space work entirely on their own',
+      'The Working Time Regulations 1998 and the National Minimum Wage Act 1998, which govern the hours that entrants may work inside the space each day',
+      'The Data Protection Act 2018 and the Equality Act 2010, which govern the records that are kept about each authorised entrant on the project',
     ],
     correctAnswer: 0,
     explanation:
@@ -1113,10 +1113,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     id: 61,
     question: 'What penalties can be imposed for breaching the Confined Spaces Regulations 1997?',
     options: [
-      'A fixed penalty notice of £100 issued by the inspector on the day, with no possibility of any further legal action being taken',
+      'A fixed penalty notice of £100 issued by the inspector on the day of the visit, with no possibility of any further legal action being taken at all',
       'Unlimited fines and/or imprisonment for individuals; unlimited fines for organisations, with additional sentencing guidelines for fatalities',
-      'A written warning only, since the Confined Spaces Regulations are civil in nature and carry no criminal sanctions',
-      'A maximum fine of £5,000 for organisations, with no penalty available against individual directors or managers',
+      'A written warning only, since the Confined Spaces Regulations are civil in nature and carry no criminal sanctions of any real kind at all',
+      'A maximum fine of £5,000 for organisations, with no penalty at all available against any individual directors or managers of the company',
     ],
     correctAnswer: 1,
     explanation:
@@ -1130,10 +1130,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     id: 62,
     question: 'What role does the HSE play in enforcing confined space regulations?',
     options: [
-      'The HSE publishes guidance only and has no power to enter workplaces, serve notices, or bring any legal proceedings itself',
-      'The HSE designs and type-approves confined space rescue equipment to a national standard before it may be used',
+      'The HSE publishes guidance only and has no power to enter workplaces, to serve notices, or to bring any legal proceedings itself at all',
+      'The HSE designs and type-approves all confined space rescue equipment to a national standard before it may be used anywhere in the UK at all',
       'The HSE is the primary enforcing authority; its inspectors can issue improvement notices, prohibition notices, and prosecute offenders',
-      'The HSE provides the breathing apparatus and standby rescue teams required for every confined space entry',
+      'The HSE provides the breathing apparatus and the standby rescue teams required for every confined space entry made in the UK today',
     ],
     correctAnswer: 2,
     explanation:
@@ -1147,9 +1147,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     id: 63,
     question: 'What is an improvement notice issued by the HSE?',
     options: [
-      'A notice that immediately stops all work on a site until a fine has been paid',
-      'A voluntary suggestion that a duty holder may choose to act on at their discretion',
-      'A notice confirming that a workplace has passed an HSE inspection successfully',
+      'A notice that immediately stops all of the work on a site until a fine has been paid in full first',
+      'A voluntary suggestion that a duty holder may choose to act on entirely at their own discretion on site',
+      'A notice confirming that a workplace has passed an HSE inspection of its own premises successfully',
       'A formal notice requiring a duty holder to remedy a contravention within a specified time period',
     ],
     correctAnswer: 3,
@@ -1165,9 +1165,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question: 'What is a prohibition notice?',
     options: [
       'A notice that immediately stops a dangerous work activity until the risk is adequately controlled',
-      'A notice giving a duty holder a fixed period to correct a minor contravention',
-      'A notice confirming that a confined space has been certified safe for entry',
-      'A notice requiring a company to register its confined spaces with the HSE',
+      'A notice giving a duty holder a fixed period of time in which to correct a minor contravention on site',
+      'A notice confirming that a confined space has been certified as safe for entry by the workers',
+      'A notice requiring a company to register each of its confined spaces with the local HSE office',
     ],
     correctAnswer: 0,
     explanation:
@@ -1181,10 +1181,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     id: 65,
     question: 'When should a confined space risk assessment be reviewed?',
     options: [
-      'Once every five years on a fixed cycle, regardless of any change to the work, the space or the people doing it',
+      'Once every five years on a fixed cycle, regardless of any change to the work, to the space or to the people doing it on site today',
       'Whenever there is a significant change in conditions, work activities, or personnel, or when the assessment is no longer valid',
-      'After a fatality has occurred in the space and the enforcing authority has completed its own investigation',
-      'Never — once completed, an assessment remains valid for the whole working life of the space it describes',
+      'After a fatality has occurred in the confined space and the enforcing authority has completed its own formal investigation into it',
+      'Never — once it is completed, an assessment remains valid for the whole of the working life of the space that it describes',
     ],
     correctAnswer: 1,
     explanation:
@@ -1199,10 +1199,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       "What is the role of a 'responsible person' or 'authorised person' in a permit-to-work system?",
     options: [
-      'To enter the confined space first and confirm conditions are acceptable for the rest of the team to follow',
-      'To carry out the work inside the space while the other members of the team remain on standby above',
+      'To enter the confined space first and to confirm that conditions are acceptable for the rest of the team to follow',
+      'To carry out the work inside the space while all of the other members of the team remain on standby above ground',
       'To assess the hazards, define the precautions, issue the permit, and ensure the safe system of work is followed',
-      'To take the casualty to hospital in the event of a confined space emergency and stay with them',
+      'To take the casualty to hospital in the event of a confined space emergency and to stay with them there until seen',
     ],
     correctAnswer: 2,
     explanation:
@@ -1217,9 +1217,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       'What should happen to a confined space permit to work at the end of the work period?',
     options: [
-      'It should be left open so that the same space can be re-entered on the following day without a fresh permit being raised',
-      'It should be destroyed immediately at the entry point so that it cannot be reused or altered by anyone else',
-      'It should be handed to the entrant to keep as a personal record of the work carried out during the shift',
+      'It should be left open so that the same confined space can be re-entered on the following day without a fresh permit being raised for it at all',
+      'It should be destroyed immediately at the entry point so that it cannot be reused or altered later by anyone else on the site at all',
+      'It should be handed to the entrant to keep as a personal record of the work that was carried out inside the space during the shift itself',
       'It should be formally cancelled, with confirmation that all persons have exited, the space is secure, and it should be retained as a record',
     ],
     correctAnswer: 3,
@@ -1235,9 +1235,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question: 'Under RIDDOR, what confined space incidents must be reported to the HSE?',
     options: [
       'Deaths, specified injuries, dangerous occurrences (including loss of consciousness due to asphyxiation in a confined space), and work-related diseases',
-      'Incidents in which the cost of damage to plant, property or the structure of the space exceeds the financial threshold published each year by the HSE',
-      'Incidents occurring during the hours of darkness or outside normal working hours, when no supervision was present on site',
-      'Incidents involving members of the public or visitors to the site, rather than incidents involving the employer own staff',
+      'Incidents in which the cost of damage to plant, property or the structure of the space exceeds the financial threshold that is published each year by the HSE',
+      'Incidents occurring during the hours of darkness or outside of normal working hours, when no supervision at all was present at the entry point on the day',
+      'Incidents involving members of the public or visitors to the site, rather than incidents that involve the employer and their own members of staff',
     ],
     correctAnswer: 0,
     explanation:
@@ -1252,10 +1252,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       'How does the Construction (Design and Management) Regulations 2015 relate to confined space work on construction sites?',
     options: [
-      'CDM 2015 replaces the Confined Spaces Regulations 1997 on any construction site, so only the construction phase plan applies and no entry permit is needed at all',
+      'CDM 2015 replaces the Confined Spaces Regulations 1997 on any construction site, so only the construction phase plan applies and no entry permit of any kind is needed on the site',
       'CDM 2015 requires designers to eliminate or reduce risks (including confined space risks) at the design stage, and principal contractors to plan and manage confined space work',
-      'CDM 2015 applies to confined space work only in completed and occupied buildings during maintenance, and never during the construction phase itself',
-      'CDM 2015 has no bearing on confined space work at all, because its provisions deal solely with work at height and lifting operations',
+      'CDM 2015 applies to confined space work only in completed and occupied buildings during maintenance work, and never at any point during the construction phase of the project itself',
+      'CDM 2015 has no bearing on confined space work at all, because the provisions of those regulations deal solely with work at height and with lifting operations on site and nothing else',
     ],
     correctAnswer: 1,
     explanation:
@@ -1269,10 +1269,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     id: 70,
     question: "What is a 'dynamic risk assessment' in the context of confined spaces?",
     options: [
-      'An assessment completed once at the planning stage and never revisited after the work has actually started',
-      'An assessment produced by computer modelling software rather than by a competent person on site',
+      'An assessment that is completed once at the planning stage and never revisited after the work has actually started on site',
+      'An assessment produced by computer modelling software rather than by a competent person who is present on site',
       'An ongoing, real-time assessment of changing conditions within and around the confined space during the work activity',
-      'An assessment that covers only the fast-moving or dynamic hazards, such as moving machinery inside the space',
+      'An assessment that covers only the fast-moving or dynamic hazards, such as any moving machinery inside the space',
     ],
     correctAnswer: 2,
     explanation:
@@ -1286,9 +1286,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     id: 71,
     question: "What does the term 'isolation' mean in a confined space safe system of work?",
     options: [
-      'Keeping the confined space physically separated from all other work areas on the site using barriers, signage and a controlled access point',
-      'Ensuring that only one worker is inside the confined space at any time so that others are not exposed to the hazard',
-      'Sealing the space so that no outside air can enter during the work, keeping the tested atmosphere unchanged',
+      'Keeping the confined space physically separated from all other work areas on the site using barriers, signage and a single controlled access point into it',
+      'Ensuring that only one worker at a time is inside the confined space, so that the others on the team are not exposed to the hazard at any point at all',
+      'Sealing the space so that no outside air at all can enter during the work, keeping the atmosphere that was tested completely unchanged throughout',
       'Physically disconnecting, blanking, or locking off all pipelines, services, and energy sources that could introduce hazards into the confined space',
     ],
     correctAnswer: 3,
@@ -1304,9 +1304,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question: "Why is a 'lock-out/tag-out' (LOTO) procedure important for confined space work?",
     options: [
       'It prevents the inadvertent re-energisation of isolated systems, which could introduce hazardous substances, energy, or mechanical movement into the space',
-      'It speeds the work up by allowing isolated plant to be restarted quickly whenever the entrants call for it during the shift',
-      'It provides the written record of everyone who has been trained and authorised to enter the confined space at any point during the project',
-      'It provides a backup supply of breathing air to the entrants if the primary forced ventilation system should fail',
+      'It speeds the work up by allowing isolated plant to be restarted quickly whenever the entrants inside the space call for it during the working shift on site',
+      'It provides the written record of everyone who has been trained and authorised to enter the confined space at any point during the project as a whole at all',
+      'It provides a backup supply of breathing air to the entrants inside the space if the primary forced ventilation system should fail at any point during the work',
     ],
     correctAnswer: 0,
     explanation:
@@ -1320,10 +1320,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     id: 73,
     question: 'What training must workers receive before entering a confined space?',
     options: [
-      'A short verbal briefing given at the entry point on the day of the work, with no formal training required beforehand',
+      'A short verbal briefing given at the entry point on the day of the work itself, with no formal training of any kind required beforehand',
       'Training appropriate to the level of risk, covering hazard awareness, use of equipment, safe working procedures, and emergency actions',
-      'General manual handling training only, since the main risk in confined space work is lifting equipment through the hatch',
-      'A current first aid at work certificate, which is the only qualification legally required before an entry may be made',
+      'General manual handling training only, since the main risk in confined space work is lifting equipment in through the hatch opening',
+      'A current first aid at work certificate, which is the only qualification that is legally required before an entry is made by anyone',
     ],
     correctAnswer: 1,
     explanation:
@@ -1338,10 +1338,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       "What is the legal significance of an employer's failure to carry out a risk assessment before confined space entry?",
     options: [
-      'It is acceptable in practice provided that the work is completed quickly and that nobody is injured during the entry itself',
-      'It is a civil matter between employer and employee only, and cannot give rise to any criminal proceedings at all',
+      'It is acceptable in practice provided that the work is completed quickly enough and that nobody at all is injured during the entry into the space',
+      'It is a civil matter between the employer and the employee only, and cannot give rise to any criminal proceedings at all in the courts of law',
       'It constitutes a breach of both the Management Regulations 1999 and the Confined Spaces Regulations 1997, potentially leading to prosecution',
-      'It is permitted for low-risk entries where the workers involved are experienced and have entered the space before',
+      'It is permitted for low-risk entries where the workers involved are experienced and have entered that same space many times before now',
     ],
     correctAnswer: 2,
     explanation:
@@ -1356,9 +1356,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       'How should the risk assessment address the risk of multiple persons being affected in a confined space incident?',
     options: [
-      'The assessment need only consider the single worker most likely to be injured first, on the basis that the controls which protect that person will also protect everyone else on the team',
-      'The assessment may disregard would-be rescuers entirely, because rescue personnel always wear breathing apparatus and are treated as fully protected at all times',
-      'The assessment should maximise the number of entrants working together, so that help is always immediately at hand if one of them is overcome',
+      'The assessment need only consider the single worker most likely to be injured first, on the basis that the controls which protect that person will also protect everyone else who is on the team as well',
+      'The assessment may disregard any would-be rescuers entirely, because rescue personnel always wear breathing apparatus and are therefore treated as being fully protected during the entry at all times',
+      'The assessment should maximise the number of entrants who are working together inside the space, so that help is always immediately at hand while the work is going on if one of them is overcome at all',
       'The assessment must consider the \'cascade effect\' where a hazardous atmosphere can overcome multiple people, and must limit the number of entrants and ensure rescue can handle multiple casualties',
     ],
     correctAnswer: 3,
@@ -1374,9 +1374,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question: "What is the purpose of a 'method statement' for confined space work?",
     options: [
       'It is a detailed document describing the step-by-step procedure for carrying out the work safely, including all required precautions',
-      'It is a list of the hazards present in the space, with no detail of the sequence in which the work is to be carried out',
-      'It is the certificate confirming that the atmosphere was tested and found safe at the moment of entry to the space',
-      'It is the formal notice authorising named individuals to enter the confined space during a stated period',
+      'It is a list of all the hazards that are present in the space, with no detail of the sequence in which the work is to be carried out inside',
+      'It is the certificate confirming that the atmosphere was tested and found to be safe at the exact moment of the entry to the space',
+      'It is the formal notice authorising the named individuals to enter the confined space during a stated period on the day of the work',
     ],
     correctAnswer: 0,
     explanation:
@@ -1390,10 +1390,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     id: 77,
     question: "Under the CSR 1997, what is meant by 'so far as is reasonably practicable'?",
     options: [
-      'That the duty holder must take every conceivable control measure that exists, regardless of the cost, time or practical difficulty of putting it in place on site',
+      'That the duty holder must take every conceivable control measure that exists, regardless of the cost, the time or the practical difficulty of putting it in place before entry on the site',
       'That the duty holder must balance the risk against the time, trouble, cost, and difficulty of taking measures to avoid it — unless the risk is grossly disproportionate to the cost',
-      'That the duty holder need only act on those risks which have already caused an injury or a reportable dangerous occurrence in that space',
-      'That the duty holder may select whichever control measure is cheapest to implement, irrespective of how effective it is against the risk',
+      'That the duty holder need only act on those risks which have already caused an injury or a reportable dangerous occurrence in that particular space or in a similar space before',
+      'That the duty holder may select whichever control measure is the cheapest to implement, irrespective of how effective it actually is against the risk to the entrants working inside it',
     ],
     correctAnswer: 1,
     explanation:
@@ -1407,10 +1407,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     id: 78,
     question: 'What documentation should be kept following confined space work?',
     options: [
-      'The timesheets recording how many hours each worker spent inside the space during the shift, and nothing else',
-      'A photograph of the completed work taken at the end of the entry, filed with the job sheet',
+      'The timesheets recording how many hours each worker spent inside the space during the shift, and nothing else at all',
+      'A photograph of the completed work taken at the end of the entry, filed together with the job sheet for the client afterwards',
       'Risk assessments, permits to work, gas test records, training records, and any incident reports should be retained',
-      'Nothing needs to be kept once the work has been completed and the space has been made secure',
+      'Nothing needs to be kept once all the work has been completed and the confined space has been made secure again afterwards',
     ],
     correctAnswer: 2,
     explanation:
@@ -1425,9 +1425,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       'How does the Provision and Use of Work Equipment Regulations 1998 (PUWER) apply to confined space work?',
     options: [
-      'PUWER applies only to fixed machinery installed permanently in the workplace, and does not extend to portable equipment such as gas detectors, blowers or lighting taken into a confined space',
-      'PUWER requires that every item of equipment taken into a confined space is brand new for each entry, since used equipment cannot be shown to be suitable',
-      'PUWER applies only to equipment used on construction sites notified under CDM, and has no application to confined space work in other workplaces',
+      'PUWER applies only to fixed machinery installed permanently in the workplace, and does not extend to portable equipment such as gas detectors, blowers or lighting that is taken into a confined space on site',
+      'PUWER requires that every item of equipment taken into a confined space is brand new for each and every entry, since equipment that has been used before cannot be shown to be suitable for the job',
+      'PUWER applies only to equipment used on construction sites that are notified under CDM, and has no application at all to confined space work carried out in any other workplaces at any time on any site',
       'PUWER requires that all equipment used in confined spaces (including gas detectors, ventilation fans, breathing apparatus, and communication systems) is suitable, maintained, and used by trained persons',
     ],
     correctAnswer: 3,
@@ -1444,9 +1444,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
       'A principal contractor on a construction site receives a risk assessment from a subcontractor for confined space work. What should the principal contractor do?',
     options: [
       'Review the assessment for adequacy, ensure it aligns with the construction phase plan, verify the subcontractor\'s competence, and monitor compliance during the work',
-      'File the assessment with the project records without reading it, since the subcontractor alone is responsible for the content and accuracy of its own documents',
-      'Reject every subcontractor assessment as a matter of policy and insist that all confined space assessments are written in-house',
-      'Send the assessment to the enforcing authority for formal approval, and stop the work until that approval is received',
+      'File the assessment with the project records without reading it, since the subcontractor alone is responsible for the content and the accuracy of its own documents on site',
+      'Reject every subcontractor assessment as a matter of policy and insist that all of the confined space assessments for the project are written in-house by the contractor',
+      'Send the assessment to the enforcing authority for its formal approval, and stop all of the work on the site until that approval has been received back in writing',
     ],
     correctAnswer: 0,
     explanation:
@@ -1530,10 +1530,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     id: 85,
     question: 'What is hydrogen sulphide (H₂S) and why is it a significant confined space hazard?',
     options: [
-      'An inert, non-toxic gas produced by decomposition, which is monitored only because it interferes with the methane readings given by a flammable gas detector in a sewer',
+      'An inert, non-toxic gas produced by decomposition, which is monitored only because it interferes with the methane readings given by a flammable gas detector when used in a sewer itself',
       'A toxic, flammable gas with a characteristic \'rotten eggs\' smell at low concentrations, but it deadens the sense of smell at higher concentrations, making it extremely dangerous',
-      'A heavier-than-air gas whose only hazard is that it can soak into clothing and later ignite when the wearer uses a naked flame',
-      'A colourless, odourless gas whose sole danger is that it displaces oxygen without giving the entrant any warning at all',
+      'A heavier-than-air gas whose only real hazard is that it can soak into the clothing of the entrant and later ignite when the wearer uses a naked flame nearby during the work inside',
+      'A colourless, odourless gas whose sole danger is that it displaces the oxygen in a confined space without giving the entrant inside any prior warning of it before they are overcome',
     ],
     correctAnswer: 1,
     explanation:
@@ -1653,9 +1653,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
       "What is the difference between a 'bump test' and a 'calibration' for a gas detector?",
     options: [
       'A bump test verifies that the sensors respond to gas, while a calibration adjusts the sensor readings to match known reference concentrations',
-      'A bump test recharges and conditions the battery, while a calibration cleans the sensor membranes and replaces the filters',
-      'A bump test may be carried out by the user, while a calibration can only be performed by the enforcing authority',
-      'A bump test and a calibration are two names for the same procedure, one used by manufacturers and one by users',
+      'A bump test recharges and conditions the battery, while a calibration cleans the sensor membranes and replaces all of the filters',
+      'A bump test may be carried out by the user, while a calibration can only be performed by an inspector from the enforcing authority',
+      'A bump test and a calibration are two names for the same procedure, one name used by the manufacturers and one used by the users on site',
     ],
     correctAnswer: 0,
     explanation:
@@ -1703,9 +1703,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     id: 95,
     question: 'Why is carbon dioxide (CO₂) particularly dangerous in confined spaces?',
     options: [
-      'It is lighter than air, so it rises to the roof of the space and escapes through the access hatch, presenting no real danger at working level even without ventilation',
-      'It is highly flammable and forms an explosive mixture with air at concentrations above 5%, so the main risk is ignition',
-      'It is harmless at any concentration and is monitored solely to confirm that the forced ventilation system is working',
+      'It is lighter than air, so it rises to the roof of the space and escapes through the access hatch, presenting no real danger at working level even without any forced ventilation',
+      'It is highly flammable and forms an explosive mixture with the air at concentrations above 5%, so the main risk inside a confined space is that of ignition by a spark or flame',
+      'It is completely harmless at any concentration and is monitored solely in order to confirm that the forced ventilation system in the space is working properly at all times',
       'It is denser than air and accumulates at low levels, is an asphyxiant that displaces oxygen, and at higher concentrations acts as a direct toxin affecting the central nervous system',
     ],
     correctAnswer: 3,
@@ -1721,9 +1721,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question: 'What causes oxygen depletion in a confined space?',
     options: [
       'Rusting of steel surfaces, biological decomposition, displacement by other gases, combustion processes, and chemical reactions that consume oxygen',
-      'Opening the access hatch and allowing fresh air to circulate freely through the space for a period before the first entrant goes in',
-      'Running mechanical ventilation that draws clean air in from outside the building and pushes it through the space',
-      'Lowering the temperature inside the space below the surrounding ambient level, which makes the air denser',
+      'Opening the access hatch and allowing fresh air to circulate freely through the space for a period of time before the first entrant goes in',
+      'Running mechanical ventilation that draws clean air in from outside the building and then pushes it right through the whole of the space',
+      'Lowering the temperature inside the space below the surrounding ambient level, which makes the air inside the space much denser than before',
     ],
     correctAnswer: 0,
     explanation:
@@ -2007,10 +2007,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       'Which physical hazard is most commonly associated with engulfment in a confined space?',
     options: [
-      'Electric shock from contact with live cables inside the space',
+      'Electric shock from contact with live cables running inside the space',
       'Drowning or suffocation in free-flowing solid materials such as grain or sand',
-      'Burns from contact with hot surfaces such as steam pipes',
-      'Falls from height when climbing internal ladders or platforms',
+      'Burns from contact with hot surfaces such as steam and process pipes',
+      'Falls from height when climbing internal ladders or platforms inside',
     ],
     correctAnswer: 1,
     explanation:
@@ -2070,10 +2070,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     id: 117,
     question: 'What hazard does nitrogen gas pose when used to purge a confined space?',
     options: [
-      'It is flammable and may cause an explosion',
+      'It is highly flammable and may cause an explosion inside the space',
       'It displaces oxygen and can cause rapid asphyxiation without warning',
-      'It is toxic and causes chemical burns to the lungs',
-      'It reacts with moisture to form a corrosive acid',
+      'It is toxic and causes chemical burns to the lungs of entrants',
+      'It reacts with any moisture present to form a corrosive acid',
     ],
     correctAnswer: 1,
     explanation:
@@ -2119,9 +2119,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
       'A confined space entry is planned in a tank that previously contained toluene. Which additional monitoring instrument should be considered beyond a standard 4-gas detector?',
     options: [
       'A photoionisation detector (PID)',
-      'A thermal imaging camera',
-      'A sound level meter',
-      'A Geiger-Muller counter',
+      'An infrared thermal imaging camera',
+      'A calibrated sound level meter',
+      'A hand-held Geiger counter',
     ],
     correctAnswer: 0,
     explanation:
@@ -2137,10 +2137,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       'Under the Confined Spaces Regulations 1997, what must an employer do BEFORE considering entry into a confined space?',
     options: [
-      'Provide breathing apparatus to all workers',
+      'Provide self-contained breathing apparatus to all of the workers on site',
       'Avoid entry to the confined space so far as is reasonably practicable',
-      'Ensure at least three rescue personnel are on standby',
-      'Notify the HSE of the planned entry 48 hours in advance',
+      'Ensure that at least three rescue personnel are on standby at the entry',
+      'Notify the HSE of the planned entry at least 48 hours in advance',
     ],
     correctAnswer: 1,
     explanation:
@@ -2152,10 +2152,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     id: 122,
     question: 'What is the primary purpose of a confined space entry permit?',
     options: [
-      'To record the names of the workers present for payroll and timekeeping purposes',
-      'To transfer legal liability for the work from the employer onto the individual entrant',
+      'To record the names of the workers present for the payroll and timekeeping purposes of the employer',
+      'To transfer the legal liability for the work from the employer onto the individual entrant instead',
       'To provide a formal check that all elements of a safe system of work are in place before entry',
-      'To remove the need for a separate risk assessment of the confined space to be made',
+      'To remove the need for any separate risk assessment of the confined space to be made at all beforehand',
     ],
     correctAnswer: 2,
     explanation:
@@ -2168,9 +2168,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       "Who is the 'competent person' responsible for issuing a confined space entry permit?",
     options: [
-      'Whoever happens to be the most senior manager present on site on the day the entry takes place',
-      'Any worker who has been issued with the correct personal protective equipment for the space',
-      'An external HSE inspector, who must attend the site to authorise each individual entry',
+      'Whoever happens to be the most senior manager present on the site on the day that the entry actually takes place there',
+      'Any worker who has been issued with the correct personal protective equipment for that particular space at all',
+      'An external HSE inspector, who must attend the site in order to authorise each of the individual entries made',
       'A person with sufficient training, knowledge, and experience to understand the hazards and necessary precautions',
     ],
     correctAnswer: 3,
@@ -2199,10 +2199,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       'When isolating a pipeline feeding into a confined space, which method provides the most positive form of isolation?',
     options: [
-      'Closing a single isolation valve on the pipeline',
+      'Closing a single isolation valve on the pipeline nearest to the entry point',
       'Physically disconnecting the pipe or inserting a spectacle blind (spade)',
-      'Hanging a warning sign on the pipeline near the confined space',
-      'Reducing the flow rate through the pipeline to a minimum',
+      'Hanging a warning sign on the pipeline near to the confined space entry point',
+      'Reducing the flow rate through the pipeline down to a bare minimum',
     ],
     correctAnswer: 1,
     explanation:
@@ -2214,10 +2214,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     id: 126,
     question: "What is the purpose of a 'top person' (attendant) during a confined space entry?",
     options: [
-      'To enter the space first and confirm that the conditions are safe before the other entrants follow',
-      'To carry out the manual work inside the space alongside the other members of the team',
+      'To enter the space first and confirm that the conditions are safe before any of the other entrants follow into the space',
+      'To carry out all of the manual work inside the space alongside the other members of the entry team throughout the work',
       'To remain at the entry point, maintain communication with entrants, and initiate emergency procedures if needed',
-      'To drive to the nearest hospital and wait there in case a casualty is brought out',
+      'To drive to the nearest hospital and to wait there in case a casualty is brought out of the confined space later',
     ],
     correctAnswer: 2,
     explanation:
@@ -2230,9 +2230,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       'How often should atmospheric monitoring typically continue once workers have entered a confined space?',
     options: [
-      'Once at the start of entry and again at the end',
-      'Every hour on the hour, whatever the activity',
-      'Only if a worker reports feeling unwell',
+      'Once at the start of the entry and again at the end',
+      'Every hour, on the hour, whatever the activity',
+      'Only if a worker reports that they feel unwell',
       'Continuously throughout the duration of the work',
     ],
     correctAnswer: 3,
@@ -2247,9 +2247,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
       'What is the recommended minimum pre-entry ventilation period for a confined space before taking atmospheric readings?',
     options: [
       'There is no set minimum — readings should be taken to confirm the atmosphere is safe',
-      'A fixed 5 minutes, which is always sufficient for any size of confined space',
-      'Exactly 30 minutes, as specified in the Confined Spaces Regulations 1997',
-      'A minimum of 24 hours before any atmospheric testing can begin',
+      'A fixed 5 minutes, which is always sufficient for any size or shape of confined space at all',
+      'Exactly 30 minutes, as specified in the Confined Spaces Regulations 1997 for every space',
+      'A minimum of 24 hours must pass before any atmospheric testing can begin on site',
     ],
     correctAnswer: 0,
     explanation:
@@ -2262,10 +2262,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       'When using mechanical ventilation in a confined space, where should the fresh air intake be positioned?',
     options: [
-      'As close as possible to the generator powering the ventilation fan and lighting',
+      'As close as possible to the generator that is powering the ventilation fan and the lighting on site',
       'In an area of clean, uncontaminated air, away from exhaust fumes and other contaminant sources',
-      'Directly above the vehicle exhausts, so that the warm air rises into the space',
-      'Inside the confined space itself, so the existing atmosphere is recirculated',
+      'Directly above the vehicle exhausts on the site, so that the warm air rises up into the space itself',
+      'Inside the confined space itself, so that the existing atmosphere is simply recirculated through the fan',
     ],
     correctAnswer: 1,
     explanation:
@@ -2278,10 +2278,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       'Which type of respiratory protective equipment provides the highest level of protection for confined space entry into an IDLH atmosphere?',
     options: [
-      'A half-face filtering facepiece (FFP3)',
-      'A full-face powered air-purifying respirator (PAPR)',
+      'A disposable half-face filtering facepiece respirator of the FFP3 class',
+      'A full-face powered air-purifying respirator (PAPR) with filters',
       'Self-contained breathing apparatus (SCBA) in positive pressure mode',
-      'A half-face respirator with organic vapour cartridges',
+      'A half-face respirator fitted with organic vapour cartridges',
     ],
     correctAnswer: 2,
     explanation:
@@ -2294,9 +2294,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       "What is a 'safe atmosphere' in the context of confined space entry as typically defined?",
     options: [
-      'An atmosphere that has no detectable smell when the entry hatch is first opened',
-      'An atmosphere with oxygen above 16% and any flammable gas below 50% LEL',
-      'Any atmosphere in which a worker can breathe without immediately feeling unwell',
+      'An atmosphere that has no detectable smell at all when the entry hatch is first opened at the surface',
+      'An atmosphere with the oxygen level above 16% and with any flammable gas held below 50% LEL at the time',
+      'Any atmosphere in which a worker can breathe without immediately feeling unwell inside it at all',
       'O₂ between 19.5% and 23.5%, flammable gases below 10% LEL, toxic gases below their respective WELs',
     ],
     correctAnswer: 3,
@@ -2311,9 +2311,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
       'Before entering a confined space, what must be done with all mechanical equipment (such as agitators and mixers) inside the space?',
     options: [
       'They must be isolated, locked out, tagged out, and proved dead',
-      'They only need to be switched off at the local control panel',
-      'They should be put into standby mode',
-      'They should be left running at low speed',
+      'They only need to be switched off at the local control panel first',
+      'They should simply be put into standby mode at the local control panel',
+      'They should be left running at a low speed throughout the whole entry work',
     ],
     correctAnswer: 0,
     explanation:
@@ -2325,10 +2325,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     id: 133,
     question: 'What information must be displayed on a LOTO tag?',
     options: [
-      'The manufacturer, model and serial number of the equipment that has been isolated',
+      'The manufacturer, the model and the serial number of each item of equipment that has been isolated on site',
       'The name of the person who applied the lock, the date, the reason for isolation, and contact details',
-      'The atmospheric test results recorded at the moment the lock was fitted',
-      'A list of all the tools that will be used inside the confined space',
+      'The atmospheric test results that were recorded at the moment the lock was fitted to the panel',
+      'A list of all of the tools that will be used inside the confined space during the entry itself',
     ],
     correctAnswer: 1,
     explanation:
@@ -2341,10 +2341,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       "What is the purpose of a 'try test' (proving dead test) after applying LOTO isolation?",
     options: [
-      'To check if the equipment still works despite the isolation',
-      'To test the LOTO lock for structural integrity',
+      'To check whether the equipment still works despite the isolation applied on site',
+      'To test the LOTO lock itself for its structural integrity before it is used',
       'To confirm that the isolation is effective and no residual energy remains',
-      'To calibrate the equipment ready for return to service',
+      'To calibrate the equipment ready for its return to service afterwards',
     ],
     correctAnswer: 2,
     explanation:
@@ -2356,9 +2356,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     id: 135,
     question: 'When is hot work inside a confined space permitted?',
     options: [
-      'At any time during the entry, provided the worker wears flame-retardant overalls and the space has been ventilated for ten minutes',
-      'During daylight hours, when the space can be lit naturally and any smoke can be seen escaping',
-      'Whenever the confined space entry permit is in date, since it already covers all work in the space',
+      'At any time during the entry, provided the worker wears flame-retardant overalls and the space has been ventilated for ten minutes at the surface itself',
+      'During daylight hours, when the space can be lit naturally and any smoke that is given off can be seen escaping at the surface above during the work',
+      'Whenever the confined space entry permit is in date, since that permit already covers every kind of work carried out during that period at all times',
       'Only when a specific hot work permit has been issued in addition to the confined space entry permit, and the atmosphere has been confirmed as safe',
     ],
     correctAnswer: 3,
@@ -2373,9 +2373,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
       'What is the maximum recommended safe working voltage for portable electrical equipment used inside a confined space with conductive surroundings?',
     options: [
       '25V from a suitable transformer or extra-low voltage (ELV) equipment',
-      '110V from a centre-tapped reduced low voltage transformer',
-      '230V provided a 30 mA RCD is fitted at the supply point',
-      '400V three-phase supplied directly from the site distribution board',
+      '110V from a centre-tapped reduced low voltage site transformer on site',
+      '230V provided that a 30 mA RCD is fitted at the supply point',
+      '400V three-phase taken directly from the distribution board',
     ],
     correctAnswer: 0,
     explanation:
@@ -2403,10 +2403,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     id: 138,
     question: "What does a confined space entry permit's 'duration' or 'validity period' specify?",
     options: [
-      'The length of time the entrant has held a valid confined space entry training certificate',
-      'The time the emergency services are expected to take to reach the site if called out',
+      'The length of time for which the entrant has held a valid confined space entry training certificate on site',
+      'The time the emergency services are expected to take to reach the site if they are called to the incident itself',
       'The maximum period during which the permit authorises entry, after which it must be reviewed and reissued',
-      'The number of years for which the completed permit document must be retained',
+      'The number of years for which the completed permit document must be retained after the entry on the day',
     ],
     correctAnswer: 2,
     explanation:
@@ -2419,9 +2419,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       'A worker needs to enter a confined space to inspect a valve. No hazardous atmosphere is present, but the space has a vertical access point 3 metres deep. What fall protection is required?',
     options: [
-      'A waist belt with a single attachment point at the front',
-      'No fall protection is required because the atmosphere is safe',
-      'A hard hat and high-visibility vest worn by the entrant',
+      'A waist belt with a single attachment point at the front of the harness itself',
+      'No fall protection is required at all because the atmosphere in the space is safe',
+      'A hard hat and a high-visibility vest worn by the entrant during the entry at all times',
       'A full-body harness with a short lanyard attached to a suitable anchor point',
     ],
     correctAnswer: 3,
@@ -2436,9 +2436,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
       "What is the role of a 'rescue team' as part of confined space emergency arrangements?",
     options: [
       'To be trained, equipped, and immediately available to effect rescue of any person who becomes incapacitated in the confined space',
-      'To carry out the planned work inside the space so that the original entrants can take their rest breaks at the surface',
-      'To remain off site and attend only when the fire and rescue service requests their assistance',
-      'To issue the permit to work and authorise the entry before any work is allowed to begin',
+      'To carry out the planned work inside the space so that the original entrants can take their rest breaks at the surface above',
+      'To remain off site and to attend only when the fire and rescue service requests their assistance at the scene of the incident on the day',
+      'To issue the permit to work and to authorise the entry before any of the work is allowed to begin on the site at all on the day',
     ],
     correctAnswer: 0,
     explanation:
@@ -2467,10 +2467,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the maximum number of people a single top person (attendant) should normally be responsible for monitoring?',
     options: [
-      'Exactly ten entrants for each attendant, which is the fixed maximum set out in the Confined Spaces Regulations',
-      'An unlimited number, provided that every entrant carries their own personal gas detector',
+      'Exactly ten entrants for each attendant, which is the fixed maximum set out in the Confined Spaces Regulations in every case itself',
+      'An unlimited number, provided that every entrant carries their own personal gas detector into the space with them at all times',
       'No more than can be effectively monitored and communicated with at all times — typically one to three depending on conditions',
-      'One entrant at a time in every case, because a top person can never monitor more than one',
+      'One entrant at a time in every case, because a top person can never safely monitor more than one entrant at a time safely',
     ],
     correctAnswer: 2,
     explanation:
@@ -2483,9 +2483,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       'Which of the following communication methods is MOST reliable for maintaining contact between entrants and the top person in a noisy confined space?',
     options: [
-      'Shouting loudly between the entrant and the top person',
-      'Pre-agreed hand signals visible from the entry point',
-      'Sending text messages on a standard mobile phone',
+      'Shouting loudly between the entrant and the top person at the hatch',
+      'Pre-agreed hand signals visible from the entry point above at all',
+      'Sending text messages on a standard mobile telephone inside the space',
       'A hard-wired communication system or intrinsically safe radio',
     ],
     correctAnswer: 3,
@@ -2499,9 +2499,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question: 'What must be included in a confined space risk assessment?',
     options: [
       'All foreseeable hazards including atmospheric, physical, biological, and those introduced by the work activity, along with the control measures required',
-      'The atmospheric hazards alone, since physical and biological hazards are dealt with under a separate assessment held by the site operator',
-      'A list of the workers who will be entering, the time of their entry and the expected duration of the work',
-      'The cost of the work and the equipment that will be hired in to complete it within the programme',
+      'The atmospheric hazards alone, since the physical and biological hazards are dealt with under a separate assessment held by the site operator on the site',
+      'A list of the workers who will be entering the space, the time of their entry and the expected duration of the work inside on the day of the entry',
+      'The cost of the work and of the equipment that will be hired in to complete it within the programme agreed by the main contractor for the job',
     ],
     correctAnswer: 0,
     explanation:
@@ -2514,10 +2514,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       'What should happen to a confined space entry permit if the scope of work changes during the entry?',
     options: [
-      'The change can be noted verbally and the work can continue under the existing permit',
+      'The change can be noted verbally and the work can then continue under the existing permit on site',
       'The existing permit must be cancelled and a new permit issued to cover the revised scope of work',
-      'The supervisor can amend the existing permit by hand without stopping the work',
-      'The change can be recorded in the site diary and addressed at the end of the shift',
+      'The supervisor can amend the existing permit by hand without stopping the work at any point on site',
+      'The change can be recorded in the site diary and addressed at the end of the shift that day',
     ],
     correctAnswer: 1,
     explanation:
@@ -2562,9 +2562,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
       'A confined space entry involves working on live 230V electrical equipment inside a vessel. What voltage reduction measures are required?',
     options: [
       'The equipment must be made dead and isolated wherever possible; if live work is unavoidable, a specific risk assessment and method statement for live working must be produced',
-      'Live work at 230V is acceptable inside a confined space provided that insulating gloves, an insulating mat and eye protection are worn by the entrant throughout',
-      'No voltage reduction is required, because 230V is standard mains voltage and the surroundings make no difference to the risk',
-      'The supply voltage must be raised to overcome the additional resistance of the conductive surroundings inside the vessel',
+      'Live work at 230V is acceptable inside a confined space provided that insulating gloves, an insulating mat and eye protection are worn by the entrant during the work at all times',
+      'No voltage reduction of any kind is required, because 230V is the standard mains voltage and the conductive surroundings make no difference at all to the risk of electric shock',
+      'The supply voltage must instead be raised in order to overcome the additional resistance of the conductive surroundings inside the vessel by the electrician on site during the work',
     ],
     correctAnswer: 0,
     explanation:
@@ -2577,10 +2577,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       "What is the function of a 'gas-free certificate' in relation to confined space entry?",
     options: [
-      'A certificate confirming that the space will remain free of hazardous gas for the entire duration of the work',
+      'A certificate confirming that the space will remain free of hazardous gas for the entire duration of the work inside at all times',
       'A formal document confirming that atmospheric testing has shown the space to be free from hazardous gases at the time of testing',
-      'A licence permitting petrol or gas-powered equipment to be used inside the confined space',
-      'A record of the calibration dates for the gas detection instruments being used on site',
+      'A licence permitting petrol or gas-powered equipment to be used inside the confined space during the work that is planned',
+      'A record of the calibration dates for all of the gas detection instruments being used on the site during the entry itself',
     ],
     correctAnswer: 1,
     explanation:
@@ -2609,9 +2609,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       'What precautions must be taken when using airline breathing apparatus (ALBA) in a confined space?',
     options: [
-      'The airline may be supplied from any convenient compressed air outlet on site, since filtration is only needed where the compressor is oil-lubricated rather than oil-free',
-      'No emergency escape cylinder is needed, because the airline provides a continuous supply that cannot be interrupted while the wearer is inside',
-      'The hose may be any length the job requires, so the wearer can travel to every part of the space without moving the compressor',
+      'The airline may be supplied from any convenient compressed air outlet on the site, since filtration is only needed where the compressor is oil-lubricated rather than oil-free at the surface above',
+      'No emergency escape cylinder is needed at all, because the airline provides a continuous supply of air that cannot be interrupted while the wearer is inside during the whole of the work itself',
+      'The hose may be any length that the job requires, so that the wearer can travel to every part of the space without having to move the compressor that is at the surface during the entry',
       'The air supply must be from a suitable compressor with filtration providing Grade D breathing air, the airline must be protected from damage, and an emergency escape cylinder must be carried',
     ],
     correctAnswer: 3,
@@ -2626,9 +2626,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
       'What is the recommended pre-entry atmospheric testing sequence when using a multi-gas detector?',
     options: [
       'Test for oxygen first, then flammable gases, then toxic gases',
-      'Test for toxic gases first, then flammable gases, then oxygen',
-      'Test for flammable gases first, then oxygen, then toxic gases',
-      'The order does not matter',
+      'Test for toxic gases first, then flammable gases, then the oxygen',
+      'Test for flammable gases first, then for oxygen, then for toxic gases',
+      'The order in which the three gases are tested does not matter at all',
     ],
     correctAnswer: 0,
     explanation:
@@ -2641,10 +2641,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       'During a confined space entry, a worker develops a headache and nausea. What should be the FIRST action?',
     options: [
-      'Ask the worker to rest inside the space for 10 minutes',
+      'Ask the worker to rest inside the space for about 10 minutes',
       'Immediately evacuate all personnel from the confined space',
-      'Open a window in the confined space',
-      'Give the worker paracetamol and continue working',
+      'Open a window or an access hatch in the confined space',
+      'Give the worker some paracetamol and continue working',
     ],
     correctAnswer: 1,
     explanation:
@@ -2656,10 +2656,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     id: 154,
     question: "What does the term 'permit to work' hierarchy mean in confined space operations?",
     options: [
-      'The ranking of workers by seniority, which decides who is entitled to issue an entry permit and who may only countersign it before the entry',
-      'The order in which permits expire, running from the shortest duration to the longest so they can be closed in sequence',
+      'The ranking of the workers by seniority, which decides who is entitled to issue an entry permit and who may only countersign it into the confined space on the day',
+      'The order in which the permits expire, running from the shortest duration through to the longest so that they can be closed at the end of the job agreed for the job',
       'The system of authorisation where a master permit may require additional subsidiary permits (e.g., hot work, electrical isolation) to be in place simultaneously',
-      'The sequence of signatures required on a single permit, running from junior supervisor up to senior management',
+      'The sequence of signatures required on a single permit, running from the junior supervisor at the site up to the senior management responsible on the site',
     ],
     correctAnswer: 2,
     explanation:
@@ -2672,9 +2672,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       "A top person observes that the entrant's personal gas detector has gone into alarm. The entrant appears unresponsive to radio calls. What should the top person do?",
     options: [
-      'Enter the space immediately to drag the entrant out before the gas spreads',
-      'Wait a few minutes to see whether the entrant responds before raising the alarm',
-      'Climb partway into the space to get a closer look at the entrant',
+      'Enter the space immediately to drag the entrant out through the hatch at the entry point',
+      'Wait a few minutes to see whether the entrant responds before raising the alarm to the rescue team',
+      'Climb partway into the space in order to get a closer look at the entrant inside the space',
       'Activate the emergency rescue plan and summon the rescue team — DO NOT enter the space',
     ],
     correctAnswer: 3,
@@ -2688,9 +2688,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question: "What is 'residual hazard' in the context of confined space isolation?",
     options: [
       'A hazard that remains despite isolation measures, such as sludge containing toxic substances or residual energy in a system',
-      'A hazard that exists only outside the confined space and can never reach the person who is working inside it',
-      'A hazard that is fully removed as soon as the isolation and lock-off have been applied to the system',
-      'A hazard that arises only where the entrant fails to wear the personal protective equipment specified',
+      'A hazard that exists only outside the confined space and can never reach the person who is working inside at any point in time',
+      'A hazard that is fully removed as soon as the isolation and the lock-off have been applied by the entry team on the day',
+      'A hazard that arises only where the entrant fails to wear the personal protective equipment for the job at the time',
     ],
     correctAnswer: 0,
     explanation:
@@ -2703,10 +2703,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       'When is it acceptable for the top person to leave their post at the confined space entry point?',
     options: [
-      'Whenever the entrants confirm over the radio that they feel safe and that the atmosphere readings inside are stable',
+      'Whenever the entrants confirm over the radio that they feel safe and that the atmosphere readings inside are stable and are safe to work in',
       'Never — they must not leave until all entrants have exited and the permit has been closed, unless a competent replacement takes over',
-      'During quiet periods of the work when no cutting, welding or other activity is taking place inside',
-      'At any time, provided that all of the entrants are wearing self-contained breathing apparatus',
+      'During any quiet periods of the work when no cutting, welding or other activity is taking place inside at that moment during the entry',
+      'At any time at all, provided that all of the entrants are wearing self-contained breathing apparatus during the entry work on site',
     ],
     correctAnswer: 1,
     explanation:
@@ -2719,10 +2719,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       'In addition to atmospheric hazards, what physical hazard assessment must be carried out before confined space entry involving work at height inside the space?',
     options: [
-      'An assessment of whether the entrants will be able to hear spoken instructions clearly over the noise inside the space during the work',
-      'An assessment of the colour and reflectivity of the PPE, to ensure the workers remain visible in the space',
+      'An assessment of whether the entrants will be able to hear spoken instructions clearly over the noise inside the space that is being carried out at the time',
+      'An assessment of the colour and the reflectivity of the PPE issued, to ensure that the workers remain visible in the space throughout the entry during the entry',
       'An assessment of the structural integrity of internal fixtures, the suitability of anchor points, and the risk of falls from internal platforms or ladders',
-      'An assessment of the breathing apparatus duration, to confirm that a single cylinder lasts the whole shift',
+      'An assessment of the breathing apparatus duration, to confirm that a single cylinder will last for the whole of the working shift of work being done on the day',
     ],
     correctAnswer: 2,
     explanation:
@@ -2735,9 +2735,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       'What should be done with a confined space entry permit at the end of the work or at the end of the permitted duration?',
     options: [
-      'It should be left active so that the same space can be re-entered later in the week without a fresh permit being raised by the issuing authority',
-      'It should be passed to the incoming shift so that they can continue the work under the same authorisation',
-      'It should be discarded at the entry point as soon as the last worker has climbed out of the space',
+      'It should be left active so that the same space can be re-entered later in the week without a fresh permit being raised by the authority responsible for the site itself',
+      'It should be passed to the incoming shift so that they are able to continue the work under exactly the same authorisation that was issued for the earlier shift',
+      'It should be discarded at the entry point as soon as the last worker has climbed back out of the confined space at the end of the shift that they were working',
       'It should be formally cancelled by the issuing authority, confirming all personnel have exited, all equipment removed, and the space returned to a safe condition',
     ],
     correctAnswer: 3,
@@ -2752,9 +2752,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
       'Under BS 7671 (IET Wiring Regulations), what additional protection measure is recommended for socket outlets supplying portable equipment inside a confined space with conductive location?',
     options: [
       'Electrical separation using an isolating transformer supplying only one item of equipment, or SELV/PELV not exceeding 25V AC',
-      'A 13A fused plug fitted to every item of portable equipment taken into the space, each fitted with a 3A fuse link',
-      'A standard 230V socket outlet protected by the main circuit breaker serving the distribution board',
-      'Doubling the cross-sectional area of the circuit protective conductor supplying the socket outlet',
+      'A 13A fused plug fitted to every item of portable equipment taken into the space, each one fitted with a 3A fuse link fitted in it',
+      'A standard 230V socket outlet protected by the main circuit breaker serving the site distribution board that supplies the site',
+      'Doubling the cross-sectional area of the circuit protective conductor supplying the socket in the confined space on site',
     ],
     correctAnswer: 0,
     explanation:
@@ -2785,10 +2785,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     id: 162,
     question: "What is 'non-entry rescue' in the context of confined space emergency procedures?",
     options: [
-      'A rescue method in which two rescuers enter the space together, so that each can assist the other while extracting the casualty quickly',
-      'A rescue method in which the casualty is left in place and made comfortable until the fire and rescue service arrive',
+      'A rescue method in which two rescuers enter the space together, so that each of them can assist the other while extracting the casualty quickly and safely',
+      'A rescue method in which the casualty is left in place and made comfortable until the fire and rescue service arrive at the scene of the incident on site',
       'A rescue method where the casualty is retrieved from the confined space without the rescuer entering, typically using a retrieval line and winch system',
-      'A rescue method in which the space is flooded so that the casualty floats up to the access opening',
+      'A rescue method in which the whole space is deliberately flooded so that the casualty floats up towards the access opening at the top of it at the surface',
     ],
     correctAnswer: 2,
     explanation:
@@ -2800,9 +2800,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     id: 163,
     question: 'What is the primary advantage of non-entry rescue over entry rescue?',
     options: [
-      'It is faster to set up because no equipment is needed at the entry point',
-      'It allows more rescuers to enter the space at the same time',
-      'It removes the need for atmospheric monitoring during the rescue',
+      'It is faster to set up because no equipment is needed at the entry point by the rescue team',
+      'It allows more rescuers to enter the space inside the space at once at all times',
+      'It removes the need for any atmospheric monitoring during the rescue of the casualty',
       'It eliminates the risk of the rescuer becoming a casualty in the hazardous atmosphere',
     ],
     correctAnswer: 3,
@@ -2847,10 +2847,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     id: 166,
     question: "What is a 'davit' in the context of confined space rescue equipment?",
     options: [
-      'A portable gas detector head lowered on a sampling line, which draws the atmosphere up to the instrument at the surface so the space can be tested at several levels before entry',
-      'A flexible roll-up stretcher that wraps around the casualty so they can be drawn through a narrow opening without the use of a rigid board',
+      'A portable gas detector head lowered on a sampling line, which draws the atmosphere up to the instrument at the surface so the space can be tested at several levels before entry is finally made',
+      'A flexible roll-up stretcher that wraps closely around the casualty so that they can be drawn out through a narrow opening without the use of a rigid basket stretcher during the rescue itself',
       'A fixed or portable arm-and-base system that provides an anchor point above a confined space entry, functioning similarly to a tripod but suited to spaces where a tripod cannot be positioned',
-      'A self-contained breathing apparatus set with an extended-duration cylinder, worn by members of the rescue team while inside',
+      'A self-contained breathing apparatus set fitted with an extended-duration cylinder, worn by each of the members of the rescue team who are carrying out the rescue during the rescue work',
     ],
     correctAnswer: 2,
     explanation:
@@ -2863,9 +2863,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       'When planning confined space emergency arrangements, what should the assumed response time for the fire and rescue service be?',
     options: [
-      'A guaranteed 8 minutes, which removes the need for any on-site rescue arrangements at all',
-      'A fixed 30 minutes, which is quick enough for any confined space casualty to survive',
-      'Whatever response time the site manager judges to be acceptable on the day',
+      'A guaranteed 8 minutes, which removes the need for any on-site rescue arrangements being made on the site',
+      'A fixed 30 minutes, which is quick enough for any confined space casualty whatever the conditions at all',
+      'Whatever response time the site manager judges to be acceptable on the day when the entry is planned itself',
       'Response times cannot be guaranteed — on-site rescue capability must be provided for immediate response',
     ],
     correctAnswer: 3,
@@ -2911,10 +2911,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       "What is 'suspension trauma' (harness hang syndrome) and why is it relevant to confined space rescue?",
     options: [
-      'A muscle strain in the rescuer, caused by lifting a casualty incorrectly through a narrow confined space access opening',
-      'The bruising left on the body by the leg straps of a harness that has been poorly fitted',
+      'A muscle strain in the rescuer, caused by lifting a casualty incorrectly through a narrow confined space access opening at the surface',
+      'The bruising left on the body by the leg straps of a harness that has been poorly fitted to the wearer of it during the entry',
       'A potentially fatal condition caused by prolonged suspension in a harness, where blood pools in the legs and reduces cardiac output',
-      'The disorientation felt by a worker after spending a long period in a dark and noisy confined space',
+      'The disorientation felt by a worker after spending a long period inside a dark and noisy confined space during a long shift',
     ],
     correctAnswer: 2,
     explanation:
@@ -2927,9 +2927,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       'Once a casualty suffering from suspension trauma has been rescued, what position should they be placed in?',
     options: [
-      'Laid completely flat on their back straight away in order to restore normal circulation',
-      'Placed in the standard recovery position on their side immediately after being recovered',
-      'Stood upright and encouraged to walk about to keep the blood moving in the legs',
+      'Laid completely flat on their back straight away in order to restore normal circulation to the brain',
+      'Placed in the standard recovery position on their side immediately after being recovered from the space',
+      'Stood upright and encouraged to walk about to keep the blood moving straight away at all times',
       'In a semi-seated or W-position (knees raised towards chest) initially, NOT laid flat immediately',
     ],
     correctAnswer: 3,
@@ -2944,9 +2944,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
       'What type of stretcher is specifically designed for extracting a casualty through narrow confined space access points?',
     options: [
       'A basket (Stokes) stretcher or a confined space rescue stretcher (such as a SKED or roll-up stretcher)',
-      'A standard rigid spinal board of the type carried on ambulances for road casualties',
-      'An inflatable air mattress designed for moving patients across level ground',
-      'A folding wheeled trolley stretcher of the type used in hospital corridors',
+      'A standard rigid spinal board of the type carried on ambulances at road traffic collisions at all times',
+      'An inflatable air mattress designed for moving patients between beds in a ward during a rescue at the surface',
+      'A folding wheeled trolley stretcher of the type used in hospital corridors and in accident units at all times',
     ],
     correctAnswer: 0,
     explanation:
@@ -2959,10 +2959,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the minimum number of trained personnel typically required for a confined space entry rescue team to perform an effective entry rescue?',
     options: [
-      'A single trained rescuer who enters the space alone',
+      'A single trained rescuer who enters the space alone with a lifeline',
       'A minimum of three to four persons, depending on the rescue plan',
-      'At least ten persons, regardless of the size of the space',
-      'No dedicated team — the top person carries out the rescue alone',
+      'At least ten persons, regardless of the size of that space',
+      'No dedicated team — the top person carries out any rescue',
     ],
     correctAnswer: 1,
     explanation:
@@ -2974,10 +2974,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     id: 174,
     question: 'What does the emergency rescue plan for a confined space entry MUST include?',
     options: [
-      'The contact telephone number for the local fire and rescue service, together with the full site address, the postcode and directions to the entry point itself',
-      'The names of the workers authorised to enter the space and the training certificates each of them holds',
+      'The contact telephone number for the local fire and rescue service, together with the full site address, the postcode and directions to the entry point on the site itself',
+      'The names of all of the workers authorised to enter the space and the training certificates that each of them currently holds for confined space entry work during the entry',
       'Rescue equipment, trained rescue personnel, communication methods, first aid arrangements, and procedures for raising the alarm and coordinating with emergency services',
-      'The atmospheric test results recorded immediately before entry, signed by the person who took them',
+      'The atmospheric test results recorded before the entry was made, signed and dated by the competent person who took them just before the entry was made on the day',
     ],
     correctAnswer: 2,
     explanation:
@@ -2990,9 +2990,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       'During a confined space rescue drill, the rescue team takes 12 minutes to retrieve the dummy casualty from a 5-metre deep vessel. Is this acceptable?',
     options: [
-      'Yes — there is no time limit set anywhere in the regulations, so any retrieval time achieved during a drill is acceptable, whatever the depth',
-      'Yes — twelve minutes is comfortably inside the regulatory maximum of thirty minutes for a vertical rescue',
-      'No — the regulations set a strict legal limit of exactly three minutes for the retrieval of any casualty',
+      'Yes — there is no time limit set anywhere in the regulations, so any retrieval time achieved during a drill is acceptable, whatever the depth of the space itself',
+      'Yes — twelve minutes is comfortably inside the regulatory maximum of thirty minutes that applies to a rescue carried out from a vertical space during the drill',
+      'No — the regulations set a strict legal limit of exactly three minutes for the retrieval of any casualty from any vertical confined space during the rescue drill',
       'It depends on the specific risk assessment; however, best practice target for initial casualty retrieval from a vertical space is typically within 5 minutes',
     ],
     correctAnswer: 3,
@@ -3007,9 +3007,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
       'What RIDDOR reporting obligation applies if a worker loses consciousness inside a confined space due to exposure to a toxic atmosphere?',
     options: [
       'It must be reported as a dangerous occurrence under RIDDOR, and if the worker is taken to hospital for treatment, it is also reportable as a specified injury/over-7-day injury as applicable',
-      'It does not need to be reported provided that the worker regains consciousness at the entry point and appears to have recovered fully within an hour of being brought out into fresh air',
-      'It only needs to be entered in the accident book, since loss of consciousness is not a category that RIDDOR covers',
-      'It is reportable only where the worker is subsequently absent from work for more than twenty-eight consecutive days',
+      'It does not need to be reported provided that the worker regains consciousness at the entry point and appears to have recovered fully within an hour of being brought out into the fresh air again',
+      'It only needs to be entered in the site accident book, since a loss of consciousness inside a confined space is not a category that RIDDOR actually covers under any circumstances at all',
+      'It is reportable only where the worker is subsequently absent from their work for a period of more than twenty-eight consecutive days that follows the incident itself during the entry',
     ],
     correctAnswer: 0,
     explanation:
@@ -3022,10 +3022,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       'Which of the following is a reportable dangerous occurrence under RIDDOR related to confined spaces?',
     options: [
-      'A worker arriving late for the start of a confined space entry shift without notice',
+      'A worker arriving late for the start of a confined space entry shift without notice being given to anyone',
       'The unintentional release of a substance that could reasonably have caused death or specified injury',
-      'A gas detector failing its routine calibration check at the annual service',
-      'A permit to work that has been completed with the wrong date written on it',
+      'A gas detector failing its routine calibration check at the annual service carried out each year on the site',
+      'A permit to work that has been completed with the wrong date by the issuing person on that shift',
     ],
     correctAnswer: 1,
     explanation:
@@ -3038,10 +3038,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       'After a confined space incident requiring rescue, what investigation should be carried out?',
     options: [
-      'A brief note in the site diary recording who was at fault and what they did wrong, so that the matter can be raised at the next toolbox talk',
-      'No investigation by the employer, since the incident is a matter for the emergency services who attended',
+      'A brief note in the site diary recording who was at fault and what they did wrong, so that the matter can be raised at the next toolbox talk held on the site',
+      'No investigation at all by the employer, since the incident is a matter for the emergency services who attended the scene of the incident that day itself',
       'A thorough investigation to establish root causes, contributing factors, and lessons learned, with corrective actions implemented to prevent recurrence',
-      'An investigation limited to checking whether the permit and the risk assessment were completed correctly',
+      'An investigation limited to checking whether the entry permit and the risk assessment were completed properly before the entry was made by the site team',
     ],
     correctAnswer: 2,
     explanation:
@@ -3054,9 +3054,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       "What is the purpose of a 'near-miss' reporting culture in relation to confined space safety?",
     options: [
-      'To identify which of the workers involved should be disciplined for creating the unsafe situations that were reported',
-      'To reduce the volume of paperwork that has to be completed after an actual injury occurs',
-      'To demonstrate to the enforcing authority that the workplace has had no reportable accidents',
+      'To identify which of the workers involved should be disciplined for creating the unsafe situations that were reported to the manager',
+      'To reduce the volume of paperwork that has to be completed after an actual injury occurs inside a confined space at all times',
+      'To demonstrate to the enforcing authority that the workplace has had no reportable accidents in the last twelve months at all',
       'To identify and learn from incidents that could have resulted in injury or death, enabling proactive prevention of future incidents',
     ],
     correctAnswer: 3,
@@ -3071,9 +3071,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
       'What first aid equipment should be immediately available at a confined space entry point?',
     options: [
       'A first aid kit, oxygen resuscitation equipment, automated external defibrillator (AED), and blankets as a minimum — with additional items based on the specific risk assessment',
-      'A basic plaster and bandage kit at the entry point, since any seriously injured casualty is taken straight to hospital by the ambulance service in any event',
-      'No first aid equipment at the entry point, because the trained rescue team bring everything they need with them',
-      'A fire extinguisher and a burns dressing, since fire is the main risk when hot work is done in a confined space',
+      'A basic plaster and bandage kit at the entry point, since any seriously injured casualty is taken straight to hospital by the ambulance service whatever has happened at all times',
+      'No first aid equipment at all at the entry point, because the trained rescue team will bring everything that they are likely to need with them into the space on the day of entry',
+      'A fire extinguisher and a burns dressing, since fire is by far the main risk whenever any hot work is being done inside a confined space by the entry team on the site',
     ],
     correctAnswer: 0,
     explanation:
@@ -3085,10 +3085,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     id: 181,
     question: 'What should happen to the confined space atmosphere during a rescue operation?',
     options: [
-      'Ventilation should be switched off so that the casualty is not further chilled by the airflow inside the space',
+      'Ventilation should be switched off so that the casualty is not further chilled by the airflow inside the space during the rescue',
       'Forced ventilation should be maintained or increased to improve the atmosphere for both the casualty and the rescue team',
-      'The space should be sealed to prevent any further gas entering while the rescue is carried out',
-      'The space should be purged with nitrogen to displace the toxic gas as quickly as possible',
+      'The space should be sealed to prevent any further gas from entering it while the rescue is being carried out by the rescue team',
+      'The space should be purged with nitrogen in order to displace the toxic gas as quickly as possible during the rescue at all',
     ],
     correctAnswer: 1,
     explanation:
@@ -3101,10 +3101,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       "A confined space rescue plan specifies 'entry rescue' as the primary method. What does this mean?",
     options: [
-      'The casualty is winched out on a retrieval line operated from the surface, without any rescuer entering the space at all',
-      'The casualty is left in position and monitored until the fire and rescue service arrive on scene',
+      'The casualty is winched out on a retrieval line operated from the surface, without any rescuer entering the space by the rescuers at all times',
+      'The casualty is left in position and monitored from above until the fire and rescue service arrive at the scene of the incident at all',
       'Trained rescuers wearing appropriate PPE and RPE will physically enter the confined space to reach, stabilise, and extract the casualty',
-      'The top person enters the space briefly to pass a rope down to the casualty and then withdraws',
+      'The top person enters the space briefly to pass a rope down to the casualty and then withdraws from the space to the surface at all',
     ],
     correctAnswer: 2,
     explanation:
@@ -3116,9 +3116,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     id: 183,
     question: 'Why is it critical to practise confined space rescue drills regularly?',
     options: [
-      'Because the regulations require that every drill is filmed and that the recording is submitted to the enforcing authority afterwards',
-      'Because drills are needed only to justify the cost of buying and maintaining the rescue equipment',
-      'Because a documented drill removes the need to carry out a written risk assessment for the entry',
+      'Because the regulations require that every drill is filmed and that the recording is then submitted to the enforcing authority for its records at all times',
+      'Because drills are needed only in order to justify the cost of buying and maintaining the rescue equipment by the employer for the entry work on the site',
+      'Because a documented drill removes the need to carry out a written risk assessment for the entry into the confined space itself during the entry',
       'To ensure the rescue team can perform an effective rescue under stress, identify any deficiencies in equipment or procedures, and maintain competence',
     ],
     correctAnswer: 3,
@@ -3132,9 +3132,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question: "What is the 'buddy system' in the context of confined space entry rescue?",
     options: [
       'A system where rescue team members always enter the space in pairs so they can monitor each other and provide mutual assistance',
-      'A system in which each rescuer is paired with a named member of the attending fire and rescue service crew on arrival',
-      'A system in which a rescuer is paired with the casualty they have been sent into the space to retrieve',
-      'A system in which rescuers take it in turns to enter the space one at a time to conserve their air',
+      'A system in which each rescuer is paired with a named member of the attending fire and rescue service crew at the scene at all times',
+      'A system in which a rescuer is paired with the casualty that they have been sent in to retrieve from the space during the rescue',
+      'A system in which the rescuers take it in turns to enter the space one at a time to conserve their air supply during the rescue itself',
     ],
     correctAnswer: 0,
     explanation:
@@ -3147,10 +3147,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       'During an emergency evacuation from a confined space, what should the top person record?',
     options: [
-      'The serial numbers of all the breathing apparatus sets that were issued to each entrant for the shift',
+      'The serial numbers of all of the breathing apparatus sets that were issued to each entrant for the shift and to the rescue team',
       'The names and times of all personnel exiting the space to confirm a complete headcount and identify anyone still inside',
-      'The atmospheric readings taken at the start of the shift, before any of the work began',
-      'The make and model of the rescue tripod set up over the entry point that day',
+      'The atmospheric readings taken at the start of the shift, before any of the work had begun at the entry point at all',
+      'The make and model of the rescue tripod that was set up over the entry point at the surface by the rescuers on the day',
     ],
     correctAnswer: 1,
     explanation:
@@ -3163,10 +3163,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the purpose of an emergency escape breathing device (EEBD) carried by a confined space entrant?',
     options: [
-      'It provides a continuous supply of breathing air for the whole of the planned working period inside the space',
-      'It filters the surrounding atmosphere to remove toxic gases before the wearer breathes it in',
+      'It provides a continuous supply of breathing air for the whole of the planned working period throughout the work during the work',
+      'It filters the surrounding atmosphere in order to remove any toxic gases before the wearer breathes through the filter media itself',
       'It provides a short-duration air supply (typically 10-15 minutes) to enable self-rescue escape from a contaminated atmosphere',
-      'It supplies oxygen to a casualty who has already been recovered from the confined space',
+      'It supplies oxygen to a casualty who has already been recovered from the confined space after the rescue is over at all',
     ],
     correctAnswer: 2,
     explanation:
@@ -3179,9 +3179,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       'A confined space rescue involves a casualty located 8 metres below ground level in a vertical shaft. Which extraction method would be most appropriate?',
     options: [
-      'Two rescuers carrying the casualty up the fixed access ladder between them without a line',
-      'Lowering a single rope so that the casualty can climb out of the shaft unaided',
-      'Waiting for the water table to rise so that the casualty floats up to the surface',
+      'Two rescuers carrying the casualty up the fixed access ladder between them or a rescue harness at the surface',
+      'Lowering a single rope so that the casualty is able to climb out of the shaft without any assistance at all',
+      'Waiting for the water table to rise so that the casualty floats up at the top of the shaft of the shaft above',
       'A tripod or davit with man-riding winch system, with the casualty secured in a rescue harness or stretcher',
     ],
     correctAnswer: 3,
@@ -3196,9 +3196,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
       'What is the role of the emergency services (fire and rescue) in a confined space rescue plan?',
     options: [
       'They provide additional support, specialist rescue capability, medical assistance, and resources to supplement the on-site rescue team',
-      'They replace the on-site rescue team entirely, so no rescue arrangements need to be made by the employer at the site',
-      'They issue the confined space entry permit and authorise the entry before any work can begin',
-      'They carry out the atmospheric monitoring on the employer\'s behalf throughout the entry',
+      'They replace the on-site rescue team entirely, so no rescue arrangements need to be made by the employer at any point during the project',
+      'They issue the confined space entry permit and authorise the entry before any of the work can begin at the entry point on the day',
+      'They carry out all of the atmospheric monitoring on behalf of the employer on site during the whole entry throughout the entry',
     ],
     correctAnswer: 0,
     explanation:
@@ -3211,10 +3211,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       'What should a rescue team do FIRST upon arriving at a confined space where the entrant has become unresponsive?',
     options: [
-      'Enter the space immediately in order to pull the entrant out, on the basis that every second counts once someone is unresponsive inside',
+      'Enter the space immediately in order to pull the entrant out, on the basis that every second counts once someone is unresponsive inside the confined space',
       'Assess the situation: check atmospheric monitoring readings, attempt communication, attempt non-entry retrieval, and determine if entry rescue is needed',
-      'Wait at the entry point for the fire and rescue service to arrive before taking any action at all',
-      'Complete the RIDDOR report form and notify the site manager before any rescue attempt is made',
+      'Wait at the entry point for the fire and rescue service to arrive on the site before taking any action at all themselves at any stage of the incident on the day',
+      'Complete the RIDDOR report form and notify the site manager before any rescue attempt at all by the rescue team on the site at the entry point above',
     ],
     correctAnswer: 1,
     explanation:
@@ -3243,9 +3243,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       'Under RIDDOR 2013, within what timeframe must a death resulting from a confined space incident be reported to the enforcing authority?',
     options: [
-      'Within 10 days, using the online F2508 form only',
-      'Within 28 days of the death occurring on site',
-      'Within 3 months, once the internal investigation is complete',
+      'Within 10 days, using the online F2508 form sent to the HSE office first',
+      'Within 28 days of the death occurring on the site of the works on the day',
+      'Within 3 months, once the internal investigation is complete by the employer',
       'Without delay — by the quickest practicable means (usually telephone)',
     ],
     correctAnswer: 3,
@@ -3259,9 +3259,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question: "What is 'rescue death' and how can it be prevented?",
     options: [
       'Death that occurs after rescue from suspension, caused by the sudden redistribution of pooled blood overwhelming the heart — prevented by adopting a semi-seated recovery position rather than laying the casualty flat',
-      'Death of a rescuer who enters a toxic atmosphere without breathing apparatus in order to reach a colleague — prevented by ensuring that every entry rescue is made only with full respiratory protection',
-      'Death caused by a casualty being dropped during winching from a vertical space — prevented by fitting a secondary backup line to the retrieval system',
-      'Death from delayed pulmonary oedema following gas exposure — prevented by giving the casualty oxygen at the scene and monitoring them',
+      'Death of a rescuer who enters a toxic atmosphere without breathing apparatus in order to reach a colleague — prevented by ensuring that every entry rescue is made only with full respiratory protection on every single entry',
+      'Death caused by a casualty being dropped during winching from a vertical space — prevented by fitting a secondary backup line to the retrieval system that is used at the surface during the rescue at the entry point',
+      'Death from delayed pulmonary oedema following exposure to gas — prevented by giving the casualty oxygen at the scene and monitoring them closely afterwards for several hours for any delayed effects that may appear',
     ],
     correctAnswer: 0,
     explanation:
@@ -3274,10 +3274,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       'What factors should be considered when selecting between SCBA and airline BA for confined space rescue?',
     options: [
-      'The colour of the apparatus, the preference of the individual rescuer, and which set happens to be nearest to the entry point on the day',
+      'The colour of the apparatus, the preference of the individual rescuer, and which set happens to be nearest to the entry point of the rescue operation itself',
       'Duration of air supply, the distance the rescuer needs to travel, the size of the access, the potential for hose snag or damage, and the need for mobility',
-      'The purchase cost of each type of apparatus and which supplier is able to offer the quickest delivery to site',
-      'The brand name printed on the equipment, its year of manufacture, and the length of the warranty offered',
+      'The purchase cost of each type of apparatus and which of the suppliers is able to offer the quickest delivery of the equipment sets at short notice on the day',
+      'The brand name printed on the equipment, the year of its manufacture, and the length of the warranty that is offered with each of the apparatus sets',
     ],
     correctAnswer: 1,
     explanation:
@@ -3290,10 +3290,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       "What is the purpose of a 'turnaround pressure' when using SCBA during a confined space rescue?",
     options: [
-      'The cylinder pressure at which the set must be taken out of service and refilled before it can be used for the next entry into the space',
-      'The maximum pressure to which the cylinder may safely be charged before the set is worn into the space',
+      'The cylinder pressure at which the set must be taken out of service and refilled before it can be used for the next entry by the wearer during the entry',
+      'The maximum pressure to which the cylinder may safely be charged before the set is worn into the confined space before the entry begins at the surface',
       'The minimum cylinder pressure at which the rescuer must begin their return journey to ensure they exit the space before the air supply is exhausted',
-      'The positive pressure maintained inside the facepiece that stops contaminated air leaking past the seal',
+      'The positive pressure that is maintained inside the facepiece and that stops contaminated air from leaking past the seal of the wearer inside the space',
     ],
     correctAnswer: 2,
     explanation:
@@ -3306,9 +3306,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       'After a confined space incident, what documentation should be preserved for the investigation?',
     options: [
-      'The permit to work alone, since the permit records every control that was in place at the time and the other records add nothing useful to the investigation',
-      'The timesheets showing how long the work took, so that the sequence of events can be reconstructed later',
-      'A verbal account taken from the supervisor after the incident, recorded as a written statement',
+      'The permit to work alone, since the permit records every control that was in place at the time and the other records add nothing useful to the investigation that follows',
+      'The timesheets showing how long the work took, so that the sequence of events during the entry can be reconstructed by the team investigating the incident later on',
+      'A verbal account taken from the supervisor after the incident, recorded and then signed for the investigation file afterwards at the end of the working shift',
       'All permits, risk assessments, atmospheric monitoring records, training records, equipment inspection records, CCTV footage, witness statements, and the scene itself',
     ],
     correctAnswer: 3,
@@ -3322,9 +3322,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question: "What is the HSE's recommended approach to investigating confined space incidents?",
     options: [
       'A systematic approach examining immediate causes, underlying causes, and root causes — including organisational and management factors',
-      'A quick check to confirm that the permit and risk assessment were completed correctly, with no further analysis of the causes',
-      'An approach focused on identifying which individual worker was to blame for causing the incident',
-      'An approach that considers the equipment and its maintenance, but not human or organisational factors',
+      'A quick check to confirm that the permit and the risk assessment were completed correctly, with no further analysis of the causes at all',
+      'An approach focused on identifying which individual worker was to blame rather than on the causes of it that occurred on the day of entry',
+      'An approach that considers the equipment and its maintenance, but not the factors that led to the incident that occurred on site',
     ],
     correctAnswer: 0,
     explanation:
@@ -3337,10 +3337,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       'A worker is rescued from a confined space after inhaling hydrogen sulphide. They appear to have recovered and want to return to work. What should happen?',
     options: [
-      'They may return to work immediately, since an apparently full recovery from H₂S exposure means that no further risk remains to them',
+      'They may return to work immediately, since an apparently full recovery from H₂S exposure means that no further risk remains from the exposure at all',
       'They must receive medical assessment and clearance before returning to work, as H₂S can cause delayed pulmonary oedema and other latent effects',
-      'They should rest at the site for an hour and then resume the work if they still feel well enough',
-      'They may return to work once they have signed a disclaimer accepting the risk of further exposure',
+      'They should rest at the site for an hour and then resume the work if they still feel well enough to carry on with the work inside the confined space',
+      'They may return to work once they have signed a disclaimer accepting the risk of any further exposure at some later date during the work on the site',
     ],
     correctAnswer: 1,
     explanation:
@@ -3353,10 +3353,10 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
     question:
       "What is a 'cascade system' in the context of confined space rescue breathing apparatus?",
     options: [
-      'The chain reaction in which one worker being overcome leads to several would-be rescuers also becoming casualties',
-      'A single small escape cylinder carried by each entrant to allow self-rescue from the space',
+      'The chain reaction in which one worker being overcome leads to several of the would-be rescuers also becoming casualties themselves',
+      'A single small escape cylinder that is carried by each entrant to allow self-rescue from the confined space during the entry',
       'A bank of interconnected high-pressure air cylinders that provide an extended, continuous supply of breathing air to airline BA users',
-      'A sequence of subsidiary permits that must each be issued in turn before the entry is authorised',
+      'A sequence of subsidiary permits that must each be issued in turn before the confined space entry is authorised by the issuer',
     ],
     correctAnswer: 2,
     explanation:
@@ -3386,9 +3386,9 @@ export const confinedSpacesQuestionBank: StandardMockQuestion[] = [
       'After a confined space near-miss event is reported and investigated, what is the MOST important final step?',
     options: [
       'Implementing corrective actions, updating the risk assessment and safe system of work, and sharing the lessons learned across the organisation',
-      'Filing the completed investigation report away with the other project records, and taking no further action on the site at all',
-      'Identifying and disciplining the worker who was involved in the near miss so that others take notice',
-      'Waiting to see whether a similar near miss occurs again before deciding to change anything',
+      'Filing the completed investigation report away with the other project records, and taking no further action on the site afterwards',
+      'Identifying and disciplining the worker who was involved in the near miss so that all of the others take notice in the future on site',
+      'Waiting to see whether a similar near miss occurs again on the site before deciding to change anything at all about the system on site',
     ],
     correctAnswer: 0,
     explanation:

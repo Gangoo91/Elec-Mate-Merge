@@ -1,6 +1,7 @@
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
+import { withSentry } from '../_shared/sentry.ts';
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers':
@@ -783,7 +784,7 @@ function extractRegion(postcode: string | null, location: string | null): string
   return null;
 }
 
-Deno.serve(async (req) => {
+Deno.serve(withSentry('sync-contracts-finder', async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -983,7 +984,7 @@ Deno.serve(async (req) => {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   }
-});
+}));
 
 // Generate comprehensive mock opportunities for testing without API credentials
 function generateMockOpportunities() {

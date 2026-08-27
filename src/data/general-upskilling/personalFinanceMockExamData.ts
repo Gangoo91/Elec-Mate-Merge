@@ -88,7 +88,7 @@ export const pfQuestionBank: StandardMockQuestion[] = [
       'Which JIB grading is the entry-level position before becoming a Trainee Electrician?',
     options: [
       'Electrical Labourer',
-      'Graded Electrician',
+      'Approved Electrician',
       'Apprentice',
       'Improver',
     ],
@@ -191,10 +191,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 10,
     question: 'What does UTR stand for in self-assessment?',
     options: [
-      'United Tax Registration',
+      'Universal Taxpayer Registration',
       'Universal Tax Record',
       'Unique Taxpayer Reference',
-      'Updated Tax Return',
+      'Updated Tax Return Reference',
     ],
     correctAnswer: 2,
     explanation:
@@ -364,9 +364,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question: 'What are payments on account in self-assessment?',
     options: [
       "Advance payments towards next year's tax bill based on the previous year",
-      "A one-off charge HMRC adds for filing your return late",
-      "The balance of tax left to pay after CIS deductions are applied",
-      "Monthly instalments spread evenly across the whole tax year",
+      'A one-off penalty charge that HMRC adds when a Self Assessment return is late',
+      'The balance of tax still left to pay once CIS deductions have been applied',
+      'Fixed monthly instalments spread evenly across every month of the tax year',
     ],
     correctAnswer: 0,
     explanation:
@@ -384,7 +384,7 @@ export const pfQuestionBank: StandardMockQuestion[] = [
       'Profits are exempt from tax until they are withdrawn as dividends',
       'Profits are taxed at Corporation Tax rates before being distributed',
       'Profits are taxed at a flat 20% regardless of how much you earn',
-      'Profits are free of National Insurance but pay double Income Tax',
+      'Profits are free of National Insurance and are never liable to Income Tax',
     ],
     correctAnswer: 1,
     explanation:
@@ -487,8 +487,8 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 27,
     question: 'In financial health terms, what is the difference between assets and liabilities?',
     options: [
-      'Assets depreciate; liabilities appreciate',
-      'Assets are liquid; liabilities are fixed',
+      'Assets can be sold on; liabilities must eventually be repaid',
+      'Assets are always insured; liabilities are always secured',
       'Assets are taxable; liabilities are tax-deductible',
       'Assets add value; liabilities create obligations or debt',
     ],
@@ -521,10 +521,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 29,
     question: 'What is gross payment status under CIS?',
     options: [
-      'All contractors automatically receive gross payments',
+      'Every contractor is paid gross as soon as they register with HMRC',
       'Approved contractors can receive payments with 0% CIS deduction',
-      'Payments made before tax registration',
-      'Monthly rather than weekly payment terms',
+      'Payments made to a subcontractor before they have registered with HMRC',
+      'Monthly rather than weekly payment terms agreed with the contractor',
     ],
     correctAnswer: 1,
     explanation:
@@ -538,10 +538,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 30,
     question: 'Which expense category would cover your Napit or NICEIC membership fees?',
     options: [
-      'Capital allowances',
-      'Travel and subsistence',
+      'Capital allowances on tools',
+      'Travel and subsistence costs',
       'Professional fees and subscriptions',
-      'Tools and equipment',
+      'Tools and equipment bought for the job',
     ],
     correctAnswer: 2,
     explanation:
@@ -556,8 +556,8 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question: 'What does the "day rate illusion" refer to for self-employed electricians?',
     options: [
       'Charging every client the same daily rate whether the work is domestic or industrial',
-      'Believing that raising your day rate will make clients book fewer jobs with you',
-      'Quoting work by the day instead of at a fixed price so that jobs overrun less often',
+      'Believing that putting your day rate up will always make clients book far fewer jobs with you',
+      'Quoting work by the day instead of at a fixed price so that jobs are far less likely to overrun',
       'Comparing gross daily rates without accounting for tax, NI, expenses, and non-working time',
     ],
     correctAnswer: 3,
@@ -590,10 +590,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'How do IR35 off-payroll working rules affect electricians working through their own limited company?',
     options: [
-      'They set the maximum dividend a company can pay its director in any single tax year',
+      'They set the maximum dividend that a company may pay its director in any single tax year of trading',
       "They determine whether you're taxed as employed or self-employed based on working practices",
-      'They fix the rate of Corporation Tax charged on profits earned from contract work only',
-      'They require every limited company to register for VAT from the date of its first invoice',
+      'They fix the rate of Corporation Tax that is charged on the profits earned from contract work',
+      'They require every limited company to register for VAT from the date of its very first invoice',
     ],
     correctAnswer: 1,
     explanation:
@@ -626,9 +626,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the optimal salary/dividend split strategy for a limited company director in 2024/25?',
     options: [
-      'Take the entire profit as salary to maximise State Pension accrual',
-      'Take the entire profit as dividends and pay no salary at all',
-      'Split profit equally between salary and dividends each month',
+      'Take the entire profit as salary so as to maximise the State Pension accrual',
+      'Take the entire profit as dividends and pay yourself no salary from the company',
+      'Split the profit equally between salary and dividends in every month of the tax year',
       'Salary around £12,570 (Personal Allowance), remainder as dividends to minimise NI',
     ],
     correctAnswer: 3,
@@ -645,8 +645,8 @@ export const pfQuestionBank: StandardMockQuestion[] = [
       'When comparing employed versus self-employed income, which calculation gives the most accurate comparison?',
     options: [
       'Net annual take-home after tax, NI, expenses, and adjusting for lost benefits and non-working days',
-      'Gross day rate multiplied by working days booked, ignoring holidays, sickness, and admin',
-      'Hourly rate set directly against an employed hourly wage, before tax, NI, and running costs',
+      'Gross day rate multiplied by the working days booked, ignoring holidays, sickness, and unpaid admin',
+      'Hourly rate set directly against an employed hourly wage, before tax, NI, expenses, and running costs',
       'Total invoiced turnover for the year, before deducting any expenses, tax, or unpaid invoices',
     ],
     correctAnswer: 0,
@@ -661,10 +661,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 37,
     question: 'What are the four key dimensions of the CIPD/MaPS Financial Wellbeing model?',
     options: [
-      'Income, Savings, Pension, Protection',
+      'Earnings, Savings, Pensions, Protection',
       'Control, Resilience, Security, Freedom',
-      'Budgeting, Debt, Investment, Planning',
-      'Earnings, Spending, Borrowing, Saving',
+      'Budgeting, Borrowing, Investing, Planning',
+      'Earning, Spending, Borrowing, Protecting',
     ],
     correctAnswer: 1,
     explanation:
@@ -679,7 +679,7 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'When must a self-employed electrician register for Making Tax Digital if their income grows from £25,000 to £55,000?',
     options: [
-      'From April 2027 when they exceed £30,000',
+      'Once their profits pass the VAT threshold',
       'Immediately upon exceeding £50,000',
       'From April 2026 when they exceed £50,000',
       'When they file their next tax return',
@@ -716,9 +716,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
       'What is the key difference between actual expenses and simplified expenses for business use of home?',
     options: [
       'Actual expenses require apportioning bills based on business use percentage; simplified expenses use a flat £6/week rate',
-      'Actual expenses are open only to limited companies; simplified expenses are open only to sole traders',
-      'Actual expenses can be backdated across five earlier tax years; simplified expenses apply to this year only',
-      'Actual expenses cover metered utility bills only; simplified expenses also cover rent and mortgage interest',
+      'Actual expenses are open only to limited companies; simplified expenses are open only to registered sole traders',
+      'Actual expenses can be backdated across five earlier tax years, whereas simplified expenses apply to the current year only',
+      'Actual expenses cover metered utility bills only, whereas simplified expenses also cover the rent and the mortgage interest',
     ],
     correctAnswer: 0,
     explanation:
@@ -771,9 +771,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 43,
     question: 'What is the key principle of zero-based budgeting?',
     options: [
-      'Starting each month with zero in your bank account',
-      'Resetting your budget to zero each year',
-      'Spending nothing on non-essentials',
+      'Starting every month with a zero balance in your bank account',
+      'Resetting your budget back to zero at the start of each year',
+      'Spending nothing at all on anything that is not essential',
       'Allocating every pound of income to a specific purpose',
     ],
     correctAnswer: 3,
@@ -823,10 +823,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 46,
     question: 'What does IPSE research reveal about self-employed income?',
     options: [
-      'Income is stable throughout the year',
-      'Income is guaranteed by government schemes',
+      'Income is stable and predictable throughout the year',
+      'Income is guaranteed by government support schemes',
       'Income shows significant volatility and seasonal variation',
-      'Income is always higher than employed workers',
+      'Income is always higher than that of an employed electrician',
     ],
     correctAnswer: 2,
     explanation:
@@ -840,9 +840,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 47,
     question: 'What is the "baseline month" approach to budgeting for irregular income?',
     options: [
-      'Budgeting based on your highest earning month',
+      'Budgeting based on your highest earning month of the year',
       'Budgeting based on your average monthly income',
-      "Budgeting based on last year's total income",
+      'Budgeting based on the total income earned last tax year',
       'Budgeting based on your lowest likely monthly income',
     ],
     correctAnswer: 3,
@@ -858,9 +858,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question: 'What is "income smoothing" in the context of self-employment?',
     options: [
       'Paying yourself a consistent salary from your business account',
-      'Averaging your income over several years for tax purposes',
-      'Spreading payments to HMRC across the year',
-      'Requesting clients pay in monthly instalments',
+      'Averaging your income over several earlier tax years for tax purposes',
+      'Spreading your payments to HMRC evenly across the whole tax year',
+      'Requesting that every client pays you in equal monthly instalments',
     ],
     correctAnswer: 0,
     explanation:
@@ -876,8 +876,8 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     options: [
       'Save 10% of net profit',
       'Save 30% of gross income',
-      'Save 40% of gross income',
-      'Save 20% of gross income',
+      'Save 40% of your gross income',
+      'Save 20% of turnover',
     ],
     correctAnswer: 1,
     explanation:
@@ -960,9 +960,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question: 'How long must electricians keep business records for tax purposes?',
     options: [
       '1 year from the filing deadline',
-      '3 years from the filing deadline',
+      '3 years from the end of the tax year',
       '5 years plus the current tax year',
-      '10 years from the filing deadline',
+      '10 years from the end of the tax year',
     ],
     correctAnswer: 2,
     explanation:
@@ -976,9 +976,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 55,
     question: 'What is the recommended weekly admin habit for self-employed electricians?',
     options: [
-      '10 minutes on Monday morning',
-      '1 hour on Wednesday lunchtime',
-      '2 hours on Sunday evening',
+      'A quick 10 minutes on Monday morning',
+      'A full hour on Wednesday lunchtime',
+      'A couple of hours on Sunday evening',
       '30 minutes on Friday afternoon',
     ],
     correctAnswer: 3,
@@ -1047,7 +1047,7 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'In zero-based budgeting for electricians, what should happen to surplus income after all categories are funded?',
     options: [
-      'It should be left unallocated in the current account in case a quiet month comes along',
+      'It should be left unallocated in the current account in case a quiet month comes along later',
       'It should be drawn out as extra personal spending money once the essentials are covered',
       'It should be held back untouched until the tax return is filed at the end of the year',
       'It should be allocated to specific goals (extra debt payment, savings, business investment)',
@@ -1066,9 +1066,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
       "What is the main advantage of the Tradesperson's Five-Account System over a single account?",
     options: [
       'It creates financial discipline through physical separation and purpose-specific allocation',
-      'It removes the need to set money aside for tax during the year, as HMRC bills you annually',
+      'It removes the need to set money aside for tax during the year, as HMRC bills you once a year',
       'It guarantees a higher rate of credit interest on every one of the five accounts held',
-      'It lets you defer Self Assessment payments until the business account balance recovers',
+      'It lets you defer Self Assessment payments until the business current account balance recovers',
     ],
     correctAnswer: 0,
     explanation:
@@ -1082,10 +1082,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 61,
     question: 'Which seasonal pattern is most common for domestic electricians in the UK?',
     options: [
-      'Busiest in summer holidays, quiet in autumn and spring',
+      'Busiest during the summer holidays, then quiet in autumn and spring',
       'Quiet in summer holidays and December, busier in autumn/spring',
-      'Steady throughout the year with no seasonal variation',
-      'Busiest in December, quiet for the rest of the year',
+      'Steady right through the whole year with no seasonal variation at all',
+      'Busiest in December, then quiet for the whole of the rest of the year',
     ],
     correctAnswer: 1,
     explanation:
@@ -1100,10 +1100,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       "If an electrician's lowest monthly income is typically £2,500 and highest is £6,000, what should their baseline budget cover?",
     options: [
-      'The average of £4,250',
+      'The average of £4,250 across the year',
       'The highest of £6,000 for security',
       'The lowest of £2,500 for resilience',
-      'The median across the year',
+      'The median month across the year',
     ],
     correctAnswer: 2,
     explanation:
@@ -1153,10 +1153,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 65,
     question: 'How should an electrician plan for the Christmas cash flow trap?',
     options: [
-      'Rely on credit cards during December',
+      'Rely on credit cards to get through the December period',
       'Set aside money monthly in a separate pot throughout the year',
-      'Work extra hours in December to compensate',
-      'Delay paying suppliers until January',
+      'Work extra hours through December to make up the shortfall later',
+      'Delay paying every supplier and the wholesaler until the new year',
     ],
     correctAnswer: 1,
     explanation:
@@ -1170,10 +1170,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 66,
     question: 'What are the key elements a 12-month cash flow forecast should include?',
     options: [
-      'Expected income only, with expenses and tax estimated once the year end accounts are done',
-      'Your credit score, outstanding personal debts, pension contributions, and tool purchases',
+      'Expected income only, with expenses and tax estimated after the year end accounts are prepared',
+      'Your credit score, outstanding personal debts, pension contributions, and recent tool purchases',
       'Expected income, regular expenses, one-off costs, tax payments, and opening/closing balances',
-      'A ranked list of clients by payment speed, plus the rates charged by local competitors',
+      'A ranked list of clients by payment speed, plus the day rates charged by your local competitors',
     ],
     correctAnswer: 2,
     explanation:
@@ -1188,7 +1188,7 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'Beyond practical bookkeeping, what psychological benefit does separating business and personal finances provide?',
     options: [
-      'It automatically lowers the Income Tax due on the profits your business makes',
+      'It automatically lowers the Income Tax due on the profits that your business makes',
       'It removes the need to keep receipts or invoices for any business purchase',
       'It guarantees the business will stay profitable in every month of trading',
       'It provides clear visibility on true business profitability and personal drawings',
@@ -1223,10 +1223,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 69,
     question: 'What is the main purpose of receipt management apps like Dext or Xero Capture?',
     options: [
-      'To calculate the tax due on your profits and file the Self Assessment return with HMRC for you',
+      'To calculate the tax due on your profits and to file the Self Assessment return with HMRC on your behalf',
       'To photograph and digitise receipts for automatic data extraction and accounting software integration',
-      'To log every business journey using phone GPS and work out the mileage claim due automatically',
-      'To send automated reminders to late-paying clients and escalate overdue invoices to recovery',
+      'To log every business journey using the phone GPS and then work out the mileage claim due automatically',
+      'To send automated reminders to late-paying clients and escalate any overdue invoices to recovery',
     ],
     correctAnswer: 1,
     explanation:
@@ -1241,10 +1241,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'Which budgeting app uses the "give every pound a job" philosophy, making it ideal for irregular income?',
     options: [
-      'Plum',
-      'Emma',
+      'Plum (automatic round-up saving)',
+      'Emma (subscription tracking app)',
       'YNAB (You Need A Budget)',
-      'Moneybox',
+      'Moneybox (round-up investing app)',
     ],
     correctAnswer: 2,
     explanation:
@@ -1259,9 +1259,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the benefit of accessing your Personal Tax Account via the HMRC app rather than the Government Gateway website?',
     options: [
-      'It applies an automatic discount to the Income Tax you owe for filing through a mobile device',
-      'It removes the need to file a Self Assessment return, as the app reports your income for you',
-      'It lets you claim business expenses without keeping any receipts, as the app estimates them',
+      'It applies an automatic discount to the Income Tax you owe for filing your return through a mobile device',
+      'It removes the need to file a Self Assessment return, as the app reports all your income for you',
+      'It lets you claim business expenses without keeping any receipts at all, as the app estimates them',
       'It provides mobile-optimised access to tax information, payment deadlines, and National Insurance record',
     ],
     correctAnswer: 3,
@@ -1295,10 +1295,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'An electrician operates zero-based budgeting with irregular income. They earn £7,000 in March but only £2,800 in April. Their essential monthly allocation is £2,500. How should they allocate the March surplus?',
     options: [
-      'Spend the whole £7,000 on new test equipment now, then live on April\'s £2,800 income',
+      'Spend the whole £7,000 on new test equipment now, then live on the £2,800 of April income',
       "Allocate £2,500 to April's essentials buffer, then assign remaining £2,000 to specific goals",
-      'Leave the whole £7,000 in the current account as a float, then review it at the end of April',
-      'Pay the full £7,000 into a pension for the tax relief, then live only on April\'s £2,800',
+      'Leave the whole £7,000 in the current account as a float, then review it all at the end of April',
+      'Pay the full £7,000 into a pension for the tax relief, then live only on the £2,800 April income',
     ],
     correctAnswer: 1,
     explanation:
@@ -1313,10 +1313,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'Why might the 30% tax provision rule be insufficient for a VAT-registered electrician with high profit margins?',
     options: [
-      'Class 2 National Insurance is charged at 30% of gross profit before expenses are deducted',
-      'VAT-registered electricians cannot claim business expenses, so the 30% must cover them all',
+      'Class 2 National Insurance is charged at 30% of gross profit before any of the expenses are deducted',
+      'VAT-registered electricians cannot claim business expenses at all, so the 30% must cover them too',
       "30% may not cover higher-rate tax (40%), Class 4 NI, and VAT if pricing doesn't add VAT on top",
-      'The 30% rule applies only to limited companies, as sole traders pay tax at a flat 40% rate',
+      'The 30% rule applies only to limited companies, because sole traders pay tax at a flat 40% rate',
     ],
     correctAnswer: 2,
     explanation:
@@ -1332,7 +1332,7 @@ export const pfQuestionBank: StandardMockQuestion[] = [
       'An electrician wants to smooth income to £3,000/month. In a 12-month forecast, they project total income of £42,000. What challenge does this create?',
     options: [
       'They will owe no Income Tax at all, since monthly drawings of £3,000 count as a business expense',
-      'A turnover of £42,000 triggers compulsory VAT registration, so smoothing the income is pointless',
+      'A turnover of £42,000 triggers compulsory VAT registration, so smoothing the monthly income is pointless',
       'Paying themselves a fixed £3,000 each month breaches HMRC rules, as drawings must match invoices',
       'They need a starting buffer, as early months may earn less than £3,000 before later months compensate',
     ],
@@ -1367,10 +1367,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'A 12-month cash flow forecast shows negative cash in August (-£1,200) and December (-£800), but positive all other months. What is the best strategic response?',
     options: [
-      'Take out a payday loan in August and December to cover the gaps',
+      'Take out a payday loan in August and again in December to cover the two gaps',
       'Build a cash buffer of £1,500 by July and replenish it after August for December',
-      'Stop trading entirely during August and December',
-      'Delay paying suppliers and HMRC until cash flow recovers',
+      'Stop trading altogether during August and December and take both of those months off',
+      'Delay paying the suppliers and HMRC until the cash flow recovers on its own again',
     ],
     correctAnswer: 1,
     explanation:
@@ -1385,10 +1385,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'An electrician approaching the £90,000 VAT threshold considers voluntary registration at £75,000. What is the primary strategic advantage of early registration?',
     options: [
-      'You can stop charging VAT on invoices to clients until turnover actually passes £90,000',
-      'Your Income Tax rate falls once you register, because VAT replaces part of the tax on profits',
+      'You can stop charging VAT on your invoices to clients until turnover actually passes £90,000 in a year',
+      'Your Income Tax rate falls once you register, because VAT replaces part of the tax due on your profits',
       'You can reclaim VAT on business expenses and avoid rushing to implement systems at the threshold',
-      'You become exempt from Making Tax Digital record keeping until turnover reaches £90,000',
+      'You become exempt from Making Tax Digital record keeping until your turnover reaches £90,000 a year',
     ],
     correctAnswer: 2,
     explanation:
@@ -1403,7 +1403,7 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'Why is the "Bills" account in the Five-Account System crucial for MTD compliance beyond just separation?',
     options: [
-      'It earns a higher rate of credit interest than a standard business current account does',
+      'It earns a much higher rate of credit interest than a standard business current account would pay',
       'It lets household bills paid from it be claimed in full as allowable business expenses',
       'It keeps personal spending outside Making Tax Digital, so no digital records are needed',
       'It creates a clear audit trail of personal vs business expenses, reducing classification errors',
@@ -1422,9 +1422,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
       'An electrician uses FreeAgent and Dext together. How should their Friday admin workflow integrate these tools for maximum efficiency?',
     options: [
       'Photograph receipts in Dext during the week, then Friday review Dext-pushed transactions in FreeAgent for categorisation and approval',
-      'Keep paper receipts loose in the van all year, then type them into FreeAgent in one session before the filing deadline',
-      'Use Dext solely for supplier invoices and FreeAgent solely for mileage records, keeping the two systems separate every week',
-      'Enter every transaction twice, once in Dext and once in FreeAgent, then spend Friday reconciling both sets of entries by hand',
+      'Keep paper receipts loose in the van all year, then type them into FreeAgent in one session before the filing deadline each year',
+      'Use Dext solely for supplier invoices and FreeAgent solely for mileage records, keeping the two systems separate every week of the year',
+      'Enter every transaction twice, once in Dext and once in FreeAgent, then spend Friday reconciling both sets of entries by hand each week',
     ],
     correctAnswer: 0,
     explanation:
@@ -1541,9 +1541,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 87,
     question: 'What does PCP stand for in vehicle finance?',
     options: [
-      'Partial Credit Purchase',
-      'Personal Credit Plan',
-      'Protected Car Payment',
+      'Partial Credit Purchase Plan',
+      'Personal Credit Protection Plan',
+      'Protected Car Purchase Plan',
       'Personal Contract Purchase',
     ],
     correctAnswer: 3,
@@ -1575,10 +1575,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 89,
     question: 'What is the avalanche method of debt repayment?',
     options: [
-      'Paying off smallest debts first',
+      'Paying off the smallest debts first',
       'Paying off highest interest rate debts first',
       'Spreading payments equally across all debts',
-      'Negotiating all debts to zero',
+      'Negotiating every debt down to nothing at all',
     ],
     correctAnswer: 1,
     explanation:
@@ -1731,9 +1731,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question: 'Why does being on the electoral roll improve your credit score?',
     options: [
       'It shows you can vote responsibly',
-      'It increases your available credit',
+      'It increases the credit available to you',
       'It verifies your identity and address',
-      'It reduces your existing debts',
+      'It reduces the debts that you already owe',
     ],
     correctAnswer: 2,
     explanation:
@@ -1747,9 +1747,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 99,
     question: 'What is the key difference between a hard and soft credit search?',
     options: [
-      'Hard searches are carried out by banks; soft searches only by landlords',
-      'Hard searches check your income; soft searches check your address',
-      'Soft searches lower your score; hard searches have no effect at all',
+      'Hard searches are carried out only by the banks; soft searches are made only by landlords',
+      'Hard searches check your income; soft searches check only the address you have given to them',
+      'Soft searches lower your credit score, whereas hard searches have no real effect on it at all',
       'Hard searches appear on your credit file and can affect your score, soft searches do not',
     ],
     correctAnswer: 3,
@@ -1816,9 +1816,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 103,
     question: 'What is the main psychological advantage of the snowball debt repayment method?',
     options: [
-      'It is the most mathematically efficient',
-      'It saves the most money in interest',
-      'It reduces your credit utilisation fastest',
+      'It is the most mathematically efficient method of all',
+      'It saves the most money in interest charges',
+      'It reduces your credit utilisation the fastest',
       'It provides quick wins by clearing small debts first',
     ],
     correctAnswer: 3,
@@ -1834,9 +1834,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question: 'What is an Individual Voluntary Arrangement (IVA)?',
     options: [
       'A formal, legally binding agreement to repay a portion of debts over 5-6 years',
-      'An informal arrangement that creditors can withdraw from at any time',
-      'A court order that writes off all your debts immediately',
-      'A short-term payment holiday agreed directly with each lender',
+      'An informal arrangement that any one creditor can withdraw from at any time',
+      'A formal court order that writes off every one of your debts immediately and in full',
+      'A short-term payment holiday agreed directly with each one of your separate lenders',
     ],
     correctAnswer: 0,
     explanation:
@@ -1884,9 +1884,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 107,
     question: 'What are bailiffs NOT allowed to do on their first visit to your property?',
     options: [
-      'Knock on your door',
-      'Look through windows',
-      'Ask to come inside',
+      'Knock on your door and wait outside',
+      'Look through the front windows',
+      'Ask to be let inside the house',
       'Force entry to your home',
     ],
     correctAnswer: 3,
@@ -1919,10 +1919,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 109,
     question: 'What is the main benefit of using the Financial Ombudsman Service?',
     options: [
-      'They lend money at preferential rates to people in debt',
+      'They lend money at preferential rates to people who are in debt',
       'They provide free, independent dispute resolution with financial firms',
-      'They write off debts once they exceed six years old',
-      'They negotiate lower interest rates on your behalf with creditors',
+      'They write off any debt that has been owed for more than six years',
+      'They negotiate lower interest rates on your behalf with all your creditors',
     ],
     correctAnswer: 1,
     explanation:
@@ -1955,9 +1955,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'What happens to statute-barred debt if you make a payment or acknowledge it in writing?',
     options: [
-      'It becomes completely written off',
-      'Nothing changes - it remains statute-barred',
-      'The creditor must take you to court within 30 days',
+      'It becomes completely written off and cannot be chased',
+      'Nothing changes at all - it remains statute-barred',
+      'The creditor must then take you to court within 30 days',
       'The 6-year limitation period restarts from that date',
     ],
     correctAnswer: 3,
@@ -1973,9 +1973,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question: 'When applying for a mortgage as a self-employed electrician, what is an SA302 form?',
     options: [
       'A tax calculation from HMRC showing your annual income',
-      'A self-assessment registration form',
-      'A form confirming you have public liability insurance',
-      'A credit reference agency report',
+      'A form used to register a new business for Self Assessment',
+      'A form confirming that you hold public liability insurance',
+      'A credit reference agency report on your payment history',
     ],
     correctAnswer: 0,
     explanation:
@@ -2008,10 +2008,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the strategic disadvantage of a DMP compared to an IVA for electricians with significant non-priority debts?',
     options: [
-      'DMPs always charge higher set-up fees than an IVA',
-      'DMPs appear on your credit file for longer than an IVA',
+      'DMPs always charge far higher set-up fees than an IVA ever does',
+      'DMPs appear on your credit file for far longer than an IVA does',
       'DMPs do not write off any debt and creditors can withdraw at any time',
-      'DMPs are only available to people who are already bankrupt',
+      'DMPs are only available to people who have already been declared bankrupt',
     ],
     correctAnswer: 2,
     explanation:
@@ -2064,8 +2064,8 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     options: [
       'Balance transfer cards sit outside FCA regulation, so there is no complaint route if the lender alters the terms',
       'Missing a payment typically cancels the 0% rate and damages credit during a critical period when income may fluctuate',
-      'Transferring a balance is only permitted once you are VAT-registered, which rules the cards out for most sole traders',
-      'Repaying the transferred balance early cancels the 0% deal and triggers an exit fee on the full amount owed',
+      'Transferring a balance is only permitted once you are VAT-registered, which rules these cards out for most sole traders',
+      'Repaying the transferred balance early cancels the 0% deal and triggers an exit fee on the full amount owed to the lender',
     ],
     correctAnswer: 1,
     explanation:
@@ -2117,9 +2117,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
       "An electrician has a PCP van agreement with £8,000 remaining and a final balloon payment of £6,000 due in 6 months. The van's current market value is £11,000. What is the most financially advantageous option?",
     options: [
       'Sell the van privately, settle the finance, and pocket the £3,000 equity',
-      'Pay the £6,000 balloon payment now and keep the van on the drive',
-      'Hand the van back to the finance company and write off the £3,000',
-      'Refinance the £6,000 balloon over five further years of payments',
+      'Pay the £6,000 balloon payment early and keep the van parked up on the drive',
+      'Hand the van back to the finance company and write off the £3,000 of equity',
+      'Refinance the £6,000 balloon over another five years of monthly repayments',
     ],
     correctAnswer: 0,
     explanation:
@@ -2275,10 +2275,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 129,
     question: 'What is NEST in the context of pensions?',
     options: [
-      'A type of SIPP for high earners',
+      'A type of SIPP designed for high earners',
       'A government-backed default pension scheme',
-      'A pension tracing database',
-      'A private pension advisory service',
+      'A database for tracing lost pensions',
+      'A private pension advisory service for firms',
     ],
     correctAnswer: 1,
     explanation:
@@ -2362,10 +2362,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 134,
     question: 'What happens if you opt out of automatic enrolment within the first month?',
     options: [
-      'You pay a penalty fee',
-      'You lose employer contributions only',
+      'You pay a penalty fee to the provider',
+      'You lose the employer contributions only',
       'You get a full refund of contributions',
-      'You must wait 5 years to rejoin',
+      'You must wait five years before rejoining',
     ],
     correctAnswer: 2,
     explanation:
@@ -2447,9 +2447,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 139,
     question: 'How do self-employed electricians build National Insurance qualifying years?',
     options: [
-      'Automatically through Self Assessment',
-      'By registering with HMRC annually',
-      'Through quarterly tax returns',
+      'Automatically through their Self Assessment return',
+      'By registering with HMRC at the start of each year',
+      'Through the quarterly tax returns they file',
       'By paying Class 2 voluntary contributions',
     ],
     correctAnswer: 3,
@@ -2500,9 +2500,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question: 'What is the "halve your age" rule of thumb for pension contributions?',
     options: [
       'Contribute half your age as a percentage from age 20',
-      'Contribute half your weekly wage in pounds',
+      'Contribute half of your weekly wage into the pension',
       'Contribute half your age as a percentage when you start',
-      'Save half your annual bonus into your pension',
+      'Save half of your annual bonus into your pension each year',
     ],
     correctAnswer: 2,
     explanation:
@@ -2550,10 +2550,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 145,
     question: 'What does the "4% rule" refer to in retirement planning?',
     options: [
-      'Pay 4% in pension charges maximum',
+      'Pay no more than 4% a year in pension scheme charges',
       'Withdraw 4% of your pension pot annually in retirement',
-      'Save 4% of income minimum for retirement',
-      'Expect 4% average investment returns',
+      'Save at least 4% of your income towards your retirement',
+      'Expect an average of 4% in investment returns each year',
     ],
     correctAnswer: 1,
     explanation:
@@ -2567,10 +2567,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 146,
     question: 'What is a stakeholder pension?',
     options: [
-      'A pension for company shareholders only',
-      'A government employee pension scheme',
+      'A pension open only to company shareholders and directors',
+      'A pension scheme provided by the government for its staff',
       'A low-cost, flexible pension with capped charges',
-      'A pension that includes life insurance',
+      'A pension that always includes life insurance cover',
     ],
     correctAnswer: 2,
     explanation:
@@ -2619,10 +2619,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 149,
     question: 'What is the "triple lock" that protects the State Pension?',
     options: [
-      'Three verification steps to claim your pension',
+      'Three verification steps needed to claim your pension',
       'Increases by the highest of earnings, inflation, or 2.5%',
-      'Protection against three types of fraud',
-      'Three different State Pension rates available',
+      'Protection against three separate types of fraud',
+      'Three different State Pension rates, one for each age group',
     ],
     correctAnswer: 1,
     explanation:
@@ -2636,10 +2636,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 150,
     question: 'What is pension drawdown?',
     options: [
-      'Taking your entire pension as cash',
-      'Reducing contributions during hard times',
+      'Taking your entire pension pot as cash in one go',
+      'Reducing your contributions during hard times',
       'Drawing a regular income from your invested pot',
-      'Transferring your pension to another provider',
+      'Transferring your pension pot to another provider',
     ],
     correctAnswer: 2,
     explanation:
@@ -2653,9 +2653,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 151,
     question: 'What are "qualifying earnings" in automatic enrolment?',
     options: [
-      'All earnings including overtime and bonuses',
-      'All earnings above the personal allowance',
-      'Basic salary only, excluding benefits',
+      'All earnings including overtime, bonuses and commission',
+      'Every pound of pay above the Personal Allowance threshold',
+      'Basic salary only, excluding overtime and any benefits',
       'Salary between £6,240 and £50,270 per year (2024/25)',
     ],
     correctAnswer: 3,
@@ -2673,7 +2673,7 @@ export const pfQuestionBank: StandardMockQuestion[] = [
       'State Pension + private pension + other savings',
       'Splitting your pension between three providers',
       'Saving for three different retirement ages',
-      'Contributing to three different pension types',
+      'Contributing to three different types of pension',
     ],
     correctAnswer: 0,
     explanation:
@@ -2687,10 +2687,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 153,
     question: 'What is the main difference between equities and bonds in pension investments?',
     options: [
-      'Equities are guaranteed by the government; bonds are not',
+      'Equities are guaranteed by the government; bonds carry no such guarantee',
       'Equities are shares in companies; bonds are loans to governments or companies',
-      'Equities are tax-free in a pension; bonds are always taxed',
-      'Equities are short-term savings; bonds are instant-access cash',
+      'Equities are always tax-free inside a pension; bonds are always taxed at source',
+      'Equities are short-term savings; bonds are always instant-access cash deposits',
     ],
     correctAnswer: 1,
     explanation:
@@ -2739,9 +2739,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question: 'What is an annuity in pension terms?',
     options: [
       'A guaranteed income for life bought with your pension pot',
-      'A lump sum withdrawn tax-free from your pension at age 55',
-      'A flexible income drawn from a pot that stays invested',
-      'A government top-up added to your State Pension each year',
+      'A lump sum withdrawn tax-free from your pension pot at age 55',
+      'A flexible income drawn from a pension pot that stays invested',
+      'A government top-up added to your State Pension every single year',
     ],
     correctAnswer: 0,
     explanation:
@@ -2756,10 +2756,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'Why might a self-employed electrician consider career transition planning as part of retirement strategy?',
     options: [
-      'To claim the State Pension earlier than the official age',
+      'To claim the State Pension earlier than the official retirement age',
       'To move from physical work to less demanding roles like testing or training',
-      'To avoid paying National Insurance in their final working years',
-      'To withdraw their entire pension pot tax-free before age 55',
+      'To avoid paying National Insurance during their final working years',
+      'To withdraw their entire pension pot free of all tax before they reach age 55',
     ],
     correctAnswer: 1,
     explanation:
@@ -2773,10 +2773,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 158,
     question: 'What is "lifestyling" in pension fund management?',
     options: [
-      'Increasing contributions as your lifestyle improves',
-      'Taking regular income to fund your lifestyle',
+      'Increasing your contributions as your lifestyle steadily improves',
+      'Taking a regular income from the pension pot to fund your own lifestyle',
       'Automatically shifting from equities to bonds as you near retirement',
-      'Choosing investments that match your lifestyle',
+      'Choosing investments that match the lifestyle you want in your retirement',
     ],
     correctAnswer: 2,
     explanation:
@@ -2790,9 +2790,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 159,
     question: 'What is Pension Wise and who can use it?',
     options: [
-      'A paid financial advice service for people under 30',
-      'A regulator that polices pension providers',
-      'A scheme that tops up your pension contributions',
+      'A paid financial advice service for people aged under 30',
+      'A regulator that polices pension providers and advisers',
+      'A scheme that tops up your pension contributions each year',
       'Free, impartial guidance from MoneyHelper for over-50s',
     ],
     correctAnswer: 3,
@@ -2809,9 +2809,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
       'If you are self-employed and hire an apprentice or employee, what are your auto-enrolment duties?',
     options: [
       'You must assess eligibility and enrol them if they qualify, contributing at least 3%',
-      'You have no pension duties as a sole trader employing one person',
-      'You only need to enrol workers once they have completed two years',
-      'You must pay their full pension yourself with no employee contribution',
+      'You have no pension duties at all as a sole trader employing just one person',
+      'You only need to enrol workers once they have completed two years of service',
+      'You must pay the whole of their pension yourself, with no employee contribution at all',
     ],
     correctAnswer: 0,
     explanation:
@@ -2830,10 +2830,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the MoneyHelper recommended emergency fund size for an employed electrician?',
     options: [
-      '1-2 months of essential outgoings',
+      '1-2 months of your essential outgoings',
       '3-6 months of essential outgoings',
-      '12 months of essential outgoings',
-      '1 month of total income',
+      '12 months of your essential outgoings',
+      '1 month of gross monthly income',
     ],
     correctAnswer: 1,
     explanation:
@@ -2848,10 +2848,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'Why should a self-employed electrician maintain a larger emergency fund than an employed one?',
     options: [
-      'Because the self-employed pay a higher rate of Income Tax and get no personal allowance',
-      'Because HMRC requires the self-employed to hold six months of expenses in reserve at all times',
+      'Because the self-employed pay a higher rate of Income Tax and receive no Personal Allowance at all',
+      'Because HMRC requires the self-employed to hold six months of essential expenses in reserve at all times',
       'Because self-employed income is more variable and they have no sick pay or redundancy protection',
-      'Because their pension contributions must be paid out of the emergency fund rather than profit',
+      'Because their pension contributions must be paid out of the emergency fund rather than out of profits',
     ],
     correctAnswer: 2,
     explanation:
@@ -2865,8 +2865,8 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 163,
     question: 'Where should you keep your emergency fund for best practice?',
     options: [
-      'Locked away in a five-year fixed-rate bond for higher interest',
-      'Invested in a Stocks & Shares ISA for long-term growth',
+      'Locked away in a five-year fixed-rate savings bond for higher interest',
+      'Invested in a Stocks and Shares ISA for long-term capital growth',
       'In your everyday current account alongside your spending money',
       'In an easy access savings account separate from your current account',
     ],
@@ -2899,10 +2899,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 165,
     question: 'Which scenario is a valid use of your emergency fund?',
     options: [
-      'A holiday abroad that you have been planning for months',
+      'A holiday abroad that you have been planning for several months now',
       'Your van breaks down and needs £800 of repairs to get back on the road',
-      'Upgrading to the latest model of cordless drill on offer',
-      'Your monthly van finance payment that is due as normal',
+      'Upgrading to the latest model of cordless drill while it is on special offer',
+      'Your monthly van finance payment that falls due at the end of the month',
     ],
     correctAnswer: 1,
     explanation:
@@ -2916,10 +2916,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 166,
     question: 'How many separate "pots" should a self-employed electrician maintain?',
     options: [
-      'Just one, holding all savings together for simplicity',
-      'Two: one for tax and one for everything else combined',
+      'Just the one account, holding all of the savings together for simplicity',
+      'Two accounts: one for tax and one for everything else lumped together',
       'At least three: emergency fund, tax provision, and general savings',
-      'At least six, one for every month of the working year',
+      'At least six separate pots, one for every month of the working year',
     ],
     correctAnswer: 2,
     explanation:
@@ -2967,10 +2967,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 169,
     question: 'Why should you keep an inventory with serial numbers for your tools and equipment?',
     options: [
-      'It is needed to claim capital allowances on your tax return',
+      'It is needed in order to claim capital allowances on your Self Assessment return',
       'It is required by insurance providers to validate claims for stolen or damaged tools',
-      'It allows you to register your tools as business assets with HMRC',
-      'It is a legal requirement under health and safety regulations',
+      'It allows you to register your tools as business assets with HMRC every year',
+      'It is a legal requirement under the health and safety regulations that apply to a site',
     ],
     correctAnswer: 1,
     explanation:
@@ -2986,9 +2986,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
       'What special classification must your van insurance have if you use it for electrical work?',
     options: [
       'Trade plate exemption',
-      'Personal use only',
+      'Social and domestic use only',
       'Business use classification',
-      'Agricultural use',
+      'Agricultural and forestry use',
     ],
     correctAnswer: 2,
     explanation:
@@ -3020,9 +3020,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question: 'When is life insurance most essential for an electrician?',
     options: [
       'When they have a mortgage or dependants who rely on their income',
-      'When they buy a new van on finance for their business',
-      'When they register for VAT for the first time',
-      'When they take on their first apprentice or employee',
+      'When they buy a new van on hire purchase for their own business use',
+      'When they register their business for VAT for the very first time',
+      'When they take on their first apprentice or employee on the books',
     ],
     correctAnswer: 0,
     explanation:
@@ -3088,9 +3088,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question: 'What does SMART stand for when setting financial goals?',
     options: [
       'Specific, Measurable, Achievable, Relevant, Time-bound',
-      'Safe, Moderate, Ambitious, Risky, Total',
-      'Savings, Money, Assets, Returns, Tax',
-      'Simple, Manageable, Accurate, Realistic, Timely',
+      'Sensible, Moderate, Ambitious, Rewarding, Timely',
+      'Savings, Mortgage, Assets, Retirement, Taxation',
+      'Straightforward, Manageable, Accurate, Realistic, Timely',
     ],
     correctAnswer: 0,
     explanation:
@@ -3105,10 +3105,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'A self-employed electrician earning £40,000/year has £2,500 in essential monthly outgoings. What should their full emergency fund target be?',
     options: [
-      '£10,000 (fixed amount recommended)',
+      '£10,000 (a flat figure for every trade)',
       '£15,000 (6 months of essential outgoings)',
-      '£20,000 (6 months of gross income)',
-      '£7,500 (3 months of essential outgoings)',
+      '£20,000 (six months of gross annual income)',
+      '£7,500 (three months of essential outgoings)',
     ],
     correctAnswer: 1,
     explanation:
@@ -3160,9 +3160,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
       'What is a key difference between income protection insurance and critical illness cover?',
     options: [
       'Income protection pays regular monthly income for ongoing inability to work; critical illness pays a lump sum for specific diagnosed conditions',
-      'Income protection pays a single lump sum on diagnosis; critical illness cover pays a monthly income for the rest of your life',
-      'Income protection covers death and funeral costs only; critical illness cover pays out solely for accidental injury sustained at work',
-      'Income protection is available to employees only; critical illness cover can be bought only by the self-employed and company directors',
+      'Income protection pays a single lump sum immediately on diagnosis; critical illness cover pays a monthly income for the rest of your working life',
+      'Income protection covers death and funeral costs only; critical illness cover pays out solely for an accidental injury sustained in the workplace',
+      'Income protection is available to employees only; critical illness cover can be bought only by the self-employed and by limited company directors',
     ],
     correctAnswer: 0,
     explanation:
@@ -3197,7 +3197,7 @@ export const pfQuestionBank: StandardMockQuestion[] = [
       'Anyone whose taxable profits sit above the higher-rate Income Tax threshold',
       'Sole traders registered under CIS for deductions, whatever their earnings',
       'People receiving Universal Credit with minimum earnings, or Working Tax Credit',
-      'UK taxpayers aged under 40 who have never owned a residential property',
+      'UK taxpayers aged under 40 who have never owned a residential property of any kind',
     ],
     correctAnswer: 2,
     explanation:
@@ -3263,10 +3263,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'In what order should an electrician prioritise their savings according to the tax-efficient hierarchy?',
     options: [
-      'Emergency fund → ISA → taxable investments → employer pension match last',
-      'ISA → additional pension contributions → emergency fund → employer match',
+      'Emergency fund → ISA → taxable investments → employer pension match comes last',
+      'ISA → additional pension contributions → emergency fund → the employer match last',
       'Employer pension match → emergency fund → ISA → additional pension contributions',
-      'Clear all debt → additional pension contributions → ISA → emergency fund',
+      'Clear all debt → additional pension contributions → ISA → the emergency fund last',
     ],
     correctAnswer: 2,
     explanation:
@@ -3281,9 +3281,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'What is a realistic short-term financial goal (0-2 years) for a newly qualified electrician?',
     options: [
-      'Pay off the mortgage on their family home in full',
-      'Build a pension pot large enough to retire at 55',
-      'Buy a commercial unit and take on a team of employees',
+      'Pay off the mortgage on their family home in full and own it outright',
+      'Build up a pension pot large enough to retire comfortably at 55',
+      'Buy a commercial unit and take on a full team of your own employees',
       'Build a £1,000 emergency fund and open a business bank account',
     ],
     correctAnswer: 3,
@@ -3316,10 +3316,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 189,
     question: 'What is a long-term financial goal (10+ years) for an electrician in their 30s?',
     options: [
-      'Save up for a new set of test equipment this year',
+      'Save up for a new set of test instruments before the end of this year',
       'Build a pension pot sufficient to retire comfortably at state pension age',
-      'Build a three-month emergency fund within the next 12 months',
-      'Pay off the outstanding balance on the van finance this quarter',
+      'Build up a three-month emergency fund within the next twelve months',
+      'Pay off the outstanding balance on the van finance before this quarter ends',
     ],
     correctAnswer: 1,
     explanation:
@@ -3333,10 +3333,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 190,
     question: 'Why should electricians conduct an annual "financial MOT"?',
     options: [
-      'To satisfy the HMRC requirement for an annual financial health check filed with the Self Assessment return',
+      'To satisfy the HMRC requirement for an annual financial health check filed alongside the Self Assessment return',
       'To recalculate the day rate from last year\'s turnover and then raise it by the same amount every year',
       'To review insurance cover, check progress towards goals, and adjust savings as income or circumstances change',
-      'To switch business bank account and insurer every year, on the basis that loyalty always costs more',
+      'To switch business bank account and insurer every year, on the basis that loyalty always costs more in the end',
     ],
     correctAnswer: 2,
     explanation:
@@ -3350,9 +3350,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     id: 191,
     question: 'What benefit do Premium Bonds offer to higher-rate taxpayers?',
     options: [
-      'They pay a guaranteed rate of interest above the base rate, unlike savings accounts whose rates track the market',
-      'Your stake doubles automatically after five years, unlike savings interest, which only compounds once a year',
-      'Holdings are protected by Section 75 of the Consumer Credit Act, unlike money held in an ordinary savings account',
+      'They pay a guaranteed rate of interest above the base rate, unlike savings accounts whose rates track the market closely',
+      'Your stake doubles automatically after five years, unlike savings interest, which only compounds once each year at most',
+      'Holdings are protected by Section 75 of the Consumer Credit Act, unlike money held in an ordinary savings account at a bank',
       'Prize winnings are completely tax-free, unlike savings interest which is taxable above the Personal Savings Allowance',
     ],
     correctAnswer: 3,
@@ -3369,7 +3369,7 @@ export const pfQuestionBank: StandardMockQuestion[] = [
       'An electrician has £30,000 saved. They have maximised their employer pension match and have a 6-month emergency fund. What is the most tax-efficient next step?',
     options: [
       'Use £20,000 ISA allowance (£4,000 Lifetime ISA + £16,000 Stocks & Shares ISA) before investing in taxable accounts',
-      'Keep the whole £30,000 in an everyday current account so the money can be reached instantly if work dries up',
+      'Keep the whole £30,000 in an everyday current account so the money can be reached instantly if work dries up on site',
       'Move the full £30,000 into a single high-street savings account and take the interest as taxable income each year',
       'Spend the whole £30,000 on upgrading tools and the work van so the cost can be claimed as capital allowances',
     ],
@@ -3386,10 +3386,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'A self-employed electrician has a £12,000 emergency fund and £8,000 set aside for tax. They receive an unexpected £15,000 inheritance. What is the most financially optimal strategy?',
     options: [
-      'Add the full £15,000 to the existing emergency fund so that it covers a much longer quiet spell, and leave the £8,000 tax pot untouched until the bill lands',
+      'Add the full £15,000 to the existing emergency fund so that it covers a longer quiet spell, and leave the £8,000 tax pot untouched until the bill lands',
       'Maximise £4,000 Lifetime ISA (if under 40 and saving for first home), contribute £10,000 to pension (gaining higher-rate tax relief), keep £1,000 accessible',
-      'Leave the £15,000 sitting in the business current account until a use for it appears, then decide between a pension and an ISA at the end of the tax year',
-      'Spend £10,000 on a newer van to cut future repair bills, put £4,000 towards new test equipment, and drop the last £1,000 into the existing tax pot',
+      'Leave the £15,000 sitting in the business current account until a use for it appears, then decide between a pension and an ISA at the end of the current tax year',
+      'Spend £10,000 on a newer van to cut future repair bills, put £4,000 towards new test equipment, and drop the last £1,000 into the existing tax pot straight away',
     ],
     correctAnswer: 1,
     explanation:
@@ -3422,9 +3422,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the withdrawal penalty for accessing Lifetime ISA funds before age 60 for non-qualifying purposes?',
     options: [
-      'No penalty at all, but the 25% government bonus is clawed back in full',
-      'A flat £250 administration charge each time funds are withdrawn early',
-      'A 20% Income Tax charge applied to the amount taken out of the account',
+      'No penalty at all, but the whole 25% government bonus is then clawed back in full',
+      'A flat £250 administration charge applied each time that funds are withdrawn early',
+      'A 20% Income Tax charge applied to the whole of the amount taken out of the account',
       '25% penalty on the total withdrawal (losing bonus plus some original capital)',
     ],
     correctAnswer: 3,
@@ -3441,9 +3441,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
       'An electrician has £20,000 in a Stocks & Shares ISA and sells investments making a £5,000 gain. How much Capital Gains Tax do they owe?',
     options: [
       'None - gains within ISAs are completely tax-free regardless of amount',
-      '£400, charged at 20% on the £2,000 gain above the allowance',
-      '£200, charged at 10% on the £2,000 gain above the allowance',
-      '£900, charged at 18% on the full £5,000 gain',
+      '£400, charged at 20% on the £2,000 gain above the CGT allowance',
+      '£200, charged at 10% on the £2,000 gain above the CGT allowance',
+      '£900, charged at 18% on the full £5,000 gain from the sale of the shares',
     ],
     correctAnswer: 0,
     explanation:
@@ -3476,10 +3476,10 @@ export const pfQuestionBank: StandardMockQuestion[] = [
     question:
       'When might professional indemnity insurance be more critical than public liability for an electrician?',
     options: [
-      'When a member of the public trips over a trailing extension lead on a site you are working on and is injured badly enough to claim',
-      'When a customer\'s worktop and tiled flooring are damaged by a tool you drop while second-fixing sockets, and they claim the repair cost',
+      'When a member of the public trips over a trailing extension lead on a site you are working on and is injured badly enough to claim against you',
+      'When a customer\'s worktop and tiled flooring are damaged by a tool you drop while second-fixing sockets, and they claim the repair cost back from you',
       'When designing electrical systems for new builds or providing certification for building control where errors could cause financial loss to clients',
-      'When tools and test instruments are stolen from the locked van overnight and you cannot take on any work until they are replaced',
+      'When tools and test instruments are stolen from the locked van overnight and you cannot take on any work until they are replaced out of your own pocket',
     ],
     correctAnswer: 2,
     explanation:
@@ -3513,9 +3513,9 @@ export const pfQuestionBank: StandardMockQuestion[] = [
       'A self-employed electrician has income protection insurance with a 13-week deferred period. They break their arm and cannot work for 10 weeks. What will they receive?',
     options: [
       'Nothing - they returned to work before the 13-week deferred period ended',
-      'A lump sum equal to 13 weeks of their average income',
-      'Three weeks of payments, covering the time beyond the deferred period',
-      'Full income replacement for all 10 weeks off work',
+      'A lump sum equal to 13 weeks of their average weekly income, paid at once',
+      'Three weeks of payments, covering the time beyond the 13-week deferred period',
+      'Full income replacement for all 10 of the weeks that they were unable to work',
     ],
     correctAnswer: 0,
     explanation:

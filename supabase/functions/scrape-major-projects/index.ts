@@ -1,5 +1,6 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.38.0';
 
+import { withSentry } from '../_shared/sentry.ts';
 // Initialize Supabase client
 const supabaseUrl = 'https://jtwygbeceundfgnkirof.supabase.co';
 const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || '';
@@ -34,7 +35,7 @@ interface ScrapedProject {
 }
 
 // Main handler for the edge function
-Deno.serve(async (req) => {
+Deno.serve(withSentry('scrape-major-projects', async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders });
@@ -102,7 +103,7 @@ Deno.serve(async (req) => {
       }
     );
   }
-});
+}));
 
 function checkIfShouldScrape(source: ScrapingSource): boolean {
   if (!source.last_scraped_at) return true;

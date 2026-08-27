@@ -19,7 +19,9 @@ import CalendarHeader from './CalendarHeader';
 import CalendarMonthView from './CalendarMonthView';
 import CalendarWeekView from './CalendarWeekView';
 import CalendarDayView from './CalendarDayView';
-import CalendarEventSheet from './CalendarEventSheet';
+import CalendarDaySheet from './CalendarDaySheet';
+import CalendarEventSheet, { type SaveExtras } from './CalendarEventSheet';
+import TellCustomerSheet, { type TellCustomerTarget } from './TellCustomerSheet';
 import CalendarEventDetail from './CalendarEventDetail';
 import CalendarSettingsSheet from './CalendarSettingsSheet';
 import CalendarAgendaStrip from './CalendarAgendaStrip';
@@ -27,21 +29,22 @@ import CalendarSummaryStrip from './CalendarSummaryStrip';
 import StartDateRequestsCard from '@/components/electrician/booking/StartDateRequestsCard';
 import { useStartDateRequests } from '@/hooks/useStartDateRequests';
 import { containerVariants, itemVariants } from './calendarStyles';
+import { eventRecordHref } from './diaryLinks';
 import {
-  useCalendarEvents,
   useCalendarRealtimeInvalidation,
   useCreateCalendarEvent,
   useUpdateCalendarEvent,
   useDeleteCalendarEvent,
 } from '@/hooks/useCalendarEvents';
+import { useDiaryEvents } from '@/hooks/useDiaryEvents';
+import { useCompanyProfile } from '@/hooks/useCompanyProfile';
+import { spawnFromBooking } from '@/lib/bookingSpawn';
 import { useCalendarPulse } from '@/hooks/useCalendarPulse';
 import { useGoogleCalendarSync } from '@/hooks/useGoogleCalendarSync';
 import { toast } from '@/hooks/use-toast';
 import { useHaptic } from '@/hooks/useHaptic';
+import { useQueryClient } from '@tanstack/react-query';
 import { useCalendarSettings } from '@/hooks/useCalendarSettings';
-import { useTasksForCalendar } from '@/hooks/useTasksForCalendar';
-import { useProjectsForCalendar } from '@/hooks/useProjectsForCalendar';
-import { useSiteVisitsForCalendar } from '@/hooks/useSiteVisitsForCalendar';
 import type {
   CalendarEvent,
   CalendarView,
@@ -52,7 +55,8 @@ import type {
 const CalendarPageContent = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-  const { settings, setDefaultView, setWorkingHours, setDefaultReminder } = useCalendarSettings();
+  const { settings, setDefaultView, setWorkingHours, setDefaultReminder, setJobsAtOnce } =
+    useCalendarSettings();
   const [currentDate, setCurrentDate] = useState(new Date());
   const [view, setView] = useState<CalendarView>(settings.defaultView);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
@@ -70,6 +74,23 @@ const CalendarPageContent = () => {
   const [viewingEvent, setViewingEvent] = useState<CalendarEvent | null>(null);
   const [newEventDate, setNewEventDate] = useState<Date | undefined>(undefined);
   const [newEventHour, setNewEventHour] = useState<number | undefined>(undefined);
+  const [newEventMinute, setNewEventMinute] = useState<number | undefined>(undefined);
+  /** Working days to block out, when the event came from a "Book out" chip. */
+  const [newEventDays, setNewEventDays] = useState<number | undefined>(undefined);
+  const [daySheetOpen, setDaySheetOpen] = useState(false);
+  const [daySheetDate, setDaySheetDate] = useState<Date>(() => new Date());
+
+  /** The "now tell them" step, offered after a booking with a customer on it. */
+  const [tellSheetOpen, setTellSheetOpen] = useState(false);
+  const [tellTarget, setTellTarget] = useState<TellCustomerTarget | null>(null);
+  const [tellBooking, setTellBooking] = useState<{
+    title: string;
+    start: Date;
+    end: Date;
+    allDay: boolean;
+    location?: string | null;
+    movedFrom?: { start: Date; end: Date; allDay: boolean } | null;
+  } | null>(null);
 
   // Realtime — invalidate queries on INSERT/UPDATE/DELETE
   useCalendarRealtimeInvalidation();
@@ -133,18 +154,16 @@ const CalendarPageContent = () => {
     }
   }, [view, currentDate]);
 
-  const { data: events = [] } = useCalendarEvents(dateFrom, dateTo);
-  const { data: taskEvents = [] } = useTasksForCalendar(dateFrom, dateTo);
-  const { data: projectEvents = [] } = useProjectsForCalendar(dateFrom, dateTo);
-  const { data: siteVisitEvents = [] } = useSiteVisitsForCalendar(dateFrom, dateTo);
-  const allEvents = useMemo(
-    () => [...events, ...taskEvents, ...projectEvents, ...siteVisitEvents],
-    [events, taskEvents, projectEvents, siteVisitEvents]
-  );
+  // Real events plus the three synthetic sources — tasks, project dates and
+  // booked site visits. Composed in one hook so the diary panels on the hub and
+  // the dashboard cannot answer "what is on today" differently from this page.
+  const { events: allEvents } = useDiaryEvents(dateFrom, dateTo);
 
   const pulse = useCalendarPulse();
   const { data: startRequests = [], isLoading: requestsLoading } = useStartDateRequests();
 
+  const queryClient = useQueryClient();
+  const { companyProfile } = useCompanyProfile();
   const createMutation = useCreateCalendarEvent();
   const updateMutation = useUpdateCalendarEvent();
   const deleteMutation = useDeleteCalendarEvent();
@@ -188,13 +207,75 @@ const CalendarPageContent = () => {
     setSelectedDate(now);
   }, [currentDate, haptic]);
 
-  // Date selection — tapping a day in month view does NOT jump to Day view.
-  // The agenda underneath the grid retargets instead, so a glance at another
-  // day costs one tap and no loss of place.
+  /*
+   * Tapping a day opens it.
+   *
+   * It used to only retarget the agenda strip below the grid, which answered
+   * "what is on Thursday" and never the question actually being asked — "can I
+   * do half four on Thursday". The day sheet answers that and leaves the month
+   * behind it, so you keep your place; switching the whole calendar to Day view
+   * (which is what the agenda heading still does) loses it.
+   */
   const handleDateSelect = useCallback(
     (date: Date) => {
       haptic.selection();
       setSelectedDate(date);
+      setDaySheetDate(date);
+      setDaySheetOpen(true);
+    },
+    [haptic]
+  );
+
+  /**
+   * Stepping the day sheet a day at a time.
+   *
+   * `currentDate` moves with it on purpose: the sheet draws from the events the
+   * page has already loaded for the visible range, so walking off the end of
+   * the month has to bring the range along or the sheet would show an empty day
+   * that is not empty.
+   */
+  const handleDaySheetDateChange = useCallback(
+    (date: Date) => {
+      haptic.selection();
+      setDaySheetDate(date);
+      setSelectedDate(date);
+      setCurrentDate(date);
+    },
+    [haptic]
+  );
+
+  /** A slot picked in the day sheet — straight into the event form, pre-filled. */
+  const handlePickSlot = useCallback(
+    (start: Date) => {
+      haptic.light();
+      setDaySheetOpen(false);
+      setNewEventDate(start);
+      setNewEventHour(start.getHours());
+      setNewEventMinute(start.getMinutes());
+      setNewEventDays(undefined);
+      setEditingEvent(null);
+      setEventSheetOpen(true);
+    },
+    [haptic]
+  );
+
+  /**
+   * Booking a run of days out.
+   *
+   * Opens the same form as a slot does, all-day and pre-stretched, rather than
+   * writing the event straight off — a fortnight blocked out with no title and
+   * nobody attached is a fortnight you cannot identify a week later.
+   */
+  const handleBookOut = useCallback(
+    (start: Date, days: number) => {
+      haptic.light();
+      setDaySheetOpen(false);
+      setNewEventDate(start);
+      setNewEventHour(undefined);
+      setNewEventMinute(undefined);
+      setNewEventDays(days);
+      setEditingEvent(null);
+      setEventSheetOpen(true);
     },
     [haptic]
   );
@@ -231,21 +312,13 @@ const CalendarPageContent = () => {
     setView('day');
   }, [selectedDate]);
 
-  // Event tap — synthetic events navigate to the record they stand for.
+  // Event tap — synthetic events navigate to the record they stand for. The
+  // mapping lives in diaryLinks so the hub panels resolve a tap identically.
   const handleEventTap = useCallback(
     (event: CalendarEvent) => {
-      if (event.id.startsWith('task-')) {
-        navigate('/electrician/tasks');
-        return;
-      }
-      if (event.id.startsWith('project-')) {
-        // event.job_id holds the project id (see useProjectsForCalendar).
-        if (event.job_id) navigate(`/electrician/projects/${event.job_id}`);
-        return;
-      }
-      if (event.id.startsWith('visit-')) {
-        // event.job_id holds the visit id (see useSiteVisitsForCalendar).
-        if (event.job_id) navigate(`/electrician/site-visit/${event.job_id}`);
+      const record = eventRecordHref(event);
+      if (record) {
+        navigate(record);
         return;
       }
       setViewingEvent(event);
@@ -254,10 +327,29 @@ const CalendarPageContent = () => {
     [navigate]
   );
 
+  /**
+   * The same tap, made from inside the day sheet.
+   *
+   * The day sheet has to close first. Two Radix sheets open at once means two
+   * overlays and two focus traps competing, which on a phone is how you end up
+   * with a screen that scrolls but will not accept a tap. Editing from the
+   * detail sheet then returns you to the month with the day still selected,
+   * which is where you would want to be anyway.
+   */
+  const handleDaySheetEventTap = useCallback(
+    (event: CalendarEvent) => {
+      setDaySheetOpen(false);
+      handleEventTap(event);
+    },
+    [handleEventTap]
+  );
+
   // Time slot tap (week/day view)
   const handleTimeSlotTap = useCallback((date: Date, hour: number) => {
     setNewEventDate(date);
     setNewEventHour(hour);
+    setNewEventMinute(0);
+    setNewEventDays(undefined);
     setEditingEvent(null);
     setEventSheetOpen(true);
   }, []);
@@ -267,11 +359,62 @@ const CalendarPageContent = () => {
       haptic.light();
       setNewEventDate(date ?? selectedDate ?? currentDate);
       setNewEventHour(undefined);
+      setNewEventMinute(undefined);
+      setNewEventDays(undefined);
       setEditingEvent(null);
       setEventSheetOpen(true);
     },
     [selectedDate, currentDate, haptic]
   );
+
+  /*
+   * Arriving from the diary panel.
+   *
+   * The Business Hub and the dashboard now link straight at a day — and, from
+   * the "Book" affordances, straight at a new event on that day. Carried in the
+   * query string rather than router state so the link survives a refresh, a
+   * push notification and being opened in a new tab, the same reasoning as
+   * `bookingProjectUrl`.
+   *
+   * Runs once. The params are stripped afterwards so a back-navigation to the
+   * calendar does not re-open the sheet.
+   */
+  useEffect(() => {
+    const dateStr = searchParams.get('date');
+    const wantsNew = searchParams.get('new') === '1';
+    const wantsDay = searchParams.get('open') === 'day';
+    const hourStr = searchParams.get('hour');
+    if (!dateStr && !wantsNew) return;
+
+    // Parsed as local midnight — `new Date('2026-08-27')` is parsed as UTC and
+    // lands on the previous evening anywhere west of Greenwich.
+    let target = new Date();
+    if (dateStr && /^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+      const [y, m, d] = dateStr.split('-').map(Number);
+      target = new Date(y, m - 1, d);
+      setCurrentDate(target);
+      setSelectedDate(target);
+    }
+    // `open=day` opens the day SHEET over the month, not Day view. The whole
+    // point of arriving from the hub is to look at one day and get back out.
+    if (wantsDay) {
+      setDaySheetDate(target);
+      setDaySheetOpen(true);
+    }
+    if (wantsNew) {
+      const hour = hourStr != null ? Number(hourStr) : NaN;
+      setNewEventDate(target);
+      setNewEventHour(Number.isInteger(hour) && hour >= 0 && hour <= 23 ? hour : undefined);
+      setNewEventMinute(undefined);
+      setNewEventDays(undefined);
+      setEditingEvent(null);
+      setEventSheetOpen(true);
+    }
+
+    ['date', 'new', 'open', 'hour'].forEach((k) => searchParams.delete(k));
+    setSearchParams(searchParams, { replace: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleEdit = useCallback((event: CalendarEvent) => {
     setDetailSheetOpen(false);
@@ -288,19 +431,104 @@ const CalendarPageContent = () => {
   );
 
   const handleSave = useCallback(
-    (data: CreateCalendarEventInput | UpdateCalendarEventInput) => {
+    (data: CreateCalendarEventInput | UpdateCalendarEventInput, extras: SaveExtras) => {
       if (editingEvent) {
+        /*
+         * Moving a booking is when the customer MOST needs telling.
+         *
+         * A job that quietly shifts from Tuesday to Thursday and never reaches
+         * the customer means someone waits in for a van that is not coming —
+         * far more expensive than a booking nobody confirmed. So the same "tell
+         * them" step fires on an edit, but only when the time actually changed;
+         * fixing a typo in a title should not fire off a reschedule text.
+         */
+        const before = editingEvent;
         updateMutation.mutate(
           { id: editingEvent.id, updates: data as UpdateCalendarEventInput },
-          { onSuccess: () => setEventSheetOpen(false) }
+          {
+            onSuccess: (updated) => {
+              setEventSheetOpen(false);
+              const moved =
+                new Date(before.start_at).getTime() !== new Date(updated.start_at).getTime() ||
+                new Date(before.end_at).getTime() !== new Date(updated.end_at).getTime();
+              if (!moved || !extras.customer) return;
+              setTellTarget(extras.customer);
+              setTellBooking({
+                title: updated.title,
+                start: new Date(updated.start_at),
+                end: new Date(updated.end_at),
+                allDay: updated.all_day,
+                location: updated.location,
+                movedFrom: {
+                  start: new Date(before.start_at),
+                  end: new Date(before.end_at),
+                  allDay: before.all_day,
+                },
+              });
+              setTellSheetOpen(true);
+            },
+          }
         );
-      } else {
-        createMutation.mutate(data as CreateCalendarEventInput, {
-          onSuccess: () => setEventSheetOpen(false),
-        });
+        return;
       }
+
+      createMutation.mutate(data as CreateCalendarEventInput, {
+        onSuccess: async (created) => {
+          setEventSheetOpen(false);
+
+          /*
+           * Spawns first, then the "tell them" prompt.
+           *
+           * Deliberately after the event is saved and the sheet is closed: the
+           * booking is the thing that had to land, and a job or a site visit
+           * failing to create must not take it down with it. Failures are said
+           * out loud rather than swallowed — a switch that silently did nothing
+           * is worse than no switch.
+           */
+          if (extras.createProject || extras.createSiteVisit) {
+            const spawned = await spawnFromBooking(created, {
+              createProject: extras.createProject,
+              createSiteVisit: extras.createSiteVisit,
+              customerName: extras.customer?.name,
+              customerPhone: extras.customer?.phone,
+              customerEmail: extras.customer?.email,
+            });
+
+            const made = [
+              spawned.projectId ? 'job' : null,
+              spawned.siteVisitId ? 'site visit' : null,
+            ].filter(Boolean);
+
+            if (made.length > 0) {
+              toast({ title: `Booked in — ${made.join(' and ')} started too` });
+              queryClient.invalidateQueries({ queryKey: ['spark-projects'] });
+              queryClient.invalidateQueries({ queryKey: ['projects-for-calendar'] });
+              queryClient.invalidateQueries({ queryKey: ['site-visits-for-calendar'] });
+            }
+            if (spawned.failures.length > 0) {
+              toast({
+                title: `Booking saved, but could not start the ${spawned.failures.join(' or ')}`,
+                variant: 'destructive',
+              });
+            }
+          }
+
+          // Only worth offering when there is somebody to tell.
+          if (extras.customer) {
+            setTellTarget(extras.customer);
+            setTellBooking({
+              title: created.title,
+              start: new Date(created.start_at),
+              end: new Date(created.end_at),
+              allDay: created.all_day,
+              location: created.location,
+            });
+            setTellSheetOpen(true);
+          }
+        },
+      });
     },
-    [editingEvent, createMutation, updateMutation]
+    [editingEvent, createMutation, updateMutation, queryClient]
   );
 
   // Agenda target — the selected day in month view, the shown day otherwise.
@@ -413,14 +641,38 @@ const CalendarPageContent = () => {
       </div>
 
       {/* Sheets */}
+      <CalendarDaySheet
+        open={daySheetOpen}
+        onOpenChange={setDaySheetOpen}
+        date={daySheetDate}
+        events={allEvents}
+        workingHoursStart={settings.workingHoursStart}
+        workingHoursEnd={settings.workingHoursEnd}
+        capacity={settings.jobsAtOnce}
+        onPickSlot={handlePickSlot}
+        onBookOut={handleBookOut}
+        onEventTap={handleDaySheetEventTap}
+        onChangeDate={handleDaySheetDateChange}
+      />
+
       <CalendarEventSheet
         open={eventSheetOpen}
         onOpenChange={setEventSheetOpen}
         event={editingEvent}
         defaultDate={newEventDate}
         defaultHour={newEventHour}
+        defaultMinute={newEventMinute}
+        defaultDays={newEventDays}
         onSave={handleSave}
         saving={createMutation.isPending || updateMutation.isPending}
+      />
+
+      <TellCustomerSheet
+        open={tellSheetOpen}
+        onOpenChange={setTellSheetOpen}
+        customer={tellTarget}
+        booking={tellBooking}
+        businessName={companyProfile?.company_name}
       />
 
       <CalendarEventDetail
@@ -448,6 +700,8 @@ const CalendarPageContent = () => {
         onWorkingHoursChange={setWorkingHours}
         defaultReminderMinutes={settings.defaultReminderMinutes}
         onDefaultReminderChange={setDefaultReminder}
+        jobsAtOnce={settings.jobsAtOnce}
+        onJobsAtOnceChange={setJobsAtOnce}
       />
 
       <button

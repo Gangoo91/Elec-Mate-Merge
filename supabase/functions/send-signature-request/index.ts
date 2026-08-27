@@ -3,6 +3,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 import { Resend, clientFacingSender, htmlToPlainText } from '../_shared/mailer.ts';
 import { buildSignatureRequestEmail } from '../_shared/email-templates/signature-request.ts';
 
+import { withSentry } from '../_shared/sentry.ts';
 const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
 
 const corsHeaders = {
@@ -139,4 +140,4 @@ const handler = async (req: Request): Promise<Response> => {
   }
 };
 
-serve(handler);
+serve(withSentry('send-signature-request', handler));

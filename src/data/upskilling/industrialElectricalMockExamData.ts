@@ -217,9 +217,9 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     question: 'What is the purpose of Buchholz relay on a transformer?',
     options: [
       'Gas and oil fault protection',
-      'Voltage regulation',
-      'Temperature monitoring',
-      'Current limiting',
+      'On-load voltage regulation',
+      'Winding temperature monitoring',
+      'Fault current limiting',
     ],
     correctAnswer: 0,
     explanation:
@@ -233,10 +233,10 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     id: 13,
     question: 'What is the maximum demand in an industrial installation?',
     options: [
-      'Average daily load',
+      'The average daily load',
       'Peak load expected',
-      'Minimum load',
-      'Standby load',
+      'The minimum load drawn',
+      'Standby load only',
     ],
     correctAnswer: 1,
     explanation:
@@ -250,10 +250,10 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     id: 14,
     question: 'What is diversity factor in industrial load calculations?',
     options: [
-      'The ratio of real power to apparent power',
-      'The peak load expected on the incoming supply',
+      'The ratio of the real power drawn to the total apparent power',
+      'The peak load that is expected on the whole incoming supply',
       'A ratio allowing for non-simultaneous operation of loads',
-      'The reduction in current rating from grouping cables',
+      'The reduction in current rating that comes from grouping cables',
     ],
     correctAnswer: 2,
     explanation:
@@ -320,10 +320,10 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     id: 18,
     question: 'Why is star-delta starting used for motors?',
     options: [
-      'Increase torque',
-      'Increase speed',
+      'Increase starting torque',
+      'Increase running speed',
       'Reduce starting current',
-      'Reverse rotation',
+      'Reverse the rotation',
     ],
     correctAnswer: 2,
     explanation:
@@ -387,8 +387,8 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     id: 22,
     question: 'What protection does an overload relay provide?',
     options: [
-      'Short circuit',
-      'Earth fault',
+      'Short circuit only',
+      'Earth fault current',
       'Thermal overload',
       'Undervoltage',
     ],
@@ -404,9 +404,9 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     id: 23,
     question: 'What is the function of a soft starter?',
     options: [
-      'Frequency control',
-      'Instant full voltage',
-      'Power factor correction',
+      'Output frequency control',
+      'Instant full voltage start',
+      'Power factor correction only',
       'Gradual voltage ramp-up',
     ],
     correctAnswer: 3,
@@ -422,9 +422,9 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     question: 'What does slip mean in an induction motor?',
     options: [
       'The difference between synchronous and rotor speed',
-      'The loss of one phase of the supply',
-      'The ratio of starting current to full-load current',
-      'The drop in voltage along the supply cable',
+      'The loss of one phase of the incoming supply',
+      'The ratio of starting current to the full-load current',
+      'The drop in voltage along the whole supply cable',
     ],
     correctAnswer: 0,
     explanation:
@@ -472,9 +472,9 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     id: 27,
     question: 'What causes motor single-phasing?',
     options: [
-      'Overload',
-      'Low frequency',
-      'High voltage',
+      'Sustained mechanical overload',
+      'Low supply frequency',
+      'Excessively high supply voltage',
       'Loss of one phase supply',
     ],
     correctAnswer: 3,
@@ -490,9 +490,9 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     question: 'What is the purpose of thermistors in motor windings?',
     options: [
       'Temperature monitoring',
-      'Speed sensing',
-      'Current measurement',
-      'Voltage regulation',
+      'Rotor shaft speed sensing',
+      'Winding current measurement',
+      'Supply voltage regulation',
     ],
     correctAnswer: 0,
     explanation:
@@ -592,10 +592,10 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     id: 34,
     question: 'What is DIN rail used for in control panels?',
     options: [
-      'Earthing',
-      'Cable routing',
+      'Panel earthing',
+      'Cable routing only',
       'Mounting components',
-      'Ventilation',
+      'Enclosure ventilation',
     ],
     correctAnswer: 2,
     explanation:
@@ -609,8 +609,8 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     id: 35,
     question: 'What is the purpose of cable segregation in panels?',
     options: [
-      'Appearance',
-      'Space saving',
+      'Neat appearance',
+      'Saving panel space',
       'Cost saving',
       'EMC and safety',
     ],
@@ -627,9 +627,9 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     question: 'What is form of separation in switchgear?',
     options: [
       'The degree of internal segregation by barriers',
-      'The minimum clearance in front of the board',
-      'The IP rating of the outer enclosure',
-      'The fault current the busbars can withstand',
+      'The minimum clearance required in front of the board',
+      'The IP rating given to the outer panel enclosure',
+      'The fault current that the main busbars can withstand',
     ],
     correctAnswer: 0,
     explanation:
@@ -643,10 +643,10 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     id: 37,
     question: 'What is the purpose of anti-condensation heaters in panels?',
     options: [
-      'Increase temperature',
+      'Increase panel temperature',
       'Prevent moisture damage',
       'Improve efficiency',
-      'Reduce costs',
+      'Reduce running costs',
     ],
     correctAnswer: 1,
     explanation:
@@ -777,10 +777,10 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     id: 45,
     question: 'What is the purpose of panel earthing studs?',
     options: [
-      'Mounting point for DIN-rail components',
+      'Mounting point for all the DIN-rail components',
       'Connection point for protective conductors',
       'Anchor point for cable strain relief',
-      'Tapping point for the control transformer',
+      'Tapping point for the panel control transformer',
     ],
     correctAnswer: 1,
     explanation:
@@ -796,10 +796,10 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     id: 46,
     question: 'What does PLC stand for?',
     options: [
-      'Process Level Computer',
-      'Primary Load Controller',
+      'Process Level Control Computer',
+      'Primary Load Circuit Controller',
       'Programmable Logic Controller',
-      'Power Line Controller',
+      'Power Line Control Coordinator',
     ],
     correctAnswer: 2,
     explanation: 'PLC stands for Programmable Logic Controller, used for industrial automation.',
@@ -896,9 +896,9 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     question: 'What is a PLC scan cycle?',
     options: [
       'Read inputs, execute logic, update outputs sequence',
-      'The startup self-test run when power is applied',
-      'The communications poll between PLC and HMI',
-      'The watchdog timeout before a fault reset',
+      'The startup self-test that runs when power is applied',
+      'The communications poll between the PLC and HMI',
+      'The watchdog timeout period before a fault reset',
     ],
     correctAnswer: 0,
     explanation:
@@ -978,10 +978,10 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     id: 57,
     question: 'What does SCADA stand for?',
     options: [
-      'System Control And Data Access',
+      'System Control And Data Access Network',
       'Supervisory Control And Data Acquisition',
-      'Standard Control And Data Analysis',
-      'System Communication And Data Archive',
+      'Standard Control And Data Analysis System',
+      'System Communication And Data Archive Access',
     ],
     correctAnswer: 1,
     explanation:
@@ -1080,9 +1080,9 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     id: 63,
     question: 'What does a megger test measure?',
     options: [
-      'Continuity',
-      'Current',
-      'Earth resistance',
+      'Circuit protective continuity',
+      'Steady load current drawn',
+      'Earth electrode resistance',
       'Insulation resistance',
     ],
     correctAnswer: 3,
@@ -1097,8 +1097,8 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     question: 'What causes nuisance tripping of circuit breakers?',
     options: [
       'Overload, earth fault, or incorrect sizing',
-      'A power factor that is too close to unity',
-      'An oversized neutral conductor',
+      'A power factor that is much too close to unity',
+      'An oversized neutral conductor fitted',
       'Too much working space at the board',
     ],
     correctAnswer: 0,
@@ -1179,10 +1179,10 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     id: 69,
     question: 'What can cause intermittent faults?',
     options: [
-      'An undersized but correctly terminated cable',
+      'An undersized but correctly terminated supply cable',
       'Loose connections, thermal expansion, vibration',
-      'A permanently open-circuit conductor',
-      'A power factor below the utility target',
+      'A permanently open-circuit line conductor end',
+      'A power factor sitting below the utility target figure',
     ],
     correctAnswer: 1,
     explanation:
@@ -1245,10 +1245,10 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     id: 73,
     question: 'What indicates earth leakage in a circuit?',
     options: [
-      'A balanced current across line and neutral',
+      'A balanced current across the line and neutral conductors',
       'A residual current imbalance detected by an RCD/RCBO',
-      'An open circuit on the line conductor',
-      'A low resistance between the line phases',
+      'An open circuit fault on the line conductor at the load',
+      'A low resistance measured between the three line phases',
     ],
     correctAnswer: 1,
     explanation: 'Earth leakage causes current imbalance detected by RCDs as residual current.',
@@ -1261,10 +1261,10 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     id: 74,
     question: "What should be checked if a motor won't start?",
     options: [
-      'Only the supply voltage at the incoming board',
-      'The power factor of the installation and nothing else',
+      'Only the supply voltage measured at the incoming distribution board',
+      'The power factor of the whole installation and nothing else',
       'Power supply, control circuit, motor windings, mechanical binding',
-      'The harmonic distortion on the supply only',
+      'The harmonic distortion present on the incoming supply only',
     ],
     correctAnswer: 2,
     explanation:
@@ -1278,9 +1278,9 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     id: 75,
     question: 'What is the purpose of documentation in fault finding?',
     options: [
-      'To authorise high-risk work before it starts',
-      'To satisfy the utility power factor penalty rules',
-      'To replace the need for a risk assessment',
+      'To authorise any high-risk work before it is allowed to start on site',
+      'To satisfy the utility company power factor penalty rules',
+      'To remove the need for any written risk assessment on the job',
       'Record findings, aid future maintenance, track recurring issues',
     ],
     correctAnswer: 3,
@@ -1365,9 +1365,9 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     question: 'What factor affects cable current rating in trunking?',
     options: [
       'Grouping factor',
-      'Colour',
-      'Length only',
-      'Age',
+      'Cable sheath colour',
+      'Cable length alone',
+      'Age of the installation',
     ],
     correctAnswer: 0,
     explanation: 'Grouping factor reduces current rating due to mutual heating of grouped cables.',
@@ -1396,10 +1396,10 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     id: 82,
     question: 'Why must SWA armour be earthed?',
     options: [
-      'To increase the current rating of the cable',
-      'To identify the cable at its termination',
+      'To increase the current carrying rating of the whole cable',
+      'To identify the cable at each of its terminations',
       'To provide a fault current path and touch protection',
-      'To reduce the bending radius of the cable',
+      'To reduce the minimum bending radius of the cable',
     ],
     correctAnswer: 2,
     explanation:
@@ -1447,10 +1447,10 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     id: 85,
     question: 'What marking should be on cables in industrial installations?',
     options: [
-      'None required',
+      'No marking required',
       'Circuit identification',
-      'Date only',
-      'Manufacturer only',
+      'Date of installation only',
+      'The manufacturer name only',
     ],
     correctAnswer: 1,
     explanation: 'Cables should be identified with circuit references for maintenance and safety.',
@@ -1463,10 +1463,10 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     id: 86,
     question: 'What is EMC cable separation?',
     options: [
-      'Separating phases to balance the three-phase load',
-      'Spacing cables apart to improve heat dissipation',
+      'Separating the phases in order to balance the three-phase load',
+      'Spacing the cables apart in order to improve heat dissipation',
       'Separating power and data cables to prevent interference',
-      'Keeping cables clear of fire barriers',
+      'Keeping the cables well clear of any fire barrier in a wall',
     ],
     correctAnswer: 2,
     explanation:
@@ -1514,9 +1514,9 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     id: 89,
     question: 'What is fire barrier cable transit?',
     options: [
-      'A route reserved for fire-alarm cabling only',
+      'A route reserved for the fire-alarm cabling only',
       'Sealing where cables pass through fire barriers',
-      'A heat-resistant cable rated above 90°C',
+      'A heat-resistant cable rated above 90°C throughout',
       'A flexible connection to vibrating equipment',
     ],
     correctAnswer: 1,
@@ -1531,10 +1531,10 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     id: 90,
     question: 'What must be considered for underground cable routes?',
     options: [
-      'Only the colour of the cable sheath',
-      'The supply power factor alone',
+      'Only the colour of the outer cable sheath used',
+      'The supply power factor at the installation intake alone',
       'Depth, protection, marking, and route recording',
-      'The conduit fill factor only',
+      'The conduit fill factor for the whole route only',
     ],
     correctAnswer: 2,
     explanation:
@@ -1583,10 +1583,10 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     id: 93,
     question: 'Why is low power factor problematic?',
     options: [
-      'It raises the supply frequency above 50Hz',
+      'It raises the supply frequency to well above 50Hz at the board',
       'Increased losses, reduced capacity, potential charges',
-      'It reduces the prospective fault current',
-      'It improves the efficiency of motors',
+      'It reduces the prospective fault current at the main board',
+      'It improves the running efficiency of all of the plant motors',
     ],
     correctAnswer: 1,
     explanation:
@@ -1600,10 +1600,10 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     id: 94,
     question: 'How do capacitors correct power factor?',
     options: [
-      'By drawing additional lagging reactive current',
-      'By reducing the real power demand of loads',
+      'By drawing an additional lagging reactive current from the supply',
+      'By reducing the real power demand of all the plant loads',
       'Supply leading reactive current to offset lagging current',
-      'By filtering harmonics out of the supply',
+      'By filtering all the harmonics out of the supply current',
     ],
     correctAnswer: 2,
     explanation:
@@ -1635,9 +1635,9 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     question: 'What are harmonics in electrical systems?',
     options: [
       'Multiples of fundamental frequency causing distortion',
-      'Short-duration transient voltage spikes',
-      'Slow drifts in the supply voltage level',
-      'Imbalances between the three phase currents',
+      'Short-duration transient voltage spikes on the mains supply',
+      'Slow drifts in the supply voltage level with time',
+      'Imbalances between the currents in the three line phases',
     ],
     correctAnswer: 0,
     explanation: 'Harmonics are currents/voltages at multiples of 50Hz that distort the waveform.',
@@ -1650,10 +1650,10 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     id: 97,
     question: 'What commonly generates harmonics?',
     options: [
-      'Purely resistive heater elements',
+      'Purely resistive heating elements on the board',
       'Variable speed drives and electronic loads',
-      'Power factor correction capacitors',
-      'Incandescent lighting circuits',
+      'Power factor correction capacitor banks alone',
+      'Incandescent lighting circuits around the plant',
     ],
     correctAnswer: 1,
     explanation:
@@ -1667,10 +1667,10 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     id: 98,
     question: 'What problems do harmonics cause?',
     options: [
-      'Improved efficiency and reduced losses',
-      'A higher and more stable system power factor',
+      'Improved efficiency and reduced system losses',
+      'A higher and much more stable system power factor overall',
       'Overheating, interference, equipment malfunction',
-      'Reduced neutral conductor current',
+      'Reduced current flow in the neutral conductor',
     ],
     correctAnswer: 2,
     explanation:
@@ -1684,9 +1684,9 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     id: 99,
     question: 'What is Total Harmonic Distortion (THD)?',
     options: [
-      'The ratio of real power to apparent power',
-      'The percentage imbalance between three phases',
-      'The peak instantaneous transient voltage',
+      'The ratio of the real power drawn to the total apparent power',
+      'The percentage imbalance measured between the three supply phases',
+      'The peak instantaneous transient voltage seen on the incoming supply',
       'A measure of harmonic content as a percentage of the fundamental',
     ],
     correctAnswer: 3,
@@ -1701,9 +1701,9 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     question: 'What is an active harmonic filter?',
     options: [
       'Electronic device that injects cancelling currents',
-      'A capacitor bank fitted with detuning reactors',
-      'A surge protection device for transient spikes',
-      'A passive LC trap tuned to one harmonic',
+      'A capacitor bank fitted with series detuning reactors',
+      'A surge protection device used for transient voltage spikes',
+      'A passive LC trap tuned to one single harmonic order',
     ],
     correctAnswer: 0,
     explanation:
@@ -1717,7 +1717,7 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     id: 101,
     question: 'Why is neutral conductor sizing important with harmonics?',
     options: [
-      'Harmonics fully cancel in the neutral conductor',
+      'All harmonics fully cancel out within the neutral conductor',
       'Triple-N (third) harmonics add together in the neutral',
       'The neutral carries no current under harmonic loads',
       'Harmonics flow only in the protective conductor',
@@ -1768,9 +1768,9 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     question: 'What is a detuned capacitor bank?',
     options: [
       'A bank fitted with series reactors to prevent resonance',
-      'A bank switched automatically by a controller',
-      'A bank using active electronics to cancel harmonics',
-      'A bank sized deliberately below the reactive demand',
+      'A bank switched automatically by its controller',
+      'A bank using active electronics to cancel out the harmonics',
+      'A bank sized deliberately below the total reactive demand',
     ],
     correctAnswer: 0,
     explanation:
@@ -1784,10 +1784,10 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     id: 105,
     question: 'What instrument measures power quality?',
     options: [
-      'Simple ammeter',
+      'A simple clamp-on ammeter',
       'Power quality analyser',
-      'Voltmeter only',
-      'Multimeter only',
+      'A panel-mounted voltmeter only',
+      'A hand-held multimeter only',
     ],
     correctAnswer: 1,
     explanation:
@@ -1803,10 +1803,10 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     id: 106,
     question: 'What is safe isolation?',
     options: [
-      'Switching off the load but leaving the supply live',
-      'Fitting an RCD to disconnect under earth fault',
+      'Switching off the load but leaving the incoming supply cable live',
+      'Fitting an RCD to trip under an earth fault condition',
       'Complete procedure to ensure circuit cannot be re-energised',
-      'Separating power and data cables for safety',
+      'Separating the power and data cables to ensure safety',
     ],
     correctAnswer: 2,
     explanation:
@@ -1838,8 +1838,8 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     question: 'What must be done before working on isolated equipment?',
     options: [
       'Prove dead with an approved voltage indicator',
-      'Measure the load current with a clamp meter',
-      'Carry out an insulation resistance test',
+      'Measure the load current using a clamp-on ammeter',
+      'Carry out a full insulation resistance test first',
       'Confirm the power factor is within limits',
     ],
     correctAnswer: 0,
@@ -1854,10 +1854,10 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     id: 109,
     question: 'What is a permit to work system?',
     options: [
-      'A licence proving an electrician is qualified',
+      'A licence proving that an electrician is fully qualified',
       'Formal written system for controlling hazardous work',
-      'A log recording the status of every isolation',
-      'A method statement for routine low-risk tasks',
+      'A log recording the status of every isolation on the site',
+      'A method statement written for the routine low-risk tasks',
     ],
     correctAnswer: 1,
     explanation:
@@ -1906,9 +1906,9 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     question: 'What is stored energy in machinery?',
     options: [
       'Energy remaining after isolation (springs, pressure, gravity)',
-      'The reactive power drawn by inductive loads',
-      'The charge held in supply harmonic filters',
-      'The standby current of a de-energised drive',
+      'The reactive power that is drawn by the inductive loads on site',
+      'The charge held within the supply harmonic filter banks',
+      'The standby current drawn by a de-energised drive panel',
     ],
     correctAnswer: 0,
     explanation:
@@ -1922,10 +1922,10 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     id: 113,
     question: 'What does GS38 specify?',
     options: [
-      'The earthing arrangements for switchgear',
+      'The earthing arrangements for industrial switchgear',
       'Requirements for electrical test probes and leads',
-      'The procedure for issuing a permit to work',
-      'The minimum insulation resistance values',
+      'The procedure for issuing any permit to work',
+      'The minimum acceptable insulation resistance values',
     ],
     correctAnswer: 1,
     explanation:

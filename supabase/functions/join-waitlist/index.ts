@@ -17,6 +17,7 @@
 
 import { serve, corsHeaders, createClient } from '../_shared/deps.ts';
 
+import { withSentry } from '../_shared/sentry.ts';
 const BREVO_CONTACTS_ENDPOINT = 'https://api.brevo.com/v3/contacts';
 
 type Plan = 'mate' | 'employer' | 'college';
@@ -64,7 +65,7 @@ async function addToBrevoList(
   }
 }
 
-serve(async (req) => {
+serve(withSentry('join-waitlist', async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
   if (req.method !== 'POST') {
     return new Response(JSON.stringify({ error: 'Method not allowed' }), {
@@ -193,4 +194,4 @@ serve(async (req) => {
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
-});
+}));

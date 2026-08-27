@@ -4092,6 +4092,7 @@ export type Database = {
           client_id: string | null;
           colour: string | null;
           created_at: string | null;
+          crew: string | null;
           description: string | null;
           end_at: string;
           event_type: string;
@@ -4121,6 +4122,7 @@ export type Database = {
           client_id?: string | null;
           colour?: string | null;
           created_at?: string | null;
+          crew?: string | null;
           description?: string | null;
           end_at: string;
           event_type?: string;
@@ -4150,6 +4152,7 @@ export type Database = {
           client_id?: string | null;
           colour?: string | null;
           created_at?: string | null;
+          crew?: string | null;
           description?: string | null;
           end_at?: string;
           event_type?: string;
@@ -34120,6 +34123,7 @@ export type Database = {
         Row: {
           access_notes: string | null;
           assumptions: string | null;
+          calendar_event_id: string | null;
           created_at: string | null;
           customer_email: string | null;
           customer_id: string | null;
@@ -34141,6 +34145,7 @@ export type Database = {
         Insert: {
           access_notes?: string | null;
           assumptions?: string | null;
+          calendar_event_id?: string | null;
           created_at?: string | null;
           customer_email?: string | null;
           customer_id?: string | null;
@@ -34162,6 +34167,7 @@ export type Database = {
         Update: {
           access_notes?: string | null;
           assumptions?: string | null;
+          calendar_event_id?: string | null;
           created_at?: string | null;
           customer_email?: string | null;
           customer_id?: string | null;
@@ -34343,6 +34349,7 @@ export type Database = {
       spark_projects: {
         Row: {
           ai_notes: Json;
+          calendar_event_id: string | null;
           completed_at: string | null;
           created_at: string;
           customer_id: string | null;
@@ -34363,6 +34370,7 @@ export type Database = {
         };
         Insert: {
           ai_notes?: Json;
+          calendar_event_id?: string | null;
           completed_at?: string | null;
           created_at?: string;
           customer_id?: string | null;
@@ -34383,6 +34391,7 @@ export type Database = {
         };
         Update: {
           ai_notes?: Json;
+          calendar_event_id?: string | null;
           completed_at?: string | null;
           created_at?: string;
           customer_id?: string | null;

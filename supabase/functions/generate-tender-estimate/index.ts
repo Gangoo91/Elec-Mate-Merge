@@ -2,6 +2,7 @@ import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { ingestTenderDocuments } from './documentIngest.ts';
 
+import { withSentry } from '../_shared/sentry.ts';
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers':
@@ -519,7 +520,7 @@ function calculateComplexity(
   return { score, level, tokenMultiplier };
 }
 
-Deno.serve(async (req) => {
+Deno.serve(withSentry('generate-tender-estimate', async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -1025,7 +1026,7 @@ RESPONSE FORMAT (JSON only - include team_size and team_composition):
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   }
-});
+}));
 
 /**
  * Generate fallback estimate when AI is unavailable

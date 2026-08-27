@@ -12,13 +12,14 @@
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
 
+import { withSentry } from '../_shared/sentry.ts';
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
-Deno.serve(async (req) => {
+Deno.serve(withSentry('parent-portal-view', async (req) => {
   if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers: corsHeaders });
   if (req.method !== 'POST')
     return new Response(JSON.stringify({ error: 'method_not_allowed' }), {
@@ -152,4 +153,4 @@ Deno.serve(async (req) => {
     }),
     { headers: { ...corsHeaders, 'content-type': 'application/json' } }
   );
-});
+}));

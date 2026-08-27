@@ -1,6 +1,6 @@
 import React from 'react';
 import { Users, ChevronRight, TrendingUp } from 'lucide-react';
-import { Customer } from '@/hooks/useCustomers';
+import { Customer } from '@/hooks/inspection/useCustomers';
 import { isThisMonth, parseISO } from 'date-fns';
 import { cn } from '@/lib/utils';
 

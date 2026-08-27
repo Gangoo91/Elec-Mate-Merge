@@ -1,9 +1,10 @@
 import { serve } from '../_shared/deps.ts';
 import { corsHeaders } from '../_shared/cors.ts';
 
+import { withSentry } from '../_shared/sentry.ts';
 const reedApiKey = Deno.env.get('REED_API_KEY');
 
-serve(async (req) => {
+serve(withSentry('basic-job-search', async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -52,7 +53,7 @@ serve(async (req) => {
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
-});
+}));
 
 function normalizeLocationForAPI(location: string): string {
   if (!location) return 'United Kingdom';

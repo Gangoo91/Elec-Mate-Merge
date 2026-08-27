@@ -1,6 +1,7 @@
 /// <reference lib="deno.unstable" />
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
+import { withSentry } from '../_shared/sentry.ts';
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers':
@@ -9,7 +10,7 @@ const corsHeaders = {
 
 const ENRICHMENT_VERSION = 'v1';
 
-Deno.serve(async (req) => {
+Deno.serve(withSentry('enrich-design-patterns', async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -64,7 +65,7 @@ Deno.serve(async (req) => {
       }
     );
   }
-});
+}));
 
 // Background worker function
 async function processInBackground(

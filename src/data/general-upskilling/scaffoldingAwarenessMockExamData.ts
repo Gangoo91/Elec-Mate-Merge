@@ -46,10 +46,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 1,
     question: 'What is the primary purpose of scaffolding on a construction site?',
     options: [
-      'To provide permanent structural support to the finished building',
+      'To provide a permanent structural support to the finished building frame',
       'To provide a safe temporary working platform for people and materials',
-      'To store building materials and tools securely at ground level',
-      'To screen the building from public view during construction',
+      'To store building materials and hand tools securely at ground level',
+      'To screen the building from public view during the construction',
     ],
     correctAnswer: 1,
     explanation:
@@ -64,10 +64,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question:
       'Which of the following is the most common type of scaffolding used in the UK construction industry?',
     options: [
-      'Suspended scaffolding',
-      'Trestle scaffolding',
+      'Rope-suspended cradle scaffolding',
+      'Trestle and staging scaffolding',
       'Tube and fitting scaffolding',
-      'Cantilever scaffolding',
+      'Cantilevered scaffolding',
     ],
     correctAnswer: 2,
     explanation:
@@ -99,9 +99,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question: "What is an 'independent scaffold'?",
     options: [
       'A freestanding scaffold with two rows of standards that does not rely on the building for support',
-      'A scaffold with a single row of standards that relies on the building for support',
-      'A scaffold suspended from the roof by ropes for facade maintenance work',
-      'A scaffold mounted on wheels that can be moved between work positions',
+      'A scaffold with a single row of standards whose putlogs rest in holes left in the brickwork of the wall',
+      'A scaffold suspended from outriggers at roof level on wire ropes for facade maintenance and cleaning',
+      'A scaffold mounted on lockable castors that can be wheeled by hand between successive work positions on site',
     ],
     correctAnswer: 0,
     explanation:
@@ -115,10 +115,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 5,
     question: "What is a 'putlog scaffold'?",
     options: [
-      'A scaffold with two rows of standards that is fully independent of the building',
+      'A scaffold with two rows of standards that stands fully independent of the building',
       'A scaffold with a single row of standards, with putlogs built into the brickwork',
-      'A scaffold whose platform projects beyond its ground supports as a cantilever',
-      'A scaffold ballasted with concrete blocks so it needs no ties to the building',
+      'A scaffold whose platform projects out past its ground supports as a cantilever',
+      'A scaffold ballasted with concrete blocks so that no ties are needed at all',
     ],
     correctAnswer: 1,
     explanation:
@@ -168,9 +168,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question: "What is a 'ledger' in scaffolding?",
     options: [
       'A horizontal tube fixed to the standards running parallel to the building face',
-      'A vertical upright tube that carries the scaffold load down to the ground',
-      'A horizontal tube placed at right angles to support the platform boards',
-      'A diagonal tube fixed across the face to stop the scaffold racking sideways',
+      'A vertical upright tube that carries the scaffold load down into the base plate',
+      'A horizontal tube placed at right angles to the ledgers to carry the boards above',
+      'A diagonal tube fixed across the face to stop the scaffold from racking',
     ],
     correctAnswer: 0,
     explanation:
@@ -184,10 +184,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 9,
     question: "What is a 'transom' in scaffolding?",
     options: [
-      'A vertical upright tube that transfers the scaffold load to the base plate',
+      'A vertical upright tube that transfers the scaffold load down to the base plate beneath',
       'A tube that spans between the inner and outer ledgers, supporting the platform boards',
-      'A horizontal tube running lengthways and fixed directly to the standards',
-      'A diagonal tube fixed across the scaffold face to provide lateral stability',
+      'A horizontal tube running lengthways along the scaffold and fixed directly to the standards',
+      'A diagonal tube fixed across the scaffold face at an angle to provide extra lateral stability',
     ],
     correctAnswer: 1,
     explanation:
@@ -201,10 +201,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 10,
     question: "What is a 'bay' in scaffolding terminology?",
     options: [
-      'An area designated for material storage at ground level',
-      'A gap left in the platform for ladder access',
+      'An area at ground level that is set aside for storing scaffold tubes and boards',
+      'A gap left in the boarded platform to give ladder access to the lift',
       'The space between two adjacent standards along the length of the scaffold',
-      'The overall height of the scaffold structure',
+      'The overall height of the completed scaffold structure above ground',
     ],
     correctAnswer: 2,
     explanation:
@@ -236,9 +236,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question: "What is 'system scaffolding'?",
     options: [
       'A proprietary scaffolding system with prefabricated components that slot or lock together',
-      'Scaffolding assembled on site from loose tube and fitting cut to length by hand',
-      'A scaffold erected to a written method statement and a numbered inspection tag',
-      'A scaffold whose stability is monitored by electronic load sensors on each tie',
+      'Scaffolding assembled on site from loose tube and fittings cut to length on the ground by hand',
+      'A scaffold erected to a written method statement and fitted with a numbered inspection tag',
+      'A scaffold whose stability is monitored by electronic load sensors at each tie point',
     ],
     correctAnswer: 0,
     explanation:
@@ -252,10 +252,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 13,
     question: "What is 'birdcage scaffolding' primarily used for?",
     options: [
-      'Providing access to the external facade of a tall building',
+      'Providing working access to the external facade of a tall building for cladding',
       'Providing a wide platform for work on ceilings or soffits inside buildings',
-      'Supporting a building that is in danger of collapse during alterations',
-      'Receiving and storing heavy materials delivered to height by crane',
+      'Supporting a building that is in danger of collapse during structural alterations',
+      'Receiving and storing heavy materials delivered up to height by crane or tower hoist',
     ],
     correctAnswer: 1,
     explanation:
@@ -269,10 +269,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 14,
     question: "What is a 'scaffold tower' (also known as a mobile access tower)?",
     options: [
-      'A scaffold suspended from outriggers at roof level by ropes or wire cables',
-      'A scaffold with a single row of standards tied into the brickwork by putlogs',
+      'A scaffold suspended from outriggers at roof level on wire ropes and electric winches',
+      'A scaffold with a single row of standards tied into the brickwork by its putlogs',
       'A freestanding, moveable scaffold on wheels or castors used for short-duration tasks',
-      'A scaffold whose platform cantilevers out beyond its ground supports',
+      'A scaffold whose platform cantilevers out beyond its supports at ground level',
     ],
     correctAnswer: 2,
     explanation:
@@ -289,9 +289,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question:
       "What is the role of a 'scaffolding supervisor' (CISRS Advanced Scaffolder or Scaffold Supervisor card holder)?",
     options: [
-      'To erect and dismantle every scaffold personally, without a team, on any project',
-      'To prepare the structural calculations for the scaffold and issue the drawings',
-      'To inspect scaffolds on behalf of the Health and Safety Executive and serve notices',
+      'To erect and dismantle every scaffold on the project personally, without the help of a scaffolding gang',
+      'To prepare the structural calculations for the scaffold and to issue the signed drawings to the site',
+      'To inspect scaffolds on behalf of the Health and Safety Executive and serve enforcement notices',
       'To oversee scaffold operations, ensure compliance with the design, and manage the scaffolding team',
     ],
     correctAnswer: 3,
@@ -307,9 +307,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question: "What is a 'scaffold design' and when is it required?",
     options: [
       'A structural calculation and drawing prepared by a competent person; required when the scaffold is non-standard or complex',
-      'A material take-off listing every tube, board and fitting needed; required before any scaffold is erected',
-      'A handover certificate signed by the site manager; required each time a new trade begins using the scaffold',
-      'A written method statement produced by the scaffold gang; required only where the scaffold exceeds 8 metres',
+      'A material take-off listing every tube, board and fitting needed; required before any scaffold on the site is erected at all',
+      'A handover certificate signed by the site manager and the scaffolder; required each time a new trade begins using the scaffold',
+      'A written method statement produced by the scaffold gang before work begins; required only where the scaffold exceeds 8 metres',
     ],
     correctAnswer: 0,
     explanation:
@@ -323,10 +323,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 17,
     question: "What does the term 'duty' refer to when classifying a scaffold?",
     options: [
-      'The number of working lifts that the scaffold has been boarded out to',
+      'The number of working lifts that the scaffold has been boarded out to and fitted with rails',
       'The maximum load the scaffold platform is designed to carry, classified by intended use',
-      'The frequency at which the scaffold must be inspected by a competent person',
-      'The grade of steel from which the scaffold tubes have been manufactured',
+      'The frequency at which the scaffold must be inspected on site by a competent person',
+      'The grade of steel from which the scaffold tubes and the fittings are manufactured',
     ],
     correctAnswer: 1,
     explanation:
@@ -358,9 +358,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 19,
     question: "What is a 'cantilever scaffold'?",
     options: [
-      'A scaffold suspended from roof outriggers on wire ropes so the platform can be raised and lowered',
-      'A scaffold with two independent rows of standards tied back to the building at every other lift',
-      'A scaffold mounted on lockable castors so the whole structure can be wheeled between work positions',
+      'A scaffold suspended from roof outriggers on wire ropes and winches so that the platform can be raised and lowered',
+      'A scaffold with two independent rows of standards tied back into the face of the building at each alternate lift',
+      'A scaffold mounted on lockable castors so that the whole structure can be wheeled between work positions',
       'A scaffold where the platform projects beyond the supporting structure without external bracing to the ground',
     ],
     correctAnswer: 3,
@@ -376,9 +376,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question: "What is 'suspended scaffolding' and where is it typically used?",
     options: [
       'A scaffold platform hung from the roof or an outrigger structure, commonly used on high-rise buildings for facade work',
-      'A scaffold built up from the ground in two rows of standards, generally used for new-build brickwork and blockwork',
-      'A birdcage scaffold with standards in both directions, generally used inside halls for ceiling work',
-      'A freestanding aluminium tower on lockable castors, commonly used for short-duration internal tasks',
+      'A scaffold built up from the ground in two rows of standards, generally used for new-build brickwork and blockwork trades',
+      'A birdcage scaffold with standards running in both directions, generally used inside large halls for ceiling and soffit work',
+      'A freestanding aluminium tower on lockable castors, commonly used indoors for short-duration tasks such as lamp changes or tests',
     ],
     correctAnswer: 0,
     explanation:
@@ -392,10 +392,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 21,
     question: "What is a 'loading bay' in scaffolding?",
     options: [
-      'A storage compound set out at ground level beside the scaffold',
+      'A fenced storage compound set out at ground level beside the scaffold for tubes and boards',
       'A reinforced section of scaffold designed for receiving materials from a crane or hoist',
-      'A short raised platform within a bay reached using a hop-up bracket',
-      'A boarded internal lift used solely for storing scaffold boards',
+      'A short raised platform within a single bay that is reached using a hop-up bracket',
+      'A boarded internal lift used solely for storing spare scaffold boards and tubes',
     ],
     correctAnswer: 1,
     explanation:
@@ -409,10 +409,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 22,
     question: "What is a 'gin wheel' used for on scaffolding?",
     options: [
-      'Levelling the scaffold base plates on sloping or uneven ground',
-      'Tensioning the scaffold ties against the face of the building',
+      'Levelling the scaffold base plates and sole boards on sloping or badly uneven ground',
+      'Tensioning the scaffold ties against the face of the building at every other lift',
       'Hoisting lightweight materials and components to working platforms using a rope',
-      'Locking the castors of a mobile tower before it is used',
+      'Locking the castors of a mobile access tower before it is climbed or used',
     ],
     correctAnswer: 2,
     explanation:
@@ -426,9 +426,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 23,
     question: "In scaffolding, what does 'TG20' refer to?",
     options: [
-      'Safety Guidance Note 20, covering manual handling in the scaffolding industry',
-      'The British Standard specifying the dimensions of steel scaffold tubes',
-      'A code of practice for temporary works procedures, including formwork and falsework',
+      'Safety Guidance Note 20, covering the manual handling of tubes and boards in the scaffolding industry',
+      'The British Standard specifying the outside diameter and the wall thickness of the steel scaffold tubes',
+      'A code of practice for temporary works procedures, covering the duties of the temporary works coordinator',
       'Technical Guidance Note 20, a comprehensive guide to good practice for tube and fitting scaffolding',
     ],
     correctAnswer: 3,
@@ -460,10 +460,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 25,
     question: "What is the difference between a 'scaffolder' and a 'scaffold labourer'?",
     options: [
-      'A scaffolder may work at any lift on the structure; a scaffold labourer is confined to ground level and may never climb onto a platform',
+      'A scaffolder may work at any lift on the structure; a scaffold labourer is confined to ground level and may never climb onto a boarded platform at all',
       'A scaffolder is CISRS-trained and can erect/dismantle scaffolding; a scaffold labourer assists by passing materials but does not erect components',
-      'A scaffolder is employed directly by the scaffolding contractor; a scaffold labourer is always supplied to site through an employment agency',
-      'A scaffolder may erect tube and fitting scaffolds only; a scaffold labourer is the person trained to erect proprietary system scaffolds',
+      'A scaffolder is employed directly by the scaffolding contractor; a scaffold labourer is always supplied to the site through an employment agency',
+      'A scaffolder may erect tube and fitting scaffolds only; a scaffold labourer is the person trained to erect the proprietary system scaffolds',
     ],
     correctAnswer: 1,
     explanation:
@@ -477,10 +477,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 26,
     question: "What is a 'reveal tie' used for in scaffolding?",
     options: [
-      'Joining two scaffold tubes end to end to extend a standard or ledger',
-      'Supporting a putlog across an opening where it has no bearing point',
+      'Joining two scaffold tubes end to end in order to extend a standard or a ledger run',
+      'Supporting a putlog across a window opening where it has no bearing point in the wall',
       'Securing the scaffold to a building by wedging a tube into a window or door reveal',
-      'Bracing the scaffold diagonally across its face to prevent racking',
+      'Bracing the scaffold diagonally across the whole face to prevent it racking',
     ],
     correctAnswer: 2,
     explanation:
@@ -494,9 +494,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 27,
     question: "What is a 'through-tie' in scaffolding?",
     options: [
-      'A tie made by wedging an adjustable tube tightly across a window or door reveal',
-      'A tie formed from tubes and couplers boxed around an internal column or beam',
-      'A tie formed by an expanding ring anchor that is drilled and load-tested into the masonry',
+      'A tie made by wedging an adjustable tube tightly across the reveal of a window or a door opening in a wall',
+      'A tie formed from tubes and couplers boxed right around an internal column, beam or other structural member',
+      'A tie formed by an expanding ring anchor that is drilled into the masonry and load-tested before it is used',
       'A tie that passes through the building (e.g., through a window opening) and is anchored on the inside',
     ],
     correctAnswer: 3,
@@ -512,9 +512,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question: "Why is scaffolding sometimes referred to as 'falsework'?",
     options: [
       'It is not — falsework is a separate term referring to temporary structures that support permanent works during construction, such as concrete formwork',
-      'Both are temporary structures erected only by CISRS-carded scaffolders, so the industry treats the two words as interchangeable terms on site',
-      'Falsework is simply the American term for what UK sites call scaffolding, and it entered use here through imported design standards',
-      'Any scaffold that carries a working platform is legally classed as falsework, because the platform is only supported temporarily',
+      'Both are temporary structures erected only by CISRS-carded scaffolders, so the industry treats the two words as interchangeable terms in everyday site use',
+      'Falsework is simply the American term for what UK sites call scaffolding, and it entered use here through imported design standards and software',
+      'Any scaffold that carries a working platform is legally classed as falsework, because the working platform it carries is only supported temporarily',
     ],
     correctAnswer: 0,
     explanation:
@@ -528,10 +528,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 29,
     question: "What is a 'hop-up bracket' in scaffolding?",
     options: [
-      'A spring-loaded bracket fitted beneath the boards so the platform can absorb impact from dropped loads',
+      'A spring-loaded bracket fitted beneath the boards so that the platform can absorb the impact of dropped loads',
       'A bracket used to create an additional raised platform within a scaffold bay, typically one board width',
-      'A bracket that supports the base of an access ladder where it lands on the platform below',
-      'A bracket fixed to the ledger that allows the whole scaffold to be raised a full lift in one operation',
+      'A bracket that supports the foot of an access ladder where it lands on the boarded platform at the lift below',
+      'A bracket fixed to the ledger that lets the whole scaffold be raised a full lift in one operation',
     ],
     correctAnswer: 1,
     explanation:
@@ -545,10 +545,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 30,
     question: "What is a 'bridle' in scaffolding?",
     options: [
-      'An inclined tube running from the scaffold to the ground for extra stability',
-      'A counterweight placed on the base to stop a freestanding scaffold overturning',
+      'An inclined tube running from the scaffold down to the ground to give the structure extra stability',
+      'A counterweight of concrete blocks placed at the base to stop a freestanding scaffold overturning in wind',
       'A horizontal tube spanning across an opening (such as a doorway or window) in a putlog scaffold',
-      'A short raised platform within a bay supported on hop-up brackets',
+      'A short raised platform formed within a single bay and supported on hop-up brackets fixed to the ledger',
     ],
     correctAnswer: 2,
     explanation:
@@ -562,9 +562,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 31,
     question: "What is a 'boarded lift'?",
     options: [
-      'A scaffold bay that has been marked with a board sign',
-      'A powered mechanical platform that lifts boards',
-      'A lift of the scaffold used exclusively for storing boards',
+      'A scaffold bay that has been marked out with a painted warning sign on it',
+      'A powered mechanical platform that lifts boards up to each lift',
+      'A lift of the scaffold used only for storing the spare boards',
       'A scaffold lift where the platform has been fully decked with boards',
     ],
     correctAnswer: 3,
@@ -580,9 +580,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question: "What is the role of a 'scaffold coordinator' on a large construction project?",
     options: [
       'To plan, manage, and coordinate all scaffold requirements across the project, liaising with contractors and designers',
-      'To erect and dismantle every scaffold on the project personally, rather than delegating to a gang',
-      'To carry out the statutory 7-day inspections in place of the appointed competent person and sign the reports',
-      'To approve the scaffold design on behalf of the structural engineer who prepared the calculations',
+      'To erect and dismantle every scaffold on the project personally, rather than delegating the work to a scaffolding gang',
+      'To carry out the statutory 7-day inspections in place of the appointed competent person and to sign off each of the reports',
+      'To approve the scaffold design on behalf of the structural engineer who prepared the drawings and the calculations',
     ],
     correctAnswer: 0,
     explanation:
@@ -599,10 +599,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question:
       "When calculating the 'in-service' wind load on a clad scaffold, which factor most significantly increases the wind force compared to an open scaffold?",
     options: [
-      'The number of working lifts that have been fully boarded out and fitted with toe boards',
+      'The number of working lifts that have been fully boarded out and fitted with toe boards and guard rails',
       'The solidity ratio (the proportion of the scaffold face that is enclosed by sheeting or netting)',
-      'The grade of steel used to manufacture the scaffold tubes and their galvanised finish',
-      'The torque applied to the bolts of the load-bearing right-angle couplers at each node',
+      'The grade of steel used to manufacture the scaffold tubes and the thickness of the galvanised finish',
+      'The torque applied to the bolts of the load-bearing right-angle couplers at every node on the scaffold',
     ],
     correctAnswer: 1,
     explanation:
@@ -616,10 +616,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 34,
     question: "What is a 'Kentledge' in scaffold terminology?",
     options: [
-      'A lightweight alloy tube permitted only for guard rails and toe boards on the outer lift',
-      'An adjustable base jack screwed into the standard to level the scaffold on sloping ground',
+      'A lightweight alloy tube permitted only for guard rails and toe boards on the outer face of the lift',
+      'An adjustable base jack wound out under the standard to level the scaffold on sloping ground',
       'A counterweight (typically concrete blocks) used to provide stability to a freestanding scaffold',
-      'A proprietary clip that secures the scaffold boards to the transoms against wind uplift',
+      'A proprietary clip that secures the scaffold boards down to the transoms against wind uplift',
     ],
     correctAnswer: 2,
     explanation:
@@ -652,9 +652,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question: "What is a 'raker' in scaffolding and when might one be required?",
     options: [
       'An inclined tube from the scaffold to the ground providing additional stability, used when ties to the building are not possible',
-      'A horizontal tube running lengthways parallel to the building face that carries the transoms',
-      'A short transom added beneath a board that does not reach the next support, used where boards are of unequal length',
-      'A vertical upright carrying the scaffold load down to the base plate, used at every bay along the scaffold run',
+      'A horizontal tube running lengthways parallel to the face of the building, carrying the transoms at every lift of the scaffold run',
+      'A short transom added beneath a board that does not reach the next support, used where the boards on a lift are of unequal length',
+      'A vertical upright carrying the scaffold load down to the base plate and sole board, used at every bay along the scaffold run',
     ],
     correctAnswer: 0,
     explanation:
@@ -685,10 +685,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 38,
     question: "In a 'shoring scaffold', what is the primary function of the structure?",
     options: [
-      'To provide a wide boarded internal working platform for ceiling and soffit work in large halls',
-      'To form a covered walkway that protects pedestrians from objects falling from the works above',
+      'To provide a wide boarded internal working platform for ceiling and soffit work in large halls, atria and workshops',
+      'To form a covered walkway at street level that protects pedestrians from objects falling from the works going on above',
       'To temporarily support a building or structure that is in danger of collapse or during structural alterations',
-      'To receive and store the materials landed onto the scaffold by crane, tower hoist or gin wheel',
+      'To receive and store the materials landed onto the scaffold by crane, tower hoist or gin wheel at each working lift',
     ],
     correctAnswer: 2,
     explanation:
@@ -703,9 +703,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question:
       "What is a 'TG20 compliance sheet' and how does it benefit the scaffolding contractor?",
     options: [
-      'A handover certificate issued by the scaffolding contractor that confirms the scaffold is complete and safe for the named trades to use',
-      'A statutory inspection record completed by a competent person at intervals of no more than 7 days confirming the scaffold is safe',
-      'A material delivery note listing every tube, board and coupler supplied to site, used by the contractor to price the scaffold hire',
+      'A handover certificate issued by the scaffolding contractor that confirms the scaffold is complete and safe for each of the named trades on site to use',
+      'A statutory inspection record completed by a competent person at intervals of no more than 7 days, confirming that the scaffold remains safe',
+      'A material delivery note listing every tube, board and coupler supplied to site, used by the contractor to price and invoice the scaffold hire',
       'A pre-calculated design output sheet from the TG20 e-guide software that, for standard configurations, removes the need for a bespoke scaffold design',
     ],
     correctAnswer: 3,
@@ -722,9 +722,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
       "What are 'spigot joints' and why must they be positioned correctly in a scaffold structure?",
     options: [
       'Internal fitting joints used to connect scaffold tubes end to end, which must be positioned close to a node point to maintain structural integrity',
-      'Right-angle couplers that grip two tubes at 90 degrees, which carry the main scaffold loads and must be tightened to the stated torque',
-      'Adjustable base jacks placed under each standard, which must be wound out evenly to level the scaffold on sloping or stepped ground',
-      'Diagonal tubes fixed across the scaffold face, which must run continuously from base to top lift to stop the structure racking',
+      'Right-angle couplers that grip two tubes at 90 degrees, which carry the main scaffold loads and must be tightened to the torque stated by the manufacturer',
+      'Adjustable base jacks placed under each standard, which must be wound out evenly to level the scaffold where the ground is sloping or is stepped down',
+      'Diagonal tubes fixed across the scaffold face, which must run continuously from the base to the top lift to stop the structure racking sideways',
     ],
     correctAnswer: 0,
     explanation:
@@ -763,10 +763,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question:
       'Under the Work at Height Regulations 2005, what should be the first consideration when planning work at height?',
     options: [
-      'Selecting the cheapest access equipment available on site',
-      'Checking that the site\'s public liability insurance is valid',
+      'Selecting the cheapest access equipment that is available on the site',
+      'Checking that the public liability insurance for the site is still valid',
       'Avoiding work at height altogether where reasonably practicable',
-      'Issuing every operative with a full-body harness and lanyard',
+      'Issuing every operative on the site with a full-body harness and a lanyard',
     ],
     correctAnswer: 2,
     explanation:
@@ -869,9 +869,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question: "What is a 'method statement' in relation to scaffolding work?",
     options: [
       'A document describing how the scaffolding work will be carried out safely, step by step',
-      'A financial statement showing the cost of scaffold hire',
-      'A statement from the scaffold manufacturer about product quality',
-      'A verbal instruction given by the site manager at the morning briefing',
+      'A financial statement showing the weekly cost of the scaffold hire for the whole contract',
+      'A statement from the scaffold manufacturer about the quality of the tubes and boards',
+      'A verbal instruction given by the site manager at the morning toolbox briefing',
     ],
     correctAnswer: 0,
     explanation:
@@ -885,10 +885,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 49,
     question: "What is a 'risk assessment' in the context of scaffold operations?",
     options: [
-      'A structural calculation and drawing prepared by an engineer to prove the scaffold will carry its loads',
+      'A structural calculation and drawing prepared by a competent engineer to prove that the scaffold will carry its loads',
       'A systematic process of identifying hazards, evaluating risks, and determining control measures for scaffold work',
-      'A statutory inspection of the scaffold carried out by a competent person at intervals of no more than 7 days',
-      'A certificate issued by the scaffolding contractor confirming the scaffold is complete and handed over for use',
+      'A statutory inspection of the scaffold carried out by an appointed competent person at intervals of no more than 7 days',
+      'A certificate issued by the scaffolding contractor confirming the scaffold is finished and handed over for use',
     ],
     correctAnswer: 1,
     explanation:
@@ -903,10 +903,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question:
       'How often must a scaffold be inspected under the Work at Height Regulations 2005 as a minimum?',
     options: [
-      'At least once a month, and whenever a new trade starts using it',
-      'At least every 14 days, and after the scaffold has been sheeted',
+      'At least once a month, and whenever another trade starts to work from the scaffold',
+      'At least every 14 days, and after the scaffold has been sheeted or netted over the face',
       'At least every 7 days, and after any event likely to have affected its stability',
-      'Only once, immediately before the scaffold is first handed over for use',
+      'Only once, immediately before the scaffold is first handed over to the trades for use',
     ],
     correctAnswer: 2,
     explanation:
@@ -921,9 +921,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question:
       'Who is legally permitted to inspect a scaffold under the Work at Height Regulations 2005?',
     options: [
-      'Any operative who holds a valid construction site induction card',
-      'The site manager, regardless of their scaffolding training or experience',
-      'An HSE inspector, who must attend the site for every statutory inspection',
+      'Any operative who holds a valid construction skills induction card for that site only',
+      'The site manager, whatever their scaffolding training or experience may be',
+      'An HSE inspector, who has to attend the site for every statutory inspection',
       'A competent person with adequate training and experience in scaffold inspection',
     ],
     correctAnswer: 3,
@@ -939,9 +939,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question: 'For how long must scaffold inspection records be kept on site?',
     options: [
       'For at least 3 months after the inspection',
-      'For at least 7 days after the inspection',
-      'For at least 2 years after the inspection',
-      'For at least 5 years after the inspection',
+      'For at least 7 days from the date of inspection',
+      'For at least 2 years after the last inspection',
+      'For at least 5 years after inspection',
     ],
     correctAnswer: 0,
     explanation:
@@ -1011,9 +1011,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question: "Under CDM 2015, what is the role of the 'principal designer'?",
     options: [
       'To plan, manage, monitor, and coordinate health and safety in the pre-construction phase',
-      'To manage health and safety during the construction phase on site',
-      'To allocate sufficient time and resources for the project to be built safely',
-      'To carry out the statutory 7-day inspections of every scaffold on site',
+      'To plan, manage and monitor health and safety during the construction phase of the project',
+      'To allocate sufficient time and resources so that the project can be built and completed safely',
+      'To carry out the statutory 7-day inspections of every scaffold on the site and to sign the reports',
     ],
     correctAnswer: 0,
     explanation:
@@ -1028,10 +1028,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question:
       "What is the key difference between an HSE 'Improvement Notice' and a 'Prohibition Notice'?",
     options: [
-      'An Improvement Notice halts the activity on the spot; a Prohibition Notice sets a deadline by which the improvements must be completed',
+      'An Improvement Notice halts the activity on the spot; a Prohibition Notice sets a deadline by which all of the improvements must be completed',
       'An Improvement Notice gives a set time to make improvements; a Prohibition Notice stops the activity immediately until the risk is addressed',
-      'An Improvement Notice can only be issued by a magistrates\' court; a Prohibition Notice is served on site by an HSE inspector that day',
-      'An Improvement Notice applies only to scaffolding and access work; a Prohibition Notice applies only to lifting equipment and cranes',
+      'An Improvement Notice can only be issued by a magistrates court; a Prohibition Notice is served on site by an HSE inspector on that day',
+      'An Improvement Notice applies only to scaffolding and access work; a Prohibition Notice applies only to lifting equipment and to cranes',
     ],
     correctAnswer: 1,
     explanation:
@@ -1063,9 +1063,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 59,
     question: 'What does BS 5975 cover?',
     options: [
-      'The dimensions and material grade of steel scaffold tubes',
-      'The performance requirements for scaffold couplers and base plates',
-      'The minimum content required in a statutory scaffold inspection report',
+      'The dimensions and the material grade of the steel tubes used for scaffolding on site',
+      'The performance requirements and test methods for scaffold couplers and for base plates',
+      'The minimum content required in a statutory report of each scaffold inspection',
       'Code of practice for temporary works procedures, including formwork and scaffolding',
     ],
     correctAnswer: 3,
@@ -1081,9 +1081,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question: "What does the Work at Height Regulations 2005 define as 'work at height'?",
     options: [
       'Any work where a person could fall a distance liable to cause personal injury, regardless of height',
-      'Any work carried out more than 2 metres above ground or floor level',
-      'Any work carried out above the height of the worker’s own shoulders',
-      'Any work on a scaffold, ladder, or mobile tower irrespective of the fall distance',
+      'Any work that is carried out more than 2 metres above the level of the ground or the floor beneath it',
+      'Any work that is carried out above the height of the shoulders of the worker who is carrying out the task',
+      'Any work carried out from a scaffold, ladder or mobile tower, irrespective of the distance a person could fall',
     ],
     correctAnswer: 0,
     explanation:
@@ -1098,10 +1098,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question:
       'Under the Work at Height Regulations 2005, what hierarchy must be followed when selecting equipment for work at height?',
     options: [
-      'Use personal protection measures (e.g., harnesses) before collective protection (e.g., guard rails)',
+      'Use personal protection measures (e.g., harnesses) before any collective protection (e.g., guard rails)',
       'Use collective protection measures (e.g., guard rails) before personal protection (e.g., harnesses)',
-      'Select whichever protection measure is cheapest and quickest to install',
-      'Use harnesses for erection and guard rails only once the scaffold is complete',
+      'Select whichever protection measure is the cheapest and the quickest to install on the site',
+      'Use harnesses during erection and fit all the guard rails only once the scaffold is complete',
     ],
     correctAnswer: 1,
     explanation:
@@ -1150,9 +1150,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question: "What is a NASC 'SG' document?",
     options: [
       'A Safety Guidance note published by NASC covering specific scaffolding topics',
-      'A British Standard that sets the dimensions for steel scaffold tubes',
-      'A statutory inspection record required every 7 days under the regulations',
-      'A structural design calculation prepared for a complex bespoke scaffold',
+      'A British Standard that sets the dimensions for the steel tubes used in scaffolding',
+      'A statutory inspection record required at least every 7 days under the regulations',
+      'A structural design calculation prepared for a bespoke or complex scaffold',
     ],
     correctAnswer: 0,
     explanation:
@@ -1166,10 +1166,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 65,
     question: 'What is NASC SG4 specifically about?',
     options: [
-      'Fire safety on scaffolding',
+      'Fire safety and hot work on scaffolding sites',
       'Preventing falls in scaffolding operations',
-      'Manual handling of scaffold components',
-      'Electrical safety near scaffolding',
+      'Manual handling of scaffold tubes and components',
+      'Electrical safety near overhead lines and scaffolding',
     ],
     correctAnswer: 1,
     explanation:
@@ -1183,10 +1183,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 66,
     question: 'What is the legal status of an Approved Code of Practice (ACoP) issued by the HSE?',
     options: [
-      'It is enforceable as law in its own right, so any breach of its guidance is automatically a criminal offence',
-      'It is purely advisory guidance and carries no legal weight at all in any prosecution or civil proceedings',
+      'It is enforceable as law in its own right, so any breach of its guidance is automatically a criminal offence in the courts',
+      'It is purely advisory guidance and carries no legal weight at all in a prosecution or in any civil proceedings',
       'It is not law itself, but failure to follow it can be used as evidence of non-compliance with the associated regulation',
-      'It overrides the regulation that it supports wherever the wording of the two documents appears to conflict',
+      'It overrides the regulation that it supports wherever the wording of the two documents appears to be in conflict',
     ],
     correctAnswer: 2,
     explanation:
@@ -1201,9 +1201,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question:
       'Under PUWER 1998, what must an employer ensure about scaffold equipment before it is used?',
     options: [
-      'It is the cheapest option that meets the minimum specification and is hired from an approved supplier',
-      'It carries a CE or UKCA mark, which alone confirms it is fit to use whatever its condition on site',
-      'It is insured against accidental damage and covered by the supplier\'s warranty for the hire period',
+      'It is the cheapest option that meets the minimum specification and has been hired in from an approved supplier',
+      'It carries a CE or UKCA mark, which alone confirms it is fit to use whatever its actual condition may be on site',
+      'It is insured against accidental damage and covered by a supplier warranty for the whole hire period',
       'It is suitable for its intended purpose, maintained in a safe condition, and inspected at regular intervals',
     ],
     correctAnswer: 3,
@@ -1220,9 +1220,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
       'What information must a scaffold inspection report contain as a minimum under the Work at Height Regulations 2005?',
     options: [
       'The location, date, details of the scaffold, name and position of the inspector, and details of any defects found',
-      'The date of the inspection, a pass or fail result, and nothing more than the inspector\'s initials',
-      'The weekly hire cost of the scaffold, the trades expected to use it, and the agreed off-hire date',
-      'The names of all the operatives who have worked on the scaffold during the preceding seven days',
+      'The date of the inspection, a simple pass or fail result, and nothing more than the initials of the inspector who did it',
+      'The weekly hire cost of the scaffold, the trades that are expected to use it, and the date agreed for the off-hire',
+      'The names of all of the operatives who have worked from the scaffold during the preceding seven days of work on site',
     ],
     correctAnswer: 0,
     explanation:
@@ -1236,10 +1236,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 69,
     question: "What is a 'permit to work' system in relation to scaffolding?",
     options: [
-      'A licence issued by the local highway authority allowing a scaffold to stand on a public footpath or road',
+      'A licence issued by the local highway authority allowing a scaffold to stand on a public footpath or a public road for a fixed period',
       'A formal documented procedure that authorises certain work on or affecting the scaffold, ensuring safety precautions are in place',
-      'A card scheme record proving that a scaffolder has been trained and assessed as competent to erect and alter scaffolds',
-      'A certificate issued by the scaffolding contractor confirming the scaffold is complete and safe for the trades to use',
+      'A card scheme record proving that a scaffolder has been trained and assessed as competent to erect, alter and strike scaffolds',
+      'A certificate issued by the scaffolding contractor confirming the scaffold is complete and safe for the named trades to use',
     ],
     correctAnswer: 1,
     explanation:
@@ -1253,10 +1253,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 70,
     question: "What is the purpose of a 'scaffold handover certificate'?",
     options: [
-      'To record the findings of each statutory inspection carried out on site by a competent person every seven days',
-      'To authorise high-risk activities such as tying into live services or removing ties from the completed scaffold',
+      'To record the findings of each statutory inspection carried out by an appointed competent person at intervals of no more than seven days',
+      'To authorise high-risk activities such as tying into live services or the removal of ties from a completed scaffold on the site itself',
       'To formally confirm that the scaffold has been erected in accordance with the design and is safe for use by the specified trades',
-      'To list every component used in the scaffold so that the hire charges can be calculated and invoiced correctly each month',
+      'To list every component used in the scaffold so that the hire charges can be calculated and invoiced correctly at the month end',
     ],
     correctAnswer: 2,
     explanation:
@@ -1271,9 +1271,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question:
       'What action should be taken if scaffolding is found to be non-compliant during an inspection?',
     options: [
-      'Continue using the scaffold as normal and simply record the defect on the next seven-day inspection report',
-      'Leave the scaffold in service and tell all the trades using it to take extra care in the affected area',
-      'Apply a green tag to reassure the users and monitor the defect over the coming weeks before acting',
+      'Continue using the scaffold as normal and simply record the defect on the next seven-day inspection report when it falls due',
+      'Leave the scaffold in service and tell all the trades using it to take extra care when working in the affected area of it',
+      'Apply a green tag to reassure the users and monitor the defect over the coming weeks before taking any action to put it right',
       'Immediately restrict access to the scaffold, apply a danger tag, and arrange for a competent person to make it safe',
     ],
     correctAnswer: 3,
@@ -1290,9 +1290,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
       'What does Regulation 4 of the Work at Height Regulations 2005 require regarding the organisation and planning of work at height?',
     options: [
       'That all work at height is properly planned, appropriately supervised, and carried out in a safe manner by competent persons',
-      'That every scaffold is fitted with personal fall-arrest anchor points before any trade is permitted onto it',
-      'That all work at height is notified to the Health and Safety Executive at least 28 days before the work begins',
-      'That a permit to work is issued for every individual task carried out more than 2 metres above ground level',
+      'That every scaffold is fitted with personal fall-arrest anchor points before any trade is permitted onto the working platform',
+      'That all work at height is notified to the Health and Safety Executive at least 28 days before the work begins on site',
+      'That a permit to work is issued for every individual task carried out more than 2 metres above the ground or floor level',
     ],
     correctAnswer: 0,
     explanation:
@@ -1309,10 +1309,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question:
       'Under CDM 2015, what specific duty does the client have regarding scaffolding on a notifiable project?',
     options: [
-      'The client must erect and dismantle the scaffold personally, using their own directly employed labour',
+      'The client must erect and dismantle the scaffold personally, using their own directly employed labour rather than a contractor',
       'The client must ensure sufficient time and resources are allocated for scaffolding to be erected, used, and dismantled safely',
-      'The client must carry out the statutory seven-day inspections of the scaffold and sign the reports themselves',
-      'The client must prepare the structural design calculations and drawings for every scaffold on the project',
+      'The client must carry out the statutory seven-day inspections of the scaffold and sign each of the inspection reports themselves',
+      'The client must prepare the structural design calculations and drawings for every scaffold that is erected on the project',
     ],
     correctAnswer: 1,
     explanation:
@@ -1326,10 +1326,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 74,
     question: 'What is the significance of BS EN 12810 in relation to scaffolding?',
     options: [
-      'It specifies the outside diameter, wall thickness and steel grade of scaffold tubes and their galvanised finish',
-      'It sets out the performance requirements and test methods for scaffold couplers, base plates and fittings generally',
+      'It specifies the outside diameter, the wall thickness and the steel grade of scaffold tubes, and the quality of their galvanised finish',
+      'It sets out the performance requirements and the test methods for scaffold couplers, base plates and other fittings used on site generally',
       'It provides product specifications and assessment methods for facade scaffolds made from prefabricated components (system scaffolds)',
-      'It is the code of practice covering the management of temporary works and the duties of the temporary works coordinator',
+      'It is the code of practice covering the management of temporary works on site and the duties of the appointed temporary works coordinator',
     ],
     correctAnswer: 2,
     explanation:
@@ -1363,9 +1363,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
       'Under the Workplace (Health, Safety and Welfare) Regulations 1992, what is the minimum temperature at which scaffolding operations should be reviewed for safe continuation?',
     options: [
       'The regulations do not specify a minimum temperature; risk assessment should consider the effects of cold, ice, and wind chill',
-      'The regulations set a statutory minimum of 5°C, below which all scaffold work outdoors must stop until it rises',
-      'The regulations set a statutory minimum of 0°C, below which scaffold work may continue only with a permit to work',
-      'The regulations set a statutory minimum of minus 5°C, below which the scaffold must be tagged out of service',
+      'The regulations set a statutory minimum of 5°C, below which all scaffold work outdoors must stop until the temperature rises again',
+      'The regulations set a statutory minimum of 0°C, below which scaffold work may continue only under a written permit to work',
+      'The regulations set a statutory minimum of minus 5°C, below which the scaffold must be tagged out of service until it rises',
     ],
     correctAnswer: 0,
     explanation:
@@ -1380,10 +1380,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the maximum wind speed at which scaffolding erection and dismantling operations should generally cease, according to NASC guidance?',
     options: [
-      'Beaufort Scale Force 3 (gentle breeze) or mean wind speed of approximately 9 knots',
+      'Beaufort Scale Force 3 (a gentle breeze) or a mean wind speed of approximately 9 knots',
       'Beaufort Scale Force 6 (strong breeze) or mean wind speed of approximately 23 knots',
-      'Beaufort Scale Force 8 (gale) or mean wind speed of approximately 37 knots',
-      'Beaufort Scale Force 10 (storm) or mean wind speed of approximately 50 knots',
+      'Beaufort Scale Force 8 (a strong gale) or a mean wind speed of approximately 37 knots',
+      'Beaufort Scale Force 10 (storm) or a mean wind speed of approximately 50 knots',
     ],
     correctAnswer: 1,
     explanation:
@@ -1398,10 +1398,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the legal position if a worker is injured due to a scaffold defect that should have been identified during a routine inspection?',
     options: [
-      'No enforcement action can follow, because a scaffold defect that develops between inspections is treated in law as an unforeseeable accident',
-      'Only the injured worker can be held liable, for failing to carry out a pre-use check and spot the defect before stepping onto the platform',
+      'No enforcement action can follow, because a scaffold defect that develops in the period between two inspections is treated in law as an unforeseeable accident on site',
+      'Only the injured worker can be held liable, for failing to carry out a pre-use check and spot the defect before stepping onto the boarded platform on that day',
       'The employer and/or the person responsible for the inspection could face prosecution for failing to comply with the Work at Height Regulations and HSWA 1974',
-      'Liability rests solely with the manufacturer that supplied the components, whatever the condition of the scaffold or the standard of inspection',
+      'Liability rests solely with the manufacturer that supplied the components, whatever the condition of the scaffold or the standard of the inspection work carried out',
     ],
     correctAnswer: 2,
     explanation:
@@ -1416,9 +1416,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question:
       'What does Section 3 of the HSWA 1974 require in relation to scaffolding that is accessible to the public?',
     options: [
-      'That every employee takes reasonable care, so far as is reasonably practicable, of their own health and safety and of that of other employees affected by what they do',
-      'That all work equipment provided for use at work is suitable for its purpose, maintained in efficient working order, and inspected by a competent person before first use',
-      'That every scaffold is inspected by a competent person before it is first used and thereafter at intervals not exceeding seven days, with a written report of each inspection',
+      'That every employee takes reasonable care, so far as is reasonably practicable, of their own health and safety and of that of the other employees who are affected by what they do while at work',
+      'That all work equipment provided for use at work is suitable for its purpose, maintained in efficient working order, and inspected by a competent person before it is first used on site',
+      'That every scaffold is inspected by a competent person before it is first used and thereafter at intervals not exceeding seven days, with a written report made of each such inspection',
       'That the employer conducts their undertaking in a way that ensures, so far as reasonably practicable, that persons not in their employment are not exposed to risks to their health or safety',
     ],
     correctAnswer: 3,
@@ -1435,9 +1435,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
       'Under the Work at Height Regulations 2005, Schedule 3, Part 4 covers additional requirements for scaffolding. What key provision does it make regarding incomplete scaffolds?',
     options: [
       'Incomplete scaffolds must not be used and must be marked with appropriate warning signs to prevent inadvertent use',
-      'Incomplete scaffolds may be used by any trade provided a harness and lanyard are worn and clipped on',
-      'Incomplete scaffolds may be used by the scaffolders erecting them and by any trade holding a permit',
-      'Incomplete scaffolds may be used once a verbal warning about the missing sections is given to users',
+      'Incomplete scaffolds may be used by any trade provided that a harness and a lanyard are worn and clipped on at all times',
+      'Incomplete scaffolds may be used by the scaffolders erecting them and by any other trade that holds a permit to work',
+      'Incomplete scaffolds may be used once a verbal warning about the missing sections has been given to the users',
     ],
     correctAnswer: 0,
     explanation:
@@ -1457,10 +1457,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 81,
     question: "What is the purpose of a 'base plate' in scaffolding?",
     options: [
-      'To brace the scaffold diagonally at the base and stop the structure racking sideways',
+      'To brace the scaffold diagonally at the base and stop the whole structure from racking sideways',
       'To spread the load from a standard over a larger area and prevent it sinking into the ground',
-      'To tie the foot of the scaffold back to the face of the building at the lowest lift',
-      'To stop the standards rotating in the wind by clamping them to the sole board below',
+      'To tie the foot of the scaffold back to the face of the building at the lowest working lift of all',
+      'To stop the standards rotating in the wind by clamping them down to the sole board beneath each one',
     ],
     correctAnswer: 1,
     explanation:
@@ -1474,10 +1474,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 82,
     question: "What is a 'sole board' used for in scaffolding?",
     options: [
-      'To form the boarded working platform that operatives stand on',
-      'To prevent tools and materials being kicked off the edge of the platform',
+      'To form the boarded working platform that the operatives stand on while they are at work on it',
+      'To prevent tools and materials being kicked off the outer edge of the working platform',
       'To distribute the load from the base plate over an even wider area on soft or uneven ground',
-      'To brace the scaffold diagonally across its face for added stability',
+      'To brace the scaffold diagonally across its face for added lateral stability at each lift',
     ],
     correctAnswer: 2,
     explanation:
@@ -1509,9 +1509,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question: "What is a 'swivel coupler' used for?",
     options: [
       'Connecting two tubes at any angle other than 90 degrees',
-      'Connecting a tube to a flat surface such as a wall',
-      'Joining two tubes of different diameters',
-      'Allowing a scaffold to rotate on its base',
+      'Connecting a tube to a flat surface such as a wall or a slab',
+      'Joining two scaffold tubes of different outside diameters',
+      'Allowing a scaffold to rotate about its own base',
     ],
     correctAnswer: 0,
     explanation:
@@ -1543,10 +1543,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 86,
     question: "What is a 'toe board' and what is its purpose?",
     options: [
-      'A board laid at the foot of a leaning ladder to stop the stiles from slipping outwards',
-      'A board laid across the width of the platform to spread the weight of stacked bricks',
+      'A board laid at the foot of a leaning ladder to stop the ladder stiles from slipping outwards on site',
+      'A board laid across the width of the platform to spread the weight of the bricks that are stacked on it',
       'A board fixed at the edge of a scaffold platform to prevent materials and tools from falling off',
-      'A board laid on the ground beneath the standards to mark out the scaffold perimeter',
+      'A board laid on the ground beneath the standards to mark out the perimeter of the scaffold on site',
     ],
     correctAnswer: 2,
     explanation:
@@ -1581,9 +1581,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question: "What is 'plan bracing' and where is it fitted on a scaffold?",
     options: [
       'Diagonal bracing fitted horizontally across the width of the scaffold at specific lifts to prevent the scaffold from twisting',
-      'Diagonal bracing fitted vertically across the face of the scaffold at every fourth bay to prevent it racking',
-      'Horizontal tubes running lengthways along the scaffold that connect the standards and carry the transoms',
-      'Inclined tubes running from the scaffold down to the ground, used where ties into the building are not possible',
+      'Diagonal bracing fitted vertically across the face of the scaffold at every fourth bay in order to prevent the scaffold racking',
+      'Horizontal tubes running lengthways along the scaffold that connect the standards and carry the transoms at every lift',
+      'Inclined tubes running from the scaffold down to the ground, used where ties into the building face are not possible at all',
     ],
     correctAnswer: 0,
     explanation:
@@ -1597,10 +1597,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 89,
     question: "What is a 'putlog coupler' and what is it used for?",
     options: [
-      'A double-bolt coupler that grips two tubes fully at right angles, carrying the main load from the transoms into the standards below',
+      'A double-bolt coupler that grips two tubes fully at right angles, carrying the main load from the transoms down into the standards beneath them',
       'A single-fitting coupler that fixes a putlog or transom to a ledger, allowing the tube to rest on the ledger rather than being fixed around it',
-      'A sleeve fitting that joins two scaffold tubes end to end to extend a run, sitting outside the tubes and bolted through both',
-      'A swivel coupler that connects two tubes at any angle other than a right angle, used mainly for fixing diagonal bracing',
+      'A sleeve fitting that joins two scaffold tubes end to end to extend a run, sitting outside the tubes and bolted through both of the tubes',
+      'A swivel coupler that connects two tubes at any angle other than a right angle, used mainly for fixing the diagonal bracing tubes to the standards',
     ],
     correctAnswer: 1,
     explanation:
@@ -1862,9 +1862,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question: "What is a 'through tie' in scaffolding?",
     options: [
       'A tie that passes through the building via an opening such as a window',
-      'A tie that connects two separate scaffolds together',
-      'A tie that connects the toe board to the standard',
-      'A tie used only on independent scaffolds',
+      'A tie that connects two separate scaffold structures to each other',
+      'A tie that connects the toe board to the nearest standard tube',
+      'A tie used only on independent scaffolds above 10 metres high',
     ],
     correctAnswer: 0,
     explanation:
@@ -2050,9 +2050,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 115,
     question: "What is a 'buttress' or 'raker' used for in scaffolding?",
     options: [
-      'To support the boards that form the working platform',
-      'To anchor the scaffold to the face of the building',
-      'To spread the load from the standards over a wider area of ground',
+      'To support the scaffold boards that form the working platform at each lift',
+      'To anchor the scaffold back to the face of the building at each tie point',
+      'To spread the load from each standard over a wider area of firm ground',
       'To provide stability to a freestanding scaffold that cannot be tied to a building',
     ],
     correctAnswer: 3,
@@ -2242,10 +2242,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 126,
     question: 'What does a RED scaffold tag indicate?',
     options: [
-      'The scaffold is ready for heavy loading',
-      'The scaffold is reserved for a specific trade',
+      'The scaffold is ready to be loaded with heavy materials now',
+      'The scaffold is reserved for one named trade only',
       'The scaffold is incomplete, unsafe, or must not be used',
-      'The scaffold inspection is overdue by one day',
+      'The scaffold inspection is overdue by a single day',
     ],
     correctAnswer: 2,
     explanation:
@@ -2260,9 +2260,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question:
       'What information must be recorded on a scaffold inspection report under the Work at Height Regulations?',
     options: [
-      'Only a simple pass or fail result for the whole scaffold',
-      'The hire charge for the scaffold and the expected dismantling date',
-      'A photograph of every lift and a signed statement from each user',
+      'Only a simple pass or fail result for the whole scaffold, with nothing further recorded',
+      'The weekly hire charge for the scaffold and the date it is expected to be struck down',
+      'A photograph of every boarded lift and a signed statement from each user of it',
       'The location, date, details of the scaffold, matters checked, and any action taken',
     ],
     correctAnswer: 3,
@@ -2278,9 +2278,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question: 'How long must scaffold inspection records be kept on site?',
     options: [
       'Until the end of construction work at the site',
-      'Until the scaffold is dismantled',
-      'Until the next inspection',
-      'For a minimum of 3 months after the inspection',
+      'Until that scaffold has been completely dismantled',
+      'Until the next inspection has been carried out on it',
+      'For a minimum of 3 months after the last inspection date',
     ],
     correctAnswer: 0,
     explanation:
@@ -2294,10 +2294,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 129,
     question: 'What should you do if you notice a scaffold tag is missing when you arrive at work?',
     options: [
-      'Assume it is safe to use because the missing tag is only a paperwork issue',
+      'Assume it is safe to use because the missing tag is only an administrative oversight',
       'Do not use the scaffold and report the missing tag to your supervisor immediately',
-      'Carry on using the scaffold but write your own note confirming it looks safe',
-      'Fit a green tag yourself so that other trades know it can be used',
+      'Carry on using the scaffold but write your own note to confirm it looks safe',
+      'Fit a green tag yourself so that the other trades know that it can be used',
     ],
     correctAnswer: 1,
     explanation:
@@ -2330,9 +2330,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question:
       'What should a competent person check regarding the scaffold base during an inspection?',
     options: [
-      'That the guard rails and toe boards are at the correct heights',
-      'That the scaffold tag has been signed and dated by the inspector',
-      'That the boards on the top lift are free from splits and cracks',
+      'That the guard rails and toe boards are fitted at the correct heights on the lift',
+      'That the scaffold tag has been signed and dated by the last inspector to visit it',
+      'That the boards on the top lift are all free from splits, cracks and knots',
       'That base plates are on sole boards, the ground is firm, and standards are plumb',
     ],
     correctAnswer: 3,
@@ -2348,9 +2348,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question: 'What is Schedule 7 of the Work at Height Regulations 2005?',
     options: [
       'The schedule that prescribes what must be included in a scaffold inspection report',
-      'The schedule that sets the minimum width of a scaffold working platform',
-      'The schedule that lists the duties of the principal designer under CDM 2015',
-      'The schedule that defines the loading classes for scaffold platforms',
+      'The schedule that sets out the minimum width of a scaffold working platform used on site',
+      'The schedule that lists the duties of the principal designer and the client under CDM 2015',
+      'The schedule that defines the loading classes used for the scaffold working platforms',
     ],
     correctAnswer: 0,
     explanation:
@@ -2364,10 +2364,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 133,
     question: 'What should be checked regarding scaffold ties during an inspection?',
     options: [
-      'That there are no more ties than the original design specified',
+      'That there are no more ties in place than the original scaffold design specified',
       'That they are present, secure, undamaged, and have not been removed or loosened',
-      'That they are painted in a high-visibility colour for easy identification',
-      'That they are fitted only at the top and bottom lifts of the scaffold',
+      'That they are painted in a high-visibility colour for easier identification',
+      'That they are fitted only at the top and the bottom lifts of the scaffold',
     ],
     correctAnswer: 1,
     explanation:
@@ -2382,10 +2382,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question:
       'If a scaffold inspection reveals that boards are split or damaged, what action should be taken?',
     options: [
-      'The boards must be turned over so that the damage faces downwards',
-      'The boards must be marked with a warning sign and left in place',
+      'The boards must be turned over so that the damaged face is turned downwards',
+      'The boards must be marked with a warning sign and then left in place',
       'The damaged boards must be replaced before the scaffold can be used',
-      'The boards must be covered with a sheet of plywood before use',
+      'The boards must be covered with a sheet of plywood before any use',
     ],
     correctAnswer: 2,
     explanation:
@@ -2400,9 +2400,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the competent person looking for when checking scaffold couplers during an inspection?',
     options: [
-      'That they are all the same colour and from the same manufacturer',
-      'That there are exactly two couplers fitted at every node point',
-      'That they have been greased to prevent them from seizing up',
+      'That they are all the same colour and were made by the same manufacturer',
+      'That there are exactly two couplers fitted at every single node point on the run',
+      'That they have all been greased to prevent the coupler bolts from seizing up',
       'That they are tight, undamaged, and correctly positioned on the tubes',
     ],
     correctAnswer: 3,
@@ -2418,9 +2418,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question: 'What should happen if a scaffold inspection is overdue?',
     options: [
       'The scaffold must not be used until it has been inspected by a competent person',
-      'The scaffold can be used for one more day before the inspection is carried out',
-      'The scaffold can be used as long as a pre-use visual check is done first',
-      'The scaffold can be used provided no more than four operatives are on it',
+      'The scaffold can be used for one more day before the inspection is then carried out',
+      'The scaffold can be used as long as a pre-use visual check is carried out',
+      'The scaffold can be used provided that no more than four operatives are on it',
     ],
     correctAnswer: 0,
     explanation:
@@ -2434,10 +2434,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 137,
     question: 'During an inspection, what should be checked about the scaffold access points?',
     options: [
-      'That the base plates sit on adequate sole boards and the ground is firm',
+      'That the base plates sit on adequate sole boards and that the ground beneath them is firm and level',
       'That access is safe, ladders are secured and extend above the platform, and stairways are clear',
-      'That all ties are present, secure, and have not been removed by other trades',
-      'That the guard rails and toe boards are present at the correct heights',
+      'That all of the ties are present, secure, and have not been removed by any of the other trades on site',
+      'That the guard rails and toe boards are all present and at the correct heights for the lift',
     ],
     correctAnswer: 1,
     explanation:
@@ -2451,10 +2451,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 138,
     question: 'Who is responsible for ensuring that scaffold inspections are carried out on time?',
     options: [
-      'The manufacturer that supplied the tubes, boards and fittings to the contractor',
-      'The HSE inspector responsible for construction sites in that local authority area',
+      'The manufacturer that supplied the tubes, boards and fittings to the scaffolding contractor for the job',
+      'The HSE inspector who is responsible for construction sites in that local authority area under the regulations',
       'The person on whose behalf the scaffold inspection is carried out (usually the principal contractor)',
-      'Each individual operative who happens to be using the scaffold on that particular day',
+      'Each individual operative who happens to be working from the scaffold on that particular day of the week',
     ],
     correctAnswer: 2,
     explanation:
@@ -2468,9 +2468,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 139,
     question: "What is a 'pre-use check' of a scaffold, and who should carry it out?",
     options: [
-      'A full structural inspection carried out by the designer before the scaffold is used',
-      'A check of the scaffold components carried out in the hire yard before delivery to site',
-      'A monthly check carried out by the site manager and entered in the site register',
+      'A full structural inspection carried out by the designer before the scaffold is first used on site',
+      'A check of the scaffold components carried out in the hire yard before delivery to the site',
+      'A monthly check carried out by the site manager and entered into the site inspection register',
       'A visual check carried out by the user before each use to ensure nothing has obviously changed',
     ],
     correctAnswer: 3,
@@ -2486,9 +2486,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question: 'What should be inspected regarding edge protection during a scaffold inspection?',
     options: [
       'That the top guardrail, mid-rail, and toe boards are all present, secure, and at the correct heights',
-      'That the base plates and sole boards are sound and the ground beneath is firm and level',
-      'That the ties are all present and have not been loosened or removed by another trade',
-      'That the access ladders are secured at both ends and extend above the platform level',
+      'That the base plates and the sole boards are sound and the ground beneath them is firm and level all round',
+      'That the ties are all present and have not been loosened or removed by any of the other trades on site',
+      'That the access ladders are secured at both ends and extend above the level of the platform landing',
     ],
     correctAnswer: 0,
     explanation:
@@ -2502,10 +2502,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 141,
     question: "What is meant by a 'competent person' in the context of scaffold inspections?",
     options: [
-      'Anyone holding a valid construction site induction card for that site',
+      'Anyone at all who holds a valid construction site induction card that was issued for that site',
       'Someone with sufficient training, experience, and knowledge to identify risks and defects',
-      'The most senior manager present on site at the time of the inspection',
-      'Any operative who has worked on scaffolding for more than five years',
+      'The most senior manager who happens to be present on the site at the time the inspection is made',
+      'Any operative who has worked on scaffolding of any kind for a period of more than five years on site',
     ],
     correctAnswer: 1,
     explanation:
@@ -2537,9 +2537,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 143,
     question: 'What should you check about scaffold boards during an inspection?',
     options: [
-      'That boards are all from the same manufacturer, the same batch and the same grade of timber',
-      'That boards are painted in a high-visibility colour so that they can be identified from ground level',
-      'That boards have been treated with a fire-retardant coating before they are taken onto site',
+      'That the boards are all from the same manufacturer, the same batch and the same grade of timber throughout',
+      'That boards are painted in a high-visibility colour so that they can be easily identified from the ground below',
+      'That boards have been treated with a fire-retardant coating before they are taken onto the site at all',
       'That boards are in good condition, properly supported, secured against uplift, and not overhanging excessively',
     ],
     correctAnswer: 3,
@@ -2556,9 +2556,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
       'What must happen when a scaffold inspection identifies defects that cannot be immediately rectified?',
     options: [
       'The affected area must be taken out of service, signed, and barriers erected until the defects are fixed',
-      'The defects may be recorded and left in place until the next seven-day inspection falls due',
-      'Work may continue in the affected area provided that operatives are warned to take extra care',
-      'A green tag must be applied so that users know the defects are being monitored by the inspector',
+      'The defects may simply be recorded and left in place until the next seven-day inspection falls due on site',
+      'Work may continue in the affected area provided that the operatives working there are warned to take extra care',
+      'A green tag must be applied so that users know the defects are being closely monitored by an inspector',
     ],
     correctAnswer: 0,
     explanation:
@@ -2572,10 +2572,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 145,
     question: 'What is the main purpose of the scaffold tag system?',
     options: [
-      'To record the hire cost of the scaffold for the contractor’s accounts',
+      'To record the weekly hire cost of the scaffold for the contractor accounts each month',
       'To clearly communicate the current safety status of the scaffold to all users',
-      'To identify which scaffolding gang erected each section of the scaffold',
-      'To replace the need for a written statutory inspection report',
+      'To identify which scaffolding gang erected each section of the whole scaffold run',
+      'To replace the need for a written statutory inspection report to be made by the inspector',
     ],
     correctAnswer: 1,
     explanation:
@@ -2590,10 +2590,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question:
       'Under the Work at Height Regulations, what must the inspection report include about the person carrying out the inspection?',
     options: [
-      'Their initials alone, so that the inspection record stays brief and the inspector anonymous',
-      'Their home address, their personal telephone number and their national insurance number',
+      'Their initials alone, so that the inspection record stays brief and the inspector remains anonymous',
+      'Their home address, their personal telephone number and their national insurance details',
       'Their name, qualifications, and the name of the employer for whom they carried out the inspection',
-      'Their photograph, taken while standing on the completed scaffold on the day of inspection',
+      'Their photograph, taken while standing on the completed scaffold on the day of that inspection',
     ],
     correctAnswer: 2,
     explanation:
@@ -2608,9 +2608,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question:
       'What should a scaffold inspector check regarding the relationship between the scaffold and adjacent structures?',
     options: [
-      'That the scaffold is set at least 1 metre clear of the building face at every lift',
-      'That the building face is sheeted to protect the brickwork from the scaffold tubes',
-      'That the scaffold is built to exactly the same height as the adjacent building roof',
+      'That the scaffold is set at least 1 metre clear of the face of the building at every working lift',
+      'That the face of the building is sheeted to protect the brickwork from the scaffold tubes on it',
+      'That the scaffold is built to exactly the same height as the roof of the adjacent building',
       'That there are no gaps where a person could fall between the scaffold and the building face',
     ],
     correctAnswer: 3,
@@ -2627,9 +2627,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
       'What is the significance of the date and time recorded on a scaffold inspection report?',
     options: [
       'It establishes when the inspection was carried out and when the next inspection is due',
-      'It records how long the inspection itself took to complete',
-      'It determines the hire period that the contractor will be charged for',
-      'It sets the shift pattern for the operatives using the scaffold',
+      'It records how long the inspection itself took the appointed competent person to complete',
+      'It determines the hire period for which the scaffolding contractor will be charged each week',
+      'It sets the shift pattern for the operatives who will be using the scaffold on site that week',
     ],
     correctAnswer: 0,
     explanation:
@@ -2644,10 +2644,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question:
       'When inspecting a scaffold after high winds, what should the competent person pay particular attention to?',
     options: [
-      'Whether the scaffold tag is still legible and securely attached at each access point',
+      'Whether the scaffold tag is still legible and securely attached at every one of the access points on it',
       'Whether ties are intact, bracing is undamaged, sheeting is secure, and the scaffold is still plumb',
-      'Whether the access ladders remain tied at every lift and nothing else on the scaffold',
-      'Whether the boards on the top lift have dried out and the tubes have been wiped down',
+      'Whether the access ladders remain tied at every lift, and nothing else at all on the scaffold',
+      'Whether the boards on the top lift have dried out and the tubes have all been wiped down again',
     ],
     correctAnswer: 1,
     explanation:
@@ -2661,10 +2661,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 150,
     question: 'What should be checked about loading during a scaffold inspection?',
     options: [
-      'That the heaviest materials are all stacked over a single transom so the load is concentrated',
-      'That the scaffold has been loaded to its full rated capacity to prove that it is strong enough',
+      'That the heaviest materials are all stacked over a single transom so that the load is concentrated in one place',
+      'That the scaffold has been loaded up to its full rated capacity to prove that it is strong enough for the work',
       'That the scaffold is not overloaded and that materials are evenly distributed as per the design loading class',
-      'That all the materials are stored at the very edge of the platform against the guard rail',
+      'That all of the materials are stored at the very edge of the platform against the guard rail at each lift',
     ],
     correctAnswer: 2,
     explanation:
@@ -2678,9 +2678,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 151,
     question: 'Can a scaffold user refuse to use a scaffold they believe is unsafe?',
     options: [
-      'No, a worker must use any scaffold that carries a current tag applied by their employer',
-      'No, unless the worker holds a CISRS scaffolder card and can judge the scaffold themselves',
-      'No, unless a manager first agrees in writing that the scaffold is unsafe to work on',
+      'No, a worker must use any scaffold that carries a current tag applied by their own employer',
+      'No, unless the worker holds a CISRS scaffolder card and can judge the scaffold for themselves',
+      'No, unless a site manager first agrees in writing that the scaffold is unsafe to work from',
       'Yes, every worker has the right to refuse to work on a scaffold they believe to be unsafe',
     ],
     correctAnswer: 3,
@@ -2696,9 +2696,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question: "What does the inspection report need to state about the scaffold's intended use?",
     options: [
       'The type and purpose of the scaffold, including any loading classification',
-      'The total cost of hiring the scaffold for the duration of the project',
-      'The names of every trade that has booked time on the scaffold',
-      'The date the scaffold is scheduled to be dismantled and removed',
+      'The total cost of hiring the scaffold for the whole duration of the project',
+      'The names of every trade that has booked time on the scaffold this week',
+      'The date the scaffold is scheduled to be dismantled and taken away',
     ],
     correctAnswer: 0,
     explanation:
@@ -2713,10 +2713,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question:
       'What should be done if you discover that someone has removed guardrails from a scaffold to pass materials through?',
     options: [
-      'Leave the guardrails off until all of the materials have been passed through, then refit them',
+      'Leave the guardrails off until all of the materials have been passed through, and then refit them all afterwards',
       'Report it immediately, stop work in that area, and ensure the guardrails are reinstated before work continues',
-      'Refit the top guardrail and carry on working, since the mid-rail is optional on a boarded lift',
-      'Note it on the next seven-day inspection report and allow the work in that area to continue',
+      'Refit the top guardrail and carry on working, since the mid-rail is optional on any lift that is fully boarded',
+      'Note it on the next seven-day inspection report and allow the work in that area to carry on as before',
     ],
     correctAnswer: 1,
     explanation:
@@ -2731,10 +2731,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question:
       'During an inspection, corrosion is found on several scaffold tubes. What should the inspector assess?',
     options: [
-      'Whether the corrosion has discoloured the tubes enough for the scaffold to fail a visual check by the client\'s engineer',
-      'Whether the corrosion has spread onto the couplers and made the bolts harder to tighten to the right torque',
+      'Whether the corrosion has discoloured the tubes enough for the scaffold to fail a visual check by the site engineer for the client',
+      'Whether the corrosion has spread onto the couplers and made the coupler bolts harder to tighten to the correct torque figure on site',
       'Whether the corrosion has reduced the wall thickness of the tubes to the point where their load-bearing capacity is compromised',
-      'Whether the corrosion will rub off onto operatives\' clothing and gloves and stain the finished brickwork',
+      'Whether the corrosion will rub off onto the clothing and gloves of the operatives and stain the finished brickwork of the building',
     ],
     correctAnswer: 2,
     explanation:
@@ -2749,9 +2749,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question:
       'What should the competent person verify about the scaffold design during an inspection?',
     options: [
-      'That the scaffold has been built with fewer components than the design so as to reduce the hire cost',
-      'That the scaffold has been built higher than the design allows so that later phases can be reached',
-      'That the design drawing has been signed by each of the operatives who erected the scaffold on site',
+      'That the scaffold has been built with fewer components than the design allows so as to reduce the hire cost to the client',
+      'That the scaffold has been built higher than the design allows so that the later phases of work can be reached',
+      'That the design drawing has been signed by each of the operatives who erected the scaffold on the site that week',
       'That the scaffold conforms to the design or TG20 compliance sheet and no unauthorised modifications have been made',
     ],
     correctAnswer: 3,
@@ -2768,9 +2768,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
       'Why must scaffold inspection results be communicated to all site workers, not just management?',
     options: [
       'So that all workers know the current status of each scaffold and can avoid unsafe scaffolds',
-      'So that the inspection cost can be shared fairly between the trades',
-      'So that workers can decide for themselves whether an inspection was needed',
-      'So that management can identify who last worked on the scaffold',
+      'So that the cost of the inspection can be shared out fairly between all of the trades on site',
+      'So that the workers can decide for themselves whether an inspection was really needed at all',
+      'So that management can identify who last worked from the scaffold during that week',
     ],
     correctAnswer: 0,
     explanation:
@@ -2784,10 +2784,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 157,
     question: 'What should the inspector check regarding the ground conditions beneath a scaffold?',
     options: [
-      'That the ground beneath the scaffold has been tarmacked over so that the whole site looks tidy',
+      'That the ground beneath the scaffold has been tarmacked over so that the site looks tidy for the client',
       'That the ground has not been disturbed by excavation, is not waterlogged, and sole boards are adequate',
-      'That the ground around the base has been fenced off so that the public cannot walk on it',
-      'That the ground bearing pressure has been signed off by the local building control officer',
+      'That the ground around the base has been fenced off so that members of the public cannot walk on it at all',
+      'That the ground bearing pressure has been signed off in writing by the local building control officer first',
     ],
     correctAnswer: 1,
     explanation:
@@ -2802,10 +2802,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the minimum that a scaffold inspection must include according to Schedule 7?',
     options: [
-      'A verbal report given to the site manager at the daily briefing and noted in the diary',
-      'A tick and a date on the scaffold tag confirming that a competent person has been round',
+      'A verbal report given to the site manager at the daily briefing and noted down in the daily site diary',
+      'A tick and a date on the scaffold tag confirming that a competent person has been round it',
       'A written or electronic record covering all matters specified in Schedule 7 of the WAH Regulations',
-      'A photograph of the whole scaffold taken from ground level on the day of the inspection',
+      'A photograph of the whole scaffold taken from ground level on the day of that inspection itself',
     ],
     correctAnswer: 2,
     explanation:
@@ -2820,9 +2820,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question:
       "What action should be taken if an inspection reveals that the scaffold's loading classification has been exceeded?",
     options: [
-      'Extra standards must be added beneath the platform so that the overload is properly supported',
-      'The excess materials must be spread more thinly across the bays so the loading class is met',
-      'The overload must be noted on the scaffold tag and the work allowed to continue under supervision',
+      'Extra standards must be added beneath the platform so that the overload is properly supported from underneath',
+      'The excess materials must be spread more thinly across the bays so that the design loading class is met again',
+      'The overload must be noted on the scaffold tag and the work allowed to carry on under supervision',
       'The excess materials must be removed immediately and the scaffold checked for damage before resuming use',
     ],
     correctAnswer: 3,
@@ -2838,9 +2838,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question: 'What role does a scaffold inspection play in an accident investigation?',
     options: [
       "Inspection records provide evidence of the scaffold's condition and whether it was properly maintained",
-      'Inspection records prove who owned the scaffold and which contractor was paying for the hire',
-      'Inspection records establish which of the trades had been booked onto the scaffold that week',
-      'Inspection records confirm that the scaffold matched the architect\'s original design intent',
+      'Inspection records prove who owned the scaffold and which contractor was paying for its weekly hire charge',
+      'Inspection records establish which of the trades had been booked onto the scaffold during that particular week',
+      'Inspection records confirm that the scaffold matched the original design intent of the project architect',
     ],
     correctAnswer: 0,
     explanation:
@@ -2888,9 +2888,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 163,
     question: 'What is the most common cause of scaffold collapse?',
     options: [
-      'Boards that have become damp after rain',
-      'Couplers that have not been painted',
-      'Using more lifts than the trade actually needs',
+      'Boards that have become damp after a period of heavy rain',
+      'Couplers that have not been painted or greased',
+      'Using more lifts than the trade actually needed',
       'Failure of ties, overloading, or inadequate foundations',
     ],
     correctAnswer: 3,
@@ -2923,10 +2923,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the maximum safe working wind speed generally cited for working on most standard scaffolds?',
     options: [
-      'Approximately 5 mph (Beaufort scale force 1) as a fixed legal limit',
+      'Approximately 5 mph (Beaufort scale force 1), which is a fixed legal limit for all work at height',
       'Approximately 23 mph (Beaufort scale force 5) as a general guide, subject to risk assessment',
-      'Approximately 55 mph (Beaufort scale force 9) as a fixed legal limit',
-      'There is no need to consider wind speed once a scaffold is tied to a building',
+      'Approximately 55 mph (Beaufort scale force 9), which is a fixed legal limit on all sites in the UK',
+      'There is no need to consider the wind speed once a scaffold has been tied to a building',
     ],
     correctAnswer: 1,
     explanation:
@@ -2940,10 +2940,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 166,
     question: 'Why should materials never be thrown from a scaffold?',
     options: [
-      'Because it can damage the materials being thrown and waste money',
-      'Because it puts extra strain on the operative’s shoulder and back',
+      'Because it can damage the materials being thrown and waste the contractor money',
+      'Because it puts extra strain on the shoulder and back of the operative throwing it',
       'Because falling objects can cause serious injury or death to people below',
-      'Because it makes the scaffold platform untidy and harder to keep clear',
+      'Because it makes the scaffold platform untidy and much harder to keep clear',
     ],
     correctAnswer: 2,
     explanation:
@@ -2957,9 +2957,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 167,
     question: 'What should you do if you notice that scaffold boards are covered in ice or frost?',
     options: [
-      'Carry on working but move more slowly and hold the guard rail at all times',
-      'Spread sawdust on the boards and continue working straight away',
-      'Only use the lower lifts where ice is less likely to have formed',
+      'Carry on working but move more slowly and hold on to the guard rail at all times while up there',
+      'Spread sawdust over the boards and then carry on working on that lift straight away',
+      'Only use the lower lifts of the scaffold, where the ice is less likely to have formed',
       'Do not use the scaffold until the ice or frost has been cleared or treated to prevent slips',
     ],
     correctAnswer: 3,
@@ -2975,9 +2975,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question: "What is 'scaffold overloading' and why is it dangerous?",
     options: [
       'Placing more weight on the scaffold than its design allows, which can cause collapse',
-      'Fitting more ties to the building than the scaffold design requires',
-      'Building the scaffold higher than the building it is serving',
-      'Leaving materials on the scaffold overnight instead of removing them',
+      'Fitting more ties to the face of the building than the scaffold design actually requires',
+      'Building the scaffold up higher than the height of the building that it is actually serving',
+      'Leaving materials on the scaffold overnight instead of removing them first each day',
     ],
     correctAnswer: 0,
     explanation:
@@ -2991,10 +2991,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 169,
     question: 'What is a brick guard and why is it important?',
     options: [
-      'A timber board laid flat across the platform to spread the weight of the stacked bricks',
+      'A timber board laid flat across the platform to spread the weight of the bricks that are stacked on it',
       'A mesh panel fitted above the toe board to prevent materials and debris falling from the scaffold',
-      'A hinged panel fitted across the loading bay opening to close it between crane lifts',
-      'A reinforced bay in the scaffold where bricks are landed by crane and then stacked',
+      'A hinged panel fitted across the loading bay opening to close the gap between crane lifts each day',
+      'A reinforced bay in the scaffold where the bricks are landed by crane and then stacked on the boards',
     ],
     correctAnswer: 1,
     explanation:
@@ -3008,10 +3008,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 170,
     question: 'What is the correct way to access a scaffold?',
     options: [
-      'Climb up the outside of the scaffold using the ledgers as footholds',
-      'Pull yourself up using the diagonal bracing tubes on the scaffold face',
+      'Climb up the outside of the scaffold using the ledgers and the transoms as footholds',
+      'Pull yourself up using the diagonal bracing tubes across the scaffold face',
       'Use the designated access points such as internal ladders or staircases provided',
-      'Lean a separate ladder against the nearest section of the scaffold',
+      'Lean a separate ladder up against the nearest section of the scaffold face',
     ],
     correctAnswer: 2,
     explanation:
@@ -3026,9 +3026,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the danger of using a scaffold as an anchor point for a gin wheel or crane without authorisation?',
     options: [
-      'The lifting rope can chafe against the scaffold tubes and fray where it passes over them',
-      'The lifting operation blocks the designated access ladder while materials are being raised',
-      'The manufacturer\'s warranty on the scaffold couplers is voided if they are used for lifting',
+      'The lifting rope can chafe against the scaffold tubes and fray where it passes over the top of them each time',
+      'The lifting operation blocks the designated access ladder while the materials are being raised to the lift',
+      'The manufacturer warranty on the scaffold couplers is voided if they are used for any lifting operation',
       "The additional point loads and dynamic forces can exceed the scaffold's design capacity, causing failure",
     ],
     correctAnswer: 3,
@@ -3044,9 +3044,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question: 'Why is it dangerous to store excessive materials on a scaffold platform?',
     options: [
       'It can overload the scaffold beyond its design capacity and create trip hazards on the platform',
-      'It makes the scaffold slower and more awkward to dismantle at the end of the contract',
-      'It scratches the scaffold boards and reduces their resale value when the hire ends',
-      'It blocks the view of the scaffold tag from ground level so its status cannot be read',
+      'It makes the scaffold slower and more awkward to dismantle at the end of the whole contract period',
+      'It scratches the scaffold boards and reduces their resale value when the hire period finally ends',
+      'It blocks the view of the scaffold tag from ground level so that its inspection status cannot be read',
     ],
     correctAnswer: 0,
     explanation:
@@ -3061,10 +3061,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question:
       'What should you do if you see someone altering a scaffold who is not a qualified scaffolder?',
     options: [
-      'Help them to finish the alteration quickly so that work on site can resume',
+      'Help them to finish the alteration quickly so that the work on site can resume sooner',
       'Stop them if safe to do so, and report the matter to your supervisor immediately',
-      'Leave them to it, since any operative on site is allowed to move tubes',
-      'Wait until they have finished, then check the altered scaffold yourself',
+      'Leave them to it, since any operative on the site is allowed to move tubes',
+      'Wait until they have finished, then check the altered scaffold over yourself',
     ],
     correctAnswer: 1,
     explanation:
@@ -3078,10 +3078,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 174,
     question: 'What is the risk of working on a scaffold during an electrical storm?',
     options: [
-      'Rain during the storm makes the boards slippery and the guard rails harder to grip',
-      'The noise of the thunder distracts operatives from the task they are carrying out',
+      'Rain during the storm makes the boards slippery and makes the guard rails harder to grip properly',
+      'The noise of the thunder distracts the operatives from the task that they are carrying out at height',
       'Metal scaffold structures can conduct lightning strikes, creating an extreme electrocution risk',
-      'Gusting wind during the storm can blow loose materials off the top working platform',
+      'Gusting wind during the storm can blow loose materials off the edge of the top working lift',
     ],
     correctAnswer: 2,
     explanation:
@@ -3095,9 +3095,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 175,
     question: 'What responsibility does every scaffold user have under health and safety law?',
     options: [
-      'To carry out the statutory seven-day inspection of any scaffold before they step onto it',
-      'To erect their own edge protection before stepping onto any unguarded working platform',
-      'To pay for any damage caused to the scaffold while they are working from the platform',
+      'To carry out the statutory seven-day inspection of any scaffold before they step onto the platform themselves',
+      'To erect their own edge protection before stepping onto any unguarded working platform on the site itself',
+      'To pay for any damage that is caused to the scaffold while they are working from the platform above it',
       'To take reasonable care of their own safety and that of others, and to report any defects they find',
     ],
     correctAnswer: 3,
@@ -3114,9 +3114,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
       'What should be established at ground level around a scaffold where there is a risk of falling objects?',
     options: [
       'An exclusion zone with barriers and warning signs to keep people away from the danger area',
-      'A storage compound with fencing and signage where materials are kept until needed',
-      'A designated smoking area with a shelter, sited well clear of the base of the scaffold',
-      'A first-aid point with a stretcher, staffed whenever work is taking place at height',
+      'A storage compound with fencing and signage where the materials are kept until they are needed',
+      'A designated smoking area with a shelter, sited well clear of the scaffold base itself',
+      'A first-aid point with a stretcher, staffed whenever work is going on at height above',
     ],
     correctAnswer: 0,
     explanation:
@@ -3131,10 +3131,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question:
       'What action should you take if you feel unwell or dizzy whilst working on a scaffold at height?',
     options: [
-      'Sit down on the platform, keep still, and carry on working once the dizziness has passed',
+      'Sit down on the platform, keep still, and then carry on working once the dizziness has fully passed',
       'Stop work, inform a colleague, and descend to ground level carefully using the proper access route',
-      'Clip on a harness and lanyard, and carry on working in case you fall from the working lift',
-      'Lean against the guard rail, hold on tightly, and wait there until you feel steady again',
+      'Clip on a harness and lanyard, and carry on working in case you fall from the working platform later',
+      'Lean against the guard rail, hold on tightly, and wait there until you feel steady once more',
     ],
     correctAnswer: 1,
     explanation:
@@ -3149,10 +3149,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question:
       'Why must scaffold platforms be kept clear of unnecessary materials, tools, and debris?',
     options: [
-      'To keep the scaffold looking tidy for the client and for passers-by at street level',
-      'To make the scaffold quicker and cheaper to strike at the end of the contract period',
+      'To keep the scaffold looking tidy for the client and for the passers-by at street level outside',
+      'To make the scaffold quicker and cheaper to strike down at the end of the whole contract period on site',
       'To prevent trip hazards, reduce overloading risks, and maintain clear access and escape routes',
-      'To stop the boards becoming scratched and losing their resale value at end of hire',
+      'To stop the boards becoming scratched and losing their resale value at the end of the hire period',
     ],
     correctAnswer: 2,
     explanation:
@@ -3166,9 +3166,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 179,
     question: 'What is the main danger if a scaffold is erected on soft or uncompacted ground?',
     options: [
-      'The ties can pull free from the building face as the ground beneath settles over time',
-      'The scaffold boards absorb moisture from the ground and warp out of shape over time',
-      'The couplers corrode more quickly in the damp conditions and become difficult to undo',
+      'The ties can pull free from the face of the building as the ground beneath settles over time on site',
+      'The scaffold boards absorb moisture from the ground and then warp out of shape over time',
+      'The couplers corrode more quickly in damp conditions and become more difficult to undo again',
       'The standards can sink unevenly, causing the scaffold to become unstable and potentially collapse',
     ],
     correctAnswer: 3,
@@ -3184,9 +3184,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question: "What is a 'loading bay' on a scaffold and what precaution must be taken?",
     options: [
       'A section of scaffold designed for receiving materials by crane, which must have a gate that is kept closed except during loading',
-      'A fenced storage compound at ground level beside the scaffold, which must be kept locked against the public at night',
-      'A short raised platform within a single bay, which must be reached using a hop-up bracket from the main lift',
-      'A boarded lift used for storing spare scaffold boards and fittings, which must be sheeted over to keep it dry',
+      'A fenced storage compound at ground level beside the scaffold, which must be kept securely locked against members of the public at night',
+      'A short raised platform within a single bay, which must be reached using a hop-up bracket fixed from the main working lift of the scaffold',
+      'A boarded lift used for storing spare scaffold boards and fittings, which must be sheeted over to keep the contents dry inside',
     ],
     correctAnswer: 0,
     explanation:
@@ -3200,10 +3200,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 181,
     question: 'When is a harness and lanyard required on a scaffold?',
     options: [
-      'When standing on any platform that is already fully boarded and guarded, whatever the height of the lift above ground',
+      'When standing on any platform that is already fully boarded and guarded, whatever the height of that lift above the ground level below',
       'When the risk assessment identifies a residual fall risk that guardrails alone cannot control, such as during erection or dismantling',
-      'When the scaffold rises more than four lifts above ground level, regardless of what edge protection has been fitted',
-      'When more than one operative is working from the same platform at the same time, whatever the task being carried out',
+      'When the scaffold rises more than four lifts above ground level, regardless of what edge protection has already been fitted to the lift',
+      'When more than one operative is working from the same platform at the same time, whatever the task that is being carried out on the lift',
     ],
     correctAnswer: 1,
     explanation:
@@ -3218,10 +3218,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the danger of leaning ladders against a scaffold to create an unauthorised access point?',
     options: [
-      'The climb is slower than using the internal ladder access, and it leaves the ladder in the way of other trades',
-      'The ladder stiles can scratch the scaffold tubes, damaging the galvanised coating and allowing the steel to rust',
+      'The climb is slower than using the internal ladder access, and it leaves the ladder in the way of the other trades on site each day',
+      'The ladder stiles can scratch the scaffold tubes, damaging the galvanised coating and allowing the steel beneath to rust',
       'The ladder may not be properly secured, the scaffold may not be designed for this load point, and it bypasses controlled access',
-      'The ladder can obscure the scaffold tag at ground level, so that users cannot read its current inspection status',
+      'The ladder can obscure the scaffold tag at ground level, so that users cannot read the current inspection status of the lift',
     ],
     correctAnswer: 2,
     explanation:
@@ -3235,9 +3235,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 183,
     question: 'What effect can heavy rain have on scaffold safety?',
     options: [
-      'The protective coating washes off the tubes, and the exposed steel begins to corrode rapidly',
-      'The ties expand in the wet and gradually pull themselves away from the face of the building',
-      'The grease on the couplers is diluted, and the coupler bolts then seize solid in the threads',
+      'The protective coating washes off the tubes, and the exposed steel then begins to corrode rapidly on site',
+      'The ties expand in the wet and gradually pull themselves away from the face of the building wall behind',
+      'The grease on the couplers is diluted, and the coupler bolts seize solid in the threads afterwards',
       'Platforms become slippery, ground conditions can deteriorate, and water can add weight to the scaffold',
     ],
     correctAnswer: 3,
@@ -3254,9 +3254,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
       'What is the correct procedure if you discover a scaffold defect during your working day?',
     options: [
       'Stop using the affected area, report the defect to your supervisor immediately, and do not return until the defect is rectified',
-      'Repair the defect yourself using spare tubes and fittings from the site stock, so that work is not held up',
-      'Carry on working in the affected area, but avoid putting any weight onto the part of the platform that is involved',
-      'Wait until the next seven-day inspection falls due and leave the appointed competent person to deal with it',
+      'Repair the defect yourself using spare tubes and fittings from the site stock, so that the work on the site is not held up at all',
+      'Carry on working in the affected area, but avoid putting any weight onto the part of the working platform that is involved at all',
+      'Wait until the next seven-day inspection falls due and leave the appointed competent person on site to deal with the matter properly',
     ],
     correctAnswer: 0,
     explanation:
@@ -3270,10 +3270,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 185,
     question: 'Why should operatives not sit on or lean over scaffold guardrails?',
     options: [
-      'Because leaning on a guardrail can bend the tube out of line and spoil the appearance of the scaffold',
+      'Because leaning on a guardrail can bend the tube out of line and spoil the overall appearance of the finished scaffold face',
       'Because guardrails are not designed to support body weight in that manner, and doing so can lead to a fall over the edge',
-      'Because the weight can loosen the couplers holding the guardrail, so it then has to be retightened each week',
-      'Because sitting on the guardrail blocks the view of the scaffold tag for the other trades using the lift',
+      'Because the weight can loosen the couplers holding the guardrail, so that it then has to be retightened each week',
+      'Because sitting on the guardrail blocks the view of the scaffold tag for the other trades who are using the lift',
     ],
     correctAnswer: 1,
     explanation:
@@ -3325,9 +3325,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
       'Why must you never attach any sheeting, signage, or banners to a scaffold without authorisation?',
     options: [
       'Because it increases wind loading and can make the scaffold unstable if the ties are not designed for the additional load',
-      'Because the sheeting can hide the scaffold tag and stop other trades reading its inspection status',
-      'Because the fixings make the scaffold slower to dismantle, as the sheeting has to be stripped off first by the gang',
-      'Because the fixings scratch the protective coating on the tubes and let the steel beneath corrode',
+      'Because the sheeting can hide the scaffold tag and stop the other trades on site from reading its current inspection status',
+      'Because the fixings make the scaffold slower to dismantle, as the sheeting has to be stripped off first by the scaffold gang',
+      'Because the fixings scratch the protective coating on the tubes and let the steel beneath them corrode away in time',
     ],
     correctAnswer: 0,
     explanation:
@@ -3341,10 +3341,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 189,
     question: 'What is the emergency procedure if a scaffold begins to show signs of collapse?',
     options: [
-      'Add extra ties and diagonal bracing as quickly as possible in an attempt to stabilise the structure',
+      'Add extra ties and diagonal bracing as quickly as possible in an attempt to stabilise the whole structure once again',
       'Evacuate the scaffold and surrounding area immediately, raise the alarm, and do not re-enter until declared safe',
-      'Carry on working but stay close to the access ladder so that you can get down quickly if needed',
-      'Remove the stored materials from the platform to reduce the load, and then continue with the work',
+      'Carry on working but stay close to the access ladder so that you can get down from the lift quickly if it is needed',
+      'Remove the stored materials from the platform to reduce the load on it, and then continue on with the work as before',
     ],
     correctAnswer: 1,
     explanation:
@@ -3358,10 +3358,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 190,
     question: 'What is the danger of using a scaffold in the dark without adequate lighting?',
     options: [
-      'The steel tubes contract in the cold night air, which loosens the couplers that hold the platform',
-      'The scaffold tag cannot be read in the dark, so the inspection status of the scaffold is unknown',
+      'The steel tubes contract in the cold night air, which loosens the couplers that hold the boarded platform up above',
+      'The scaffold tag cannot be read in the dark, so the current inspection status of the scaffold is unknown',
       'Workers cannot see hazards, trip risks, or the edges of the platform, significantly increasing the risk of falls',
-      'Condensation forms on the boards overnight and washes away the grit spread on the platform earlier',
+      'Condensation forms on the boards overnight and washes away the grit that was spread on the platform earlier',
     ],
     correctAnswer: 2,
     explanation:
@@ -3394,9 +3394,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
       'Why is it prohibited to use scaffold components (tubes, boards, fittings) that are not fit for purpose?',
     options: [
       'Because damaged, corroded, or substandard components may fail under load, causing collapse or falls',
-      'Because unfit components make the scaffold slower to dismantle at the end of the contract period',
-      'Because mixing components from different systems voids the manufacturer\'s hire warranty',
-      'Because substandard components spoil the appearance of the finished scaffold for the client',
+      'Because unfit components make the scaffold much slower to dismantle at the end of the contract period',
+      'Because mixing components from different systems voids the whole hire warranty given by the manufacturer',
+      'Because substandard components spoil the appearance of the finished scaffold for a paying client',
     ],
     correctAnswer: 0,
     explanation:
@@ -3410,10 +3410,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 193,
     question: 'What is the purpose of a scaffold rescue plan?',
     options: [
-      'To set out the safe sequence for erecting, altering and dismantling the scaffold, and to list the equipment the gang will need on site',
+      'To set out the safe sequence for erecting, altering and dismantling the scaffold, and to list the equipment that the gang will need on the site each day',
       'To ensure there is a pre-planned procedure for rescuing a worker who has fallen and is suspended in a harness or is otherwise stranded on the scaffold',
-      'To record the findings of each statutory inspection carried out at intervals of no more than seven days by the appointed competent person',
-      'To confirm that the scaffold has been completed in line with the design and formally handed over to the trades that will work from it',
+      'To record the findings of each statutory inspection carried out at intervals of no more than seven days by the appointed competent person for the whole site',
+      'To confirm that the scaffold has been completed in line with the design and formally handed over to each of the trades that will be working from it on site',
     ],
     correctAnswer: 1,
     explanation:
@@ -3427,10 +3427,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 194,
     question: "What is 'suspension trauma' and why is it relevant to scaffold work?",
     options: [
-      'A condition brought on by working for too long at height without taking any adequate rest break during the shift',
-      'The dizziness that some workers feel when they first look down over the edge of a tall scaffold platform',
+      'A condition brought on by working for too long at height without taking any adequate rest break during the working shift itself',
+      'The dizziness that some workers feel when they first look down over the edge of a tall scaffold working platform below',
       'A life-threatening condition that occurs when a person is suspended motionless in a harness, causing blood to pool in the legs',
-      'A strain injury caused by repeatedly hauling heavy materials up to the working platform using a gin wheel',
+      'A strain injury caused by repeatedly hauling heavy materials up to the working platform by hand using a gin wheel and rope',
     ],
     correctAnswer: 2,
     explanation:
@@ -3445,9 +3445,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question:
       'What should you do if you see a member of the public attempting to climb onto a construction scaffold?',
     options: [
-      'Carry on with your own work, since members of the public are responsible for their own safety',
-      'Let them climb up onto the working platform so that you can keep a close eye on them while up there',
-      'Wait until they have reached the top lift and then ask them to climb back down carefully',
+      'Carry on with your own work, since members of the public are responsible for their own safety at all times on site',
+      'Let them climb up onto the working platform so that you can keep a close eye on them while they are up there working',
+      'Wait until they have reached the top lift of the scaffold and then ask them to climb back down again carefully',
       'Warn them of the danger, ask them to stop, and report it to your supervisor so security measures can be improved',
     ],
     correctAnswer: 3,
@@ -3464,9 +3464,9 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
       'What additional precaution is needed when a scaffold is erected over a public footpath?',
     options: [
       'A covered walkway (fan or tunnel) must be provided to protect pedestrians from falling objects',
-      'A reinforced loading bay must be added so deliveries do not block the path',
-      'An additional set of guard rails must be fitted on the inside of the scaffold',
-      'A second access ladder must be provided so the public can reach the platform',
+      'A reinforced loading bay must be added so that deliveries do not block the public footpath below',
+      'An additional set of guard rails must be fitted on the inside face of the scaffold lift above the path',
+      'A second access ladder must be provided so that the public can reach the working platform safely',
     ],
     correctAnswer: 0,
     explanation:
@@ -3480,10 +3480,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     id: 197,
     question: 'What is the effect of snow loading on a scaffold?',
     options: [
-      'Snow insulates the scaffold tubes and prevents them from corroding through the winter',
+      'Snow insulates the scaffold tubes and prevents them from corroding through the whole of the winter',
       'Accumulated snow adds significant weight to platforms, can block access, and creates slip hazards',
-      'Snow lying on the boards makes the scaffold tag easier to read against the white background',
-      'Snow has no effect on the safety of a scaffold once the platform has been boarded out',
+      'Snow lying on the boards makes the scaffold tag easier to read against a white background',
+      'Snow has no effect on the safety of a scaffold once the platform has been fully boarded',
     ],
     correctAnswer: 1,
     explanation:
@@ -3498,10 +3498,10 @@ export const scaffoldingAwarenessQuestionBank: StandardMockQuestion[] = [
     question:
       'Why is it important that scaffold erectors and dismantlers work to a method statement?',
     options: [
-      'To record the weekly hire cost of the scaffold so that the client can be invoiced correctly',
-      'To list the names of every operative working on the site on any given day, for the register',
+      'To record the weekly hire cost of the scaffold so that the client can be invoiced correctly each month',
+      'To list the names of every operative working on the site on any given day, for the daily site register',
       'To ensure the work is carried out in a planned, safe sequence that controls the risks at every stage',
-      'To confirm that the scaffold has passed its most recent statutory seven-day inspection',
+      'To confirm that the scaffold has passed its most recent statutory seven-day inspection check',
     ],
     correctAnswer: 2,
     explanation:

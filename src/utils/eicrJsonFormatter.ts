@@ -1301,6 +1301,22 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       };
     })(),
 
+    /*
+     * Intake cable fields — DELIBERATELY NOT CAPTURED any more.
+     *
+     * The whole intake-cable input block was cut from the EICR front end in
+     * 67b569a3b (8 Jun 2026) along with 20 other supply fields, because they
+     * slowed the form down for no benefit to the person filling it in.
+     * Andrew's call, reaffirmed 27 Aug 2026 (ELE-1602, closed as by-design).
+     *
+     * The mapping stays on purpose. 247 EICRs created before the cut still
+     * hold a value, and leaving this here means one of those regenerates
+     * exactly as it was. It is not an orphaned field waiting to be wired up —
+     * do not "fix" it by adding it to the PDFMonkey template.
+     *
+     * Same applies to tails_size/tails_length below, EXCEPT those were put
+     * back (ELE-1580) after a customer reported them missing.
+     */
     cables: {
       intake_cable_size:
         get('intakeCableSize') === 'custom'

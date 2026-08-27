@@ -6,6 +6,7 @@
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
 
+import { withSentry } from '../_shared/sentry.ts';
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
@@ -40,7 +41,7 @@ const TOOL = {
   },
 } as const;
 
-Deno.serve(async (req) => {
+Deno.serve(withSentry('analyze-apprentice-feedback', async (req) => {
   if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers: corsHeaders });
   if (req.method !== 'POST')
     return new Response(JSON.stringify({ error: 'method_not_allowed' }), {
@@ -152,4 +153,4 @@ Deno.serve(async (req) => {
   return new Response(JSON.stringify({ ok: true, ...parsed }), {
     headers: { ...corsHeaders, 'content-type': 'application/json' },
   });
-});
+}));

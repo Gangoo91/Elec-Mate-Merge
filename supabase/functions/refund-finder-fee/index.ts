@@ -17,6 +17,7 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.1';
 import Stripe from 'https://esm.sh/stripe@14.21.0?target=deno';
 
+import { withSentry } from '../_shared/sentry.ts';
 const GUARANTEE_DAYS = 14;
 
 const corsHeaders = {
@@ -30,7 +31,7 @@ const json = (body: unknown, status = 200) =>
     headers: { ...corsHeaders, 'Content-Type': 'application/json' },
   });
 
-Deno.serve(async (req) => {
+Deno.serve(withSentry('refund-finder-fee', async (req) => {
   if (req.method === 'OPTIONS') return new Response(null, { headers: corsHeaders });
 
   try {
@@ -112,4 +113,4 @@ Deno.serve(async (req) => {
     console.error('refund-finder-fee error:', error);
     return json({ error: error instanceof Error ? error.message : 'Unknown error' }, 500);
   }
-});
+}));

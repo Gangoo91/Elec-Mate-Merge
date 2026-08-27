@@ -6,6 +6,7 @@
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
 
+import { withSentry } from '../_shared/sentry.ts';
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
@@ -159,7 +160,7 @@ async function gatherSnapshot(sb: ReturnType<typeof createClient>, collegeId: st
   };
 }
 
-Deno.serve(async (req) => {
+Deno.serve(withSentry('ai-inspection-rehearsal', async (req) => {
   if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers: corsHeaders });
   if (req.method !== 'POST')
     return new Response(JSON.stringify({ error: 'method_not_allowed' }), {
@@ -456,4 +457,4 @@ Deno.serve(async (req) => {
     status: 400,
     headers: { ...corsHeaders, 'content-type': 'application/json' },
   });
-});
+}));

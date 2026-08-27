@@ -11,6 +11,7 @@ import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { generateLargeEmbedding } from '../_shared/ai-providers.ts';
 
+import { withSentry } from '../_shared/sentry.ts';
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
@@ -32,7 +33,7 @@ Rules:
 - Ground the technical content in the extracts supplied below. Three sources are given: BS 7671 / OSG / GN3 for what is required (testing sequence, inspection, certification); Practical Work Intelligence for how the work is carried out on site (method, commissioning steps, common pitfalls); and Employer Knowledge for the duties around the work (CDM 2015, HSE guidance, notification). Use all three — the standards decide what must happen, the practical extracts shape the steps, and the employer extracts catch the obligations a task list forgets.
 - You may cite a regulation number ONLY when it appears verbatim in the supplied extracts. Never produce one from memory: an invented reference sitting in someone's task list reads as authoritative, and this has caused real problems. With no relevant extract, name the standard in general terms instead — "test and certify to BS 7671", "notify under Part P".`;
 
-serve(async (req) => {
+serve(withSentry('breakdown-job-tasks', async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -247,4 +248,4 @@ serve(async (req) => {
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
-});
+}));

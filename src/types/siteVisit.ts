@@ -1,5 +1,19 @@
 export type PropertyType = 'residential' | 'commercial' | 'industrial';
-export type SiteVisitStatus = 'in_progress' | 'completed' | 'scope_sent' | 'signed' | 'post_job';
+/**
+ * `scheduled` — booked from the calendar, nobody has been on site yet.
+ *
+ * The column default is 'in_progress', which on this table means "captured and
+ * half-scoped". A visit booked for next Thursday is not that, and letting it
+ * default made it count as abandoned work on the Business Hub and fed it to the
+ * sync loop that uploads rooms nobody has walked. See `spawnFromBooking`.
+ */
+export type SiteVisitStatus =
+  | 'scheduled'
+  | 'in_progress'
+  | 'completed'
+  | 'scope_sent'
+  | 'signed'
+  | 'post_job';
 export type PhotoPhase = 'before' | 'after';
 export type ShareLinkStatus = 'active' | 'signed' | 'expired' | 'revoked';
 export type ChecklistStatus = 'pending' | 'in_progress' | 'completed';

@@ -1,6 +1,7 @@
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
+import { withSentry } from '../_shared/sentry.ts';
 // Ingests OPEN electrical tenders from the devolved-nations procurement
 // portals into public.tender_opportunities (same table the VPS pipeline
 // feeds from Contracts Finder / Find a Tender).
@@ -235,7 +236,7 @@ function monthParams(): string[] {
   return [fmt(now), fmt(prev)];
 }
 
-Deno.serve(async (req) => {
+Deno.serve(withSentry('sync-devolved-tenders', async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
 
   const supabase = createClient(
@@ -296,4 +297,4 @@ Deno.serve(async (req) => {
   return new Response(JSON.stringify({ success: true, stats }), {
     headers: { ...corsHeaders, 'Content-Type': 'application/json' },
   });
-});
+}));

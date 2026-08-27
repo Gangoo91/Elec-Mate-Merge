@@ -64,6 +64,9 @@ async function openExternal(url: string) {
 
 const SUPABASE_URL = 'https://jtwygbeceundfgnkirof.supabase.co';
 
+/** Realistic for a firm running off one diary; more than this needs a rota. */
+const JOBS_AT_ONCE_OPTIONS = [1, 2, 3, 4, 5, 6, 8, 10];
+
 interface CalendarSettingsSheetProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -80,6 +83,9 @@ interface CalendarSettingsSheetProps {
   workingHoursEnd: number;
   onWorkingHoursChange: (start: number, end: number) => void;
   defaultReminderMinutes: number;
+  /** How many jobs can run at once — what "full" means on a day. */
+  jobsAtOnce: number;
+  onJobsAtOnceChange: (jobs: number) => void;
   onDefaultReminderChange: (minutes: number) => void;
 }
 
@@ -106,6 +112,8 @@ const CalendarSettingsSheet = ({
   workingHoursEnd,
   onWorkingHoursChange,
   defaultReminderMinutes,
+  jobsAtOnce,
+  onJobsAtOnceChange,
   onDefaultReminderChange,
 }: CalendarSettingsSheetProps) => {
   const [feedUrl, setFeedUrl] = useState<string | null>(null);
@@ -489,6 +497,34 @@ const CalendarSettingsSheet = ({
                     </SelectContent>
                   </Select>
                 </div>
+
+                {/* Jobs at once.
+                    Directly below the working hours because the three together
+                    are the whole answer to "how much can I take on" — the hours
+                    say how long the day is, this says how wide it is. */}
+                <div className="flex items-center justify-between h-12 px-4">
+                  <Label className="text-sm text-white">Jobs at once</Label>
+                  <Select
+                    value={String(jobsAtOnce)}
+                    onValueChange={(v) => onJobsAtOnceChange(parseInt(v, 10))}
+                  >
+                    <SelectTrigger className="h-9 w-24 touch-manipulation bg-transparent border-0 text-sm font-semibold text-elec-yellow text-right justify-end gap-1 focus:ring-0">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
+                      {JOBS_AT_ONCE_OPTIONS.map((n) => (
+                        <SelectItem key={n} value={String(n)}>
+                          {n === 1 ? 'Just me' : `${n} at once`}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <p className="px-4 pb-3 text-[12px] text-white">
+                  How many jobs you can have running at the same time. A day only
+                  counts as full once it hits this — below it, overlapping bookings
+                  are normal rather than a clash.
+                </p>
 
                 {/* Default reminder */}
                 <div className="flex items-center justify-between h-12 px-4">

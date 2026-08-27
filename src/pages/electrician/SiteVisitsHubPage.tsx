@@ -32,11 +32,20 @@ const itemVariants = {
   },
 };
 
-type StatusKey = 'in_progress' | 'completed' | 'scope_sent' | 'signed' | 'post_job';
+/**
+ * `scheduled` is a visit booked from the calendar and not yet walked.
+ *
+ * It used to have nowhere to live: anything created landed on the column
+ * default, `in_progress`, so a visit booked for next Thursday counted as work
+ * abandoned half-done — on this page, on the Business Hub's "site visits
+ * unfinished" figure, and in the sync loop that uploads captured rooms.
+ */
+type StatusKey = 'scheduled' | 'in_progress' | 'completed' | 'scope_sent' | 'signed' | 'post_job';
 type FilterTab = 'all' | StatusKey;
 type PropertyType = 'residential' | 'commercial' | 'industrial';
 
 const statusPillTone: Record<StatusKey, 'amber' | 'green' | 'blue' | 'emerald' | 'purple'> = {
+  scheduled: 'blue',
   in_progress: 'amber',
   completed: 'green',
   scope_sent: 'blue',
@@ -45,6 +54,7 @@ const statusPillTone: Record<StatusKey, 'amber' | 'green' | 'blue' | 'emerald' |
 };
 
 const statusLabel: Record<StatusKey, string> = {
+  scheduled: 'Booked in',
   in_progress: 'In progress',
   completed: 'Completed',
   scope_sent: 'Scope sent',
@@ -61,6 +71,8 @@ const statusLabel: Record<StatusKey, string> = {
  */
 function nextAction(visit: EnrichedSiteVisit): string {
   switch (visit.status) {
+    case 'scheduled':
+      return 'Booked in — nothing captured yet';
     case 'in_progress':
       return 'Carry on where you left off';
     case 'completed':
@@ -85,6 +97,7 @@ const propertyTypeLabel: Record<PropertyType, string> = {
 
 const filterTabs: { key: FilterTab; label: string }[] = [
   { key: 'all', label: 'All' },
+  { key: 'scheduled', label: 'Booked in' },
   { key: 'in_progress', label: 'In progress' },
   { key: 'completed', label: 'Completed' },
   { key: 'scope_sent', label: 'Scope sent' },

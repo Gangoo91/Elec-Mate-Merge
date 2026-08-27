@@ -5,6 +5,7 @@ import { corsHeaders } from '../_shared/cors.ts';
 import { createLogger } from '../_shared/logger.ts';
 import { withTimeout, Timeouts } from '../_shared/timeout.ts';
 
+import { withSentry } from '../_shared/sentry.ts';
 const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
 const OPENAI_MODEL = Deno.env.get('OPENAI_MODEL') || 'gpt-5.4-mini-2026-03-17'; // Use GPT-5 Mini for complex reasoning
 
@@ -1075,7 +1076,7 @@ async function enrichProcedure(supabase: any, item: any, logger: any): Promise<n
 
 // ==================== MAIN HANDLER ====================
 
-serve(async (req) => {
+serve(withSentry('enrich-practical-work', async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -1204,4 +1205,4 @@ serve(async (req) => {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   }
-});
+}));

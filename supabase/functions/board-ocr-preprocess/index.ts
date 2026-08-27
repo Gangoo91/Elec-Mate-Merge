@@ -1,6 +1,7 @@
 import 'https://deno.land/x/xhr@0.1.0/mod.ts';
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 
+import { withSentry } from '../_shared/sentry.ts';
 const googleCloudApiKey = Deno.env.get('GOOGLE_CLOUD_API_KEY');
 
 const corsHeaders = {
@@ -365,7 +366,7 @@ function parseVisionAnnotations(annotations: TextAnnotation[]): ExtractedText[] 
 // MAIN HANDLER
 // ============================================================================
 
-serve(async (req) => {
+serve(withSentry('board-ocr-preprocess', async (req) => {
   // Handle CORS preflight
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -477,4 +478,4 @@ serve(async (req) => {
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
-});
+}));

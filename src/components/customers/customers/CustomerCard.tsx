@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Mail, Phone, MapPin, Eye, Pencil, Trash2 } from 'lucide-react';
-import { Customer } from '@/hooks/useCustomers';
+import { Customer } from '@/hooks/inspection/useCustomers';
 
 interface CustomerCardProps {
   customer: Customer;

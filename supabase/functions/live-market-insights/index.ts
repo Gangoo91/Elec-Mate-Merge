@@ -4,6 +4,7 @@ import { withRetry, RetryPresets } from '../_shared/retry.ts';
 import { withTimeout, Timeouts } from '../_shared/timeout.ts';
 import { createLogger, generateRequestId } from '../_shared/logger.ts';
 
+import { withSentry } from '../_shared/sentry.ts';
 const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
 const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 
@@ -126,7 +127,7 @@ const scrapeMarketData = async (): Promise<MarketInsights | null> => {
   }
 };
 
-serve(async (req) => {
+serve(withSentry('live-market-insights', async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -271,4 +272,4 @@ serve(async (req) => {
     });
     return handleError(error);
   }
-});
+}));

@@ -88,9 +88,9 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What is the primary purpose of PAT testing?',
     options: [
       'To prevent electric shock and fire',
-      'To improve equipment efficiency',
-      'To reduce energy costs',
-      'To meet insurance requirements',
+      'To improve the efficiency of equipment',
+      'To cut the cost of energy used',
+      'To meet an insurance requirement',
     ],
     correctAnswer: 0,
     explanation:
@@ -138,9 +138,9 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     id: 7,
     question: 'What is a competent person in the context of PAT testing?',
     options: [
-      'Anyone employed by the duty holder',
-      'Only a fully qualified electrician',
-      'A person holding any current first aid certificate',
+      'Anyone who happens to be employed by the duty holder',
+      'Only a fully qualified electrician on the JIB grading scheme',
+      'A person who holds a current first aid certificate of any kind',
       'Someone with sufficient knowledge, training and experience',
     ],
     correctAnswer: 3,
@@ -206,9 +206,9 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     id: 11,
     question: 'What does the law say about how frequently PAT testing must be carried out?',
     options: [
-      'All equipment must be tested at least once every year',
-      'All equipment must be tested once every two years',
-      'High-risk equipment must be tested every single month',
+      'All portable equipment must be tested at least once every twelve months',
+      'All portable equipment must be tested once in every two year period',
+      'High risk equipment must be tested at monthly intervals without fail',
       'No fixed frequency is set; intervals are based on risk assessment',
     ],
     correctAnswer: 3,
@@ -224,9 +224,9 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What type of environment would require more frequent PAT testing?',
     options: [
       'Harsh industrial environment',
-      'Office environment',
-      'Retail environment',
-      'Educational environment',
+      'Dry office environment',
+      'Heated retail environment',
+      'Quiet educational environment',
     ],
     correctAnswer: 0,
     explanation:
@@ -240,10 +240,10 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     id: 13,
     question: 'What should a complete PAT testing record contain?',
     options: [
-      'The test results and pass/fail outcome only',
-      'The appliance description and its location only',
+      'The test results and the pass or fail outcome on its own',
+      'The appliance description and where it is kept only',
       'Equipment details, results, retest date and the tester',
-      'A photograph of the appliance and its serial number',
+      'A photograph of the appliance and its serial number only',
     ],
     correctAnswer: 2,
     explanation:
@@ -292,9 +292,9 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     question: 'Which single factor is the most significant in determining PAT testing frequency?',
     options: [
       'The severity of the operating environment and usage',
-      'The purchase price of the appliance',
-      'The brand reputation of the manufacturer',
-      'The colour of the test label previously applied',
+      'The purchase price paid for the appliance when it was new',
+      'The brand reputation the manufacturer has built up over time',
+      'The colour of the test label that was applied last time',
     ],
     correctAnswer: 0,
     explanation:
@@ -342,9 +342,9 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     id: 19,
     question: 'Who has the authority to enforce EAWR 1989?',
     options: [
-      'Local councils',
-      'Police',
-      'Fire service',
+      'Local authorities',
+      'The police',
+      'Fire officers',
       'HSE inspectors',
     ],
     correctAnswer: 3,
@@ -360,9 +360,9 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     question: "What is the definition of 'electrical equipment' under EAWR 1989?",
     options: [
       'Anything using electrical energy',
-      'Fixed installations only',
-      'Portable appliances only',
-      'Plugged appliances only',
+      'Fixed installations in a building only',
+      'Portable appliances with a plug only',
+      'Appliances that are plugged in',
     ],
     correctAnswer: 0,
     explanation:
@@ -410,9 +410,9 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     id: 23,
     question: 'What should be done with equipment that cannot be PAT tested?',
     options: [
-      'Remove from service',
-      'Use it anyway',
-      'Test annually instead',
+      'Remove it from service at once',
+      'Carry on using it as it is',
+      'Test it once a year instead',
       'Visual inspection only',
     ],
     correctAnswer: 3,
@@ -446,10 +446,10 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     id: 25,
     question: 'What protection method does a Class I appliance rely on?',
     options: [
-      'Double insulation with no earth required',
+      'Double insulation with no earth conductor required',
       'Basic insulation plus a protective earth connection',
-      'Extra-low voltage supplied from a safety source',
-      'Reinforced insulation around all live parts',
+      'Extra-low voltage from a safety isolating source',
+      'Reinforced insulation surrounding every live part inside',
     ],
     correctAnswer: 1,
     explanation:
@@ -464,9 +464,9 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     question: 'How can you identify a Class I appliance?',
     options: [
       'Single insulation symbol',
-      'Double insulation symbol',
+      'Double square insulation symbol',
       'Earth symbol or 3-core cable',
-      'Battery powered',
+      'Battery powered with no mains lead',
     ],
     correctAnswer: 2,
     explanation:
@@ -599,10 +599,10 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     id: 34,
     question: 'Which electrical tests are required for a Class I appliance?',
     options: [
-      'Insulation resistance only',
-      'Earth continuity only',
+      'An insulation resistance measurement on its own',
+      'An earth continuity measurement and nothing else',
       'Earth continuity and insulation resistance',
-      'Polarity and load current only',
+      'A polarity check and a load current measurement only',
     ],
     correctAnswer: 2,
     explanation:
@@ -616,9 +616,9 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     id: 35,
     question: 'Which tests are required for a Class II appliance?',
     options: [
-      'Earth continuity and insulation resistance',
-      'Earth continuity only',
-      'Earth bond and load testing',
+      'Earth continuity and an insulation resistance test',
+      'An earth continuity test taken on its own',
+      'An earth bond and load test on its own',
       'Visual inspection and insulation resistance',
     ],
     correctAnswer: 3,
@@ -650,10 +650,10 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     id: 37,
     question: "What does 'double insulation' mean?",
     options: [
-      'Two layers of earthing for redundancy',
+      'Two separate layers of earthing giving redundancy',
       'Basic insulation plus supplementary insulation',
-      'Insulation rated for twice the supply voltage',
-      'A second protective conductor within the cable',
+      'Insulation that is rated for twice the supply voltage',
+      'A second protective conductor in the cable',
     ],
     correctAnswer: 1,
     explanation:
@@ -667,10 +667,10 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     id: 38,
     question: 'Can Class II equipment have a metal case?',
     options: [
-      'No, the case must always be plastic',
-      'Only if the metal case is bonded to earth',
+      'No, the case of a Class II appliance must be moulded plastic',
+      'Yes, but only if the metal case is bonded to the plug earth pin',
       'Yes, provided live parts are double or reinforced insulated',
-      'It may, provided a separate functional earth is fitted',
+      'Yes, provided a separate functional earth connection is fitted',
     ],
     correctAnswer: 2,
     explanation:
@@ -686,7 +686,7 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     options: [
       'Basic insulation strengthened with an earthed screen',
       'A flexible cable with an extra protective conductor',
-      'Insulation backed by a residual current device',
+      'Insulation backed up by a residual current device in the plug',
       'A single insulation system equivalent to double insulation',
     ],
     correctAnswer: 3,
@@ -702,9 +702,9 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     question: 'How should damaged Class II equipment be treated?',
     options: [
       'Remove from service',
-      'Convert to Class I',
-      'Repair carefully',
-      'Use with caution',
+      'Convert it to Class I',
+      'Repair it on site',
+      'Keep using it with care',
     ],
     correctAnswer: 0,
     explanation:
@@ -752,9 +752,9 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     id: 43,
     question: 'From what type of source must a Class III appliance be supplied?',
     options: [
-      'A direct 230V mains connection',
-      'An autotransformer reducing the mains voltage',
-      'An unfused spur from the final circuit',
+      'A direct connection to the 230V mains supply at a socket',
+      'An autotransformer that reduces the incoming mains voltage',
+      'An unfused spur taken from the final circuit in the room',
       'A safety source such as a SELV isolating transformer',
     ],
     correctAnswer: 3,
@@ -820,9 +820,9 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     id: 47,
     question: 'What is the difference between a protective earth and a functional earth?',
     options: [
-      'Protective earth is for the case, functional earth for the cable',
-      'They are two names for the same connection',
-      'Protective earth is used only on Class II equipment',
+      'Protective earth is for the case and functional earth for the cable',
+      'They are simply two different names for exactly the same connection',
+      'Protective earth is provided only on Class II appliances and never elsewhere',
       'Protective earth is for safety, functional earth is for correct operation',
     ],
     correctAnswer: 3,
@@ -838,9 +838,9 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     question: 'How should you handle equipment whose class is unclear?',
     options: [
       'Check the markings, rating plate and documentation',
-      'Assume it is Class III and skip electrical testing',
-      'Earth the case before any test is carried out',
-      'Treat it as battery-operated and exempt it',
+      'Assume that it is Class III and skip the electrical tests',
+      'Earth the case before any of the tests are carried out',
+      'Treat it as battery-powered and exempt from tests',
     ],
     correctAnswer: 0,
     explanation:
@@ -873,10 +873,10 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     id: 50,
     question: 'Which finding indicates a 13A plug should be failed during visual inspection?',
     options: [
-      'A moulded-on plug body with no visible screws',
+      'A moulded-on plug body that has no visible fixing screws',
       'Cracks in the casing or burn marks around the pins',
-      'A clearly printed BS 1363 approval mark',
-      'A cable firmly gripped by the cord grip',
+      'A clearly printed BS 1363 approval mark on the casing',
+      'A flexible cable held firmly in place by the cord grip',
     ],
     correctAnswer: 1,
     explanation:
@@ -910,7 +910,7 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
       'Brown discoloration or melted plastic around the pins',
       'A securely fitted, correctly rated cartridge fuse',
       'Three colour-coded conductors at the terminals',
-      'A flexible cable held firmly by the cord grip',
+      'A flexible cable gripped firmly in place by the cord grip',
     ],
     correctAnswer: 0,
     explanation:
@@ -941,10 +941,10 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     id: 54,
     question: 'What should you check on the equipment casing during visual inspection?',
     options: [
-      'The internal winding resistance of the motor',
-      'The insulation resistance value in megohms',
+      'The internal winding resistance of the appliance motor',
+      'The insulation resistance of the appliance in megohms',
       'Cracks, missing parts and the security of fixings',
-      'The earth loop impedance at the casing',
+      'The earth loop impedance measured at the casing',
     ],
     correctAnswer: 2,
     explanation:
@@ -1027,9 +1027,9 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     question: 'Which sign suggests a flexible cable may be damaged internally even if the sheath looks intact?',
     options: [
       'Localised stiffness or soft spots when flexed',
-      'A printed manufacturer name along the sheath',
-      'A consistent outer diameter along its length',
-      'Correct colour coding visible at the plug',
+      'A printed manufacturer name running along the sheath',
+      'A consistent outer diameter along the whole length',
+      'Correct colour coding visible at the plug terminals',
     ],
     correctAnswer: 0,
     explanation:
@@ -1060,10 +1060,10 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     id: 61,
     question: 'What is the purpose of an equipment rating label?',
     options: [
-      'To record the date of the next PAT test',
+      'To record the date on which the next PAT test falls due',
       'To give voltage, current and power data and safety information',
-      'To confirm the test instrument calibration date',
-      'To identify the competent person who tested it',
+      'To confirm the calibration date of the test instrument used',
+      'To identify the competent person who carried out the testing work',
     ],
     correctAnswer: 1,
     explanation:
@@ -1077,10 +1077,10 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     id: 62,
     question: 'How should an extension lead be visually inspected?',
     options: [
-      'By checking the plug and socket only',
-      'By checking the cable midsection only',
+      'By checking the plug and the socket outlet fitted to it',
+      'By checking the middle section of the flexible cable on its own',
       'Over its entire length including plug and socket connections',
-      'By checking only that the fuse is the correct rating',
+      'By checking that the fuse fitted is of the correct rating only',
     ],
     correctAnswer: 2,
     explanation:
@@ -1180,9 +1180,9 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     question: 'How often should visual inspections be carried out?',
     options: [
       'Based on risk assessment',
-      'Before each use',
-      'Monthly',
-      'Annually',
+      'Before each use of the item',
+      'Once in every calendar month',
+      'Once in each calendar year',
     ],
     correctAnswer: 0,
     explanation:
@@ -1230,8 +1230,8 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     id: 71,
     question: 'What should be checked on a socket outlet of an extension lead during inspection?',
     options: [
-      'Its insulation resistance to the casing',
-      'The earth loop impedance at the outlet',
+      'Its insulation resistance measured to the metal casing',
+      'The earth loop impedance at the outlet pins',
       'The protective conductor current under load',
       'Physical damage, looseness and signs of burning',
     ],
@@ -1248,9 +1248,9 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     question: 'Can equipment pass visual inspection but still fail electrical testing?',
     options: [
       'Yes, because internal faults may not be visible',
-      'No, a good visual inspection guarantees a pass',
-      'Only for Class II equipment',
-      'No, unless the appliance is over five years old',
+      'No, a thorough visual inspection guarantees a pass',
+      'Only on Class II equipment with a moulded plug',
+      'No, unless the appliance is more than five years old',
     ],
     correctAnswer: 0,
     explanation:
@@ -1368,9 +1368,9 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     id: 79,
     question: 'Between which two points is earth continuity measured on a Class I appliance?',
     options: [
-      'Between the line and neutral pins of the plug',
-      'Between the line pin and the appliance casing',
-      'Between the neutral pin and the earth pin',
+      'Between the line pin and the neutral pin inside the plug top',
+      'Between the line pin of the plug and the metal appliance casing',
+      'Between the neutral pin and the earth pin inside the plug top',
       'Between the plug earth pin and accessible earthed metalwork',
     ],
     correctAnswer: 3,
@@ -1436,9 +1436,9 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     id: 83,
     question: 'When is a substitute (alternative) leakage test typically used?',
     options: [
-      'When the appliance has no earth pin and cannot be earth tested',
-      'When the earth continuity reading is exactly zero on first attempt',
-      'When the appliance is supplied at extra-low voltage via a transformer',
+      'When the appliance has no earth pin at all and so cannot have its earth tested',
+      'When the earth continuity reading comes out as exactly zero at the first attempt',
+      'When the appliance is supplied at extra-low voltage from a safety isolating transformer',
       'When insulation resistance is borderline or the appliance has sensitive electronics',
     ],
     correctAnswer: 3,
@@ -1453,10 +1453,10 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     id: 84,
     question: 'What is the key safety precaution before carrying out most PAT instrument tests?',
     options: [
-      'Run the appliance under full load first',
+      'Run the appliance under full load for a while first',
       'Ensure the appliance is isolated from the mains supply',
-      'Open the appliance casing to expose live parts',
-      'Connect the appliance to a higher voltage supply',
+      'Open up the appliance casing so the live parts are exposed',
+      'Connect the appliance to a supply of a higher voltage first',
     ],
     correctAnswer: 1,
     explanation:
@@ -1470,10 +1470,10 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     id: 85,
     question: "Can you test equipment while it's connected to the supply?",
     options: [
-      'Yes, always safe',
+      'Yes, it is always quite safe',
       'Only for certain tests',
-      'No, must be isolated',
-      'Only with low voltage',
+      'No, it must always be isolated',
+      'Only on low voltage equipment',
     ],
     correctAnswer: 1,
     explanation:
@@ -1487,10 +1487,10 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     id: 86,
     question: 'Which result indicates an earth continuity test failure on a Class I appliance?',
     options: [
-      'A steady reading of 0.05 Ω',
-      'A reading at or below the 0.1 Ω limit',
+      'A steady reading of 0.05 Ω at every point tested',
+      'A reading that sits at or below the 0.1 Ω limit',
       'A reading well above the 0.1 Ω limit or no continuity',
-      'A reading of exactly 0.1 Ω plus the lead resistance',
+      'A reading of exactly 0.1 Ω with the lead resistance added',
     ],
     correctAnswer: 2,
     explanation:
@@ -1505,9 +1505,9 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     question: 'How should PAT test leads and probes be maintained for reliable results?',
     options: [
       'Inspected for damage and their resistance nulled before use',
-      'Replaced with new leads after every single test',
-      'Stored permanently connected to the test instrument',
-      'Left uncalibrated as they do not affect readings',
+      'Replaced with a brand new set of leads after every single test',
+      'Stored permanently connected to the front of the test instrument',
+      'Left uncalibrated because they do not affect the readings',
     ],
     correctAnswer: 0,
     explanation:
@@ -1555,10 +1555,10 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     id: 90,
     question: 'What information should be recorded for each appliance test?',
     options: [
-      'The pass or fail result on its own',
-      'Only the date the test was carried out',
+      'The pass or fail result of the test and nothing else',
+      'The date on which the test was carried out on its own',
       'The equipment ID, test results, date and tester',
-      'The purchase price and warranty details',
+      'The purchase price and the warranty details of the item',
     ],
     correctAnswer: 2,
     explanation:
@@ -1642,7 +1642,7 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
       'With a small green dot and returned to the user',
       'With a clear fail label and removed from service',
       'With the next test date only and left in use',
-      'With no label, relying on the record alone',
+      'With no label at all, relying on the written record',
     ],
     correctAnswer: 1,
     explanation:
@@ -1657,9 +1657,9 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     question: 'Should extension leads be tested as one unit?',
     options: [
       'Test complete assembly',
-      'Test socket only',
-      'Test plug only',
-      'Not necessary to test',
+      'Test the socket end only',
+      'Test the plug only',
+      'No need to test it at all',
     ],
     correctAnswer: 0,
     explanation:
@@ -1727,9 +1727,9 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     question: 'Who should sign off PAT test certificates?',
     options: [
       'Competent person',
-      'The tester',
-      'Building manager',
-      'Anyone',
+      'Whoever did the testing',
+      'The building manager',
+      'Anyone on the site',
     ],
     correctAnswer: 0,
     explanation:
@@ -1810,10 +1810,10 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     id: 105,
     question: 'How should each item of equipment be uniquely identified for testing records?',
     options: [
-      'By its physical location in the building',
+      'By the physical location that it occupies in the building',
       'By a consistent unique reference such as an asset ID or barcode',
-      'By the name of the person who normally uses it',
-      'By the date it was first put into service',
+      'By the name of the member of staff who normally uses it',
+      'By the date on which it was first brought into service on the site',
     ],
     correctAnswer: 1,
     explanation:
@@ -1827,10 +1827,10 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     id: 106,
     question: 'Which documents together underpin a formal PAT testing programme?',
     options: [
-      'Test records held on their own with no other paperwork',
+      'Test records held on their own with no other paperwork kept',
       'A maintenance policy, risk assessment, procedures and test records',
-      'Manufacturer warranties and receipts for each appliance',
-      'A single annual summary report issued to management',
+      'Manufacturer warranties and purchase receipts for every appliance held',
+      'A single annual summary report issued to the senior management team',
     ],
     correctAnswer: 1,
     explanation:
@@ -1896,9 +1896,9 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What should an electrical incident report include?',
     options: [
       'The equipment involved, circumstances, actions taken and follow-up',
-      'The name of the appliance manufacturer only',
-      'The purchase cost of the damaged equipment only',
-      'A brief one-line note of the date',
+      'The name of the appliance manufacturer and nothing else',
+      'The purchase cost of the damaged equipment and nothing more',
+      'A brief one-line note of the date on which it happened',
     ],
     correctAnswer: 0,
     explanation:
@@ -1946,10 +1946,10 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     id: 113,
     question: 'Why should a PAT testing certificate include the test instrument details?',
     options: [
-      'To advertise the make of instrument used',
+      'To advertise the make and model of the instrument used',
       'To provide traceability, including the instrument calibration date',
-      'To meet a requirement of the Building Regulations',
-      'To set the appliance retest interval automatically',
+      'To meet a requirement set out in the Building Regulations',
+      'To set the appliance retest interval automatically for it',
     ],
     correctAnswer: 1,
     explanation:

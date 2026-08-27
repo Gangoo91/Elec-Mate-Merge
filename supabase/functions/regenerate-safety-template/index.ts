@@ -16,6 +16,7 @@
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { searchFacets, formatFacetsForPrompt } from '../_shared/bs7671-facets-rag.ts';
+import { withSentry } from '../_shared/sentry.ts';
 import {
   searchSafetyFacets,
   formatSafetyFacetsForPrompt,
@@ -53,7 +54,7 @@ interface TemplateRow {
   structured_content: any;
 }
 
-Deno.serve(async (req) => {
+Deno.serve(withSentry('regenerate-safety-template', async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -162,7 +163,7 @@ Deno.serve(async (req) => {
     console.error('[regenerate-safety-template] fatal:', err);
     return json({ error: err?.message ?? 'Unknown error' }, 500);
   }
-});
+}));
 
 /* ──────────────────────────────────────────────────────────────────
    Regeneration engine — RAG → AI → structured v2 content

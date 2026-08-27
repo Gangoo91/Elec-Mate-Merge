@@ -27,6 +27,7 @@
 
 import { serve, corsHeaders } from '../_shared/deps.ts';
 
+import { withSentry } from '../_shared/sentry.ts';
 const BREVO_CONTACTS_ENDPOINT = 'https://api.brevo.com/v3/contacts';
 const BREVO_TRANSACTIONAL_EMAIL_ENDPOINT = 'https://api.brevo.com/v3/smtp/email';
 
@@ -183,7 +184,7 @@ function escapeHtml(s: string): string {
     .replace(/'/g, '&#39;');
 }
 
-serve(async (req) => {
+serve(withSentry('college-request-info', async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
   if (req.method !== 'POST') {
     return new Response(JSON.stringify({ error: 'Method not allowed' }), {
@@ -313,4 +314,4 @@ serve(async (req) => {
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
-});
+}));

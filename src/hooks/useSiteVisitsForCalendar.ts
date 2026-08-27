@@ -36,6 +36,10 @@ export function useSiteVisitsForCalendar(dateFrom: string, dateTo: string) {
         .from('site_visits')
         .select('id, scheduled_at, property_address, customer_name')
         .eq('user_id', user.id)
+        // A visit created FROM a booking is already on the grid as that
+        // booking. Drawing the synthetic copy too put the same job on the day
+        // twice, once as "Rewire — 12 Elm St" and once as "Visit: 12 Elm St".
+        .is('calendar_event_id', null)
         .not('scheduled_at', 'is', null)
         .gte('scheduled_at', dateFrom)
         .lte('scheduled_at', dateTo);
@@ -44,13 +48,26 @@ export function useSiteVisitsForCalendar(dateFrom: string, dateTo: string) {
 
       return (data || []).map((visit: SiteVisitRow): CalendarEvent => {
         const label = visit.property_address || visit.customer_name || 'Site visit';
+        /*
+         * An hour long, not zero.
+         *
+         * `end_at` was the same instant as `start_at`, which made every booked
+         * visit a zero-length event. It read as "10:00–10:00" in the agenda,
+         * and the day sheet dropped it entirely: its free/busy walk asks
+         * whether an event overlaps each half hour, and a zero-length event
+         * overlaps nothing — so a day with three visits booked on it showed as
+         * completely clear. An hour is a guess, but it is the right shape of
+         * guess: `site_visits` has no duration column to be honest with.
+         */
+        const startsAt = new Date(visit.scheduled_at);
+        const endsAt = new Date(startsAt.getTime() + 60 * 60 * 1000);
         return {
           id: `visit-${visit.id}`,
           user_id: user.id,
           title: `Visit: ${label}`,
           description: visit.customer_name ? `Site visit for ${visit.customer_name}` : undefined,
           start_at: visit.scheduled_at,
-          end_at: visit.scheduled_at,
+          end_at: endsAt.toISOString(),
           all_day: false,
           location: visit.property_address || undefined,
           event_type: 'site_visit',

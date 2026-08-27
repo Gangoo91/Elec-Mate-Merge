@@ -3,6 +3,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 import { Resend, clientFacingSender, htmlToPlainText } from '../_shared/mailer.ts';
 import { buildPaymentReceivedEmail } from '../_shared/email-templates/payment-received.ts';
 
+import { withSentry } from '../_shared/sentry.ts';
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers':
@@ -24,7 +25,7 @@ const isValidEmail = (email: unknown): email is string =>
 const json = (body: unknown, status = 200) =>
   new Response(JSON.stringify(body), { status, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
 
-serve(async (req: Request) => {
+serve(withSentry('send-payment-received-resend', async (req: Request) => {
   if (req.method === 'OPTIONS') return new Response(null, { headers: corsHeaders });
 
   try {
@@ -137,4 +138,4 @@ serve(async (req: Request) => {
     console.error('[send-payment-received-resend] Error:', error);
     return json({ error: error instanceof Error ? error.message : 'unknown' }, 500);
   }
-});
+}));

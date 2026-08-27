@@ -93,9 +93,9 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     id: 3,
     question: 'In Knowles\u2019 andragogy, what does the principle of "need to know" mean?',
     options: [
-      'Adults learn best when they do not know what is coming next',
-      'Adults need to know the name of the qualification they are working towards',
-      'Adults must be told exactly what will be on the exam',
+      'Adults learn best when they do not know what is coming next in the whole session',
+      'Adults need to know the name of the awarding body and the qualification they are taking',
+      'Adults must be told exactly what questions will be on the exam before they start',
       'Adults need to understand why they are learning something before they engage with it',
     ],
     correctAnswer: 3,
@@ -217,10 +217,10 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     question:
       'What are the three basic psychological needs identified by Deci and Ryan\u2019s Self-Determination Theory?',
     options: [
-      'Knowledge, skill, and attitude',
-      'Safety, belonging, and esteem',
+      'Knowledge, understanding, and attitude',
+      'Security, belonging, and self-esteem',
       'Autonomy, competence, and relatedness',
-      'Direction, coaching, and delegation',
+      'Direction, encouragement, and delegation',
     ],
     correctAnswer: 2,
     explanation:
@@ -287,10 +287,10 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     id: 14,
     question: 'What does the term "pedagogy" refer to?',
     options: [
-      'A coaching conversation model',
-      'A method of workplace assessment',
+      'A structured coaching conversation framework',
+      'A method of assessing workplace competence',
       'The art and science of teaching children',
-      'The theory of adult learning',
+      'The theory and practice of adult learning',
     ],
     correctAnswer: 2,
     explanation:
@@ -544,7 +544,7 @@ export const mdQuestionBank: StandardMockQuestion[] = [
       'Abstract Conceptualisation',
       'Reflective Observation',
       'Concrete Experience',
-      'Active Experimentation',
+      'Active Experimentation stage',
     ],
     correctAnswer: 0,
     explanation:
@@ -577,10 +577,10 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     question:
       'An apprentice is highly motivated by practical wiring but completely disengaged by classroom theory. What is the best initial strategy?',
     options: [
-      'Skip the theory altogether and sign the knowledge units off from site work',
-      'Deliver the full theory lecture first and withhold tools until it is recited',
+      'Skip the theory altogether and sign the knowledge units off from site work instead',
+      'Deliver the full theory lecture first and withhold every tool until it can be recited back',
       'Start with the practical task and then link the theory to what they experienced on site',
-      'Warn them the college will fail them unless their attitude in class improves',
+      'Warn them the college will fail them unless their attitude in class improves very quickly',
     ],
     correctAnswer: 2,
     explanation:
@@ -594,9 +594,9 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     id: 31,
     question: 'What does MHSWR 1999 Regulation 13 require employers to consider?',
     options: [
-      'The minimum number of first aiders required on site',
-      'The maximum number of hours an apprentice may work each week',
-      'The provision of personal protective equipment free of charge',
+      'The minimum number of trained first aiders required on each and every site',
+      'The maximum number of hours an apprentice may be asked to work each week',
+      'The provision of personal protective equipment free of any charge to staff',
       'Employees\u2019 capabilities and training needs when allocating tasks',
     ],
     correctAnswer: 3,
@@ -650,10 +650,10 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     question:
       'A mentor uses S4 Delegating with a Stage 1 apprentice on their first consumer unit change. Why is this approach problematic?',
     options: [
-      'The apprentice is at R4 readiness, so delegation is correct and no change is needed',
-      'S4 Delegating is inappropriate only because the task is not safety-critical',
+      'The apprentice is at R4 readiness, so delegation is the correct choice and no change is needed at all',
+      'S4 Delegating is the wrong style here only because a first consumer unit change is not safety-critical',
       'The apprentice is at R1 readiness and needs S1 Directing — full step-by-step guidance and close supervision',
-      'S3 Supporting would be better because the apprentice has the skill but lacks confidence',
+      'S3 Supporting would be a better choice because the apprentice has the skill but simply lacks confidence in it',
     ],
     correctAnswer: 2,
     explanation:
@@ -669,8 +669,8 @@ export const mdQuestionBank: StandardMockQuestion[] = [
       'An apprentice consistently skips the Reflective Observation stage after practical work. What is the most likely long-term consequence?',
     options: [
       'There is no consequence — reflection is optional in Kolb\u2019s model',
-      'They will become more efficient because reflection wastes time',
-      'They will develop a Theorist learning style naturally',
+      'They will become more efficient because reflection only ever wastes time on site',
+      'They will develop a Theorist learning style quite naturally over time on site',
       'They will repeat the same mistakes because they never analyse what happened',
     ],
     correctAnswer: 3,
@@ -704,10 +704,10 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     question:
       'A 45-year-old career-changer from plumbing resists being taught basic tool use, saying "I\u2019ve been in the trade for 20 years." Which combination of Knowles\u2019 principles should the mentor apply?',
     options: [
-      'Need to know (explain each basic tool from scratch) and readiness (wait until they ask for help)',
+      'Need to know (explain each basic tool from scratch) and readiness (wait until they ask you for help themselves first)',
       'Experience as a resource (acknowledge their skills) and self-direction (involve them in planning their learning)',
-      'Problem-centred focus (teach only when something goes wrong) and internal motivation (offer no encouragement)',
-      'Self-direction (leave them to work it out alone) and experience (set their plumbing background aside)',
+      'Problem-centred focus (teach only when something goes wrong) and internal motivation (offer no encouragement at all)',
+      'Self-direction (leave them to work it out alone) and experience (set their plumbing background to one side entirely)',
     ],
     correctAnswer: 1,
     explanation:
@@ -722,10 +722,10 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     question:
       'According to Self-Determination Theory, what happens when a mentor removes all choice from a learner\u2019s tasks?',
     options: [
-      'It has no effect because autonomy only matters outside work',
+      'It has no effect at all, because autonomy only matters outside work',
       'Motivation increases because the learner has less to think about',
       'Intrinsic motivation decreases because the need for autonomy is unmet',
-      'Extrinsic motivation replaces intrinsic motivation permanently',
+      'Extrinsic motivation permanently replaces all forms of intrinsic motivation',
     ],
     correctAnswer: 2,
     explanation:
@@ -759,9 +759,9 @@ export const mdQuestionBank: StandardMockQuestion[] = [
       'Construction culture sometimes includes a "machismo" attitude that discourages asking for help. Which psychological barrier does this create and how should a mentor address it?',
     options: [
       'Fear of appearing incompetent \u2014 normalise questions by modelling curiosity and admitting your own past mistakes',
-      'Fixed mindset — tell the apprentice that asking questions shows weakness, so that they toughen up quickly',
-      'Fatigue — schedule every coaching conversation at the end of a long shift, so that endurance is built',
-      'Cognitive overload — deliver as much information as possible at once and see how much of it sticks',
+      'Fixed mindset — tell the apprentice that asking any questions shows weakness, so that they toughen up quickly on site',
+      'Fatigue — schedule every coaching conversation at the end of a long shift, so that endurance is built up over time',
+      'Cognitive overload — deliver as much information as possible at once and then see how much of it happens to stick at all',
     ],
     correctAnswer: 0,
     explanation:
@@ -781,10 +781,10 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     id: 41,
     question: 'What do the four letters in the GROW coaching model stand for?',
     options: [
-      'Guide, Reflect, Observe, Work',
+      'Guidance, Reflection, Observation, Working',
       'Goal, Reality, Options, Will/Way Forward',
-      'Goal, Review, Outcome, Wrap-up',
-      'Guide, Reality, Objectives, Will',
+      'Goal, Reflection, Outcome, Wrap-up Actions',
+      'Guiding, Reality, Objectives, Willingness',
     ],
     correctAnswer: 1,
     explanation:
@@ -815,9 +815,9 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     id: 43,
     question: 'What is the key difference between mentoring and coaching?',
     options: [
-      'There is no difference \u2014 they are the same thing',
-      'Mentoring uses questions; coaching uses instructions',
-      'Mentoring is only for apprentices; coaching is for qualified workers',
+      'There is no real difference at all \u2014 they are simply two words for the same thing',
+      'Mentoring uses nothing but questions, whereas coaching uses only direct instructions',
+      'Mentoring is only for apprentices, whereas coaching is only for fully qualified electricians',
       'Mentoring is long-term and relationship-based; coaching is shorter-term and goal-focused',
     ],
     correctAnswer: 3,
@@ -850,10 +850,10 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     id: 45,
     question: 'In Pendleton\u2019s Rules for giving feedback, who speaks first?',
     options: [
-      'The observer gives their feedback first',
+      'The observer gives all of their feedback first',
       'The learner reflects on their own performance first',
-      'The manager delivers the verdict first',
-      'A written report is read aloud first',
+      'The line manager delivers the final verdict first of all',
+      'A written observation report is read aloud to them first',
     ],
     correctAnswer: 1,
     explanation:
@@ -953,9 +953,9 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     id: 51,
     question: 'What is the main purpose of a mentoring agreement?',
     options: [
-      'To create a legally binding contract that can be enforced in an employment tribunal',
-      'To record the apprentice\u2019s NVQ evidence and assessment decisions',
-      'To replace the need for regular one-to-one meetings between mentor and mentee',
+      'To create a legally binding contract that can be enforced in an employment tribunal by either party',
+      'To record the apprentice\u2019s NVQ evidence and assessment decisions for the college and awarding body',
+      'To replace the need for regular one-to-one meetings between the mentor and the mentee altogether',
       'To set clear expectations, goals, boundaries, and review dates for the mentoring relationship',
     ],
     correctAnswer: 3,
@@ -971,9 +971,9 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     question: 'The "funnel technique" in questioning moves from what to what?',
     options: [
       'Broad, open questions to specific, focused questions',
-      'Closed questions to open questions',
-      'Easy questions to trick questions',
-      'Written questions to verbal questions',
+      'Closed, narrow questions to broad, open questions',
+      'Easy questions through to difficult trick questions',
+      'Written questions through to verbal, spoken questions',
     ],
     correctAnswer: 0,
     explanation:
@@ -987,10 +987,10 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     id: 53,
     question: 'What does "praise in public, correct in private" mean in the context of feedback?',
     options: [
-      'Only give feedback when other team members are present to witness it',
+      'Only ever give any feedback when other team members are present to witness it',
       'Give positive feedback in front of others but deliver constructive feedback one-to-one',
-      'Praise the learner privately so they do not become complacent in front of peers',
-      'Deliver all feedback in writing so there is a permanent record for both parties',
+      'Praise the learner privately so they do not become complacent in front of peers on site',
+      'Deliver all feedback in writing so there is a permanent record for both parties on file',
     ],
     correctAnswer: 1,
     explanation:
@@ -1076,10 +1076,10 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     question:
       'A mentor uses Socratic questioning to help an apprentice work out why an RCD trips. What is the purpose of this approach?',
     options: [
-      'To save the mentor the time that a full explanation of the fault and its cause would take',
-      'To keep pressing the apprentice with questions until they are uncomfortable enough to guess',
+      'To save the mentor the time that a full explanation of the fault and of its cause would take on site',
+      'To keep pressing the apprentice with questions until they are uncomfortable enough to guess at an answer',
       'To guide the apprentice to discover the answer through their own reasoning rather than being told',
-      'To check whether the apprentice has memorised the chapter and regulation numbers in BS 7671',
+      'To check whether the apprentice has memorised the chapter and regulation numbers in BS 7671 by heart',
     ],
     correctAnswer: 2,
     explanation:
@@ -1094,9 +1094,9 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     question:
       'Following a safe isolation observation, a mentor uses Pendleton\u2019s Rules. The apprentice says "I think I locked off correctly but forgot to post the warning notice." What should the observer do next?',
     options: [
-      'Immediately tell the apprentice everything they did wrong before they say any more',
-      'Move straight to writing up the observation record without further discussion',
-      'Ask the apprentice to repeat the whole isolation procedure from the start',
+      'Immediately tell the apprentice everything they did wrong before they say any more about it',
+      'Move straight to writing up the observation record without further discussion with the learner',
+      'Ask the apprentice to repeat the whole isolation procedure from the start again before saying anything',
       'Agree with the positives the learner identified, then add any further positives the learner missed',
     ],
     correctAnswer: 3,
@@ -1113,9 +1113,9 @@ export const mdQuestionBank: StandardMockQuestion[] = [
       'Using the SBI model, how would you give feedback about loose terminal connections found during an inspection?',
     options: [
       '"During yesterday\u2019s socket installation (S), I noticed three terminals were not tightened to the correct torque (B), which could cause overheating and a fire risk (I)"',
-      '"You are always so careless with your terminations, it lets the whole team down, and frankly I am getting fed up of having to repeat myself to you every week"',
-      '"Your work today was fine on the whole, but you really need to concentrate harder in future, because everything on this job has to be right first time, every time"',
-      '"I have raised loose terminals with you before, so this time it is going in writing, and I will be copying the site manager and the office in on it as well"',
+      '"You are always so careless with your terminations, it lets the whole team down, and frankly I am getting fed up of having to repeat myself to you every week on this job"',
+      '"Your work today was fine on the whole, but you really need to concentrate harder in future, because everything on this job has to be right first time, every time on this site"',
+      '"I have raised loose terminals with you before, so this time it is going in writing, and I will be copying the site manager, the training officer and the office in on it as well"',
     ],
     correctAnswer: 0,
     explanation:
@@ -1166,9 +1166,9 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     question:
       'A mentor discovers their apprentice has been working live without isolating. This must be reported rather than kept confidential. Why?',
     options: [
-      'The mentoring agreement states that nothing should ever be kept confidential',
-      'The apprentice has not signed a confidentiality clause, so nothing is private',
-      'Reporting it protects the mentor from any disciplinary action by the employer',
+      'The mentoring agreement states that nothing should ever be kept confidential between the two parties',
+      'The apprentice has not signed a confidentiality clause, so nothing is private between the two of them',
+      'Reporting it protects the mentor from any disciplinary action by the employer or the awarding body',
       'Safety concerns override confidentiality \u2014 there is a risk of serious injury or death',
     ],
     correctAnswer: 3,
@@ -1185,9 +1185,9 @@ export const mdQuestionBank: StandardMockQuestion[] = [
       'The "feedback sandwich" (positive-negative-positive) is commonly used but has a significant weakness. What is it?',
     options: [
       'Learners anticipate the pattern and dismiss the positives as insincere padding around the real message',
-      'Awarding bodies forbid its use in written records, so it works only in a face-to-face review',
-      'It removes any need for the mentor to raise the development point during the conversation',
-      'It obliges the mentor to give three separate criticisms in one sitting rather than one',
+      'Awarding bodies forbid its use in written records, so it works only in a face-to-face review on site',
+      'It removes any need for the mentor to raise the development point during the conversation at all',
+      'It obliges the mentor to give three separate criticisms in one sitting rather than one point of development',
     ],
     correctAnswer: 0,
     explanation:
@@ -1201,10 +1201,10 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     id: 65,
     question: 'The RASA framework for listening stands for what?',
     options: [
-      'Record, Analyse, Summarise, Act',
+      'Record, Analyse, Summarise, Action',
       'Receive, Appreciate, Summarise, Ask',
-      'Repeat, Acknowledge, Suggest, Agree',
-      'Receive, Accept, State, Advise',
+      'Repeat, Acknowledge, Suggest, Advise',
+      'Receive, Acknowledge, Restate, Advise',
     ],
     correctAnswer: 1,
     explanation:
@@ -1218,10 +1218,10 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     id: 66,
     question: 'How does giving feedback expand the "Open" quadrant of the Johari Window?',
     options: [
-      'It moves information from the Hidden area (known to self but not others) into the Open area',
-      'It moves information from the Unknown area straight into the Open area',
+      'It moves information from the Hidden area (known to self but not to others) into the Open area',
+      'It moves information from the Unknown area straight into the Open area without any feedback at all',
       'It moves information from the Blind Spot (known to others but not to self) into the Open area',
-      'It shrinks the Open area by moving shared information into the Hidden area',
+      'It shrinks the Open area by moving shared information into the Hidden area of the Johari Window',
     ],
     correctAnswer: 2,
     explanation:
@@ -1237,8 +1237,8 @@ export const mdQuestionBank: StandardMockQuestion[] = [
       'A mentor always isolates the supply before working, even for "quick jobs." What aspect of mentoring does this demonstrate?',
     options: [
       'Scaffolding \u2014 temporarily supporting the apprentice until they can isolate alone',
-      'Direct instruction \u2014 telling the apprentice exactly which steps to follow',
-      'Fading \u2014 gradually withdrawing support as the apprentice becomes more competent',
+      'Direct instruction \u2014 telling the apprentice exactly which steps to follow on the job',
+      'Fading \u2014 gradually withdrawing support as the apprentice becomes more competent on site',
       'Role modelling \u2014 demonstrating correct practice through consistent personal behaviour',
     ],
     correctAnswer: 3,
@@ -1287,10 +1287,10 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     id: 70,
     question: 'Which approach is classified as "instructing" rather than mentoring or coaching?',
     options: [
-      'Asking open questions to help someone find their own solution',
+      'Asking open questions to help someone find their own solution to it',
       'Sharing your career experience over a long-term relationship',
       'Giving step-by-step directions for a safety-critical procedure',
-      'Observing silently and then providing feedback',
+      'Observing silently and then providing feedback on the whole task',
     ],
     correctAnswer: 2,
     explanation:
@@ -1304,9 +1304,9 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     id: 71,
     question: 'What should a mentoring agreement typically include?',
     options: [
-      'A guaranteed pass on the AM2 end-point assessment',
-      'The apprentice\u2019s full medical history and personal financial details',
-      'A fixed list of disciplinary penalties for missed targets',
+      'A guaranteed pass on the AM2 end-point assessment taken at the end of the apprenticeship',
+      'The apprentice\u2019s full medical history and personal financial details and bank records',
+      'A fixed list of disciplinary penalties for missed targets and late attendance at college',
       'Expectations, meeting frequency, goals, confidentiality boundaries, and review dates',
     ],
     correctAnswer: 3,
@@ -1323,9 +1323,9 @@ export const mdQuestionBank: StandardMockQuestion[] = [
       'A closed question such as "Did you test the circuit?" is most useful in which situation?',
     options: [
       'When you need a specific factual confirmation, especially for safety-critical checks',
-      'When you want the apprentice to reflect deeply on how a task went',
-      'When you are exploring the root cause of a recurring mistake',
-      'When you want the apprentice to brainstorm several possible solutions',
+      'When you want the apprentice to reflect deeply on how a task went on the day',
+      'When you are exploring the root cause of a recurring mistake with the apprentice',
+      'When you want the apprentice to brainstorm several possible solutions to a wiring fault',
     ],
     correctAnswer: 0,
     explanation:
@@ -1361,9 +1361,9 @@ export const mdQuestionBank: StandardMockQuestion[] = [
       'A mentor uses Pendleton\u2019s Rules after observing a consumer unit installation. The apprentice identifies several positives but fails to mention a critical error (cross-polarity on one circuit). How should the mentor proceed?',
     options: [
       'Say nothing at all about the cross-polarity to avoid denting the apprentice\'s confidence, and quietly correct the circuit yourself afterwards',
-      'Interrupt the self-reflection to name the cross-polarity straight away, before the apprentice has finished working through the positives',
+      'Interrupt the self-reflection to name the cross-polarity straight away, before the apprentice has finished working through the positives out loud on site',
       'After the learner finishes, add any positives they missed, then when moving to improvements, highlight the cross-polarity as a serious safety issue',
-      'Record the installation as competent because the apprentice identified several positives, and note the cross-polarity to raise on the next job',
+      'Record the installation as competent because the apprentice identified several positives, and note the cross-polarity to raise on the next job instead',
     ],
     correctAnswer: 2,
     explanation:
@@ -1397,9 +1397,9 @@ export const mdQuestionBank: StandardMockQuestion[] = [
       'How would you structure a complete GROW conversation to help an apprentice who is struggling with inspection and testing theory?',
     options: [
       'Goal: "Pass the I&T knowledge test within 6 weeks." Reality: "Currently scoring 40% on practice tests." Options: "Evening study, mentor-led revision, practice papers, college support." Will: "Two practice papers per week, mentor review every Friday."',
-      'Will: "Pass the I&T knowledge test within 6 weeks." Goal: "Currently scoring 40% on practice tests." Reality: "Evening study, mentor-led revision, practice papers, college support." Options: "Two practice papers per week, mentor review every Friday."',
-      'Reality: "Pass the I&T knowledge test within 6 weeks." Goal: "Two practice papers per week, reviewed every Friday." Options: "Currently scoring 40% on practice tests." Will: "Evening study, mentor-led revision, or maybe some college support."',
-      'Goal: "Get better at inspection and testing at some point." Reality: "The theory is hard and most people struggle with it." Options: "Keep revising and see how it goes." Will: "Read a bit more when there is time and hope it clicks on the day."',
+      'Will: "Pass the I&T knowledge test within 6 weeks." Goal: "Currently scoring 40% on practice tests." Reality: "Evening study, mentor-led revision, practice papers, college support." Options: "Two practice papers per week, mentor review every Friday on site."',
+      'Reality: "Pass the I&T knowledge test within 6 weeks." Goal: "Two practice papers per week, reviewed every Friday." Options: "Currently scoring 40% on practice tests." Will: "Evening study, mentor-led revision, or maybe some college support in the evenings."',
+      'Goal: "Get better at inspection and testing at some point." Reality: "The theory is hard and most people struggle with it." Options: "Keep revising and see how it goes." Will: "Read a bit more when there is time and hope it clicks on the day of the exam."',
     ],
     correctAnswer: 0,
     explanation:
@@ -1414,10 +1414,10 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     question:
       'An apprentice\u2019s Johari Window has a very large Hidden area. What does this suggest and how should the mentor respond?',
     options: [
-      'The apprentice has a very large Blind Spot. The mentor should give steady factual feedback using the SBI model until those habits become visible to them',
+      'The apprentice has a very large Blind Spot. The mentor should give steady factual feedback using the SBI model until those habits become visible to them on site',
       'The apprentice is withholding information, possibly due to low trust. The mentor should build rapport and create psychological safety to encourage self-disclosure',
       'The apprentice has a very large Open area. The mentor should keep the sessions purely task-focused, as communication between them is already strong enough',
-      'The apprentice has untapped potential in the Unknown area. The mentor should set progressively harder tasks in order to expose what nobody has yet seen',
+      'The apprentice has untapped potential in the Unknown area. The mentor should set progressively harder tasks in order to expose what nobody has yet seen out on site',
     ],
     correctAnswer: 1,
     explanation:
@@ -1432,10 +1432,10 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     question:
       'An apprentice rushes through testing procedures but is unaware of this habit. Using the Johari Window, where does this behaviour sit and what should the mentor do?',
     options: [
-      'In the Hidden area — the apprentice knows full well that they rush but chooses not to mention it to the mentor',
-      'In the Unknown area — neither the apprentice nor the mentor is aware of it, so it can surface only by chance',
+      'In the Hidden area — the apprentice knows full well that they rush but chooses not to mention it to the mentor out on the job',
+      'In the Unknown area — neither the apprentice nor the mentor is aware of it, so it can surface only by chance during the observation',
       'In the Blind Spot \u2014 the mentor should provide specific, factual feedback using the SBI model to bring it into the Open area',
-      'In the Open area — the apprentice already knows full well that they rush, so the mentor need only note the fact',
+      'In the Open area — the apprentice already knows full well that they rush, so the mentor need only note it down on the observation record',
     ],
     correctAnswer: 2,
     explanation:
@@ -1450,9 +1450,9 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     question:
       'When transitioning from S2 Coaching to S3 Supporting with a developing apprentice, what specific change in mentor behaviour is required?',
     options: [
-      'Increase both task direction and relationship support — give closer instruction and more praise, so the apprentice is never left unsure',
-      'Withdraw direction and support together — hand over the task list, step back completely, and let the apprentice stand or fall on their own',
-      'Increase task direction while reducing relationship support — issue tighter instructions and hold back encouragement to push them harder',
+      'Increase both task direction and relationship support — give closer instruction and more praise, so the apprentice is never left unsure about what to do next',
+      'Withdraw direction and support together — hand over the task list, step back completely, and let the apprentice stand or fall without any support at all on the day',
+      'Increase task direction while reducing relationship support — issue tighter instructions and hold back encouragement to push them harder and get the job done',
       'Reduce task direction while maintaining high relationship support \u2014 ask more questions, give fewer instructions, but remain available and encouraging',
     ],
     correctAnswer: 3,
@@ -1470,7 +1470,7 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     options: [
       'Create a private, safe environment, express what you have observed factually, reassure confidentiality within safety limits, and leave the door open for future conversations',
       'Accept the denial at face value, record in the file that the apprentice was asked and said no, and rely on them raising it themselves later if things happen to get worse',
-      'Confront the suspected bully in front of the whole crew, issue a formal warning on the spot, and tell the apprentice afterwards what has been done on their behalf and why',
+      'Confront the suspected bully in front of the whole crew, issue a formal warning on the spot, and tell the apprentice afterwards what has now been done on their behalf and why',
       'Tell the apprentice they must report it before the end of the day or you will report it for them, and open a formal grievance in their name either way, whatever they say',
     ],
     correctAnswer: 0,
@@ -1508,10 +1508,10 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     id: 82,
     question: 'What is the correct ECS grade progression for an electrician?',
     options: [
-      'Trainee \u2192 Junior \u2192 Senior \u2192 Master',
-      'Core \u2192 Apprentice \u2192 Technician \u2192 Approved',
+      'Trainee \u2192 Junior \u2192 Senior \u2192 Supervisor',
+      'Core \u2192 Apprentice \u2192 Approved \u2192 Technician Grade',
       'Apprentice \u2192 Core \u2192 Approved \u2192 Technician',
-      'Level 1 \u2192 Level 2 \u2192 Level 3 \u2192 Level 4',
+      'Level 2 \u2192 Level 3 \u2192 Level 4 \u2192 Master Grade',
     ],
     correctAnswer: 2,
     explanation:
@@ -1525,9 +1525,9 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     id: 83,
     question: 'What does AM2 stand for and what is its purpose?',
     options: [
-      'Apprentice Module 2 \u2014 the second year of college-based theory study',
-      'Assessment Method 2 \u2014 a written multiple-choice exam on BS 7671',
-      'Apprenticeship Milestone 2 \u2014 the halfway review of portfolio progress',
+      'Apprentice Module 2 \u2014 the second year of college-based theory study and written assessment',
+      'Assessment Method 2 \u2014 a written multiple-choice exam on BS 7671 sat at the end of the course',
+      'Apprenticeship Milestone 2 \u2014 the halfway review of portfolio progress and college attendance',
       'Achievement Measurement 2 \u2014 the practical end-point assessment for electrical apprentices',
     ],
     correctAnswer: 3,
@@ -1613,9 +1613,9 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     question: 'What is a witness testimony in the context of NVQ evidence?',
     options: [
       'A written statement from someone who observed the learner performing a task competently',
-      'A written account by the learner reflecting on a task they completed',
-      'A set of photographs of the finished work submitted as product evidence',
-      'A verbal question-and-answer session recorded as a professional discussion',
+      'A written account by the learner reflecting on a task they completed on their own',
+      'A set of photographs of the finished work submitted as product evidence for a unit',
+      'A verbal question-and-answer session recorded as a professional discussion with the assessor',
     ],
     correctAnswer: 0,
     explanation:
@@ -1647,10 +1647,10 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     id: 90,
     question: 'In competence-based assessment, what term should be used instead of "fail"?',
     options: [
-      'Unsuccessful',
-      'Below standard',
+      'Unsuccessful attempt',
+      'Below the standard',
       'Not yet competent',
-      'Inadequate',
+      'Inadequate work',
     ],
     correctAnswer: 2,
     explanation:
@@ -1665,9 +1665,9 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the mentor\u2019s primary role in the three-way apprenticeship relationship?',
     options: [
-      'Delivering all the formal classroom theory and marking the written work',
-      'Setting and grading the end-point assessment for the awarding body',
-      'Managing the apprentice\'s pay, holiday and contract as line manager',
+      'Delivering all the formal classroom theory and marking the written work for the college',
+      'Setting and grading the end-point assessment on behalf of the college and the awarding body',
+      'Managing the apprentice\'s pay, holiday and contract as line manager for the employer',
       'Coordinating between employer, college, and apprentice to ensure learning progresses',
     ],
     correctAnswer: 3,
@@ -1683,9 +1683,9 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     question: 'Which of the following is NOT a recognised type of NVQ evidence?',
     options: [
       'Hearsay from a colleague who did not directly observe the work',
-      'Direct observation of the learner by the assessor',
-      'A signed witness testimony from a supervisor',
-      'A reflective account written by the learner',
+      'Direct observation of the learner by the assessor on site',
+      'A signed witness testimony from a supervisor at the workplace',
+      'A reflective account written by the learner about a completed task',
     ],
     correctAnswer: 0,
     explanation:
@@ -1753,8 +1753,8 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     options: [
       'A written piece by the learner describing what they did, how they did it, and what they learned',
       'A statement written by the supervisor confirming the learner worked to the required standard',
-      'A live observation recorded by the assessor while the learner carries out the task',
-      'A set of dated photographs of the finished installation, captioned by the assessor',
+      'A live observation recorded by the assessor while the learner carries out the task on site that day',
+      'A set of dated photographs of the finished installation, captioned by the assessor for the portfolio',
     ],
     correctAnswer: 0,
     explanation:
@@ -1789,10 +1789,10 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     question:
       'An apprentice\u2019s portfolio contains 20 almost identical photographs of socket installations. What evidence quality criterion does this fail?',
     options: [
-      'Validity \u2014 the photographs are not relevant to any NVQ unit',
-      'Authenticity \u2014 there is no proof the photographs are the learner\u2019s own work',
+      'Validity \u2014 the photographs are not relevant to any NVQ unit being claimed in the portfolio by the learner',
+      'Authenticity \u2014 there is no proof the photographs are the learner\u2019s own work on any one of the jobs',
       'Sufficiency \u2014 the evidence lacks range and does not demonstrate competence across different contexts',
-      'Currency \u2014 the photographs are too old to count towards the qualification',
+      'Currency \u2014 the photographs are too old to count towards the qualification that the learner is claiming',
     ],
     correctAnswer: 2,
     explanation:
@@ -1860,10 +1860,10 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     id: 102,
     question: 'What three areas does the AM2 practical assessment typically test?',
     options: [
-      'Theory, practical, and portfolio',
-      'First fix, second fix, and testing',
+      'Theory, practical work, and portfolio building',
+      'First fix, second fix, and commissioning tests',
       'Installation, inspection and testing, and fault diagnosis',
-      'Design, installation, and commissioning',
+      'Design, installation, and final commissioning',
     ],
     correctAnswer: 2,
     explanation:
@@ -2126,10 +2126,10 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     question:
       'A witness testimony states: "Jake did a good job on the sockets today." Why is this inadequate as NVQ evidence?',
     options: [
-      'It is far too long and detailed, so the assessor cannot work out which criteria the evidence was meant to cover',
+      'It is far too long and detailed, so the assessor cannot work out which of the criteria the evidence was meant to cover',
       'It lacks specific detail about what was done, how it met the assessment criteria, and does not describe the standard achieved',
-      'It was written by the apprentice rather than by a supervisor, so it counts as a reflective account instead',
-      'It names the apprentice, which breaches confidentiality, as testimonies must refer to the learner anonymously',
+      'It was written by the apprentice rather than by a supervisor, so it counts as a reflective account for the unit instead',
+      'It names the apprentice, which breaches confidentiality, as testimonies must refer to the learner anonymously and by number only',
     ],
     correctAnswer: 1,
     explanation:
@@ -2144,10 +2144,10 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     question:
       'An apprentice with diagnosed ADHD struggles to maintain focus during long installation tasks. How should the mentor adapt their approach?',
     options: [
-      'Insist every long task is finished in one sitting, remove the usual breaks, treat lost focus as a discipline matter, and expect concentration to build',
-      'Keep the apprentice off any task lasting longer than an hour, and hand the longer installations to the rest of the team to finish so nothing is left half done',
+      'Insist every long task is finished in one sitting, remove the usual breaks, treat lost focus as a discipline matter, and expect concentration to build with time',
+      'Keep the apprentice off any task lasting longer than an hour, and hand the longer installations to the rest of the team to finish so nothing is left undone',
       'Break tasks into shorter segments with clear milestones, provide visual checklists, build in movement breaks, and use varied activities to maintain engagement',
-      'Lower the competence standard on the longer tasks and record it as a reasonable adjustment, so the apprentice can be signed off without sustaining focus',
+      'Lower the competence standard on the longer tasks and record it as a reasonable adjustment, so the apprentice can be signed off without ever having to sustain focus',
     ],
     correctAnswer: 2,
     explanation:
@@ -2162,9 +2162,9 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     question:
       'How can a mentor use a single domestic rewire to generate evidence for multiple NVQ units simultaneously?',
     options: [
-      'Submit one photograph of the finished rewire and one dated job sheet against every unit in the portfolio, then ask the college assessor to work out for themselves which criteria each of them happens to cover',
-      'Ask the college assessor to credit the first fix, second fix, testing and certification units automatically, on the strength of the job having been a full domestic rewire carried out over several weeks',
-      'Record a single witness testimony saying the apprentice worked well on the rewire, then copy that same testimony into the first fix, second fix, testing and certification units without linking it to criteria',
+      'Submit one photograph of the finished rewire and one dated job sheet against every unit in the portfolio, then ask the college assessor to work out entirely for themselves which of the NVQ criteria each one happens to cover',
+      'Ask the college assessor to credit the first fix, second fix, testing and certification units automatically and in full, on the strength of the job having been a full domestic rewire carried out over several weeks in one house',
+      'Record a single witness testimony saying the apprentice worked well on the rewire, then copy that same testimony into the first fix, second fix, testing and certification units without ever linking it to the specific unit criteria',
       'Plan the apprentice\u2019s involvement across first fix (containment, cabling), second fix (accessories, connections), testing (dead and live tests), and certification \u2014 mapping each activity to specific NVQ criteria',
     ],
     correctAnswer: 3,
@@ -2181,9 +2181,9 @@ export const mdQuestionBank: StandardMockQuestion[] = [
       'Regulation 16 of the Electricity at Work Regulations 1989 specifically requires what in relation to electrical work?',
     options: [
       'That no person shall be engaged in any work activity where technical knowledge or experience is necessary to prevent danger unless they possess such knowledge or experience, or are under appropriate supervision',
-      'That every electrical installation shall be inspected and tested at least once a year, and that a certificate shall be issued in writing to the duty holder and the client before it is returned to service',
-      'That all electrical work shall be carried out only by a person holding a recognised qualification and aged over eighteen, with any trainee kept well away from live parts and the working area at all times',
-      'That a written permit-to-work shall be issued and countersigned by a duty holder before any electrical task is started, whether the equipment concerned is live, dead or isolated for maintenance purposes',
+      'That every electrical installation shall be inspected and tested at least once a year, and that a certificate shall be issued in writing to the duty holder and to the client before it is returned to service',
+      'That all electrical work shall be carried out only by a person holding a recognised qualification and aged over eighteen, with any trainee kept well away from live parts and from the working area at all times',
+      'That a written permit-to-work shall be issued and countersigned by a duty holder in advance before any electrical task is started, whether the equipment concerned is live, dead or isolated for maintenance purposes',
     ],
     correctAnswer: 0,
     explanation:
@@ -2220,10 +2220,10 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     id: 122,
     question: 'What does "summative assessment" mean?',
     options: [
-      'An ongoing check during learning used to identify strengths and gaps as they appear',
-      'An informal comment made to the learner while they are working on a practical task',
+      'An ongoing check during learning used to identify strengths and gaps on the job as they appear',
+      'An informal comment made to the learner while they are working on a practical task on site',
       'An end-point assessment that confirms whether the learner has achieved the required standard',
-      'A diagnostic check made before learning begins to establish the learner\'s starting point',
+      'A diagnostic check made before learning begins to establish the learner\'s starting point on site',
     ],
     correctAnswer: 2,
     explanation:
@@ -2255,9 +2255,9 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     question: 'Kirkpatrick Level 1 (Reaction) measures what?',
     options: [
       'Whether the learners enjoyed the training and found it relevant',
-      'Whether the training improved business results',
-      'Whether the learners can demonstrate new skills on the job',
-      'Whether the learners passed a knowledge test',
+      'Whether the training improved business results over the following year',
+      'Whether the learners can demonstrate new skills on the job weeks later',
+      'Whether the learners passed a knowledge test at the end of the course',
     ],
     correctAnswer: 0,
     explanation:
@@ -2288,10 +2288,10 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     id: 126,
     question: 'What is the purpose of a structured observation in assessment?',
     options: [
-      'To question the learner about the theory behind a task they have completed',
-      'To gather written witness statements from the learner’s colleagues',
+      'To question the learner about the theory behind a task they have already completed',
+      'To gather written witness statements from the colleagues who saw the task done',
       'To watch the learner perform a task in the workplace and gather evidence of competence',
-      'To review the learner’s portfolio of photographs and reflective accounts',
+      'To review the portfolio of photographs and reflective accounts that the learner has built',
     ],
     correctAnswer: 2,
     explanation:
@@ -2305,9 +2305,9 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     id: 127,
     question: 'The halo effect in assessment means what?',
     options: [
-      'An assessor\'s judgement is swayed by the final part of the observation rather than the whole',
+      'An assessor\'s judgement is swayed by the closing few minutes of the observation rather than by the whole of it',
       'An assessor seeks out only the evidence that confirms the opinion they had already formed of the learner',
-      'An assessor sets the pass bar far too low and records everyone as competent regardless of evidence',
+      'An assessor sets the pass bar far too low and records everyone in the group as competent regardless of evidence',
       'An assessor\u2019s overall positive impression of a learner influences their judgement of specific performance',
     ],
     correctAnswer: 3,
@@ -2324,9 +2324,9 @@ export const mdQuestionBank: StandardMockQuestion[] = [
       'What is the correct competence-based language for a learner who has not met the standard?',
     options: [
       'Not yet competent',
-      'Failed',
-      'Below average',
-      'Incompetent',
+      'Failed the assessment',
+      'Below the average standard',
+      'Incompetent performance',
     ],
     correctAnswer: 0,
     explanation:
@@ -2340,10 +2340,10 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     id: 129,
     question: 'What is a professional discussion in the context of NVQ assessment?',
     options: [
-      'A casual chat on site with no record kept, used to settle the learner before an observation',
+      'A casual chat on site with no record kept, used to settle the learner down before a formal observation',
       'A structured conversation between the assessor and learner to explore underpinning knowledge and understanding',
-      'A written examination sat under timed conditions and marked externally against a mark scheme',
-      'A direct observation of the learner carrying out a practical task against the unit criteria',
+      'A written examination sat under timed conditions and marked externally against a mark scheme at the centre',
+      'A direct observation of the learner carrying out a practical task against the unit criteria out in the workplace',
     ],
     correctAnswer: 1,
     explanation:
@@ -2392,9 +2392,9 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     question: 'What is the recency effect in assessment?',
     options: [
       'An assessor gives disproportionate weight to the most recent performance rather than the whole observation',
-      'An assessor lets a positive overall impression colour their judgement of each specific task',
-      'An assessor favours a learner who shares their own background, interests or way of working',
-      'An assessor records everyone as competent because the standard being applied is set too low',
+      'An assessor lets one positive overall impression of a learner colour their judgement of every task observed',
+      'An assessor favours a learner who shares their own background, interests or way of working on the job',
+      'An assessor records every learner as competent because the standard being applied at the centre is set too low',
     ],
     correctAnswer: 0,
     explanation:
@@ -2408,10 +2408,10 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     id: 133,
     question: 'An assessment plan should answer which basic questions?',
     options: [
-      'Who else passed the same unit and what grades they were given',
+      'Who else has passed the same unit and what grades each of them was given',
       'What will be assessed, when, how, and what evidence will be collected',
-      'Whether the learner enjoyed the previous training session',
-      'How the assessor personally feels about the learner\u2019s attitude',
+      'Whether the learner enjoyed the previous training session with the mentor',
+      'How the assessor personally feels about the learner\u2019s attitude to the work',
     ],
     correctAnswer: 1,
     explanation:
@@ -2442,9 +2442,9 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     id: 135,
     question: 'What is the purpose of standardisation meetings in IQA?',
     options: [
-      'To give each assessor a personal performance review and pay rise',
-      'To decide which learners will be entered for assessment that month',
-      'To brief learners on what to expect during their observations',
+      'To give each assessor a personal performance review and pay rise every year',
+      'To decide which learners will be entered for assessment at the centre that month',
+      'To brief learners on what to expect during their observations and what they must show',
       'To ensure all assessors are making consistent judgements against the same standards',
     ],
     correctAnswer: 3,
@@ -2460,9 +2460,9 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     question: 'Kirkpatrick Level 4 (Results) measures what?',
     options: [
       'Measurable outcomes such as reduced rework, fewer incidents, or improved productivity',
-      'Learner reaction, such as whether the training was enjoyable and felt relevant',
-      'Knowledge and skill gained, measured by a test at the end of the course',
-      'Changed practice on site, observed by a supervisor some weeks afterwards',
+      'Learner reaction, such as whether the training was enjoyable and felt relevant to them',
+      'Knowledge and skill gained, measured by a written test at the end of the course',
+      'Changed practice back on site, observed by a supervisor some weeks after the course ends',
     ],
     correctAnswer: 0,
     explanation:
@@ -2515,9 +2515,9 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     question:
       'A company runs a safe isolation refresher but only evaluates it with a feedback form asking if people enjoyed it. What level of Kirkpatrick is this and why is it insufficient?',
     options: [
-      'Level 2 Learning only — the form shows the workers understood the isolation procedure, but not whether they use it',
-      'Level 3 Behaviour only — the form confirms that practice on site has changed, but not whether anyone enjoyed it',
-      'Level 4 Results only — the form shows isolation incidents have fallen since the refresher was delivered on site',
+      'Level 2 Learning only — the form shows the workers understood the isolation procedure, but not whether they use it afterwards',
+      'Level 3 Behaviour only — the form confirms that practice on site has changed, but not whether anyone actually enjoyed the day',
+      'Level 4 Results only — the form shows that isolation incidents have fallen right across every site since the refresher was run',
       'Level 1 Reaction only \u2014 it tells you nothing about whether anyone learned anything or changed their behaviour on site',
     ],
     correctAnswer: 3,
@@ -2535,8 +2535,8 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     options: [
       'Factual: "The learner did not verify isolation with a voltage indicator." Judgemental: "The learner was careless and lazy."',
       'Factual language records what was measured, while judgemental language records the assessor\u2019s opinion of the learner',
-      'Factual language praises the learner, while judgemental language criticises them',
-      'Factual language is used in summative assessment, while judgemental language is used in formative assessment',
+      'Factual language praises the learner, while judgemental language criticises them for the very same piece of work on site',
+      'Factual language is used in summative assessment, while judgemental language is used in formative assessment during the course',
     ],
     correctAnswer: 0,
     explanation:
@@ -2551,10 +2551,10 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     question:
       'A mentor has a strong personal friendship with an apprentice. What assessment risk does this create?',
     options: [
-      'Recency effect \u2014 the assessor only remembers the end of the observation',
+      'Recency effect \u2014 the assessor only remembers the very end of the practical observation',
       'Personal relationship bias \u2014 the mentor may unconsciously assess the apprentice more favourably',
-      'Confirmation bias \u2014 the assessor seeks evidence that fits their prior opinion',
-      'Halo effect \u2014 a single strong skill makes every other judgement more favourable',
+      'Confirmation bias \u2014 the assessor seeks evidence that fits their prior opinion about that learner',
+      'Halo effect \u2014 a single strong skill makes every other judgement more favourable than it should be',
     ],
     correctAnswer: 1,
     explanation:
@@ -2568,10 +2568,10 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     id: 142,
     question: 'Before starting a structured observation, what should the assessor do?',
     options: [
-      'Decide the likely outcome in advance so that the paperwork can be written up more quickly',
-      'Warn the learner they will probably be found not yet competent, to lower their expectations',
+      'Decide the likely outcome in advance so that the paperwork can be written up much more quickly later on',
+      'Warn the learner they will probably be found not yet competent, to lower their expectations for the day',
       'Brief the learner on what will be assessed, the criteria, and what to expect during the observation',
-      'Withhold the criteria from the learner, so that the observation is a fairer test of them',
+      'Withhold the criteria from the learner, so that the observation is a fairer test of them on the day itself',
     ],
     correctAnswer: 2,
     explanation:
@@ -2585,9 +2585,9 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     id: 143,
     question: 'An action plan following a "not yet competent" decision should include what?',
     options: [
-      'A note that the learner was not yet competent, with no further detail',
-      'A list of every other learner who passed the same unit',
-      'A reminder that the learner may appeal the decision to the awarding body',
+      'A note that the learner was not yet competent, with no further detail of any kind at all',
+      'A list of every other learner at the centre who passed the same unit earlier in the year',
+      'A reminder that the learner may appeal the decision to the awarding body within the set time limit',
       'Specific areas for development, measurable targets, a timeline, and who will provide support',
     ],
     correctAnswer: 3,
@@ -2603,9 +2603,9 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     question: 'Confirmation bias in assessment means what?',
     options: [
       'The assessor looks for evidence that confirms their pre-existing opinion of the learner while ignoring contradictory evidence',
-      'The assessor is swayed by the last few minutes of the observation rather than by the whole performance recorded',
-      'The assessor applies a standard well below the criteria and records nearly every learner observed as competent',
-      'The assessor favours learners from a similar background and judges their work more generously than that of others',
+      'The assessor is swayed by the last few minutes of the observation rather than by the whole performance recorded on the day',
+      'The assessor applies a standard well below the criteria and records nearly every learner observed as competent during the observation',
+      'The assessor favours learners from a similar background and judges their work far more generously than that of everyone else on site',
     ],
     correctAnswer: 0,
     explanation:
@@ -2619,10 +2619,10 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     id: 145,
     question: 'Why do most organisations only evaluate training at Kirkpatrick Level 1?',
     options: [
-      'Because Level 1 is the only level that the awarding body will accept as evidence that training was delivered',
+      'Because Level 1 is the only level of evidence that the awarding body will accept to show that training was delivered',
       'Because Level 1 is quick, easy, and cheap to measure, while higher levels require more time, effort, and planning',
-      'Because Levels 2 to 4 may only be carried out while an external verifier from the awarding body is present',
-      'Because the funding rules oblige employers to stop at Level 1 unless they are being formally audited that year',
+      'Because Levels 2 to 4 may only be carried out while an external verifier from the awarding body is present on the site',
+      'Because the funding rules oblige employers to stop at Level 1 unless they are being formally audited that year by the funder',
     ],
     correctAnswer: 1,
     explanation:
@@ -2637,10 +2637,10 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     question:
       'A learner disputes a "not yet competent" decision, saying "But I always check polarity." How should the assessor respond?',
     options: [
-      'Change the decision to competent, on the basis that what the learner usually does is a fair reflection of their ability',
-      'Tell the learner that their usual practice is irrelevant, close the discussion down, and record the appeal as withdrawn',
+      'Change the decision to competent, on the basis that what the learner usually does is a fair reflection of their ability on the day',
+      'Tell the learner that their usual practice is irrelevant, close the discussion down, and record the appeal as withdrawn on file',
       'Acknowledge what the learner usually does, but explain the assessment is based on what was observed during this specific assessment',
-      'Accept the learner\'s account of their usual practice and record the unit as competent without arranging a further observation',
+      'Accept the learner\'s account of their usual practice and record the unit as competent without arranging a further observation at all',
     ],
     correctAnswer: 2,
     explanation:
@@ -2655,9 +2655,9 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the correct sequence for an appeals process when a learner disagrees with an assessment decision?',
     options: [
-      'External appeal to the awarding body first, then an internal appeal if unresolved',
-      'A single appeal made directly to the regulator with no internal stage',
-      'An immediate appeal to an employment tribunal before any other step',
+      'External appeal to the awarding body first, then an internal appeal if unresolved at that stage',
+      'A single appeal made directly to the regulator, with no internal stage at the centre',
+      'An immediate appeal to an employment tribunal before any other step has been taken at the centre',
       'Internal appeal to the centre first, then external appeal to the awarding body if unresolved',
     ],
     correctAnswer: 3,
@@ -2673,9 +2673,9 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     question: 'IQA sampling involves what?',
     options: [
       'The IQA reviewing a selection of assessor decisions and evidence to check they meet the required standard',
-      'The assessor re-marking every piece of evidence in the portfolio before it goes to the awarding body',
-      'The learner choosing which of their units are assessed and which pieces of evidence are used for each',
-      'The awarding body issuing the certificates once every unit in the portfolio has been completed and signed',
+      'The assessor re-marking every single piece of evidence in the portfolio before it goes to the awarding body',
+      'The learner choosing which of their units are assessed and which pieces of evidence are used for each of them',
+      'The awarding body issuing the certificates once every unit in the portfolio has been completed and signed off',
     ],
     correctAnswer: 0,
     explanation:
@@ -2707,10 +2707,10 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     id: 150,
     question: 'What is the main limitation of using simulation as an assessment method?',
     options: [
-      'It always costs far more to set up than a real workplace observation',
-      'It can only ever be used to assess theory, never practical skills',
+      'It always costs far more to set up than a real workplace observation on site',
+      'It can only ever be used to assess theory on site, and never practical skills',
       'It may not fully reflect the pressures and conditions of real workplace situations',
-      'It is not accepted by any awarding body as a form of evidence',
+      'It is not accepted by any awarding body as a form of evidence anywhere in this country',
     ],
     correctAnswer: 2,
     explanation:
@@ -2725,9 +2725,9 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     question:
       'When delivering a "not yet competent" decision using Pendleton\u2019s Rules, what is the first step?',
     options: [
-      'Ask the learner if they agree with the decision',
-      'Tell the learner what they did wrong',
-      'Read out the official assessment report',
+      'Ask the learner if they agree with the decision before you speak',
+      'Tell the learner what they did wrong and why it matters',
+      'Read the official written assessment report out to the learner',
       'Ask the learner to reflect on their own performance first',
     ],
     correctAnswer: 3,
@@ -2744,9 +2744,9 @@ export const mdQuestionBank: StandardMockQuestion[] = [
       'To evaluate safe isolation training at Kirkpatrick Level 3, what would an organisation need to do?',
     options: [
       'Observe workers performing safe isolation on site several weeks after the training to see if their behaviour has actually changed',
-      'Hand out a feedback form at the end of the course on the day asking whether the training was useful and well delivered',
-      'Set a written knowledge test immediately after the course to check the isolation procedure has been understood in full',
-      'Track the company\'s electrical accident and near-miss statistics over the twelve months following the training course',
+      'Hand out a feedback form at the end of the course on the day, asking whether the training was useful and whether it was well delivered',
+      'Set a written knowledge test immediately after the course to check that the whole isolation procedure has been understood on the day',
+      'Track the company\'s electrical accident and near-miss statistics over the twelve months following the training course on every site',
     ],
     correctAnswer: 0,
     explanation:
@@ -2763,10 +2763,10 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     question:
       'An assessor observes an apprentice perform a ring final continuity test. The apprentice completes the test correctly but cannot explain why the three readings should all be within 0.05\u03A9 of each other. What assessment decision is appropriate?',
     options: [
-      'Competent — the procedure itself was carried out correctly, so the underpinning knowledge behind it can be assumed',
+      'Competent — the procedure itself was carried out correctly, so the underpinning knowledge behind it can be assumed on the day',
       'Not yet competent \u2014 they can perform the procedure but lack the underpinning knowledge required by the assessment criteria',
-      'Competent — underpinning knowledge is assessed only in the written units, and never during a practical observation',
-      'Defer the decision — record no outcome at all and wait until the apprentice asks to be reassessed at a later date',
+      'Competent — underpinning knowledge is assessed only in the written units, and never at any stage in a practical observation',
+      'Defer the decision — record no outcome at all and wait until the apprentice asks to be reassessed at a later date of their choosing',
     ],
     correctAnswer: 1,
     explanation:
@@ -2782,9 +2782,9 @@ export const mdQuestionBank: StandardMockQuestion[] = [
       'A company spent \u00a350,000 on electrical training last year but has seen no reduction in rework or safety incidents. Using Kirkpatrick, what is the most likely evaluation gap?',
     options: [
       'They evaluated at Level 4 (Results) but never at Level 1 (Reaction) or 2 (Learning), so they cannot say whether the courses were understood',
-      'They measured Level 2 (Learning) thoroughly and Level 3 (Behaviour) as well, so the gap must lie in the content of the training itself',
+      'They measured Level 2 (Learning) thoroughly and Level 3 (Behaviour) as well, so the gap must lie in the content of the training that was bought',
       'They evaluated at Level 1 (Reaction) but not at Levels 3 (Behaviour) or 4 (Results), so they never checked if training changed actual practice',
-      'They tracked Level 3 (Behaviour) closely but skipped Level 1 (Reaction), so they never found out whether anyone enjoyed the courses',
+      'They tracked Level 3 (Behaviour) closely but skipped Level 1 (Reaction), so they never found out whether anyone enjoyed the courses that were on offer',
     ],
     correctAnswer: 2,
     explanation:
@@ -2799,9 +2799,9 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     question:
       'Two assessors observe the same apprentice on the same task and reach different decisions. What does this indicate about the assessment?',
     options: [
-      'The assessment lacks validity — the evidence gathered does not relate to the unit being claimed',
-      'The assessment lacks sufficiency — there was not enough evidence for either assessor to judge',
-      'The assessment lacks currency — the evidence is too old to reflect current working practice',
+      'The assessment lacks validity — the evidence gathered does not relate to the unit that is actually being claimed',
+      'The assessment lacks sufficiency — there was not enough evidence for either assessor to judge on either occasion',
+      'The assessment lacks currency — the evidence is too old to reflect current working practice on the day of the job',
       'The assessment lacks reliability \u2014 the criteria may be ambiguous or the assessors need standardisation',
     ],
     correctAnswer: 3,
@@ -2818,9 +2818,9 @@ export const mdQuestionBank: StandardMockQuestion[] = [
       'An assessor notices they tend to rate all apprentices as "competent" regardless of performance. What type of bias is this and how should it be addressed?',
     options: [
       'Leniency bias \u2014 the assessor should refocus on the specific criteria, use structured observation checklists, and have decisions verified through IQA',
-      'Halo effect — the assessor should set the written criteria aside and rely instead on the overall impression each apprentice makes on site',
-      'Recency bias — the assessor should base every decision on the final task observed and disregard the earlier part of the observation entirely',
-      'Confirmation bias — the assessor should gather only the evidence supporting a competent decision and leave any conflicting notes out',
+      'Halo effect — the assessor should set the written criteria aside and rely instead on the overall impression each apprentice makes on site each time',
+      'Recency bias — the assessor should base every decision on the final task observed and disregard the earlier part of the whole observation entirely',
+      'Confirmation bias — the assessor should gather only the evidence that supports a competent decision and leave any conflicting notes out of the record entirely',
     ],
     correctAnswer: 0,
     explanation:
@@ -2835,10 +2835,10 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     question:
       'How would you design a complete Kirkpatrick evaluation plan for a one-day safe isolation refresher course?',
     options: [
-      'Level 1: pre- and post-course knowledge test. Level 2: end-of-day feedback form. Level 3: track isolation-related incidents over 6 months. Level 4: observe safe isolation on site 4 weeks later.',
+      'Level 1: pre- and post-course knowledge test. Level 2: end-of-day feedback form. Level 3: track isolation-related incidents over 6 months. Level 4: observe safe isolation out on site 4 weeks later.',
       'Level 1: end-of-day feedback form. Level 2: pre- and post-course knowledge test. Level 3: observe safe isolation on site 4 weeks later. Level 4: track isolation-related incidents over 6 months.',
-      'Level 1: end-of-day feedback form. Level 2: a second feedback form a week later. Level 3: a third feedback form 4 weeks later. Level 4: a final feedback form after 6 months on site.',
-      'Level 1: track isolation-related incidents over 6 months. Level 2: observe safe isolation on site 4 weeks later. Level 3: pre- and post-course knowledge test. Level 4: end-of-day feedback form.',
+      'Level 1: end-of-day feedback form. Level 2: a second feedback form a week later. Level 3: a third feedback form 4 weeks later. Level 4: a final feedback form issued after 6 months on site.',
+      'Level 1: track isolation-related incidents over 6 months. Level 2: observe safe isolation on site 4 weeks later. Level 3: pre- and post-course knowledge test. Level 4: an end-of-day feedback form.',
     ],
     correctAnswer: 1,
     explanation:
@@ -2853,10 +2853,10 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     question:
       'An apprentice appeals a "not yet competent" decision internally and the appeal is upheld (the original decision stands). The apprentice wants to escalate. What is the next step?',
     options: [
-      'A second internal appeal, heard this time by a different manager at the same training provider',
-      'A review by the internal quality assurer, whose decision is final once an appeal has been upheld',
+      'A second internal appeal, heard this time by a different senior manager working at the same training provider',
+      'A review by the internal quality assurer, whose decision is final once an internal appeal has been upheld',
       'External appeal to the awarding body, who will review the evidence and assessment process independently',
-      'A direct claim to an employment tribunal, which will re-examine the assessor\'s original decision',
+      'A direct claim to an employment tribunal, which will re-examine the assessor\'s original decision once again',
     ],
     correctAnswer: 2,
     explanation:
@@ -2871,9 +2871,9 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     question:
       'An IQA identifies that one assessor consistently uses the phrase "good enough" in observation records rather than referencing specific criteria. What action should be taken?',
     options: [
-      'Record the sample as satisfactory, on the basis that "good enough" is an accepted way of recording a pass in an observation record',
-      'Suspend the assessor immediately, re-mark all of their past decisions single-handedly, and report them to the awarding body',
-      'Ask the learners whether they felt the assessments were fair on the day, and treat their answers as the record of criteria met',
+      'Record the sample as satisfactory, on the basis that "good enough" is an accepted way of recording a pass in an observation record itself',
+      'Suspend the assessor immediately, re-mark all of their past decisions single-handedly, and report them to the awarding body straight away',
+      'Ask the learners whether they felt that the assessments were fair on the day, and treat their answers as the record of the criteria that were met',
       'Provide CPD on criterion-referencing, require the assessor to link every judgement to specific NVQ criteria, and re-sample their decisions',
     ],
     correctAnswer: 3,
@@ -2930,10 +2930,10 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     id: 162,
     question: 'Why is an overconfident learner potentially dangerous on a construction site?',
     options: [
-      'They become anxious and freeze, refusing to attempt any task without supervision',
-      'They ask so many questions that the job is never finished on time',
+      'They become anxious and freeze, refusing to attempt any task at all without supervision from anyone else',
+      'They ask so many questions on every job that the work is never finished anywhere near on time',
       'They don\u2019t know what they don\u2019t know, so they may skip safety steps or take unnecessary risks',
-      'They are so cautious that they double-check every step and slow the whole team down',
+      'They are so cautious that they double-check every step and slow the whole team down on every job they do',
     ],
     correctAnswer: 2,
     explanation:
@@ -2965,9 +2965,9 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     question: 'What is "unconscious bias"?',
     options: [
       'Automatic assumptions or prejudices that influence decisions without the person being aware of them',
-      'A deliberate decision to treat someone unfairly because of their background',
-      'A formal complaint raised when someone feels they have been discriminated against',
-      'The legal duty to make reasonable adjustments for disabled workers',
+      'A deliberate decision to treat someone less favourably because of their background or their religious beliefs',
+      'A formal complaint raised when someone feels they have been discriminated against at work by a colleague',
+      'The legal duty to make reasonable adjustments for disabled workers in the workplace under the Equality Act',
     ],
     correctAnswer: 0,
     explanation:
@@ -2999,10 +2999,10 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     id: 166,
     question: 'What does reflective practice involve for a mentor?',
     options: [
-      'Asking the apprentice to reflect on their own performance before you comment',
-      'Recording the apprentice\u2019s competence against the NVQ criteria after each task',
+      'Asking the apprentice to reflect on how the task went before you make any comment yourself',
+      'Recording the apprentice\u2019s competence against the NVQ criteria after each task on site',
       'Regularly thinking about what went well and what could be improved in your own mentoring practice',
-      'Keeping a detailed logbook of every job the apprentice has completed',
+      'Keeping a detailed logbook of every job the apprentice has completed over their whole apprenticeship',
     ],
     correctAnswer: 2,
     explanation:
@@ -3034,9 +3034,9 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     question: 'Affinity bias in mentoring means what?',
     options: [
       'Favouring people who are similar to you in background, interests, or personality',
-      'Judging someone mainly on the most recent piece of work you happened to see',
+      'Judging someone mainly on the most recent piece of work you happened to see on the day',
       'Letting one strong quality colour your judgement of everything else they do',
-      'Assuming practical learners will always outperform more theoretical ones',
+      'Assuming practical learners will always outperform more theoretical ones every time',
     ],
     correctAnswer: 0,
     explanation:
@@ -3068,10 +3068,10 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     id: 170,
     question: 'Csikszentmihalyi\u2019s concept of "flow" describes what?',
     options: [
-      'A state of boredom that arises when a task is far too easy for the learner',
-      'A state of anxiety that arises when a task is far too difficult for the learner',
+      'A state of boredom that arises when a task is far too easy for the learner and offers no challenge at all',
+      'A state of anxiety that arises when a task is far too difficult for the level of skill the learner has',
       'A state of deep engagement when the challenge level perfectly matches the person\u2019s skill level',
-      'A state of complete relaxation in which no learning challenge is present at all',
+      'A state of complete relaxation in which no learning challenge is present for the learner at any point',
     ],
     correctAnswer: 2,
     explanation:
@@ -3086,9 +3086,9 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     question:
       'What does "reasonable adjustment" mean in the context of mentoring a learner with a disability?',
     options: [
-      'Lowering the required competence standard so that the learner can reach a pass more easily than others',
-      'Awarding a disabled learner extra marks on every unit to compensate for the difficulties they face',
-      'Excusing the learner from any task they find difficult as a result of their disability, and passing them',
+      'Lowering the required competence standard so that the learner can reach a pass more easily than others on site',
+      'Awarding a disabled learner extra marks on every unit to compensate for the difficulties they face on the job',
+      'Excusing the learner from any task they find difficult as a result of their disability, and passing them on that basis',
       'Making changes to the learning or assessment process to remove barriers, without lowering the competence standard',
     ],
     correctAnswer: 3,
@@ -3140,10 +3140,10 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     question:
       'How does mentoring competence support career progression in the electrical industry?',
     options: [
-      'It guarantees an automatic promotion to supervisor within the first year',
-      'It replaces the need to hold any technical electrical qualifications',
+      'It guarantees an automatic promotion to supervisor within the first year of mentoring with the employer',
+      'It replaces the need for the mentor to hold any technical electrical qualifications of their own',
       'It demonstrates leadership capability, which is required for ECS Technician grade and management roles',
-      'It exempts the mentor from completing their own continuing professional development',
+      'It exempts the mentor from meeting their own continuing professional development requirements each year',
     ],
     correctAnswer: 2,
     explanation:
@@ -3194,10 +3194,10 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     question:
       'An apprentice is doing the minimum and seems disengaged. Before assuming laziness, what should the mentor explore first?',
     options: [
-      'Whether a formal written warning and a note on file would sharpen their attitude before the next progress review',
+      'Whether a formal written warning and a note on file would sharpen their attitude before the next progress review meeting',
       'Whether there are underlying causes such as personal problems, wrong career choice, bullying, financial stress, or health issues',
-      'Whether moving them to another team, another site or another mentor would make the problem go away by itself',
-      'Whether cutting their responsibilities back to fetching and carrying would leave them more comfortable on site',
+      'Whether moving them to another team, another site or another mentor would make the problem go away by itself in time',
+      'Whether cutting their responsibilities back to fetching and carrying would leave them more comfortable out on the site',
     ],
     correctAnswer: 1,
     explanation:
@@ -3212,10 +3212,10 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     question:
       'An overconfident apprentice dismisses the need for safe isolation, saying "I\u2019ve done this loads of times." How should the mentor respond?',
     options: [
-      'Accept their experience at face value — let them skip proving the test instrument to save time, and check the finished work over yourself afterwards',
-      'Criticise them in front of the whole crew — make an example of the attitude so that the rest of the team hears the message loud and clear as well',
+      'Accept their experience at face value — let them skip proving the test instrument to save time, and check the finished work over yourself afterwards instead',
+      'Criticise them in front of the whole crew — make an example of the attitude so that the rest of the team hears the message loud and clear at the same time',
       'Use assessment evidence to demonstrate the gap \u2014 set a task that reveals the limit of their competence, and have a factual conversation about the specific risks',
-      'Leave it for the time being — overconfidence tends to correct itself sooner or later, once an apprentice has had a fright or a near-miss of their own',
+      'Leave it for the time being — overconfidence tends to correct itself sooner or later, once an apprentice has had a fright or a near-miss of their own on site',
     ],
     correctAnswer: 2,
     explanation:
@@ -3266,10 +3266,10 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     question:
       'A dyslexic apprentice takes twice as long to complete written NVQ evidence. What should the mentor do?',
     options: [
-      'Insist the written evidence is completed in the same time as everyone else, so the qualification stays fair to the whole cohort',
+      'Insist the written evidence is completed in the same time as everyone else, so that the qualification stays fair to the rest of the cohort',
       'Arrange reasonable adjustments: extra time, use of technology, verbal evidence methods, and support from the college\u2019s learning support team',
-      'Reduce the written evidence below the amount the awarding body requires, and record the missing items as covered by observation',
-      'Explain that dyslexia is a college matter, and leave the apprentice to arrange any support with their tutor in their own time',
+      'Reduce the written evidence below the amount the awarding body requires, and record the missing items as being covered by observation',
+      'Explain that dyslexia is a college matter, and leave the apprentice to arrange any support with their college tutor in their own time',
     ],
     correctAnswer: 1,
     explanation:
@@ -3284,10 +3284,10 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     question:
       'A 25-year-old mentor is paired with a 45-year-old career-changer. What potential challenges might arise?',
     options: [
-      'The older learner will inevitably work more slowly than the rest of the crew on site, and the younger mentor will always be the better electrician of the two',
-      'The age gap makes no difference to either party, as a mentoring relationship is shaped only by technical ability and never by age or by experience of life',
+      'The older learner will inevitably work more slowly than the rest of the crew on site, and the younger mentor will always be the better electrician of the two of them',
+      'The age gap makes no difference to either party, as a mentoring relationship is shaped only by technical ability and never by age or by experience of life at all',
       'The older learner may resist taking direction from someone younger, and the younger mentor may feel uncomfortable asserting authority over someone with more life experience',
-      'Under the awarding body rules the older learner cannot be signed off by a younger mentor, and the younger mentor cannot witness evidence for anyone older',
+      'Under the awarding body rules the older learner cannot be signed off by a younger mentor, and the younger mentor cannot witness any evidence for anyone older than them',
     ],
     correctAnswer: 2,
     explanation:
@@ -3302,9 +3302,9 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     question:
       'An apprentice going through a family breakdown has declining performance and attendance. What is the correct balance between support and accountability?',
     options: [
-      'Hold the apprentice to exactly the same targets and ignore the personal situation',
-      'Remove all expectations and standards until the apprentice\u2019s situation improves',
-      'Begin formal disciplinary action for the poor attendance straight away',
+      'Hold the apprentice to exactly the same targets and ignore the personal situation altogether',
+      'Remove all expectations and standards until the apprentice\u2019s situation improves again',
+      'Begin formal disciplinary action for the poor timekeeping and attendance straight away',
       'Show empathy and adjust expectations temporarily while maintaining core safety and competence standards',
     ],
     correctAnswer: 3,
@@ -3571,10 +3571,10 @@ export const mdQuestionBank: StandardMockQuestion[] = [
     question:
       'A senior electrician makes sexist comments about a female apprentice in front of the team. The apprentice seems upset but does not complain. What are the mentor\u2019s obligations?',
     options: [
-      'The mentor should wait for a formal written complaint before acting, as the Equality Act 2010 places no duty on anyone until the person affected has raised the matter in writing with the employer',
-      'The mentor should have a quiet word with the senior electrician off the record, keep it out of any file, and leave the apprentice to decide whether anything further is done about it at a later date',
+      'The mentor should wait for a formal written complaint before acting, as the Equality Act 2010 places no duty on anyone until the person affected has raised the matter in writing with the employer first',
+      'The mentor should have a quiet word with the senior electrician off the record, keep it out of any file, and leave the apprentice to decide whether anything further is done about it at a later date herself',
       'The mentor must act regardless of whether a formal complaint is made \u2014 challenge the behaviour, support the apprentice, and report it as the Equality Act 2010 places a duty on employers to prevent harassment',
-      'The mentor should coach the apprentice to handle the comments herself, as banter is part of site culture and the duty to act rests solely with the site manager, not with anyone supervising her',
+      'The mentor should coach the apprentice to handle the comments herself, as banter is part of site culture and the duty to act rests solely with the site manager, not with anyone who is supervising her',
     ],
     correctAnswer: 2,
     explanation:

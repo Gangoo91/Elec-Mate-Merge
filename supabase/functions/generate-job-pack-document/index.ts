@@ -3,6 +3,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 import { corsHeaders } from '../_shared/cors.ts';
 import { callOpenAI } from '../_shared/ai-providers.ts';
 
+import { withSentry } from '../_shared/sentry.ts';
 const admin = createClient(
   Deno.env.get('SUPABASE_URL') ?? '',
   Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
@@ -70,7 +71,7 @@ Keep it clear and easy to read - this will be reviewed by workers on their phone
 Format the output as a professional document in markdown.`,
 };
 
-serve(async (req) => {
+serve(withSentry('generate-job-pack-document', async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -217,4 +218,4 @@ Generate a professional, comprehensive document suitable for a UK electrical con
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   }
-});
+}));

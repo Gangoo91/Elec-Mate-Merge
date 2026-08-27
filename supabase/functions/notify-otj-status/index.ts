@@ -12,6 +12,7 @@
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
 
+import { withSentry } from '../_shared/sentry.ts';
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
@@ -70,7 +71,7 @@ function fmtHours(min: number): string {
   return h >= 10 ? `${h.toFixed(0)}h` : `${h.toFixed(1)}h`;
 }
 
-Deno.serve(async (req) => {
+Deno.serve(withSentry('notify-otj-status', async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
   if (req.method !== 'POST')
     return new Response(JSON.stringify({ error: 'method_not_allowed' }), {
@@ -210,4 +211,4 @@ Deno.serve(async (req) => {
       headers: { ...corsHeaders, 'content-type': 'application/json' },
     }
   );
-});
+}));

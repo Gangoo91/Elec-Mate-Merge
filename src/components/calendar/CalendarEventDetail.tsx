@@ -102,6 +102,10 @@ const CalendarEventDetail = ({
 
             {event.customer?.name && <DetailRow label="Customer">{event.customer.name}</DetailRow>}
 
+            {/* Who is on it. Without this the field was write-only — you could
+                set it on the booking and never see it again. */}
+            {event.crew && <DetailRow label="Who&rsquo;s on it">{event.crew}</DetailRow>}
+
             {event.project?.title && <DetailRow label="Job">{event.project.title}</DetailRow>}
 
             {event.job?.title && !event.project?.title && (

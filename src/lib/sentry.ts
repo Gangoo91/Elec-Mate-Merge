@@ -186,8 +186,18 @@ export function initSentry() {
         // genuinely goes down — query category:realtime to see the trend.
         // Sentry: REACT-AR/AN (transport failure), AJ/AY (socket closed 1006),
         // B5/AZ (heartbeat timeout).
+        //
+        // ⚠️ `socket closed: <code>` matches the WHOLE family, not just 1006.
+        // It listed 1006 only, which is the ABNORMAL close — so the routine
+        // ones sailed past at full error level while the genuinely abnormal
+        // one sat quietly at warning. Exactly backwards, and it made
+        // JAVASCRIPT-REACT-AJ the single largest error-level issue on the
+        // dashboard: 549 occurrences across 68 users, every one of them a
+        // WebSocket closing the way the spec says it should.
+        //   1000 = Normal Closure  ·  1005 = No Status Received (navigated away)
+        //   1006 = Abnormal Closure (network dropped / tab backgrounded)
         if (
-          /channel error: transport failure|socket closed: 1006|heartbeat timeout/i.test(message)
+          /channel error: transport failure|socket closed: \d+|heartbeat timeout/i.test(message)
         ) {
           event.level = 'warning';
           event.tags = { ...event.tags, category: 'realtime' };
