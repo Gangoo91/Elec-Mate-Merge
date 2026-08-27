@@ -115,9 +115,9 @@ export const gsCat3Questions: StandardMockQuestion[] = [
     question:
       'According to Shawn Achor&rsquo;s 20-second rule, how can you make a good habit easier to start?',
     options: [
-      'Reward yourself within 20 seconds of completing the habit',
-      'Commit to doing the habit for only 20 seconds each day',
-      'Wait 20 seconds before deciding whether to do the habit',
+      'Reward yourself within 20 seconds of completing the habit, every single time',
+      'Commit to doing the habit for exactly 20 seconds each day, and then stop',
+      'Wait a full 20 seconds before deciding whether or not you will do the habit',
       'Reduce the activation energy so it takes 20 seconds less effort to begin',
     ],
     correctAnswer: 3,
@@ -150,10 +150,10 @@ export const gsCat3Questions: StandardMockQuestion[] = [
     id: 89,
     question: 'What is the &ldquo;never miss twice&rdquo; rule in habit formation?',
     options: [
-      'Never attempt a habit more than twice a day',
+      'Never attempt a habit more than twice a day, however keen you feel',
       'If you miss a habit once, make sure you get back to it the next day',
       'If you fail twice, abandon the habit and start a new one',
-      'Always do the habit at least twice before evaluating it',
+      'Always do the habit at least twice, before you evaluate whether it works',
     ],
     correctAnswer: 1,
     explanation:
@@ -184,9 +184,9 @@ export const gsCat3Questions: StandardMockQuestion[] = [
     id: 91,
     question: 'In the context of trade work, which of these is an example of a keystone habit?',
     options: [
-      'Avoiding all paperwork until month-end',
-      'Buying new tools every month',
-      'Working overtime every weekend',
+      'Avoiding all of the paperwork until the end of the month',
+      'Buying a set of new tools at the start of every month',
+      'Working overtime on every single weekend of the year',
       'Completing a daily tool check before starting work',
     ],
     correctAnswer: 3,
@@ -272,9 +272,9 @@ export const gsCat3Questions: StandardMockQuestion[] = [
     question: 'What does James Clear mean by making a habit &ldquo;easy&rdquo; (the 3rd Law)?',
     options: [
       'Reducing friction so the behaviour requires minimal effort to start',
-      'Only choosing habits that are simple and unimportant',
-      'Making the habit so easy it has no meaningful benefit',
-      'Skipping the habit whenever it feels difficult',
+      'Only choosing habits that are simple, small and ultimately unimportant',
+      'Making the habit so easy that it no longer delivers any real benefit',
+      'Skipping the habit altogether whenever it feels difficult to get started',
     ],
     correctAnswer: 0,
     explanation:
@@ -327,9 +327,9 @@ export const gsCat3Questions: StandardMockQuestion[] = [
     question:
       'How would you apply James Clear&rsquo;s &ldquo;inversion&rdquo; of the 4 Laws to break a bad habit?',
     options: [
-      'Announce publicly that you are quitting the habit',
-      'Replace it with a different habit using the same cue',
-      'Increase your willpower through mental training',
+      'Announce publicly, to everyone you know, that you are quitting the habit',
+      'Replace it with a different habit, triggered by the same cue',
+      'Increase your willpower, through daily mental training',
       'Make it invisible, unattractive, difficult, and unsatisfying',
     ],
     correctAnswer: 3,
@@ -363,10 +363,10 @@ export const gsCat3Questions: StandardMockQuestion[] = [
     question:
       'An electrician wants to build a habit of photographing completed work for their portfolio. Using habit stacking, which approach is best?',
     options: [
-      'I will try to remember to take photos whenever I think about it',
+      'I will try to remember to take photos whenever I think about it, however busy the day is',
       'After I complete the final test on an installation, I will take three photographs',
-      'I will set a daily alarm to remind me to take photos',
-      'I will take all my portfolio photos at the end of each month',
+      'I will set a daily alarm on my phone, reminding me to take photos',
+      'I will take all my portfolio photos in one go, at the end of each month',
     ],
     correctAnswer: 1,
     explanation:
@@ -398,7 +398,7 @@ export const gsCat3Questions: StandardMockQuestion[] = [
     id: 103,
     question: 'How does the 20-second rule apply to building a CPD study habit for an electrician?',
     options: [
-      'Set a twenty-second timer before each session so that studying feels urgent',
+      'Set a twenty-second timer running before each session so that studying feels urgent',
       'Study for a minimum of twenty seconds every evening to keep the chain going',
       'Wait twenty seconds before deciding whether you are in the mood to study',
       'Keep your study materials out and open so starting requires 20 seconds less effort',
@@ -417,9 +417,9 @@ export const gsCat3Questions: StandardMockQuestion[] = [
       'What does Phillippa Lally&rsquo;s research say about the effect of occasionally missing a day on habit formation?',
     options: [
       'Missing a single day has no measurable impact on long-term habit formation',
-      'Missing one day resets the entire habit-formation process',
-      'Missing a day doubles the time needed to form the habit',
-      'Missing a day is only acceptable during the first week',
+      'Missing a single day resets the entire habit-formation process to the start',
+      'Missing a single day roughly doubles the time still needed to form the habit',
+      'Missing a day is only acceptable during the very first week of practising',
     ],
     correctAnswer: 0,
     explanation:
@@ -434,10 +434,10 @@ export const gsCat3Questions: StandardMockQuestion[] = [
     question:
       'An electrician wants to break the habit of leaving admin until Friday afternoon. Using the inversion of the 4 Laws, which strategy addresses &ldquo;Make it difficult&rdquo;?',
     options: [
-      'Promise a colleague a reward each Friday the admin is left until the afternoon',
+      'Promise a colleague a reward each Friday that the admin has been left until the afternoon',
       'Set up their system so Friday admin access is blocked unless daily entries are completed',
       'Put a sticky note on the laptop reminding them not to leave admin until Friday',
-      'Schedule the admin for Friday but set an early-morning calendar alert',
+      'Schedule the admin for Friday but set an early-morning calendar alert to prompt it',
     ],
     correctAnswer: 1,
     explanation:
@@ -452,10 +452,10 @@ export const gsCat3Questions: StandardMockQuestion[] = [
     question:
       'What is the relationship between motivation and ability in BJ Fogg&rsquo;s Behaviour Model?',
     options: [
-      'Ability has no effect on behaviour if motivation is high enough',
-      'Motivation and ability must always be equally high',
+      'Ability has no effect on behaviour at all, provided motivation is high enough',
+      'Motivation and ability must always be equally high, or the behaviour never occurs',
       'When ability is high, less motivation is needed for the behaviour to occur',
-      'Motivation is more important than ability in every situation',
+      'Motivation is more important than ability, in every situation without exception',
     ],
     correctAnswer: 2,
     explanation:
@@ -470,9 +470,9 @@ export const gsCat3Questions: StandardMockQuestion[] = [
     question:
       'Which PPE habit formation strategy best applies the 1st Law (&ldquo;Make it obvious&rdquo;)?',
     options: [
-      'Rewarding yourself with a coffee each time you remember to wear your PPE',
-      'Choosing the most comfortable, lightweight PPE so it is easier to put on',
-      'Promising a colleague you will wear your PPE every day this week',
+      'Rewarding yourself with a coffee and a break each time you remember to wear your PPE',
+      'Choosing the most comfortable, lightweight PPE available so that it is easier to put on',
+      'Promising a colleague at work that you will wear your PPE every single day this week',
       'Placing PPE at the van door so it is the first thing you see when arriving on site',
     ],
     correctAnswer: 3,
@@ -488,9 +488,9 @@ export const gsCat3Questions: StandardMockQuestion[] = [
     question: 'How does temptation bundling differ from simple reward-based habit formation?',
     options: [
       'Temptation bundling pairs the habit with a simultaneous pleasure, not a delayed reward',
-      'Temptation bundling works only with habits the person already finds enjoyable',
-      'Temptation bundling delays the pleasure until the whole habit streak is complete',
-      'Temptation bundling strips every reward out of the process to build discipline',
+      'Temptation bundling works only with habits that the person already finds enjoyable, not new ones',
+      'Temptation bundling delays the pleasure, holding it back until the whole streak is complete',
+      'Temptation bundling strips every reward out of the process, in order to build pure discipline',
     ],
     correctAnswer: 0,
     explanation:
@@ -523,10 +523,10 @@ export const gsCat3Questions: StandardMockQuestion[] = [
     question:
       'According to James Clear, what is the most effective way to track habits without it becoming a chore?',
     options: [
-      'Use a complex spreadsheet with multiple metrics for each habit',
-      'Write a detailed journal entry about each habit every evening',
+      'Use a complex spreadsheet, with several separate metrics recorded for each habit',
+      'Write a detailed journal entry about each habit, every single evening without fail',
       'Use the simplest possible tracking method, such as marking an X on a calendar',
-      'Only track habits when you remember to do so',
+      'Only track your habits on the days when you happen to remember, and skip the rest',
     ],
     correctAnswer: 2,
     explanation:
@@ -541,9 +541,9 @@ export const gsCat3Questions: StandardMockQuestion[] = [
     question:
       'Why is it important for tradespeople to anchor habits to portable cues rather than location-based ones?',
     options: [
-      'Because portable cues require less willpower overall',
-      'Because portable cues are always more effective than location cues',
-      'Because location-based cues only work in office environments',
+      'Because portable cues require less willpower, whatever the setting',
+      'Because portable cues are always more effective than location-based cues, in every trade',
+      'Because location-based cues only work in office environments, never on site',
       'Because tradespeople frequently change work sites, so location cues are unreliable',
     ],
     correctAnswer: 3,
@@ -560,9 +560,9 @@ export const gsCat3Questions: StandardMockQuestion[] = [
       'Which of the following is an example of applying the 4th Law (&ldquo;Make it satisfying&rdquo;) to a tool management habit?',
     options: [
       'Taking a moment to admire your neatly organised toolbag after tidying it',
-      'Buying the most expensive tools available',
-      'Telling colleagues about your tool organisation system',
-      'Reading articles about tool management every week',
+      'Always buying the most expensive tools available, whatever the job needs',
+      'Telling all your colleagues on site about your new tool organisation system',
+      'Reading articles about tool management systems every single week without fail',
     ],
     correctAnswer: 0,
     explanation:
@@ -597,10 +597,10 @@ export const gsCat3Questions: StandardMockQuestion[] = [
     question:
       'How does Phillippa Lally&rsquo;s habit formation curve differ from a linear model, and what is the practical implication?',
     options: [
-      'It follows an exponential curve where automaticity accelerates fastest near the end, so the final week matters most',
-      'It follows a flat line until day 66, when the habit suddenly becomes fully automatic overnight',
+      'It follows an exponential curve where automaticity accelerates fastest near the end, so the final week of the process matters most',
+      'It follows a completely flat line until day 66, when the habit suddenly becomes fully automatic overnight',
       'It follows an asymptotic curve where early gains are rapid but automaticity plateaus, meaning early consistency matters most',
-      'It follows a perfectly linear curve, so each day contributes an identical amount of automaticity',
+      'It follows a perfectly linear curve, so each day contributes an identical amount of automaticity to the total',
     ],
     correctAnswer: 2,
     explanation:
@@ -615,9 +615,9 @@ export const gsCat3Questions: StandardMockQuestion[] = [
     question:
       'An experienced electrician wants to transition from reactive problem-solving to proactive CPD. Integrating Fogg&rsquo;s B = MAP model with Clear&rsquo;s framework, which approach addresses the weakest link?',
     options: [
-      'Maximise all three of motivation, ability and prompt at once, since the model requires every element to be at its peak',
-      'Focus solely on raising motivation through inspirational goals, as motivation is the dominant factor in the model',
-      'Wait until a strong prompt naturally appears, since prompts cannot be designed deliberately',
+      'Maximise all three of motivation, ability and prompt simultaneously, since the model requires every single element to be at its absolute peak',
+      'Focus solely on raising motivation through inspirational goals, as motivation is the dominant factor in the model at all times',
+      'Wait until a strong prompt naturally appears, since prompts cannot be designed deliberately in advance',
       'Identify whether the barrier is low motivation, low ability, or a missing prompt, then apply the corresponding Law of Behaviour Change',
     ],
     correctAnswer: 3,
@@ -634,7 +634,7 @@ export const gsCat3Questions: StandardMockQuestion[] = [
       'How does Baumeister&rsquo;s ego depletion theory interact with Duhigg&rsquo;s habit loop in explaining why tradespeople may abandon good habits by Friday afternoon?',
     options: [
       'Accumulated decision fatigue throughout the week depletes willpower, making it harder to maintain routines that have not yet become automatic habits',
-      'Willpower accumulates across the week, so by Friday workers have ample self-control and deliberately abandon the habits they no longer value',
+      'Willpower accumulates steadily across the week, so by Friday workers have ample self-control and deliberately abandon the habits they no longer value',
       'The habit loop resets completely every Friday, erasing the cue and the reward that were carefully established earlier in the working week',
       'Ego depletion affects motivation only in the mornings, so afternoon routines are unaffected by whichever day of the week it happens to be',
     ],
@@ -669,10 +669,10 @@ export const gsCat3Questions: StandardMockQuestion[] = [
     question:
       'An electrical contractor wants to create a company-wide safety culture shift. Using Duhigg&rsquo;s keystone habits concept and Clear&rsquo;s identity-based approach, which strategy is most likely to succeed?',
     options: [
-      'Roll out a long checklist covering every possible safety behaviour at once and require every operative on site to sign off each separate item at the end of the day',
-      'Set an annual outcome target of zero reportable incidents and review progress only once, at the year-end company meeting held with the directors and supervisors',
+      'Roll out a long checklist covering every possible safety behaviour at once, and require every operative on site to sign off each separate item at the end of the day &mdash; every day',
+      'Set an annual outcome target of zero reportable incidents and review progress only once, at the year-end company meeting held with the directors and supervisors &mdash; no more often',
       'Identify one high-visibility safety behaviour, implement it consistently, and frame it as &ldquo;who we are as a company&rdquo; rather than &ldquo;what we have to do&rdquo;',
-      'Offer a one-off cash bonus each quarter to whichever site reports the fewest incidents, leaving the day-to-day behaviours entirely to individual supervisors',
+      'Offer a one-off cash bonus each quarter to whichever site reports the fewest incidents, leaving the day-to-day behaviours entirely to individual supervisors&rsquo; judgement',
     ],
     correctAnswer: 2,
     explanation:
@@ -687,9 +687,9 @@ export const gsCat3Questions: StandardMockQuestion[] = [
     question:
       'Considering Wendy Wood&rsquo;s research on context-dependent memory and BJ Fogg&rsquo;s prompt design, how should a multi-site electrician structure their end-of-day admin habit?',
     options: [
-      'Tie the admin to a fixed location such as the home office desk, completing it only after returning home at the end of each working evening',
-      'Rely on a willpower-based decision each day to tackle the admin whenever the working day happens to finish on that particular site',
-      'Schedule a fixed clock-time reminder at five o&rsquo;clock regardless of which site the electrician is working on that day',
+      'Tie the admin to a fixed location such as the home office desk, completing it only after returning home at the end of each working evening, without exception',
+      'Rely on a willpower-based decision each day, tackling the admin whenever the working day happens to finish on that particular site',
+      'Schedule a fixed clock-time reminder at five o&rsquo;clock, regardless of which site the electrician is working on that day',
       'Anchor it to a consistent portable cue such as starting the van engine, with the admin app pre-loaded and a tiny first step like logging one item',
     ],
     correctAnswer: 3,

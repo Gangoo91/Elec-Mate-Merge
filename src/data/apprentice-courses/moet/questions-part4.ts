@@ -15,10 +15,10 @@ export const questionsPart4: StandardMockQuestion[] = [
     id: 121,
     question: 'The MOET EPA (End-Point Assessment) consists of which assessment components?',
     options: [
-      'A single written examination covering all core and pathway knowledge',
+      'A single written examination, sat under invigilation, covering all core and pathway knowledge',
       'A knowledge test, a practical assessment, and a portfolio-based professional discussion',
-      'An online multiple-choice test and a structured peer review by colleagues',
-      'A supervised workplace observation and a written technical report',
+      'An online multiple-choice test, followed by a structured peer review carried out by colleagues',
+      'A supervised workplace observation, a written technical report, and a viva with the employer',
     ],
     correctAnswer: 1,
     explanation:
@@ -32,10 +32,10 @@ export const questionsPart4: StandardMockQuestion[] = [
     id: 122,
     question: 'What grades are available in the MOET EPA?',
     options: [
-      'Pass or fail only',
-      'Percentage scores with no grade boundaries',
+      'Pass or fail, with no distinction',
+      'Percentage scores, with no grade boundaries',
       'Fail, pass, or distinction',
-      'Grades A to E',
+      'Grades A, B, C, D or E',
     ],
     correctAnswer: 2,
     explanation:
@@ -69,9 +69,9 @@ export const questionsPart4: StandardMockQuestion[] = [
       'What is the role of the Independent End-Point Assessment Organisation (EPAO) in the MOET EPA?',
     options: [
       'To independently assess the apprentice against the standard, ensuring impartiality',
-      'To deliver the on-programme training and mentor the apprentice throughout the apprenticeship',
-      'To employ the apprentice and confirm they are ready to enter the gateway',
-      'To set the funding band and pay the training provider for each apprentice',
+      'To deliver the on-programme training, and mentor the apprentice throughout the apprenticeship',
+      'To employ the apprentice, and confirm they are ready to enter the gateway',
+      'To set the funding band, and pay the training provider for each apprentice',
     ],
     correctAnswer: 0,
     explanation:
@@ -85,10 +85,10 @@ export const questionsPart4: StandardMockQuestion[] = [
     id: 125,
     question: 'Before entering EPA gateway, what must an apprentice have achieved?',
     options: [
-      'A distinction grade in the on-programme knowledge modules only',
+      'A distinction grade in every on-programme knowledge module (theory only), with no practical evidence',
       'Level 2 English and maths (or equivalent), completed on-programme learning and employer sign-off',
-      'A minimum of five years of relevant electrical workplace experience',
-      'A Level 3 qualification in a subject unrelated to the apprenticeship standard',
+      'A minimum of five years (60 months) of relevant electrical workplace experience, logged in a diary',
+      'A Level 3 qualification (any subject) unrelated to the apprenticeship standard, plus a valid CSCS card',
     ],
     correctAnswer: 1,
     explanation:
@@ -103,10 +103,10 @@ export const questionsPart4: StandardMockQuestion[] = [
     question:
       'During the EPA practical assessment, the assessor observes a technician performing safe isolation. What would demonstrate distinction-level performance?',
     options: [
-      'Completing the isolation as quickly as possible to minimise downtime on the line',
-      'Carrying out the isolation in silence so as not to distract the assessor',
+      'Completing the isolation as quickly as possible, to minimise downtime on the line',
+      'Carrying out the isolation in silence, so as not to distract the assessor',
       'Isolating correctly while explaining each step, citing EAWR 1989 and GS 38 equipment',
-      'Isolating the supply and relying on the assessor to verify the dead state',
+      'Isolating the supply, and relying on the assessor to verify the dead state',
     ],
     correctAnswer: 2,
     explanation:
@@ -141,9 +141,9 @@ export const questionsPart4: StandardMockQuestion[] = [
       'During the professional discussion, the assessor asks about a complex fault you diagnosed. What approach would best demonstrate the required competencies?',
     options: [
       'Explain the systematic approach, the reasoning, the root cause and the prevention',
-      'State the final outcome and confirm that the equipment is now working correctly',
-      'Explain that a colleague diagnosed the fault and describe what they did',
-      'Describe the fault in general terms without referring to any specific job',
+      'State the final outcome, and confirm that the equipment is now working correctly',
+      'Explain that a colleague diagnosed the fault, and describe what they did',
+      'Describe the fault in general terms, without referring to any specific job',
     ],
     correctAnswer: 0,
     explanation:
@@ -157,10 +157,10 @@ export const questionsPart4: StandardMockQuestion[] = [
     id: 129,
     question: 'Which types of evidence are most valuable in a MOET EPA portfolio?',
     options: [
-      'A single large maintenance report covering one task in great detail',
+      'A single large maintenance report, covering one task in great detail, with photographs attached',
       'A diverse mix of work orders, test certificates, witness testimonies and reflective accounts',
-      'A set of photographs of completed work with no supporting documentation',
-      'Printouts of the apprenticeship standard with no work-based evidence attached',
+      'A set of photographs of completed work, dated and captioned, with no supporting documentation at all',
+      'Printouts of the apprenticeship standard and assessment plan, with no work-based evidence attached',
     ],
     correctAnswer: 1,
     explanation:
@@ -193,9 +193,9 @@ export const questionsPart4: StandardMockQuestion[] = [
     question:
       'An EPA assessor asks about your understanding of maintenance strategies. Which response demonstrates comprehensive knowledge?',
     options: [
-      'We run every asset to failure and replace components only when they break down',
-      'We carry out preventive maintenance on a fixed monthly schedule for all equipment regardless of criticality',
-      'Maintenance strategy is decided by the production manager and is not a technician\'s concern',
+      'We run every asset to failure, replacing components only when they break down',
+      'We carry out preventive maintenance on a fixed monthly schedule, for all equipment regardless of criticality',
+      'Maintenance strategy is decided by the production manager, and is not a technician\'s concern',
       'Matching planned, condition-based and run-to-failure work to asset criticality via a CMMS',
     ],
     correctAnswer: 3,
@@ -212,9 +212,9 @@ export const questionsPart4: StandardMockQuestion[] = [
       'What is the maximum timeframe typically allowed to complete all EPA components once the first assessment has been taken?',
     options: [
       'Typically three to six months, as set by the assessment plan',
-      'Up to two years from the date of the gateway meeting',
-      'No limit applies once the first assessment is taken',
-      'One calendar week from the first assessment activity',
+      'Up to two full years, measured from the date of the gateway meeting',
+      'No limit applies, once the first assessment activity has been taken',
+      'One calendar week, counted from the first assessment activity',
     ],
     correctAnswer: 0,
     explanation:
@@ -235,10 +235,10 @@ export const questionsPart4: StandardMockQuestion[] = [
     question:
       'A maintenance technician is called to investigate a tripping VSD on a critical production line pump. Applying a systematic approach, what is the correct sequence of actions?',
     options: [
-      'Reset the VSD repeatedly until the pump runs and then close the work order off',
+      'Reset the VSD repeatedly until the pump runs again, and then close the work order off',
       'Read the VSD fault log, test the motor and load, then apply root cause analysis',
-      'Replace the VSD immediately as it is always the most likely cause of tripping',
-      'Increase the VSD current limit so the protection stops tripping the drive out',
+      'Replace the VSD immediately, as it is always the most likely cause of tripping',
+      'Increase the VSD current limit, so the protection stops tripping the drive out',
     ],
     correctAnswer: 1,
     explanation:
@@ -254,7 +254,7 @@ export const questionsPart4: StandardMockQuestion[] = [
       'A planned shutdown is scheduled for an 11 kV/400 V substation to replace a transformer. What planning documents and safety systems are required?',
     options: [
       'A verbal briefing on the morning of the shutdown, a switching plan agreed on site, and no written records',
-      'A single risk assessment covering the whole shutdown, with the switching carried out from memory by the engineer',
+      'A single risk assessment covering the whole shutdown, with the switching carried out from memory by the senior authorised engineer',
       'Method statement, risk assessment, switching schedule, permit to work, LOTO, proof of competence and a communication plan',
       'The transformer data sheet, a toolbox talk, and switching arranged informally between the team on the day itself',
     ],
@@ -271,9 +271,9 @@ export const questionsPart4: StandardMockQuestion[] = [
     question:
       'During a routine PPM visit, a thermographic survey of a motor control centre reveals a hot spot at 85 degrees C on one contactor connection (normal operating temperature is 40 degrees C). What actions should be taken?',
     options: [
-      'Leave the connection until the next annual survey, as 85 degrees C is a normal reading',
-      'Tighten the connection immediately while the circuit is still live and fully loaded',
-      'Trip the whole motor control centre out at once without informing the operators',
+      'Leave the connection until the next annual survey, as 85 degrees C is a normal running reading',
+      'Tighten the connection immediately, while the circuit is still live and fully loaded',
+      'Trip the whole motor control centre out at once, without informing the operators',
       'Record it, raise a priority work order, assess the risk and report to the duty engineer',
     ],
     correctAnswer: 3,
@@ -290,9 +290,9 @@ export const questionsPart4: StandardMockQuestion[] = [
       'A PLC-controlled packaging line has an intermittent fault causing random stoppages. The PLC diagnostics show no fault codes. What cross-disciplinary approach should be used?',
     options: [
       'Monitor the I/O and sensors, review the logic timing, and check for VSD electrical noise',
-      'Replace the PLC processor first because intermittent faults are always processor related',
-      'Wait for a fault code to appear on the PLC before taking any further action',
-      'Disable the safety circuit temporarily to see whether the stoppages then cease',
+      'Replace the PLC processor and I/O cards first, because intermittent faults are always processor related',
+      'Wait for a fault code to appear on the PLC I/O modules, before taking any further action',
+      'Disable the safety circuit and light curtain I/O temporarily, to see whether the stoppages cease',
     ],
     correctAnswer: 0,
     explanation:
@@ -307,10 +307,10 @@ export const questionsPart4: StandardMockQuestion[] = [
     question:
       'An apprentice is preparing evidence for their EPA portfolio relating to a motor replacement task. Which combination of evidence would best demonstrate competence?',
     options: [
-      'A single photograph of the new motor installed on the conveyor system',
+      'A single photograph of the new motor, installed and running on the conveyor system, with no paperwork',
       'Work order, risk assessment, isolation certificate, test results and a reflective account',
-      'A verbal account given to the assessor during the professional discussion',
-      'The delivery note and supplier invoice for the replacement motor only',
+      'A verbal account given to the assessor, unsupported by records, during the professional discussion',
+      'The delivery note, the supplier invoice and the warranty card for the replacement motor only',
     ],
     correctAnswer: 1,
     explanation:
@@ -326,7 +326,7 @@ export const questionsPart4: StandardMockQuestion[] = [
       'A maintenance technician needs to specify a replacement motor for a conveyor system. What information is needed and where would it be found?',
     options: [
       'The power rating only, taken from any similarly sized motor in the stores',
-      'The colour and physical size of the old motor so a visual match can be found',
+      'The colour and physical size of the old motor, so a visual match can be found',
       'Rating, voltage, speed, mounting, IP rating and duty from the nameplate and O&M data',
       'The supplier\'s current catalogue, choosing whichever motor is in stock at the time',
     ],
@@ -345,14 +345,14 @@ export const questionsPart4: StandardMockQuestion[] = [
     question:
       'A 400 V three-phase motor has been rewound. Before returning it to service, what tests must be performed and what minimum values apply?',
     options: [
-      'A visual inspection of the windings only, with no electrical testing before service',
-      'A continuity test of the windings, then a return straight to full-load operation',
-      'Insulation resistance testing at 250 V DC with a minimum of 0.5 megohm and nothing further',
+      'A visual inspection of the windings only (no instrument testing), before returning to service',
+      'A continuity test of the windings (resistance only), then a return straight to full load',
+      'Insulation resistance at 250 V DC (min 0.5 megohm), and nothing further',
       'Insulation resistance at 500 V DC (min 1 megohm), winding balance, rotation and no-load current',
     ],
     correctAnswer: 3,
     explanation:
-      'This question integrates electrical testing knowledge (Module 2/4), motor theory (Module 2), safety procedures (Module 1), and commissioning documentation (Module 6). A comprehensive post-rewind testing regime ensures the motor is fit for service. The insulation resistance minimum of 1 megohm at 500 V DC is specified by BS 7671 Table 6.1 for circuits up to 500 V.',
+      'This question integrates electrical testing knowledge (Module 2/4), motor theory (Module 2), safety procedures (Module 1), and commissioning documentation (Module 6). A comprehensive post-rewind testing regime ensures the motor is fit for service. The insulation resistance minimum of 1 megohm at 500 V DC is specified for circuits up to 500 V by BS 7671 Table 64, under Regulation 643.3.2.',
     section: 'Applied Knowledge',
     difficulty: 'advanced',
     topic: 'Motor Commissioning',
@@ -364,9 +364,9 @@ export const questionsPart4: StandardMockQuestion[] = [
       "What is the significance of power factor in an industrial installation and how does it affect the maintenance technician's work?",
     options: [
       'Poor power factor raises current for the same real power, causing losses and charges',
-      'Power factor only affects the supply authority and has no impact on the technician\'s work',
+      'Power factor only affects the supply authority, and has no impact on the technician\'s work',
       'A poor power factor reduces the current drawn, lowering the load on cables and switchgear',
-      'Power factor is fixed by the motor design at manufacture and cannot change in service',
+      'Power factor is fixed by the motor design at manufacture, and cannot change in service',
     ],
     correctAnswer: 0,
     explanation:
@@ -381,10 +381,10 @@ export const questionsPart4: StandardMockQuestion[] = [
     question:
       'A building management system (BMS) alarm indicates a UPS battery fault. What should the maintenance technician do?',
     options: [
-      'Silence the alarm and take no further action as UPS batteries rarely actually fail',
+      'Silence the alarm, and take no further action as UPS batteries rarely actually fail',
       'Acknowledge it, test battery impedance and voltages, assess autonomy and report back',
-      'Switch the UPS to bypass and disconnect the batteries before any investigation',
-      'Replace the entire UPS unit immediately without first testing the batteries',
+      'Switch the UPS to bypass, and disconnect the batteries before any investigation',
+      'Replace the entire UPS unit immediately, without first testing the batteries',
     ],
     correctAnswer: 1,
     explanation:
@@ -417,9 +417,9 @@ export const questionsPart4: StandardMockQuestion[] = [
     question:
       'A safety light curtain on a press machine has been reported as intermittently blanking out. The machine has emergency-stopped twice today. What systematic approach should be followed?',
     options: [
-      'Bypass the light curtain so the press can continue running while you investigate',
-      'Reduce the sensitivity of the light curtain to stop the nuisance trips occurring',
-      'Replace the press control PLC as the most likely cause of the intermittent blanking',
+      'Bypass the light curtain and mute the safety relay, so the press can keep running while you investigate',
+      'Reduce the sensitivity of the light curtain, to stop the nuisance trips occurring',
+      'Replace the press control PLC, as the most likely cause of the intermittent blanking',
       'Check alignment, clean the lenses, verify the safety relay and confirm the safety distance',
     ],
     correctAnswer: 3,
@@ -437,8 +437,8 @@ export const questionsPart4: StandardMockQuestion[] = [
     options: [
       'Replace the oversized motors with correctly sized units, or fit VSDs to match the load',
       'Leave the motors as they are, since running below rated load extends their life and needs no action',
-      'Increase the supply voltage to the motors so they draw more current and run at full load',
-      'Fit even larger motors so there is more spare capacity for future production increases',
+      'Increase the supply voltage to the motors, so they draw more current and run at full load',
+      'Fit even larger motors, so there is more spare capacity for future production increases',
     ],
     correctAnswer: 0,
     explanation:
@@ -457,8 +457,8 @@ export const questionsPart4: StandardMockQuestion[] = [
     options: [
       'Communication matters only when dealing with customers, not within the maintenance team',
       'It underpins safe handovers, accurate fault reporting and coordination with production',
-      'Communication is the supervisor\'s responsibility and not part of a technician\'s role',
-      'Communication is unimportant provided the technical work itself is carried out correctly',
+      'Communication is the supervisor\'s responsibility, and not part of a technician\'s role',
+      'Communication is unimportant, provided the technical work itself is carried out correctly',
     ],
     correctAnswer: 1,
     explanation:
@@ -473,10 +473,10 @@ export const questionsPart4: StandardMockQuestion[] = [
     question:
       'A maintenance technician notices that the same type of contactor keeps failing across multiple motor starters in a plant. What approach demonstrates continuous improvement thinking?',
     options: [
-      'Keep replacing the contactors like-for-like as they fail and accept the recurring cost',
-      'Fit the next size up of contactor without first investigating why they are failing',
+      'Keep replacing the contactors like-for-like as they fail, and accept the recurring cost',
+      'Fit the next size up of contactor, without first investigating why they keep failing',
       'Investigate the failure with RCA, check the rating and propose a design improvement',
-      'Report the issue to the supervisor and then take no further action yourself',
+      'Report the issue to the supervisor, and then take no further action yourself',
     ],
     correctAnswer: 2,
     explanation:
@@ -491,9 +491,9 @@ export const questionsPart4: StandardMockQuestion[] = [
     question:
       'During a professional discussion, the assessor asks how you ensure compliance with relevant legislation in your daily work. What comprehensive answer would be expected?',
     options: [
-      'I rely on my supervisor to tell me what the law requires for each task I do',
+      'I rely on my supervisor to tell me what the law requires, for each task I do',
       'I follow custom and practice on site, as legislation does not apply to maintenance work',
-      'I assume the equipment is compliant because it was installed by an approved contractor',
+      'I assume the equipment is compliant, because it was installed by an approved contractor',
       'I apply HSWA 1974, EAWR 1989 and BS 7671 through risk assessment and safe isolation',
     ],
     correctAnswer: 3,
@@ -511,8 +511,8 @@ export const questionsPart4: StandardMockQuestion[] = [
     options: [
       'The blend of knowledge, skills, experience and risk awareness suited to the work',
       'Competence simply means holding any recognised electrical qualification, regardless of experience',
-      'Competence is the number of years a person has worked in the electrical industry',
-      'Competence is confirmed solely by passing the EPA knowledge test at the end',
+      'Competence is the number of years, in total, a person has worked in the electrical industry',
+      'Competence is confirmed solely by passing the EPA knowledge test, at the end',
     ],
     correctAnswer: 0,
     explanation:
@@ -527,10 +527,10 @@ export const questionsPart4: StandardMockQuestion[] = [
     question:
       'A maintenance technician is asked to work on equipment they have not been trained on. What is the correct professional response?',
     options: [
-      'Proceed with the work and learn the equipment as you go to avoid delaying production',
+      'Proceed with the work, and learn the equipment as you go to avoid delaying production',
       'Tell the supervisor they are not trained, and ask for training or supervision first',
-      'Refuse the task outright and report the supervisor for even asking them to do it',
-      'Ask another apprentice who is also untrained to help work it out together',
+      'Refuse the task outright, and report the supervisor for even asking them to do it',
+      'Ask another apprentice, who is also untrained, to help work it out together',
     ],
     correctAnswer: 1,
     explanation:
@@ -545,10 +545,10 @@ export const questionsPart4: StandardMockQuestion[] = [
     question:
       "How does the concept of 'continuous improvement' apply to a maintenance department, and how can a technician contribute?",
     options: [
-      'Continuous improvement is a management initiative that technicians cannot influence',
-      'Continuous improvement only applies to production output, not to the maintenance function',
+      'Continuous improvement is a management initiative, one that technicians cannot influence',
+      'Continuous improvement only applies to production output, not to the maintenance function itself',
       'By spotting recurring failures, feeding accurate CMMS data and joining root cause analysis',
-      'Continuous improvement means working faster to close more work orders each shift',
+      'Continuous improvement means working faster, to close more work orders each shift',
     ],
     correctAnswer: 2,
     explanation:

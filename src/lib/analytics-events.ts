@@ -157,6 +157,7 @@ export function trackEmailCaptured(props: {
     | 'exit_intent'
     | 'lead_magnet_cheatsheet'
     | 'lead_magnet_symbols_chart'
+    | 'lead_magnet_zs_ze_reference'
     | 'mock_exam_result'
     | 'calculator_result'
     | 'footer'

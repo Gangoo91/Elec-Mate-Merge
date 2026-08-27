@@ -13,10 +13,15 @@ import { reportCloud } from '@/utils/reportCloud';
 import { formatDangerNoticePayload } from '@/utils/danger-notice-formatter';
 import { DangerNoticeSignoffCard } from '@/components/certificates/DangerNoticeSignoffCard';
 
-// --- Constants ---
+/*
+ * Page styling comes from the shared kit. These were local copies that had
+ * drifted from every other Notices & Labels page — see components/forms/pageStyles.
+ */
+import { pageInputCn as inputCn, pageTextareaCn as textareaCn } from '@/components/forms/pageStyles';
 
-const inputCn = 'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
-const textareaCn = 'textarea-soft rounded-xl border-0 bg-white/[0.05] px-3.5 py-3 text-base md:text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors focus:bg-white/[0.07] focus:ring-1 focus:ring-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/50 focus:outline-none focus:shadow-none min-h-[90px] touch-manipulation';
+import { PageHeader } from '@/components/forms/PageHeader';
+
+// --- Constants ---
 
 const dangerTypes = [
   { key: 'riskOfFire' as const, label: 'Fire' },
@@ -454,36 +459,30 @@ export default function DangerNoticePage() {
   return (
     <div className="bg-background min-h-screen">
       {/* Header */}
-      <div className="px-4 pt-3 pb-1 lg:px-8">
-        <div className="mx-auto max-w-3xl lg:max-w-[1600px]">
-          <button
-            onClick={() => navigate(-1)}
-            className="h-11 pr-2 text-[13px] font-semibold text-white/90 transition-colors hover:text-white touch-manipulation"
-          >
-            Back
-          </button>
-          <div className="flex items-end justify-between gap-3">
-            <div>
-              <h1 className="text-2xl font-bold tracking-tight text-white sm:text-[28px]">Danger Notice</h1>
-              <p className="mt-1 text-[13px] text-white/50"><span className="font-semibold text-red-400">C1 — Danger present.</span> Advises the responsible person of dangerous condition(s) requiring urgent remedial action.</p>
-              {data.referenceNumber && <p className="mt-1 font-mono text-[12px] text-white/50">{data.referenceNumber}</p>}
-            </div>
+      <PageHeader
+        eyebrow="BS 7671"
+        title="Danger Notice"
+        lead="C1 — Danger present."
+        leadTone="danger"
+        description="Advises the responsible person of dangerous condition(s) requiring urgent remedial action."
+        reference={data.referenceNumber}
+        actions={
             <button
-              onClick={() => { storageSetJSONSync(DRAFT_KEY, data); toast.success('Draft saved'); }}
-              className="h-11 text-[13px] font-semibold text-white/90 transition-colors hover:text-white touch-manipulation"
+            onClick={() => { storageSetJSONSync(DRAFT_KEY, data); toast.success('Draft saved'); }}
+            className="h-11 text-[13px] font-semibold text-white transition-opacity hover:opacity-80 touch-manipulation"
             >
-              Save draft
+            Save draft
             </button>
-          </div>
-        </div>
-      </div>
+        }
+      />
 
-      <main className="mx-auto max-w-3xl lg:max-w-[1600px] px-4 lg:px-8 py-4 pb-48 sm:pb-8 space-y-5 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
+
+      <main className="mx-auto max-w-3xl lg:max-w-none xl:max-w-[1700px] px-4 lg:px-8 py-4 pb-48 sm:pb-8 space-y-5 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
 
         {/* Linked EICR */}
         {data.linkedEicrCertNumber && (
           <div className="-mx-4 rounded-none border-y border-white/[0.12] bg-gradient-to-b from-white/[0.07] to-white/[0.03] sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-3 lg:col-span-2">
-            <p className="text-[12.5px] text-white/90">Linked to EICR</p>
+            <p className="text-[12.5px] text-white">Linked to EICR</p>
             <p className="font-mono text-[13px] font-semibold text-white">{data.linkedEicrCertNumber}</p>
           </div>
         )}
@@ -542,7 +541,7 @@ export default function DangerNoticePage() {
               <Field label="Postcode"><Input value={data.installationPostcode} onChange={(e) => update('installationPostcode', e.target.value)} className={inputCn} /></Field>
             </>
           ) : (
-            <p className="text-[12.5px] text-white/90">Same as client address</p>
+            <p className="text-[12.5px] text-white">Same as client address</p>
           )}
         </Section>
 
@@ -664,14 +663,14 @@ export default function DangerNoticePage() {
         {/* Contractor declaration */}
         <Section className="lg:col-span-2">
           <SectionHeading title="Contractor declaration" />
-          <p className="text-[12.5px] leading-relaxed text-white/90">{data.declarationText}</p>
+          <p className="text-[12.5px] leading-relaxed text-white">{data.declarationText}</p>
           <SignatureInput label="Contractor Signature *" value={data.contractorSignature} onChange={(sig) => update('contractorSignature', sig || '')} />
         </Section>
 
         {/* Client acknowledgement */}
         <Section className="lg:col-span-2">
           <SectionHeading title="Client acknowledgement" />
-          <p className="text-[12.5px] leading-relaxed text-white/90">{data.acknowledgementText}</p>
+          <p className="text-[12.5px] leading-relaxed text-white">{data.acknowledgementText}</p>
           <Field label="Client refused to sign">
             <YesNoToggle value={data.clientRefusedToSign} onChange={(v) => update('clientRefusedToSign', v)} yesLabel="Refused" noLabel="Will Sign" yesDanger />
           </Field>

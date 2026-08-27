@@ -26,9 +26,10 @@ const PROJECT_COLOUR = '#6366F1';
  * that's still ahead. Events mirror the exact shape of useTasksForCalendar so
  * they slot straight into the Month/Week/Day views + agenda with no changes.
  */
-export function useProjectsForCalendar(dateFrom: string, dateTo: string) {
+export function useProjectsForCalendar(dateFrom: string, dateTo: string, enabled = true) {
   return useQuery({
     queryKey: ['projects-for-calendar', dateFrom, dateTo],
+    enabled,
     queryFn: async (): Promise<CalendarEvent[]> => {
       const {
         data: { user },

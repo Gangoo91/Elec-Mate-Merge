@@ -14,6 +14,14 @@ import { storageGetJSONSync, storageSetJSONSync, storageRemoveSync } from '@/uti
 import { reportCloud } from '@/utils/reportCloud';
 import { formatPermitToWorkPayload } from '@/utils/permit-to-work-formatter';
 
+/*
+ * Page styling comes from the shared kit. These were local copies that had
+ * drifted from every other Notices & Labels page — see components/forms/pageStyles.
+ */
+import { pageInputCn as inputCn, pageTextareaCn as textareaCn } from '@/components/forms/pageStyles';
+
+import { PageHeader } from '@/components/forms/PageHeader';
+
 const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.04 } } };
 const itemVariants = { hidden: { opacity: 0, y: 8 }, visible: { opacity: 1, y: 0, transition: { duration: 0.25 } } };
 
@@ -155,8 +163,6 @@ const defaultData = (): PermitData => ({
 });
 
 const DRAFT_KEY = 'elec-mate-draft-permit-to-work';
-const inputCn = 'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
-const textareaCn = 'textarea-soft rounded-xl border-0 bg-white/[0.05] px-3.5 py-3 text-base md:text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors focus:bg-white/[0.07] focus:ring-1 focus:ring-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/50 focus:outline-none focus:shadow-none min-h-[90px] touch-manipulation';
 const dateTimeCn = inputCn;
 
 const Section = ({ title, children, className }: { title: string; children: React.ReactNode; className?: string }) => (
@@ -372,20 +378,16 @@ export default function PermitToWorkPage() {
 
   return (
     <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
-      <div className="px-4 pt-3 pb-1 lg:px-8">
-        <div className="mx-auto max-w-3xl lg:max-w-[1600px]">
-          <button onClick={() => navigate(-1)} className="h-11 pr-2 text-[13px] font-semibold text-white/90 transition-colors hover:text-white touch-manipulation">Back</button>
-          <div className="flex items-end justify-between gap-3">
-            <div>
-              <h1 className="text-2xl font-bold tracking-tight text-white sm:text-[28px]">Permit to Work</h1>
-              <p className="mt-1 text-[13px] text-white/50"><span className="font-semibold text-elec-yellow">Formal authorisation.</span> Work on electrical systems in accordance with HSE HSG250 and BS 7671:2018+A3:2024 — Issue, Receipt, Clearance, Cancellation.</p>
-              <p className="mt-1 font-mono text-[12px] text-white/50">{data.permitNumber}</p>
-            </div>
-          </div>
-        </div>
-      </div>
+      <PageHeader
+        eyebrow="HSE"
+        title="Permit to Work"
+        lead="Formal authorisation."
+        description="Work on electrical systems in accordance with HSE HSG250 and BS 7671:2018+A3:2024 — Issue, Receipt, Clearance, Cancellation."
+        reference={data.permitNumber}
+      />
 
-      <motion.main variants={containerVariants} initial="hidden" animate="visible" className="px-4 py-4 space-y-5 mx-auto max-w-3xl lg:max-w-[1600px] lg:px-8 lg:grid lg:grid-cols-2 lg:gap-4 lg:space-y-0">
+
+      <motion.main variants={containerVariants} initial="hidden" animate="visible" className="px-4 py-4 space-y-5 mx-auto max-w-3xl lg:max-w-none xl:max-w-[1700px] lg:px-8 lg:grid lg:grid-cols-2 lg:gap-4 lg:space-y-0">
 
         {/* Reference */}
         <Section title="Reference">
@@ -446,7 +448,7 @@ export default function PermitToWorkPage() {
         {/* Part 1: Hazards */}
         <Section title="Part 1 — Hazards identified">
           <div className="flex items-center justify-between gap-3">
-            <p className="text-[12.5px] text-white/90">Select all hazards present</p>
+            <p className="text-[12.5px] text-white">Select all hazards present</p>
             <button onClick={applyStandardElectrical} className="h-11 shrink-0 rounded-xl border border-white/[0.12] bg-white/[0.04] px-4 text-[13px] font-semibold text-white hover:bg-white/[0.08] touch-manipulation active:scale-[0.98] transition-colors">
               Standard Electrical
             </button>
@@ -505,7 +507,7 @@ export default function PermitToWorkPage() {
 
         {/* Part 2: Receipt */}
         <Section title="Part 2 — Receipt">
-          <p className="border-b border-white/[0.06] pb-3 text-[12.5px] text-white/90 leading-relaxed">{data.receiptDeclaration}</p>
+          <p className="border-b border-white/[0.06] pb-3 text-[12.5px] text-white leading-relaxed">{data.receiptDeclaration}</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <Field label="Person in Charge"><Input value={data.personInChargeName} onChange={(e) => update('personInChargeName', e.target.value)} className={inputCn} /></Field>
             <Field label="Position"><Input value={data.personInChargePosition} onChange={(e) => update('personInChargePosition', e.target.value)} className={inputCn} /></Field>

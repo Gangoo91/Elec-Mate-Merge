@@ -18,7 +18,12 @@ export interface CertificateEmailData {
     | 'ev-charging'
     | 'pat-testing'
     | 'fire-alarm'
-    | 'emergency-lighting';
+    | 'emergency-lighting'
+    // Not a certificate, but issued, filed and emailed exactly like one
+    // (ELE-1615). send-certificate-resend routes it to
+    // generate-board-schedule-pdf; the CU door label is deliberately not
+    // sendable — it is a sticker for the inside of a consumer unit.
+    | 'board-schedule';
   reportId: string;
   certificateNumber?: string;
   clientName?: string;

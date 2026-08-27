@@ -16,9 +16,10 @@ interface SparkTaskRow {
  * Lightweight hook: fetches open tasks with due dates in a given range
  * and converts them to CalendarEvent objects for display on the calendar.
  */
-export function useTasksForCalendar(dateFrom: string, dateTo: string) {
+export function useTasksForCalendar(dateFrom: string, dateTo: string, enabled = true) {
   return useQuery({
     queryKey: ['tasks-for-calendar', dateFrom, dateTo],
+    enabled,
     queryFn: async (): Promise<CalendarEvent[]> => {
       const {
         data: { user },

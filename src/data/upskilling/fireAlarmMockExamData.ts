@@ -179,7 +179,7 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     options: [
       'Entire building contents',
       'Specific risks or areas',
-      'Life safety only',
+      'Only life safety, with no property cover',
       'Structural elements',
     ],
     correctAnswer: 1,
@@ -229,7 +229,7 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     question: 'What is the key difference between Category L and Category P systems?',
     options: [
       'Primary purpose - life vs property protection',
-      'Whether the system is addressable or conventional',
+      'Addressable versus conventional wiring',
       'The number of detection zones permitted',
       'The type of standby battery required',
     ],
@@ -403,9 +403,9 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     question: 'Which type of detector is most suitable for detecting smouldering fires?',
     options: [
       'Ionisation smoke detector',
-      'Heat detector',
+      'A fixed-temperature heat detector',
       'Optical smoke detector',
-      'Flame detector',
+      'An infrared flame detector',
     ],
     correctAnswer: 2,
     explanation:
@@ -894,7 +894,7 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
       'A single common audible sounder in each zone',
       'A zone plan combined with a text or graphic display',
       'Colour-coded indicator lamps with no labelling',
-      'A printed handout given to the occupants of the building',
+      'A printed handout given to occupants',
     ],
     correctAnswer: 1,
     explanation:
@@ -1080,7 +1080,7 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
       'Use average dimensions',
       'Apply safety factors',
       'Divide into regular sections',
-      'Use engineering judgement alone',
+      'Rely on judgement alone',
     ],
     correctAnswer: 2,
     explanation:
@@ -1320,8 +1320,8 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     options: [
       'In protected routes',
       'Above suspended ceilings',
-      'Underground',
-      'Externally',
+      'Underground in buried ducts',
+      'Externally along the outside walls',
     ],
     correctAnswer: 0,
     explanation:
@@ -1521,7 +1521,7 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     options: [
       'Both certificate and manual',
       'User manual only',
-      'Installation certificate only',
+      'Installation certificate',
       'Warranty document only',
     ],
     correctAnswer: 0,
@@ -1589,7 +1589,7 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     options: [
       'Power supply test',
       'Detector function test',
-      'Battery test',
+      'Standby battery capacity test',
       'Sounder test',
     ],
     correctAnswer: 0,
@@ -1622,9 +1622,9 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     question: 'How long should the installation certificate be retained?',
     options: [
       'No specific requirement',
-      '5 years',
+      '5 years from the date of issue',
       'Life of the system',
-      '1 year',
+      '1 year after commissioning',
     ],
     correctAnswer: 2,
     explanation:
@@ -1690,9 +1690,9 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     question: 'How should cable routes be documented?',
     options: [
       'Verbal description',
-      'Photographs',
+      'Photographs taken on completion',
       'As-built drawings',
-      'Not required',
+      'Not required for cable routes',
     ],
     correctAnswer: 2,
     explanation:
@@ -1743,7 +1743,7 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
       'None required',
       'All building services',
       'Electrical services only',
-      'HVAC systems only',
+      'HVAC and ventilation systems only',
     ],
     correctAnswer: 1,
     explanation:
@@ -1757,8 +1757,8 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     id: 102,
     question: 'How should temporary systems be handled during phased installation?',
     options: [
-      'Not permitted',
-      'Partial commissioning',
+      'Not permitted under any circumstances',
+      'Partial commissioning of the final system',
       'Separate temporary system',
       'Temporary connections allowed',
     ],
@@ -1776,7 +1776,7 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     options: [
       'Manual handling of heavy items of site plant',
       'Falls from height when working on access equipment',
-      'Exposure to asbestos contained within the floor screed',
+      'Exposure to asbestos in the floor screed',
       'Noise-induced hearing loss caused by the work',
     ],
     correctAnswer: 1,
@@ -2015,7 +2015,7 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     question: 'Which outcome is LEAST likely to result from failing to maintain a fire alarm system?',
     options: [
       'Invalidated insurance cover',
-      'Reduced detection reliability',
+      'Reduced detection reliability and more false alarms',
       'Possible prosecution of the responsible person',
       'Automatic upgrade of the system category',
     ],
@@ -2085,7 +2085,7 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
       "Washing the head in soapy water",
       "The manufacturer's recommended method",
       "Spraying with a solvent degreaser",
-      "Blowing through with compressed air only",
+      'Blowing through with compressed air',
     ],
     correctAnswer: 1,
     explanation:
@@ -2102,7 +2102,7 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
       'The CV of the author of the fire risk assessment',
       'The fire alarm log book and previous service records',
       'The lease agreement covering the whole building',
-      'The electrical installation condition report for the site',
+      'The electrical installation condition report',
     ],
     correctAnswer: 1,
     explanation:
@@ -2206,7 +2206,7 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
       'An unlimited fine and up to 2 years imprisonment',
       'A fixed penalty notice for a sum of £5,000',
       'A formal written warning and nothing further',
-      'A maximum fine of £1,000 with no other penalty at all',
+      'A maximum fine of £1,000 and no other penalty',
     ],
     correctAnswer: 0,
     explanation:
@@ -2307,7 +2307,7 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
       'Local authority',
       'Health and Safety Executive',
       'Fire and rescue service',
-      'Building control',
+      'The building control body for the area',
     ],
     correctAnswer: 2,
     explanation:
@@ -2391,7 +2391,7 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     options: [
       'The provision of portable fire extinguishers and nothing else',
       'Only the structural fire resistance designed into the building',
-      'Solely the fire alarm and detection system installed within the building',
+      'Solely the fire alarm and detection system in the building',
       'Measures for prevention, detection, warning, escape and firefighting',
     ],
     correctAnswer: 3,
@@ -2409,7 +2409,7 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
       'Domestic premises',
       'Small offices',
       'Schools',
-      'None - all covered',
+      'None are exempt',
     ],
     correctAnswer: 0,
     explanation:

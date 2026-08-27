@@ -54,6 +54,8 @@ const getTypeLabel = (type: string, data?: Record<string, unknown>) => {
       return 'PERMIT';
     case 'safe-isolation':
       return 'SAFE ISO';
+    case 'board-schedule':
+      return 'BOARD SCH';
     case 'limitation-notice':
       return 'LIMITATION';
     case 'non-compliance-notice':

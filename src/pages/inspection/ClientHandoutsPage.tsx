@@ -8,6 +8,14 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 
+/*
+ * Page styling comes from the shared kit. These were local copies that had
+ * drifted from every other Notices & Labels page — see components/forms/pageStyles.
+ */
+import { pageInputCn as inputCn } from '@/components/forms/pageStyles';
+
+import { PageHeader } from '@/components/forms/PageHeader';
+
 const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.04 } } };
 const itemVariants = { hidden: { opacity: 0, y: 8 }, visible: { opacity: 1, y: 0, transition: { duration: 0.25 } } };
 
@@ -105,9 +113,6 @@ const handouts: HandoutDef[] = [
   },
 ];
 
-const inputCn =
-  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
-
 export default function ClientHandoutsPage() {
   const navigate = useNavigate();
   const [generatingId, setGeneratingId] = useState<string | null>(null);
@@ -176,33 +181,20 @@ export default function ClientHandoutsPage() {
   return (
     <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
       {/* Header */}
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm">
-        <div className="px-4 pt-3 pb-2 lg:px-8">
-          <div className="mx-auto max-w-3xl lg:max-w-[1600px]">
-            <button
-              onClick={() => navigate(-1)}
-              className="h-11 pr-2 text-[13px] font-semibold text-white/90 transition-colors hover:text-white touch-manipulation"
-            >
-              Back
-            </button>
-            <div className="flex items-end justify-between gap-3">
-              <div>
-                <h1 className="text-2xl font-bold tracking-tight text-white sm:text-[28px]">Client Handouts</h1>
-                <p className="mt-1 text-[13px] text-white/50">
-                  <span className="font-semibold text-elec-yellow">{handouts.length} branded PDF templates.</span>{' '}
-                  Your company name, logo, phone and email are added automatically from Business Settings — leave them with clients after jobs.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <PageHeader
+        eyebrow="Printable"
+        title="Client Handouts"
+        lead={`${handouts.length} branded PDF templates.`}
+        description={`${' '}
+                  Your company name, logo, phone and email are added automatically from Business Settings — leave them with clients after jobs.`}
+      />
+
 
       <motion.main
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="mx-auto max-w-3xl px-4 py-4 space-y-4 lg:max-w-[1600px] lg:px-8"
+        className="mx-auto max-w-3xl px-4 py-4 space-y-4 lg:max-w-none xl:max-w-[1700px] lg:px-8"
       >
         {/* Handout cards */}
         <motion.section variants={itemVariants} className="space-y-3">
@@ -217,13 +209,13 @@ export default function ClientHandoutsPage() {
                     <h3 className="min-w-0 flex-1 text-[15px] font-semibold leading-tight text-white">
                       {handout.title}
                     </h3>
-                    <span className="flex-shrink-0 rounded border border-white/[0.1] bg-white/[0.06] px-2 py-0.5 text-[11px] font-medium text-white/90">
+                    <span className="flex-shrink-0 rounded border border-white/[0.1] bg-white/[0.06] px-2 py-0.5 text-[11px] font-medium text-white">
                       {handout.pages}
                     </span>
                   </div>
 
                   {/* Description */}
-                  <p className="mb-3 text-[12.5px] leading-relaxed text-white/90">{handout.description}</p>
+                  <p className="mb-3 text-[12.5px] leading-relaxed text-white">{handout.description}</p>
 
                   {/* Location fields for New Build Handover */}
                   {handout.id === 'new-build-handover' && (

@@ -46,9 +46,9 @@ export const gsCat2Questions: StandardMockQuestion[] = [
     question:
       'Which of the following is an example of a short-term goal for an electrical apprentice?',
     options: [
-      'Retire at age 55 with a full pension',
-      'Become a Senior Technician within ten years',
-      'Achieve Chartered Engineer status by 2035',
+      'Retire at age 55 on a full pension &mdash; the ultimate long game',
+      'Become a Senior Technician within ten years &mdash; a decade of steady progress',
+      'Achieve Chartered Engineer status by 2035 &mdash; a goal a decade away',
       'Pass next month&rsquo;s City &amp; Guilds 2365 unit assessment',
     ],
     correctAnswer: 3,
@@ -114,9 +114,9 @@ export const gsCat2Questions: StandardMockQuestion[] = [
     id: 47,
     question: 'What is the primary purpose of writing goals down, according to Dr Gail Matthews?',
     options: [
-      'It eliminates the need for deadlines',
-      'It satisfies employer requirements',
-      'It reduces the need for planning',
+      'It removes the need to set a deadline for each step',
+      'It satisfies the employer&rsquo;s paperwork requirements',
+      'It reduces the amount of planning that you need to do',
       'You are significantly more likely to achieve them',
     ],
     correctAnswer: 3,
@@ -218,10 +218,10 @@ export const gsCat2Questions: StandardMockQuestion[] = [
     id: 53,
     question: 'What is a "process goal"?',
     options: [
-      'A goal describing the final result you want',
+      'A goal describing the final result you want, expressed as a date and a number',
       'A goal focused on the specific actions or behaviours you will carry out',
-      'A goal about changing your core identity',
-      'A goal that only applies to manufacturing processes',
+      'A goal about changing your core identity rather than your habits',
+      'A goal that applies only to manufacturing and production processes',
     ],
     correctAnswer: 1,
     explanation:
@@ -235,10 +235,10 @@ export const gsCat2Questions: StandardMockQuestion[] = [
     id: 54,
     question: 'Which of the following best describes the Eisenhower Matrix?',
     options: [
-      'A technique for wiring three-phase systems',
-      'A method for calculating electrical load',
+      'A technique for balancing loads across three-phase systems',
+      'A method for calculating the maximum demand of an installation',
       'A tool for prioritising tasks by urgency and importance',
-      'A formula for cable voltage drop',
+      'A formula for working out the voltage drop in a cable run',
     ],
     correctAnswer: 2,
     explanation:
@@ -270,9 +270,9 @@ export const gsCat2Questions: StandardMockQuestion[] = [
     question: 'Which of the following is a long-term career goal for an electrician?',
     options: [
       'Achieve Chartered Engineer (CEng) status within five years',
-      'Complete next week&rsquo;s timesheet before Friday',
-      'Pass tomorrow&rsquo;s mock exam on inspection and testing',
-      'Read one chapter of BS 7671 this evening',
+      'Complete next week&rsquo;s timesheet before Friday (the payroll cut-off)',
+      'Pass tomorrow&rsquo;s mock exam on inspection and testing (40 questions)',
+      'Read one chapter of BS 7671 this evening (around 40 minutes)',
     ],
     correctAnswer: 0,
     explanation:
@@ -306,10 +306,10 @@ export const gsCat2Questions: StandardMockQuestion[] = [
     id: 58,
     question: 'What is "goal cascading"?',
     options: [
-      'Increasing goal difficulty every week automatically',
-      'Abandoning goals when they become difficult',
+      'Increasing the difficulty of every goal automatically at the start of each week',
+      'Abandoning a goal as soon as it starts to become difficult',
       'Breaking long-term goals into progressively shorter-term actions',
-      'Setting the same goal for every team member',
+      'Setting exactly the same goal for every member of the team',
     ],
     correctAnswer: 2,
     explanation:
@@ -323,9 +323,9 @@ export const gsCat2Questions: StandardMockQuestion[] = [
     id: 59,
     question: 'What is an "implementation intention" as described by Peter Gollwitzer?',
     options: [
-      'A financial budget for training courses',
-      'A general desire to improve your career',
-      'A written contract signed by your employer',
+      'A financial budget that sets money aside for training courses',
+      'A general desire to improve your career prospects over time',
+      'A written training contract signed by you and your employer',
       'An "if-then" plan linking a situation to a specific action',
     ],
     correctAnswer: 3,
@@ -376,10 +376,10 @@ export const gsCat2Questions: StandardMockQuestion[] = [
     id: 62,
     question: 'What is the "planning fallacy" identified by Daniel Kahneman?',
     options: [
-      'The habit of over-planning and never starting',
-      'The belief that planning is unnecessary for simple tasks',
+      'The habit of over-planning a task and never actually starting it',
+      'The belief that planning is unnecessary for simple, familiar tasks',
       'The tendency to underestimate the time needed to complete tasks',
-      'The tendency to set too many goals simultaneously',
+      'The tendency to set far too many separate goals at the same time',
     ],
     correctAnswer: 2,
     explanation:
@@ -429,10 +429,10 @@ export const gsCat2Questions: StandardMockQuestion[] = [
     id: 65,
     question: 'What is a "personal mission statement" as described by Stephen Covey?',
     options: [
-      'A formal business plan submitted to your employer each year',
+      'A formal business plan, submitted to your employer at the start of each year',
       'A written declaration of your core values, purpose, and long-term vision',
-      'A list of measurable targets with deadlines for the next quarter',
-      'A signed contract committing you to a specific qualification',
+      'A list of measurable targets, each with a deadline, for the coming quarter',
+      'A signed contract, committing you to a specific qualification by a set date',
     ],
     correctAnswer: 1,
     explanation:
@@ -483,9 +483,9 @@ export const gsCat2Questions: StandardMockQuestion[] = [
       'An electrician sets the goal: "I want to earn more money." Why does this fail the SMART criteria?',
     options: [
       'It is not specific, measurable, or time-bound',
-      'It is too specific and leaves no room for flexibility',
-      'It is challenging but not relevant to an electrician',
-      'It has a deadline but no clear method of measurement',
+      'It is too specific, and leaves no room for flexibility at all',
+      'It is challenging, but not relevant to an electrician',
+      'It has a deadline, but no measure',
     ],
     correctAnswer: 0,
     explanation:
@@ -518,10 +518,10 @@ export const gsCat2Questions: StandardMockQuestion[] = [
     question:
       'What does "feedback" mean in the context of Locke &amp; Latham&rsquo;s five goal-setting principles?',
     options: [
-      'Receiving criticism from your employer about your work',
-      'Completing an anonymous customer satisfaction survey',
+      'Receiving criticism from your employer about the standard of your work on site',
+      'Completing an anonymous customer satisfaction survey at the end of each job',
       'Regularly reviewing progress towards your goal and adjusting your approach',
-      'Writing online reviews for training providers',
+      'Writing online reviews of all the training providers you have used in the past',
     ],
     correctAnswer: 2,
     explanation:
@@ -535,9 +535,9 @@ export const gsCat2Questions: StandardMockQuestion[] = [
     id: 71,
     question: 'How does an implementation intention differ from a standard goal?',
     options: [
-      'It is written by an employer or assessor rather than chosen by the individual',
-      'It states the desired outcome without committing to any measure of success',
-      'It applies only to long-term career ambitions and never to everyday tasks',
+      'It is written by an employer or assessor, rather than chosen by the individual concerned',
+      'It states the desired outcome, without committing to any measure of success',
+      'It applies only to long-term career ambitions, never to everyday tasks',
       'It specifies when, where, and how you will act, not just what you want to achieve',
     ],
     correctAnswer: 3,
@@ -592,7 +592,7 @@ export const gsCat2Questions: StandardMockQuestion[] = [
       'An electrician wants to progress from Approved Electrician to Senior Technician within four years. Using goal cascading, which sequence best represents the correct breakdown?',
     options: [
       'Year 1: Study alone without sitting any exams &rarr; Year 2: Continue studying with no assessment &rarr; Year 3: Sit every exam in a single week &rarr; Year 4: Apply for grading with no design experience',
-      'Year 1: Apply for Senior Technician grade immediately &rarr; Year 2: Complete whichever qualifications are demanded &rarr; Year 3: Wait for a decision &rarr; Year 4: Collect the ECS card',
+      'Year 1: Apply for Senior Technician grade immediately &rarr; Year 2: Complete whichever qualifications are demanded afterwards &rarr; Year 3: Wait for a decision from the grading panel &rarr; Year 4: Collect the ECS card',
       'Year 1: Complete C&amp;G 2396 &amp; 2919 &rarr; Year 2: Gain design experience &amp; register with NICEIC &rarr; Year 3: Begin IET IEng application &rarr; Year 4: Achieve Technician then Senior Technician grade',
       'Year 1: Change employer for a pay rise &rarr; Year 2: Change employer again for a job title &rarr; Year 3: Request promotion without qualifications &rarr; Year 4: Demand Senior Technician status',
     ],
@@ -628,9 +628,9 @@ export const gsCat2Questions: StandardMockQuestion[] = [
       'A self-employed electrician consistently underestimates how long jobs take, leading to missed deadlines and financial losses. Which combination of strategies from goal-setting research would best address this?',
     options: [
       'Use reference class forecasting (Kahneman) to estimate durations, set specific time-bound goals (Locke &amp; Latham), and create implementation intentions (Gollwitzer) for schedule reviews',
-      'Set vague &ldquo;do your best&rdquo; goals with no deadline attached, avoid tracking how long past jobs actually took, and rely on memory rather than any written schedule review',
-      'Quote deliberately optimistic timescales to win the work, explain the overruns to clients afterwards, and keep no record of actual durations for future estimating',
-      'Remove all deadlines from quotations to avoid the stress of missing them, set only vague effort goals, and review the schedule whenever the workload happens to feel heavy',
+      'Set vague &ldquo;do your best&rdquo; goals with no deadline attached, avoid tracking how long past jobs actually took, and rely on memory (rather than any written record) at schedule reviews',
+      'Quote deliberately optimistic timescales to win the work, explain the overruns to clients afterwards (an apology &mdash; not an estimate), and keep no record of actual durations for future estimating',
+      'Remove all deadlines from quotations to avoid the stress of missing them (a client&rsquo;s patience is elastic), set only vague effort goals, and review the schedule whenever the workload happens to feel heavy',
     ],
     correctAnswer: 0,
     explanation:
@@ -663,8 +663,8 @@ export const gsCat2Questions: StandardMockQuestion[] = [
     question:
       'An electrician is building a five-year career plan incorporating IET professional registration. Which pathway correctly sequences the EngTech, IEng, and CEng levels with their typical requirements?',
     options: [
-      'IEng and CEng together as one joint submission &rarr; EngTech awarded afterwards as an honorary title following ten years of service',
-      'CEng first with no qualification requirements &rarr; IEng after a further two years &rarr; EngTech as the final and most senior grade',
+      'IEng and CEng together as one joint submission (a single application) &rarr; EngTech awarded afterwards as an honorary title following ten years of service',
+      'CEng first with no qualification requirements &rarr; IEng after a further two years (once experience allows) &rarr; EngTech as the final and most senior grade',
       'EngTech (Level 3 quals + competence) &rarr; IEng (BEng or equivalent + competence) &rarr; CEng (MEng or equivalent + leadership evidence)',
       'EngTech (requires a PhD) &rarr; IEng (requires an MBA) &rarr; CEng (requires a medical degree plus ten years of site work)',
     ],
@@ -700,9 +700,9 @@ export const gsCat2Questions: StandardMockQuestion[] = [
       'An experienced electrician creates a personal mission statement, uses the Eisenhower Matrix daily, and sets implementation intentions for study sessions. Despite this, progress towards their City &amp; Guilds 2396 qualification stalls. Based on goal-setting research, what is the most likely root cause?',
     options: [
       'The goal lacks genuine commitment &mdash; the electrician may not truly value the 2396 or believe they can achieve it, undermining persistence as described by Locke &amp; Latham',
-      'The three planning tools are mutually incompatible and cancel one another out, so combining a matrix with written intentions always stalls progress on a qualification',
-      'The Eisenhower Matrix must never be combined with implementation intentions, because sorting work by urgency overrides every study cue that has been planned in advance',
-      'A personal mission statement guarantees success entirely on its own, so the matrix and the implementation intentions are redundant additions that dilute the effort',
+      'The three planning tools are mutually incompatible and cancel one another out &mdash; combining a matrix with written intentions always stalls progress on a qualification',
+      'The Eisenhower Matrix must never be combined with implementation intentions &mdash; sorting work by urgency overrides every study cue that has been planned in advance',
+      'A personal mission statement guarantees success entirely on its own, so the matrix and the implementation intentions are redundant additions that only dilute the effort &mdash; nothing further is needed',
     ],
     correctAnswer: 0,
     explanation:

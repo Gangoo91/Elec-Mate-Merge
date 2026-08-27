@@ -87,6 +87,21 @@ const LAST_CERT_FIELDS: Record<ReportType, string[]> = {
   'g99-commissioning': [],
   'smoke-co-alarm': [],
   'testing-only': [],
+  /*
+   * A board schedule prefills nothing from a previous certificate. It has its
+   * own, far better mechanism — "Import from certificate" pulls the actual
+   * circuits, devices, cable sizes and Zs from a chosen cert rather than
+   * copying a handful of supply fields forward (ELE-1615).
+   */
+  'board-schedule': [],
+  /*
+   * ⚠️ These two were MISSING, which made `Record<ReportType, string[]>` a
+   * standing type error rather than the exhaustive map it is declared to be —
+   * so the compiler had stopped policing this list at all. Empty arrays keep
+   * the existing behaviour (no prefill) while restoring the check.
+   */
+  'heat-pump': [],
+  'fire-alarm-log-book': [],
 };
 
 export interface LastCertSuggestion {

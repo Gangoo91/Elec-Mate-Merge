@@ -76,6 +76,7 @@ const getTypeLabel = (type: string) => {
     'non-compliance-notice': 'NON-COMP',
     'completion-notice': 'COMPLETION',
     disconnection: 'DISCONN',
+    'board-schedule': 'BOARD SCH',
   };
   return labels[type] || type.toUpperCase().replace(/-/g, ' ').slice(0, 8);
 };

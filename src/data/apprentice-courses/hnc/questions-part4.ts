@@ -5,7 +5,7 @@ export const questionsPart4 = [
     question: 'What is the primary purpose of Part L of the Building Regulations?',
     options: [
       'Conservation of fuel and power',
-      'Fire safety requirements',
+      'Fire safety requirements for means of escape',
       'Structural integrity',
       'Access and facilities',
     ],
@@ -246,10 +246,10 @@ export const questionsPart4 = [
     id: 390,
     question: 'What is a thermal bridge in building construction?',
     options: [
-      'A deliberate gap left in insulation for ventilation purposes',
+      'A deliberate gap left in insulation so that trapped moisture can ventilate away',
       'A structural connection between two separate buildings',
       'An area where heat transfers more readily through the building envelope',
-      'A barrier installed to prevent moisture passing through walls',
+      'A barrier installed to stop moisture passing through the wall construction',
     ],
     correctAnswer: 2,
     explanation:
@@ -334,7 +334,7 @@ export const questionsPart4 = [
     options: [
       'To prevent theft of solar panels',
       'To prevent overheating of panels',
-      'To protect against lightning strikes',
+      'To protect the array against direct lightning strikes',
       'To disconnect the system if the grid fails',
     ],
     correctAnswer: 3,
@@ -452,10 +452,10 @@ export const questionsPart4 = [
     id: 402,
     question: 'What is embodied carbon in building construction?',
     options: [
-      'Carbon emitted by the building during its occupied operational life',
-      'Carbon stored within timber and other natural building materials',
+      'Carbon emitted by the building in use, from heating, lighting and power',
+      'Carbon locked into timber, hemp and other bio-based materials',
       'Carbon emissions from materials, construction and end-of-life',
-      'Carbon offset purchased to make a building carbon neutral',
+      'Carbon offsets purchased, usually as credits, to reach carbon neutrality',
     ],
     correctAnswer: 2,
     explanation:
@@ -470,7 +470,7 @@ export const questionsPart4 = [
     question: 'What is a nearly Zero Energy Building (nZEB)?',
     options: [
       'A building designed to consume no energy at all at any point in the calendar year',
-      'A building constructed entirely from recycled and reclaimed materials with no new stock',
+      'A building constructed entirely from recycled and reclaimed materials, with no new stock brought to site',
       'A building that exports more energy to the grid over the year than it imports from it',
       'A building with very high energy performance where remaining energy is largely from renewable sources',
     ],
@@ -488,7 +488,7 @@ export const questionsPart4 = [
     options: [
       'Significantly reduced energy consumption',
       'Elimination of the need for any lighting controls',
-      'Production of more heat output per unit of light',
+      'More heat output per lumen',
       'Higher illuminance than is possible with any other source',
     ],
     correctAnswer: 0,
@@ -520,7 +520,7 @@ export const questionsPart4 = [
     id: 406,
     question: "What does a building's carbon footprint include?",
     options: [
-      'Operational carbon emissions only',
+      'Operational carbon emissions only, excluding materials',
       'Embodied carbon from materials only',
       'Both operational and embodied carbon emissions',
       'On-site generation emissions only',
@@ -589,10 +589,10 @@ export const questionsPart4 = [
     id: 410,
     question: 'Why are lower flow temperatures beneficial for heat pump efficiency?',
     options: [
-      'They allow smaller diameter pipework to be used throughout',
-      'They remove the need for a buffer vessel in the system',
+      'They allow smaller pipework, cutting pump duty',
+      'They remove the need for a buffer vessel, simplifying the pipework',
       'They reduce the temperature lift required, improving COP',
-      'They eliminate the need for any defrost cycles in winter',
+      'They eliminate defrost cycles, since the evaporator stays above freezing',
     ],
     correctAnswer: 2,
     explanation:
@@ -657,10 +657,10 @@ export const questionsPart4 = [
     id: 414,
     question: 'What is the purpose of thermal mass in sustainable building design?',
     options: [
-      'To increase the airtightness of the building envelope',
-      'To reduce the structural loading on the building foundations',
+      'To increase airtightness, reducing uncontrolled infiltration losses',
+      'To reduce structural loading, allowing shallower foundations',
       'To store and release heat, stabilising internal temperatures',
-      'To provide acoustic separation between occupied spaces',
+      'To provide acoustic separation, isolating adjacent occupied spaces',
     ],
     correctAnswer: 2,
     explanation:
@@ -674,7 +674,7 @@ export const questionsPart4 = [
     id: 415,
     question: 'What is the g-value of glazing?',
     options: [
-      'The visible light transmission',
+      'The proportion of visible light transmitted through the pane',
       'The thermal resistance of the glass',
       'The U-value of the glazing',
       'The solar energy transmittance coefficient',
@@ -726,10 +726,10 @@ export const questionsPart4 = [
     id: 418,
     question: 'What is the performance gap in building energy use?',
     options: [
-      'The gap between different building types',
+      'The gap between the modelled performance of different building types',
       'The gap between old and new buildings',
       'The difference between predicted and actual energy consumption',
-      'The difference between heating and cooling loads',
+      'The difference between the heating and cooling loads across the year',
     ],
     correctAnswer: 2,
     explanation:
@@ -883,9 +883,9 @@ export const questionsPart4 = [
     question:
       'What is the typical COP of a ground source heat pump compared to an air source heat pump?',
     options: [
-      'GSHPs and ASHPs have identical COP at all temperatures',
+      'GSHPs and ASHPs have identical COP (3.0-4.0) at all temperatures',
       'GSHPs typically have lower COP (2.0-3.0 vs 3.5-5.0)',
-      'COP depends only on flow temperature, not the heat source',
+      'COP depends only on flow temperature (35-55°C), not the heat source',
       'GSHPs typically have higher COP (3.5-5.0 vs 2.5-4.0)',
     ],
     correctAnswer: 3,
@@ -917,10 +917,10 @@ export const questionsPart4 = [
     id: 429,
     question: 'What is the Future Homes Standard?',
     options: [
-      'A voluntary accreditation scheme for smart home technology',
+      'A voluntary accreditation scheme for smart home technology and connected heating',
       'UK regulations requiring new homes to be zero carbon ready from 2025',
       'A minimum space standard for the size of new dwellings',
-      'A grant scheme funding insulation upgrades to existing homes',
+      'A grant scheme funding insulation and low carbon heating upgrades to existing homes',
     ],
     correctAnswer: 1,
     explanation:
@@ -1020,8 +1020,8 @@ export const questionsPart4 = [
     id: 435,
     question: 'What is the net zero carbon definition for buildings?',
     options: [
-      'A building that produces zero carbon only during construction',
-      'A building that uses no fossil fuels in its heating systems',
+      'A building that produces zero carbon during construction, with operation excluded',
+      'A building that uses no fossil fuels in its heating or hot water systems at any time',
       'A building rated A on its Energy Performance Certificate',
       'Carbon emissions balanced by offsets or removals over the building lifecycle',
     ],
@@ -1231,7 +1231,7 @@ export const questionsPart4 = [
     options: [
       'Weekly visual check, quarterly brief test, biennial full test',
       'Monthly visual check, annual brief test only',
-      'No testing required if self-testing luminaires are used',
+      'No testing required, provided self-testing luminaires are fitted',
       'Daily visual check, monthly brief test, annual full duration test',
     ],
     correctAnswer: 3,
@@ -1264,10 +1264,10 @@ export const questionsPart4 = [
     id: 449,
     question: 'What is the purpose of a lighting control system using DALI?',
     options: [
-      'To supply luminaires with a higher voltage to reduce cable size',
+      'To supply luminaires with a higher voltage so that smaller cables can be used',
       'To provide digital addressable control of individual or grouped luminaires',
       'To convert mains AC into the DC required by LED drivers',
-      'To provide surge protection for the lighting distribution board',
+      'To provide surge protection for the lighting distribution board and its drivers',
     ],
     correctAnswer: 1,
     explanation:
@@ -1388,7 +1388,7 @@ export const questionsPart4 = [
       'To protect against transient overvoltages',
       'To protect against sustained overcurrent and overload',
       'To protect against earth fault and provide additional protection',
-      'To protect against undervoltage and supply brownouts',
+      'To protect against undervoltage',
     ],
     correctAnswer: 0,
     explanation:
@@ -1402,10 +1402,10 @@ export const questionsPart4 = [
     id: 457,
     question: 'According to BS 7671, when is SPD protection generally required?',
     options: [
-      'Where the installation is supplied by overhead distribution lines in a rural area',
+      'Where any part of the installation is supplied by an overhead distribution line, in a rural area',
       'When the consequence of overvoltage affects safety, public services, or valuable equipment',
-      'Where the prospective fault current measured at the origin exceeds 16 kA',
-      'On every final circuit in the installation regardless of the load connected',
+      'Where the prospective fault current at the origin exceeds 16 kA, measured under Ipf test',
+      'On every final circuit, regardless of the load connected or the type of premises',
     ],
     correctAnswer: 1,
     explanation:
@@ -1437,9 +1437,9 @@ export const questionsPart4 = [
     question:
       'What colour temperature is typically used for morning alertness in circadian lighting?',
     options: [
-      '1800-2200K (very warm amber)',
-      '2700-3000K (warm white)',
-      '4000K (neutral white)',
+      '1800-2200K (candle/amber)',
+      '2700-3000K (warm/soft white)',
+      '4000K (neutral/cool white)',
       '5500-6500K (cool white/daylight)',
     ],
     correctAnswer: 3,
@@ -1457,7 +1457,7 @@ export const questionsPart4 = [
       '12 W/m²',
       '8 W/m²',
       '5 W/m²',
-      'No specific limit',
+      'No W/m² limit is specified',
     ],
     correctAnswer: 0,
     explanation:
@@ -1559,7 +1559,7 @@ export const questionsPart4 = [
     question: 'What does IP65 rating indicate for a luminaire?',
     options: [
       'Protected against dust ingress and temporary immersion in water',
-      'Dust protected and protected against splashing water only',
+      'Dust protected and splash-proof',
       'Dust tight and protected against water jets',
       'Dust tight and protected against powerful water jets',
     ],
@@ -1593,7 +1593,7 @@ export const questionsPart4 = [
     question: 'What is the purpose of a lighting design calculation using the lumen method?',
     options: [
       'To determine the number of luminaires needed to achieve target illuminance',
-      'To calculate the point illuminance at a single location precisely',
+      'To calculate the precise illuminance at one point on the working plane below a luminaire',
       'To determine the glare rating of a proposed luminaire layout',
       'To calculate the energy consumption of a lighting installation',
     ],
@@ -1646,7 +1646,7 @@ export const questionsPart4 = [
     question: 'What does Modbus protocol provide in HVAC control systems?',
     options: [
       'Wireless mesh networking between battery-powered sensors',
-      'High-bandwidth video streaming for plant room CCTV',
+      'Video streaming for plant room CCTV',
       'Electrical isolation between control panels and field devices',
       'Serial communication for industrial devices',
     ],
@@ -1748,10 +1748,10 @@ export const questionsPart4 = [
     id: 477,
     question: 'What cable type is recommended between a VSD and motor?',
     options: [
-      'Standard unscreened PVC singles in conduit',
+      'Standard unscreened PVC/PVC singles in conduit',
       'Screened/shielded cable with symmetrical construction',
-      'Flexible rubber cable with no earth conductor',
-      'Mineral-insulated cable terminated without glands',
+      'Flexible rubber cable with no cpc/earth conductor',
+      'MICC/pyro cable terminated without glands',
     ],
     correctAnswer: 1,
     explanation:
@@ -1765,7 +1765,7 @@ export const questionsPart4 = [
     id: 478,
     question: 'What is the purpose of an Air Handling Unit (AHU)?',
     options: [
-      'To produce chilled water for distribution to cooling coils',
+      'To produce chilled water for distribution to cooling coils around the building',
       'To generate electricity from waste heat in the exhaust air',
       'To condition and circulate air for ventilation and climate control',
       'To store hot water for the building heating circuits',
@@ -1800,9 +1800,9 @@ export const questionsPart4 = [
     question: 'What is a fan coil unit (FCU)?',
     options: [
       'A local heating/cooling unit with fan and heat exchanger coil',
-      'A central plant item that chills water for the whole building',
-      'A duct-mounted device that recovers heat from extract air',
-      'A roof-mounted unit that rejects condenser heat to atmosphere',
+      'A central plant item that produces chilled/hot water for the whole building',
+      'A device recovering heat from extract/exhaust air',
+      'A roof-mounted unit that rejects condenser heat to outside air/atmosphere',
     ],
     correctAnswer: 0,
     explanation:
@@ -1816,7 +1816,7 @@ export const questionsPart4 = [
     id: 481,
     question: 'What is the advantage of a four-pipe FCU system over a two-pipe system?',
     options: [
-      'It uses smaller diameter pipework and less plant space',
+      'It uses smaller diameter pipework and takes up less plant room space',
       'Simultaneous heating and cooling capability in different zones',
       'It removes the need for a fan within each terminal unit',
       'It allows the system to run without any central chiller',
@@ -1833,10 +1833,10 @@ export const questionsPart4 = [
     id: 482,
     question: 'What is a Variable Air Volume (VAV) system?',
     options: [
-      'A system that varies supply air temperature at constant flow',
-      'A system that recirculates a fixed volume of air continuously',
+      'A system varying supply air temperature at constant flow/volume',
+      'A system recirculating a fixed volume with no fresh/outside air',
       'A system that varies airflow to match zone cooling/heating loads',
-      'A system that supplies only fresh air with no recirculation',
+      'A system supplying only fresh/outside air, never recirculated',
     ],
     correctAnswer: 2,
     explanation:
@@ -1884,7 +1884,7 @@ export const questionsPart4 = [
     id: 485,
     question: 'What is the purpose of a cooling tower in a chiller system?',
     options: [
-      'To chill water directly for the cooling coils',
+      'To chill water directly for the cooling coils served by the air handling units',
       'To reject heat from the chiller condenser to atmosphere',
       'To pressurise the chilled water circuit',
       'To filter the refrigerant within the chiller',
@@ -1901,8 +1901,8 @@ export const questionsPart4 = [
     id: 486,
     question: 'What is free cooling in a chilled water system?',
     options: [
-      'Running the chiller only at night when electricity is cheaper',
-      'Providing cooling at no cost using recovered waste heat',
+      'Running the chiller only at night when electricity is cheaper and storing the cooling',
+      'Providing cooling at no running cost by using heat recovered from the exhaust air',
       'Using cool outdoor conditions to provide cooling without running the chiller',
       'Cooling the building using its thermal mass alone',
     ],
@@ -1986,7 +1986,7 @@ export const questionsPart4 = [
     id: 491,
     question: "What is the purpose of the 'I' (Integral) term in PID control?",
     options: [
-      'To respond instantly to the present magnitude of error',
+      'To act on the present error',
       'To anticipate and dampen rapid future changes in error',
       'To set the maximum and minimum output limits of the controller',
       'To eliminate steady-state error over time',
@@ -2072,8 +2072,8 @@ export const questionsPart4 = [
     question: 'What is an optimum start controller in HVAC?',
     options: [
       'A controller that calculates when to start plant to achieve setpoint at occupancy',
-      'A controller that always starts plant at a fixed time each day',
-      'A controller that limits the inrush current when motors start',
+      'A controller that always starts plant at the same fixed time each day, whatever the weather',
+      'A controller that limits the inrush current drawn when the largest motors are started',
       'A controller that staggers plant starts to limit peak demand',
     ],
     correctAnswer: 0,
@@ -2088,10 +2088,10 @@ export const questionsPart4 = [
     id: 497,
     question: 'What is night setback in HVAC control?',
     options: [
-      'Switching all plant off completely overnight',
+      'Switching all heating/cooling plant off overnight',
       'Reducing heating/cooling setpoints during unoccupied periods',
-      'Running plant overnight to pre-cool the building fabric',
-      'Boosting ventilation rates during the night to purge heat',
+      'Running plant overnight to pre-cool/purge the fabric',
+      'Boosting night ventilation to purge heat from the slab/soffit',
     ],
     correctAnswer: 1,
     explanation:
@@ -2140,7 +2140,7 @@ export const questionsPart4 = [
     question: 'What is the purpose of seasonal commissioning in HVAC systems?',
     options: [
       'To verify and optimise system performance under different seasonal conditions',
-      'To shut down plant that is not required during a particular season',
+      'To shut down plant that is not required during a particular season and isolate it',
       'To rebalance airflows each time the clocks change',
       'To replace refrigerant before the cooling season begins',
     ],

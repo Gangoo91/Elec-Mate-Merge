@@ -31,10 +31,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 1,
     question: 'What is the main purpose of the Health and Safety at Work Act 1974?',
     options: [
-      'To establish building regulations for electrical installations',
+      'To set out design, installation and testing rules for electrical work',
       'To ensure the health, safety and welfare of all persons at work',
-      'To provide guidance on electrical installation methods',
-      'To regulate the testing and certification of electrical equipment',
+      'To give guidance on installation methods, materials and workmanship',
+      'To regulate the testing, inspection and certification of equipment',
     ],
     correctAnswer: 1,
     explanation:
@@ -83,9 +83,9 @@ export const am2QuestionBank: AM2Question[] = [
     question: "What does 'so far as is reasonably practicable' mean under HASAWA?",
     options: [
       'Balance the risk against cost, time and effort to reduce it',
-      'Reduce the risk regardless of any cost or difficulty involved',
-      'Take whatever action the employee considers appropriate',
-      'Comply only with the minimum standards set by the HSE',
+      'Reduce the risk regardless of cost, time or difficulty involved',
+      'Leave the choice of action to the employee, whatever the risk',
+      'Comply with the HSE minimum standards, and nothing beyond them',
     ],
     correctAnswer: 0,
     explanation:
@@ -99,10 +99,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 5,
     question: 'Who enforces HASAWA 1974 in most workplaces?',
     options: [
-      'The local authority environmental health department',
+      'The local authority environmental health department (EHO)',
       'Health and Safety Executive (HSE)',
-      'The Office for Product Safety and Standards',
-      'Individual trade unions and safety representatives',
+      'The Office for Product Safety and Standards (OPSS)',
+      'Individual trade unions and safety representatives (TUC-affiliated)',
     ],
     correctAnswer: 1,
     explanation:
@@ -116,10 +116,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 6,
     question: 'What are the maximum penalties for serious breaches of HASAWA 1974?',
     options: [
-      'A fixed penalty notice of up to £20,000',
-      'A written improvement notice only',
+      'A fixed penalty notice and/or £20,000 fine',
+      'An improvement/prohibition notice only',
       'Unlimited fine and/or imprisonment',
-      'A maximum fine of £5,000 with no custodial option',
+      'A maximum £5,000 fine in the magistrates\'/Crown Court',
     ],
     correctAnswer: 2,
     explanation:
@@ -134,8 +134,8 @@ export const am2QuestionBank: AM2Question[] = [
     question: 'Under HASAWA, must employers consult with employees on health and safety matters?',
     options: [
       'No, consultation is entirely at the employer’s discretion',
-      'Only where a recognised trade union is present on site',
-      'Consultation is only required after a reportable incident',
+      'Yes, but only where a recognised trade union is present',
+      'Yes, but only after a reportable incident has occurred',
       'Yes, either directly or through safety representatives',
     ],
     correctAnswer: 3,
@@ -238,10 +238,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 13,
     question: "What does 'danger' mean in the context of EAW 1989?",
     options: [
-      'Any defect that is recorded during a periodic inspection',
+      'Any defect recorded during a periodic inspection, however minor',
       'Risk of injury from electric shock, burns, fire or explosion',
-      'A circuit operating above the rated current capacity of its cable',
-      'Any installation not certified as compliant with BS 7671',
+      'A circuit operating above the rated capacity of its cable, on load',
+      'Any installation that is not certified, whatever its condition',
     ],
     correctAnswer: 1,
     explanation:
@@ -275,7 +275,7 @@ export const am2QuestionBank: AM2Question[] = [
     question: 'What is the difference between a hazard and a risk?',
     options: [
       'A hazard is a minor issue that can be tolerated; a risk is a serious issue needing urgent action',
-      'A hazard applies only to persons at work, whereas a risk applies only to plant and equipment used',
+      'A hazard applies only to persons at work; a risk applies only to plant and equipment',
       'A hazard is the likelihood that harm will occur; a risk is the source from which that harm arises',
       'A hazard is something with potential to cause harm; risk is the likelihood of harm occurring',
     ],
@@ -345,9 +345,9 @@ export const am2QuestionBank: AM2Question[] = [
     question: 'What does RIDDOR stand for?',
     options: [
       'Risk Investigation, Detection, Documentation and Organisational Reporting',
-      'Recording of Industrial Diseases and Dangerous Operations Register',
-      'Regulations for Industrial Danger Detection and Operational Review',
-      'Reporting of Injuries, Deaths and Dangerous Occurrences Regulations',
+      'Recording of Industrial Diseases, Deaths and Dangerous Operations',
+      'Regulations for Industrial Danger, Detection and Operational Review',
+      'Reporting of Injuries, Diseases and Dangerous Occurrences Regulations',
     ],
     correctAnswer: 3,
     explanation:
@@ -363,8 +363,8 @@ export const am2QuestionBank: AM2Question[] = [
     options: [
       'Electric shock or burn causing death, specified injury, or incapacity for more than 7 days',
       'Any electric shock felt by an employee, however minor, including a harmless static discharge',
-      'Any final circuit that trips its protective device more than once during the commissioning stage',
-      'Any installation found to be non-compliant with BS 7671 during a periodic inspection',
+      'Any final circuit that trips its protective device twice, whether during commissioning or later',
+      'Any installation found to be non-compliant with BS 7671, whether or not anyone was hurt',
     ],
     correctAnswer: 0,
     explanation:
@@ -378,10 +378,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 21,
     question: 'How quickly must fatal or specified injuries be reported under RIDDOR?',
     options: [
-      'Within 15 days of the incident and in writing to the HSE only',
+      'Within 15 days of the incident, in writing to the HSE only (form F2508)',
       'Without delay (immediately) and followed up within 10 days',
-      'Within 24 hours of the incident, by completing an online form',
-      'At the next scheduled health and safety meeting held on the site',
+      'Within 24 hours of the incident (online form only)',
+      'At the next scheduled health and safety meeting (site records)',
     ],
     correctAnswer: 1,
     explanation:
@@ -412,9 +412,9 @@ export const am2QuestionBank: AM2Question[] = [
     id: 23,
     question: 'Who is responsible for reporting incidents under RIDDOR?',
     options: [
-      'The injured person once they have recovered',
-      'Any colleague who witnessed the incident',
-      'The HSE inspector who is assigned to the premises',
+      'The injured person (once they have recovered)',
+      'Any witness to the incident (colleague or visitor)',
+      'The HSE inspector (assigned to the premises)',
       'The responsible person (usually the employer)',
     ],
     correctAnswer: 3,
@@ -450,8 +450,8 @@ export const am2QuestionBank: AM2Question[] = [
     options: [
       'The employee, who must buy their own',
       'The employer, free of charge',
-      'The client commissioning the work',
-      'The main contractor’s insurer',
+      'The client, who commissions the work',
+      'The insurer, under the main contractor\'s policy',
     ],
     correctAnswer: 1,
     explanation:
@@ -500,9 +500,9 @@ export const am2QuestionBank: AM2Question[] = [
     question: "What is the employee's duty regarding PPE?",
     options: [
       'Use it properly, report defects, store it correctly',
-      'Provide it for all of the other workers working on site',
-      'Modify it to suit the particular task that is undertaken',
-      'Replace it at their own expense when it wears out',
+      'Provide it for other workers, and replace it when needed',
+      'Modify it to suit the task, then hand it on to others',
+      'Buy it, maintain it and replace it at their own expense',
     ],
     correctAnswer: 0,
     explanation:
@@ -538,7 +538,7 @@ export const am2QuestionBank: AM2Question[] = [
       'Only the principal contractor, who is required to manage every duty on the site',
       'The client funding the project, who then passes all of the duties to others on site',
       'Clients, principal designers, principal contractors, designers and contractors',
-      'The architect and the structural engineer who prepare the design drawings and details',
+      'The architect and the structural engineer, who prepare the design drawings',
     ],
     correctAnswer: 2,
     explanation:
@@ -605,10 +605,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 34,
     question: 'Before using a ladder, what checks should be made?',
     options: [
-      'Confirm that the ladder has been PAT tested within the last twelve months',
-      'Ensure that the ladder is at least three metres long when fully extended',
+      'Confirm the ladder has been PAT tested, and record the test date on it',
+      'Measure the ladder, confirming it extends to at least three metres',
       'Check for damage, ensure suitable for task, correct angle, secure base',
-      'Verify that the ladder is rated to the BS 7671 requirements for site use',
+      'Verify the ladder is rated to BS 7671, as the standard requires for site use',
     ],
     correctAnswer: 2,
     explanation:
@@ -819,10 +819,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 82,
     question: 'What does TN-C-S (PME) mean?',
     options: [
-      'Separate neutral and protective conductors throughout the whole supply',
-      'A local earth electrode at the installation with no distributor earth',
+      'Separate neutral and protective conductors, throughout supply and installation',
+      'An earth electrode at the installation, with no distributor earth provided',
       'Combined neutral and protective conductor in supply, separate in installation',
-      'Combined neutral and protective conductor throughout the installation and supply',
+      'Combined neutral and protective conductor, throughout supply and installation',
     ],
     correctAnswer: 2,
     explanation:
@@ -889,10 +889,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 86,
     question: 'What are the two types of overcurrent?',
     options: [
-      'Earth leakage current and residual current',
-      'Inrush current and standing current',
+      'Earth leakage current and residual current (IΔn)',
+      'Inrush current and standing current (transient)',
       'Overload and fault current (short-circuit)',
-      'Touch current and protective conductor current',
+      'Touch current and protective conductor current (Reg 543.7)',
     ],
     correctAnswer: 2,
     explanation:
@@ -976,9 +976,9 @@ export const am2QuestionBank: AM2Question[] = [
     id: 91,
     question: 'Which requirement does BS 7671 place on workmanship and materials?',
     options: [
-      'Using the cheapest compliant materials that are available',
-      'Completing the work as quickly as the client requires it to be done',
-      'Following only the manufacturer’s instructions supplied',
+      'Using the cheapest materials available, provided they are compliant',
+      'Working as quickly as the client requires, whatever the standard',
+      'Following the manufacturer\'s instructions, and nothing further',
       'Skilled, competent work using proper materials and techniques',
     ],
     correctAnswer: 3,
@@ -1018,7 +1018,7 @@ export const am2QuestionBank: AM2Question[] = [
     options: [
       'Conductor colour, the overall cable length and the number of cores fitted',
       'The supply voltage, the supply frequency and the type of earthing system',
-      'The circuit protective device type and its breaking capacity at the board',
+      'The protective device type, and its breaking capacity at the board',
       'Installation method, ambient temperature, grouping, thermal insulation',
     ],
     correctAnswer: 3,
@@ -1068,10 +1068,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 134,
     question: 'When selecting a cable, what limit applies to the voltage drop between the origin and the point of use?',
     options: [
-      '5% of nominal voltage for lighting and 3% for other uses',
-      '2% of nominal voltage for all of the circuits',
+      '5% of nominal voltage for lighting, 3% for other uses',
+      '2% of nominal voltage, applied to all of the circuits',
       '3% of nominal voltage for lighting, 5% for other uses',
-      '10% of nominal voltage for all of the circuits',
+      '10% of nominal voltage, applied to all of the circuits',
     ],
     correctAnswer: 2,
     explanation:
@@ -1263,8 +1263,8 @@ export const am2QuestionBank: AM2Question[] = [
     options: [
       'Only metal water pipes within the bathroom, where supplementary bonding applies',
       'Gas, water, oil pipes, structural steel, central heating and air conditioning systems',
-      'The metal consumer unit enclosure and the meter tails at the origin of the installation',
-      'All of the plastic service pipes entering the building below ground level from the street',
+      'The metal consumer unit enclosure, the meter tails and the main switch',
+      'Plastic gas, water and oil service pipes, wherever they enter the building below ground',
     ],
     correctAnswer: 1,
     explanation:
@@ -1331,10 +1331,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 149,
     question: 'What is the extent of Zone 1 in a bathroom?',
     options: [
-      'The interior of the bath or shower basin only',
+      'The interior of the bath/shower basin only',
       'Above the bath/shower to 2.25m from floor level',
-      'The area 0.6m horizontally beyond the Zone 1 boundary',
-      'The entire room from floor to ceiling level',
+      'The area 0.6m beyond the bath/shower Zone 1 boundary',
+      'The entire room from floor to ceiling as Zones 0/1/2',
     ],
     correctAnswer: 1,
     explanation:
@@ -1429,7 +1429,7 @@ export const am2QuestionBank: AM2Question[] = [
     ],
     correctAnswer: 2,
     explanation:
-      'The minimum insulation resistance for circuits up to 500V is 1.0MΩ (Table 6.1 of BS 7671).',
+      'The minimum insulation resistance for circuits up to 500V is 1.0MΩ, tested at 500V DC. BS 7671 Table 64, under Regulation 643.3.2. Guidance Note 3 prints the same values as its Table 6.1, so look for Table 64 if you are working from the Regs on the day.',
     section: 'Insulation Testing',
     difficulty: 'basic',
     topic: 'Minimum Values',
@@ -1439,9 +1439,9 @@ export const am2QuestionBank: AM2Question[] = [
     id: 195,
     question: 'Before conducting insulation resistance tests, what precautions must be taken?',
     options: [
-      'Energise the circuit to confirm that it is live before any testing',
-      'Connect all of the loads and the appliances to the circuit first',
-      'Link the line and neutral conductors together at the consumer unit terminals',
+      'Energise the circuit first, to confirm it is live before testing',
+      'Connect all loads and appliances to the circuit, so everything is tested',
+      'Link the line and neutral conductors to earth, at the consumer unit',
       'Disconnect sensitive electronic equipment, ensure circuit is isolated',
     ],
     correctAnswer: 3,
@@ -1633,10 +1633,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 206,
     question: 'What is the first test in ring final circuit continuity testing?',
     options: [
-      'Measure the insulation resistance between conductors',
-      'Cross-connect line and neutral at the consumer unit',
+      'Measure insulation resistance, conductor to conductor (at 500 V d.c.)',
+      'Cross-connect line to neutral (L-N), then test at each socket',
       'Measure end-to-end resistance of each conductor (L, N, E)',
-      'Measure the loop impedance at the furthest socket',
+      'Measure loop impedance (Zs), at the furthest socket',
     ],
     correctAnswer: 2,
     explanation:
@@ -1651,9 +1651,9 @@ export const am2QuestionBank: AM2Question[] = [
     question:
       'In ring final circuit testing, what relationship should the line and neutral end-to-end readings have to one another?',
     options: [
-      'Line should be roughly 1.67 times the neutral reading',
-      'Neutral should read close to zero ohms',
-      'Line should read approximately double the neutral',
+      'Line roughly 1.67 times neutral (the r1/r2 ratio)',
+      'Neutral close to zero ohms (under 0.1Ω)',
+      'Line approximately double the neutral (2:1)',
       'Substantially the same (within 0.05Ω)',
     ],
     correctAnswer: 3,
@@ -1686,10 +1686,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 209,
     question: 'After measuring end-to-end resistance, what is the next step in ring testing?',
     options: [
-      'Carry out an insulation resistance test on the ring',
+      'Carry out an insulation resistance test, on the whole ring',
       'Cross-connect L1-N2, N1-L2 and E1-E2, then measure at each socket',
-      'Measure the prospective fault current at the board',
-      'Energise the ring and check the polarity at each socket',
+      'Measure the prospective fault current, taken at the board',
+      'Energise the ring, then check the polarity at each socket',
     ],
     correctAnswer: 1,
     explanation:
@@ -1703,10 +1703,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 210,
     question: 'What reading should be obtained at each socket-outlet after the ends have been cross-connected?',
     options: [
-      'A steadily increasing value towards the far end of the ring',
-      'A reading equal to the full end-to-end resistance',
+      'A steadily increasing value (highest at the mid-point/far end)',
+      'Half of the end-to-end value (r1+rn)/2 at every socket',
       'Approximately the same (should be r1+rn)/4 or (r1+r2)/4',
-      'Close to zero ohms at every socket on the ring',
+      'Close to zero ohms at every socket (below 0.01Ω L/N)',
     ],
     correctAnswer: 2,
     explanation:
@@ -1781,8 +1781,8 @@ export const am2QuestionBank: AM2Question[] = [
     options: [
       'Dwellings including houses, flats, and communal areas',
       'Offices, shops and other commercial buildings',
-      'Industrial and agricultural premises only',
-      'All buildings connected to the public supply',
+      'Industrial, agricultural and farm premises only',
+      'All buildings, whether domestic or commercial',
     ],
     correctAnswer: 0,
     explanation:
@@ -1920,9 +1920,9 @@ export const am2QuestionBank: AM2Question[] = [
     question: 'What certificate should a customer receive for notifiable electrical work?',
     options: [
       'Building Regulations Compliance Certificate (plus BS 7671 certificate)',
-      'A RIDDOR report confirming no incidents occurred',
-      'A CSCS card confirming the installer’s competence',
-      'A manufacturer’s warranty for the equipment installed',
+      'A RIDDOR report (form F2508) confirming no incidents',
+      'A CSCS card (Construction Skills Certification Scheme)',
+      'A manufacturer\'s warranty (for the equipment installed)',
     ],
     correctAnswer: 0,
     explanation:
@@ -1938,10 +1938,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 261,
     question: 'Which of these is non-notifiable work under Part P?',
     options: [
-      'Installing a new final circuit from the consumer unit in a kitchen',
+      'Installing a new final circuit (from the consumer unit) in a kitchen',
       'Adding a socket outlet to an existing circuit (not in special location)',
-      'Replacing the consumer unit and all of its protective devices',
-      'Installing a new circuit in a room containing a bath or shower',
+      'Replacing the consumer unit (and all of its protective devices)',
+      'Installing a new circuit in a room containing a bath (a special location)',
     ],
     correctAnswer: 1,
     explanation:
@@ -1974,7 +1974,7 @@ export const am2QuestionBank: AM2Question[] = [
     options: [
       'No, it is a like-for-like accessory replacement',
       'No, provided the same number of circuits is used',
-      'Only if a new circuit is added at the same time',
+      'No, unless a new circuit is added at the same time',
       'Yes, it involves the origin of the installation',
     ],
     correctAnswer: 3,
@@ -2063,10 +2063,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 305,
     question: 'Under GS38, what maximum length of exposed metal tip is recommended for test probes?',
     options: [
-      '10mm',
+      '10mm (finger barriers)',
       '4mm (2mm preferred)',
-      '20mm',
-      'No limit',
+      '20mm (shrouded probes)',
+      'No limit (fused leads)',
     ],
     correctAnswer: 1,
     explanation:
@@ -2080,10 +2080,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 306,
     question: 'Which features should test leads have in order to comply with GS38?',
     options: [
-      'Bare probe tips of at least 10mm for good contact',
-      'Coiled leads with crocodile clips at each end',
+      'Bare probe tips, at least 10mm long, for good contact',
+      'Coiled leads, with crocodile clips at each end',
       'Finger barriers, fused, insulated probes, correct CAT rating',
-      'Unfused leads to give the most accurate reading',
+      'Unfused leads, to give the most accurate reading',
     ],
     correctAnswer: 2,
     explanation:
@@ -2115,9 +2115,9 @@ export const am2QuestionBank: AM2Question[] = [
     question: 'When isolating a three-phase supply, which conductors must be proved dead?',
     options: [
       'All three phases L1, L2, L3 and neutral',
-      'Only the phase being worked on',
-      'Any two of the three phases plus earth',
-      'L1 and the neutral conductor at the origin',
+      'Only the phase being worked on, L1',
+      'Any two phases, L1 and L2, plus earth',
+      'L1, plus the neutral conductor at the origin',
     ],
     correctAnswer: 0,
     explanation:
@@ -2133,10 +2133,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 309,
     question: 'Why is a two-pole voltage indicator used in place of a single-pole neon tester?',
     options: [
-      'They are cheaper to buy and easier to carry around a busy site',
+      'They are cheaper to buy, and easier to carry around a busy site',
       'They measure voltage reliably between two points, unlike a neon that can mislead',
-      'They can also measure insulation resistance and continuity of the cpc',
-      'They do not need to be proved on a known live source beforehand',
+      'They can also measure insulation resistance, and continuity of the cpc',
+      'They need no proving on a known live source, before or after use',
     ],
     correctAnswer: 1,
     explanation:
@@ -2150,10 +2150,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 310,
     question: 'What visual checks should be made on a voltage indicator before use?',
     options: [
-      'Confirm the calibration certificate is within date only',
-      'Check the battery level and display brightness only',
+      'Confirm the calibration date, which must be current; nothing else is needed',
+      'Check the battery level, not the leads; confirm display brightness',
       'Check for damage to leads, probes, body; ensure probes are insulated',
-      'Verify the CAT rating matches the supply frequency',
+      'Verify the CAT rating, and the model number; confirm the supply frequency',
     ],
     correctAnswer: 2,
     explanation:
@@ -2187,9 +2187,9 @@ export const am2QuestionBank: AM2Question[] = [
     question: 'What information should an isolation warning label include?',
     options: [
       'Name of person isolating, date/time, what is isolated, contact details',
-      'The circuit rating, the cable size and the protective device type',
-      'The Zs value and the disconnection time of the isolated circuit',
-      'The manufacturer, the model and the serial number of the equipment isolated',
+      'The circuit rating, the cable csa and the protective device make/type',
+      'The Zs value, and the disconnection time of 0.4s/5s for the circuit',
+      'The manufacturer, the model/serial number and the rating of the equipment',
     ],
     correctAnswer: 0,
     explanation:
@@ -2222,10 +2222,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 314,
     question: 'When might a permit to work system be required for electrical work?',
     options: [
-      'For any domestic socket-outlet addition made to an existing ring final circuit',
-      'Whenever a Minor Works Certificate is issued for any of the work carried out',
+      'For any socket-outlet addition, made to an existing domestic ring final circuit',
+      'Whenever a Minor Works Certificate is issued, for any work carried out',
       'For high-risk work, especially on HV systems or in industrial environments',
-      'When working alone on any final circuit within an occupied domestic building',
+      'When working alone, on any final circuit in an occupied domestic building',
     ],
     correctAnswer: 2,
     explanation:
@@ -2333,9 +2333,9 @@ export const am2QuestionBank: AM2Question[] = [
     id: 355,
     question: 'An MCB trips immediately on reset. What type of fault does this indicate?',
     options: [
-      'A gradual overload condition',
-      'A high-resistance loose connection',
-      'Normal inrush current at switch-on',
+      'A gradual overload (thermal element)',
+      'A high-resistance joint (loose connection)',
+      'Normal inrush current (at switch-on)',
       'Short circuit (dead short)',
     ],
     correctAnswer: 3,
@@ -2367,10 +2367,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 357,
     question: 'An RCD trips repeatedly in service. What should be checked?',
     options: [
-      'The breaking capacity of the protective device that is fitted',
+      'The breaking capacity, in kA, of the protective device fitted',
       'Earth leakage, N-E faults, moisture ingress, or faulty appliances',
-      'The voltage drop measured across the final circuit under full load',
-      'The colour coding of all of the circuit conductors at each accessory',
+      'The voltage drop across the final circuit, measured under full load',
+      'The colour coding of the conductors, checked at each accessory',
     ],
     correctAnswer: 1,
     explanation:
@@ -2384,10 +2384,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 358,
     question: 'What causes a high resistance joint?',
     options: [
-      'Over-tightened terminals that crush the conductor strands within the terminal',
-      'Using a conductor of too large a cross-sectional area for the circuit design',
+      'Over-tightened terminals, crushing the conductor strands within the terminal',
+      'A conductor of too large a cross-sectional area, for the circuit design',
       'Poor connections, oxidation, incorrect termination, or mechanical damage',
-      'Excessive insulation resistance measured at the termination point of the cable',
+      'Excessive insulation resistance, measured at the cable termination',
     ],
     correctAnswer: 2,
     explanation:
@@ -2401,14 +2401,14 @@ export const am2QuestionBank: AM2Question[] = [
     id: 359,
     question: 'How can a high resistance joint be identified?',
     options: [
-      'An insulation resistance reading of less than 1.0MΩ measured to earth',
-      'A residual current that trips the RCD repeatedly whenever it is on load',
-      'A prospective fault current that is above the breaking capacity of the device',
-      'Thermal imaging, smell of burning, discoloration, or voltage drop testing',
+      'An insulation resistance reading below 1.0MΩ, when measured to earth',
+      'A residual current that trips the RCD, whenever the circuit is on load',
+      'A prospective fault current, above the breaking capacity of the device fitted',
+      'Thermal imaging, smell of burning, discolouration, or voltage drop testing',
     ],
     correctAnswer: 3,
     explanation:
-      'Signs include discoloration, smell, heat detected by thermal imaging, or voltage drop measurements across connections.',
+      'Signs include discolouration, smell, heat detected by thermal imaging, or voltage drop measurements across connections.',
     section: 'Common Faults',
     difficulty: 'intermediate',
     topic: 'High Resistance',
@@ -2435,10 +2435,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 361,
     question: 'A lighting circuit has partial failure. What should be checked?',
     options: [
-      'The earth fault loop impedance measured at the origin of the circuit',
+      'The earth fault loop impedance, measured at the origin of the whole circuit',
       'Individual switches, connections, and lamp holders in the dead section',
-      'The breaking capacity of each of the protective devices fitted at the board',
-      'The voltage drop measured across the whole of the installation under load',
+      'The breaking capacity, in kA, of each protective device at the board',
+      'The voltage drop across the whole installation, measured under load',
     ],
     correctAnswer: 1,
     explanation:
@@ -2452,10 +2452,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 362,
     question: 'What is a common cause of flickering lights?',
     options: [
-      'An oversized circuit protective conductor within the affected final circuit',
-      'Correctly rated conductors that are correctly terminated at both of their ends',
+      'An oversized circuit protective conductor, within the affected final circuit',
+      'Correctly rated conductors, correctly terminated at both of their ends',
       'Loose connections, failing lamps, incompatible dimmer, or supply issues',
-      'An RCD that is set to a higher residual operating current rating than needed',
+      'An RCD with a higher residual operating current rating, such as 100 mA',
     ],
     correctAnswer: 2,
     explanation:
@@ -2471,9 +2471,9 @@ export const am2QuestionBank: AM2Question[] = [
     id: 363,
     question: 'Which instrument would you use to trace a cable route?',
     options: [
-      'Earth loop tester',
-      'Insulation resistance tester',
-      'RCD tester',
+      'Line/earth loop tester',
+      'Insulation/continuity tester',
+      'RCD/RCBO tester',
       'Cable locator/tracer',
     ],
     correctAnswer: 3,
@@ -2524,10 +2524,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 366,
     question: 'After rectifying a fault, what must be done?',
     options: [
-      'Leave the circuit isolated until the next periodic inspection',
-      'Inform building control of the repair carried out',
+      'Leave the circuit isolated, until the next periodic inspection',
+      'Inform building control, whatever the repair carried out',
       'Test to verify repair, document the fault and repair',
-      'Replace the protective device as a safety measure',
+      'Replace the protective device, whatever the fault was',
     ],
     correctAnswer: 2,
     explanation:
@@ -2541,9 +2541,9 @@ export const am2QuestionBank: AM2Question[] = [
     id: 367,
     question: 'What documentation should be provided after fault rectification?',
     options: [
-      'A RIDDOR report submitted to the HSE after the repair is done',
-      'A Building Regulations Compliance Certificate for the repair work only',
-      'A risk assessment and a method statement covering the repair only',
+      'A RIDDOR report to the HSE, submitted after the repair is done',
+      'A Building Regulations Compliance Certificate, for the repair only',
+      'A risk assessment, and a method statement covering the repair',
       'Minor Works Certificate or EIC as appropriate, plus fault report',
     ],
     correctAnswer: 3,
@@ -2561,9 +2561,9 @@ export const am2QuestionBank: AM2Question[] = [
     question: 'What voltage tolerance applies to a UK public low voltage supply?',
     options: [
       '+10%/-6% of 230V',
-      '±5%',
-      '±15%',
-      'Exactly 230V always',
+      '+6%/-10% of 230V',
+      '+15%/-15% of 230V',
+      'Exactly 230V/400V always',
     ],
     correctAnswer: 0,
     explanation: 'UK supply is 230V +10%/-6%, giving acceptable range of 216.2V to 253V.',
@@ -2644,10 +2644,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 373,
     question: 'What must be verified before energising a new installation?',
     options: [
-      'That the customer has paid the final invoice issued for the whole job',
+      'That the customer has paid the final invoice, issued for the whole job',
       'Completion of all inspection and testing, satisfactory results recorded',
-      'That the new supply has been notified to the distribution network operator',
-      'That a further periodic inspection has been booked within the next 12 months',
+      'That the distribution network operator, not the installer, has been notified',
+      'That a further periodic inspection has been booked, within 12 months',
     ],
     correctAnswer: 1,
     explanation:
@@ -2678,9 +2678,9 @@ export const am2QuestionBank: AM2Question[] = [
     id: 375,
     question: 'What is the purpose of a functional test?',
     options: [
-      'To measure the insulation resistance of each of the circuits installed',
-      'To confirm that the earth fault loop impedance is within tabulated limits',
-      'To verify the current-carrying capacity of the cable in each circuit',
+      'To measure the insulation resistance, circuit by circuit, at 500 V',
+      'To confirm the earth fault loop impedance, against the tabulated limits',
+      'To verify the current-carrying capacity, cable by cable, on load',
       'To verify that controls, interlocks, and devices operate correctly',
     ],
     correctAnswer: 3,
@@ -2696,9 +2696,9 @@ export const am2QuestionBank: AM2Question[] = [
     question: 'What is double insulation (Class II)?',
     options: [
       'Basic insulation plus supplementary insulation, no earth required',
-      'Basic insulation together with an earthed metal enclosure fitted',
-      'Two layers of basic insulation plus a protective earth wire',
-      'A reduced low-voltage supply that has no earth connection at the load',
+      'Basic insulation, together with an earthed metal enclosure',
+      'Two layers of basic insulation, plus a protective earth wire',
+      'A reduced low-voltage supply, with no earth connection at the load',
     ],
     correctAnswer: 0,
     explanation:
@@ -2800,14 +2800,14 @@ export const am2QuestionBank: AM2Question[] = [
     id: 382,
     question: 'What construction is required for a consumer unit installed in domestic premises?',
     options: [
-      'A surge protection device fitted on every final circuit',
-      'An arc fault detection device fitted on every final circuit',
+      'A surge protection device on every final circuit (Section 534)',
+      'An arc fault detection device on every final circuit (Reg 421.1.7)',
       'Non-combustible enclosure (metal or fire-resistant)',
-      'A 100mA time-delayed main RCD fitted as the incoming device',
+      'A 100mA time-delayed main RCD as the incoming device (S-type)',
     ],
     correctAnswer: 2,
     explanation:
-      'Amendment 3 (2015) required consumer units to have non-combustible enclosures to reduce fire risk.',
+      'Within domestic premises, a consumer unit or similar switchgear assembly must either have its enclosure manufactured from non-combustible material, or be enclosed in a cabinet constructed of non-combustible material complying with Regulation 132.12. The two routes are alternatives — satisfy either. The requirement exists to limit fire spread from the consumer unit.',
     section: 'Consumer Units',
     difficulty: 'intermediate',
     topic: 'Fire Safety',
@@ -2871,7 +2871,7 @@ export const am2QuestionBank: AM2Question[] = [
       'Only the name, the address and the scheme registration number of the installing contractor',
       'The test results for each of the final circuits, recorded on a separate schedule of results',
       'Description of installation, test results, schedule of circuits, design and installation details',
-      'The earthing arrangement and the sizes of the main protective bonding conductors used at the origin',
+      'The earthing arrangement, and the sizes of the main protective bonding conductors used at the origin',
     ],
     correctAnswer: 2,
     explanation:
@@ -2886,8 +2886,8 @@ export const am2QuestionBank: AM2Question[] = [
     question: 'What does a C1 coding on an EICR indicate?',
     options: [
       'Potentially dangerous, urgent remedial action required',
-      'Improvement recommended but not a danger',
-      'Further investigation required without delay',
+      'Improvement recommended, but no danger present',
+      'Further investigation required, without delay',
       'Danger present, immediate remedial action required',
     ],
     correctAnswer: 3,
@@ -2904,7 +2904,7 @@ export const am2QuestionBank: AM2Question[] = [
       'Potentially dangerous, urgent remedial action required',
       'Danger present, and immediate remedial action is required',
       'Improvement is recommended, but there is no danger present',
-      'Further investigation is required without delay',
+      'Further investigation is required, without delay',
     ],
     correctAnswer: 0,
     explanation: 'C2 = Potentially dangerous. Urgent remedial action required.',
@@ -2984,10 +2984,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 393,
     question: 'What is a polarity test checking for?',
     options: [
-      'That the conductor resistances are within the tabulated limits',
+      'That the conductor resistances, R1 and R2, are within limits',
       'Correct connection of line, neutral, and earth conductors',
-      'That the insulation resistance exceeds 1.0MΩ overall',
-      'That the RCD operates within the required disconnection time',
+      'That the insulation resistance, line to earth, exceeds 1.0MΩ',
+      'That the RCD operates within 300 ms, at its rated residual current',
     ],
     correctAnswer: 1,
     explanation:
@@ -3018,9 +3018,9 @@ export const am2QuestionBank: AM2Question[] = [
     id: 395,
     question: 'What test confirms no RCD nuisance tripping will occur from normal earth leakage?',
     options: [
-      '5×IΔn test',
-      '1×IΔn test',
-      'Insulation resistance test',
+      '5×IΔn test (fast-trip check)',
+      '1×IΔn test (rated residual current)',
+      'Insulation resistance test (500 V d.c.)',
       '½×IΔn (50%) no-trip test',
     ],
     correctAnswer: 3,
@@ -3085,9 +3085,9 @@ export const am2QuestionBank: AM2Question[] = [
     id: 399,
     question: 'What information should be displayed on the consumer unit labelling?',
     options: [
-      'The prospective fault current and the measured Ze value at the origin only',
-      'The maximum demand and the rating of the main incoming supply fuse only',
-      'The make and the model number of every protective device that is fitted',
+      'The prospective fault current, and the measured Ze/Zs values at the origin only',
+      'The maximum demand, and the rating/type of the main incoming supply fuse',
+      'The make, and the model/catalogue number, of every protective device',
       'Installer details, inspection dates, and earthing/bonding information',
     ],
     correctAnswer: 3,
@@ -3240,7 +3240,7 @@ export const am2QuestionBank: AM2Question[] = [
     options: [
       'It is a C1, as combustible enclosures are prohibited outright by BS 7671',
       'It requires no code of any kind, as the requirement is not retrospective',
-      'It is automatically a C2 because the cupboard forms part of the escape route',
+      'It is automatically a C2, because the cupboard forms part of the escape route',
       'It is a C2 or C3 depending on the circumstances, judged on the installation',
     ],
     correctAnswer: 3,
@@ -3274,8 +3274,8 @@ export const am2QuestionBank: AM2Question[] = [
     options: [
       'A 100 mA RCD, with time-delayed types permitted for discrimination',
       'A 30 mA RCD, with time-delayed types expressly prohibited',
-      'A 30 mA RCD only where the heating is in a room containing a bath',
-      'Supplementary bonding of the heating element instead of an RCD',
+      'A 30 mA RCD, but only where the heating is in a room containing a bath',
+      'Supplementary bonding of the heating element, instead of an RCD',
     ],
     correctAnswer: 1,
     explanation:
@@ -3289,8 +3289,8 @@ export const am2QuestionBank: AM2Question[] = [
     id: 411,
     question: 'You find a Type AC RCD protecting a circuit that supplies a variable-speed drive. What is the correct assessment?',
     options: [
-      'Acceptable, since a Type AC device responds to every residual current waveform',
-      'Acceptable provided that the drive is rated at below 3 kW on that circuit',
+      'Acceptable — a Type AC device responds to every residual current waveform',
+      'Acceptable — the drive is rated below 3 kW, so Type AC remains permitted',
       'Not acceptable — Reg 531.3.3 restricts Type AC to loads with no DC components',
       'Not acceptable — all Type AC devices were withdrawn from use by Amendment 4:2026',
     ],
@@ -3394,7 +3394,7 @@ export const am2QuestionBank: AM2Question[] = [
       'Acceptable — the stability of the electrode also needs consideration',
       'Unacceptable — TT electrodes must be below 20 Ω in every case',
       'Unacceptable — a 100 mA RCD is required for any electrode above 100 Ω',
-      'Acceptable only if supplementary bonding is installed throughout the site',
+      'Acceptable — but only if supplementary bonding is installed throughout the site',
     ],
     correctAnswer: 0,
     explanation:
@@ -3442,8 +3442,8 @@ export const am2QuestionBank: AM2Question[] = [
     id: 420,
     question: 'Under the Electricity at Work Regulations 1989, when may live working be undertaken?',
     options: [
-      'Whenever the operative holds a valid competency card and is accompanied by a second competent person',
-      'Where the work will take less than fifteen minutes to complete and the customer has agreed in writing',
+      'Whenever the operative holds a valid competency card, and is accompanied by a second person',
+      'Where the work will take less than fifteen minutes, and the customer has agreed in writing',
       'On any circuit operating at or below 230V single-phase, provided that insulating gloves and mats are used',
       'Where it is unreasonable to work dead, it is reasonable to work live, and suitable precautions are taken',
     ],
@@ -3461,8 +3461,8 @@ export const am2QuestionBank: AM2Question[] = [
     options: [
       '30 mA RCD protection, or mechanical protection, or an earthed metallic covering',
       'Nothing further is required, as the cable is buried deeper than 25 mm in the wall',
-      '100 mA RCD protection and a warning notice fitted at the distribution board',
-      'The cable must always be re-routed so that it runs within a prescribed zone in the wall',
+      '100 mA RCD protection, with a warning notice at the distribution board',
+      'The cable must always be re-routed, so that it runs within a prescribed zone in the wall',
     ],
     correctAnswer: 0,
     explanation:
@@ -3546,8 +3546,8 @@ export const am2QuestionBank: AM2Question[] = [
     options: [
       'It must be manufactured from metal in every case, without any exception',
       'It must comply with BS EN 61439-3, which in practice means a non-combustible enclosure',
-      'It must be installed with its main switch at least 1.4m above floor level',
-      'It must be fitted with a double-pole main switch rated at not less than 100A',
+      'Its main switch must be at least 1.4m above floor level, in every case',
+      'It must be fitted with a double-pole main switch, rated at not less than 100A',
     ],
     correctAnswer: 1,
     explanation:
@@ -3561,7 +3561,7 @@ export const am2QuestionBank: AM2Question[] = [
     id: 427,
     question: 'Under Part P of the Building Regulations in England, which work is notifiable?',
     options: [
-      'Replacing a damaged socket-outlet on an existing ring final circuit in a kitchen',
+      'Replacing a damaged socket-outlet in a kitchen, on an existing ring final circuit',
       'Any electrical work carried out in a dwelling, however minor the alteration may be',
       'Installing a new circuit, or any work in a room containing a bath or shower involving a new circuit',
       'Replacing an existing consumer unit, but only where the earthing arrangement is TT',
@@ -3637,10 +3637,10 @@ export const am2QuestionBank: AM2Question[] = [
     question:
       'Under BS 7671:2018+A4:2026, what is the status of arc fault detection devices (AFDDs) in AC final circuits?',
     options: [
-      'Mandatory on all final circuits rated 32 A or less in domestic premises under Reg 421.1.7',
+      'Mandatory under Reg 421.1.7 on all final circuits rated 32 A or less, in domestic premises',
       'Recommended by Reg 421.1.7 to mitigate fire risk from arc fault currents, but not mandated',
-      'Mandatory only where the installation includes a stationary secondary battery system',
-      'Withdrawn by Amendment 4 and replaced by an equivalent RCBO requirement in Chapter 42',
+      'Mandatory, but only where the installation includes a stationary secondary battery system',
+      'Withdrawn by Amendment 4, and replaced by an equivalent RCBO requirement in Chapter 42',
     ],
     correctAnswer: 1,
     explanation:
@@ -3746,7 +3746,7 @@ export const am2QuestionBank: AM2Question[] = [
       'A 30 mA general-purpose RCD is being verified on the AM2 rig. What is the required test under BS 7671:2018+A4:2026?',
     options: [
       'A test at 1x IdN and a further test at 5x IdN, recording the shorter of the two trip times',
-      'A no-trip test at half IdN followed by a test at 5x IdN requiring operation within 40 ms',
+      'A no-trip test at half IdN, followed by a test at 5x IdN requiring operation within 40 ms',
       'A single AC test at 1x IdN requiring operation within 300 ms, plus the integral test button',
       'Tests at half, one and five times IdN, with the results compared against Appendix 3 Table 3A',
     ],
@@ -3763,10 +3763,10 @@ export const am2QuestionBank: AM2Question[] = [
     question:
       'Where does BS 7671 require cables to be adequately supported against premature collapse in a fire?',
     options: [
-      'Along designated escape routes and within protected stairwells',
-      'Where the building has more than three storeys above ground level',
+      'Along designated escape routes, and within protected stairwells',
+      'Where the building has more than three storeys, but not otherwise',
       'Throughout the electrical installation, wherever cables are present',
-      'Where the cables supply a safety service or fire-fighting circuit',
+      'Where the cables supply a safety service, or a fire-fighting circuit',
     ],
     correctAnswer: 2,
     explanation:
@@ -3896,7 +3896,7 @@ export const am2QuestionBank: AM2Question[] = [
       'The resistance of the protective conductor alone, R2',
       'The external earth fault loop impedance of the supply, Ze',
       'The sum of the line and protective conductor resistances, R1 + R2',
-      'The insulation resistance between line and protective conductor',
+      'The insulation resistance between line and protective conductor, in MΩ',
     ],
     correctAnswer: 2,
     explanation:
@@ -4015,9 +4015,9 @@ export const am2QuestionBank: AM2Question[] = [
     question:
       'Why does Guidance Note 3 require a four-terminal earth tester when the most accurate electrode resistance is needed?',
     options: [
-      'It applies a higher test current than a three-terminal instrument',
-      'It allows the reading to be taken without disconnecting the electrode',
-      'It compensates automatically for seasonal variation in soil moisture',
+      'It applies a higher test current, so the reading is more stable',
+      'It takes the reading with the electrode still connected, saving time',
+      'It compensates automatically for soil moisture, season by season',
       'It separates current and potential connections, excluding lead resistance',
     ],
     correctAnswer: 3,
@@ -4070,9 +4070,9 @@ export const am2QuestionBank: AM2Question[] = [
       'What happens to the accuracy of a prospective fault current value derived from a loop impedance reading?',
     options: [
       'It decreases as the scale reading rises, since voltage is divided by it',
-      'It is unaffected by the magnitude of the loop impedance reading taken',
-      'It improves as the loop impedance rises because the current gets smaller',
-      'It depends solely on the calibration date recorded for the instrument',
+      'It is unaffected by the loop impedance, whatever the reading taken',
+      'It improves as the loop impedance rises, because the current gets smaller',
+      'It depends solely on the calibration date, recorded for the instrument',
     ],
     correctAnswer: 0,
     explanation:
@@ -4122,8 +4122,8 @@ export const am2QuestionBank: AM2Question[] = [
     question:
       'The operation of the main switch is verified during initial verification as what kind of check?',
     options: [
-      'A dead test carried out before the sequence of tests begins',
-      'A continuity check between the incoming and outgoing terminals',
+      'A dead test, carried out before the sequence of tests begins',
+      'A continuity check, made between the incoming and outgoing terminals',
       'A functional check, with the switch operated and the result recorded',
       'An inspection item only, requiring no operation of the switch itself',
     ],
@@ -4140,9 +4140,9 @@ export const am2QuestionBank: AM2Question[] = [
     question: 'When should the continuity tests required by Regulation 643.2.1 be carried out?',
     options: [
       'Before circuits are energised for functional tests, where practicable',
-      'After the installation has been energised and left on load',
-      'Only where the installer suspects a broken protective conductor',
-      'At the first periodic inspection rather than initial verification',
+      'After the installation has been energised, and left on load',
+      'Only where the installer suspects a fault, such as a broken cpc',
+      'At the first periodic inspection, rather than initial verification',
     ],
     correctAnswer: 0,
     explanation:
@@ -4157,10 +4157,10 @@ export const am2QuestionBank: AM2Question[] = [
     question:
       'How is compliance with the measures against electromagnetic disturbances verified on an installation?',
     options: [
-      'By calculating the expected disturbance level from the design data',
+      'By calculating the expected disturbance level, using the design data',
       'By inspecting mitigation, measuring where appropriate and functional tests',
-      'By a declaration of conformity supplied by the equipment manufacturer',
-      'By an insulation resistance test at 500 V DC applied to each circuit',
+      'By a declaration of conformity, supplied by the equipment manufacturer',
+      'By an insulation resistance test at 500 V DC, applied to each circuit',
     ],
     correctAnswer: 1,
     explanation:
@@ -4266,9 +4266,9 @@ export const am2QuestionBank: AM2Question[] = [
       'A thermal imaging survey shows one terminal noticeably hotter than its neighbours. What does this establish?',
     options: [
       'A relative difference that may indicate a fault, needing confirmation',
-      'A confirmed loose connection that can be recorded as a defect',
-      'An overloaded circuit requiring the protective device to be uprated',
-      'An insulation failure between the terminal and the enclosure body',
+      'A confirmed loose connection, which can be recorded as a defect',
+      'An overloaded circuit, requiring the protective device to be uprated',
+      'An insulation failure between terminal and enclosure, needing repair',
     ],
     correctAnswer: 0,
     explanation:
@@ -4283,9 +4283,9 @@ export const am2QuestionBank: AM2Question[] = [
     question:
       'Guidance Note 3 states the purpose of record keeping for inspection and testing. Which is one of those purposes?',
     options: [
-      'To transfer legal liability for the installation to the client',
-      'To satisfy an insurer that the contractor holds indemnity cover',
-      'To establish the resale value of the property at a later date',
+      'To transfer legal liability, from the contractor to the client',
+      'To satisfy an insurer that indemnity cover is held, and current',
+      'To establish the resale value of the property, at a later date',
       'To assist future inspection, maintenance and fault finding work',
     ],
     correctAnswer: 3,
@@ -4301,10 +4301,10 @@ export const am2QuestionBank: AM2Question[] = [
     question:
       'What information should the specification provide so that an installation can be tested and maintained in future?',
     options: [
-      'The cost breakdown for each circuit and the labour hours allowed',
+      'The cost breakdown for each circuit, and the labour hours allowed',
       'Drawings, circuit lists, protective device details and instructions',
-      'Manufacturer warranty documents for every accessory that is fitted',
-      'A schedule of the test instruments the contractor intends to use',
+      'Manufacturer warranty documents, covering every accessory fitted',
+      'A schedule of the test instruments, with their calibration dates',
     ],
     correctAnswer: 1,
     explanation:
@@ -4353,10 +4353,10 @@ export const am2QuestionBank: AM2Question[] = [
     question:
       'What distinguishes the multiple-signature Electrical Installation Certificate given in Appendix 6 of BS 7671?',
     options: [
-      'It is issued only where more than one contractor is on the site',
+      'It is issued only where more than one contractor, or firm, is on site',
       'Design, construction, and inspection and testing are signed separately',
-      'It requires the client to countersign each stage before the next',
-      'It replaces the need for a schedule of test results to be attached',
+      'It requires the client to countersign each stage, before the next',
+      'It replaces the schedule of test results, which need not be attached',
     ],
     correctAnswer: 1,
     explanation:
@@ -4406,10 +4406,10 @@ export const am2QuestionBank: AM2Question[] = [
     question:
       'Before taking measurements that will be entered on a Schedule of Test Results, what does Guidance Note 3 require of the test leads and probes?',
     options: [
-      'They are replaced with a new set at the start of every project',
-      'They are proved on a known live supply before each measurement',
+      'A new set is fitted at the start of every project, without exception',
+      'They are proved on a known live supply, immediately before use',
       'They are visually inspected for damage, cracks or poor contacts',
-      'They are checked against the calibration certificate held on file',
+      'They are checked against the calibration certificate, not inspected',
     ],
     correctAnswer: 2,
     explanation:
@@ -4441,9 +4441,9 @@ export const am2QuestionBank: AM2Question[] = [
     id: 476,
     question: 'What does good practice require where cables enter an enclosure?',
     options: [
-      'The sheath is stripped back at the gland to aid heat dissipation',
-      'The entry is left unsealed so that condensation can drain freely',
-      'The cable is drawn in tightly so that no slack remains inside',
+      'The sheath is stripped back at the gland, to aid heat dissipation',
+      'The entry is left unsealed, so that condensation can drain freely',
+      'The cable is drawn in tightly, so that no slack remains inside',
       'Grommets, glands or conduit protect the sheath and radii are kept',
     ],
     correctAnswer: 3,
@@ -4577,7 +4577,7 @@ export const am2QuestionBank: AM2Question[] = [
     question: 'A candidate is asked which countries the Building Regulations containing Part P apply to. What is the correct answer?',
     options: [
       'England and Wales, with Scotland having its own arrangements',
-      'The whole of the United Kingdom without any variation',
+      'The whole of the United Kingdom, without any variation',
       'England only, with Wales having its own arrangements',
       'Great Britain, excluding Northern Ireland but including Scotland',
     ],
@@ -4672,10 +4672,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 490,
     question: 'Adding a new final circuit to an existing dwelling is proposed. How is that work treated?',
     options: [
-      'It is exempt where the circuit does not serve a bathroom',
+      'It is exempt, provided the circuit does not serve a bathroom',
       'It is notifiable, whatever the existing board allows',
-      'It is exempt because a supply already exists there',
-      'It is exempt if the existing consumer unit has a spare way',
+      'It is exempt, since a supply already exists there',
+      'It is exempt, provided the consumer unit has a spare way',
     ],
     correctAnswer: 1,
     explanation: 'Installing a new circuit in a dwelling is notifiable. Spare ways in the board, the age of the installation and the room served make no difference to whether notification is required for a new circuit.',
@@ -4720,10 +4720,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 493,
     question: 'Which description matches a special location for the purposes of Part P?',
     options: [
-      'A kitchen where the sink is within 600 mm of a socket-outlet',
+      'A kitchen, where the sink is within 600 mm of a socket-outlet',
       'A room containing a bath tub, a shower basin or a sauna heater',
-      'A garage that is attached to and shares a supply with a house',
-      'A loft space that contains junction boxes for lighting circuits',
+      'A garage, which is attached to and shares a supply with a house',
+      'A loft space, containing junction boxes for lighting circuits',
     ],
     correctAnswer: 1,
     explanation: 'A special location is one containing a bath tub or shower basin, a swimming or paddling pool, or a hot air sauna. Kitchens, garages and loft spaces are not special locations, so additions to existing circuits there are treated differently.',
@@ -4800,9 +4800,9 @@ export const am2QuestionBank: AM2Question[] = [
     id: 498,
     question: 'What does the Electricity at Work Regulations 1989 require about the people doing electrical work?',
     options: [
-      'That they are registered with a competent person scheme operator',
-      'That they are directly employed rather than working as subcontractors',
-      'That they hold a recognised qualification issued within five years',
+      'That they are registered with a scheme operator, before starting work',
+      'That they are directly employed, rather than working as subcontractors',
+      'That they hold a recognised qualification, issued within five years',
       'That they possess technical knowledge or experience, or are supervised',
     ],
     correctAnswer: 3,
@@ -4897,9 +4897,9 @@ export const am2QuestionBank: AM2Question[] = [
     question: 'How does the Electricity at Work Regulations 1989 express the duty to maintain electrical systems?',
     options: [
       'Maintained so as to prevent danger, so far as is reasonably practicable',
-      'Replaced once they reach twenty-five years from installation',
-      'Tested every year by an approved independent third-party body',
-      'Inspected at intervals fixed by the relevant enforcing authority',
+      'Replaced once they reach twenty-five years, whatever their condition',
+      'Tested every year, by an approved independent third-party body',
+      'Inspected at fixed intervals, set by the relevant enforcing authority',
     ],
     correctAnswer: 0,
     explanation: 'The duty is expressed as maintenance to prevent danger, so far as is reasonably practicable, rather than as a fixed interval or an age limit. That is why periodic inspection intervals come from guidance and risk, not from the Regulations.',
@@ -4963,7 +4963,7 @@ export const am2QuestionBank: AM2Question[] = [
       'As notifiable work, because fixed cabling has been replaced',
       'As work that is not notifiable, being a like-for-like repair',
       'As notifiable work, because the circuit serves a dwelling',
-      'As work requiring a building notice before it is started',
+      'As work requiring a building notice, given in advance',
     ],
     correctAnswer: 1,
     explanation: 'Like-for-like replacement of cable on a single circuit, on the same route and with the same current-carrying capacity, is not notifiable. Rerouting the cable or changing its size would take the work outside that description.',
@@ -5024,10 +5024,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 512,
     question: 'A whole lighting circuit reads 0.4 MΩ on a 500 V DC insulation resistance test. What should be done?',
     options: [
-      'Record the value and issue the certificate for the circuit',
+      'Record the value, and issue the certificate for the circuit',
       'Investigate, since the value is below the stated minimum',
-      'Repeat the test at 250 V DC and record the higher reading',
-      'Energise the circuit and repeat the test after an hour',
+      'Repeat the test at 250 V DC, and record the higher reading',
+      'Energise the circuit, then repeat the test after an hour',
     ],
     correctAnswer: 1,
     explanation: 'The minimum for a 230 V circuit is 1.0 MΩ, so 0.4 MΩ fails and the cause must be found, typically by splitting the circuit down. Dropping the test voltage to obtain a better number is not a permitted way of passing a circuit.',
@@ -5152,7 +5152,7 @@ export const am2QuestionBank: AM2Question[] = [
     id: 520,
     question: 'An electrician is asked to add a socket-outlet to an existing circuit in a room containing a shower. How should the work be treated?',
     options: [
-      'As work needing only a minor works certificate for the file',
+      'As work needing a minor works certificate, and nothing more',
       'As work in a special location, which is notifiable',
       'As an alteration to an existing circuit, which is exempt',
       'As work outside Part P, because no new circuit is added',
@@ -5232,10 +5232,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 525,
     question: 'An electrical short circuit on a site distribution board causes a fire in the enclosure. How is this treated for reporting?',
     options: [
-      'It is not reportable because nobody was injured by the fire',
-      'It is not reportable because the board was replaced immediately',
+      'It is not reportable, because nobody was injured by the fire',
+      'It is not reportable, because the board was replaced immediately',
       'It is reportable, being a listed dangerous occurrence',
-      'It is reportable only if the site had more than twenty workers',
+      'It is reportable, but only if the site had more than twenty workers',
     ],
     correctAnswer: 2,
     explanation: 'An electrical short circuit or overload causing fire or explosion is a listed dangerous occurrence and is reportable whether or not anyone was hurt. Injury is what makes an accident reportable, and the two categories are separate.',
@@ -5312,10 +5312,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 530,
     question: 'By which means may the prospective fault current at a point be established?',
     options: [
-      'By reading the rating plate fixed to the distribution board',
+      'By reading the rating plate, fixed to the distribution board',
       'By calculation, by measurement, or by enquiry of the distributor',
-      'By measuring the insulation resistance of the circuit',
-      'By reference to the breaking capacity of the device fitted',
+      'By measuring the insulation resistance, circuit by circuit',
+      'By reference to the device fitted, and its breaking capacity',
     ],
     correctAnswer: 1,
     explanation: 'Any of calculation, measurement or enquiry of the distributor is acceptable, and the value must be determined at the origin and other relevant points. A device\'s breaking capacity is what the value is compared against, not a source of it.',
@@ -5377,7 +5377,7 @@ export const am2QuestionBank: AM2Question[] = [
     question: 'An electrician is the only contractor on a small domestic job for a householder. Who carries the client duties under CDM 2015?',
     options: [
       'The contractor, because the client duties pass to them',
-      'The local authority building control body for the area',
+      'The local authority, through its building control body',
       'Nobody, because CDM 2015 does not apply to domestic work',
       'The householder, because they commissioned the work themselves',
     ],
@@ -5392,10 +5392,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 535,
     question: 'Which document should be consulted for the minimum insulation resistance value to accept on a 230 V final circuit?',
     options: [
-      'The manufacturer\'s literature for the test instrument',
+      'The manufacturer\'s literature, supplied with the instrument',
       'BS 7671, which gives the values in a table in Part 6',
-      'The local authority building control department\'s guidance',
-      'The Electrician\'s Guide to Building Regulations',
+      'The local authority, through its building control guidance',
+      'The Electrician\'s Guide to Building Regulations, in its tables',
     ],
     correctAnswer: 1,
     explanation: 'Acceptance values for insulation resistance are tabulated in Part 6 of BS 7671, and Guidance Note 3 explains their application. The Building Regulations guide deals with notification and statutory duties, not test limits.',
@@ -5441,9 +5441,9 @@ export const am2QuestionBank: AM2Question[] = [
     question: 'Why does the Building Regulations route require documentation as well as compliant work?',
     options: [
       'Because compliance has to be demonstrated, not just achieved',
-      'Because the certificate replaces the need for inspection and testing',
-      'Because the distributor will not connect an undocumented supply',
-      'Because insurers will not accept an installation without records',
+      'Because the certificate replaces inspection and testing, in law',
+      'Because the distributor will not connect a supply, without records',
+      'Because insurers, not building control, require the records',
     ],
     correctAnswer: 0,
     explanation: 'The paperwork is how compliance is evidenced to building control and to future occupiers. It records that inspection and testing were done, rather than standing in place of them.',
@@ -5472,10 +5472,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 540,
     question: 'Which projects must be notified to the enforcing authority under CDM 2015?',
     options: [
-      'Those involving work on an existing installation in commercial premises',
-      'Those where more than one contractor is engaged during the project',
+      'Those involving work on an existing installation, whatever its size',
+      'Those where more than one contractor is engaged, at any stage',
       'Those over 30 working days with 20-plus workers, or over 500 person days',
-      'Those where the value of the contract exceeds a figure set each year',
+      'Those where the contract value exceeds a figure, set each year',
     ],
     correctAnswer: 2,
     explanation: 'Notification turns on duration and scale: longer than 30 working days with more than 20 workers working simultaneously, or exceeding 500 person days. Having more than one contractor triggers the principal designer and principal contractor appointments, not notification.',
@@ -5489,9 +5489,9 @@ export const am2QuestionBank: AM2Question[] = [
     question: 'An electrician is working on a commercial unit rather than a dwelling. What is the position on Part P?',
     options: [
       'It does not apply, though other statutory duties and BS 7671 still do',
-      'It applies in the same way as it does to domestic premises',
-      'It applies only where the unit has living accommodation above',
-      'It applies only where the work involves a new distribution board',
+      'It applies in the same way, as it does to domestic premises',
+      'It applies, but only where the unit has living accommodation above',
+      'It applies, but only where the work involves a new distribution board',
     ],
     correctAnswer: 0,
     explanation: 'Part P is about dwellings. Commercial work is outside it, but the Electricity at Work Regulations and BS 7671 continue to apply, so nothing about the technical standard of the work changes.',
@@ -5520,10 +5520,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 543,
     question: 'Before appointing a contractor to a project, what must the appointer satisfy themselves about?',
     options: [
-      'That the contractor has never had an enforcement notice served',
-      'That the contractor carries the highest level of insurance cover',
+      'That the contractor has never had an enforcement notice, of any kind',
+      'That the contractor holds the highest level of cover, and can show it',
       'That the contractor has the skills, knowledge, experience and capability',
-      'That the contractor holds membership of a recognised trade body',
+      'That the contractor belongs to a recognised trade body, currently',
     ],
     correctAnswer: 2,
     explanation: 'Reasonable steps must be taken to check skills, knowledge, experience and, for an organisation, organisational capability. Trade membership and insurance are useful evidence but are not the test the Regulations set.',
@@ -5680,10 +5680,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 553,
     question: 'Building control has been notified of work by a non-scheme installer. What will it want at the end of the job?',
     options: [
-      'A statement of the hours worked by each operative on site',
-      'Confirmation from the customer that they are satisfied',
+      'A statement of the hours worked, operative by operative',
+      'Confirmation from the customer, saying they are satisfied',
       'Evidence that the completed work complies, including test results',
-      'A copy of the installer\'s public liability insurance schedule',
+      'A copy of the installer\'s insurance schedule, for public liability',
     ],
     correctAnswer: 2,
     explanation: 'Building control needs evidence of compliance, which means a properly completed certificate with the inspection and test results. Commercial and contractual documents are not evidence that the installation meets the requirements.',
@@ -5760,10 +5760,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 558,
     question: 'Where should a caution notice be placed during safe isolation?',
     options: [
-      'On the certificate that will be issued at the end of the work',
-      'On the enclosure containing the equipment being worked on',
+      'On the certificate, which is issued at the end of the work',
+      'On the enclosure, which contains the equipment worked on',
       'At the point of isolation, with the locking device',
-      'On the entrance door to the room containing the equipment',
+      'On the entrance door of the room, where others will see it',
     ],
     correctAnswer: 2,
     explanation: 'The notice goes where somebody might otherwise restore the supply, which is at the isolating device itself alongside the lock. A notice on a door tells nobody standing at the board what they must not do.',
@@ -5808,10 +5808,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 561,
     question: 'Which document sets out the requirements for test probes and leads used on low voltage systems?',
     options: [
-      'The Provision and Use of Work Equipment Regulations',
+      'The Provision and Use of Work Equipment Regulations, 1998',
       'HSE Guidance Note GS38, issued by the Executive',
       'The Electricity at Work Regulations 1989, Regulation 4',
-      'The Management of Health and Safety at Work Regulations',
+      'The Management of Health and Safety at Work Regulations, 1999',
     ],
     correctAnswer: 1,
     explanation: 'GS38 covers electrical test equipment for use on low voltage systems, including probe and lead construction. It is guidance rather than a Regulation, but Guidance Note 3 expects its procedures to be followed.',
@@ -5872,7 +5872,7 @@ export const am2QuestionBank: AM2Question[] = [
     id: 565,
     question: 'Where would a candidate look for the requirement to reinstate fire sealing that has been disturbed by cable installation?',
     options: [
-      'In the Electrician\'s Guide to Building Regulations notification tables',
+      'In the Electrician\'s Guide to Building Regulations, in the notification tables',
       'In Guidance Note 3, in the section covering periodic inspection',
       'In the On-Site Guide, in the tables of conduit capacity figures',
       'In BS 7671, in the wiring systems requirements on sealing penetrations',
@@ -5904,9 +5904,9 @@ export const am2QuestionBank: AM2Question[] = [
     id: 567,
     question: 'An apprentice is asked to work alone diagnosing a fault in an occupied commercial unit. What should be considered first?',
     options: [
-      'Whether the customer is content for an apprentice to attend',
-      'Whether the job can be completed within the working day',
-      'Whether the van carries the instruments needed for the job',
+      'Whether the customer is content, given an apprentice is attending',
+      'Whether the job can be completed, within the working day',
+      'Whether the van carries the instruments, and the spares, needed',
       'Whether their knowledge, experience and supervision suit the work',
     ],
     correctAnswer: 3,
@@ -5953,9 +5953,9 @@ export const am2QuestionBank: AM2Question[] = [
     question: 'In the Electricity at Work Regulations 1989, what does \'danger\' refer to?',
     options: [
       'Risk of injury from electrical causes such as shock, burn or fire',
-      'Any voltage present that exceeds the extra-low voltage bands',
-      'Any situation in which a protective device has failed to operate',
-      'Any defect in the installation that a competent person would record',
+      'Any voltage present, exceeding the extra-low voltage bands',
+      'Any situation where a protective device, fuse or breaker, has failed',
+      'Any defect in the installation, that a competent person would record',
     ],
     correctAnswer: 0,
     explanation: 'Danger means risk of injury, and injury is defined in terms of electric shock, electric burn, arcing, fire and explosion caused by electricity. A defect only becomes danger when it creates that risk of injury.',
@@ -6000,10 +6000,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 573,
     question: 'Work is to be done in a dwelling in Scotland. How should the candidate treat the Part P notification rules?',
     options: [
-      'They apply once the local authority has been informed of the work',
+      'They apply, once the local authority has been informed of the work',
       'They do not apply, as Scotland has its own arrangements',
-      'They apply only where the installer holds an English registration',
-      'They apply in the same way as they do in England and Wales',
+      'They apply, but only where the installer holds an English registration',
+      'They apply in the same way, as they do in England and Wales',
     ],
     correctAnswer: 1,
     explanation: 'Part P sits in the Building Regulations for England and Wales; Scotland operates its own building standards system. Applying English notification rules north of the border is a straightforward error of jurisdiction.',
@@ -6033,9 +6033,9 @@ export const am2QuestionBank: AM2Question[] = [
     question: 'A dwelling is sold and the buyer\'s solicitor asks for evidence about a recent consumer unit change. What is the relevant document?',
     options: [
       'The certificate for the work, together with the notification record',
-      'The quotation accepted by the previous owner for the work',
-      'The manufacturer\'s data sheet for the consumer unit fitted',
-      'The periodic inspection report for the previous installation',
+      'The quotation for the work, accepted by the previous owner',
+      'The data sheet for the consumer unit, supplied by the maker',
+      'The periodic inspection report, covering the previous installation',
     ],
     correctAnswer: 0,
     explanation: 'Evidence of compliance for notifiable work is the certificate plus the record that the work was notified or self-certified. This is exactly why the certificate must be kept safe by the householder.',

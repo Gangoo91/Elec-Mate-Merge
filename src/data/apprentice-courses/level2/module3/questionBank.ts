@@ -14,6 +14,12 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 1,
     question: 'What is the most common type of cable used for fixed domestic wiring in the UK?',
+    // Was "recommended maximum pulling tension for copper conductors" keyed to
+    // 70 N/mm2, which contradicted level2/module4 id 280 (50 N/mm2, sourced to
+    // the IET Electrical Installation Design Guide). Both banks feed the L2
+    // mixed mock, so a candidate could meet both and be marked wrong for a right
+    // answer. The figure is in neither BS 7671, the On-Site Guide nor the RAG,
+    // so this now tests the same topic without asserting a number.
     options: [
       'Three-core flexible cord',
       'Twin and earth cable',
@@ -47,9 +53,9 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 3,
     question: 'In a twin and earth cable, what is the bare conductor used for?',
     options: [
-      'Neutral',
-      'Line',
-      'Switch wire',
+      'Neutral (N)',
+      'Line (L)',
+      'Switch wire (SL)',
       'Earth (CPC)',
     ],
     correctAnswer: 3,
@@ -195,9 +201,9 @@ export const module3QuestionBank: QuestionBank[] = [
     question: 'What is the main difference between surface and recessed conduit installation?',
     options: [
       'Surface conduit is visible and mounted on the wall; recessed conduit is concealed within it',
-      'Surface conduit must always be made of steel, whereas recessed conduit must be plastic',
-      'Surface conduit carries only data cables, whereas recessed conduit carries power',
-      'Surface conduit needs no fixings at all, whereas recessed conduit is screwed back',
+      'Surface conduit must always be made of steel; recessed conduit must always be plastic',
+      'Surface conduit carries only data cables; recessed conduit carries only power circuits',
+      'Surface conduit needs no fixings at all; recessed conduit is screwed back to the wall',
     ],
     correctAnswer: 0,
     explanation:
@@ -259,9 +265,9 @@ export const module3QuestionBank: QuestionBank[] = [
     question: 'What is the main difference between cable tray and cable ladder?',
     options: [
       'Support structure - tray has solid/perforated base, ladder has rungs',
-      'Tray carries only data cables, whereas ladder carries power cables',
-      'Tray must always be earthed, whereas ladder must never be earthed',
-      'Tray is always moulded in PVC, whereas ladder is made of steel',
+      'Tray carries only data/comms cables, whereas ladder carries power',
+      'Tray must be earthed/bonded, whereas ladder must never be earthed',
+      'Tray is moulded in PVC/GRP, whereas ladder is made of steel',
     ],
     correctAnswer: 0,
     explanation:
@@ -334,7 +340,7 @@ export const module3QuestionBank: QuestionBank[] = [
     explanation:
       'Expansion joints and flexible connections must be incorporated in long runs of containment to accommodate thermal expansion and prevent stress damage.',
     section: '3.2.7',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Thermal Expansion',
   },
 
@@ -376,9 +382,9 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'Which test instrument would you use to verify that a circuit is dead before working on it?',
     options: [
-      'Insulation resistance tester',
-      'Multimeter',
-      'Earth fault loop impedance tester',
+      'Insulation/continuity tester',
+      'Multimeter set to AC/DC volts',
+      'Line/earth fault loop impedance tester',
       'Voltage indicator/tester',
     ],
     correctAnswer: 3,
@@ -507,9 +513,9 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 31,
     question: 'What is the main difference between surface and concealed wiring?',
     options: [
-      'Surface wiring always uses larger cables than concealed wiring',
-      'Surface wiring needs no circuit protective conductor at all',
-      'Concealed wiring can be installed in new build properties only',
+      'Surface wiring always uses larger cables than concealed wiring, whatever the load',
+      'Surface wiring, being visible, needs no circuit protective conductor',
+      'Concealed wiring can be installed in new build properties only, never an existing one',
       'Visibility - surface wiring is visible, concealed is hidden',
     ],
     correctAnswer: 3,
@@ -524,9 +530,9 @@ export const module3QuestionBank: QuestionBank[] = [
     question: "When does 'first fix' electrical work typically take place?",
     options: [
       'Before plastering, during construction phase',
-      'After decoration is complete and the building is occupied',
-      'Only once final testing and certification is finished',
-      'At the same time as the accessories are fitted',
+      'After decoration is complete, once the building is occupied',
+      'Only after final testing, once certification is finished',
+      'At the same time as the accessories, on second fix',
     ],
     correctAnswer: 0,
     explanation:
@@ -539,10 +545,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 33,
     question: "What does 'second fix' electrical work involve?",
     options: [
-      'Installing back boxes and pulling in cables',
+      'Installing back boxes, and pulling in cables',
       'Fitting accessories, switches, and sockets',
-      'Chasing walls and laying floor containment',
-      'Drawing up the design and circuit schedules',
+      'Chasing walls, and laying floor containment',
+      'Drawing up the design, and the circuit schedules',
     ],
     correctAnswer: 1,
     explanation:
@@ -636,9 +642,9 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 39,
     question: 'What should be checked when installing socket outlets?',
     options: [
-      'The brand name printed on the front of the moulded faceplate',
-      'The colour of the mounting screws supplied with it',
-      'The packaging that the accessory was supplied to site in',
+      'The brand name, printed on the front of the moulded faceplate',
+      'The colour of the mounting screws, supplied with it',
+      'The packaging, in which the accessory was supplied to site',
       'Correct height, level installation, and secure fixing',
     ],
     correctAnswer: 3,
@@ -696,7 +702,7 @@ export const module3QuestionBank: QuestionBank[] = [
     explanation:
       'AD represents water and moisture conditions in BS 7671 external influences classification, ranging from AD1 (negligible) to AD8 (submersion).',
     section: '3.5.1',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'BS 7671 External Influences',
   },
   {
@@ -734,18 +740,18 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 45,
     question:
-      'Which type of cable would be most suitable for installation in a chemical processing plant?',
+      'Which cable type is specified where escaping acid gases and dense smoke in a fire would endanger people and sensitive equipment?',
     options: [
-      'Standard PVC twin and earth cable',
+      'Standard PVC (6242Y) twin and earth cable',
       'LSOH (Low Smoke Zero Halogen) cable',
-      'General-purpose flexible cord to BS 6500',
-      'Bare overhead line conductors',
+      'General-purpose flexible cord (BS 6500)',
+      'Bare overhead line (ACSR) conductors',
     ],
     correctAnswer: 1,
     explanation:
       'LSOH (low smoke zero halogen) cable is specified in process plants because, unlike PVC, it releases no corrosive halogen acids and little toxic smoke if involved in a fire — important where people and sensitive plant are present.',
     section: '3.5.4',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Chemical Resistance',
   },
   {
@@ -777,7 +783,7 @@ export const module3QuestionBank: QuestionBank[] = [
     explanation:
       'IK10 provides the highest level of mechanical protection, indicating resistance to 20 joule impacts equivalent to heavy hammer blows.',
     section: '3.5.3',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Mechanical Protection',
   },
   {
@@ -852,9 +858,9 @@ export const module3QuestionBank: QuestionBank[] = [
     question: 'According to BS 7671, cables buried in walls should be installed in which zones?',
     options: [
       'Only in safe zones - horizontally/vertically from accessories',
-      'Diagonally between the accessories to give the shortest route',
-      'Anywhere in the wall, provided that the cable is twin and earth',
-      'In whichever zone the customer has marked out',
+      'Diagonally between the socket/switch boxes for a shorter run',
+      'Anywhere in the wall, provided that the cable is PVC/PVC sheathed',
+      'In whichever zone the customer/client has marked out',
     ],
     correctAnswer: 0,
     explanation:
@@ -1007,7 +1013,7 @@ export const module3QuestionBank: QuestionBank[] = [
     explanation:
       'Thermoplastic elastomer sheaths provide excellent resistance to oils, chemicals, and environmental stress compared to standard PVC.',
     section: '3.1.7',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Chemical Resistant Cables',
   },
   {
@@ -1192,10 +1198,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 73,
     question: 'Which multimeter function would you use to check cable continuity?',
     options: [
-      'AC voltage range',
+      'AC/DC voltage range',
       'Resistance/ohms',
-      'DC millivolts range',
-      'AC current clamp',
+      'DC volts/millivolts range',
+      'AC/DC current clamp',
     ],
     correctAnswer: 1,
     explanation:
@@ -1329,7 +1335,7 @@ export const module3QuestionBank: QuestionBank[] = [
     explanation:
       'AG classification in BS 7671 covers mechanical stress including impact, vibration, and other mechanical influences on electrical installations.',
     section: '3.5.1',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Mechanical Impact Classification',
   },
   {
@@ -1416,10 +1422,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 87,
     question: "Which zones are considered 'safe zones' for cable routing in walls?",
     options: [
-      'Within 50mm of any electrical accessory',
-      'Anywhere below the mid-height of the finished wall',
-      'Within 300mm of the consumer unit only',
-      'Within 150mm of corners, ceilings, floors, and accessories',
+      'Within 50mm of any electrical accessory, in any direction',
+      'Anywhere below the mid-height of the wall, once it is finished',
+      'Within 300mm of the consumer unit, and nowhere else',
+      'Within 150mm of the top of a wall, of an internal corner, or of an accessory',
     ],
     correctAnswer: 3,
     explanation:
@@ -1464,10 +1470,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 90,
     question: 'What information should be included on cable labels?',
     options: [
-      'The installer name and date of birth',
-      'The cable manufacturer advertising slogan',
+      'The installer name, and date of birth',
+      'The cable manufacturer\'s advertising slogan, in full',
       'Circuit designation, cable type, and destination',
-      'The purchase price of the cable',
+      'The purchase price of the cable, per metre',
     ],
     correctAnswer: 2,
     explanation:
@@ -1492,7 +1498,7 @@ export const module3QuestionBank: QuestionBank[] = [
     explanation:
       'Screened cables have metallic screens that provide protection against electromagnetic interference, essential in environments with sensitive equipment.',
     section: '3.1.7',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'EMI Protection',
   },
   {
@@ -1508,7 +1514,7 @@ export const module3QuestionBank: QuestionBank[] = [
     explanation:
       'BS 7671 typically limits voltage drop to 5% of nominal voltage for final circuits to ensure proper equipment operation and efficiency.',
     section: '3.1.7',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Voltage Drop',
   },
   {
@@ -1525,7 +1531,7 @@ export const module3QuestionBank: QuestionBank[] = [
     explanation:
       'Clipped direct installation (Method C) typically provides the highest current carrying capacity due to better heat dissipation compared to enclosed methods.',
     section: '3.1.7',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Installation Methods',
   },
   {
@@ -1605,7 +1611,7 @@ export const module3QuestionBank: QuestionBank[] = [
     explanation:
       'Expansion loops accommodate thermal expansion and contraction of cables in long runs, preventing stress damage to cables and terminations.',
     section: '3.2.7',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Thermal Expansion',
   },
   {
@@ -1621,7 +1627,7 @@ export const module3QuestionBank: QuestionBank[] = [
     explanation:
       'Explosive atmospheres require certified equipment - galvanised steel conduit with appropriate ATEX certification ensures safe operation in hazardous areas.',
     section: '3.2.2',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Hazardous Areas',
   },
   {
@@ -1784,7 +1790,7 @@ export const module3QuestionBank: QuestionBank[] = [
     explanation:
       'Screwed terminals alone may loosen due to vibration; additional measures like spring washers or thread-locking compounds are needed in vibration environments.',
     section: '3.4.3',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Vibration Resistance',
   },
   {
@@ -1882,7 +1888,7 @@ export const module3QuestionBank: QuestionBank[] = [
     explanation:
       'AA represents ambient temperature classification in BS 7671 external influences, ranging from AA1 (-60°C to +5°C) to AA8 (+90°C to +125°C).',
     section: '3.5.1',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Temperature Classification',
   },
   {
@@ -1974,14 +1980,14 @@ export const module3QuestionBank: QuestionBank[] = [
     options: [
       'Standard PVC (thermoplastic)',
       'XLPE (Cross-linked polyethylene)',
-      'Natural rubber insulation',
-      'Paper-insulated lead-covered',
+      'Natural rubber (elastomeric) insulation',
+      'Paper-insulated lead-covered (PILC)',
     ],
     correctAnswer: 1,
     explanation:
       'XLPE (90°C thermosetting) insulation has superior thermal properties compared to 70°C PVC, maintaining its properties at higher temperatures.',
     section: '3.1.7',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'High Temperature Insulation',
   },
   {
@@ -1998,7 +2004,7 @@ export const module3QuestionBank: QuestionBank[] = [
     explanation:
       'Steel conduit acts as a Faraday cage when properly earthed, providing excellent electromagnetic shielding for enclosed cables.',
     section: '3.2.2',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'EMI Shielding',
   },
   {
@@ -2177,7 +2183,7 @@ export const module3QuestionBank: QuestionBank[] = [
     explanation:
       'Hot, humid tropical environments promote fungal growth which can degrade cable materials, requiring fungus-resistant cable types or treatments.',
     section: '3.5.4',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Fungal Resistance',
   },
   {
@@ -2185,10 +2191,10 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'What additional protection is required for electrical installations in swimming pool areas?',
     options: [
-      'Larger cable sizes throughout the building',
-      'A dedicated three-phase supply to the pool plant room',
+      'Larger cable sizes, throughout the whole building',
+      'A dedicated three-phase supply, run to the pool plant room',
       'Enhanced IP ratings, RCD protection, and bonding',
-      'Removal of all metallic parts from the whole pool area',
+      'Removal of all metallic parts, from the whole pool area',
     ],
     correctAnswer: 2,
     explanation:
@@ -2251,10 +2257,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 138,
     question: 'What information must be provided with electrical installation certificates?',
     options: [
-      'The retail price of every accessory and cable used on the whole job',
-      'The names of everyone who visited the site during the course of works',
+      'The retail price of every accessory, and of every cable, used on the whole job',
+      'The names of everyone who visited the site, throughout the course of works',
       'Test results, circuit details, and any departures from standards',
-      'A photograph of the completed installation and of the consumer unit board',
+      'A photograph of the completed installation, and of the consumer unit board',
     ],
     correctAnswer: 2,
     explanation:
@@ -2310,7 +2316,7 @@ export const module3QuestionBank: QuestionBank[] = [
     explanation:
       'Lift travelling cables are specially designed with enhanced flexibility to withstand constant movement and are often flat in construction for space efficiency.',
     section: '3.1.5',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Travelling Cables',
   },
   {
@@ -2326,7 +2332,7 @@ export const module3QuestionBank: QuestionBank[] = [
     explanation:
       'Mineral insulated cables can maintain circuit integrity during fires as the mineral insulation is non-combustible and the copper sheath provides excellent protection.',
     section: '3.1.7',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Mineral Insulated Cables',
   },
   {
@@ -2342,7 +2348,7 @@ export const module3QuestionBank: QuestionBank[] = [
     explanation:
       "Clean rooms require stainless steel containment with smooth surfaces that can be easily cleaned and won't harbour contaminants or bacteria.",
     section: '3.2.3',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Clean Room Containment',
   },
   {
@@ -2430,10 +2436,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 149,
     question: 'Which section of BS 7671 sets out the zones for a location containing a bath or shower?',
     options: [
-      'No special zones',
+      'No zones, no restrictions',
       'Zone 0, 1, 2 system',
       'Industrial zone system',
-      'Safe zone system',
+      'Safe zones, as for cables',
     ],
     correctAnswer: 1,
     explanation:
@@ -2446,10 +2452,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 150,
     question: 'What documentation should accompany electrical installations?',
     options: [
-      'A verbal confirmation to the client that all the work is complete',
-      'A receipt for the materials purchased from the wholesaler',
+      'A verbal confirmation to the client, once all the work is complete',
+      'A receipt for the materials, purchased from the wholesaler',
       'Installation certificate, test results, and circuit schedules',
-      'A photograph of the consumer unit showing the full circuit chart',
+      'A photograph of the consumer unit, showing the full circuit chart',
     ],
     correctAnswer: 2,
     explanation:
@@ -2473,23 +2479,23 @@ export const module3QuestionBank: QuestionBank[] = [
     explanation:
       'Voltage drop is calculated using conductor resistance, cable length, and current, making conductor resistance and current the most critical parameters.',
     section: '3.1.7',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Voltage Drop Calculation',
   },
   {
     id: 152,
-    question: 'What is the recommended maximum pulling tension for copper conductors?',
+    question: 'What is the main risk of exceeding the recommended pulling tension when drawing cables into conduit?',
     options: [
-      '70N per mm²',
-      '50N per mm²',
-      '100N per mm²',
-      '150N per mm²',
+      'The conductor stretches and the insulation is damaged, often with no visible sign at the surface',
+      'The sheath is polished by the conduit, dropping the insulation resistance below the 1 MΩ minimum',
+      'The conductor work-hardens and its resistance falls, so R1+R2 reads artificially low',
+      'Friction heats the cable past 70 °C, so it must be permanently derated afterwards',
     ],
     correctAnswer: 0,
     explanation:
-      'The recommended maximum pulling tension for copper conductors is approximately 70N per mm² of conductor cross-sectional area to prevent damage.',
+      'Over-tensioning stretches the conductor and can split or thin the insulation inside the conduit, where none of the damage is visible once the pull is finished. The IET Electrical Installation Design Guide gives a maximum pulling tension per square millimetre of conductor cross-section — use a stocking grip and lubricant rather than pulling harder.',
     section: '3.1.1',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Cable Pulling Limits',
   },
 
@@ -2556,8 +2562,8 @@ export const module3QuestionBank: QuestionBank[] = [
     question: 'Which cable type would be most appropriate for a fire alarm circuit?',
     options: [
       'Fire resistant cable (FP200)',
-      'Twin and earth cable',
-      'Standard PVC singles in conduit',
+      'Twin and earth (6242Y) cable',
+      'PVC singles (6491X) in conduit',
       'Steel wire armoured (SWA) cable',
     ],
     correctAnswer: 0,
@@ -2580,7 +2586,7 @@ export const module3QuestionBank: QuestionBank[] = [
     explanation:
       'XLPE stands for Cross-Linked Polyethylene, an insulation material with superior thermal and electrical properties compared to standard PVC.',
     section: '3.1.2',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Cable Insulation Materials',
   },
   {
@@ -2596,7 +2602,7 @@ export const module3QuestionBank: QuestionBank[] = [
     explanation:
       'MICC cable is used in high temperature applications and where fire resistance is critical, such as emergency lighting and fire alarm systems.',
     section: '3.1.8',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'MICC Cable',
   },
   {
@@ -2628,7 +2634,7 @@ export const module3QuestionBank: QuestionBank[] = [
     explanation:
       'Aluminium has different thermal expansion properties and oxidises readily, so it requires proper termination techniques to prevent loose connections and potential fire hazards.',
     section: '3.1.2',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Aluminium Conductor Safety',
   },
   {
@@ -2741,7 +2747,7 @@ export const module3QuestionBank: QuestionBank[] = [
     explanation:
       'Chemical plants require cables with chemical resistant sheaths to prevent degradation from exposure to corrosive substances.',
     section: '3.1.7',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Chemical Resistance',
   },
   {
@@ -2885,7 +2891,7 @@ export const module3QuestionBank: QuestionBank[] = [
     explanation:
       'Motor circuits must be sized considering both starting current (which can be 6-8 times running current) and continuous running current.',
     section: '3.1.10',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Motor Circuits',
   },
   {
@@ -2983,7 +2989,7 @@ export const module3QuestionBank: QuestionBank[] = [
     explanation:
       'The minimum bending radius for cable tray should be 3 times the tray width to prevent cable damage and maintain proper support.',
     section: '3.2.7',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Bending Radius',
   },
   {
@@ -3049,7 +3055,7 @@ export const module3QuestionBank: QuestionBank[] = [
     explanation:
       'Expansion joints in cable tray systems accommodate thermal movement, preventing stress and damage to the installation.',
     section: '3.2.7',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Expansion Joints',
   },
   {
@@ -3082,7 +3088,7 @@ export const module3QuestionBank: QuestionBank[] = [
     explanation:
       'PVC should be avoided in high EMI areas as it provides no electromagnetic shielding, unlike metallic containment systems.',
     section: '3.2.10',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'EMI Considerations',
   },
   {
@@ -3146,7 +3152,7 @@ export const module3QuestionBank: QuestionBank[] = [
     explanation:
       'Stainless steel containment is most appropriate for clean rooms due to its corrosion resistance and ease of cleaning and sterilisation.',
     section: '3.2.12',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Specialist Environments',
   },
   {
@@ -3194,7 +3200,7 @@ export const module3QuestionBank: QuestionBank[] = [
     explanation:
       'Fire barriers prevent fire and smoke from spreading through containment system openings between fire compartments.',
     section: '3.2.13',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Fire Protection',
   },
   {
@@ -3242,7 +3248,7 @@ export const module3QuestionBank: QuestionBank[] = [
     explanation:
       'Data cables require EMI shielding and separation from power cables to prevent interference that could affect signal quality.',
     section: '3.2.16',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Data Cable Containment',
   },
   {
@@ -3429,10 +3435,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 210,
     question: 'Which factor is most important when selecting ladder for electrical work?',
     options: [
-      'The lightest possible aluminium frame',
-      'The lowest purchase cost',
+      'The lightest possible frame (aluminium)',
+      'The lowest purchase cost (best value)',
       'Non-conductive material (fibreglass)',
-      'A bright colour for visibility',
+      'A bright colour (yellow) for visibility',
     ],
     correctAnswer: 2,
     explanation:
@@ -3477,10 +3483,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 213,
     question: 'What information should be recorded when using test equipment?',
     options: [
-      'Only a pass or fail tick',
+      'Only a tick, pass or fail',
       'Results, test conditions, and equipment details',
-      'The retail price of the test instrument',
-      'The name of the building architect',
+      'The retail price of the instrument, when new',
+      'The name of the architect, who designed the building',
     ],
     correctAnswer: 1,
     explanation:
@@ -3529,9 +3535,9 @@ export const module3QuestionBank: QuestionBank[] = [
       'Which zones around a bath are designated as special locations requiring additional protection?',
     options: [
       'Zone 0, 1, and 2',
-      'Zone 1 only',
-      'Zone 0 and 1 only',
-      'No special zones',
+      'Zone 1, and no other',
+      'Zone 0 and 1, no others',
+      'No special zones, at any point',
     ],
     correctAnswer: 0,
     explanation:
@@ -3636,7 +3642,7 @@ export const module3QuestionBank: QuestionBank[] = [
     explanation:
       'Crimped lugs with appropriate terminals provide the most reliable, low-resistance connections for high current applications.',
     section: '3.4.7',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'High Current Terminations',
   },
   {
@@ -3722,16 +3728,21 @@ export const module3QuestionBank: QuestionBank[] = [
   },
   {
     id: 228,
-    question: 'Which regulation governs the electrical installation requirements in the UK?',
+    // Said "regulation", and keyed to BS 7671 — which is a STANDARD, not a
+    // regulation. Question 251 in this same bank teaches exactly that
+    // distinction ("BS 7671, GN3 and OSG are non-statutory guidance documents"),
+    // and both banks feed the mixed mock, so the two could turn up in one
+    // sitting and a candidate who learned 251 would answer 228 "wrongly".
+    question: 'Which standard sets out the requirements for electrical installations in the UK?',
     options: [
       'BS 7671 (18th Edition)',
-      'IEC 60364',
-      'IEEE standards',
-      'Local building regulations only',
+      'IEC 60364 (international)',
+      'IEEE standards (US-based)',
+      'Building regulations (Part P) only',
     ],
     correctAnswer: 0,
     explanation:
-      'BS 7671 (currently 18th Edition) is the UK standard for electrical installations, incorporating IEC 60364 with UK-specific requirements.',
+      'BS 7671, the IET Wiring Regulations, is the UK standard for electrical installations, incorporating IEC 60364 with UK-specific requirements. It is not statutory in itself — the Electricity at Work Regulations 1989 carry the legal duty — but compliance with BS 7671 is the recognised way of meeting it.',
     section: '3.4.14',
     difficulty: 'basic',
     topic: 'UK Regulations',
@@ -4110,8 +4121,8 @@ export const module3QuestionBank: QuestionBank[] = [
       'Which of the following is a STATUTORY regulation that applies to electrical work in the UK?',
     options: [
       'BS 7671 (the IET Wiring Regulations)',
-      'The IET On-Site Guide',
-      'IET Guidance Note 3',
+      'The IET On-Site Guide (OSG)',
+      'IET Guidance Note 3 (GN3)',
       'The Electricity at Work Regulations 1989 (EAWR)',
     ],
     correctAnswer: 3,
@@ -4178,8 +4189,8 @@ export const module3QuestionBank: QuestionBank[] = [
       'A breach of the Electricity at Work Regulations 1989 can result in which of the following?',
     options: [
       'A written warning only, with no legal force',
-      'Loss of warranty on the installation',
-      'A requirement to re-sit the qualification',
+      'Loss of warranty on the installation, and nothing more',
+      'A requirement to re-sit the qualification, before working again',
       'Criminal prosecution, including fines and imprisonment',
     ],
     correctAnswer: 3,
@@ -4195,9 +4206,9 @@ export const module3QuestionBank: QuestionBank[] = [
       'The Building Regulations Approved Document P applies to fixed electrical work in which type of premises in England?',
     options: [
       'Dwellings (domestic premises)',
-      'Industrial factories and warehouses',
-      'Commercial offices and shops',
-      'Agricultural and horticultural premises',
+      'Factories and warehouses (industrial)',
+      'Offices and shops (commercial)',
+      'Agricultural and horticultural (farm) premises',
     ],
     correctAnswer: 0,
     explanation:
@@ -4229,9 +4240,9 @@ export const module3QuestionBank: QuestionBank[] = [
       'Why is following the IET On-Site Guide considered good industry practice even though it is non-statutory?',
     options: [
       'It overrides BS 7671 wherever the two documents disagree, because it is the more recent publication',
-      'It is statutory law enforced directly by the Health and Safety Executive and local authority inspectors',
+      'It is statutory law, enforced directly by the Health and Safety Executive and local authority inspectors',
       'It provides simplified, deemed-to-satisfy guidance for common installations consistent with BS 7671',
-      'It replaces the need for inspection and testing on small domestic jobs covered by its standard circuits',
+      'It replaces the need for inspection and testing, on small domestic jobs covered by its standard circuits',
     ],
     correctAnswer: 2,
     explanation:
@@ -4247,9 +4258,9 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'Which document on a construction site sets out the safe systems of work, hazards and control measures for a specific task?',
     options: [
-      'The Electrical Installation Certificate and schedules',
+      'The Electrical Installation Certificate (EIC)',
       'The general arrangement (layout) drawing',
-      'The schedule of inspection and test results',
+      'The schedule of inspection and test results (Appendix 6)',
       'The Risk Assessment & Method Statement (RAMS)',
     ],
     correctAnswer: 3,
@@ -4265,9 +4276,9 @@ export const module3QuestionBank: QuestionBank[] = [
       'On a construction project, which document shows the architect-specified positions of accessories such as socket-outlets, switches and luminaires?',
     options: [
       'The layout (general arrangement) drawing',
-      'The single-line schematic distribution diagram',
-      'The block diagram of the whole system',
-      'The schedule of inspection and test results',
+      'The single-line (schematic) distribution diagram',
+      'The block diagram (system overview)',
+      'The schedule of inspection and test results (Appendix 6)',
     ],
     correctAnswer: 0,
     explanation:
@@ -4283,8 +4294,8 @@ export const module3QuestionBank: QuestionBank[] = [
     options: [
       'Layout (general arrangement) drawing',
       'Schematic (single-line) diagram',
-      'As-built record drawing',
-      'Block diagram',
+      'As-built (record) drawing',
+      'Block diagram (system overview)',
     ],
     correctAnswer: 1,
     explanation:
@@ -4298,10 +4309,10 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'What is the primary purpose of a BLOCK diagram in an electrical drawing pack?',
     options: [
-      'To show the exact physical position of every accessory and the route of every cable on the building floor plan',
-      'To show every individual conductor and terminal connection in enough detail for an operative to wire it up on site',
+      'To show the exact physical position of every accessory — and the route of every cable — on the building floor plan',
+      'To show every individual conductor and terminal connection — in enough detail for an operative to wire it up on site',
       'To show the overall system at a high level — major items and their interconnections — without internal detail',
-      'To record the measured test results for each circuit alongside the protective device type and its current rating',
+      'To record the measured test results for each circuit — alongside the protective device type and its current rating',
     ],
     correctAnswer: 2,
     explanation:
@@ -4333,9 +4344,9 @@ export const module3QuestionBank: QuestionBank[] = [
       'Which IEC 60617 symbol represents a switched socket-outlet on a layout drawing?',
     options: [
       'A semi-circle on a horizontal line, with a short stroke through it (denoting the switch)',
-      'A circle with a cross drawn inside it and a short tail running out to one side of it',
-      'A rectangle divided into three equal sections with a single diagonal line drawn across it',
-      'A triangle pointing towards a horizontal line with a dot marked at the apex',
+      'A circle with a cross inside it (a crossed circle), with a short tail running to one side',
+      'A rectangle divided into three equal sections (banded), with a single diagonal line across it',
+      'A triangle pointing towards a horizontal line (apex outward), with a dot at the apex',
     ],
     correctAnswer: 0,
     explanation:
@@ -4403,9 +4414,9 @@ export const module3QuestionBank: QuestionBank[] = [
       'What is the principal advantage of a RADIAL final circuit over a ring final circuit for socket-outlets?',
     options: [
       'Simpler fault-finding — a single break interrupts only the outlets downstream of the break, and there is only one route to test',
-      'It can serve a much larger floor area than a ring final circuit wired in the same size of cable, so fewer circuits are needed overall',
-      'It needs no overcurrent protective device at the origin because the load is spread evenly along the whole length of the circuit run',
-      'It does not require RCD additional protection, because there is only one route back to the board for any fault current to take',
+      'It can serve a much larger floor area than a ring final circuit wired in the same size of cable — fewer circuits are needed, so the board is smaller',
+      'It needs no overcurrent protective device at the origin — the load is spread evenly along the whole run, so no one point is overloaded',
+      'It does not require RCD additional protection — there is only one route back to the board, so fault current cannot divide between legs',
     ],
     correctAnswer: 0,
     explanation:
@@ -4437,7 +4448,7 @@ export const module3QuestionBank: QuestionBank[] = [
       'Using the IET On-Site Guide cable factor / conduit factor method, what is the rule for a conduit run that contains BENDS or sets and is longer than ~3 m?',
     options: [
       'Use the straight-run table and ignore the bends entirely, since those tabulated factors already include an allowance for them',
-      'Apply a flat 45% space factor regardless of the number of bends in the run or its overall length from box to box',
+      'Apply a flat 45% space factor, regardless of the number of bends in the run or its overall length from box to box',
       'Use the appropriate factor from the bends table for the run length and number of bends, which gives a smaller permitted fill',
       'Double the number of cables permitted in a straight run of the same size, to allow for the extra pulling effort needed',
     ],
@@ -4455,9 +4466,9 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'BS 7671:2018+A4:2026 Regulation 312.2.1 recognises five UK earthing arrangements. Which of the following lists is correct?',
     options: [
-      'TN-A, TN-B, TN-C, TT, IT',
-      'TT, IT, PME, PNB, SELV',
-      'TN-S, TN-R, TN-X, TT, IT',
+      'TN-A, TN-B, TN-C (PME), TT, IT',
+      'TT, IT, PME, PNB, SELV (Section 414)',
+      'TN-S, TN-R (PME), TN-X, TT, IT',
       'TN-S, TN-C-S (PME), TN-C-S (PNB), TT, IT',
     ],
     correctAnswer: 3,
@@ -4473,9 +4484,9 @@ export const module3QuestionBank: QuestionBank[] = [
       'In a TN-S system, where does the protective conductor (earth) originate?',
     options: [
       'A separate metallic protective conductor (typically the cable sheath) supplied by the DNO from the substation',
-      'An earth electrode installed by the consumer at the property and connected to the main earthing terminal',
-      'The combined PEN conductor of the supply, split into neutral and earth at the DNO service cut-out',
-      'The incoming metallic water service pipe, bonded to the main earthing terminal at the intake position',
+      'An earth electrode (rod or plate) installed by the consumer and connected to the main earthing terminal',
+      'The combined PEN (protective earthed neutral) conductor of the supply, split into neutral and earth at the cut-out',
+      'The incoming metallic water service pipe (an extraneous-conductive-part), bonded at the intake position',
     ],
     correctAnswer: 0,
     explanation:
@@ -4617,7 +4628,7 @@ export const module3QuestionBank: QuestionBank[] = [
     explanation:
       'Table 41.3 of A4:2026 gives 1.37 Ω for a 32 A Type B MCB at 230 V (Note: this REPLACES the older A2 figure of 1.44 Ω). Other Type B values: B6=7.28, B10=4.37, B16=2.73, B20=2.19, B40=1.09 Ω.',
     section: '203-4.5',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Table 41.3 — B32 Zs',
   },
 
@@ -4644,10 +4655,10 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'Why is electricity transmitted across the National Grid at very high voltages (e.g. 400 kV / 275 kV) rather than at 230 V?',
     options: [
-      'To make the overhead conductors safer to touch if a line falls to the ground',
-      'To allow much thinner insulation to be used on the overhead line conductors',
+      'To make the overhead conductors (bare aluminium) safer to touch if a line falls',
+      'To allow much thinner insulation (or none at all) on the overhead line conductors',
       'To minimise I²R (resistive) losses in the transmission conductors for a given amount of power',
-      'To increase the frequency of the supply that is delivered to consumers',
+      'To increase the frequency (50 Hz nominal) of the supply delivered to consumers',
     ],
     correctAnswer: 2,
     explanation:
@@ -4662,8 +4673,8 @@ export const module3QuestionBank: QuestionBank[] = [
       'A small hydroelectric scheme uses which energy conversion sequence?',
     options: [
       'Chemical (fuel) → thermal (boiler/steam) → mechanical → electrical',
-      'Light (photons) → electrical directly, with no moving parts involved',
-      'Thermal (combustion of gas) → mechanical (turbine) → electrical',
+      'Light (photons) → electrical directly, with no turbine/generator stage',
+      'Thermal (gas/oil combustion) → mechanical (turbine) → electrical',
       'Kinetic (water) → mechanical (turbine/generator) → electrical',
     ],
     correctAnswer: 3,
@@ -4748,8 +4759,8 @@ export const module3QuestionBank: QuestionBank[] = [
     options: [
       'The Distribution Network Operator (DNO)',
       'The electricity supplier (e.g. Octopus, British Gas)',
-      'The customer',
-      'National Grid ESO only',
+      'The customer (bill payer)',
+      'National Grid ESO (transmission) only',
     ],
     correctAnswer: 0,
     explanation:
@@ -4763,10 +4774,10 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'Which sequence places the parts of the supply network in the correct order from generation to consumer?',
     options: [
-      'Consumer → meter → secondary substation → primary substation → grid supply point → transmission lines → step-up transformer → generator',
+      'Consumer → meter → secondary substation (400 V/230 V) → primary substation → grid supply point → transmission lines → step-up transformer → generator',
       'Generator → step-up transformer → transmission lines → grid supply point → primary substation → secondary (11 kV/400 V) substation → consumer',
-      'Generator → consumer → step-down transformer → transmission lines → grid supply point → primary substation → secondary substation → meter',
-      'Transmission lines → generator → grid supply point → consumer → secondary substation → primary substation → step-up transformer → meter',
+      'Generator → consumer → step-down transformer → transmission lines → grid supply point → primary substation (11 kV/6.6 kV) → secondary substation → meter',
+      'Transmission lines (400 kV/275 kV) → generator → grid supply point → consumer → secondary substation → primary substation → step-up transformer → meter',
     ],
     correctAnswer: 1,
     explanation:
@@ -4799,9 +4810,9 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'A solar photovoltaic (PV) array converts which form of energy directly into DC electricity?',
     options: [
-      'Wind kinetic energy captured by a turbine rotor blade',
-      'Chemical energy stored inside a rechargeable battery',
-      'Heat drawn from the ground via a buried collector loop',
+      'Wind (kinetic) energy captured by a turbine rotor blade',
+      'Chemical energy stored in a rechargeable (secondary) cell',
+      'Heat drawn from the ground via a buried (collector) loop',
       'Photons (light) striking a semiconductor junction',
     ],
     correctAnswer: 3,
@@ -4817,9 +4828,9 @@ export const module3QuestionBank: QuestionBank[] = [
       'A small domestic micro-wind turbine converts which energy sequence?',
     options: [
       'Wind kinetic → mechanical (rotor/generator) → electrical (typically AC, then rectified/inverted as required)',
-      'Light photons → electrical directly through a semiconductor, with no moving parts in the conversion at all',
-      'Chemical → thermal → mechanical → electrical, by burning a fuel to drive a generator set',
-      'Heat from the ground → mechanical compression → electrical, through a sealed refrigerant circuit',
+      'Light photons → electrical directly through a semiconductor (p–n junction), with no rotor/generator',
+      'Chemical → thermal → mechanical → electrical, by burning gas/diesel to drive a generator set (genset)',
+      'Heat from the ground → mechanical compression → electrical, through a sealed (refrigerant/brine) loop',
     ],
     correctAnswer: 0,
     explanation:
@@ -4833,10 +4844,10 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'A ground source heat pump (GSHP) is best described as a:',
     options: [
-      'A generating technology that converts low-grade heat drawn from deep underground directly into electricity for the dwelling',
+      'A generating technology that converts low-grade heat, drawn from deep underground, directly into electricity for the dwelling',
       'Heat-transfer technology that uses electrical energy to move thermal energy from the ground into the building, with a typical CoP of 3–4',
-      'A high-efficiency condensing boiler that burns mains gas to heat the water for the radiators and the hot water cylinder',
-      'A storage technology that holds surplus solar generation in an underground vessel for release during the evening peak',
+      'A high-efficiency condensing boiler that burns mains gas, heating the water for the radiators and the hot water cylinder',
+      'A storage technology that holds surplus solar generation in an underground vessel, for release during the evening peak',
     ],
     correctAnswer: 1,
     explanation:
@@ -4850,8 +4861,8 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'Battery Energy Storage Systems (BESS) installed alongside domestic PV provide which primary benefit?',
     options: [
-      'They generate additional electricity from the waste heat given off by the PV modules during the day',
-      'They increase the output of the PV array directly by raising the voltage at the module terminals',
+      'They generate additional electricity from the waste heat given off by the PV modules, throughout the day',
+      'They increase the output of the PV array directly, by raising the voltage at the module terminals',
       'They store excess generation for use at times of low generation or high tariff, increasing self-consumption',
       'They convert the DC output of the array into AC, removing the need for a separate inverter unit',
     ],
@@ -4901,10 +4912,10 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'For a PV installation to qualify for the Smart Export Guarantee (SEG) and other consumer protections, the installer and product must typically be certified under which UK scheme?',
     options: [
-      'PAT testing certification of the array',
+      'Portable appliance testing (PAT) of the array',
       'MCS (Microgeneration Certification Scheme)',
-      'CHAS health and safety contractor accreditation',
-      'Gas Safe registration of the installing firm',
+      'CHAS (health and safety) contractor accreditation',
+      'Gas Safe registration (gas work) of the installing firm',
     ],
     correctAnswer: 1,
     explanation:
@@ -4919,7 +4930,7 @@ export const module3QuestionBank: QuestionBank[] = [
       'Which of the following is a well-recognised ADVANTAGE of solar PV for a domestic customer?',
     options: [
       'It produces a constant output over the full 24 hours of the day, regardless of the weather or the season of the year',
-      'It requires neither an inverter nor any connection agreement with the distribution network operator before it is used',
+      'It requires neither an inverter, nor any connection agreement with the distribution network operator, before it is used',
       'Zero-carbon, zero-fuel-cost generation during daylight, with very low maintenance and a typical 25-year module performance warranty',
       'It generates the greatest output on overcast winter nights, which is exactly when the household demand is at its highest',
     ],
@@ -4935,9 +4946,9 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'Which of the following is a common DISADVANTAGE shared by both micro-wind and solar PV?',
     options: [
-      'They both produce hazardous combustion gases that must be flued to outside air away from any window',
-      'They both require a constant supply of purchased fuel, so the running cost rises when fuel prices go up',
-      'They both generate only DC, which cannot be used by a domestic installation without fitting a rotary converter set',
+      'They both produce hazardous combustion gases — the flue must discharge to outside air, well away from any window',
+      'They both require a constant supply of purchased fuel — the running cost rises whenever prices go up, exactly as with a boiler',
+      'They both generate only DC — a domestic installation cannot use it, so a rotary converter set has to be fitted',
       'They are intermittent — output depends on weather and time of day, so storage or grid backup is needed for continuous supply',
     ],
     correctAnswer: 3,
@@ -4953,15 +4964,15 @@ export const module3QuestionBank: QuestionBank[] = [
       'A homeowner is considering air source heat pump (ASHP) versus a gas combi boiler for heating. Which statement best summarises the trade-off?',
     options: [
       'ASHP delivers 3–4 kWh of heat per 1 kWh electrical input (high efficiency) but works best in well-insulated dwellings with low flow temperatures (~45 °C); a poorly insulated house with high-temperature radiators can negate the running-cost advantage',
-      'ASHP runs at its best efficiency with a flow temperature of about 70 °C, so it is ideally suited to poorly insulated homes with small existing radiators; a well-insulated dwelling with underfloor heating would gain nothing at all from fitting one',
-      'A gas combi boiler has a higher seasonal efficiency than any ASHP because it burns its fuel on the site rather than moving heat around, so it is always the cheaper of the two to run whatever the insulation standard of the dwelling may be',
-      'An ASHP and a gas boiler produce identical carbon emissions per kWh of heat delivered to the rooms, so the choice between the two depends only on the installation cost and on the space available outside the property itself',
+      'ASHP runs at its best efficiency with a flow temperature of about 70 °C (a boiler flow temperature), so it is ideally suited to poorly insulated homes with small existing radiators; a well-insulated dwelling with underfloor heating would gain nothing at all from fitting one',
+      'A gas combi boiler has a higher seasonal efficiency (SEDBUK band A) than any ASHP because it burns its fuel on the site rather than moving heat around; it is therefore always the cheaper of the two to run, whatever the insulation standard of the dwelling',
+      'An ASHP and a gas boiler produce identical carbon emissions per kWh of heat delivered to the rooms (the grid and gas carbon factors being equal); the choice between the two therefore depends only on the installation cost and the space available outside',
     ],
     correctAnswer: 0,
     explanation:
       'A heat pump\u2019s CoP (typically 3–4) gives a strong efficiency advantage, but only when the building fabric and emitter design (oversized radiators or underfloor heating with low flow temperatures) suit low-temperature heat. Without that, running costs can be comparable to or worse than gas.',
     section: '203-6.3',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Heat pump trade-offs',
   },
   {
@@ -5029,7 +5040,7 @@ export const module3QuestionBank: QuestionBank[] = [
     explanation:
       'Table 52.1 and Regulation 522.6.202 require a cable concealed at less than 50 mm depth to be in a prescribed zone and to have additional protection by an RCD with the characteristics of Regulation 415.1.1, which means 30 mA. A 100 mA delayed device is attractive because it is still an RCD, but it does not meet the additional-protection characteristic and will not disconnect fast enough if a nail or screw penetrates a live core.',
     section: '3.1.4',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Cable Types and Selection',
   },
   {
@@ -5097,7 +5108,7 @@ export const module3QuestionBank: QuestionBank[] = [
     explanation:
       'The exemption applies to a conduit, trunking or ducting system classified as non-flame propagating to its product standard with a maximum internal cross-sectional area of 710 mm², provided the further conditions of 527.2.3 are met; external sealing under 527.2.1 is still required. Choosing the metallic option misses the point, because it is the non-flame-propagating classification, not the material, that earns the concession.',
     section: '3.7.1',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Segregation and Fire Sealing',
   },
   {
@@ -5131,7 +5142,7 @@ export const module3QuestionBank: QuestionBank[] = [
     explanation:
       'The note to Regulation 521.10.202 precludes non-metallic clips or ties as the sole means of support for cables clipped direct or suspended beneath tray, and equally precludes non-metallic trunking as the sole support of the cables within it, because plastic softens and releases the cables when heated. Halving the spacing does not fix this: the failure mode is loss of the fixing material itself, not the load it carries.',
     section: '3.6.1',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Cable Support and Fixing',
   },
   {
@@ -5148,7 +5159,7 @@ export const module3QuestionBank: QuestionBank[] = [
     explanation:
       'BS 5467:2016 covers thermosetting insulated armoured cables, and Table 52.2 gives thermosetting insulation a limit of 90 °C at the conductor, against 70 °C for thermoplastic. Assuming 70 °C PVC is the usual site error, because it comes from familiarity with twin and earth and it sends you to the wrong Appendix 4 tables for both rating and voltage drop.',
     section: '3.1.7',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Cable Types and Selection',
   },
   {
@@ -5250,7 +5261,7 @@ export const module3QuestionBank: QuestionBank[] = [
     explanation:
       'Method (d) of Regulation 528.1 expressly permits cables on a cable tray system where physical separation is provided by a partition, so a partitioned tray is a compliant alternative to insulating everything for the highest voltage present. The absolute answer that the bands may never share a support is wrong: 528.1 sets conditions for sharing, it does not ban it.',
     section: '3.3.1',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Trunking and Tray Systems',
   },
   {
@@ -5311,8 +5322,8 @@ export const module3QuestionBank: QuestionBank[] = [
     options: [
       '30 mA RCD protection, or compliance with 522.6.204',
       'Nothing further, as the prescribed zone is satisfied',
-      'Earth bonding of the metal studs on both wall faces',
-      'Re-routing the cable outside any prescribed zone',
+      'Earth bonding of the metal studs, on both wall faces',
+      'Re-routing the cable, outside any prescribed zone',
     ],
     correctAnswer: 0,
     explanation:
@@ -5344,9 +5355,9 @@ export const module3QuestionBank: QuestionBank[] = [
       'What does Regulation 526.1 require of conductor connections at a distribution board?',
     options: [
       'Every connection must be correctly located, tight and secure',
-      'Connections rated above 32 A alone require a torque check',
-      'Busbar connections are exempt from the tightness check',
-      'Screw terminals need retightening at every periodic inspection',
+      'Connections rated above 32 A, and no others, require a torque check',
+      'Busbar connections, being factory made, are exempt from the check',
+      'Screw terminals, without exception, are retightened at every inspection',
     ],
     correctAnswer: 0,
     explanation:
@@ -5369,7 +5380,7 @@ export const module3QuestionBank: QuestionBank[] = [
     explanation:
       'Where connections are made inside an enclosure, the enclosure must keep them from being degraded, so corrosive conditions call for corrosion-resistant materials, protective coatings, or relocation away from the source. Picking any non-metallic box is not the answer: plastics vary widely in chemical resistance and the enclosure still has to suit the IP and mechanical duty of its position.',
     section: '3.4.4',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Enclosures and IP Ratings',
   },
   {
@@ -5394,7 +5405,7 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'A cable is totally surrounded by loft insulation for about 0.8 m and no manufacturer data is available. How is its current-carrying capacity taken?',
     options: [
-      'Take the full tabulated capacity with no derating used',
+      'Take the full tabulated capacity, with no derating used',
       'Take 0.5 times the free air, Method E, capacity value',
       'Take 0.7 times the clipped direct, Method C, capacity',
       'Take 0.5 times the clipped direct, Method C, capacity',
@@ -5437,7 +5448,7 @@ export const module3QuestionBank: QuestionBank[] = [
     explanation:
       'The note to Regulation 522.8.5 confirms that consumer unit meter tails are covered by the support requirements, so they must be arranged so that no appreciable mechanical strain, including the weight of the tails themselves, reaches the terminations. Assuming large tails support themselves is the frequent misjudgement, and the resulting strain works terminal screws loose at the very point carrying the whole installation current.',
     section: '3.6.3',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Cable Support and Fixing',
   },
   {
@@ -5471,7 +5482,7 @@ export const module3QuestionBank: QuestionBank[] = [
     explanation:
       'Regulation 522.6.204(a) lists BS 5467, BS 6724, BS 7846, BS 8436 and BS EN 60702-1, and it is BS EN 60702-1 that covers mineral insulated cables and their terminations at rated voltages up to 750 V. BS 5467 is the plausible distractor because it is also on that list, but it is the standard for thermosetting insulated armoured cable, not mineral insulated.',
     section: '3.1.12',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Cable Types and Selection',
   },
   {
@@ -5488,7 +5499,7 @@ export const module3QuestionBank: QuestionBank[] = [
     explanation:
       'Unless it is run in a conduit or duct giving equivalent protection against mechanical damage, a cable buried in the ground must incorporate an earthed armour or metal sheath, or both, suitable for use as a protective conductor. Fitting an electrode at the garage is a different subject entirely: it concerns the earthing arrangement, and it does nothing about the risk of a spade or digger striking the buried cable.',
     section: '3.1.13',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Cable Types and Selection',
   },
   {
@@ -5496,7 +5507,7 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'How deep must a buried cable be laid, and how must its route be recorded on site, according to BS 7671?',
     options: [
-      'Any depth is acceptable provided the cable is armoured throughout',
+      'Any depth is acceptable, provided the cable is armoured throughout',
       'At least 600 mm in every case, with a warning notice fitted above it',
       'Sufficient depth for the ground use, with covers or marker tape',
       'At least 450 mm in every case, with covers or marker tape above it',
@@ -5530,9 +5541,9 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'A consumer unit is being replaced in a house. What does BS 7671 require of the enclosure of the new unit?',
     options: [
-      'A metal enclosure with an IP rating of at least IP4X',
-      'A sealed enclosure with intumescent strip at the entries',
-      'An enclosure with a lockable door in every dwelling type',
+      'A metal enclosure, with an IP rating of at least IP4X',
+      'A sealed enclosure, with intumescent strip at the entries',
+      'An enclosure with a lockable door, in every dwelling type',
       'Non-combustible enclosure, or a non-combustible cabinet',
     ],
     correctAnswer: 3,
@@ -5573,7 +5584,7 @@ export const module3QuestionBank: QuestionBank[] = [
     explanation:
       'Current-carrying capacity has to be assessed for the actual installation conditions, and grouping cables together reduces each cable ability to shed heat, so the Appendix 4 grouping factor is applied along with any ambient temperature and thermal insulation factors. Simply stepping up one conductor size feels safe but is not a calculation: it can under-provide with heavy grouping and waste copper where the grouping is light.',
     section: '3.3.2',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Trunking and Tray Systems',
   },
   {
@@ -5596,18 +5607,18 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 340,
     question:
-      'A data cable insulated only for extra-low voltage is proposed to share unpartitioned trunking with 230 V circuits. Is that arrangement acceptable?',
+      'Cables must run at low level through an area used by vehicle traffic. Which wiring system provides the mechanical protection required?',
     options: [
       'Clipped flat twin and earth, protected by a 30 mA RCD device',
       'PVC mini-trunking, which is quick to install and easy to extend',
       'Steel conduit or armoured cable, protecting against impact',
-      'Plastic oval conduit buried under the wall surface plasterwork',
+      'Plastic oval conduit, buried under the wall surface plasterwork',
     ],
     correctAnswer: 2,
     explanation:
       'Selection must account for the mechanical influences at the location, so an area with vehicle traffic calls for a system that can take impact and abrasion, such as steel conduit or armoured cable. Relying on a 30 mA RCD is the seductive answer because it addresses the shock risk after a strike, but BS 7671 asks you to prevent the damage in the first place rather than manage its consequences.',
     section: '3.3.4',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Trunking and Tray Systems',
   },
   {
@@ -5617,7 +5628,7 @@ export const module3QuestionBank: QuestionBank[] = [
     options: [
       'Use a screw terminal box, fitted with a labelled lid',
       'Use a maintenance-free accessory, or relocate the joint',
-      'Use a crimped joint wrapped in self-amalgamating tape',
+      'Use a crimped joint, wrapped in self-amalgamating tape',
       'Use a connector block inside a plastic box, then seal it',
     ],
     correctAnswer: 1,
@@ -5641,7 +5652,7 @@ export const module3QuestionBank: QuestionBank[] = [
     explanation:
       'Regulation 528.1 allows mixed bands in one wiring system only where every conductor is insulated for the highest voltage present or where the bands are physically separated, for example by a partition in the trunking or on the tray. Screening is the attractive answer because it deals with electrical interference, but a screen is not insulation rated for 230 V and would not withstand contact with a damaged mains core.',
     section: '3.7.4',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Segregation and Fire Sealing',
   },
   {
@@ -5658,7 +5669,7 @@ export const module3QuestionBank: QuestionBank[] = [
     explanation:
       'Regulation 522.3.2 requires that where water may collect or condensation may form in a wiring system, provision is made for its escape, which for conduit means drainage holes at low points. Extra saddles improve support but trap the water exactly where it does the damage, corroding the conduit from inside and eventually attacking the cable sheath.',
     section: '3.2.5',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Conduit Systems',
   },
   {
@@ -5692,7 +5703,7 @@ export const module3QuestionBank: QuestionBank[] = [
     explanation:
       'Regulation 522.7 requires vibration to be taken into account, which is why a flexible connection is used, but Regulation 543.2.3 forbids flexible or pliable conduit from acting as the protective conductor, so a separate cpc must be run through it. Clamping an earth to each end of the flex is the plausible workaround, yet the regulation excludes the flexible conduit itself from the earth path regardless of how it is clamped.',
     section: '3.2.6',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Conduit Systems',
   },
   {
@@ -5754,7 +5765,7 @@ export const module3QuestionBank: QuestionBank[] = [
       'Internal sealing at the wall, external sealing not needed',
       'External sealing at the wall, internal sealing not needed',
       'Neither, since the conduit is non-flame propagating',
-      'Both internal and external sealing to the wall rating',
+      'Both internal and external sealing, to the wall rating',
     ],
     correctAnswer: 1,
     explanation:
@@ -5811,7 +5822,7 @@ export const module3QuestionBank: QuestionBank[] = [
     explanation:
       'Regulation 522.3.1 requires entries and glands to be sealed so water ingress cannot cause damage, 522.3.2 requires provision for water or condensation to escape, and the enclosure and containment materials must resist the corrosive conditions so connections are not degraded. Painting a standard steel system yearly is the tempting economy, but the coating is broken at every thread and fixing, and corrosion then attacks the very continuity that a steel system depends on.',
     section: '3.3.5',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Trunking and Tray Systems',
   },
   {
@@ -5901,17 +5912,17 @@ export const module3QuestionBank: QuestionBank[] = [
     correctAnswer: 2,
     explanation: 'A new circuit in a kitchen is notifiable work in England, and an unregistered contractor has no self-certification route, so a building notice must be given before work starts. Option B is the trap: issuing an installation certificate satisfies BS 7671 but does nothing at all about the Building Regulations notification.',
     section: '203-1.3',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Building Regs Part P',
   },
   {
     id: 359,
     question: 'Two contractors quote for a consumer unit replacement in a dwelling in England. One is scheme-registered and one is not. Which statement about notification is correct?',
     options: [
-      'Both must notify because the work is a full rewire',
+      'Both must notify, because the work is a full rewire',
       'The registered firm self-certifies, the other notifies',
-      'Neither notifies because it is a like-for-like swap',
-      'The registered firm notifies and the other self-certifies',
+      'Neither notifies, because it is a like-for-like swap',
+      'The registered firm notifies, and the other self-certifies',
     ],
     correctAnswer: 1,
     explanation: 'Scheme registration exists precisely so members can self-certify notifiable work and have it registered on their behalf; a non-member must serve a building notice instead. Option C is the trap heard most often on site: replacing a consumer unit is notifiable regardless of it being a swap, because it is work on the origin of the installation.',
@@ -5931,7 +5942,7 @@ export const module3QuestionBank: QuestionBank[] = [
     correctAnswer: 0,
     explanation: 'BS 5467 defines an armoured cable with thermosetting insulation rated for a 90 degrees C conductor operating temperature, so the standard controls the rating, the armour and the terminations. Option D is tempting because conductor size was matched, but two cables of the same size to different standards can have quite different current-carrying capacities.',
     section: '203-1.2',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'British Standards',
   },
   {
@@ -6081,7 +6092,7 @@ export const module3QuestionBank: QuestionBank[] = [
     correctAnswer: 1,
     explanation: 'An unrecognised symbol is a query for the designer, and resolving it at first fix costs nothing. Option D is tempting because a 13 A twin is the usual UK default, but guessing the rating decides the circuit design, the cable and the protective device before anyone has confirmed the load.',
     section: '203-2.3',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Drawing symbols',
   },
   {
@@ -6096,7 +6107,7 @@ export const module3QuestionBank: QuestionBank[] = [
     correctAnswer: 0,
     explanation: 'A condition report carries a schedule of circuit details and test results, which is the nearest thing to a survey of what is actually there. Option D tempts because the board maker is known, but a data sheet describes the enclosure and devices, not what has been wired into them over the years.',
     section: '203-2.1',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Documentation',
   },
   {
@@ -6111,7 +6122,7 @@ export const module3QuestionBank: QuestionBank[] = [
     correctAnswer: 1,
     explanation: 'As-fitted drawings capture the route and position changes made on site so that future work does not start from a fiction. Option D is a plausible guess because as-fitted drawings often do look more detailed, but the scale is usually unchanged and it is the accuracy, not the scale, that matters.',
     section: '203-2.2',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Drawing types',
   },
   {
@@ -6156,7 +6167,7 @@ export const module3QuestionBank: QuestionBank[] = [
     correctAnswer: 1,
     explanation: 'In a twin and earth switch drop the blue core carries the switched line, so it must be identified brown at both ends. Option C reverses the situation and is the mistake made when the sleeving is applied without thinking about which core is doing which job.',
     section: '203-3.1',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Circuit Design',
   },
   {
@@ -6186,7 +6197,7 @@ export const module3QuestionBank: QuestionBank[] = [
     correctAnswer: 2,
     explanation: 'Armoured cable carries its own mechanical protection and its armour serves as the protective conductor, which is what a vehicle area demands. Option D is the tempting compromise because conduit looks like protection, but PVC conduit shatters under vehicle impact and offers no earthed metallic covering behind it.',
     section: '3.1.7',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Cable Types and Selection',
   },
   {
@@ -6201,7 +6212,7 @@ export const module3QuestionBank: QuestionBank[] = [
     correctAnswer: 2,
     explanation: 'Hosing means jets, not splashing, and detergent is a chemical attack on sheaths and gaskets, so both must be designed for. Option D is the classic underspecification: IP44 protects against splashing water only and will let a hose jet straight past the seal.',
     section: '3.1.7',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Chemical Resistance',
   },
   {
@@ -6216,7 +6227,7 @@ export const module3QuestionBank: QuestionBank[] = [
     correctAnswer: 2,
     explanation: 'BS 7671 requires that dissimilar metals liable to start electrolytic action are not placed in contact, and stainless against galvanised steel in salt spray is exactly that couple. Option B is a real consequence, but it happens later and only because the joint has already corroded away.',
     section: '3.1.7',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Marine Corrosion',
   },
   {
@@ -6246,7 +6257,7 @@ export const module3QuestionBank: QuestionBank[] = [
     correctAnswer: 3,
     explanation: 'In an explosive atmosphere the classified zone dictates the protection concept, and only equipment certified for that zone may be used. Option A is a common half-answer: a high IP rating keeps vapour out of an enclosure but says nothing about whether the equipment could ignite the atmosphere around it.',
     section: '3.1.7',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Hazardous Areas',
   },
   {
@@ -6261,7 +6272,7 @@ export const module3QuestionBank: QuestionBank[] = [
     correctAnswer: 0,
     explanation: 'Alarm circuits must continue to operate while the building is being evacuated, which needs a fire-resistant cable rather than a general purpose one. Option D is tempting because sounder circuits are often long, but volt drop is a design calculation, not the reason the cable type is ruled out.',
     section: '3.1.7',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Fire Resistant Cables',
   },
   {
@@ -6276,7 +6287,7 @@ export const module3QuestionBank: QuestionBank[] = [
     correctAnswer: 1,
     explanation: 'Bunched circuits heat one another, so a grouping factor must be applied before the tabulated value can be used. Option C is the plausible-sounding distractor: length matters, but it drives volt drop, not the current-carrying capacity of the conductor.',
     section: '3.1.10',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Cable Grouping',
   },
   {
@@ -6306,7 +6317,7 @@ export const module3QuestionBank: QuestionBank[] = [
     correctAnswer: 1,
     explanation: 'Tabulated capacities assume a reference ambient, and a hotter room leaves the conductor less margin, so an ambient temperature factor reduces the usable rating. Option C is wrong here because the two circuits are separate runs, not bunched, so grouping does not arise.',
     section: '3.1.10',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Current Capacity Factors',
   },
   {
@@ -6456,7 +6467,7 @@ export const module3QuestionBank: QuestionBank[] = [
     correctAnswer: 1,
     explanation: 'Breaking a long, heavily bent run into shorter sections with a draw-in box is the designed solution and is why those boxes exist. Option C is what happens under time pressure, and it stretches conductors and strips insulation against the bends.',
     section: '203-3.6',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Conduit fill — bends',
   },
   {
@@ -6471,7 +6482,7 @@ export const module3QuestionBank: QuestionBank[] = [
     correctAnswer: 0,
     explanation: 'More circuits in the same enclosure means a heavier grouping factor, so existing cables may no longer be adequate even if a larger trunking solves the space problem. Option B matters when installing, but it does not change with the number of circuits and is not what makes the addition unsafe.',
     section: '203-3.6',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Trunking space factor',
   },
   {
@@ -6553,10 +6564,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 402,
     question: 'How can an electrician tell a TN-S supply from a TN-C-S supply at the intake position?',
     options: [
-      'The earth comes from the meter tails at the cut-out',
+      'The earth comes from the meter tails, at the cut-out',
       'The earth comes from the cable sheath, not neutral',
-      'The earth comes from an electrode driven into the ground',
-      'The earth comes from the incoming water service pipe',
+      'The earth comes from an electrode, driven into the ground',
+      'The earth comes from the water service pipe, on entry',
     ],
     correctAnswer: 1,
     explanation: 'On TN-S the earthing conductor is clamped to the lead sheath or armour of the service cable, whereas on TN-C-S it is taken from the distributor\'s combined neutral and earth terminal. Option C describes a TT installation and is what an electrician assumes when an electrode is found alongside a distributor earth.',
@@ -6569,14 +6580,14 @@ export const module3QuestionBank: QuestionBank[] = [
     question: 'A PME supply feeds a dwelling. Which services must be connected to the main earthing terminal by main protective bonding?',
     options: [
       'Metallic water, gas and oil services on entry',
-      'The metallic water service alone where it enters',
+      'The metallic water service alone, where it enters',
       'Every metal pipe inside the building, no exception',
       'The gas service alone, as it carries fuel',
     ],
     correctAnswer: 0,
     explanation: 'Main bonding connects the metallic services that enter the building and could introduce a potential, taken as near as practicable to their point of entry. Option C is the overcautious error: internal pipework fed from a bonded service is not extraneous and does not need its own main bonding conductor.',
     section: '203-4.4',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Main bonding sizing',
   },
   {
@@ -6591,7 +6602,7 @@ export const module3QuestionBank: QuestionBank[] = [
     correctAnswer: 3,
     explanation: 'A plastic box has no earth terminal, so the circuit protective conductor must be taken directly to the earth terminal on the metal plate, which is an exposed-conductive-part. Option B is what gets improvised on site when the cpc is short, and it leaves accessible metalwork with no fault path at all.',
     section: '203-4.3',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Earthing of exposed parts',
   },
   {
@@ -6643,10 +6654,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 408,
     question: 'A plastic water main enters a house and changes to copper pipework inside. What does that mean for main protective bonding of the water service?',
     options: [
-      'It must be bonded because copper is a conductor',
-      'It must still be bonded at the point the plastic ends',
+      'It must be bonded, because copper is a conductor',
+      'It must still be bonded, at the point the plastic ends',
       'It is not extraneous, so main bonding is not needed',
-      'It must be bonded to the nearest radiator pipework run',
+      'It must be bonded, to the nearest radiator pipework run',
     ],
     correctAnswer: 2,
     explanation: 'A metallic pipe with an insulating section at its point of entry cannot introduce a potential from outside, so it is not an extraneous-conductive-part and BS 7671 does not require it to be bonded. Option B is the habit most electricians fall into, bonding the copper anyway because it is there, when the plastic entry has already broken the path.',
@@ -6741,7 +6752,7 @@ export const module3QuestionBank: QuestionBank[] = [
     correctAnswer: 0,
     explanation: 'Everything upstream of the final 11 kV to 400 V transformer is at high voltage; that transformer is where low voltage begins. Option B is where many place the change because it is the first item they meet, but the cut-out is already on the low voltage side and changes nothing about the voltage.',
     section: '203-5.4',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Network end-to-end',
   },
   {
@@ -6756,7 +6767,7 @@ export const module3QuestionBank: QuestionBank[] = [
     correctAnswer: 2,
     explanation: 'Three balanced phases share one neutral, so far less copper carries the same power, and the load can be spread across the phases. Option B is simply untrue: a three-phase system has the same earth fault paths as any other and relies on the same protective measures.',
     section: '203-5.2',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Three-phase transmission',
   },
   {
@@ -6831,7 +6842,7 @@ export const module3QuestionBank: QuestionBank[] = [
     correctAnswer: 1,
     explanation: 'The array is a source that cannot be turned off while the sun is on it, so the DC cabling inside the building is treated as live at all times during daylight. Option D is untrue and is a habit carried over from AC work: PV DC circuits are tested, but with array-specific precautions.',
     section: '203-6.2',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'BS 7671 Section 712',
   },
   {
@@ -6846,7 +6857,7 @@ export const module3QuestionBank: QuestionBank[] = [
     correctAnswer: 2,
     explanation: 'Export payment schemes are tied to a recognised certification of both the installing business and the products, which is what gives the supplier confidence in the declared output. Option D confuses the connection route with the payment scheme: inverter rating decides how the distributor is approached, not whether export can be claimed.',
     section: '203-6.2',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'MCS certification',
   },
   {
@@ -6861,7 +6872,7 @@ export const module3QuestionBank: QuestionBank[] = [
     correctAnswer: 1,
     explanation: 'A heat pump works efficiently at a much lower flow temperature than a boiler, so radiators sized for hot water will not release enough heat and usually have to be enlarged. Option C is a common assumption because heat pumps are seen as large loads, but domestic units are routinely single-phase.',
     section: '203-6.3',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Heat pump trade-offs',
   },
 ];

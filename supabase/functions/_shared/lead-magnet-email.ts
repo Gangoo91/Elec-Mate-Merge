@@ -32,6 +32,18 @@ export interface LeadMagnet {
   facts?: string[];
   /** utm_medium for the trial link in the footer. */
   utmMedium: string;
+  /**
+   * Absolute URL of a preview image of the asset itself — shown inside the
+   * highlight panel.
+   *
+   * These magnets ARE the product; an email that asks someone to imagine a
+   * reference sheet is doing less work than one that shows it. Optional, and
+   * purely corroborating: images are blocked by default in plenty of clients,
+   * so every fact stays in the text and the email reads complete without it.
+   */
+  previewImage?: string;
+  /** Alt text for `previewImage`. Required whenever that is set. */
+  previewAlt?: string;
 }
 
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL') || 'https://jtwygbeceundfgnkirof.supabase.co';
@@ -68,6 +80,15 @@ async function fetchBase64(url: string): Promise<string | null> {
 
 function buildHtml(firstName: string | undefined, magnet: LeadMagnet, attached: boolean): string {
   const year = new Date().getFullYear();
+  // width/height are set as ATTRIBUTES as well as CSS — Outlook ignores the CSS
+  // and would otherwise draw the image at its full pixel width, bursting the card.
+  // The asset is 2x (854px) so it stays sharp when displayed at 427px.
+  const previewBlock = magnet.previewImage
+    ? `<a href="${esc(magnet.url)}" style="display: block; margin: 0 0 16px;">` +
+      `<img src="${esc(magnet.previewImage)}" alt="${esc(magnet.previewAlt || magnet.name)}" ` +
+      `width="427" style="display: block; width: 100%; max-width: 427px; height: auto; ` +
+      `border: 0; border-radius: 8px;"></a>`
+    : '';
   const greeting = firstName ? `Hi ${esc(firstName)},` : 'Hi mate,';
   const trialUrl =
     `https://www.elec-mate.com/auth/signup?utm_source=email` +
@@ -143,7 +164,7 @@ function buildHtml(firstName: string | undefined, magnet: LeadMagnet, attached: 
                 <tr>
                   <td style="padding: 22px 24px;">
                     <p style="margin: 0 0 4px; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: #B5840A;">What's inside</p>
-                    <p style="margin: 0 0 14px; font-size: 17px; font-weight: 700; color: #0C1B2A; line-height: 1.3;">Print it once. Use it on every job.</p>
+                    <p style="margin: 0 0 14px; font-size: 17px; font-weight: 700; color: #0C1B2A; line-height: 1.3;">Print it once. Use it on every job.</p>${previewBlock}
                     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">${factRows}</table>
                     <p style="margin: 12px 0 18px; font-size: 13px; color: #51606F; line-height: 1.55;">${attachLine}</p>
                     <!--[if mso]>

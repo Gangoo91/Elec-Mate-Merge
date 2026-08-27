@@ -11,10 +11,13 @@ import { cn } from '@/lib/utils';
 import { storageGetJSONSync, storageSetJSONSync, storageRemoveSync } from '@/utils/storage';
 import { reportCloud } from '@/utils/reportCloud';
 
-const inputCn = 'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
-const textareaCn = 'textarea-soft rounded-xl border-0 bg-white/[0.05] px-3.5 py-3 text-base md:text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors focus:bg-white/[0.07] focus:ring-1 focus:ring-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/50 focus:outline-none focus:shadow-none min-h-[90px] touch-manipulation';
+/*
+ * Page styling comes from the shared kit. These were local copies that had
+ * drifted from every other Notices & Labels page — see components/forms/pageStyles.
+ */
+import { pageCardCn as sectionCn, pageInputCn as inputCn, pageTextareaCn as textareaCn } from '@/components/forms/pageStyles';
 
-const sectionCn = '-mx-4 rounded-none border-y border-white/[0.12] bg-gradient-to-b from-white/[0.07] to-white/[0.03] sm:mx-0 sm:rounded-2xl sm:border-x p-4 sm:p-5 space-y-4';
+import { PageHeader } from '@/components/forms/PageHeader';
 
 const SectionHeader = ({ title }: { title: string }) => (
   <h2 className="text-[15px] font-semibold tracking-tight text-white">{title}</h2>
@@ -159,21 +162,17 @@ export default function SafeIsolationPage() {
 
   return (
     <div className="bg-background min-h-screen">
-      <div className="px-4 pt-3 pb-1 lg:px-8">
-        <div className="mx-auto max-w-3xl lg:max-w-[1600px]">
-          <button onClick={() => navigate(-1)} className="h-11 pr-2 text-[13px] font-semibold text-white/90 transition-colors hover:text-white touch-manipulation">Back</button>
-          <div className="flex items-end justify-between gap-3">
-            <div>
-              <h1 className="text-2xl font-bold tracking-tight text-white sm:text-[28px]">Safe Isolation</h1>
-              <p className="mt-1 font-mono text-[12px] text-white/50">GS 38</p>
-            </div>
-            <button onClick={handleSaveDraft} className="h-11 text-[13px] font-semibold text-white/90 transition-colors hover:text-white touch-manipulation">Save draft</button>
-          </div>
-        </div>
-      </div>
+      <PageHeader
+        eyebrow="GS 38"
+        title="Safe Isolation"
+        actions={
+            <button onClick={handleSaveDraft} className="h-11 text-[13px] font-semibold text-white transition-opacity hover:opacity-80 touch-manipulation">Save draft</button>
+        }
+      />
+
 
       <main className="px-4 py-4 pb-28 sm:pb-8 lg:px-8">
-        <div className="mx-auto max-w-3xl lg:max-w-[1600px] space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
+        <div className="mx-auto max-w-3xl lg:max-w-none xl:max-w-[1700px] space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
           {/* Details */}
           <section className={sectionCn}>
             <SectionHeader title="Details" />
@@ -201,7 +200,7 @@ export default function SafeIsolationPage() {
               {isolationSteps.map((step, index) => (
                 <div key={index} className="flex items-center justify-between gap-3 py-2.5">
                   <p className="flex-1 min-w-0 text-[13px] leading-snug text-white">
-                    <span className="font-semibold text-white/50">{index + 1}.</span> {step}
+                    <span className="font-semibold text-white">{index + 1}.</span> {step}
                   </p>
                   <div className="flex gap-1.5 shrink-0">
                     <button type="button" onClick={() => { if (!data.steps[index]) toggleStep(index); }}

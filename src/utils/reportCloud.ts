@@ -30,6 +30,11 @@ export type ReportType =
   | 'smoke-co-alarm'
   | 'heat-pump'
   | 'testing-only'
+  // A board schedule is issued to a client, kept on file and emailed exactly
+  // like a certificate, so it is a report row rather than a parallel mechanism
+  // (ELE-1615). It is the record of a board's layout, not a declaration of
+  // condition — see the completion rule below.
+  | 'board-schedule'
   // An Annex H log book export is a certificate in every way that matters:
   // it is generated, saved, downloaded and emailed the same way, so it is a
   // report row rather than a parallel mechanism (ELE-1483).
@@ -131,7 +136,9 @@ const reportInspectorName = (data: Record<string, any>): string | null =>
  */
 const reportTypeFromId = (reportId: string): string => {
   const lc = reportId.toLowerCase();
-  return lc.startsWith('fire-alarm-modification')
+  return lc.startsWith('board-schedule')
+    ? 'board-schedule'
+    : lc.startsWith('fire-alarm-modification')
     ? 'fire-alarm-modification'
     : lc.startsWith('fire-alarm-inspection')
       ? 'fire-alarm-inspection'
@@ -274,6 +281,22 @@ const calculateReportStatus = ({
   // condition: the countersignatures on the document are optional, and gating
   // on one would leave every unsigned export sat as a draft forever.
   if (reportType === 'fire-alarm-log-book' && (data.premises_name || data.building_name))
+    return 'completed';
+  /*
+   * A board schedule carries NO signature field and never will: it records the
+   * arrangement of a board, it is not a declaration that the installation is
+   * safe, and the document says so in as many words. Gating completion on a
+   * signature would leave every schedule ever produced sitting as a draft.
+   *
+   * It is complete when it identifies a board and describes at least one
+   * circuit — the same test the page applies before it will render a PDF.
+   */
+  if (
+    reportType === 'board-schedule' &&
+    data.boardRef &&
+    Array.isArray(data.circuits) &&
+    data.circuits.some((c: { description?: string }) => c?.description)
+  )
     return 'completed';
   if (reportType === 'disconnection' && data.inspectorSignature && data.workDate)
     return 'completed';

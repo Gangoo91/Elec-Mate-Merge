@@ -1,4 +1,5 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
+import PdfDownloadCard from '@/components/seo/PdfDownloadCard';
 import { CalculatorSurface } from '@/components/calculators/shared';
 import BS7671ZsLookupCalculator from '@/components/apprentice/calculators/BS7671ZsLookupCalculator';
 import ZeQuickChecker from '@/components/seo/ZeQuickChecker';
@@ -212,6 +213,24 @@ const sections = [
           >
             Look up the maximum Zs for your device
           </a>
+        </div>
+        {/* Sheet 1 of this PDF is the Ze side — the three typical maximums, the
+            Zs = Ze + (R1+R2) relationship and which disconnection time applies. */}
+        <div className="my-6">
+          <PdfDownloadCard
+            href="https://jtwygbeceundfgnkirof.supabase.co/storage/v1/object/public/lead-magnets/elec-mate-zs-ze-reference.pdf"
+            title="Ze and Zs on three printable A4 sheets"
+            description="The typical Ze maximums, how Ze and Zs relate, and every maximum Zs in BS 7671 Tables 41.2–41.5 — including the withdrawn BS 3871 types still in older boards."
+            bullets={[
+              'Ze maximums for TN-S, TN-C-S and TT',
+              'Tables 41.2–41.5 as tabulated',
+              'A4 print-ready',
+              'Free to share',
+            ]}
+            meta="364 KB"
+            trackAs="zs_ze_reference_pdf"
+            captureSource="lead_magnet_zs_ze_reference"
+          />
         </div>
       </>
     ),

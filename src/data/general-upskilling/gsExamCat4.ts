@@ -34,10 +34,10 @@ export const gsCat4Questions: StandardMockQuestion[] = [
     question:
       'What is the difference between a &ldquo;lead measure&rdquo; and a &ldquo;lag measure&rdquo; when tracking professional progress?',
     options: [
-      'Lead measures are more important than lag measures',
-      'There is no meaningful difference between them',
+      'Lead measures are always more important than lag measures; lag measures can be ignored',
+      'There is no meaningful difference between them; both record what has already happened',
       'Lead measures track inputs you can control; lag measures track outcomes that follow',
-      'Lag measures track daily activities; lead measures track annual results',
+      'Lag measures track the daily activities you control; lead measures track annual results',
     ],
     correctAnswer: 2,
     explanation:
@@ -71,9 +71,9 @@ export const gsCat4Questions: StandardMockQuestion[] = [
       'The &ldquo;Seinfeld Strategy&rdquo; (&ldquo;don&rsquo;t break the chain&rdquo;) involves which simple tracking method?',
     options: [
       'Marking a calendar with an X for each day you complete a habit',
-      'Setting a new goal at the start of each month',
-      'Writing a detailed journal entry every evening',
-      'Reviewing your progress only at the end of the year',
+      'Setting a completely new goal at the start of each month',
+      'Writing a detailed journal entry every evening about the day',
+      'Reviewing your progress only at the very end of each calendar year',
     ],
     correctAnswer: 0,
     explanation:
@@ -123,9 +123,9 @@ export const gsCat4Questions: StandardMockQuestion[] = [
     question:
       'What is the main difference between Donald Sch&ouml;n&rsquo;s &ldquo;reflection-in-action&rdquo; and &ldquo;reflection-on-action&rdquo;?',
     options: [
-      'There is no difference &mdash; they are the same thing',
-      'Reflection-on-action is more valuable than reflection-in-action',
-      'Reflection-in-action is written down; reflection-on-action is not',
+      'There is no difference &mdash; they are simply the same thing under two names',
+      'Reflection-on-action is always more valuable; reflection-in-action rarely changes an outcome',
+      'Reflection-in-action is written down; reflection-on-action is only ever verbal',
       'Reflection-in-action happens during the task; reflection-on-action happens afterwards',
     ],
     correctAnswer: 3,
@@ -247,10 +247,10 @@ export const gsCat4Questions: StandardMockQuestion[] = [
     question:
       'When tracking your progress, why is it important to measure yourself against your own past performance rather than comparing yourself to others?',
     options: [
-      'Because other people&rsquo;s progress is irrelevant to any industry',
-      'Because comparing yourself to others is always motivating',
+      'Because other people&rsquo;s progress is entirely irrelevant to any trade or industry',
+      'Because comparing yourself with others is always motivating whatever the result',
       'Because everyone starts from a different point and has different circumstances',
-      'Because there is no way to measure other people&rsquo;s performance',
+      'Because there is no reliable way at all to measure other people&rsquo;s performance',
     ],
     correctAnswer: 2,
     explanation:
@@ -264,9 +264,9 @@ export const gsCat4Questions: StandardMockQuestion[] = [
     id: 135,
     question: 'What is the purpose of a daily debrief habit at the end of a working day?',
     options: [
-      'To record the hours worked each day so they can be billed to clients accurately',
-      'To create a permanent legal record of every task carried out on site',
-      'To compare your daily output against that of your colleagues on the same job',
+      'To record the hours worked each day, so they can be billed to clients accurately',
+      'To create a permanent legal record, task by task, of everything carried out on site',
+      'To compare your daily output against that of your colleagues, job by job',
       'To reflect on what went well, what could improve, and what to do differently tomorrow',
     ],
     correctAnswer: 3,
@@ -282,9 +282,9 @@ export const gsCat4Questions: StandardMockQuestion[] = [
     question: 'What is a professional development journal used for?',
     options: [
       'Recording skills learned, challenges overcome, and CPD activities completed',
-      'Logging the start and finish time of every job for invoicing purposes',
-      'Keeping a list of tools and materials that need to be reordered each week',
-      'Noting down the contact details of every client and supplier you deal with',
+      'Logging the start and finish time of every job, for invoicing purposes',
+      'Keeping a list of tools and materials, to be reordered each week',
+      'Noting down the contact details of every client, supplier and merchant',
     ],
     correctAnswer: 0,
     explanation:
@@ -302,9 +302,9 @@ export const gsCat4Questions: StandardMockQuestion[] = [
     question:
       'An electrician tracks &ldquo;number of successful first-fix inspections per month&rdquo; as a performance metric. Is this a lead measure or a lag measure?',
     options: [
-      'A lead measure &mdash; it is an input the electrician can directly control each day',
+      'A lead measure &mdash; it is an input under the electrician&rsquo;s control',
       'A lag measure &mdash; it tracks an outcome that has already happened',
-      'Neither &mdash; counting inspections is purely a vanity metric with no value',
+      'Neither &mdash; counting inspections is purely a vanity metric',
       'Both equally &mdash; the same metric always serves as a lead and a lag measure',
     ],
     correctAnswer: 1,
@@ -320,10 +320,10 @@ export const gsCat4Questions: StandardMockQuestion[] = [
     question:
       'According to Teresa Amabile&rsquo;s progress principle, which of the following management behaviours is MOST likely to undermine an employee&rsquo;s inner work life?',
     options: [
-      'Setting challenging but achievable goals',
-      'Providing regular constructive feedback',
+      'Setting challenging but achievable goals with a clear deadline',
+      'Providing regular and constructive feedback on progress',
       'Dismissing the significance of small day-to-day achievements',
-      'Encouraging team collaboration on difficult projects',
+      'Encouraging collaboration between team members on difficult projects',
     ],
     correctAnswer: 2,
     explanation:
@@ -338,9 +338,9 @@ export const gsCat4Questions: StandardMockQuestion[] = [
     question:
       'In Kolb&rsquo;s Experiential Learning Cycle, what happens during the &ldquo;Abstract Conceptualisation&rdquo; stage?',
     options: [
-      'The learner repeats the original experience unchanged',
-      'The learner carries out a new task for the first time',
-      'The learner observes someone else performing the task',
+      'The learner simply repeats the original experience unchanged',
+      'The learner carries out an entirely unfamiliar task for the very first time',
+      'The learner stands back and watches someone else perform the task',
       'The learner forms theories or principles based on their reflections',
     ],
     correctAnswer: 3,
@@ -464,10 +464,10 @@ export const gsCat4Questions: StandardMockQuestion[] = [
     question:
       'CITB (Construction Industry Training Board) offers training grants to employers. What is the primary purpose of these grants?',
     options: [
-      'To pay the wages of apprentices while they attend college day-release',
-      'To cover the cost of an employer&rsquo;s public liability insurance premiums',
+      'To pay the wages of apprentices in full while they attend college on day-release',
+      'To cover the cost of an employer&rsquo;s public liability and employer&rsquo;s liability insurance',
       'To subsidise the cost of training and encourage employers to invest in workforce development',
-      'To reimburse employers for tools and equipment bought for new starters',
+      'To reimburse employers for the cost of tools and equipment bought for every new starter',
     ],
     correctAnswer: 2,
     explanation:
@@ -481,9 +481,9 @@ export const gsCat4Questions: StandardMockQuestion[] = [
     id: 147,
     question: 'Which of the following is an example of &ldquo;on-the-job&rdquo; CPD activity?',
     options: [
-      'Attending an accredited weekend course covering the latest BS 7671 amendment changes',
-      'Reading a technical article about cable containment at home over a Sunday breakfast',
-      'Watching an online webinar about three-phase fault finding at home in the evening',
+      'Attending an accredited weekend course covering the latest BS 7671 amendment changes in detail',
+      'Reading a technical article about new cable containment systems at home over Sunday breakfast',
+      'Watching an online webinar about three-phase fault finding at home in the evening after work',
       'Learning a new cable containment technique from a senior electrician during an installation',
     ],
     correctAnswer: 3,
@@ -535,10 +535,10 @@ export const gsCat4Questions: StandardMockQuestion[] = [
     question:
       'When applying Kolb&rsquo;s cycle to learning a new skill such as three-phase motor control, what does the &ldquo;Active Experimentation&rdquo; stage involve?',
     options: [
-      'Carrying out the task for the very first time with no prior knowledge',
-      'Standing back to think about what happened during the previous attempt',
+      'Carrying out the task for the very first time with no prior knowledge or preparation at all',
+      'Standing back to think carefully about what happened during the previous attempt at the task',
       'Trying out the new approach or theory in a practical setting to test what you have learned',
-      'Forming a general rule or theory based on your earlier reflections',
+      'Forming a general rule or a working theory based on your earlier reflections about the task',
     ],
     correctAnswer: 2,
     explanation:
@@ -553,9 +553,9 @@ export const gsCat4Questions: StandardMockQuestion[] = [
     question:
       'NAPIT member contractors are required to undergo periodic assessment. What is the primary purpose of this assessment?',
     options: [
-      'To set the maximum prices that a member contractor is allowed to charge its domestic customers',
-      'To provide free continuing professional development courses to every member of the scheme each year',
-      'To resolve contractual disputes that arise between member contractors and their domestic clients',
+      'To set the maximum prices that a member contractor&rsquo;s domestic customers can be charged',
+      'To provide free continuing professional development courses to every scheme member&rsquo;s staff each year',
+      'To resolve the contractual disputes that arise between a member contractor&rsquo;s clients and its staff',
       'To verify that the contractor&rsquo;s work continues to comply with BS 7671 and other relevant standards',
     ],
     correctAnswer: 3,
@@ -592,9 +592,9 @@ export const gsCat4Questions: StandardMockQuestion[] = [
     question:
       'A site supervisor wants to improve first-time-right installation rates. Using the lead/lag measure framework, which combination of metrics would be MOST effective?',
     options: [
-      'Lead: number of installations completed each week; Lag: total revenue invoiced across the month',
+      'Lead: the number of installations completed each week; Lag: the total revenue invoiced across the month',
       'Lead: hours of pre-installation planning per job; Lag: percentage of installations passing first inspection',
-      'Lead: percentage of installations passing first inspection; Lag: hours of pre-installation planning',
+      'Lead: percentage of installations passing first inspection; Lag: hours of pre-installation planning carried out per job',
       'Lead: customer complaints received each month; Lag: number of warranty claims settled each quarter',
     ],
     correctAnswer: 1,
@@ -611,7 +611,7 @@ export const gsCat4Questions: StandardMockQuestion[] = [
       'A qualified electrician uses Gibbs&rsquo; Reflective Cycle to analyse a near-miss incident where they nearly drilled into a concealed cable. They have completed Description, Feelings, Evaluation, and Analysis. What should the Conclusion and Action Plan stages produce?',
     options: [
       'Conclusion: accepting that near-misses like this are simply an inevitable part of the trade (e.g., nothing could realistically have been done); Action Plan: carry on working exactly as before and rely on luck',
-      'Conclusion: blaming the previous electrician for concealing the cable badly (e.g., insufficient routing depth); Action Plan: file a written complaint with the building owner and take no further personal precautions',
+      'Conclusion: blaming the previous electrician for concealing the cable badly (e.g., insufficient routing depth); Action Plan: file a written complaint with the building owner and take no further personal precautions of any kind',
       'Conclusion: identifying what they could have done differently (e.g., always use a cable detector); Action Plan: specific steps to prevent recurrence (e.g., purchase a CAT scanner, add pre-drill check to personal checklist)',
       'Conclusion: restating what happened in written form without judgement (e.g., a purely factual summary); Action Plan: browse the HSE website occasionally for general safety tips with no fixed steps or dates',
     ],
@@ -628,9 +628,9 @@ export const gsCat4Questions: StandardMockQuestion[] = [
     question:
       'An electrician has been terminating SWA cables for 10 years but still occasionally makes errors. According to Ericsson&rsquo;s deliberate practice framework, what is the MOST likely reason for this plateau?',
     options: [
-      'They need to switch to a completely different cable type to refresh their skills',
-      'Ten years is not enough experience to master SWA terminations',
-      'SWA termination is too complex to ever be fully mastered',
+      'They need to switch to a completely different cable type in order to refresh their existing skills',
+      'Ten years is simply not enough hands-on experience to master SWA gland terminations properly on site',
+      'SWA termination is far too complex a task for anyone to master fully in a single working lifetime',
       'They have been repeating the same technique without targeted feedback on their specific errors',
     ],
     correctAnswer: 3,
@@ -647,9 +647,9 @@ export const gsCat4Questions: StandardMockQuestion[] = [
       'The Engineering Council&rsquo;s UK-SPEC requires CPD to be &ldquo;planned, action-oriented, and regularly reviewed.&rdquo; An IET-registered EngTech electrician has completed 30 hours of CPD this year, all in the same narrow topic area. How would this likely be assessed during a professional review?',
     options: [
       'It may be assessed as insufficient because CPD should demonstrate breadth across multiple competence areas, not just volume of hours',
-      'It would pass automatically, because thirty hours comfortably exceeds the annual minimum expected of an EngTech registrant',
-      'It would be rejected outright, because UK-SPEC accepts only formal accredited classroom training as valid CPD evidence',
-      'It could not be assessed at all, because UK-SPEC sets no expectation whatever about the content or the spread of CPD',
+      'It would pass automatically, because thirty hours comfortably exceeds the annual minimum number of hours expected of an EngTech registrant',
+      'It would be rejected outright, because UK-SPEC accepts only formal accredited classroom training as valid evidence of continuing professional development',
+      'It could not be assessed at all, because UK-SPEC sets no expectation whatever about the content, the balance or the spread of CPD undertaken',
     ],
     correctAnswer: 0,
     explanation:
@@ -662,9 +662,9 @@ export const gsCat4Questions: StandardMockQuestion[] = [
   {
     id: 157,
     question:
-      'BS 7671 was amended by A1:2020, A2:2022, and A3:2024. An electrical contractor who last updated their knowledge at A1:2020 now encounters a solar PV installation requiring bidirectional overcurrent protection. What is the MOST significant gap in their knowledge?',
+      'BS 7671 was amended by A1:2020, A2:2022, A3:2024 and A4:2026. An electrical contractor who last updated their knowledge at A1:2020 now encounters a solar PV installation requiring bidirectional overcurrent protection. What is the MOST significant gap in their knowledge?',
     options: [
-      'They will be unaware that A3:2024 withdrew permission for solar PV installations on domestic premises anywhere in the United Kingdom',
+      'They will be unaware that A3:2024 withdrew permission for solar PV installations on domestic premises, anywhere in the United Kingdom, without an exemption',
       'They will be unaware of Regulation 530.3.201 introduced by A3:2024, which specifically addresses unidirectional and bidirectional protective devices',
       'They will be unaware that A3:2024 removed the requirement for overcurrent protection on the DC side of every PV array, whatever its rating',
       'They will be unaware that A3:2024 placed battery storage systems entirely outside the scope of BS 7671, so no design rules now apply',
@@ -719,8 +719,8 @@ export const gsCat4Questions: StandardMockQuestion[] = [
       'A self-employed electrician is preparing their CPD portfolio for ECS card renewal and IET EngTech professional review simultaneously. They have evidence of formal training (18th Edition update), informal learning (reading technical articles), on-the-job learning (complex commercial installation), and self-directed study (practising inspection and testing techniques). Which aspect of their portfolio MOST demonstrates alignment with both Ericsson&rsquo;s deliberate practice and the Engineering Council&rsquo;s UK-SPEC requirements?',
     options: [
       'The self-directed study where they identified a specific weakness in inspection and testing and systematically practised to improve it',
-      'The formal 18th Edition update course, because accredited classroom training is the only CPD that carries any real weight',
-      'The informal reading of technical articles, because breadth of general reading matters far more than any focused practice',
+      'The formal 18th Edition update course, because accredited classroom training is the only kind of CPD that carries any real weight with a review panel',
+      'The informal reading of technical articles, because breadth of general reading matters far more than any narrowly focused practice',
       'The on-the-job commercial installation, because total hours worked on site are the strongest available proof of real competence',
     ],
     correctAnswer: 0,

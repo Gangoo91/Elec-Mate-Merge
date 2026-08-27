@@ -13,11 +13,16 @@ import { storageGetJSONSync, storageSetJSONSync, storageRemoveSync } from '@/uti
 import { reportCloud } from '@/utils/reportCloud';
 import { formatNonComplianceNoticePayload } from '@/utils/non-compliance-notice-formatter';
 
+/*
+ * Page styling comes from the shared kit. These were local copies that had
+ * drifted from every other Notices & Labels page — see components/forms/pageStyles.
+ */
+import { pageInputCn as inputCn, pageTextareaCn as textareaCn } from '@/components/forms/pageStyles';
+
+import { PageHeader } from '@/components/forms/PageHeader';
+
 const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.04 } } };
 const itemVariants = { hidden: { opacity: 0, y: 8 }, visible: { opacity: 1, y: 0, transition: { duration: 0.25 } } };
-const inputCn = 'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
-const textareaCn = 'textarea-soft rounded-xl border-0 bg-white/[0.05] px-3.5 py-3 text-base md:text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors focus:bg-white/[0.07] focus:ring-1 focus:ring-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/50 focus:outline-none focus:shadow-none min-h-[90px] touch-manipulation';
-
 interface NonComplianceItem {
   id: string;
   description: string;
@@ -316,20 +321,17 @@ export default function NonComplianceNoticePage() {
 
   return (
     <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
-      <div className="px-4 pt-3 pb-1 lg:px-8">
-        <div className="mx-auto max-w-3xl lg:max-w-[1600px]">
-          <button onClick={() => navigate(-1)} className="h-11 pr-2 text-[13px] font-semibold text-white/90 transition-colors hover:text-white touch-manipulation">Back</button>
-          <div className="flex items-end justify-between gap-3">
-            <div>
-              <h1 className="text-2xl font-bold tracking-tight text-white sm:text-[28px]">Non-Compliance Notice</h1>
-              <p className="mt-1 text-[13px] text-white/50"><span className="font-semibold text-red-400">Fire alarm non-compliance.</span> Formally records that the system does not comply with BS 5839-1:2025 or BS 5839-6:2019 — the Responsible Person must act under the Regulatory Reform (Fire Safety) Order 2005.</p>
-              <p className="mt-1 font-mono text-[12px] text-white/50">{data.referenceNumber}</p>
-            </div>
-          </div>
-        </div>
-      </div>
+      <PageHeader
+        eyebrow="BS 5839"
+        title="Non-Compliance Notice"
+        lead="Fire alarm non-compliance."
+        leadTone="danger"
+        description="Formally records that the system does not comply with BS 5839-1:2025 or BS 5839-6:2019 — the Responsible Person must act under the Regulatory Reform (Fire Safety) Order 2005."
+        reference={data.referenceNumber}
+      />
 
-      <motion.main variants={containerVariants} initial="hidden" animate="visible" className="mx-auto max-w-3xl lg:max-w-[1600px] px-4 py-4 lg:px-8 space-y-5 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
+
+      <motion.main variants={containerVariants} initial="hidden" animate="visible" className="mx-auto max-w-3xl lg:max-w-none xl:max-w-[1700px] px-4 py-4 lg:px-8 space-y-5 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
         {/* Reference */}
         <Section title="Reference">
           <Field label="Record No."><Input value={data.referenceNumber} onChange={(e) => update('referenceNumber', e.target.value)} className={inputCn} /></Field>
@@ -453,7 +455,7 @@ export default function NonComplianceNoticePage() {
                   {commonNonCompliance.map((preset) => (
                     <button key={preset.desc} onClick={() => { updateItem(item.id, 'description', preset.desc); updateItem(item.id, 'standardRef', preset.ref); setShowPresets(null); }} className="w-full rounded-lg border border-white/[0.1] bg-white/[0.06] p-2.5 text-left text-[13px] text-white transition-all hover:bg-white/[0.08] touch-manipulation active:scale-[0.98]">
                       <span className="font-semibold">{preset.desc}</span>
-                      <span className="ml-2 text-white/50">({preset.ref})</span>
+                      <span className="ml-2 text-white">({preset.ref})</span>
                     </button>
                   ))}
                 </div>
@@ -502,7 +504,7 @@ export default function NonComplianceNoticePage() {
 
         {/* Temporary Measures */}
         <Section title="Temporary measures">
-          <p className="text-[12.5px] leading-relaxed text-white/90">BS 5839-1 Cl. 25.2 — Where fire protection is reduced, temporary compensatory measures must be implemented until compliance is restored.</p>
+          <p className="text-[12.5px] leading-relaxed text-white">BS 5839-1 Cl. 25.2 — Where fire protection is reduced, temporary compensatory measures must be implemented until compliance is restored.</p>
           <Textarea value={data.temporaryMeasures} onChange={(e) => update('temporaryMeasures', e.target.value)} className={textareaCn} placeholder="e.g. Fire warden patrols every 30 mins, temporary battery-operated detectors installed, revised evacuation plan briefed to all staff..." />
         </Section>
 
@@ -529,7 +531,7 @@ export default function NonComplianceNoticePage() {
 
         {/* Declaration */}
         <Section title="Declaration" className="lg:col-span-2">
-          <p className="text-[12.5px] leading-relaxed text-white/90">I hereby declare that the fire detection and alarm system at the above premises does not comply with the applicable standard as detailed in this notice. The Responsible Person has been advised of the non-compliance, the associated risks, and the recommended remedial actions. Failure to address these items may constitute a breach of the Regulatory Reform (Fire Safety) Order 2005.</p>
+          <p className="text-[12.5px] leading-relaxed text-white">I hereby declare that the fire detection and alarm system at the above premises does not comply with the applicable standard as detailed in this notice. The Responsible Person has been advised of the non-compliance, the associated risks, and the recommended remedial actions. Failure to address these items may constitute a breach of the Regulatory Reform (Fire Safety) Order 2005.</p>
           <div className="border-t border-white/[0.06] pt-3" />
           <SignatureInput label="Inspector Signature" value={data.inspectorSignature} onChange={(sig) => update('inspectorSignature', sig || '')} />
           <TickButton checked={data.clientRefusedToSign} label="Responsible person refused to sign" tone="red" onChange={() => update('clientRefusedToSign', !data.clientRefusedToSign)} />

@@ -269,6 +269,30 @@ for (const file of [...(scanAll ? discoverAllBanks() : discoverBanks())].sort())
   }
   const recycled = [...wrongUses.entries()].filter(([w, c]) => c >= 4 && !keySet.has(w));
 
+  /**
+   * PER-BANK LENGTH-RANK PROFILE.
+   *
+   * The headline rank profile below averages all 15,000+ questions, and that
+   * average was reading a clean 25/27/24/24 while moet/questions-part2 sat at
+   * 72.5% always-pick-longest and two HNC banks were above 60%. Nobody sits the
+   * whole corpus — a paper is drawn from ONE bank, so the bank's own profile is
+   * what a candidate can actually play. Large clean banks were drowning out
+   * small filthy ones, and the gate went green for weeks (found 2026-08-27).
+   *
+   * Two exploits are scored, and the worse one is what counts:
+   *   pick — always take the rank the key most often occupies
+   *   elim — discard the rank it almost never occupies, guess among the rest
+   * A key that is NEVER the longest is just as gameable as one that always is.
+   */
+  const rankAcc = [0, 0, 0, 0];
+  for (const r of rows) {
+    const lens = [r.correct.length, ...r.wrong.map((o) => o.length)].sort((a, b) => b - a);
+    const k = r.correct.length;
+    const tied = lens.reduce((acc, L, i) => (L === k ? [...acc, i] : acc), []);
+    for (const i of tied) rankAcc[i] += 1 / tied.length;
+  }
+  const rankProf = rankAcc.map((x) => (100 * x) / rows.length);
+
   perBank.push({
     name,
     n: rows.length,
@@ -279,6 +303,12 @@ for (const file of [...(scanAll ? discoverAllBanks() : discoverBanks())].sort())
     onlyTell: rows.filter((r) => r.onlyTell).length,
     throwaway: rows.filter((r) => r.throwaway).length,
     posMax: (100 * Math.max(...pos)) / rows.length,
+    rankProf,
+    // Banks under 40 questions are excluded from the verdict — the profile is
+    // too noisy at that size to mean anything, and flagging them trains people
+    // to ignore the check.
+    rankWorst:
+      rows.length < 40 ? 0 : Math.max(Math.max(...rankProf), (100 - Math.min(...rankProf)) / 3),
   });
 }
 
@@ -450,9 +480,39 @@ for (const b of perBank.sort((a, b2) => b2.exploitable - a.exploitable).slice(0,
   );
 }
 
+/**
+ * PER-BANK length-rank offenders. The single most important block in this
+ * report, because the headline figures above cannot see any of it: they average
+ * the whole corpus, and a clean 15,000-question average hid a 40-question bank
+ * scoring 72.5%. A candidate sits ONE bank.
+ */
+const rankOffenders = perBank
+  .filter((b) => b.rankWorst > STRATEGY_BUDGET)
+  .sort((a, b) => b.rankWorst - a.rankWorst);
+if (rankOffenders.length) {
+  console.log(
+    `\nBANKS GAMEABLE ON OPTION LENGTH ALONE — ${rankOffenders.length} over the ${STRATEGY_BUDGET}% budget:`
+  );
+  console.log('  (a paper is drawn from one bank, so the bank profile is what a candidate can play)');
+  for (const b of rankOffenders) {
+    const pick = Math.max(...b.rankProf);
+    const elim = (100 - Math.min(...b.rankProf)) / 3;
+    const how = pick >= elim ? 'pick that rank' : 'eliminate the empty rank';
+    console.log(
+      `  ${b.rankWorst.toFixed(1).padStart(5)}%  (${String(b.n).padStart(4)} Qs)  ${b.name.padEnd(38)}` +
+        ` ${b.rankProf.map((x) => x.toFixed(0).padStart(3)).join('/')}  — ${how}`
+    );
+  }
+} else {
+  console.log('\nNo single bank is gameable on option length alone.');
+}
+
 if (ci) {
   const ex = pct((r) => r.gap > 20);
   const blatantFail = ex > EXPLOITABLE_BUDGET;
+  // Any single bank over budget fails the run, even when the corpus average is
+  // clean. This is the check that was missing.
+  const perBankFail = rankOffenders.length > 0;
   // A candidate reading nothing should not beat chance by much. 25% is chance;
   // anything approaching a 60% pass mark means the paper is gameable outright.
   // bestRankStrategy subsumes longest and shortest — it is the strongest
@@ -468,7 +528,13 @@ if (ci) {
     `  best length-rank strategy  scores ${bestRankStrategy.toFixed(1)}% vs budget ${STRATEGY_BUDGET}%  (profile ${rankProfile.map((x) => x.toFixed(0)).join('/')})`
   );
   console.log(`  blatant (>20 char) length tell ${ex.toFixed(1)}% vs budget ${EXPLOITABLE_BUDGET}%`);
-  const fail = blatantFail || strategyFail;
+  console.log(
+    `  banks gameable on length alone ${rankOffenders.length} vs budget 0` +
+      (rankOffenders.length
+        ? `  (worst ${rankOffenders[0].name} at ${rankOffenders[0].rankWorst.toFixed(1)}%)`
+        : '')
+  );
+  const fail = blatantFail || strategyFail || perBankFail;
   console.log(`${fail ? '✗ FAIL' : '✓ PASS'}`);
   process.exit(fail ? 1 : 0);
 }

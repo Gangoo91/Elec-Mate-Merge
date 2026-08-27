@@ -18,11 +18,11 @@ import { useSiteVisitsForCalendar } from './useSiteVisitsForCalendar';
 import { compareEvents } from '@/components/calendar/eventUtils';
 import type { CalendarEvent } from '@/types/calendar';
 
-export function useDiaryEvents(dateFrom: string, dateTo: string) {
-  const events = useCalendarEvents(dateFrom, dateTo);
-  const tasks = useTasksForCalendar(dateFrom, dateTo);
-  const projects = useProjectsForCalendar(dateFrom, dateTo);
-  const visits = useSiteVisitsForCalendar(dateFrom, dateTo);
+export function useDiaryEvents(dateFrom: string, dateTo: string, enabled = true) {
+  const events = useCalendarEvents(dateFrom, dateTo, enabled);
+  const tasks = useTasksForCalendar(dateFrom, dateTo, enabled);
+  const projects = useProjectsForCalendar(dateFrom, dateTo, enabled);
+  const visits = useSiteVisitsForCalendar(dateFrom, dateTo, enabled);
 
   const all = useMemo(
     () =>

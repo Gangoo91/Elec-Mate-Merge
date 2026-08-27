@@ -47,6 +47,16 @@ export interface CalendarEvent {
   sync_status: SyncStatus;
   last_synced_at?: string;
   notes?: string;
+  /**
+   * When the app last emailed this booking to the customer, and where to.
+   *
+   * Only email can be recorded: WhatsApp and SMS hand off to the phone and the
+   * app never learns whether send was pressed. Null means "never emailed",
+   * which is not the same as "the customer does not know" — it is simply all
+   * that can honestly be claimed.
+   */
+  confirmation_sent_at?: string;
+  confirmation_sent_to?: string;
   reminder_minutes: number;
   created_at: string;
   updated_at: string;

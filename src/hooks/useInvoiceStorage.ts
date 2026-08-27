@@ -144,6 +144,59 @@ export const useInvoiceStorage = () => {
       if (error) throw error;
 
       const convertedInvoices = (data || []).map(convertDbRowToQuote);
+
+      /*
+       * ELE-1613 — whether the client has actually OPENED the invoice.
+       *
+       * This was already being recorded and had never been shown: 244 opens
+       * were sitting in `email_opens` when this was written, the most recent
+       * that same afternoon. `send-invoice-resend` embeds the tracking pixel
+       * and `email-open` writes the row — the only missing piece was reading it.
+       *
+       * ⚠️ Invoices live on the `quotes` table (`invoice_raised = true`), so
+       * `entity_id` here is the QUOTE id. Joining `email_opens` to the separate
+       * `invoices` table returns zero rows — that table is not what the app uses.
+       *
+       * ⚠️ Quotes track opens through a DIFFERENT table (`quote_views`). Do not
+       * merge the two paths without checking both: they are populated by
+       * different senders.
+       *
+       * Reminder opens count too — a client who opens the chase email has seen
+       * the invoice just as surely as one who opened the original.
+       */
+      const invoiceIds = convertedInvoices.map((i) => i.id).filter(Boolean);
+      if (invoiceIds.length > 0) {
+        const { data: opens, error: opensError } = await supabase
+          .from('email_opens')
+          .select('entity_id, first_opened_at, last_opened_at, open_count')
+          .in('entity_type', ['invoice_send', 'payment_reminder'])
+          .in('entity_id', invoiceIds);
+
+        // Deliberately non-fatal: an invoice list that loads without the "seen"
+        // badge is far better than one that fails to load at all.
+        if (opensError) {
+          console.warn('[useInvoiceStorage] Could not load open tracking:', opensError);
+        } else if (opens?.length) {
+          const byId = new Map<string, { at: Date; count: number }>();
+          for (const o of opens) {
+            const at = new Date(o.first_opened_at);
+            const prev = byId.get(o.entity_id);
+            // An invoice can be opened via the original AND a reminder. Earliest
+            // open wins for "when", counts add up for "how many times".
+            byId.set(o.entity_id, {
+              at: prev && prev.at < at ? prev.at : at,
+              count: (prev?.count ?? 0) + (o.open_count || 0),
+            });
+          }
+          for (const inv of convertedInvoices) {
+            const hit = byId.get(inv.id);
+            if (hit) {
+              inv.email_opened_at = hit.at;
+              inv.email_open_count = hit.count;
+            }
+          }
+        }
+      }
       setInvoices(convertedInvoices);
       setLastUpdated(new Date());
     } catch (error) {

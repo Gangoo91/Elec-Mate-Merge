@@ -184,6 +184,50 @@ export const InvoiceStatusPanel = ({ invoices, onRefresh }: InvoiceStatusPanelPr
               </div>
             </div>
           )}
+          {/*
+            ELE-1613 — "Seen", between Sent and Paid, exactly where Alex asked
+            for it. Shown only once an invoice has actually been sent: a draft
+            has nothing to open, and "not opened" against one would read as a
+            fault rather than a fact.
+
+            Past due and still unopened is called out in the destructive colour
+            because it is a different problem from non-payment — almost always a
+            wrong address or a spam folder, where chasing harder achieves nothing.
+
+            ⚠️ Open tracking is a pixel, so it is best-effort: plenty of mail
+            clients block images. "Not opened" therefore says exactly that, and
+            never "the client has not seen this".
+          */}
+          {invoice.invoice_sent_at && (
+            <div className="space-y-0">
+              <div className="text-white font-medium">Seen</div>
+              {invoice.email_opened_at ? (
+                <div className="text-foreground flex items-center gap-1">
+                  <Eye className="h-3 w-3 flex-shrink-0" />
+                  <span>
+                    {new Date(invoice.email_opened_at).toLocaleDateString('en-GB')}
+                    {', '}
+                    {new Date(invoice.email_opened_at).toLocaleTimeString('en-GB', {
+                      hour: '2-digit',
+                      minute: '2-digit',
+                    })}
+                    {(invoice.email_open_count || 0) > 1 && ` · ${invoice.email_open_count}×`}
+                  </span>
+                </div>
+              ) : (
+                <div
+                  className={
+                    daysOverdue > 0 && showActions !== 'paid'
+                      ? 'text-destructive font-semibold'
+                      : 'text-foreground'
+                  }
+                  title="Open tracking uses an image pixel — some mail clients block it"
+                >
+                  {daysOverdue > 0 && showActions !== 'paid' ? '✗ Not opened' : 'Not opened yet'}
+                </div>
+              )}
+            </div>
+          )}
           {invoice.invoice_paid_at && (
             <div className="space-y-0">
               <div className="text-white font-medium">Paid</div>

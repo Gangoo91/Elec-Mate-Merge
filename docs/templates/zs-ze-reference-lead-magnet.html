@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8" />
+<style>
+  @page { size: A4; margin: 12mm 11mm 14mm 11mm; }
+  /* The cover is edge-to-edge, so it gets its own named page with no margin —
+     same arrangement as the symbols chart and the EIC/EICR certificate covers. */
+  @page cover { size: A4; margin: 0; }
+:root { --navy: #0a1628; --navy-2: #152238; --navy-3: #1c2e4a; --gold: #fbbf24; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    color: #0f172a; margin: 0; font-size: 9pt; line-height: 1.35;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  /* ---------- cover (matches the EIC/EICR certificate cover language) ---------- */
+  .cover-page { page: cover; width: 100%; min-height: 297mm; display: flex;
+                flex-direction: column; color: #0a1628;
+                page-break-after: always; break-after: page; }
+  .cover-hero { position: relative; color: #fff; padding: 22mm 18mm 16mm;
+                background: linear-gradient(160deg,#0a1628 0%,#152238 60%,#1c2e4a 100%); }
+  .cover-hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px;
+                        background: linear-gradient(90deg,var(--gold),#fbbf24,var(--gold)); }
+  .cover-logos { display: flex; justify-content: space-between; align-items: center;
+                 margin-bottom: 18mm; min-height: 60px; }
+  .cover-logo { height: 56px; width: 56px; border-radius: 13px; }
+  .cover-band-name { color: #fbbf24; font-weight: 700; font-size: 20px; letter-spacing: 0.3px; }
+  .cover-band-name span { color: #fff; }
+  .cover-eyebrow { font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+                   color: #fbbf24; font-weight: 700; margin-bottom: 12px; }
+  .cover-title { font-size: 38px; line-height: 1.08; font-weight: 800; letter-spacing: -0.5px;
+                 color: #fff; margin: 0; }
+  .cover-title-rule { width: 80px; height: 4px; margin-top: 16px; border-radius: 2px;
+                      background: linear-gradient(90deg,var(--gold),#fbbf24); }
+  .cover-subtitle { margin-top: 16px; font-size: 11.5px; color: #e2e8f0; letter-spacing: 0.3px; }
+  .cover-status { padding: 14px 18mm; display: flex; align-items: center;
+                  justify-content: space-between; background: #152238; color: #fff; }
+  .cover-status-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px;
+                        font-weight: 600; opacity: .95; }
+  .cover-status-value { font-size: 20px; font-weight: 800; letter-spacing: 1.5px; color: #fbbf24; }
+  .cover-details { flex: 1; padding: 14mm 18mm; border-left: 4px solid #fbbf24; }
+  .cover-details-h { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px;
+                     color: #475569; font-weight: 700; margin-bottom: 6px; }
+  .cover-row { display: flex; border-bottom: 1px solid #e2e8f0; }
+  .cover-row:last-child { border-bottom: 0; }
+  .cover-k { width: 185px; flex-shrink: 0; color: #0a1628; font-weight: 700;
+             text-transform: uppercase; font-size: 9.5px; letter-spacing: .5px;
+             padding: 11px 0; align-self: center; }
+  .cover-v { flex: 1; color: #0f172a; font-weight: 600; font-size: 12px; padding: 11px 0;
+             align-self: center; }
+  .cover-v .muted { color: #334155; font-weight: 500; }
+  .cover-footer { background: #0a1628; color: #cbd5e1; font-size: 8.5px; font-style: italic;
+                  padding: 11px 18mm; }
+
+  /* Both spellings: the PDFMonkey engine did not act on the legacy
+     `page-break-after` alone once a named @page existed, and the sheets ran
+     together. `break-after` is the modern property and is what it honours. */
+  .sheet { page-break-after: always; break-after: page; }
+  /* NOT :last-child — .foot is the final child of <body>, so that selector never
+     matched and the last sheet kept page-break-after:always = a blank trailing page. */
+  .sheet.last { page-break-after: auto; break-after: auto; }
+
+  /* ---- masthead ---- */
+  .mast { display: flex; align-items: flex-end; justify-content: space-between;
+          border-bottom: 3pt solid var(--gold); padding-bottom: 5pt; margin-bottom: 9pt; }
+  .mast h1 { font-size: 16pt; margin: 0; letter-spacing: -0.3pt; font-weight: 800;
+             color: var(--navy); }
+  .mast > div:first-child { min-width: 0; }
+  .mast .sub { font-size: 8pt; color: #334155; margin-top: 2pt; }
+  .brand { display: flex; align-items: center; gap: 6pt; text-align: right;
+           font-size: 8pt; line-height: 1.3; white-space: nowrap; flex-shrink: 0; }
+  .brand img { height: 26px; width: 26px; border-radius: 6px; }
+  .brand .name { font-weight: 800; font-size: 10.5pt; letter-spacing: -0.2pt; color: var(--navy); }
+  .brand .name span { color: #b45309; }
+
+  h2 { font-size: 11pt; margin: 0 0 3pt; font-weight: 800; letter-spacing: -0.2pt;
+       color: var(--navy); }
+  h2 .tag { font-weight: 600; color: #334155; font-size: 8pt; margin-left: 5pt; }
+  .lead { font-size: 8.5pt; color: #1e293b; margin: 0 0 5pt; }
+
+  /* ---- tables ---- */
+  table { width: 100%; border-collapse: collapse; margin-bottom: 7pt; }
+  caption { caption-side: top; text-align: left; font-weight: 700; font-size: 9pt;
+            padding: 0 0 3pt; }
+  th, td { border: 0.5pt solid #cbd5e1; padding: 2.5pt 3.5pt; text-align: center; }
+  th { background: var(--navy); color: #fff; font-weight: 700; font-size: 8pt; }
+  th.row-head, td.row-head { text-align: left; background: #f1f5f9; font-weight: 700; white-space: nowrap; }
+  /* th paints white-on-dark; .row-head repaints the cell light, so the text must go dark
+     too or the column header is invisible — it was, on every sheet. */
+  th.row-head { color: #0f172a; }
+  tbody tr:nth-child(even) td:not(.row-head) { background: #f8fafc; }
+  td { font-variant-numeric: tabular-nums; }
+  .na { color: #64748b; }
+
+  /* ---- callouts ---- */
+  .grid { display: flex; gap: 7pt; margin-bottom: 7pt; }
+  .card { flex: 1; border: 0.8pt solid #cbd5e1; border-radius: 3pt; padding: 6pt 7pt; }
+  .card .k { font-size: 7.5pt; text-transform: uppercase; letter-spacing: 0.4pt; color: #334155; font-weight: 700; }
+  .card .v { font-size: 19pt; font-weight: 800; letter-spacing: -0.5pt; margin: 1pt 0; }
+  .card .n { font-size: 7.5pt; color: #334155; }
+
+  .note { border-left: 2.5pt solid var(--gold); background: #fffbeb; padding: 5pt 7pt;
+          font-size: 8pt; line-height: 1.38; color: #0f172a; margin-bottom: 6pt; }
+  .note strong { font-weight: 800; }
+  .warn { border-left-color: #dc2626; background: #fef2f2; }
+  table.wex th, table.wex td { padding: 2pt 4pt; font-size: 8pt; }
+  .crit { font-family: "SFMono-Regular", Consolas, monospace; font-size: 8.5pt; font-weight: 700;
+          background: #fff; border: 0.5pt solid #e5c76b; border-radius: 2pt;
+          padding: 2.5pt 6pt; margin: 3pt 0; text-align: center; color: #0f172a; }
+  .formula { font-family: "SFMono-Regular", Consolas, monospace; font-size: 10pt;
+             font-weight: 700; background: #f1f5f9; padding: 5pt 7pt; border-radius: 3pt;
+             margin-bottom: 8pt; text-align: center; }
+
+  /* Each fuse standard gets its own block sized to its own ratings. */
+  .fusegrid { margin-bottom: 10pt; }
+  .fuseblock { margin-bottom: 6pt; }
+  .fusename { font-weight: 700; font-size: 8.5pt; margin-bottom: 2pt; }
+  table.fuse { width: auto; margin-bottom: 0; }
+  table.fuse th, table.fuse td { padding: 2.5pt 5pt; }
+
+  /* 🔴 NOT position:fixed. A fixed footer paints on every page INCLUDING the
+     full-bleed cover, where it landed on top of the cover's own footer — and
+     Chrome's print engine repeats fixed elements unpredictably anyway (the same
+     bug the symbols chart hit). This is a static block, closing each sheet. */
+  .foot { border-top: 0.5pt solid #cbd5e1; padding-top: 3pt;
+          font-size: 7pt; color: #475569; display: flex; justify-content: space-between; }
+  /* 🔴 Do NOT make .sheet a flex container with a min-height to push the footer
+     down. Chrome stops honouring `page-break-after: always` on it and the sheets
+     run into each other — sheet 1 lost its closing note and footer, and the
+     breaker tables slid onto the fuse page. Plain block; the footer simply
+     follows the content. */
+</style>
+</head>
+<body>
+
+<!-- ============ COVER — same language as the EIC/EICR certificate covers ============ -->
+<div class="cover-page">
+  <div class="cover-hero">
+    <div class="cover-logos">
+      <img class="cover-logo" src="https://jtwygbeceundfgnkirof.supabase.co/storage/v1/object/public/lead-magnets/onboarding/elec-mate-logo.png" alt="Elec-Mate" />
+      <span class="cover-band-name">Elec-<span>Mate</span></span>
+    </div>
+    <div class="cover-eyebrow">BS 7671:2018 &plus; Amendment 4:2026 &middot; Tables 41.2 &ndash; 41.5</div>
+    <h1 class="cover-title">Earth Fault Loop<br />Impedance &mdash; Ze &amp; Zs</h1>
+    <div class="cover-title-rule"></div>
+    <div class="cover-subtitle">Every maximum Zs in the Regulations on three sheets you can pin up &mdash;
+      circuit-breakers, fuses, RCDs, and the withdrawn BS 3871 types still sitting in older boards</div>
+  </div>
+
+  <div class="cover-status">
+    <span class="cover-status-label">Values tabulated</span>
+    <span class="cover-status-value">{{ meta.value_count }}</span>
+  </div>
+
+  <div class="cover-details">
+    <div class="cover-details-h">About this reference</div>
+    <div class="cover-row">
+      <div class="cover-k">Basis</div>
+      <div class="cover-v">C<sub>min</sub> = 0.95, exactly as tabulated<br><span class="muted">BS 7671 Reg 253.0 and Reg 543.4. Nothing here is pre-corrected or rescaled.</span></div>
+    </div>
+    <div class="cover-row">
+      <div class="cover-k">Devices covered</div>
+      <div class="cover-v">Circuit-breakers, fuses and RCDs<br><span class="muted">BS EN 60898 &middot; BS EN 61009 &middot; BS 88-2 &middot; BS 88-3 &middot; BS 3036 &middot; BS 1362 &middot; BS&nbsp;3871&nbsp;Types&nbsp;1&ndash;4</span></div>
+    </div>
+    <div class="cover-row">
+      <div class="cover-k">Cold measurements</div>
+      <div class="cover-v">Compare against 0.8 &times; the tabulated figure<br><span class="muted">The Appendix 3 acceptance criterion. Sheet 1 works an example through.</span></div>
+    </div>
+    <div class="cover-row">
+      <div class="cover-k">Use</div>
+      <div class="cover-v">Free to print, share and pin up<br><span class="muted">On site, in the van or in the office.</span></div>
+    </div>
+    <div class="cover-row">
+      <div class="cover-k">Issued</div>
+      <div class="cover-v">{{ meta.generated }}</div>
+    </div>
+    <div class="cover-row">
+      <div class="cover-k">Full reference</div>
+      <div class="cover-v">elec-mate.com/guides/maximum-zs-values-bs-7671<br><span class="muted">With a free Zs lookup calculator.</span></div>
+    </div>
+  </div>
+
+  <div class="cover-footer">
+    Produced by Elec-Mate &mdash; the all-in-one app for UK electricians. Always verify against the
+    current edition of BS 7671 before relying on any figure.
+  </div>
+</div>
+
+<!-- ============ SHEET 1 — Ze, the relationship, and how to use ============ -->
+<div class="sheet">
+  <div class="mast">
+    <div>
+      <h1>Earth Fault Loop Impedance — Ze &amp; Zs</h1>
+      <div class="sub">Maximum permitted values · BS 7671:2018+A4:2026 · {{ meta.edition_note }}</div>
+    </div>
+    <div class="brand">
+      <img src="https://jtwygbeceundfgnkirof.supabase.co/storage/v1/object/public/lead-magnets/onboarding/elec-mate-logo.png" alt="" />
+      <div>
+        <div class="name">Elec<span>-</span>Mate</div>
+        <div>elec-mate.com</div>
+      </div>
+    </div>
+  </div>
+
+  <h2>1 · External earth fault loop impedance (Ze)</h2>
+  <p class="lead">Measured at the origin with the installation isolated and the main earthing
+    conductor disconnected. For TN these are the distributor's typical maximums, and what the
+    BS 7671 tables assume. <strong>TT is different</strong> — the return is through your own
+    electrode, so 21 Ω is a working ceiling you confirm by measurement.</p>
+
+  <div class="grid">
+    {% for z in ze %}
+    <div class="card">
+      <div class="k">{{ z.system }}</div>
+      <div class="v">{{ z.max }} Ω</div>
+      <div class="n">{{ z.note }}</div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="note warn">
+    <strong>Not a statutory cap.</strong> Typical maximums for supplies up to 100 A. Ze must be
+    measured and recorded at every installation — if your reading exceeds it, query the DNO.
+  </div>
+
+  <h2>2 · How Ze and Zs relate</h2>
+  <div class="formula">Zs = Ze + (R<sub>1</sub> + R<sub>2</sub>)</div>
+  <p class="lead">Ze is what the supply brings to your origin; (R₁+R₂) is what your circuit adds.
+    Zs is the total the device sees under an earth fault — and it is Zs that must not exceed the
+    tabulated maximum.</p>
+
+  <h2>3 · Which disconnection time applies</h2>
+  <table>
+    <thead><tr><th class="row-head">Circuit</th><th>Time</th><th>Regulation</th></tr></thead>
+    <tbody>
+      {% for d in disconnection %}
+      <tr>
+        <td class="row-head">{{ d.circuit }}</td>
+        <td><strong>{{ d.time }}</strong></td>
+        <td>{{ d.reg }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h2>4 · Reading the tables on sheets 2 and 3</h2>
+  <div class="note">
+    <strong>Every figure on sheets 2 and 3 is the BS 7671 tabulated maximum, derived with
+    C<sub>min</sub> = 0.95</strong> — as printed in the Regulations, nothing pre-corrected.
+    C<sub>min</sub> is the minimum voltage factor for variation in time and place and for
+    transformer tap changes; for an LV supply under the ESQCR it takes the value 0.95
+    (Reg 253.0, Reg 543.4). So a Type B 32 A is 230 × 0.95 ÷ (5 × 32) = <strong>1.37 Ω</strong>.
+    At C<sub>min</sub> = 1.0 it would read 1.44 Ω — if your reference shows that, it is not the
+    BS 7671 figure.
+  </div>
+  <div class="note">
+    <strong>Temperature — and this is where most people trip up.</strong><br>
+    The tabulated values assume conductors at their operating temperature (70 °C for
+    thermoplastic; NOTE 2 to Tables 41.2–41.4). You measure cold, so BS 7671 sets a
+    <strong>separate acceptance criterion in Appendix 3</strong>. Regulation 411.4.4 (or
+    411.5.4) is met when:
+    <div class="crit">Z<sub>s(measured)</sub> &lt; 0.8 × U<sub>0</sub> ÷ (I<sub>a</sub> × C<sub>min</sub>)
+      &nbsp;&nbsp;— in practice, 0.8 × the tabulated figure</div>
+    GN3 1.16.9 restates it, which is why it gets called "the GN3 factor" — but it is
+    BS 7671's own criterion, not merely guidance.<br>
+    ⚠️ <strong>The 0.8 is NOT applied anywhere in this document.</strong> Apply it yourself
+    whenever you compare a cold measurement.
+  </div>
+
+  <h2>5 · Worked example</h2>
+  <table class="wex">
+    <thead><tr><th class="row-head">Step</th><th class="row-head">Working</th><th>Result</th></tr></thead>
+    <tbody>
+      <tr><td class="row-head">32 A Type B RCBO on TN-C-S — measured Ze</td><td class="row-head">Within the 0.35 Ω typical maximum</td><td>0.28 Ω</td></tr>
+      <tr><td class="row-head">Measured Zs at the furthest point</td><td class="row-head">So (R<sub>1</sub>+R<sub>2</sub>) = 1.12 − 0.28</td><td>1.12 Ω</td></tr>
+      <tr><td class="row-head">Tabulated maximum</td><td class="row-head">Sheet 2, Type B, 32 A</td><td><strong>1.37 Ω</strong></td></tr>
+      <tr><td class="row-head">Against the tabulated figure</td><td class="row-head">1.12 Ω &lt; 1.37 Ω</td><td><strong>Complies</strong></td></tr>
+      <tr><td class="row-head">Against Appendix 3 (cold measurement)</td><td class="row-head">0.8 × 1.37 = 1.10 Ω, and 1.12 Ω &gt; 1.10 Ω</td><td><strong>Does not</strong></td></tr>
+    </tbody>
+  </table>
+  <div class="note">
+    <strong>That last pair of rows is the whole point of this sheet.</strong> 1.12 Ω sits inside
+    the tabulated 1.37 Ω but outside the 1.10 Ω Appendix 3 accepts for a cold measurement — so a
+    reading that looks compliant against the table does <strong>not</strong> meet BS 7671's
+    criterion. Compare like for like, every time, before you write C1, C2 or a tick.
+  </div>
+
+  <div class="foot">
+    <span>{{ meta.title }} · Elec-Mate</span>
+    <span>{{ meta.generated }} · Verify against the current BS 7671 before relying on any figure</span>
+  </div>
+</div>
+
+<!-- ====== SHEET 2 — circuit-breakers (41.3), BS 3871 and RCDs (41.5) ====== -->
+<div class="sheet">
+  <div class="mast">
+    <div>
+      <h1>Maximum Zs — Circuit-breakers &amp; RCDs</h1>
+      <div class="sub">BS 7671 Tables 41.3 &amp; 41.5 · BS EN 60898, BS EN 61009, BS 3871 · 230 V · as tabulated, C<sub>min</sub> 0.95 · no temperature correction applied</div>
+    </div>
+    <div class="brand"><img src="https://jtwygbeceundfgnkirof.supabase.co/storage/v1/object/public/lead-magnets/onboarding/elec-mate-logo.png" alt="" /><div><div class="name">Elec<span>-</span>Mate</div><div>elec-mate.com</div></div></div>
+  </div>
+
+  {% for t in mcb_tables %}
+  <table>
+    <caption>{{ t.caption }}</caption>
+    <thead>
+      <tr>
+        <th class="row-head">Rating (A)</th>
+        {% for r in t.ratings %}<th>{{ r }}</th>{% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in t.rows %}
+      <tr>
+        <td class="row-head">{{ row.label }}</td>
+        {% for v in row.values %}<td>{% if v != '' %}{{ v }}{% else %}<span class="na">—</span>{% endif %}</td>{% endfor %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endfor %}
+
+  <div class="note">
+    <strong>Type B and Type C carry one row each</strong> — the figure satisfies both the 0.4 s
+    and the 5 s disconnection time. <strong>Type D is the only curve with two</strong>: it trips
+    at 20×I<sub>n</sub> for 0.4 s but 10×I<sub>n</sub> is enough for 5 s, so the 5 s values are
+    exactly double. That is a genuine shared formula with Type C, not a misprint.
+  </div>
+
+
+  <h2>BS 3871-1 circuit-breakers <span class="tag">Types 1, 2, 3 and 4</span></h2>
+  <div class="note warn">
+    <strong>BS 3871-1 is withdrawn</strong>, superseded by BS EN 60898 — which is exactly
+    why you need this table on an EICR: these devices are still in service in a great many older
+    boards. <strong>Types 1–4 are not interchangeable with B/C/D.</strong> A Type 1 trips at
+    4×I<sub>n</sub> where a Type B trips at 5×I<sub>n</sub>, so recording an old Type 1 as a
+    "Type B" understates its permitted Zs by 20% and can fail a circuit that complies.
+    BS 7671 no longer tabulates these; the figures below follow the IET On-Site Guide.
+  </div>
+
+  <table>
+    <caption>Maximum Zs (Ω) — circuit-breakers to BS 3871-1, 230 V</caption>
+    <thead>
+      <tr>
+        <th class="row-head">Type</th><th class="row-head">Trips at</th>
+        {% for r in bs3871.ratings %}<th>{{ r }}</th>{% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in bs3871.rows %}
+      <tr>
+        <td class="row-head">Type {{ row.type }}</td>
+        <td class="row-head">{{ row.multiple }}×I<sub>n</sub></td>
+        {% for v in row.values %}<td>{% if v != '' %}{{ v }}{% else %}<span class="na">—</span>{% endif %}</td>{% endfor %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h2>RCDs <span class="tag">BS 7671 Table 41.5 · Reg 411.5.3</span></h2>
+  <p class="lead">Where disconnection is by residual current rather than overcurrent, the limit is
+    U<sub>L</sub> ÷ I<sub>Δn</sub>, with U<sub>L</sub> = 50 V.</p>
+  <table>
+    <thead><tr><th class="row-head">I<sub>Δn</sub></th>{% for r in rcd %}<th>{{ r.ma }} mA</th>{% endfor %}</tr></thead>
+    <tbody>
+      <tr><td class="row-head">Maximum Zs (Ω)</td>{% for r in rcd %}<td>{{ r.max }}</td>{% endfor %}</tr>
+    </tbody>
+  </table>
+  <div class="note">
+    <strong>An RCBO is not an RCD for this purpose.</strong> It has its own overcurrent element,
+    so its Zs comes from Table 41.3 — a Type B 32 A RCBO is 1.37 Ω, exactly the same as the MCB.
+    The 50/I<sub>Δn</sub> limit governs only where a standalone RCD (BS EN 61008) provides the
+    fault protection. ⚠️ Note 2 to Table 41.5 advises that the installation earth electrode
+    resistance should be as low as practicable, and that a value exceeding 200 Ω <em>may not be
+    stable</em> — soil dries and freezes. That is advice about stability, not a permitted maximum.
+  </div>
+  <div class="foot">
+    <span>{{ meta.title }} · Elec-Mate</span>
+    <span>{{ meta.generated }} · Verify against the current BS 7671 before relying on any figure</span>
+  </div>
+</div>
+
+<!-- ====== SHEET 3 — fuses, Tables 41.2 and 41.4 ====== -->
+<div class="sheet last">
+  <div class="mast">
+    <div>
+      <h1>Maximum Zs — Fuses</h1>
+      <div class="sub">BS 7671 Tables 41.2 (0.4 s) &amp; 41.4 (5 s) · 230 V · as tabulated, C<sub>min</sub> 0.95 · no temperature correction applied</div>
+    </div>
+    <div class="brand"><img src="https://jtwygbeceundfgnkirof.supabase.co/storage/v1/object/public/lead-magnets/onboarding/elec-mate-logo.png" alt="" /><div><div class="name">Elec<span>-</span>Mate</div><div>elec-mate.com</div></div></div>
+  </div>
+
+  {% for sec in fuse_sections %}
+  <h2>{{ sec.time }} disconnection <span class="tag">{{ sec.reg }} · maximum Zs in ohms</span></h2>
+  <div class="fusegrid">
+    {% for st in sec.standards %}
+    <div class="fuseblock">
+      <div class="fusename">{{ st.label }}</div>
+      <table class="fuse">
+        <thead><tr><th>Rating (A)</th>{% for c in st.cols %}<th>{{ c.r }}</th>{% endfor %}</tr></thead>
+        <tbody><tr><td class="row-head">Max Zs (Ω)</td>{% for c in st.cols %}<td>{{ c.v }}</td>{% endfor %}</tr></tbody>
+      </table>
+    </div>
+    {% endfor %}
+  </div>
+  {% endfor %}
+  <div class="foot">
+    <span>{{ meta.title }} · Elec-Mate</span>
+    <span>{{ meta.generated }} · Verify against the current BS 7671 before relying on any figure</span>
+  </div>
+</div>
+
+</body>
+</html>

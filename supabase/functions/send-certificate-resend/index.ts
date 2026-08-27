@@ -551,6 +551,9 @@ const handler = async (req: Request): Promise<Response> => {
       'smoke-co-alarm': 'generate-smoke-co-alarm-pdf',
       'testing-only': 'generate-testing-only-pdf',
       'fire-alarm-log-book': 'generate-fire-alarm-log-book-pdf',
+      // ELE-1615. The CU door label is deliberately NOT here: it is a sticker
+      // for the inside of a consumer unit, not something you email a client.
+      'board-schedule': 'generate-board-schedule-pdf',
     };
 
     const edgeFunctionName = PDF_FUNCTION_BY_TYPE[reportType];
@@ -712,6 +715,7 @@ const handler = async (req: Request): Promise<Response> => {
       'g99-commissioning': 'G99 Commissioning',
       'smoke-co-alarm': 'Smoke & CO Alarm',
       'testing-only': 'Testing Only',
+      'board-schedule': 'Board Schedule',
     };
     const certificateTypeDisplay = DISPLAY_BY_TYPE[reportType] || reportType.toUpperCase();
 

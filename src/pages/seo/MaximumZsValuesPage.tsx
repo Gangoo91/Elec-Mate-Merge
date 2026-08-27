@@ -1,4 +1,5 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
+import PdfDownloadCard from '@/components/seo/PdfDownloadCard';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import { CalculatorSurface } from '@/components/calculators/shared';
@@ -165,6 +166,25 @@ const sections = [
           fault, metalwork could remain live at a dangerous voltage for longer than the permitted
           duration, creating a risk of lethal electric shock.
         </p>
+        {/* The query behind this page is a lookup ("max zs values", "max zs values 18th
+            edition table pdf free") and an AI Overview answers it above the fold. A file
+            they can pin in the van is the one thing an overview cannot be. */}
+        <div className="my-6">
+          <PdfDownloadCard
+            href="https://jtwygbeceundfgnkirof.supabase.co/storage/v1/object/public/lead-magnets/elec-mate-zs-ze-reference.pdf"
+            title="Every maximum Zs in BS 7671, as a printable PDF"
+            description="Tables 41.2–41.5 on three A4 sheets — circuit-breakers, fuses, RCDs, and the withdrawn BS 3871 types still sitting in older boards."
+            bullets={[
+              'Tables 41.2–41.5 as tabulated',
+              'BS 3871 Types 1–4 included',
+              'A4 print-ready',
+              'Free to share',
+            ]}
+            meta="364 KB"
+            trackAs="zs_ze_reference_pdf"
+            captureSource="lead_magnet_zs_ze_reference"
+          />
+        </div>
       </>
     ),
   },

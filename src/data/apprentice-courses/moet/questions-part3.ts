@@ -34,8 +34,8 @@ export const questionsPart3: StandardMockQuestion[] = [
     question:
       'What type of sensor would be most appropriate for measuring the temperature of a motor bearing in the range 0-200 degrees C with high accuracy?',
     options: [
-      'A type K thermocouple, chosen for its very high accuracy at low temperatures',
-      'A bimetallic strip thermostat reading the bearing surface temperature',
+      'A type K thermocouple (NiCr/NiAl), chosen for its very high accuracy at low temperatures',
+      'A bimetallic strip thermostat (snap-action)',
       'A PT100 resistance temperature detector (RTD)',
       'An infrared (non-contact) pyrometer aimed at the bearing housing',
     ],
@@ -69,9 +69,9 @@ export const questionsPart3: StandardMockQuestion[] = [
     question: 'An inductive proximity sensor can detect which type of materials?',
     options: [
       'Metallic (ferrous and non-ferrous) materials only',
-      'Any solid material, whether metallic, plastic, glass, or liquid',
-      'Non-metallic materials such as plastic, wood, and glass only',
-      'Transparent materials only, by detecting an interrupted light beam',
+      'Any material (metallic, plastic, glass, or liquid) without exception',
+      'Non-metallic (plastic, wood, glass) materials only',
+      'Transparent materials only (interrupted light beam)',
     ],
     correctAnswer: 0,
     explanation:
@@ -122,9 +122,9 @@ export const questionsPart3: StandardMockQuestion[] = [
     id: 87,
     question: 'What are the three main sections of a PLC (Programmable Logic Controller)?',
     options: [
-      'Rectifier, smoothing capacitor, and inverter stage',
-      'Sensor, transmitter, and final control element',
-      'Display screen, keypad, and printer interface',
+      'Rectifier, smoothing capacitor (DC link), and inverter stage',
+      'Sensor, transmitter, and final control element (valve)',
+      'Display screen, keypad, and printer (serial) interface',
       'Input module, central processing unit (CPU), and output module',
     ],
     correctAnswer: 3,
@@ -141,9 +141,9 @@ export const questionsPart3: StandardMockQuestion[] = [
       "In PLC programming, what does a 'normally open' (NO) contact instruction represent in ladder logic?",
     options: [
       'An instruction that is TRUE (passes logic continuity) when the associated input or memory bit is in the ON (1) state',
-      'An instruction that is TRUE (passes logic continuity) only when the associated bit is in the OFF (0) state',
-      'An output instruction that energises a coil whenever the rung above it is FALSE',
-      'A timer instruction that delays the rung result by a preset number of seconds',
+      'An instruction that is TRUE (passes logic continuity) only when the associated input or memory bit is in the OFF (0) state',
+      'An output instruction (coil) that energises whenever the rung condition ahead of it is FALSE',
+      'A timer instruction (TON) that holds the rung result FALSE for a preset number of seconds and then latches it ON',
     ],
     correctAnswer: 0,
     explanation:
@@ -157,10 +157,10 @@ export const questionsPart3: StandardMockQuestion[] = [
     id: 89,
     question: 'What is the PLC scan cycle?',
     options: [
-      'The one-off sequence a PLC runs at power-up to copy its stored program into its working memory',
+      'The one-off sequence a PLC runs at power-up, copying its stored program into its working memory',
       'The repetitive cycle where the PLC reads all inputs, executes the program logic, and updates all outputs',
-      'The process of downloading a revised program from a laptop into the memory of the PLC processor',
-      'The diagnostic routine that checks every I/O module for hardware faults when the engineer requests it',
+      'The one-time transfer of a revised program from a laptop, overwriting the memory of the PLC processor',
+      'The diagnostic routine that checks every I/O module for hardware faults, run when the engineer asks for it',
     ],
     correctAnswer: 1,
     explanation:
@@ -175,10 +175,10 @@ export const questionsPart3: StandardMockQuestion[] = [
     question:
       'What is the fundamental requirement of a safety-related control circuit complying with BS EN ISO 13849?',
     options: [
-      'It must use only intrinsically safe components rated for use in explosive atmospheres',
+      'It must use only intrinsically safe (Ex ia) components rated for explosive atmospheres',
       'It must be powered from a separated extra-low voltage (SELV) supply at all times',
       'It must achieve the required Performance Level (PL) for the assessed risk',
-      'It must be controlled by a dedicated single-channel PLC with no redundancy required',
+      'It must be controlled by a dedicated single-channel (Category B) PLC with no redundancy',
     ],
     correctAnswer: 2,
     explanation:
@@ -193,9 +193,9 @@ export const questionsPart3: StandardMockQuestion[] = [
     question:
       'An emergency stop circuit is classified as a safety function. What category should it typically achieve under BS EN ISO 13849?',
     options: [
-      'No specific category is required',
-      'Category 1 (single channel with well-tried components)',
-      'Category B (basic)',
+      'No specific category is required (any architecture will do provided a stop button is fitted)',
+      'Category 1 (single channel built entirely from well-tried components and principles)',
+      'Category B (basic architecture with no redundancy or diagnostics)',
       'Category 3 or 4 (redundant channels with monitoring and fault detection)',
     ],
     correctAnswer: 3,
@@ -212,7 +212,7 @@ export const questionsPart3: StandardMockQuestion[] = [
     options: [
       'To monitor the stop circuit for faults and prevent restart until reset',
       'To boost the low-voltage stop signal up to mains voltage so it can switch the motor directly',
-      'To time the delay between pressing the stop button and the machine coming to rest',
+      'To time the delay between the stop button and the machine stopping',
       'To allow a single emergency stop button to control several unrelated machines at once',
     ],
     correctAnswer: 0,
@@ -228,10 +228,10 @@ export const questionsPart3: StandardMockQuestion[] = [
     question:
       'A light curtain is used as a safety device on a press machine. If a person breaks the light beam during the pressing cycle, what should happen?',
     options: [
-      'The machine sounds an audible alarm but completes the current stroke before stopping',
+      'The machine sounds an audible alarm and completes the current stroke, then stops before the next cycle',
       'The machine immediately stops in a safe state, preventing the press from completing the stroke',
-      'The machine slows to a controlled stop only at the end of the production batch',
-      'The machine continues running and logs the interruption for later investigation',
+      'The machine slows to a controlled stop, but only at the end of the production batch',
+      'The machine continues running, logging the interruption for later investigation',
     ],
     correctAnswer: 1,
     explanation:
@@ -247,10 +247,10 @@ export const questionsPart3: StandardMockQuestion[] = [
     id: 94,
     question: "In a PID control loop, what does the 'I' (integral) term do?",
     options: [
-      'Responds in proportion to the present error, giving an immediate corrective output',
-      'Responds to the rate of change of the error, anticipating and damping rapid swings',
+      'Responds in proportion to the present error (gain), giving an immediate corrective output',
+      'Responds to the rate of change of the error (slope), anticipating and damping rapid swings',
       'Accumulates the error over time and adjusts the output to eliminate steady-state error (offset)',
-      'Sets a fixed maximum and minimum limit on the controller output signal',
+      'Sets a fixed maximum and minimum limit (clamp) on the controller output signal',
     ],
     correctAnswer: 2,
     explanation:
@@ -283,9 +283,9 @@ export const questionsPart3: StandardMockQuestion[] = [
       'What communication protocol is most commonly used for industrial automation networking between PLCs and field devices?',
     options: [
       'PROFINET, EtherNet/IP, or Modbus TCP/IP',
-      'HDMI, DisplayPort, or VGA video links',
-      'Bluetooth, Zigbee, or NFC short-range wireless',
-      'HTTP, SMTP, or FTP standard office internet protocols',
+      'HDMI, DVI/VGA, or DisplayPort links',
+      'Bluetooth, Zigbee, or NFC/RFID short-range wireless',
+      'HTTP, SMTP, or FTP/SFTP office internet protocols',
     ],
     correctAnswer: 0,
     explanation:
@@ -300,10 +300,10 @@ export const questionsPart3: StandardMockQuestion[] = [
     question:
       'What is the purpose of an HMI (Human Machine Interface) on an industrial control panel?',
     options: [
-      'To supply the regulated DC control voltage needed by the PLC processor and the connected field devices',
+      'To supply the regulated DC control voltage needed by the PLC processor, and by the connected field devices',
       'To provide a graphical interface for operators to monitor process variables, view alarms, and control equipment',
-      'To execute the ladder logic program that controls the machinery wired to the output modules of the panel',
-      'To convert the analogue signals from the field sensors into the digital form used on the control network',
+      'To execute the ladder logic program that controls the machinery, wired to the output modules of the panel',
+      'To convert the analogue signals from the field sensors, into the digital form used on the control network',
     ],
     correctAnswer: 1,
     explanation:
@@ -336,9 +336,9 @@ export const questionsPart3: StandardMockQuestion[] = [
     question:
       'A maintenance technician needs to replace a PLC input module. What precaution must be taken regarding the PLC programme?',
     options: [
-      'Delete the existing PLC programme so the new module loads its own default logic',
-      'Rewrite the entire ladder programme from scratch to suit the replacement module',
-      'Change the I/O addressing of all other modules to match the new module&rsquo;s address',
+      'Delete the existing PLC programme, so the new I/O module loads its own default logic',
+      'Rewrite the whole ladder programme, to suit the new I/O module',
+      'Change the I/O addressing of all other modules, to match the new module&rsquo;s address',
       'Confirm the module type and I/O addressing match, and back up the programme first',
     ],
     correctAnswer: 3,
@@ -354,9 +354,9 @@ export const questionsPart3: StandardMockQuestion[] = [
     question: 'What is Modbus RTU and how does it differ from Modbus TCP?',
     options: [
       'Modbus RTU uses serial communication (RS-485/RS-232) with binary encoding, while Modbus TCP uses Ethernet with TCP/IP encapsulation of the Modbus protocol',
-      'Modbus RTU is a wireless radio protocol used for field devices, while Modbus TCP requires a dedicated fibre-optic link between master and slave',
-      'Modbus RTU can be used only between two PLCs in the same panel, while Modbus TCP can be used only to drive an HMI display on a machine front',
-      'Modbus RTU carries analogue process signals directly on the wire, while Modbus TCP carries only digital on and off states between devices',
+      'Modbus RTU is a wireless radio (sub-GHz) protocol for field devices, while Modbus TCP requires a dedicated fibre-optic (single-mode) link between master/slave devices',
+      'Modbus RTU can be used only between two PLCs (peer-to-peer) in the same panel, while Modbus TCP can be used only to drive an HMI/operator panel on a machine front',
+      'Modbus RTU carries analogue process signals (4-20 mA) directly on the wire, while Modbus TCP carries only digital on/off states (coils) between devices',
     ],
     correctAnswer: 0,
     explanation:
@@ -397,7 +397,7 @@ export const questionsPart3: StandardMockQuestion[] = [
       'A schematic is always drawn to scale so that cable lengths can be measured directly from it, whereas a wiring diagram is never drawn to scale and uses symbols only',
       'A schematic may be used only for alternating current circuits, whereas a wiring diagram may be used only for direct current circuits and low voltage control wiring',
       'A schematic shows the functional relationship between components using standard symbols, while a wiring diagram shows the physical routing and connections of cables and conductors',
-      'A schematic is issued by the equipment manufacturer and cannot be altered on site, while a wiring diagram is drawn only by the installer once the work has been finished',
+      'A schematic is issued by the equipment manufacturer and cannot be altered on site, while a wiring diagram is drawn only by the installer once the work has been finished and handed over',
     ],
     correctAnswer: 2,
     explanation:
@@ -413,7 +413,7 @@ export const questionsPart3: StandardMockQuestion[] = [
     options: [
       'A circuit breaker (the first moulded-case breaker in the circuit)',
       'A control fuse (the first fuse protecting the control circuit)',
-      'A push-button (the first start button in the control circuit)',
+      'A push-button (the first start button)',
       'A contactor (the first contactor in the circuit)',
     ],
     correctAnswer: 3,
@@ -446,10 +446,10 @@ export const questionsPart3: StandardMockQuestion[] = [
     id: 105,
     question: 'What is the purpose of cross-referencing on a multi-page control schematic?',
     options: [
-      'To list the revision history of the whole drawing set so that the technician can confirm which issue is the latest approved version',
+      'To list the revision history of the whole drawing set, so that the technician can confirm which issue is the latest approved version for use on site',
       'To show where a relay coil on one page has its associated contacts shown on other pages, enabling the technician to trace the complete circuit',
-      'To indicate the physical route taken by each cable between panels on different floors so that the cable run can be traced on site',
-      'To record the tightening torque required at every terminal shown on the page so that no connection is left slack in service',
+      'To indicate the physical route taken by each cable between panels on different floors, so that the cable run can be traced on site',
+      'To record the tightening torque required at every terminal shown on the page, so that no connection is left slack in service',
     ],
     correctAnswer: 1,
     explanation:
@@ -465,7 +465,7 @@ export const questionsPart3: StandardMockQuestion[] = [
       "On a piping and instrumentation diagram (P&ID), what does the instrument tag 'TT-101' represent?",
     options: [
       'A test terminal block, terminal number 101',
-      'A timer relay with a 101-second preset delay',
+      'A timer relay, preset to a 101-second delay',
       'A temperature transmitter, instrument number 101',
       'A pressure transmitter, instrument number 101',
     ],
@@ -481,9 +481,9 @@ export const questionsPart3: StandardMockQuestion[] = [
     id: 107,
     question: 'What is the purpose of a cable schedule in an electrical installation?',
     options: [
-      'To list the planned dates on which each cable run is to be installed on site',
-      'To record the calibration status of every test instrument used on the installation',
-      'To set out the maintenance tasks and intervals for each circuit in the installation',
+      'To list the planned dates on which each cable run is to be pulled in, tested and energised',
+      'To record the calibration status of every test instrument, with its due date',
+      'To set out the maintenance tasks, intervals and methods for each circuit',
       'To provide a tabulated record of every cable: reference, type, size, origin and destination',
     ],
     correctAnswer: 3,
@@ -501,7 +501,7 @@ export const questionsPart3: StandardMockQuestion[] = [
       'The physical position of components within the panel enclosure',
       'The logical operation of the control circuit using standard schematic symbols',
       'The list of every cable entering the panel with its size, origin, and destination',
-      'The sequence of operations the panel performs once it is energised and running',
+      'The sequence of operations the panel performs when running',
     ],
     correctAnswer: 0,
     explanation:
@@ -520,8 +520,8 @@ export const questionsPart3: StandardMockQuestion[] = [
     options: [
       'To control plant machinery directly in real time, replacing the site PLCs',
       'To manage, schedule, and record all maintenance activities and assets',
-      'To monitor live process variables and display them to operators on an HMI screen',
-      'To prepare and store the engineering drawings and schematics for the installation',
+      'To monitor live process variables, displaying them to operators on an HMI screen',
+      'To prepare and store the engineering drawings, and the schematics for the installation',
     ],
     correctAnswer: 1,
     explanation:
@@ -538,7 +538,7 @@ export const questionsPart3: StandardMockQuestion[] = [
       'Date raised, name of the technician assigned and nothing further recorded',
       'Confirmation that the equipment is running again, with no other detail',
       'Work performed, parts used, time taken, fault found and any follow-up required',
-      'The purchase cost of any replacement parts drawn from the stores',
+      'The purchase cost of any replacement parts, drawn from the stores',
     ],
     correctAnswer: 2,
     explanation:
@@ -552,7 +552,7 @@ export const questionsPart3: StandardMockQuestion[] = [
     id: 111,
     question: 'Why is it important to maintain an accurate asset register in a CMMS?',
     options: [
-      'It is only needed for financial depreciation and has no bearing on maintenance work',
+      'It is only needed for financial depreciation, and has no bearing on maintenance',
       'It records the live operating status of each machine, replacing the need for a SCADA system',
       'It lists only the spare parts held in the stores, with no link to individual assets',
       'To record every maintainable asset with its location, criticality and history',
@@ -570,9 +570,9 @@ export const questionsPart3: StandardMockQuestion[] = [
     question: 'What is the purpose of a maintenance log or shift handover report?',
     options: [
       'To pass on equipment status, ongoing work and safety concerns between shifts',
-      'To record the hours worked by each technician for payroll and overtime purposes',
-      'To list the spare parts that need to be ordered from suppliers that week',
-      'To provide formal training records demonstrating each technician&rsquo;s competencies',
+      'To record the hours worked by each technician, for payroll and overtime purposes',
+      'To list, week by week, the spare parts to be ordered from suppliers',
+      'To provide formal training records, demonstrating each technician&rsquo;s competencies',
     ],
     correctAnswer: 0,
     explanation:
@@ -586,10 +586,10 @@ export const questionsPart3: StandardMockQuestion[] = [
     id: 113,
     question: 'What is a maintenance backlog and why is it an important KPI?',
     options: [
-      'The number of breakdowns that occurred on a single asset during the past year',
+      'The number of breakdowns that occurred on a single asset, during the past year',
       'The total of outstanding, uncompleted maintenance work orders awaiting execution',
-      'The average time taken to repair equipment once a fault has been reported',
-      'The proportion of maintenance carried out reactively rather than as planned work',
+      'The average time taken to repair equipment, once a fault has been reported',
+      'The proportion of maintenance carried out reactively, rather than as planned work',
     ],
     correctAnswer: 1,
     explanation:
@@ -604,8 +604,8 @@ export const questionsPart3: StandardMockQuestion[] = [
     question:
       'Under the Electricity at Work Regulations 1989, what records should be kept for electrical maintenance and testing?',
     options: [
-      'Purchase and installation dates for every item of electrical equipment on site',
-      'Copies of the handbooks supplied by the manufacturer with each item of plant',
+      'Purchase and installation dates, for every item of electrical equipment on the site',
+      'Copies of the handbooks supplied by the manufacturer, with each item of plant',
       'Maintenance, inspection and test records with results, dates and the competent person',
       'Names of staff who hold an electrical qualification, with no test results',
     ],
@@ -644,8 +644,8 @@ export const questionsPart3: StandardMockQuestion[] = [
     options: [
       'Completed work order, test records, permit cancellation and interlock confirmation',
       'Verbal confirmation to the shift operator, with no written paperwork at all',
-      'The updated asset register entry, for operations to review at a later date',
-      'The supplier invoice covering all replacement parts used during the job',
+      'The updated asset register entry only, for operations to review at a later date',
+      'The supplier invoice, covering all replacement parts used during the job',
     ],
     correctAnswer: 0,
     explanation:
@@ -660,10 +660,10 @@ export const questionsPart3: StandardMockQuestion[] = [
     question:
       'What is the purpose of a technical file or O&M manual for an electrical installation?',
     options: [
-      'To record only the commercial cost of the installation for the client&rsquo;s accounts',
+      'To record only the commercial cost of the installation, for the client&rsquo;s accounts',
       'To provide all the information needed to safely operate, maintain and modify it',
-      'To list only the names and contact details of the contractors who did the work',
-      'To provide marketing brochures for the equipment installed in the building',
+      'To list only the names, addresses and contact details of the contractors',
+      'To provide marketing brochures, for the equipment installed in the building',
     ],
     correctAnswer: 1,
     explanation:
@@ -695,9 +695,9 @@ export const questionsPart3: StandardMockQuestion[] = [
     id: 119,
     question: 'What is the purpose of a method statement for an electrical maintenance task?',
     options: [
-      'To provide a tabulated list of every cable involved in the maintenance task',
-      'To record the test results obtained after the maintenance work is finished',
-      'To set the planned dates and intervals for routine maintenance of the asset',
+      'To provide a tabulated list of every cable, terminal and gland involved in the maintenance task',
+      'To record the test results obtained, once the maintenance work is finished',
+      'To set the planned dates, and the intervals, for routine maintenance of the asset',
       'To set out step-by-step how the work is done, with hazards and controls at each stage',
     ],
     correctAnswer: 3,
@@ -714,9 +714,9 @@ export const questionsPart3: StandardMockQuestion[] = [
       "A maintenance technician is working from a control panel schematic and notices that the drawing revision is 'Rev C' but the panel has components that do not match the drawing. What should the technician do?",
     options: [
       'Stop work, check for a later revision and report the discrepancy before relying on it',
-      'Continue working from the Rev C drawing and assume the panel components are wrong',
-      'Modify the panel components on site so they match the existing Rev C drawing',
-      'Amend the Rev C drawing in pencil to match the panel and carry on without reporting it',
+      'Continue working from the Rev C drawing, and assume the panel components are wrong',
+      'Modify the panel components on site, so they match the existing Rev C drawing',
+      'Amend the Rev C drawing in pencil, to match the panel and carry on without reporting it',
     ],
     correctAnswer: 0,
     explanation:

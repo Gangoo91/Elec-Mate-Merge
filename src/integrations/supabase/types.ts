@@ -28767,6 +28767,7 @@ export type Database = {
           referred_by: string | null;
           referrer_url: string | null;
           role: string | null;
+          scheduling_auto_confirm: boolean;
           scheduling_blackout_dates: Json | null;
           scheduling_buffer_minutes: number | null;
           scheduling_max_bookings_per_day: number | null;
@@ -28870,6 +28871,7 @@ export type Database = {
           referred_by?: string | null;
           referrer_url?: string | null;
           role?: string | null;
+          scheduling_auto_confirm?: boolean;
           scheduling_blackout_dates?: Json | null;
           scheduling_buffer_minutes?: number | null;
           scheduling_max_bookings_per_day?: number | null;
@@ -28973,6 +28975,7 @@ export type Database = {
           referred_by?: string | null;
           referrer_url?: string | null;
           role?: string | null;
+          scheduling_auto_confirm?: boolean;
           scheduling_blackout_dates?: Json | null;
           scheduling_buffer_minutes?: number | null;
           scheduling_max_bookings_per_day?: number | null;

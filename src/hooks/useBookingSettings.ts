@@ -25,6 +25,15 @@ export interface BookingSettings {
   minNoticeHours: number;
   slotMinutes: number;
   blackouts: Blackout[];
+  /**
+   * Email the customer straight away when they book through the public link.
+   *
+   * Off by default and left off for everyone who already had an account.
+   * Everywhere else the app writes the message and the electrician presses
+   * send; the public link is the exception because the customer has just asked
+   * for that slot and is holding nothing.
+   */
+  autoConfirm: boolean;
 }
 
 /**
@@ -64,6 +73,7 @@ export const DEFAULT_SETTINGS: BookingSettings = {
   minNoticeHours: 24,
   slotMinutes: 60,
   blackouts: [],
+  autoConfirm: false,
 };
 
 /**
@@ -88,7 +98,7 @@ export function useBookingSettings() {
       const { data, error } = await supabase
         .from('profiles')
         .select(
-          'scheduling_working_hours, scheduling_buffer_minutes, scheduling_max_bookings_per_day, scheduling_min_notice_hours, scheduling_blackout_dates, scheduling_slot_minutes'
+          'scheduling_working_hours, scheduling_buffer_minutes, scheduling_max_bookings_per_day, scheduling_min_notice_hours, scheduling_blackout_dates, scheduling_slot_minutes, scheduling_auto_confirm'
         )
         .eq('id', user.id)
         .maybeSingle();
@@ -126,6 +136,7 @@ export function useBookingSettings() {
             ? data.scheduling_slot_minutes
             : DEFAULT_SETTINGS.slotMinutes,
         blackouts,
+        autoConfirm: data?.scheduling_auto_confirm === true,
       };
     },
   });
@@ -149,6 +160,7 @@ export function useSaveBookingSettings() {
           scheduling_max_bookings_per_day: settings.maxPerDay,
           scheduling_min_notice_hours: settings.minNoticeHours,
           scheduling_slot_minutes: settings.slotMinutes,
+          scheduling_auto_confirm: settings.autoConfirm,
           // Sorted so the list reads chronologically wherever it is rendered
           // — including in the edge function's logs.
           scheduling_blackout_dates: [...settings.blackouts].sort((a, b) =>

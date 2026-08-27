@@ -213,7 +213,7 @@ export const module4Questions: Question[] = [
     explanation:
       "Arcing faults can sustain at relatively low currents that don't trip conventional overcurrent devices, while generating enough heat to ignite surrounding materials.",
     section: '4.1',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 14,
@@ -258,7 +258,7 @@ export const module4Questions: Question[] = [
     explanation:
       'A bolted fault has solid metallic contact creating very low resistance and maximum fault current, while arcing faults have higher resistance due to the arc gap.',
     section: '4.1',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 17,
@@ -303,16 +303,16 @@ export const module4Questions: Question[] = [
     explanation:
       'Sympathetic tripping occurs when a fault current flows through upstream protective devices, causing them to operate along with the device meant to clear the fault.',
     section: '4.1',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 20,
     question: 'Which fault type would cause a motor to run slowly and overheat?',
     options: [
       'Single phasing (loss of one phase)',
-      'Short circuit between the stator windings',
-      'Complete open circuit in the supply conductors',
-      'Earth fault from a winding to the frame',
+      'Short circuit between stator windings (turn-to-turn)',
+      'Complete open circuit (loss of all three phases)',
+      'Earth fault (winding to frame) on one phase',
     ],
     correctAnswer: 0,
     explanation:
@@ -333,7 +333,7 @@ export const module4Questions: Question[] = [
     explanation:
       'Tracking occurs when contamination on insulation surfaces becomes conductive and carbonises due to small leakage currents, progressively creating a fault path.',
     section: '4.1',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 22,
@@ -408,7 +408,7 @@ export const module4Questions: Question[] = [
     explanation:
       'Partial discharge is localised breakdown of insulation that indicates degradation has started, potentially leading to complete insulation failure if not addressed.',
     section: '4.1',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 27,
@@ -439,16 +439,16 @@ export const module4Questions: Question[] = [
     explanation:
       'Harmonics are a power quality issue causing additional heating in conductors and equipment, neutral overload in three-phase systems, and interference with sensitive electronics.',
     section: '4.1',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 29,
     question: 'A fault causing flickering lights at random intervals is likely:',
     options: [
-      'A correctly torqued and sound cable termination',
+      'A correctly torqued (sound) cable termination',
       'Loose connection (high resistance joint)',
-      'An oversized neutral conductor at the board',
-      'A solid bolted short circuit between line and earth',
+      'An oversized neutral (low impedance) at the board',
+      'A solid bolted short circuit (zero impedance) line to earth',
     ],
     correctAnswer: 1,
     explanation:
@@ -553,9 +553,9 @@ export const module4Questions: Question[] = [
     question: 'Visual inspection during fault finding should identify:',
     options: [
       'Signs of overheating, damage, or poor workmanship',
-      'The exact insulation resistance value of each cable',
-      'The earth fault loop impedance of the circuit',
-      'The prospective fault current at the origin',
+      'The exact insulation resistance value, in megohms, of each cable',
+      'The earth fault loop impedance, in ohms, of the final circuit',
+      'The prospective fault current, in kA, at the origin of the installation',
     ],
     correctAnswer: 0,
     explanation:
@@ -598,9 +598,9 @@ export const module4Questions: Question[] = [
     question:
       'When fault finding on a motor control circuit, which components should be checked first?',
     options: [
-      'The motor bearings, couplings and shaft alignment',
-      'The stator windings inside the motor before anything else',
-      'The DNO supply transformer feeding the site substation',
+      'The motor bearings, couplings and shaft (alignment)',
+      'The stator windings (inside the motor), before anything else is checked',
+      'The supply transformer, out at the DNO (distributor) substation',
       'The easiest to access components (fuses, contactors)',
     ],
     correctAnswer: 3,
@@ -643,10 +643,10 @@ export const module4Questions: Question[] = [
     id: 42,
     question: 'What documentation should be consulted during fault finding?',
     options: [
-      'Only the original purchase invoice for the equipment fitted',
-      'The manufacturer warranty card supplied with the equipment alone',
+      'Only the original purchase invoice for the equipment, filed by the customer',
+      'The manufacturer warranty card supplied with the equipment, on its own',
       'Circuit diagrams, equipment manuals, and previous test records',
-      'A copy of the customer payment receipt and the material invoice',
+      'The customer payment receipt and the material invoice, and nothing more',
     ],
     correctAnswer: 2,
     explanation:
@@ -674,9 +674,9 @@ export const module4Questions: Question[] = [
     question: 'When multiple faults are suspected, you should:',
     options: [
       'Identify and fix one fault at a time, testing after each',
-      'Replace all the suspect components in one operation and retest',
-      'Repair the most visible fault and stop looking any further',
-      'Energise the circuit again before any of the faults are corrected',
+      'Replace all the suspect components in one operation, then retest once',
+      'Repair the most visible fault, then stop looking any further',
+      'Energise the circuit again, leaving the remaining faults for later',
     ],
     correctAnswer: 0,
     explanation:
@@ -697,7 +697,7 @@ export const module4Questions: Question[] = [
     explanation:
       "Stress testing applies higher loads or specific conditions to recreate intermittent faults that don't appear under normal operating conditions.",
     section: '4.2',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 46,
@@ -854,9 +854,9 @@ export const module4Questions: Question[] = [
     question: 'What should be verified before declaring a fault repair complete?',
     options: [
       'Equipment operation, safety tests pass, and cause addressed',
-      'Only that the visible damaged part has been replaced',
-      'That the circuit re-energises without immediate tripping',
-      'That the customer is happy with the appearance of the repair',
+      'That the visible damaged part has been replaced, and nothing further',
+      'That the circuit re-energises, with no immediate tripping',
+      'That the customer is happy, and the repair looks tidy',
     ],
     correctAnswer: 0,
     explanation:
@@ -898,9 +898,9 @@ export const module4Questions: Question[] = [
     id: 59,
     question: 'Environmental conditions should be considered during fault diagnosis because:',
     options: [
-      'They only affect the appearance of the finished installation',
-      'They are never relevant to electrical faults in a domestic installation',
-      'They matter only for outdoor installations exposed to weather',
+      'They affect the appearance of the finished installation, and nothing else',
+      'They are never relevant to electrical faults, indoors or out',
+      'They matter only outdoors, where the installation is exposed to weather',
       'Temperature, moisture, and contamination affect component operation',
     ],
     correctAnswer: 3,
@@ -922,7 +922,7 @@ export const module4Questions: Question[] = [
     explanation:
       "Sneak circuits are unintended current paths through combinations of components that aren't shown on diagrams and can cause unexpected operation.",
     section: '4.2',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 61,
@@ -967,7 +967,7 @@ export const module4Questions: Question[] = [
     explanation:
       'Fault tree analysis is a systematic method of mapping all possible causes that could lead to a particular fault, helping ensure thorough diagnosis.',
     section: '4.2',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 64,
@@ -1005,10 +1005,10 @@ export const module4Questions: Question[] = [
     id: 66,
     question: 'Which measurement category rating should a multimeter carry for work at the origin of a single-phase domestic installation?',
     options: [
-      'CAT I for all installation and testing work',
-      'CAT II for the supply origin and final circuits',
+      'CAT I for final circuits, CAT II for the origin',
+      'CAT II for the origin, CAT I for distribution circuits',
       'CAT III for distribution circuits, CAT IV for origin',
-      'No CAT rating is required for low voltage work at all',
+      'No CAT rating is needed below 1000 V, at the origin or elsewhere',
     ],
     correctAnswer: 2,
     explanation:
@@ -1097,9 +1097,9 @@ export const module4Questions: Question[] = [
       'When testing for voltage presence, a two-pole voltage tester is preferred over a neon screwdriver because:',
     options: [
       'Two-pole testers confirm voltage between points, not just presence',
-      'Neon screwdrivers are cheaper to replace and simpler to use',
-      'Neon testers measure the current as well as the voltage in a circuit',
-      'Two-pole testers work without a battery or any internal power source',
+      'Neon screwdrivers cost less to replace, so they are the safer choice',
+      'Neon testers measure current as well as voltage, giving a fuller picture',
+      'Two-pole testers need no battery, so they cannot fail undetected',
     ],
     correctAnswer: 0,
     explanation:
@@ -1171,10 +1171,10 @@ export const module4Questions: Question[] = [
     id: 77,
     question: 'A socket tester with indicators can identify:',
     options: [
-      'The exact earth fault loop impedance value in ohms',
+      'The exact earth fault loop impedance, in ohms, at that socket',
       'Common wiring faults like reversed polarity, missing earth',
-      'The trip time of the RCD protecting the final circuit',
-      'The insulation resistance between the final circuit conductors',
+      'The trip time of the RCD, in milliseconds, protecting that circuit',
+      'The insulation resistance, in megohms, between the circuit conductors',
     ],
     correctAnswer: 1,
     explanation:
@@ -1210,7 +1210,7 @@ export const module4Questions: Question[] = [
     explanation:
       'High input impedance (typically 10 MΩ or more) prevents the meter from loading the circuit and affecting the voltage being measured.',
     section: '4.3',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 80,
@@ -1218,9 +1218,9 @@ export const module4Questions: Question[] = [
       'When using test leads with a multimeter, what condition indicates replacement is needed?',
     options: [
       'Cracked insulation, damaged probes, or intermittent readings',
-      'Whenever the battery in the meter is changed or the fuse blows',
-      'Only after the leads have been used for a period of ten years',
-      'When the meter display shows a lower reading than the last test',
+      'Whenever the meter battery is changed, or the internal fuse blows',
+      'Only after ten years in service, whatever their condition',
+      'When the display reads lower than last time, whatever the leads look like',
     ],
     correctAnswer: 0,
     explanation:
@@ -1241,7 +1241,7 @@ export const module4Questions: Question[] = [
     explanation:
       'Oscilloscopes display voltage waveforms, enabling diagnosis of complex issues like harmonics, interference, switching problems, and timing issues.',
     section: '4.3',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 82,
@@ -1307,16 +1307,16 @@ export const module4Questions: Question[] = [
     id: 86,
     question: 'A power quality analyser can measure:',
     options: [
-      'Only the insulation resistance of each final circuit in the installation',
-      'Loop impedance and prospective fault current at the main supply origin',
+      'Insulation resistance only, circuit by circuit, across the installation',
+      'Loop impedance, prospective fault current, and nothing else',
       'Harmonics, power factor, voltage dips, and other quality parameters',
-      'Polarity and continuity at every socket outlet on the final circuits',
+      'Polarity and continuity, socket by socket, on the final circuits',
     ],
     correctAnswer: 2,
     explanation:
       'Power quality analysers measure various parameters including harmonics, power factor, voltage disturbances, and energy consumption patterns.',
     section: '4.3',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 87,
@@ -1338,9 +1338,9 @@ export const module4Questions: Question[] = [
     question: 'Which characteristic makes a digital multimeter more suitable than an analogue instrument for reading a steady voltage?',
     options: [
       'Easy to read, auto-ranging, and can capture transients',
-      'They never require a battery or any power source',
-      'They respond faster than analogue meters to slow changes',
-      'They do not need a CAT safety rating for installation work',
+      'They need no battery, so they cannot fail mid-test',
+      'They follow slow changes faster than a needle, so trends are clearer',
+      'They need no CAT safety rating, being digital rather than analogue',
     ],
     correctAnswer: 0,
     explanation:
@@ -1422,16 +1422,16 @@ export const module4Questions: Question[] = [
     explanation:
       'Auxiliary electrodes must be positioned away from the electrode under test to avoid overlap of resistance areas and ensure accurate measurement.',
     section: '4.3',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 94,
     question: 'How is the accuracy of an electrical test instrument normally stated by its manufacturer?',
     options: [
-      'A single fixed value in ohms for all ranges',
-      'A percentage of the supply voltage only',
+      'A single fixed value in ohms/volts for all ranges',
+      'A percentage of the supply/load voltage',
       'Percentage of reading plus/minus digits',
-      'The CAT rating of the instrument',
+      'The CAT III/IV rating of the instrument',
     ],
     correctAnswer: 2,
     explanation:
@@ -1443,9 +1443,9 @@ export const module4Questions: Question[] = [
     id: 95,
     question: 'When selecting test equipment for fault finding, the key considerations are:',
     options: [
-      'The brand name and colour of the instrument',
-      'The lowest purchase price available',
-      'Whether it matches the customer preferred manufacturer',
+      'The brand name, and the colour of the instrument case',
+      'The lowest purchase price, whatever the specification',
+      'Whether it matches the customer preferred manufacturer, on brand alone',
       'Measurement range, accuracy, safety rating, and suitability for task',
     ],
     correctAnswer: 3,
@@ -1505,9 +1505,9 @@ export const module4Questions: Question[] = [
     id: 99,
     question: 'When isolating a circuit, all means of supply must be isolated including:',
     options: [
-      'The phase conductor only, as neutral is at earth potential',
-      'Only the conductors visible at the point of work',
-      'The protective conductor as well as the phase',
+      'The phase conductor only, since the neutral (at earth potential) is safe',
+      'Only the visible conductors (at the point of work), and no others',
+      'The protective conductor (cpc), as well as the phase conductor',
       'All live conductors - phase, neutral (and other phases in 3-phase)',
     ],
     correctAnswer: 3,
@@ -1521,9 +1521,9 @@ export const module4Questions: Question[] = [
     question: 'A lock-off device should be:',
     options: [
       'Unique to the person working, with their key held securely',
-      'A shared key kept at the consumer unit for convenience',
-      'Removable by any competent person on site',
-      'Fitted only at the end of the working day',
+      'A shared key, kept at the consumer unit for convenience',
+      'Removable by any competent person, so work is never held up',
+      'Fitted at the end of the working day, once the tools are packed',
     ],
     correctAnswer: 0,
     explanation:
@@ -1550,10 +1550,10 @@ export const module4Questions: Question[] = [
     id: 102,
     question: 'The minimum information on an isolation warning notice should include:',
     options: [
-      'The earth fault loop impedance of the circuit',
-      'The cost and duration estimate for the customer',
+      'The earth fault loop impedance, in ohms, of the circuit',
+      'The cost, and the duration estimate, for the customer',
       'Name of person, nature of work, date and time',
-      'The serial numbers of all test instruments used',
+      'The serial numbers, and calibration dates, of the instruments',
     ],
     correctAnswer: 2,
     explanation:
@@ -1565,9 +1565,9 @@ export const module4Questions: Question[] = [
     id: 103,
     question: 'If the point of isolation cannot be locked off, you should:',
     options: [
-      'Proceed to work and rely on others not to switch on',
-      'Leave the supply on but work as quickly as possible',
-      'Tape over the switch and continue without any notices',
+      'Proceed with the work, relying on others not to switch on',
+      'Leave the supply on, and work as quickly as possible',
+      'Tape over the switch, then continue without any notices',
       'Remove the fuses or links, retain them and post notices',
     ],
     correctAnswer: 3,
@@ -1625,9 +1625,9 @@ export const module4Questions: Question[] = [
     id: 107,
     question: 'If working on a circuit supplied by a generator, isolation must consider:',
     options: [
-      'Only the mains supply, as the generator is separate',
-      'The generator alone, since the mains is already off',
-      'The protective conductor in addition to the phases',
+      'Only the DNO/mains supply, as the generator is off',
+      'The generator/UPS alone, since the mains is off',
+      'The protective conductor as well as line/neutral',
       'Both normal supply AND any standby/generator supply',
     ],
     correctAnswer: 3,
@@ -1670,10 +1670,10 @@ export const module4Questions: Question[] = [
     id: 110,
     question: 'Before removing safe isolation, you should verify:',
     options: [
-      'That the customer invoice for the work has been settled in full',
-      'That the next job on the list has been scheduled and booked',
+      'That the customer invoice, for labour and materials, is settled in full',
+      'That the next job, further down the list, has been booked',
       'All persons are clear, tools removed, and circuit safe to re-energise',
-      'That the test instruments used are due for annual calibration',
+      'That the test instruments used are due for annual calibration, and logged',
     ],
     correctAnswer: 2,
     explanation:
@@ -1715,10 +1715,10 @@ export const module4Questions: Question[] = [
     id: 113,
     question: 'Which aspects of test equipment does HSE guidance on electrical test equipment address?',
     options: [
-      'The sequence of dead and live tests on a circuit',
+      'The sequence of dead tests, then live tests, on a circuit',
       'Probes, leads, fuses, and barriers for test equipment',
-      'The retention period for certification records',
-      'The maximum earth fault loop impedance values',
+      'The retention period, in years, for certification records',
+      'The maximum earth fault loop impedance, in ohms, for each device',
     ],
     correctAnswer: 1,
     explanation:
@@ -1761,9 +1761,9 @@ export const module4Questions: Question[] = [
     question: 'When isolating circuits in domestic premises with no lock-off facility:',
     options: [
       'Remove fuses, inform occupants, and post notices',
-      'Switch off and trust the occupants not to interfere',
-      'Leave the circuit live and work with care',
-      'Tape the MCB in the off position and leave',
+      'Switch off, and trust the occupants not to interfere',
+      'Leave the circuit live, and work with care throughout',
+      'Tape the MCB off, then leave it unattended',
     ],
     correctAnswer: 0,
     explanation:
@@ -1790,10 +1790,10 @@ export const module4Questions: Question[] = [
     id: 118,
     question: 'If a voltage indicator gives unexpected results during safe isolation:',
     options: [
-      'Assume the tester is faulty and carry on working',
-      'Shake the instrument and retest the circuit',
+      'Assume the tester is faulty, and carry on working',
+      'Shake the instrument, then retest the same circuit',
       'Stop, investigate, and do not assume circuit is dead',
-      'Use a different circuit for proving the tester',
+      'Prove the tester on a different circuit, and accept the result',
     ],
     correctAnswer: 2,
     explanation:
@@ -1874,7 +1874,7 @@ export const module4Questions: Question[] = [
     explanation:
       'Electromagnetic induction can induce voltages on isolated cables running near or parallel to live circuits, particularly with high currents.',
     section: '4.4',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 124,
@@ -1913,10 +1913,10 @@ export const module4Questions: Question[] = [
     id: 126,
     question: 'Documentation of fault finding should include:',
     options: [
-      'Only the final invoice amount charged',
-      'The date of the visit and the hours worked on site',
+      'The final invoice amount charged, and nothing else',
+      'The date of the visit, and the hours worked on site',
       'Symptoms, tests performed, fault found, and repair made',
-      'The make and model of the faulty equipment alone',
+      'The make, and the model, of the faulty equipment',
     ],
     correctAnswer: 2,
     explanation:
@@ -2033,10 +2033,10 @@ export const module4Questions: Question[] = [
     id: 134,
     question: 'What documentation is required when fault finding involves safe isolation?',
     options: [
-      'Only the customer name and address',
-      'The make and serial number of the voltage tester',
+      'The customer name, and address, alone',
+      'The make, and serial number, of the voltage tester',
       'Record of isolation point, lock used, and tests performed',
-      'The total time spent on site and the rate charged',
+      'The total time spent on site, and the rate charged',
     ],
     correctAnswer: 2,
     explanation:
@@ -2064,9 +2064,9 @@ export const module4Questions: Question[] = [
     question: 'What determines how long records of fault diagnosis work should be retained?',
     options: [
       'For a reasonable period, matching certification retention',
-      'Destroyed as soon as the customer invoice is paid',
-      'Kept only until the end of the working day',
-      'Held for no longer than 24 hours after the visit',
+      'Until the customer invoice is paid, then destroyed',
+      'Until the end of the working day, then discarded',
+      'For 24 hours after the visit, and no longer',
     ],
     correctAnswer: 0,
     explanation:
@@ -2078,10 +2078,10 @@ export const module4Questions: Question[] = [
     id: 137,
     question: 'A schedule of test results after fault repair should include:',
     options: [
-      'Only the name of the electrician who attended',
+      'The name of the electrician who attended, and no more',
       'Circuit details, test values, and acceptable limits',
-      'The total cost of the materials and labour used',
-      'The customer signature and the date of the visit',
+      'The total cost of the materials, and of the labour, used',
+      'The customer signature, and the date of the visit',
     ],
     correctAnswer: 1,
     explanation:
@@ -2259,10 +2259,10 @@ export const module4Questions: Question[] = [
     id: 149,
     question: 'Which details of the test instruments used must be recorded on the schedule of test results?',
     options: [
-      'The purchase date and warranty period of the unit',
+      'The purchase date, and warranty period, of the unit',
       'Make, model, serial number, and calibration date',
-      'Only the purchase price of the instrument',
-      'The manufacturer name and the battery type fitted',
+      'The purchase price of the instrument, and nothing else',
+      'The manufacturer name, and the battery type fitted',
     ],
     correctAnswer: 1,
     explanation:
@@ -2473,9 +2473,9 @@ export const module4Questions: Question[] = [
     id: 163,
     question: 'Voltage drop on long lighting circuits commonly causes:',
     options: [
-      'Lights becoming brighter towards the far end of the run',
-      'Immediate tripping of the protective device',
-      'Reversed polarity at every one of the light fittings',
+      'Brighter lights, especially at the far end of the run',
+      'Immediate tripping, as soon as the circuit is switched on',
+      'Reversed polarity, at every fitting on the run',
       'Dim lights, especially at the end of the circuit',
     ],
     correctAnswer: 3,
@@ -2563,10 +2563,10 @@ export const module4Questions: Question[] = [
     id: 169,
     question: 'Smoke alarm false alarms in kitchens are commonly due to:',
     options: [
-      'An interlink wire shared with the lighting circuit',
+      'An interlink wire shared with the lighting (final) circuit',
       'Wrong detector type (ionisation) for the location',
-      'A loose interconnection between the alarm heads',
-      'Reversed polarity at the detector base',
+      'A loose interconnection (interlink) between the heads',
+      'Reversed polarity (line and neutral) at the base',
     ],
     correctAnswer: 1,
     explanation:
@@ -2578,10 +2578,10 @@ export const module4Questions: Question[] = [
     id: 170,
     question: "A doorbell that doesn't work often has a fault in:",
     options: [
-      'The main earthing conductor of the property',
-      'The consumer unit main switch',
+      'The main earthing conductor, at the property',
+      'The main switch, in the consumer unit',
       'The transformer, push, or bell unit',
-      'The ring final circuit continuity',
+      'The ring final circuit, and its continuity',
     ],
     correctAnswer: 2,
     explanation:
@@ -2698,10 +2698,10 @@ export const module4Questions: Question[] = [
     id: 178,
     question: 'A time switch that fails to operate at programmed times often has:',
     options: [
-      'A supply voltage sitting slightly above the 230 V nominal value',
-      'A supply fuse of the wrong rating fitted at the supply origin',
+      'A supply voltage slightly above 230 V nominal, drifting the clock',
+      'A supply fuse of the wrong rating, fitted at the supply origin',
       'Battery backup failure losing settings, or mechanism wear',
-      'The wrong size of conductor used to feed the time switch supply',
+      'The wrong size of conductor, feeding the time switch supply',
     ],
     correctAnswer: 2,
     explanation:
@@ -2773,25 +2773,25 @@ export const module4Questions: Question[] = [
     id: 183,
     question: 'Which item of equipment on a shared supply is the most likely source of electromagnetic interference?',
     options: [
-      'Correctly bonded and terminated protective conductors',
-      'Resistive heating loads such as immersion heaters and ovens',
-      'Incandescent lamps supplied from a dedicated final circuit',
+      'Protective conductors, correctly bonded and terminated',
+      'Resistive heating loads, such as immersion heaters and ovens',
+      'Incandescent lamps, fed from a dedicated final circuit',
       'VFDs, fluorescent lighting, or high-frequency switching',
     ],
     correctAnswer: 3,
     explanation:
       'Variable frequency drives, fluorescent lamp ballasts, and switching power supplies generate electromagnetic interference that can affect sensitive electronics.',
     section: '4.6',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 184,
     question: 'Solar PV systems that underperform commonly suffer from:',
     options: [
       'Shading, dirty panels, or inverter faults',
-      'Rising insulation resistance in the DC string cables',
-      'An oversized AC protective device at the origin',
-      'Reversed phase rotation on the incoming supply',
+      'Rising insulation resistance, which throttles the DC string current',
+      'An oversized AC protective device, which caps the inverter export',
+      'Reversed phase rotation, which halves the inverter output',
     ],
     correctAnswer: 0,
     explanation:
@@ -2803,10 +2803,10 @@ export const module4Questions: Question[] = [
     id: 185,
     question: 'EV charger faults commonly involve:',
     options: [
-      'A charge point mounted outside its rated IP protection level',
+      'An IP rating higher than the location needs, which blocks the handshake',
       'Communication errors, RCD trips, or contactor failures',
-      'An undersized protective conductor serving the charge point',
-      'Reversed phase rotation on the single-phase supply to the unit',
+      'An undersized protective conductor, which raises the charging current',
+      'Reversed phase rotation, on a single-phase supply to the unit',
     ],
     correctAnswer: 1,
     explanation:
@@ -2835,9 +2835,9 @@ export const module4Questions: Question[] = [
     id: 187,
     question: 'Before starting repair work, you should:',
     options: [
-      'Begin dismantling immediately in order to save time',
-      'Energise the circuit first to confirm the fault',
-      'Order parts only after dismantling the faulty equipment',
+      'Begin dismantling immediately, in order to save time',
+      'Energise the circuit first, to confirm the fault is still present',
+      'Order the parts afterwards, once the equipment is dismantled',
       'Verify isolation, have correct parts and tools ready',
     ],
     correctAnswer: 3,
@@ -2851,9 +2851,9 @@ export const module4Questions: Question[] = [
     question: 'When repairing a high resistance joint, the proper procedure is to:',
     options: [
       'Clean all contact surfaces, remake the joint properly',
-      'Wrap the joint in tape and put it back in service',
-      'Apply more current through the joint to burn off the oxide',
-      'Tighten the existing joint as hard as the terminal allows',
+      'Wrap the joint in tape, then put it back in service',
+      'Pass more current through the joint, to burn off the oxide',
+      'Tighten the existing joint hard, without cleaning the surfaces',
     ],
     correctAnswer: 0,
     explanation:
@@ -2895,9 +2895,9 @@ export const module4Questions: Question[] = [
     id: 191,
     question: 'When replacing a circuit breaker, you should verify:',
     options: [
-      'Matching colour and case size to the existing devices',
-      'The device is from the same wholesaler as before',
-      'The busbar cut-out accepts the new device physically',
+      'Colour, and case size, match the existing devices',
+      'The device is from the same wholesaler, and the same batch',
+      'The busbar cut-out accepts the new device, physically at least',
       'Rating, type, breaking capacity match requirements',
     ],
     correctAnswer: 3,
@@ -3031,9 +3031,9 @@ export const module4Questions: Question[] = [
     question: 'Handover after fault repair should include:',
     options: [
       'Explaining repair made, any limitations, and operating instructions',
-      'Leaving the site without speaking to the customer about the work',
-      'Handing over only the invoice for the work that was carried out',
-      'Removing all records of the work carried out from the customer premises',
+      'Leaving the site quietly, without speaking to the customer',
+      'Handing over the invoice, and nothing else, for the work done',
+      'Removing all records of the work carried out, from the customer premises',
     ],
     correctAnswer: 0,
     explanation:
@@ -3068,10 +3068,10 @@ export const module4Questions: Question[] = [
     question:
       "A 30 mA RCD trips intermittently every Tuesday morning. What is the most likely cause?",
     options: [
-      'A mechanically sticking RCD test button that closes intermittently and operates the device even though no residual current is actually present',
-      'Reversed line and neutral at the consumer unit, forcing the residual current to pass through the RCD sensing coil in the wrong direction',
+      'A mechanically sticking RCD test button (the internal test resistor) closing intermittently and operating the device with no residual current present',
+      'Reversed line and neutral at the consumer unit (a polarity error) forcing the residual current through the RCD sensing coil in the wrong direction',
       'A scheduled time-controlled load (such as a frost stat or boiler) with cumulative leakage current pushing the circuit over the trip threshold',
-      'A main switch rated above the RCD, letting the circuit draw more load current than the sensing core can carry without saturating',
+      'A main switch rated above the RCD (100 A ahead of an 80 A device) letting the circuit draw more load current than the sensing core can carry',
     ],
     correctAnswer: 2,
     explanation:
@@ -3116,10 +3116,10 @@ export const module4Questions: Question[] = [
     question:
       "Under HSE GS38, voltage indicators and test probes used by electricians must:",
     options: [
-      'Have at least 20 mm of exposed metal tip so that readings register reliably, with no CAT rating required on systems at or below 230 V nominal',
+      'Have at least 20 mm of exposed metal tip so that readings register reliably, with no CAT rating required on systems at or below 230/400 V nominal',
       'Have a maximum of 4 mm exposed metal tip, finger guards, fused leads where appropriate, and be CAT III/IV rated for the system voltage',
-      'Be CAT I rated with unfused leads to give the fastest response, and carry a 10 mm exposed metal tip for reliable contact on busbars and terminals',
-      'Have uninsulated probe shafts and no finger guards, so that adjacent conductors can be deliberately bridged when comparing phases on site',
+      'Be CAT I/CAT II rated with unfused leads to give the fastest response, and carry a 10 mm exposed metal tip for reliable contact on busbars and terminals',
+      'Have uninsulated probe shafts and no finger guards, so that line/earth conductors can be deliberately bridged when comparing readings on site',
     ],
     correctAnswer: 1,
     explanation:
@@ -3180,10 +3180,10 @@ export const module4Questions: Question[] = [
     question:
       "The preferred sequence of dead testing per BS 7671 Reg 643 is:",
     options: [
-      'Earth fault loop impedance, prospective fault current, then RCD operation before any continuity or insulation resistance tests',
+      'Earth fault loop impedance, prospective fault current, then RCD operation (all live tests) before any continuity or insulation resistance tests',
       'Continuity of protective conductors, continuity of ring, IR, polarity, earth electrode resistance (where applicable)',
-      'Polarity first, then insulation resistance, then continuity of protective conductors and continuity of the ring circuit last',
-      'RCD trip times, then functional testing, then insulation resistance carried out with the supply still connected to the board',
+      'Polarity first, then insulation resistance, then continuity of protective conductors and continuity of the ring (r1, rn, r2) last',
+      'RCD trip times, then functional testing, then insulation resistance (at 500 V) with the supply still connected to the board',
     ],
     correctAnswer: 1,
     explanation:
@@ -3229,9 +3229,9 @@ export const module4Questions: Question[] = [
       'An AFDD protecting a kitchen circuit trips when the toaster is used, and the indicator shows neither overload nor earth leakage. What should be checked first?',
     options: [
       'Check the toaster for a series arc fault (loose terminal, broken element strand) using IR test on the appliance lead and visual inspection',
-      'Measure the earth fault loop impedance Zs at the kitchen socket and compare it with the maximum permitted value for the device protecting it',
-      'Carry out an RCD trip-time test on the affected circuit and compare the operating time with the manufacturer stated limit for the device',
-      'Fit an RCBO of the next size up so the kitchen circuit stops tripping, then retest loop impedance to confirm compliance with the stated limit',
+      'Measure the earth fault loop impedance (Zs) at the kitchen socket, comparing it with the maximum permitted value in Table 41.3 for the device',
+      'Carry out an RCD trip-time test (at 1× and 5× IΔn) on the affected circuit, comparing the operating time with the manufacturer stated limit',
+      'Fit an RCBO of the next size up (32 A in place of 20 A) so the kitchen circuit stops tripping, then retest loop impedance to confirm compliance',
     ],
     correctAnswer: 0,
     explanation:
@@ -3244,10 +3244,10 @@ export const module4Questions: Question[] = [
     question:
       'What must a phase rotation test on a 400 V three-phase supply confirm?',
     options: [
-      'L3-L2-L1 reverse sequence, so that any connected motor always starts in the safest direction',
-      'L1-L2-L3 (anti-clockwise rotation when viewed from drive end) for correct motor direction',
-      'Identical on all three phases, with no defined rotation order required at the supply terminals',
-      'L1-L3-L2 in order to balance the neutral current more evenly across the three line conductors',
+      'L3-L2-L1 (reverse sequence), so that any connected motor always starts in the safest direction',
+      'L1-L2-L3 sequence (clockwise on a rotation indicator) so connected motors run the intended way',
+      'Identical voltage on all three phases (no defined rotation order is required) at the supply terminals',
+      'L1-L3-L2 (a reversed pair) to balance the neutral current more evenly across the three line conductors',
     ],
     correctAnswer: 1,
     explanation:
@@ -3260,10 +3260,10 @@ export const module4Questions: Question[] = [
     question:
       "When working on fibre-optic cabling, the special precautions you must observe include:",
     options: [
-      'Isolate and prove dead before splicing, since the metallic strength member in the fibre can carry induced mains voltage from adjacent cables',
-      'Apply a 500 V insulation resistance test across the fibre core before terminating, to confirm the glass is not contaminated or cracked internally',
+      'Isolate and prove dead before splicing — the metallic strength member in the fibre carries induced mains voltage from adjacent cables; treat the fibre as a live conductor',
+      'Apply a 500 V insulation resistance test across the fibre core before terminating — a low reading shows the glass is contaminated or cracked; clean the ferrule and retest',
       'Never look into a fibre or coupler — laser radiation can damage the retina; use a fibre detector card or scope; dispose of glass shards safely',
-      'Bond the fibre sheath to the main earthing terminal so that static charge stored in the glass core discharges safely to earth at the board',
+      'Bond the fibre sheath to the main earthing terminal — static charge stored in the glass core then discharges safely to earth; confirm continuity back at the board',
     ],
     correctAnswer: 2,
     explanation:
@@ -3276,9 +3276,9 @@ export const module4Questions: Question[] = [
     question:
       "Electro-static discharge (ESD) precautions when servicing electronic control panels include:",
     options: [
-      'Wearing rubber-soled boots and a synthetic fleece so any charge collects on clothing rather than on the boards',
-      'Applying a 500 V DC insulation resistance test across each board before handling it to prove it is fully discharged',
-      'Holding boards firmly by their edge connectors with bare hands so that any charge drains away through the operator',
+      'Wearing rubber-soled boots and a synthetic fleece, so that any charge collects on clothing rather than on the boards',
+      'Applying a 500 V DC insulation resistance test across each board, before handling it, to prove it is fully discharged',
+      'Holding boards firmly by their edge connectors with bare hands, so that any charge drains away through the operator',
       'Using a wrist strap connected to the panel earth, keeping boards in anti-static bags, working on an ESD-rated mat',
     ],
     correctAnswer: 3,
@@ -3293,8 +3293,8 @@ export const module4Questions: Question[] = [
       'A clamp meter placed around the line, neutral and protective conductors of one circuit together reads 4.8 A. This indicates:',
     options: [
       '4.8 A of unbalance current, indicating earth leakage to investigate',
-      '4.8 A of balanced load current being drawn by the connected appliance',
-      '4.8 A of load current returning through the protective conductor',
+      '4.8 A of balanced load current, drawn by the connected appliance',
+      '4.8 A of load current, returning through the protective conductor',
       '4.8 A of line current, read because the clamp meter itself is faulty',
     ],
     correctAnswer: 0,
@@ -3310,7 +3310,7 @@ export const module4Questions: Question[] = [
     options: [
       'Begin isolating and dismantling the suspect equipment straight away, so that the duty holder downtime is kept as short as possible on the day itself',
       'Conduct a risk assessment, agree the scope of work with the duty holder, gather any prior records and confirm safe access and isolation points',
-      'Carry out a full insulation resistance test on every circuit at the distribution board before speaking to anyone else on first arrival at the premises',
+      'Carry out a full insulation resistance test on every circuit at the distribution board, before speaking to anyone else, on first arrival at the premises',
       'Issue the completion certificate and schedule of test results in advance, before any diagnostic testing or inspection has been carried out at the premises',
     ],
     correctAnswer: 1,
@@ -3324,25 +3324,25 @@ export const module4Questions: Question[] = [
     question:
       'A tripping RCBO is traced back through an earth fault, a damaged cable, and a cable run in a stud wall that a joiner cut through because safe zones were not marked. Which action addresses the underlying cause?',
     options: [
-      'Replace the tripping RCBO with a higher-rated device so that it no longer operates on the fault',
-      'Repair the damaged cable and re-energise, treating the chase cut by the joiner as a one-off event on site',
+      'Replace the tripping RCBO with a higher-rated device (100 mA) so that it no longer operates on the fault',
+      'Repair the damaged cable and re-energise, treating the chase cut by the joiner (one-off damage) as closed',
       'Repair the cable AND mark safe zones (BS 7671 Reg 522.6) AND brief site team to prevent recurrence',
-      'Advise the customer to reset the RCBO each time it trips and keep a log of how often it happens',
+      'Advise the customer to reset the RCBO each time it trips and keep a log (date and time) of how often it happens',
     ],
     correctAnswer: 2,
     explanation:
       "Root cause analysis distinguishes the immediate fix (repair cable) from preventing recurrence (mark safe zones, brief other trades). BS 7671 Reg 522.6.201 specifies cables in safe zones (within 150 mm of corners or obscured behind earthed metal containment). Without addressing the root, the fault returns.",
     section: '4.8',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 219,
     question:
       "An IR camera shows a 75°C hot-spot on one phase of an MK three-phase distribution board, while the other two phases sit at 35°C. The most likely fault is:",
     options: [
-      'Normal operation, because the most heavily loaded phase of a three-phase board always runs hotter, and 75 degrees is still within the temperature rating of the enclosure',
-      'Excessive insulation resistance on that phase dissipating the leakage current as heat, which will settle down once the board has been re-tested under normal load conditions',
-      'A reversed polarity fault on that phase, reversing the direction of current in the busbar and raising its operating temperature above that of the other two phases',
+      'Normal operation, because the most heavily loaded phase of a three-phase board always runs hotter, and a 40°C difference (delta-T) between phases is expected',
+      'Excessive insulation resistance (above the 1 MΩ minimum) on that phase dissipating the leakage current as heat, which will settle down once the board is re-tested under normal load',
+      'A reversed polarity fault on that phase (line and neutral transposed), reversing the direction of current in the busbar and raising its operating temperature above the other two',
       'A loose or high-resistance termination on that phase causing localised heating (P = I²R), often combined with thermal degradation of the busbar or termination plating',
     ],
     correctAnswer: 3,
@@ -3381,17 +3381,17 @@ export const module4Questions: Question[] = [
     explanation:
       "Capacitor banks (PFC, DC link capacitors in VFDs) can hold dangerous charge for minutes to hours after isolation. Always wait the manufacturer's recommended discharge time (often 5-15 minutes), then discharge through a rated bleed resistor or shorting bar before touching terminals. Treat as live until proven dead.",
     section: '4.8',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 222,
     question:
       'A split-load consumer unit has one 30 mA RCD covering all socket circuits. An EV charger is added to the same RCD-protected bank. What problem is most likely?',
     options: [
-      'The additional EV load will overload the busbar of the split-load board and cause the main switch to overheat, so a higher-rated main switch is needed and the remaining ways on that side of the board derated to suit the new load',
-      'The added load will pull the earth fault loop impedance at the charger below the maximum permitted for the device, so the disconnection time can no longer be met and a longer supply cable is needed to raise the Zs back up into range',
+      'The additional EV load will overload the busbar of the split-load board (rated 100 A), causing the main switch/isolator to overheat; a higher-rated main switch is needed and the remaining ways on that side of the board derated to suit the new load',
+      'The added load will pull the earth fault loop impedance (Zs) at the charger below the maximum permitted in Table 41.3; the disconnection time can no longer be met, so a longer line/cpc route is needed to raise the Zs back up into range',
       'Cumulative DC residual current from the EV charger and other loads could exceed the AC-only RCD threshold, plus DC residual currents may blind a Type AC RCD; a Type A or Type B RCD is required (BS 7671 722.531.3.101 / Section 722)',
-      'The EV charger will reverse the polarity of the socket outlets sharing the same RCD bank, because its internal rectifier returns current through the neutral bar, so those sockets must be moved to the other bank of the board straight away',
+      'The EV charger will reverse the polarity of the socket outlets sharing the same RCD bank (line/neutral transposed), because its internal rectifier returns current through the neutral bar; those sockets must be moved to the other bank straight away',
     ],
     correctAnswer: 2,
     explanation:
@@ -3404,9 +3404,9 @@ export const module4Questions: Question[] = [
     question:
       "After completing a fault correction, the relevant certificate to issue under BS 7671 / IET model forms is:",
     options: [
-      'An Electrical Installation Condition Report (EICR) in every case, since any work carried out after a fault is treated as a periodic inspection of the installation as a whole, whatever its extent',
-      'A PAT test certificate covering the affected portable appliance, with the fixed wiring recorded only in the site log book and no BS 7671 model form or certificate issued for the repair itself',
-      'A verbal confirmation to the customer plus an entry on your own job sheet, since certification is only required when a completely new circuit is added to an existing installation at a later date',
+      'An Electrical Installation Condition Report (EICR) in every case, since any work carried out after a fault is treated as a periodic inspection/testing of the installation as a whole, whatever its extent',
+      'A PAT test certificate (in-service inspection/testing record) covering the affected portable appliance, with the fixed wiring recorded only in the site log book and no BS 7671 model form issued',
+      'A verbal confirmation to the customer plus an entry on your own job/time sheet (dated and timed), since certification is only required when a completely new circuit is added to an existing installation at a later date',
       'A Minor Electrical Installation Works Certificate (MEIWC) for additions/alterations to a single circuit, or an Electrical Installation Certificate (EIC) for new circuits/installations',
     ],
     correctAnswer: 3,
@@ -3422,8 +3422,8 @@ export const module4Questions: Question[] = [
     options: [
       'By confirming no trip at half IΔn, a trip at 1x IΔn, then a trip within 40 ms at 5x IΔn',
       'A single alternating current test at IΔn, disconnecting within 300 ms for a non-delay device',
-      'By comparing the measured trip current with the Table 3A values in Appendix 3 for that device Type',
-      'By operating the integral test button twice and recording the faster of the two results',
+      'By comparing the measured trip current with the values in Table 3A, Appendix 3, for that device Type',
+      'By operating the integral test button twice, and recording the faster of the two results',
     ],
     correctAnswer: 1,
     explanation:
@@ -3436,10 +3436,10 @@ export const module4Questions: Question[] = [
     question:
       "When attending a domestic call for 'half the lights are off', your initial logical hypothesis tree should include:",
     options: [
-      'A single insulation resistance fault affecting every light fitting on the circuit equally, which would be confirmed by a 500 V IR test between line and earth',
+      'A single insulation resistance fault affecting every light fitting on the circuit equally, which would be confirmed by an IR test (500 V d.c.) between line/earth and line/neutral',
       'Loss of one phase (in TPN supply), tripped MCB/RCBO, loose connection at a feeder, line conductor break in a junction box or pendant, and accidental switching off',
-      'Reversed polarity at the consumer unit, causing the affected half of the fittings to dim rather than go out, confirmed by a polarity check at the main switch itself',
-      'An oversized protective device passing too much current to the lighting circuit, so the affected fittings drop out once the load on the circuit rises above a set level',
+      'Reversed polarity at the consumer unit (line/neutral transposed), causing the affected half of the fittings to dim rather than go out, confirmed by a check at the main switch',
+      'An oversized protective device (a 16 A MCB/RCBO in place of a 6 A) passing too much current to the lighting circuit, so the affected fittings drop out once the load rises above a set level',
     ],
     correctAnswer: 1,
     explanation:
@@ -3452,10 +3452,10 @@ export const module4Questions: Question[] = [
     question:
       'A voltage indicator used for the test for dead must be proved before and after use against which source?',
     options: [
-      'The circuit being worked on, taking one reading before isolating it and another once the supply has been switched off at the board',
-      'An insulation resistance tester set to 500 V DC, applied to a circuit already confirmed dead by the same voltage indicator',
+      'The circuit being worked on — a reading before isolating it and another once the supply has been switched off (at the board)',
+      'An insulation resistance tester set to 500 V d.c. (the LV test voltage) — its output proves the indicator before and after use',
       'A known live source (proving unit such as a PD440 or a confirmed live circuit) — the proving sequence is prove-test-prove',
-      'The calibration certificate supplied by the manufacturer, checked against the stated in-service date of the test instrument',
+      'The calibration certificate from the manufacturer (with its expiry date) — a valid certificate removes the need to prove the indicator on site',
     ],
     correctAnswer: 2,
     explanation:
@@ -3482,12 +3482,12 @@ export const module4Questions: Question[] = [
   {
     id: 228,
     question:
-      'What is the purpose of the outcome column on the Schedule of Inspections?',
+      'What did Amendment 4:2026 add to the Schedule of Inspections?',
     options: [
       'AFDD presence/justification for each circuit',
-      'The name and address of the cable manufacturer for each circuit',
-      'The retail purchase price of every protective device installed',
-      'The ambient air temperature recorded at the time of each test',
+      'The name/address of the cable manufacturer for each circuit',
+      'The retail/trade price of every protective device installed',
+      'The ambient/ground temperature recorded at the time of each test',
     ],
     correctAnswer: 0,
     explanation:
@@ -3500,26 +3500,26 @@ export const module4Questions: Question[] = [
     question:
       "Customer complains: 'the freezer compressor short-cycles'. Diagnostic tests should include:",
     options: [
-      'Replace the consumer unit and re-test every circuit in the property before looking at the appliance itself, on the basis that short-cycling points to a supply problem every time',
+      'Replace the consumer unit and re-test every circuit in the property before looking at the appliance itself, on the basis that short-cycling points to a supply/wiring problem every time',
       'Verify supply voltage, check start/run capacitor capacitance with multimeter capacitance range, measure motor winding resistances, inspect overload relay and check refrigerant pressure',
-      'Measure the earth fault loop impedance at the freezer socket, compare it with the maximum permitted for the protective device, then re-test the RCD trip time at that socket outlet',
-      'Carry out an AFDD self-test, confirm the polarity of the freezer plug top and check the flex, with no measurements taken on the compressor or its start capacitor at any point on the visit',
+      'Measure the earth fault loop impedance at the freezer socket, compare it with the maximum permitted for the MCB/RCBO fitted, then re-test the RCD trip time at that socket outlet',
+      'Carry out an AFDD self-test, confirm the line/neutral polarity of the plug top and check the flex, with no measurements taken on the compressor or its start capacitor at any point on the visit',
     ],
     correctAnswer: 1,
     explanation:
       "Compressor short-cycling indicates either electrical (failing start capacitor, faulty overload, low supply voltage causing stall) or refrigeration (low refrigerant tripping LP cut-out, dirty condenser). Capacitance test on the start/run capacitor (e.g. with Fluke 117 capacitance range) catches the most common electrical cause.",
     section: '4.8',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 230,
     question:
       "When recording fault diagnosis findings for the customer, IET CoP and good practice require:",
     options: [
-      'A verbal summary given to the customer at the end of the visit, with no written record retained at all, since the invoice already evidences that the work was carried out',
-      'Only the final invoice amount and the total hours worked, with the technical detail deliberately omitted so that the customer is not confused by the measured test values',
+      'A verbal summary given to the customer at the end of the visit (with no written record retained at all) — the invoice already evidences that the work was carried out',
+      'Only the final invoice amount and the total hours worked (labour and materials) — the technical detail is deliberately omitted so that the customer is not confused by the test values',
       'Written report including symptoms found, tests performed, results (with numerical values), root cause, repair carried out, retest results and recommendations — all dated and signed',
-      'A note of the time spent on site and the parts used, without recording the tests, the values measured or the root cause, as these are all held in the test instrument memory',
+      'A note of the time spent on site and the parts used — the tests, the values measured and the root cause need no record (all held in the test instrument memory anyway)',
     ],
     correctAnswer: 2,
     explanation:
@@ -3532,9 +3532,9 @@ export const module4Questions: Question[] = [
     question:
       "A variation order is appropriate when:",
     options: [
-      'The original work has been completed exactly as quoted with no change of scope, and a variation order is then raised to close the job off and confirm the final account with the customer in writing',
-      'The customer has already paid the final invoice and signed the job off, so a variation order is issued afterwards to record any extra items that were fitted along the way for the warranty record',
-      'Finding that a test instrument has gone out of calibration during the work, so a variation order is raised to record the retest that follows and to pass the recalibration cost on as an extra',
+      'The original work has been completed exactly as quoted with no change of scope (no extras, no omissions) — a variation order is then raised to close the job off and confirm the final account',
+      'The customer has already paid the final invoice and signed the job off (the warranty record) — a variation order issued afterwards records any extra items fitted along the way',
+      'Finding that a test instrument has gone out of calibration during the work (past its annual recheck) — a variation order records the retest and passes the recalibration cost on as an extra',
       'During fault diagnosis you discover the agreed scope must change (additional cabling required, asbestos found, hidden defects) — written variation captures cost, time and consent before extra work proceeds',
     ],
     correctAnswer: 3,
@@ -3550,8 +3550,8 @@ export const module4Questions: Question[] = [
     options: [
       'Code C2 (potentially dangerous) on EICR, isolate, plan replacement of affected components, investigate water ingress and moisture source as the root cause',
       'Record it as Code C3 (improvement recommended), leave the board in service and note the damp as an observation for the next periodic inspection',
-      'Wipe the oxide from the busbar, apply petroleum jelly to the affected contacts and re-energise, with no further investigation of the damp',
-      'Treat it as normal, since green oxide on copper is a protective patina that seals the surface and presents no risk to the busbar connections',
+      'Wipe the oxide from the busbar, apply petroleum jelly (a moisture barrier) to the contacts and re-energise, with no further investigation',
+      'Treat it as normal, since green oxide on copper (verdigris) is a protective patina that seals the surface and presents no risk to the busbar connections',
     ],
     correctAnswer: 0,
     explanation:
@@ -3567,7 +3567,7 @@ export const module4Questions: Question[] = [
       "Fails — the prospective fault current must never exceed half the device rating",
       "Passes — installed device's 6 kA breaking capacity exceeds the prospective fault current",
       "Fails — a 32 A type B device always requires a 10 kA breaking capacity minimum",
-      "Cannot be assessed without first measuring the earth fault loop impedance",
+      'Cannot be assessed — the earth fault loop impedance must be measured first',
     ],
     correctAnswer: 1,
     explanation:
@@ -3580,10 +3580,10 @@ export const module4Questions: Question[] = [
     question:
       'Several items of IT equipment fail during a fault investigation on the circuit supplying them. What should be investigated first?',
     options: [
-      'An oversized protective device on the IT equipment circuit letting fault energy through before it disconnects, so the device rating should be reduced',
-      'Excessive insulation resistance between line and neutral at the socket outlet, allowing leakage current to reach the equipment power supply',
+      'An oversized protective device (a 32 A on a 20 A radial) letting fault energy through before it disconnects — reduce the rating to match the circuit',
+      'Excessive insulation resistance (above 1 MΩ) between line and neutral at the socket outlet — the leakage current then reaches the equipment power supply',
       'A common-mode transient (lightning, switching surge) reaching the equipment via mains, data cable or earth — investigate SPDs, data isolation, surge events',
-      'A reversed polarity fault at the IT equipment socket outlet, placing the switched line on the neutral side of the internal fuse',
+      'A reversed polarity fault (transposed conductors) at the IT equipment socket — the switched line then sits on the neutral side of the internal fuse',
     ],
     correctAnswer: 2,
     explanation:
@@ -3596,16 +3596,16 @@ export const module4Questions: Question[] = [
     question:
       "When working in a hazardous area (DSEAR / ATEX zone 1), the special precautions include:",
     options: [
-      'Use any standard test instrument once the circuit is isolated and locked off, since an isolated circuit cannot produce an incendive spark in a zone 1 area at any time',
-      'Wear additional insulating gloves and flame-retardant overalls, but use ordinary non-certified test equipment, as the readings obtained are the same either way in practice',
-      'No special precautions are needed once the supply has been switched off, provided the area has been ventilated and the permit desk has been informed of the work first',
+      'Use any standard (non-certified) test instrument once the circuit is isolated and locked off, since an isolated circuit cannot produce an incendive spark in a zone 1 area at any time',
+      'Wear additional insulating gloves and flame-retardant (FR) overalls, but use ordinary non-certified test equipment, as the readings obtained are the same either way in practice',
+      'No special precautions are needed once the supply has been switched off, provided the area has been ventilated (forced extraction) and the permit desk has been informed first',
       'Use intrinsically safe (Ex i) test equipment, obtain a permit-to-work, gas-test the area, wear anti-static PPE, and only use methods compliant with the area\'s zone classification',
     ],
     correctAnswer: 3,
     explanation:
       "DSEAR 2002 and the EX framework require all equipment used in hazardous areas to be certified for the zone (Zone 0, 1, 2 for gas; 20, 21, 22 for dust). Test instruments must be Ex i intrinsically safe. Permit-to-work and gas-test before any electrical work; never break a circuit live in a flammable atmosphere.",
     section: '4.8',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 236,
@@ -3613,9 +3613,9 @@ export const module4Questions: Question[] = [
       "After repairing a fault that involved chasing brick to bury new cable, the building fabric must be:",
     options: [
       'Reinstated to at least the original condition using suitable mortar/plaster, with cable in safe zones or in earthed metal containment, and any made-good areas redecorated as agreed',
-      'Left open and unfilled so that the buried cable can be inspected at any time in future, with the customer told to keep the area clear and a note added to the certificate',
-      'Filled with any available material such as expanding foam or silicone sealant, since the finish is cosmetic and the cable capping already gives the protection needed',
-      'Left for the customer to make good, as reinstatement of plaster and decoration falls outside electrical work and is normally handled by the main contractor instead',
+      'Left open and unfilled so that the buried cable can be inspected at any time in future, with the customer told to keep the area clear and a note added to the certificate/report',
+      'Filled with any available material such as expanding foam/silicone sealant, since the finish is cosmetic and the cable capping already gives the protection needed',
+      'Left for the customer to make good, as reinstatement of plaster/decoration falls outside electrical work and is normally handled by the main contractor instead',
     ],
     correctAnswer: 0,
     explanation:
@@ -3628,10 +3628,10 @@ export const module4Questions: Question[] = [
     question:
       "A schedule of test results for fault diagnosis should record:",
     options: [
-      'Only a simple pass or fail for the whole installation, with the measured values held on the instrument and quoted to the customer only if a dispute later arises',
+      'Only a simple pass/fail (one line for the whole installation), with the measured values held on the instrument and quoted to the customer only if a dispute later arises',
       'Circuit reference, conductor sizes, R1+R2, R2 (where applicable), IR live-live and live-earth, polarity, Zs, RCD trip times at 1× and 5×, AFDD test, all with limits and pass/fail',
-      'The make, model and serial number of each test instrument used together with its calibration date, since the individual circuit readings belong on the certificate itself',
-      'The date of the visit, the name of the attending electrician and the circuit that was repaired, since the remaining circuits did not form part of the work carried out',
+      'The make, model/type and serial number of each test instrument used (together with its calibration date), since the individual circuit readings belong on the certificate itself',
+      'The date/time of the visit, the name of the attending electrician and the circuit that was repaired (its reference only), since the remaining circuits were not part of the work carried out',
     ],
     correctAnswer: 1,
     explanation:
@@ -3644,10 +3644,10 @@ export const module4Questions: Question[] = [
     question:
       'What should determine the extent of sampling when a periodic inspection cannot cover every point?',
     options: [
-      'A fixed 10% of the circuits on every installation, regardless of the type, age or condition of the installation or the results of any previous inspection',
-      'No sampling at all, since every circuit must be fully tested at every periodic inspection, with the whole installation taken out of service to allow this',
+      'A fixed 10% of the circuits on every installation — the same proportion regardless of the type, age or condition of the installation or the results of any previous inspection',
+      'No sampling at all — every circuit must be fully tested at every periodic inspection, with the whole installation taken out of service to allow this',
       'Risk-based — sample to a level that gives confidence in the conclusions, with sampling agreed with the duty holder, and 100% of accessible parts visually inspected',
-      'Whatever proportion the electrician judges reasonable on the day, with the basis of that choice left off the report so the conclusions are not limited',
+      'Whatever proportion the electrician judges reasonable on the day — the basis of that choice is left off the report so the conclusions are not limited',
     ],
     correctAnswer: 2,
     explanation:
@@ -3660,9 +3660,9 @@ export const module4Questions: Question[] = [
     question:
       'A no-trip loop impedance test measures Zs at low current so that a 30 mA RCD is not operated. How does its accuracy compare with the high-current test?',
     options: [
-      'Significantly more accurate than the high-current test in every case, because no load current is drawn during the measurement',
-      'Identical accuracy to the high-current test, since both methods measure the same loop using the same internal calculation',
-      'So inaccurate that the result may be used only as an indication and never quoted on a certificate for compliance purposes',
+      'Significantly more accurate than the high-current test in every case, because no load current (and so no heating) is drawn during the measurement',
+      'Identical accuracy to the high-current test, since both methods measure the same loop (Ze plus R1+R2) using the same internal calculation',
+      'So inaccurate that the result may be used only as an indication (never entered on a certificate) for compliance purposes',
       'Slightly lower accuracy than the high-current test (factor of 2-3 in resolution) but adequate for verifying compliance with Table 41.3',
     ],
     correctAnswer: 3,
@@ -3677,9 +3677,9 @@ export const module4Questions: Question[] = [
       "An oscilloscope captured on a VFD output shows a high dV/dt waveform with bearing currents on the motor shaft. The mitigation is:",
     options: [
       'Fit a sine-wave or dV/dt filter at the VFD output, install shaft grounding rings, use VFD-rated motor cables (low-capacitance, screened) and bond the cable screen 360° at both ends',
-      'Increase the VFD switching frequency to its maximum, as a faster carrier reduces the rate of rise at the motor terminals and removes the shaft current path entirely',
-      'Remove the motor earth connection at the terminal box so that the bearing currents have no return path back to the drive and can therefore no longer circulate at all',
-      'Replace the VFD with a larger frame rating so that it runs cooler on the same load, which in turn lowers the rate of rise of voltage seen at the motor terminals',
+      'Increase the VFD switching (carrier) frequency to its maximum, as a faster carrier reduces the dV/dt at the motor terminals and removes the shaft current path entirely',
+      'Remove the motor earth connection (the cpc/bonding at the terminal box), so that the bearing currents have no return path back to the drive and can therefore no longer circulate',
+      'Replace the VFD with a larger frame/current rating (next size up) so that it runs cooler on the same load, which in turn lowers the rate of rise of voltage at the motor terminals',
     ],
     correctAnswer: 0,
     explanation:
@@ -3692,10 +3692,10 @@ export const module4Questions: Question[] = [
     question:
       'In an eight-cell lead-acid battery bank, two cells measure 1.8 V while the remaining six measure 2.1 V. What action should be taken?',
     options: [
-      'Leave the weak cells in place, as cells in a series string self-balance over several charge cycles once the bank is returned to continuous float charge at the right voltage',
+      'Leave the weak cells in place (no action needed); cells in a series string self-balance, over several charge cycles, once the bank is returned to continuous float charge',
       'Identify the discharged cells as defective (sulphation or open internal connection), test specific gravity, and replace as a matched set; never mix new and old cells in a series string',
-      'Replace only the two weak cells with new ones of the same type and rating and return the bank to service, recording the cell voltages at the next scheduled service visit',
-      'Increase the charger output voltage until the weak cells rise to 2.1 V, then return the charger to its normal float setting once the whole string has balanced again',
+      'Replace only the two weak cells (same type and rating), then return the bank to service; record the cell voltages again at the next scheduled service visit to the site',
+      'Increase the charger output voltage (an equalising charge), driving the weak cells back up to 2.1 V; then return the charger to its normal float setting once the string has balanced',
     ],
     correctAnswer: 1,
     explanation:
@@ -3724,9 +3724,9 @@ export const module4Questions: Question[] = [
     question:
       "Functional testing after fault correction must verify:",
     options: [
-      'Only that the insulation resistance reading has improved on the previous test, since a satisfactory IR value shows the original fault is cleared and that the protective devices downstream of the repair must therefore still be sound',
-      'That the circuit re-energises without immediately tripping its protective device, because a device that holds in under normal load proves both the repair itself and the correct operation of every RCD, RCBO and interlock',
-      'The appearance of the finished work and that the customer is satisfied with it, as functional testing of protective devices and control sequences is carried out at the next periodic inspection rather than after a repair',
+      'Only that the insulation resistance (line/earth) reading has improved on the previous test, since a satisfactory IR value (above 1 MΩ) shows the original fault is cleared and that the protective devices downstream of the repair must therefore still be sound',
+      'That the circuit re-energises without immediately tripping its protective device, because an MCB/RCBO that holds in under normal load proves both the repair and the correct operation of every RCD, RCBO and interlock (no separate test)',
+      'The appearance of the finished work and that the customer is satisfied with it, as functional testing of protective devices and controls/interlocks is carried out at the next periodic inspection (the EICR) rather than after a repair',
       'All protective devices operate (RCD test, RCBO test, AFDD self-test), correct switching/control sequences, interlocks, emergency stops, automatic devices and that the system performs as intended without re-introducing the original fault',
     ],
     correctAnswer: 3,
@@ -3741,9 +3741,9 @@ export const module4Questions: Question[] = [
       "For safe disposal of waste from a fault repair (broken accessories, off-cuts, packaging), you should:",
     options: [
       'Segregate at source — recyclable cable scrap, WEEE for accessories with electronics, mixed waste, and asbestos suspect material handled separately under CAR 2012 / HSG264',
-      'Place all waste, including electronic accessories, cable off-cuts and packaging, into the general waste skip, as household quantities are exempt from the waste regulations',
-      'Leave the waste on site for the customer to dispose of as they see fit, since the duty of care passes to the occupier once the work has been signed off and paid for',
-      'Burn the cable off-cuts on site to recover the copper for resale and return the remaining accessories to the wholesaler in exchange for a scrap credit',
+      'Place all waste into the general waste skip — electronic accessories, cable off-cuts/packaging alike, as household quantities are exempt from the waste regulations',
+      'Leave the waste on site for the customer to dispose of as they see fit — the duty of care passes to the occupier/client, once the work has been signed off and paid for',
+      'Burn the cable off-cuts on site to recover the copper/aluminium for resale — the remaining accessories go back to the wholesaler, in exchange for a scrap credit',
     ],
     correctAnswer: 0,
     explanation:
@@ -3756,48 +3756,48 @@ export const module4Questions: Question[] = [
     question:
       "A complaint: 'the EV charger sometimes stops mid-charge then restarts'. Diagnostic considerations include:",
     options: [
-      'Simply replacing the charger with a new unit of the same make and rating without any diagnostic investigation, since intermittent stopping is a known firmware behaviour that cannot be measured on site and is always cured by a hardware swap',
+      'Simply replacing the charger with a new unit (same make/model and rating) without any diagnostic investigation, since intermittent stopping is a known firmware behaviour that cannot be measured on site and is always cured by a hardware swap',
       'Check supply voltage stability under load (DNO voltage drop), CT clamp position and orientation if load-shedding is enabled, communications/firmware logs, RCD trip/auto-reset behaviour, and weather/temperature effects on the charger',
-      'Assuming the vehicle battery management system is faulty and advising the customer to have the car checked by the dealer, as the charger only follows the demand signalled by the vehicle and cannot itself interrupt a session',
-      'Increasing the rating of the protective device supplying the charger so the charge is no longer interrupted, then re-testing the loop impedance to confirm the disconnection time for that circuit is still met',
+      'Assuming the vehicle battery management system (BMS) is faulty and advising the customer to have the car checked by the dealer, as the charger only follows the start/stop demand from the vehicle and cannot itself interrupt a session',
+      'Increasing the rating of the protective device supplying the charger (a 40 A MCB/RCBO in place of a 32 A) so the charge is no longer interrupted, then re-testing the loop impedance to confirm the disconnection time is still met',
     ],
     correctAnswer: 1,
     explanation:
       "EV chargers are complex systems with supply, comms, CTs and protective monitoring. A clamp meter at the origin captures voltage stability under EV load; CT misorientation causes incorrect load-shedding; firmware logs reveal communication faults. Many manufacturers provide cloud telemetry (Ohme, Wallbox, EO) to diagnose remotely.",
     section: '4.8',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 246,
     question:
-      'Which earthing arrangement combines the neutral and protective functions in a single conductor within the distributor\'s network only?',
+      'Which earthing arrangement has the neutral-to-earth link made within the consumer\'s installation rather than out in the distributor\'s network?',
     options: [
-      'TT (Terre-Terre) - recognising the use of an independent earth electrode at the installation in place of a distributor earth',
-      'IT (Isole-Terre) - recognising an unearthed or impedance-earthed supply with an independent electrode at the installation',
+      'TT (Terre-Terre) — recognising the use of an independent electrode/mat at the installation in place of a distributor earth',
+      'IT (Isole-Terre) — recognising an unearthed/impedance-earthed supply with an independent electrode at the installation',
       'PNB (Protective Neutral Bonding) — recognising the LV practice of bonding to the combined neutral/earth at the consumer cut-out',
-      'TN-S - recognising separate neutral and protective conductors run all the way from the transformer to the origin',
+      'TN-S (Terre-Neutre-Separe) — recognising separate neutral/protective conductors run from the transformer to the origin',
     ],
     correctAnswer: 2,
     explanation:
-      "A4:2026 introduced PNB (Protective Neutral Bonding) terminology alongside TN-C-S/PME to better describe UK distribution practice where the PEN is bonded to earth at the supply origin. Practical implications include open-PEN risk, requiring approved PEN-fault devices for EV charging supplies in many cases.",
+      "PNB is a TN-C-S variant in which the neutral-earth link sits within the consumer's installation, typically where the consumer has a dedicated transformer or multiple sources. NOTE 3(a) is explicit: where the source earth and the neutral-earth link are installed within the consumer's installation, PME conditions do not apply. A4:2026 adds the PNB figure and its requirements at Reg 312.2.1.1. Open-PEN risk still drives the EV and heat-pump rules on outdoor metalwork.",
     section: '4.8',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 247,
     question:
       "A flickering LED downlight controlled by a remote dimmer is reported. Diagnostic logic should consider:",
     options: [
-      'A reversed polarity fault at the downlight, so the lamp is fed through the switched neutral and flickers whenever the dimmer reduces the conduction angle, confirmed by a polarity check at the ceiling rose and at the switch',
-      'An oversized protective device allowing excess current to reach the downlight, so the driver runs above its rated input and pulses; the remedy is to reduce the MCB rating to match the connected lighting load',
-      'Excessive insulation resistance in the lighting cable supplying the downlight, restricting the current available to the driver so it drops out and restarts, and showing up as a low reading on a 500 V IR test',
+      'A reversed polarity fault at the downlight (line/neutral transposed), so the lamp is fed through the switched neutral and flickers whenever the dimmer reduces the conduction angle, confirmed by a check at the rose',
+      'An oversized protective device (a 16 A MCB/RCBO on a lighting circuit) allowing excess current to reach the downlight, so the driver runs above its rated input and pulses; the remedy is to reduce the MCB rating to match the load',
+      'Excessive insulation resistance in the lighting cable supplying the downlight (measured at 500 V d.c. line/earth), restricting the current available to the driver so it drops out and restarts, showing as a low reading',
       'Compatibility of the LED driver with the dimmer (leading-edge vs trailing-edge, minimum load), neutral connection at the switch (for smart dimmers), driver minimum-load issue, and harmonic/DC supply asymmetry causing 100 Hz flicker',
     ],
     correctAnswer: 3,
     explanation:
       "LED flicker stems from dimmer/driver mismatch (most common), insufficient minimum load on a leading-edge dimmer, lack of neutral at smart dimmers, or supply DC offset. Match dimmer type to driver datasheet (trailing edge usually preferred for LED), and check minimum load. Some installs need a 'min-load' resistor pack.",
     section: '4.8',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 248,
@@ -3805,25 +3805,25 @@ export const module4Questions: Question[] = [
       'An RCBO protecting a kitchen radial trips repeatedly, and black soot is visible inside the device. What action should be taken?',
     options: [
       'Replace the device — internal arcing has occurred and the contact set integrity cannot be guaranteed; investigate cause of severe fault that produced the arcing',
-      'Clean the soot out with contact cleaner, refit the device and return the circuit to service, noting the condition on the schedule of test results',
-      'Leave the device in place, as soot inside an RCBO is a normal by-product of repeated switching under load and does not affect the contact set',
-      'Reset the device and advise the customer that it will settle after a few operating cycles once the contacts have burnished themselves clean',
+      'Clean the soot out with contact cleaner and refit the device — the contact set is serviceable once cleaned; note the condition on the schedule of test results',
+      'Leave the device in place — soot inside an RCBO is a normal by-product of repeated switching under load; the contact set is unaffected by it',
+      'Reset the device — the contacts burnish themselves clean after a few operating cycles; advise the customer that it will settle',
     ],
     correctAnswer: 0,
     explanation:
       "Black carbon deposits inside a protective device indicate internal arcing — likely a high prospective fault current event approaching the device's breaking capacity. Replace the device, log the fault event, and investigate the originating fault to ensure it has been corrected. Many manufacturers void warranty on devices showing arcing.",
     section: '4.8',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 249,
     question:
       "A test result schedule shows IR L-N = 0.2 MΩ on a final circuit. Per BS 7671 Table 64, this is:",
     options: [
-      'A clear pass, since any reading above 0.1 megohms is acceptable on a low voltage final circuit provided the circuit remains in service and in use',
+      'A clear pass — the reading exceeds the Table 64 value for a low voltage final circuit (measured at 500 V d.c.) that remains in service and in use',
       'Fail (minimum 1 MΩ for LV) — investigate insulation degradation, moisture ingress, damaged cables or connected equipment that should have been disconnected',
-      'A pass only where the circuit has 30 mA RCD additional protection, which compensates for the reduced insulation resistance of the wiring in that circuit',
-      'Not relevant, because minimum insulation resistance values apply only to SELV and PELV circuits and never to 230 V final circuits in a dwelling',
+      'A pass only where the circuit has 30 mA RCD additional protection (Reg 411.3.3) — the RCD compensates for the reduced insulation resistance of the wiring in that circuit',
+      'Not relevant — minimum insulation resistance values apply only to SELV and PELV circuits (tested at 250 V), never to 230 V final circuits',
     ],
     correctAnswer: 1,
     explanation:
@@ -3861,7 +3861,7 @@ export const module4Questions: Question[] = [
     explanation:
       'The device must be secured (locked off, key retained, warning notice applied) before the dead test is carried out, so that nobody can re-energise the circuit between the test and the work starting. Proving dead before securing is the attractive wrong answer because the readings feel like the "real" safety step, but an unsecured isolator can be closed the moment your back is turned, making a dead test meaningless.',
     section: '4.4',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 252,
@@ -3932,10 +3932,10 @@ export const module4Questions: Question[] = [
     question:
       'Which symptom is most typical of a high-resistance connection at an accessory terminal?',
     options: [
-      'Immediate operation of the circuit-breaker as soon as the load is used',
+      'Immediate operation of the circuit-breaker, the joint resistance driving the current up',
       'Localised heating and discolouration at the terminal, worse under load',
-      'An insulation resistance reading of zero between the line and earth',
-      'A residual current device tripping the moment the circuit is energised',
+      'An insulation resistance reading of zero to earth, the loose terminal shorting the cpc',
+      'A residual current device tripping on energising, the joint diverting current to earth',
     ],
     correctAnswer: 1,
     explanation:
@@ -3949,9 +3949,9 @@ export const module4Questions: Question[] = [
       'An open circuit is being traced on a long radial with many junction boxes. Which approach locates the break in the fewest tests?',
     options: [
       'Test at the mid point, then halve the remaining suspect length each time',
-      'Test every accessory in order from the board to the far end of the run',
-      'Replace each junction box connector in turn until the circuit works again',
-      'Measure insulation resistance at the board and estimate the break by value',
+      'Test every accessory in order, from the board to the far end of the run',
+      'Replace each junction box connector in turn, until the circuit works again',
+      'Measure insulation resistance at the board, then estimate the break from the value',
     ],
     correctAnswer: 0,
     explanation:
@@ -3973,7 +3973,7 @@ export const module4Questions: Question[] = [
     explanation:
       'A voltage indicator can fail between the first proof and the dead test, and a failed indicator gives exactly the same blank display as a genuinely dead conductor. Proving it afterwards is what turns a blank reading into evidence. Calibration is the plausible wrong answer, but a proving unit only confirms function against a known source; instrument calibration is a separate periodic exercise and cannot be done at the point of work.',
     section: '4.4',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 259,
@@ -4085,7 +4085,7 @@ export const module4Questions: Question[] = [
     explanation:
       'A conventional loop test injects a current through the earth path that a 30 mA device reads as residual current and trips on, so the no-trip range uses a much smaller current pulsed over a longer period. Greater accuracy is the plausible wrong answer, but the opposite is true: the tiny test current makes the reading more susceptible to noise, which is why a high-current test is preferred wherever the RCD can be bypassed.',
     section: '4.3',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 266,
@@ -4094,8 +4094,8 @@ export const module4Questions: Question[] = [
     options: [
       'Switch the breaker off, tape it over and post a warning label on it',
       'Isolate and secure at the main switch, or fit a breaker that will lock',
-      'Remove the breaker and leave the busbar live with a warning notice on',
-      'Switch the breaker off and ask a colleague to watch the board instead',
+      'Remove the breaker, leaving the busbar live with a warning notice on',
+      'Switch the breaker off, and ask a colleague to watch the board instead',
     ],
     correctAnswer: 1,
     explanation:
@@ -4108,7 +4108,7 @@ export const module4Questions: Question[] = [
     question:
       'A damaged section of cable on a socket-outlet circuit has been replaced. Which tests must be carried out before the circuit is returned to service?',
     options: [
-      'Insulation resistance and a functional switching check will be enough',
+      'Insulation resistance, and a functional switching check, will be enough',
       'Earth fault loop impedance alone, as the cable route has not changed',
       'A visual inspection alone, since the repair is a like-for-like change',
       'Continuity, insulation resistance, polarity, Zs and RCD operation',
@@ -4236,16 +4236,16 @@ export const module4Questions: Question[] = [
     question:
       'A reported fault has been repaired, but a second unrelated defect has come to light that cannot be corrected on this visit. What should the electrician do?',
     options: [
-      'Restore the supply and mention the defect at the next site visit',
+      'Restore the supply, and mention the defect at the next site visit',
       'Make the defect safe, report it in writing and agree the action',
-      'Leave the whole installation isolated until the client makes contact',
+      'Leave the whole installation isolated, until the client makes contact',
       'Correct the defect anyway, as any resulting risk falls to the client',
     ],
     correctAnswer: 1,
     explanation:
       'Any danger found must be made safe at once and communicated to the person ordering the work in a form that can be evidenced, then the remedial work agreed. Verbally noting it for next time is the attractive answer because it seems proportionate, but it leaves a known danger live with no record that the duty holder was ever told about it.',
     section: '4.7',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 276,
@@ -4309,7 +4309,7 @@ export const module4Questions: Question[] = [
     explanation:
       'Alteration or repair of an existing circuit that does not involve a new circuit is certified by a Minor Works Certificate, which records the tests carried out on the circuit affected. An Electrical Installation Certificate is the tempting choice because the work was substantial, but that document is reserved for new installations, additions and new circuits.',
     section: '4.5',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 280,
@@ -4341,15 +4341,15 @@ export const module4Questions: Question[] = [
     explanation:
       'The button applies an internal out-of-balance current through a resistor, which exercises the trip mechanism only. Assuming it verifies the sensitivity is the common error: the button does not measure operating time or current, so a device that trips on the button can still fail an instrument test at IΔn, and it tells you nothing at all about the earthing arrangement of the circuit.',
     section: '4.3',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 282,
     question:
       'On a PME supply with a 25 mm² PEN conductor, the main protective bonding to the gas service is found to be 6 mm². How should this be judged?',
     options: [
-      'It is adequate, as 6 mm² is the accepted minimum for gas services',
-      'It is adequate provided its continuity to the earthing terminal is proven',
+      'It is adequate; 6 mm² is the accepted minimum for a gas service',
+      'It is adequate; its continuity to the earthing terminal has been proven',
       'It is undersized; 16 mm² is required wherever PME conditions apply here',
       'It is undersized; 10 mm² is the minimum required by Table 54.8 here',
     ],
@@ -4373,7 +4373,7 @@ export const module4Questions: Question[] = [
     explanation:
       'The dead tests are done first precisely so that a missing cpc, a transposed conductor or damaged insulation is found while the circuit still cannot hurt anybody. Repeatability is a genuine benefit and makes a believable distractor, but it is a side effect; the reason the sequence is ordered this way is safety, not measurement quality.',
     section: '4.2',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 284,
@@ -4428,10 +4428,10 @@ export const module4Questions: Question[] = [
     question:
       'Zs measured at a socket-outlet is 0.85 Ω, while Ze is 0.35 Ω and R1+R2 for that circuit measures 0.22 Ω. What does the discrepancy suggest?',
     options: [
-      'The readings agree once the conductor operating temperature is added',
+      'The readings agree, once the conductor operating temperature is added',
       'There is additional resistance in the earth path, such as a poor joint',
-      'The loop tester has been used on the wrong range for this measurement',
-      'The Ze figure was taken with the main bonding conductors still connected',
+      'The loop tester has been used on the wrong range, giving a high reading',
+      'The Ze figure was taken with the main bonding still connected, raising it',
     ],
     correctAnswer: 1,
     explanation:
@@ -4477,9 +4477,9 @@ export const module4Questions: Question[] = [
       'An entire installation is dead. The main switch is on, and no voltage is present on either side of it. Where should the electrician look next?',
     options: [
       'At each final circuit breaker in turn, working along the busbar',
-      'At the residual current device protecting the socket circuits',
+      'At the residual current device, which protects the socket circuits',
       'At the supply side, meter tails and the distributor cut-out fuse',
-      'At the earthing conductor between the board and the earth block',
+      'At the earthing conductor, between the board and the earth block',
     ],
     correctAnswer: 2,
     explanation:
@@ -4501,7 +4501,7 @@ export const module4Questions: Question[] = [
     explanation:
       'Live working is permitted only where it is unreasonable in all the circumstances for the conductor to be dead, it is reasonable to work live, and suitable precautions such as barriers, GS38 equipment and supervision are provided. Holding a qualification is the tempting answer because competence is one of the conditions, but competence alone never makes live working lawful; the justification test has to be satisfied first.',
     section: '4.4',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 292,
@@ -4572,10 +4572,10 @@ export const module4Questions: Question[] = [
     question:
       'Why can a residual current device not provide protection against an open PEN conductor on a PME supply?',
     options: [
-      'Because the fault current is too small for the device to detect it',
-      'Because the device operates only on faults downstream of its terminals',
+      'Because the fault current is too small; the device cannot detect it',
+      'Because the device sees only downstream faults; the PEN break is downstream',
       'Because no imbalance arises; the danger is a rise in earth potential',
-      'Because the device is bypassed by the main protective bonding conductors',
+      'Because the bonding conductors bypass it; the current avoids the device',
     ],
     correctAnswer: 2,
     explanation:
@@ -4589,9 +4589,9 @@ export const module4Questions: Question[] = [
       'Who should be informed when a dangerous condition is found during fault diagnosis?',
     options: [
       'The person ordering the work, in writing, without delay',
-      'The manufacturer of the equipment that has been affected',
-      'The next electrician who attends the site for maintenance',
-      'The local authority building control department in writing',
+      'The manufacturer of the equipment, in writing, without delay',
+      'The next electrician to attend the site, in writing, at that visit',
+      'The local authority building control department, in writing',
     ],
     correctAnswer: 0,
     explanation:
@@ -4613,7 +4613,7 @@ export const module4Questions: Question[] = [
     explanation:
       'Linking line and cpc at the origin puts both conductors in series, so the reading at the far accessory is R1+R2 directly and can be added to Ze to predict Zs. The wander lead method is a valid continuity check and is therefore a strong distractor, but it measures the cpc alone, so it proves connection without giving the combined figure the loop calculation needs.',
     section: '4.3',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 299,
@@ -4645,7 +4645,7 @@ export const module4Questions: Question[] = [
     explanation:
       'A symptom confined to one point on a circuit must be caused by something unique to that point, so the local terminations and the lamp itself are where to start. Testing the whole circuit for insulation resistance is the thorough-sounding answer, but a fault serious enough to show in that test would affect every outlet fed from the same conductors, not one luminaire on its own.',
     section: '4.6',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 301,
@@ -4701,7 +4701,7 @@ export const module4Questions: Question[] = [
     correctAnswer: 3,
     explanation: 'The circuit conductors are dead, but the board\'s busbar, incoming terminals and every other outgoing device stay live within arm\'s reach, so a slipped tool or probe causes a phase to phase fault at full prospective current. Backfeed is the wrong way round here: the isolated circuit has no source, so it cannot feed the busbar.',
     section: '4.4',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 305,
@@ -4771,7 +4771,7 @@ export const module4Questions: Question[] = [
     correctAnswer: 0,
     explanation: 'The RCD is doing its job, so the installation is not in immediate danger and there is no basis for leaving the tenant without supply. What the tenant cannot do is make an informed decision without knowing the finding, so it goes in writing, to them and to whoever is responsible for the property. Fitting a less sensitive device is the classic wrong repair: it hides the symptom by removing the protection.',
     section: '4.5',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 310,
@@ -4827,7 +4827,7 @@ export const module4Questions: Question[] = [
     correctAnswer: 0,
     explanation: 'The hazard of repeated re-energising is that someone else touches the circuit or its equipment during a live period, so the control is over access and information, not over the switching itself. Working alone is the opposite of a precaution here: it removes the person who would raise the alarm, and lone working on live equipment is what risk assessments are written to prevent.',
     section: '4.4',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 314,
@@ -4841,7 +4841,7 @@ export const module4Questions: Question[] = [
     correctAnswer: 1,
     explanation: 'The no-trip range injects a residual current below the RCD\'s threshold and derives the impedance from it, which is the whole reason the range exists. Testing line to neutral is the classic substitute and it is wrong: it measures a completely different loop that does not include the protective conductor or the return path through earth, so the figure cannot be compared with a maximum Zs at all.',
     section: '4.3',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 315,
@@ -4897,7 +4897,7 @@ export const module4Questions: Question[] = [
     correctAnswer: 1,
     explanation: 'A like-for-like swap needs no re-assessment, but this one is not like for like: the higher current has to be checked against the circuit\'s design current and protective device, and the new fixing centres against the ceiling structure. Finish and delivery are commercial questions the client can decide; only the electrical and mechanical suitability is the electrician\'s to determine.',
     section: '4.7',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 319,
@@ -4973,24 +4973,24 @@ export const module4Questions: Question[] = [
     id: 324,
     question: 'During a repair a length of cable insulation is suspected of containing a hazardous material. What is the correct course of action?',
     options: [
-      'Continue and note the concern on the completion form',
-      'Damp the cable and cut it out using hand tools',
-      'Bag the cable and place it in the general waste',
+      'Continue working, noting the concern on the completion form',
+      'Damp the cable down, then cut it out using hand tools',
+      'Bag the cable, and place it in the general waste',
       'Stop work, contain the area and seek specialist advice',
     ],
     correctAnswer: 3,
     explanation: 'Suspicion is enough to stop: the material is identified by someone competent to do so before any further disturbance, because cutting or damping releases fibres or dust that cannot be recalled. Using hand tools and water is a genuine control for some materials, but it is a control applied by a licensed contractor after identification, not a reason to carry on.',
     section: '4.7',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 325,
     question: 'At which point in the safe isolation procedure is the caution notice applied?',
     options: [
       'After locking off, before testing the circuit for dead',
-      'When the work is finished and the lock is being taken off',
-      'After the circuit has been proved dead at every test point',
-      'Before the circuit-breaker has been switched to the off position',
+      'When the work is finished, as the lock is being taken off',
+      'After proving dead, at every test point on the circuit',
+      'Before switching off, while the circuit-breaker is still on',
     ],
     correctAnswer: 0,
     explanation: 'The notice goes on with the lock, as part of securing the isolation, so that anyone reaching the device while the test for dead is being carried out already knows not to operate it. Applying it after proving dead leaves a window in which the device is unlabelled and someone could switch it back on.',
@@ -5365,15 +5365,15 @@ export const module4Questions: Question[] = [
     id: 352,
     question: 'A borrowed neutral has been confirmed between two RCBO-protected lighting circuits, and both devices trip on reset. In what order should the work proceed?',
     options: [
-      'Separate the neutrals live so as to keep the lighting available',
+      'Separate the neutrals live, so as to keep the lighting available',
       'Replace both RCBOs, then separate the neutrals afterwards',
-      'Reset one RCBO first to find out which of the two circuits holds in',
+      'Reset one RCBO first, to find which of the two circuits holds in',
       'Isolate both circuits, separate the neutrals, then retest each',
     ],
     correctAnswer: 3,
     explanation: 'Each RCBO sees a neutral return that belongs to the other circuit, so both read an imbalance and both trip; the tripping stops only once the neutrals are separated, and both circuits must be dead for that work. Resetting one to see which holds wastes a step and tells you nothing new, since the cross-connection already explains both trips.',
     section: '4.6',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 353,
@@ -5421,9 +5421,9 @@ export const module4Questions: Question[] = [
     id: 356,
     question: 'An intermittent fault has cleared itself by the time the electrician arrives, and every test at the board is satisfactory. What is the most effective next step?',
     options: [
-      'Record the circuit as satisfactory and then close the job down',
-      'Renew the last accessory that was worked on previously',
-      'Replace the circuit\'s protective device as a general precaution',
+      'Record the circuit as satisfactory, then close the job down',
+      'Renew the last accessory worked on, as the likely cause',
+      'Replace the circuit\'s protective device, as a general precaution',
       'Fit monitoring, or apply the stress that provokes the fault',
     ],
     correctAnswer: 3,
@@ -5492,7 +5492,7 @@ export const module4Questions: Question[] = [
     question: 'Standing leakage on a board protected by one 30 mA RCD measures 22 mA with all circuits energised. What does this explain?',
     options: [
       'Unwanted tripping, as it far exceeds the 9 mA guidance',
-      'An earth fault on one circuit requiring immediate repair',
+      'An earth fault on one circuit, requiring immediate repair',
       'A faulty RCD, since 22 mA should not be detectable at all',
       'Nothing at all, since the leakage is below the 30 mA rating',
     ],
@@ -5548,14 +5548,14 @@ export const module4Questions: Question[] = [
     question: 'A dangerous condition is found during fault diagnosis and cannot be corrected on the visit. What is the priority action?',
     options: [
       'Make it safe, warn the person responsible and record it',
-      'Note it in the report and arrange a return visit',
-      'Photograph it and email the client next day',
-      'Isolate the whole installation until it is corrected',
+      'Note it in the report, and arrange a return visit',
+      'Photograph it, and email the client the next day',
+      'Isolate the whole installation, until it is corrected',
     ],
     correctAnswer: 0,
     explanation: 'Danger is removed or made inaccessible first, then the responsible person is told without delay, then it is written down; the sequence matters because a record does not protect anyone who touches it tonight. Isolating the entire installation is disproportionate where the danger can be confined to one circuit, and leaving a household without supply creates hazards of its own.',
     section: '4.5',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 366,
@@ -5653,7 +5653,7 @@ export const module4Questions: Question[] = [
     correctAnswer: 3,
     explanation: 'Every fault is corrected before the supply is restored, because energising with a known defect still in place can convert a repairable condition into a dangerous one. Repairing the line conductor first and energising to check is the worst order available: it restores full voltage to a circuit that still has no protective conductor.',
     section: '4.7',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 373,
@@ -5667,7 +5667,7 @@ export const module4Questions: Question[] = [
     correctAnswer: 0,
     explanation: 'Energising with a fault still present exposes people and equipment to whatever that fault does, and where the outstanding defect is in the protective conductor the exposure is to a live casing with no path to operate the device. Inrush current is a normal service condition, not a consequence of an incomplete repair.',
     section: '4.7',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 374,
@@ -5703,7 +5703,7 @@ export const module4Questions: Question[] = [
     options: [
       'Test at each box in turn, starting from the consumer unit',
       'Test at the far end, then work back one box at a time',
-      'Replace each junction box until the circuit works',
+      'Replace each junction box, until the circuit works again',
       'Test at the middle box, then halve the remaining length',
     ],
     correctAnswer: 3,
@@ -5716,14 +5716,14 @@ export const module4Questions: Question[] = [
     question: 'An electrician records Zs on an RCD-protected circuit by measuring between line and neutral to avoid tripping the device. Why is the recorded value invalid?',
     options: [
       'It measures the line-neutral loop, not the earth fault loop',
-      'It includes the RCD\'s own contact resistance within the reading',
-      'It cannot be taken while that circuit is under its normal load',
-      'It measures at a lower current than the earth fault test does',
+      'It includes the RCD\'s own contact resistance, not just that of the cable',
+      'It cannot be taken under normal load, only with the circuit switched off',
+      'It measures at a lower test current, giving an optimistic figure',
     ],
     correctAnswer: 0,
     explanation: 'The earth fault loop runs through the protective conductor and back through the supply earth, and a line-to-neutral measurement includes neither, so the figure describes a different circuit and cannot be compared with a maximum Zs. The proper way to avoid tripping the device is the instrument\'s no-trip range, which still measures the correct loop.',
     section: '4.3',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 378,
@@ -5737,7 +5737,7 @@ export const module4Questions: Question[] = [
     correctAnswer: 1,
     explanation: 'Linking line to cpc at the origin turns the circuit itself into the return path, so a single measurement at each point gives both the continuity proof and the R1+R2 figure needed for Zs, with no long lead at all. Measuring to bonded metalwork proves only that a parallel path exists, not that this circuit\'s protective conductor is continuous.',
     section: '4.3',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 379,

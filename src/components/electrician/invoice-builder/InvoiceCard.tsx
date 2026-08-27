@@ -1,6 +1,6 @@
 import { Trash2, Check, Pencil, MoreVertical, Download, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { differenceInDays } from 'date-fns';
+import { differenceInDays, format } from 'date-fns';
 import { isInvoiceOverdue, getInvoiceDaysOverdue, getInvoiceOutstanding } from '@/utils/invoice-status';
 import { formatCardAmount, formatCardAge } from '@/lib/format';
 import { PANEL } from '@/components/electrician/shared/surfaces';
@@ -53,6 +53,23 @@ export function InvoiceCard({
 
   const daysOverdue = getInvoiceDaysOverdue(invoice);
 
+  /*
+   * ELE-1613 — has the client actually opened it?
+   *
+   * The useful distinction is NOT "seen" on its own, it is SENT-BUT-NEVER-OPENED
+   * versus OPENED-AND-STILL-NOT-PAID. They call for opposite actions: the first
+   * is usually a wrong address or a spam folder, so chasing harder achieves
+   * nothing; the second means they have read it and are choosing not to pay.
+   * A card that just showed a tick would leave the reader to work that out.
+   *
+   * Only meaningful once an invoice has actually been sent — a draft has
+   * nothing to open, and "not opened" on one would read as a fault.
+   */
+  const isSent = !isDraft;
+  const openedAt = invoice.email_opened_at ? new Date(invoice.email_opened_at) : null;
+  const openCount = invoice.email_open_count || 0;
+  const neverOpened = isSent && !isPaid && !openedAt;
+
   const daysToDue =
     !isPaid && !overdue && invoice.invoice_due_date
       ? differenceInDays(new Date(invoice.invoice_due_date), new Date())
@@ -68,7 +85,13 @@ export function InvoiceCard({
 
   // One cue per card — most urgent first
   const cue = overdue
-    ? { text: `Overdue ${daysOverdue}d — chase it`, cls: 'text-red-400' }
+    ? {
+        // Overdue AND never opened is a delivery problem, not a payment one.
+        text: neverOpened
+          ? `Overdue ${daysOverdue}d — never opened, check the address`
+          : `Overdue ${daysOverdue}d — opened, chase it`,
+        cls: 'text-red-400',
+      }
     : isPartPaid
       ? { text: `${formatCardAmount(outstanding)} still owed`, cls: 'text-amber-400' }
       : daysToDue !== null && daysToDue <= 7 && daysToDue >= 0
@@ -115,6 +138,25 @@ export function InvoiceCard({
           </span>
           {isPartPaid && (
             <span className="text-[10px] font-semibold text-amber-400">Part-paid</span>
+          )}
+          {/*
+            Read receipt. Shown only on sent, unpaid invoices — once it is paid
+            the question is settled and the badge is noise.
+          */}
+          {isSent && !isPaid && (
+            <span
+              className={cn(
+                'text-[10px] font-semibold',
+                openedAt ? 'text-blue-300' : 'text-white/55'
+              )}
+              title={
+                openedAt
+                  ? `First opened ${format(openedAt, 'd MMM yyyy, HH:mm')}${openCount > 1 ? ` · ${openCount} opens` : ''}`
+                  : 'No open recorded for this invoice'
+              }
+            >
+              · {openedAt ? (openCount > 1 ? `Seen ${openCount}×` : 'Seen') : 'Not opened'}
+            </span>
           )}
           {invoice.external_invoice_provider && (
             <span className="text-[10px] font-semibold text-white/45 capitalize">

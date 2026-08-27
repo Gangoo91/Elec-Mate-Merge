@@ -112,8 +112,16 @@ Deno.serve(async (req: Request) => {
       throw new Error('PDFMONKEY_API_KEY environment variable is not set');
     }
 
+    /*
+     * Three accepted shapes, and all three are real callers:
+     *   { payload }  — the page, invoking directly
+     *   { formData } — send-certificate-resend, which posts every generate-*-pdf
+     *                  function `{ formData, reportId, templateId }`. Without
+     *                  this branch the email path would 500 on every send.
+     *   the body itself — kept for symmetry with the cert functions.
+     */
     const body = await req.json();
-    const payload = body?.payload ?? body;
+    const payload = body?.payload ?? body?.formData ?? body;
 
     if (!payload?.board) {
       throw new Error('No board data provided');
@@ -156,6 +164,17 @@ Deno.serve(async (req: Request) => {
      */
     const tempUrl = completedDocument.download_url;
     const authHeader = req.headers.get('Authorization');
+
+    /*
+     * `download_url` is optional on the PDFMonkey document, and a status of
+     * `success` without one is not something to paper over with a cast — there
+     * would be nothing to hand back or persist. Fail loudly instead.
+     */
+    if (!tempUrl) {
+      throw new Error(
+        `PDFMonkey reported success for document ${completedDocument.id} but returned no download_url`
+      );
+    }
 
     const permanentUrl = await Promise.race([
       persistCertPdf({

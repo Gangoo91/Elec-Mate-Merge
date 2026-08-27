@@ -16,10 +16,10 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'What is the primary purpose of a permit to work system in an industrial environment?',
     options: [
-      'To transfer all legal responsibility for safety onto the worker carrying out the task',
+      'To transfer all legal responsibility for safety onto the worker carrying out the task and away from the employer',
       'To provide a formal documented procedure ensuring work is carried out safely on high-risk activities',
-      'To speed up routine maintenance by removing the need for risk assessment',
-      'To record the time taken on a job for billing and productivity purposes',
+      'To speed up routine maintenance by removing the need for a separate risk assessment of the work involved',
+      'To record the time taken on a job so that it can be billed to the client and counted towards productivity targets',
     ],
     correctAnswer: 1,
     explanation:
@@ -71,9 +71,9 @@ export const questionsPart1: StandardMockQuestion[] = [
       'A maintenance technician is asked to work on a 415 V motor starter. The permit to work has been issued but the circuit has not yet been isolated. What should the technician do?',
     options: [
       'Refuse to commence work until safe isolation has been completed and verified',
-      'Ask a colleague to hold a voltage indicator while they work',
-      'Proceed with caution using insulated tools',
-      'Begin work and isolate the circuit when convenient',
+      'Ask a colleague to hold a voltage indicator on the incoming terminals while the work is carried out',
+      'Proceed with caution using insulated tools and an insulated mat under the feet',
+      'Begin work and isolate the circuit at the first convenient break in production',
     ],
     correctAnswer: 0,
     explanation:
@@ -108,10 +108,10 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'According to the hierarchy of risk control, what is the preferred approach to managing an electrical hazard?',
     options: [
-      'Display warning signs and rely on worker experience',
-      'Provide personal protective equipment (PPE) to all workers',
+      'Display warning signs at the point of work, and rely on the experience of the worker',
+      'Provide personal protective equipment (PPE), such as arc flash clothing, to every worker',
       'Eliminate the hazard at source, or substitute with something less hazardous',
-      'Provide training and safe systems of work only',
+      'Provide training, information and written safe systems of work, and nothing more',
     ],
     correctAnswer: 2,
     explanation:
@@ -128,7 +128,7 @@ export const questionsPart1: StandardMockQuestion[] = [
     options: [
       'Category 1 (minimum 4 cal/cm²)',
       'Category 2 (minimum 8 cal/cm²)',
-      'No arc flash PPE is required at 400 V',
+      'No arc flash PPE is required at 400 V (below 1 kV and under 1.2 cal/cm²)',
       'Category 3 (minimum 25 cal/cm²)',
     ],
     correctAnswer: 3,
@@ -200,8 +200,8 @@ export const questionsPart1: StandardMockQuestion[] = [
       "Under Section 2 of the Health and Safety at Work Act 1974, what is the employer's general duty?",
     options: [
       'To provide free personal protective equipment to every employee, visitor and contractor on the site',
-      'To hold insurance covering every employee against any injury arising from their own negligence',
-      'To report every workplace accident and near miss to the Health and Safety Executive within a day',
+      'To hold insurance, in every case, covering employees against injury caused by their own negligence at work',
+      'To report every accident, and every near miss, to the Health and Safety Executive within one working day of the event',
       'To ensure, so far as is reasonably practicable, the health, safety and welfare at work of all employees',
     ],
     correctAnswer: 3,
@@ -218,9 +218,9 @@ export const questionsPart1: StandardMockQuestion[] = [
       'Regulation 4(3) of the Electricity at Work Regulations 1989 requires that every work activity on or near an electrical system shall be carried out in such a manner as not to give rise to what?',
     options: [
       'Danger, so far as is reasonably practicable',
-      'Financial loss to the employer',
-      'Inconvenience to other site users',
-      'Excessive energy consumption',
+      'Financial loss to the employer, or to the client',
+      'Inconvenience to other site users, or to the public',
+      'Excessive energy consumption, or waste of materials',
     ],
     correctAnswer: 0,
     explanation:
@@ -252,8 +252,8 @@ export const questionsPart1: StandardMockQuestion[] = [
     id: 14,
     question: 'Under HSWA 1974, what duty does Section 7 place on employees?',
     options: [
-      'To carry out and record a written risk assessment personally before starting every task, however routine it may be',
-      'To supply their own personal protective equipment and to fund their own safety training courses each year',
+      'To carry out and record a written risk assessment personally before starting every routine task and to keep that assessment on file for inspection',
+      'To supply their own personal protective equipment and to fund their own safety training courses at the start of each year',
       'To take reasonable care for the health and safety of themselves and others who may be affected by their acts or omissions',
       'To report to the Health and Safety Executive directly any breach of the regulations they witness at work',
     ],
@@ -289,9 +289,9 @@ export const questionsPart1: StandardMockQuestion[] = [
       'Under RIDDOR 2013, which of the following electrical incidents must be reported to the HSE?',
     options: [
       'An electrical burn requiring hospital treatment, or any electrical incident causing loss of consciousness',
-      'A momentary shock from a 230 V socket outlet where the worker felt no pain and carried on working',
-      'A blown fuse or a tripped circuit breaker occurring during normal fault clearance on a final circuit',
-      'A minor singe to an insulating glove that needed no first aid and left the wearer uninjured',
+      'A momentary shock from a 230 V socket outlet, where the worker felt no pain and carried on working',
+      'A blown fuse, or a tripped circuit breaker, occurring during normal fault clearance on a final circuit',
+      'A minor singe to an insulating glove, which needed no first aid and left the wearer uninjured',
     ],
     correctAnswer: 0,
     explanation:
@@ -305,12 +305,12 @@ export const questionsPart1: StandardMockQuestion[] = [
   // BS 7671 & Compliance (Questions 17-20)
   {
     id: 17,
-    question: 'What is the legal status of BS 7671:2018+A3:2024 (the IET Wiring Regulations)?',
+    question: 'What is the legal status of BS 7671:2018+A4:2026 (the IET Wiring Regulations)?',
     options: [
-      'It is a statutory instrument made under EAWR 1989, and any departure from its requirements is a criminal offence',
+      'It is a statutory instrument made under EAWR 1989, and any departure from its requirements is a criminal offence punishable by fine',
       'It is a non-statutory British Standard, but is referenced by statutory regulations such as EAWR 1989 as a means of compliance',
       'It is an Approved Code of Practice issued by the HSE, so failure to follow it is evidence of non-compliance',
-      'It is a retained EU directive that ceased to have any effect in United Kingdom law after the transition period',
+      'It is a retained EU directive that ceased to have any effect in United Kingdom law, once the transition period ended',
     ],
     correctAnswer: 1,
     explanation:
@@ -343,7 +343,7 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'Under Regulation 12 of EAWR 1989, what must be ensured about the means of cutting off the supply and isolation of electrical equipment?',
     options: [
-      'The means of isolation shall be a key-operated switch fitted with a residual current device at the origin of every circuit',
+      'The means of isolation shall be a key-operated switch, fitted with a residual current device, at the origin of every circuit',
       'Isolation may rely on the upstream protective device tripping on fault, provided that device is correctly rated for the circuit it protects',
       'A single isolator may serve the whole installation and need not be capable of being secured, provided it is clearly labelled',
       'Suitable means shall be available for cutting off the supply and for isolation, and these must be capable of being secured in the OFF position',
@@ -362,9 +362,9 @@ export const questionsPart1: StandardMockQuestion[] = [
       'A maintenance technician discovers a colleague has received an electric shock and is still in contact with the live source. What is the correct first action?',
     options: [
       'Isolate the electrical supply if it can be done quickly and safely, or use a non-conducting object to separate them from the source',
-      'Take hold of the casualty by their clothing and pull them clear of the live source before calling anyone for assistance',
-      'Call the emergency services and wait for their arrival before attempting any action at the scene of the incident',
-      'Pour water over the point of contact to break the electrical connection before moving the casualty into fresh air',
+      'Take hold of the casualty by their clothing, which is an insulator, and pull them clear of the live source before calling for assistance',
+      'Call the emergency services immediately, and wait for their arrival, before attempting any action at the scene of the incident yourself',
+      'Pour water over the point of contact, breaking the electrical connection, before moving the casualty outside into the fresh air to recover',
     ],
     correctAnswer: 0,
     explanation:
@@ -475,10 +475,10 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'What is the relationship between peak voltage (V_pk) and RMS voltage (V_rms) for a sinusoidal AC waveform?',
     options: [
-      'V_rms = V_pk x root(2), approximately 1.414 x V_pk',
-      'V_rms = V_pk, the two values are always equal',
+      'V_rms = V_pk x root(2), so V_rms/V_pk = 1.414',
+      'V_rms = V_pk, so the ratio V_rms/V_pk is always one (unity)',
       'V_rms = V_pk / root(2), approximately 0.707 x V_pk',
-      'V_rms = V_pk / 2, exactly half the peak value',
+      'V_rms = V_pk / 2, exactly half (50%) of the peak value',
     ],
     correctAnswer: 2,
     explanation:
@@ -495,8 +495,8 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'In a three-phase star-connected system, what is the relationship between line voltage and phase voltage?',
     options: [
-      'V_line = V_phase',
-      'V_line = 3 x V_phase',
+      'V_line = V_phase (both 230 V)',
+      'V_line = 3 x V_phase (690 V)',
       'V_line = V_phase / root(3)',
       'V_line = root(3) x V_phase',
     ],
@@ -530,10 +530,10 @@ export const questionsPart1: StandardMockQuestion[] = [
     id: 29,
     question: "What is the primary function of a transformer's core?",
     options: [
-      'To give mechanical support to the windings and to hold them at the correct spacing from each other',
+      'To give mechanical support to the windings, holding them at the correct spacing from each other',
       'To provide a low-reluctance path for magnetic flux, enabling efficient energy transfer between windings',
-      'To act as a heat sink that dissipates the copper losses generated in the primary and secondary windings',
-      'To form a conducting link between the primary and secondary windings so that power can pass between them',
+      'To act as a heat sink, dissipating the copper losses generated in the primary and secondary windings',
+      'To form a conducting link between the primary and secondary windings, so that power can pass between them',
     ],
     correctAnswer: 1,
     explanation:
@@ -566,9 +566,9 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'A capacitor bank is connected to an industrial installation. What is its primary purpose?',
     options: [
-      'To smooth voltage ripple on the incoming supply so that sensitive electronic control equipment is not disturbed',
+      'To smooth voltage ripple on the incoming supply so that sensitive electronic control equipment is not disturbed by transient dips in voltage',
       'To raise the supply voltage at the far end of long cable runs so that the volt drop stays inside the permitted limit',
-      'To provide short-circuit protection at the main distribution board by limiting the prospective fault current available',
+      'To provide short-circuit protection at the main distribution board by limiting the prospective fault current available to each outgoing way',
       'To improve the power factor by providing leading reactive current to offset the lagging reactive current drawn by inductive loads',
     ],
     correctAnswer: 3,
@@ -638,9 +638,9 @@ export const questionsPart1: StandardMockQuestion[] = [
     id: 35,
     question: 'What is the purpose of earthing (grounding) in an electrical installation?',
     options: [
-      'To carry the normal load current back to the supply transformer in parallel with the neutral conductor',
-      'To reduce the voltage drop along the line conductors so that equipment always receives its full rated voltage',
-      'To improve the power factor of inductive loads by returning reactive current to the supply transformer',
+      'To carry the normal load current back to the supply transformer, in parallel with the neutral conductor of the same final circuit',
+      'To reduce the voltage drop along the line conductors, so that equipment always receives its full rated voltage even at the end of a long run',
+      'To improve the power factor of inductive loads, by returning reactive current to the supply transformer through the earthing conductor',
       'To provide a low-impedance path for fault current, enabling protective devices to operate and disconnect the supply quickly',
     ],
     correctAnswer: 3,
@@ -656,9 +656,9 @@ export const questionsPart1: StandardMockQuestion[] = [
     question: 'In a TN-S earthing system, what provides the earth fault return path?',
     options: [
       'A separate metallic conductor (usually the cable sheath) provided by the distributor throughout the distribution system',
-      'An earth electrode installed at the origin of the installation and connected to the main earthing terminal',
-      'A combined neutral-and-earth (PEN) conductor that is split into separate conductors at the installation origin',
-      'The general mass of earth, reached through the soil surrounding the buried supply cable and the building',
+      'An earth electrode (TT arrangement) installed at the origin and connected directly to the main earthing terminal of the installation',
+      'A combined neutral-and-earth (PEN) conductor that remains combined and is split into separate conductors only at the installation origin',
+      'The general mass of earth reached through the soil (resistance area) surrounding the buried supply cable and the electrode',
     ],
     correctAnswer: 0,
     explanation:
@@ -691,10 +691,10 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'What is the purpose of a residual current device (RCD) in an electrical installation?',
     options: [
-      'To disconnect the supply whenever the load current exceeds the current-carrying capacity of the cable',
-      'To detect a short circuit between the line and neutral conductors and interrupt the resulting fault current',
+      'To disconnect the supply when the load current exceeds the cable\'s rating, as a fuse or thermal overload device does',
+      'To detect a short circuit between the line and neutral conductors, and to interrupt the resulting fault current',
       'To detect an imbalance between line and neutral current, indicating earth leakage, and disconnect the supply',
-      'To limit the prospective fault current available at the origin of the installation to a declared safe value',
+      'To limit the prospective fault current at the origin of the installation, holding it to a safe value',
     ],
     correctAnswer: 2,
     explanation:
@@ -711,7 +711,7 @@ export const questionsPart1: StandardMockQuestion[] = [
     options: [
       'Diversity (allowing for loads not all being used at once)',
       'Cascading (back-up protection from an upstream device)',
-      'Earth fault loop impedance limitation',
+      'Earth fault loop impedance limitation (Zs)',
       'Discrimination (selectivity or coordination)',
     ],
     correctAnswer: 3,

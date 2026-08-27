@@ -49,9 +49,9 @@ export const module4QuestionBank: QuestionBank[] = [
     question:
       'Before starting installation work, what should be checked regarding the materials and equipment?',
     options: [
-      'The colour of the cable insulation and its outer sheath',
-      'The delivery driver\'s paperwork and vehicle registration',
-      'The retail price compared with other suppliers',
+      'Insulation colour, sheath colour, and drum labelling',
+      'The delivery driver\'s name, paperwork, and vehicle registration',
+      'The retail price, the discount given, and the supplier\'s payment terms',
       'Quantity, quality, and compliance with specifications',
     ],
     correctAnswer: 3,
@@ -326,7 +326,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'Long trunking runs require expansion joints or flexible couplings to accommodate thermal expansion and prevent stress damage to the installation.',
     section: '4.4.4',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Thermal Expansion',
   },
   {
@@ -599,9 +599,9 @@ export const module4QuestionBank: QuestionBank[] = [
     question: 'What should be considered when planning cable routes in a building?',
     options: [
       'Accessibility, protection, and safe zones',
-      'Only the shortest possible distance',
-      'The preference of the building occupier alone',
-      'The colour scheme of the finished rooms',
+      'The shortest possible route, and nothing else',
+      'The preference of the building occupier, whatever route that means',
+      'Room colour scheme, carpet finish, and furniture layout',
     ],
     correctAnswer: 0,
     explanation:
@@ -744,9 +744,9 @@ export const module4QuestionBank: QuestionBank[] = [
     id: 45,
     question: 'What is the correct procedure when drilling through walls?',
     options: [
-      'Drill straight through from one side at maximum speed to reduce the dust',
+      'Drill straight through from one side, at maximum speed, to keep the dust down',
       'Check for services, drill pilot hole, and drill from both sides to prevent breakout',
-      'Drill at a shallow angle from one side so that hidden pipes are pushed aside',
+      'Drill at a shallow angle, from one side only, so that hidden pipes are pushed aside',
       'Start with the largest bit, then step down through smaller bits to the finished size',
     ],
     correctAnswer: 1,
@@ -770,7 +770,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'Horizontal chases in solid walls should typically not exceed 1/6 of the wall thickness (vertical chases up to 1/3) to maintain the structural integrity of the wall.',
     section: '4.2.6',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Wall Chasing Limits',
   },
   {
@@ -834,7 +834,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'When working near overhead lines, maintain safe clearance distances and use goal post barriers or similar to prevent accidental contact.',
     section: '4.7.5',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Overhead Line Safety',
   },
 
@@ -842,9 +842,9 @@ export const module4QuestionBank: QuestionBank[] = [
     id: 51,
     question: 'What should be checked before energising a new circuit?',
     options: [
-      'That the client is satisfied with the appearance of every accessory fitted',
-      'That the heaviest cable available has been used throughout every circuit',
-      'That the circuit has been left de-energised for at least 24 hours first',
+      'That the client has seen the work, is satisfied with it, and has signed it off',
+      'That the heaviest cable available, rather than the calculated size, has been used',
+      'That the circuit has stood de-energised for at least 24 hours, letting the insulation settle',
       'All testing complete, connections secure, and isolation removed safely',
     ],
     correctAnswer: 3,
@@ -916,7 +916,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'A permit to work is required for high-risk activities or work in hazardous areas to ensure proper safety controls are in place.',
     section: '4.1.4',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Permit to Work',
   },
   {
@@ -924,9 +924,9 @@ export const module4QuestionBank: QuestionBank[] = [
     question: 'What information should be included on installation drawings?',
     options: [
       'Cable routes, equipment locations, circuit details, and earthing arrangements',
-      'The names and qualifications of every operative allocated to the contract',
-      'The programme dates for each trade and the expected weather conditions',
-      'Supplier part numbers and current unit prices for each item of equipment listed',
+      'The names, trades, and qualifications of every operative on the contract',
+      'The programme dates for each trade, and the weather expected on site',
+      'Supplier part numbers, unit prices, and delivery dates for each item',
     ],
     correctAnswer: 0,
     explanation:
@@ -1028,7 +1028,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'Cable tray runs require expansion joints and flexible supports to accommodate thermal movement and prevent stress damage.',
     section: '4.2.4',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Thermal Movement',
   },
   {
@@ -1093,7 +1093,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'Hydraulic benders are used for large diameter or heavy-wall conduit where manual bending tools would be insufficient.',
     section: '4.3.3',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Hydraulic Benders',
   },
   {
@@ -1117,9 +1117,9 @@ export const module4QuestionBank: QuestionBank[] = [
     question: 'What is the purpose of using a former when bending conduit?',
     options: [
       'To achieve consistent, accurate bends without damage',
-      'To cut the conduit to the required length',
-      'To thread the ends of the conduit before coupling',
-      'To remove burrs from the inside of the cut conduit end',
+      'To cut the conduit cleanly, square to its axis',
+      'To cut a clean, straight thread on the conduit end',
+      'To remove sharp, raised burrs from inside the cut end',
     ],
     correctAnswer: 0,
     explanation:
@@ -1173,7 +1173,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'Fire-rated cable trunking maintains circuit integrity during a fire, ensuring essential services continue to operate for evacuation.',
     section: '4.4.3',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Fire-Rated Systems',
   },
   {
@@ -1228,9 +1228,9 @@ export const module4QuestionBank: QuestionBank[] = [
     id: 75,
     question: 'What is the correct method for connecting cables to terminals?',
     options: [
-      'Leave the conductor slightly loose to allow movement',
-      'Wrap the conductor in tape before inserting it',
-      'Solder the conductor before inserting it into a screw terminal',
+      'Leave the conductor slightly loose, allowing for thermal movement',
+      'Wrap the conductor in tape, then insert it into the terminal',
+      'Solder the conductor solid, then insert it into a screw terminal',
       'Ensure clean, tight connections with proper contact area',
     ],
     correctAnswer: 3,
@@ -1397,7 +1397,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'Earth fault loop impedance testing verifies that protective devices will operate quickly enough under earth fault conditions.',
     section: '4.6.5',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Earth Fault Loop Testing',
   },
   {
@@ -1452,10 +1452,10 @@ export const module4QuestionBank: QuestionBank[] = [
     id: 89,
     question: 'What is the three-point contact rule for ladder use?',
     options: [
-      'Three operatives must be present on site, one footing the ladder and two working above',
+      'Three operatives must be present (one footing the ladder and two working above)',
       'Maintain three points of contact (two hands and one foot or two feet and one hand)',
-      'The ladder must be secured at three separate points: the top, the bottom and a mid-stile',
-      'The ladder must be formally inspected at three-monthly intervals and then tagged for use',
+      'The ladder must be secured at three points (the top, the bottom and a mid-stile)',
+      'The ladder must be formally inspected at three-monthly intervals (then tagged for use)',
     ],
     correctAnswer: 1,
     explanation:
@@ -1485,8 +1485,8 @@ export const module4QuestionBank: QuestionBank[] = [
     question:
       'What information should be included in a risk assessment for electrical installation work?',
     options: [
-      'A full list of the hand tools to be used on the site',
-      'The retail cost of all the materials required for the contract',
+      'Hand tools, power tools, and access equipment to be used on site',
+      'Material cost, plant hire, and the labour allowance for the contract',
       'The names of the client, the supplier and the main contractor',
       'Hazards, risks, control measures, and responsible persons',
     ],
@@ -1533,10 +1533,10 @@ export const module4QuestionBank: QuestionBank[] = [
     id: 94,
     question: 'What is the purpose of keeping a site diary during installation work?',
     options: [
-      'List the personal expenses claimed by each operative on the site',
-      'Replace the formal risk assessment and the site method statement',
+      'List the expenses, mileage, and overtime claimed by each operative',
+      'Replace the risk assessment, the method statement, and the permit to work',
       'Record progress, issues, and decisions for future reference',
-      'Record the supplier prices of the materials delivered',
+      'Record the supplier prices, discounts, and delivery dates for materials',
     ],
     correctAnswer: 2,
     explanation:
@@ -1549,9 +1549,9 @@ export const module4QuestionBank: QuestionBank[] = [
     id: 95,
     question: 'What should be considered when planning work sequences?',
     options: [
-      'Only the preferences of the most senior operative',
-      'The cheapest order of work regardless of practicality',
-      'Completing the most visible work first for the client\'s benefit',
+      'The preference of the most senior operative, whatever the programme says',
+      'The cheapest order of work, whether or not it is practical',
+      'The most visible work first, so the client sees progress early',
       'Safety, efficiency, and coordination with other trades',
     ],
     correctAnswer: 3,
@@ -1646,10 +1646,10 @@ export const module4QuestionBank: QuestionBank[] = [
     id: 101,
     question: 'What happens if conduit is bent with too small a radius?',
     options: [
-      'The conduit loses earth continuity and must be re-bonded',
+      'The conduit loses earth continuity, so it must be re-bonded at the bend',
       'The conduit may kink or collapse, restricting cable installation',
-      'The current-carrying capacity of the enclosed cables increases',
-      'The conduit becomes easier to thread but harder to cut squarely',
+      'The enclosed cables gain capacity, as the tighter bend improves heat transfer',
+      'The conduit becomes easier to thread, though harder to cut squarely',
     ],
     correctAnswer: 1,
     explanation:
@@ -1678,9 +1678,9 @@ export const module4QuestionBank: QuestionBank[] = [
     id: 103,
     question: 'What is the advantage of using a bending machine over manual bending?',
     options: [
-      'It removes the need to follow minimum bend radius',
-      'It allows a smaller conduit size to be used',
-      'It earths the conduit automatically at each bend',
+      'It removes the need to follow a minimum bend radius, whatever the size',
+      'It allows a smaller conduit size, since the bends come out tighter',
+      'It earths the conduit at each bend, through the machine\'s former',
       'Provides consistent, accurate bends with less physical effort',
     ],
     correctAnswer: 3,
@@ -1719,7 +1719,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'When making multiple bends, consider the sequence and cumulative effects on cable pulling capability and installation difficulty.',
     section: '4.3.5',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Multiple Bends',
   },
   {
@@ -1751,7 +1751,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'Chemical anchors or expansion bolts provide the strongest connection to masonry for heavy-duty applications.',
     section: '4.4.2',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Heavy-Duty Fixings',
   },
   {
@@ -1806,8 +1806,8 @@ export const module4QuestionBank: QuestionBank[] = [
     id: 111,
     question: 'What is the correct procedure for stripping multicore cables?',
     options: [
-      'Strip all of the cores together in a single cut with a knife',
-      'Remove the outer sheath only and leave the cores covered',
+      'Strip all of the cores together, in a single cut, using a knife',
+      'Remove the outer sheath only, leaving the cores covered',
       'Strip the individual cores first, then the outer sheath',
       'Strip outer sheath first, then individual cores to required lengths',
     ],
@@ -1887,9 +1887,9 @@ export const module4QuestionBank: QuestionBank[] = [
     question: 'What should be checked during visual inspection of an installation?',
     options: [
       'Connections, support, protection, and compliance with regulations',
-      'Only the appearance of the front plates and accessories',
-      'The retail value of the equipment that has been installed',
-      'The supply voltage at the incoming terminals of the board',
+      'Front plate appearance, accessory finish, and colour match only',
+      'Equipment retail value, cable value, and the total spend on site',
+      'Supply voltage, frequency, and phase rotation at the incoming terminals',
     ],
     correctAnswer: 0,
     explanation:
@@ -1934,9 +1934,9 @@ export const module4QuestionBank: QuestionBank[] = [
     id: 119,
     question: 'What should be done if test results are unsatisfactory?',
     options: [
-      'Energise the circuit and monitor it in service',
-      'Record the result and issue the certificate anyway',
-      'Repeat the test until a passing reading is obtained',
+      'Energise the circuit, then monitor it in service',
+      'Record the result, and issue the certificate',
+      'Retest, average the readings, and record the best',
       'Investigate, rectify faults, and retest',
     ],
     correctAnswer: 3,
@@ -1975,7 +1975,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'Confined space work requires appropriate PPE including breathing apparatus if atmospheric hazards are present.',
     section: '4.7.1',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Confined Space PPE',
   },
   {
@@ -2110,10 +2110,10 @@ export const module4QuestionBank: QuestionBank[] = [
     id: 130,
     question: 'What should be considered when planning temporary electrical supplies?',
     options: [
-      'Only the lowest installation cost',
-      'The appearance of the temporary cabling',
+      'Lowest installation cost, shortest cable runs, and least labour',
+      'Cable appearance, colour, and how tidy the runs look',
       'Safety, capacity, and protection requirements',
-      'The colour of the temporary distribution units',
+      'Distribution unit colour, make, and enclosure style',
     ],
     correctAnswer: 2,
     explanation:
@@ -2135,7 +2135,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'Water levels provide accurate level reference over long distances and around obstacles where spirit levels cannot be used.',
     section: '4.2.2',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Water Levels',
   },
   {
@@ -2223,10 +2223,10 @@ export const module4QuestionBank: QuestionBank[] = [
     question:
       'When bending conduit for a 90-degree change of direction, what should be considered?',
     options: [
-      'The colour-coding of the conduit and the size of the saddles',
+      'Conduit colour-coding, saddle size, and box lid finish',
       'Bend radius, conduit length, and cable pulling requirements',
-      'The cost per metre of the conduit and the labour rate allowed',
-      'The make of the bending machine and the size of its former',
+      'Cost per metre, labour rate, and the margin allowed in the tender',
+      'Machine make, former size, and the age of the bending tool',
     ],
     correctAnswer: 1,
     explanation:
@@ -2296,7 +2296,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'Spring-loaded supports accommodate thermal movement and vibration in cable tray installations, preventing stress damage.',
     section: '4.4.1',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Spring Supports',
   },
   {
@@ -2328,7 +2328,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'Fire barriers prevent fire spread through cable routes, maintaining compartmentation and allowing safe evacuation.',
     section: '4.4.3',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Fire Barriers',
   },
   {
@@ -2384,9 +2384,9 @@ export const module4QuestionBank: QuestionBank[] = [
     id: 147,
     question: 'When is a reusable lever connector particularly useful in a UK installation?',
     options: [
-      'For terminating steel-wire armour where a gland cannot be fitted',
-      'For bonding cable armour to the main earthing terminal at the board',
-      'For high-current busbar connections inside a distribution board',
+      'For terminating steel-wire armour, where a gland cannot be fitted',
+      'For bonding cable armour to the main earthing terminal, at the intake position',
+      'For high-current busbar connections, inside a distribution board',
       'For quick, tool-free joints where conductors may later need disconnecting',
     ],
     correctAnswer: 3,
@@ -2425,7 +2425,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'High-current cables require adequate terminal size and consideration of heat dissipation to prevent overheating.',
     section: '4.5.4',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'High-Current Termination',
   },
   {
@@ -2448,9 +2448,9 @@ export const module4QuestionBank: QuestionBank[] = [
     id: 151,
     question: 'What should be included in the visual inspection checklist?',
     options: [
-      'Purchase order references and the retail cost of every accessory fitted',
-      'Delivery dates and batch numbers for every reel of cable brought to site',
-      'The names and CSCS card numbers of every operative on the site',
+      'Purchase order references, invoice numbers, and the cost of every accessory',
+      'Delivery dates, batch numbers, and drum lengths for every reel of cable',
+      'Operative names, trades, and CSCS card numbers',
       'Connections, supports, protection, labelling, and general workmanship',
     ],
     correctAnswer: 3,
@@ -2496,10 +2496,10 @@ export const module4QuestionBank: QuestionBank[] = [
     id: 154,
     question: 'What information should be recorded during testing?',
     options: [
-      'The overall pass or fail result together with the date of every site visit',
+      'The overall pass or fail result, together with the date of every site visit',
       'The names, trades and signatures of every operative present on site that day',
       'Test values, instruments used, environmental conditions, and observations',
-      'The purchase cost and serial numbers of every test instrument carried on site',
+      'Instrument purchase cost, age, and serial number',
     ],
     correctAnswer: 2,
     explanation:
@@ -2569,7 +2569,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'MEWPs require trained operators and thorough equipment inspection before use to ensure safe operation.',
     section: '4.7.3',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'MEWP Safety',
   },
   {
@@ -2593,9 +2593,9 @@ export const module4QuestionBank: QuestionBank[] = [
     question: 'What should be done with hazardous waste materials?',
     options: [
       'Identify, segregate, and dispose of according to hazardous waste regulations',
-      'Place it in the general site skip together with all the other construction waste',
-      'Bury it on site well away from any building or watercourse and backfill',
-      'Store it in the site container until the contract reaches practical completion',
+      'Place it in the general site skip, together with all the other construction waste',
+      'Bury it on site, well away from any building or watercourse, and backfill',
+      'Store it in the site container, and leave it for the demolition contractor',
     ],
     correctAnswer: 0,
     explanation:
@@ -2672,10 +2672,10 @@ export const module4QuestionBank: QuestionBank[] = [
     id: 165,
     question: 'What should be considered when coordinating with other trades?',
     options: [
-      'The electrical installation programme and no other work on site',
+      'The electrical programme, and nothing else happening on site',
       'Work sequences, shared resources, and safety interactions',
-      'The material costs and discounts carried by the other trades',
-      'The qualifications and card grades held by each other trade',
+      'Material costs, discounts, and margins carried by the other trades',
+      'Qualifications, card grades, and pay rates held by each other trade',
     ],
     correctAnswer: 1,
     explanation:
@@ -2713,7 +2713,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'Theodolites provide precise angular measurements essential for complex layouts and long-distance accurate positioning.',
     section: '4.2.2',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Theodolite Use',
   },
   {
@@ -2793,7 +2793,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'Large diameter conduit requires hydraulic benders or specialised forming equipment to achieve proper bends without damage.',
     section: '4.3.3',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Large Diameter Bending',
   },
   {
@@ -2825,16 +2825,16 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'Compound bends require careful planning of the sequence and interaction of multiple bend angles to achieve the desired result.',
     section: '4.3.5',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Compound Bends',
   },
   {
     id: 175,
     question: 'What should be checked after completing conduit bending operations?',
     options: [
-      'The colour of the conduit and the quality of the paint finish',
-      'The market price of the conduit and of the saddles used on site',
-      'The make of the bending tool and the size of the former used',
+      'Conduit colour, paint finish, and general appearance',
+      'Conduit price, saddle price, and the waste allowance',
+      'Bending tool make, former size, and the machine\'s serial number',
       'Internal diameter, alignment, and cable pulling capability',
     ],
     correctAnswer: 3,
@@ -2905,7 +2905,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'Areas subject to vibration require flexible connections and vibration-resistant supports to prevent fatigue failures.',
     section: '4.4.4',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Vibration Considerations',
   },
   {
@@ -2913,9 +2913,9 @@ export const module4QuestionBank: QuestionBank[] = [
     question: 'What is the purpose of using cable management systems?',
     options: [
       'To organise, support, and protect cables systematically',
-      'To remove the need to apply grouping factors to the cables',
-      'To remove the need for circuit identification labels',
-      'To reduce the cost of the cables and of the labour required',
+      'To remove the need for grouping factors, whatever the number of circuits',
+      'To remove the need for circuit labels, since the routes are obvious',
+      'To reduce cable cost, labour cost, and the time spent clipping',
     ],
     correctAnswer: 0,
     explanation:
@@ -2928,10 +2928,10 @@ export const module4QuestionBank: QuestionBank[] = [
     id: 181,
     question: 'What is the correct procedure for preparing stranded conductors for termination?',
     options: [
-      'Solder all the strands solid before inserting them into the terminal',
+      'Solder all the strands solid, then insert them into the terminal',
       'Strip insulation, twist strands, and consider using ferrules',
-      'Cut away half of the strands so the conductor fits the terminal',
-      'Leave the insulation in place and pierce it with the terminal screw',
+      'Cut away half of the strands, so the conductor fits the terminal',
+      'Leave the insulation in place, and pierce it with the terminal screw',
     ],
     correctAnswer: 1,
     explanation:
@@ -2985,7 +2985,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'Hazardous areas require certified equipment and specific installation procedures to prevent ignition of flammable atmospheres.',
     section: '4.5.4',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Hazardous Area Termination',
   },
   {
@@ -3008,10 +3008,10 @@ export const module4QuestionBank: QuestionBank[] = [
     id: 186,
     question: 'What should be verified during the initial visual inspection?',
     options: [
-      'The purchase cost of every item of installed equipment against the tender',
-      'The earth fault loop impedance measured at every point of use in the building',
+      'The purchase cost of every installed item, checked against the tender',
+      'The earth fault loop impedance, measured at every point of use',
       'Compliance with drawings, workmanship quality, and safety requirements',
-      'The insulation resistance of every final circuit measured at the consumer unit',
+      'The insulation resistance of every final circuit, measured at the consumer unit',
     ],
     correctAnswer: 2,
     explanation:
@@ -3120,10 +3120,10 @@ export const module4QuestionBank: QuestionBank[] = [
     id: 193,
     question: 'What should be considered when selecting access equipment for work at height?',
     options: [
-      'The hire cost of the equipment and the date it can be delivered to site',
+      'Hire cost, delivery date, and the length of the hire period',
       'Task requirements, duration, weather conditions, and user competence',
-      'The colour of the equipment and how easily it can be stored in the van',
-      'The brand of the equipment and the length of the warranty offered with it',
+      'Equipment colour, van storage space, and how heavy it is to lift',
+      'Equipment brand, warranty length, and the dealer\'s after-sales cover',
     ],
     correctAnswer: 1,
     explanation:
@@ -3152,9 +3152,9 @@ export const module4QuestionBank: QuestionBank[] = [
     id: 195,
     question: 'What should be done with contaminated PPE?',
     options: [
-      'Continue using it until the current job has been finished',
-      'Share it with the other operatives working on the same site',
-      'Store it alongside the clean PPE in the same site store cupboard',
+      'Continue using it, at least until the current job is finished',
+      'Share it with the other operatives, so that nothing goes to waste',
+      'Store it alongside the clean PPE, in the same site cupboard',
       'Clean, inspect, or dispose of according to contamination type',
     ],
     correctAnswer: 3,
@@ -3234,9 +3234,9 @@ export const module4QuestionBank: QuestionBank[] = [
     question: 'What should be considered when planning material handling on site?',
     options: [
       'Manual handling risks, storage requirements, and access routes',
-      'The retail cost of the materials and the discount from the supplier',
-      'The colour-coding of the cables and the labels on the drums',
-      'The brand of the materials and the length of the warranty offered',
+      'Retail cost, supplier discount, and payment terms',
+      'Cable colour-coding, drum labels, and reel sizes',
+      'Material brand, warranty length, and packaging quality',
     ],
     correctAnswer: 0,
     explanation:
@@ -3266,16 +3266,16 @@ export const module4QuestionBank: QuestionBank[] = [
     id: 202,
     question: 'When setting out over a large site using a coordinate grid, what should be considered?',
     options: [
-      'The colour of the marking spray and the size of the timber setting-out pegs used',
-      'The cost of the materials installed and the labour rate allowed in the tender',
+      'Marking spray colour, peg size, and the string line used',
+      'Material cost, labour rate, and the margin allowed in the tender',
       'Accuracy requirements, satellite availability, and local coordinate systems',
-      'The make of the GPS receiver and the running time of its rechargeable battery pack',
+      'Receiver make, battery running time, and the carrying case supplied',
     ],
     correctAnswer: 2,
     explanation:
       'GPS use requires consideration of accuracy requirements, satellite availability, and local coordinate systems for precise positioning.',
     section: '4.2.2',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'GPS Setting Out',
   },
   {
@@ -3403,7 +3403,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'Future cable additions require consideration of additional capacity and pulling requirements when designing conduit bends.',
     section: '4.3.1',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Future Capacity',
   },
   {
@@ -3419,7 +3419,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'Anti-vibration mounts prevent vibration transmission from equipment and reduce noise levels in the installation.',
     section: '4.4.1',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Anti-Vibration Mounts',
   },
   {
@@ -3451,7 +3451,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'Fire-stopping materials prevent fire spread through cable penetrations, maintaining building fire compartmentation.',
     section: '4.4.3',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Fire Stopping',
   },
   {
@@ -3467,7 +3467,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'Chemical exposure areas require materials with appropriate chemical resistance and additional protection measures.',
     section: '4.4.4',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Chemical Resistance',
   },
   {
@@ -3499,7 +3499,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'Aluminium conductors require appropriate jointing compounds and connection methods to prevent oxidation and corrosion and to ensure reliable connections.',
     section: '4.5.1',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Aluminium Connections',
   },
   {
@@ -3547,7 +3547,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'Explosive atmospheres require ATEX or IECEx certification for equipment and installation methods to prevent ignition.',
     section: '4.5.4',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Explosive Atmosphere Certification',
   },
   {
@@ -3555,25 +3555,25 @@ export const module4QuestionBank: QuestionBank[] = [
     question: 'What does an IP rating of IPX9 indicate about an enclosure?',
     options: [
       'Dust-tight and protected against high-pressure, high-temperature wash-down',
-      'Limited dust protection and protection against splashing water',
-      'No dust protection and protection against vertical drips only',
-      'Dust-tight and protected against temporary immersion only',
+      'Limited dust protection, with protection against splashing water only',
+      'No dust protection, with protection against vertical drips only',
+      'Dust-tight, with protection against temporary immersion only',
     ],
     correctAnswer: 0,
     explanation:
       'IP69K indicates dust-tight protection and resistance to high-pressure, high-temperature wash-down procedures.',
     section: '4.5.5',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'IP69K Rating',
   },
   {
     id: 221,
     question: 'What should be documented during the visual inspection process?',
     options: [
-      'The cost of the installed equipment',
+      'The cost of the cable, accessories, and equipment installed',
       'All observations, defects, and compliance issues',
-      'The names of the material suppliers',
-      'The hours worked by each operative',
+      'Supplier names, addresses, and account numbers',
+      'Hours worked, overtime claimed, and travel time by each operative',
     ],
     correctAnswer: 1,
     explanation:
@@ -3707,7 +3707,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'Rescue equipment enables rapid rescue of workers in emergency situations, reducing the consequences of accidents at height.',
     section: '4.7.3',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Rescue Equipment',
   },
   {
@@ -3794,9 +3794,9 @@ export const module4QuestionBank: QuestionBank[] = [
     id: 235,
     question: 'What should be considered when planning work in occupied buildings?',
     options: [
-      'The speed of completing the work and the labour cost',
-      'The appearance of the finished work and its cost',
-      'The cost of the materials and the supplier\'s terms',
+      'Speed of completion, labour cost, and the programme float available',
+      'Appearance of the finished work, its cost, and the paint colour',
+      'Material cost, supplier terms, and the discount available',
       'Occupant safety, noise levels, and access disruption',
     ],
     correctAnswer: 3,
@@ -3835,23 +3835,23 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'Total stations combine distance and angle measurement capabilities for highly precise positioning in complex layouts.',
     section: '4.2.2',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Total Station Advantages',
   },
   {
     id: 238,
     question: 'What should be done when marking out positions on heritage or listed buildings?',
     options: [
-      'Use permanent marker paint so the marks stay visible during the work',
-      'Cut the marks lightly into the surface with a bolster and chisel',
+      'Use permanent marker paint, so the marks stay visible during the work',
+      'Cut the marks lightly into the surface, using a bolster and chisel',
       'Use non-damaging, removable marking methods and seek conservation advice',
-      'Avoid marking out altogether and set the positions out by eye',
+      'Avoid marking out altogether, and set the positions out by eye',
     ],
     correctAnswer: 2,
     explanation:
       'Heritage buildings require non-damaging, removable marking methods and conservation advice to protect historical features.',
     section: '4.2.2',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Heritage Building Marking',
   },
   {
@@ -3867,7 +3867,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'Electromagnetic interference areas require consideration of shielding requirements and separation from interference sources.',
     section: '4.2.4',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'EMI Considerations',
   },
   {
@@ -3883,17 +3883,17 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'Coordinate systems ensure accurate positioning in large installations and facilitate future modifications and maintenance.',
     section: '4.2.2',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Coordinate Systems',
   },
   {
     id: 241,
     question: 'What environmental factors can affect conduit bending quality?',
     options: [
-      'The colour of the conduit and the type of saddle used',
+      'Conduit colour, saddle type, and box lid finish',
       'Temperature, humidity, and material storage conditions',
-      'The cost of the conduit per metre and the labour rate',
-      'The make of the bending machine and its former size',
+      'Cost per metre, labour rate, and the tender margin',
+      'Machine make, former size, and the tool\'s service history',
     ],
     correctAnswer: 1,
     explanation:
@@ -3915,7 +3915,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'Seismic areas require flexible connections and accommodation for building movement during earthquakes.',
     section: '4.3.5',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Seismic Considerations',
   },
   {
@@ -3931,7 +3931,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'Conduit expansion fittings accommodate thermal expansion in long conduit runs, preventing stress damage.',
     section: '4.3.5',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Expansion Fittings',
   },
   {
@@ -3947,17 +3947,17 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'Corrosive environments require corrosion-resistant materials and protective coatings to ensure long-term reliability.',
     section: '4.3.1',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Corrosive Environment Bending',
   },
   {
     id: 245,
     question: 'What should be verified after completing complex conduit bending operations?',
     options: [
-      'The colour-coding of the conduit and the labelling at each end',
+      'Colour-coding, end labelling, and the finish of the paintwork',
       'Dimensional accuracy, internal clearance, and cable pulling capability',
-      'The cost of the conduit used and the waste generated on site',
-      'The make of the bending machine and the size of its formers',
+      'Conduit cost, waste generated, and the skip charges on site',
+      'Machine make, former sizes, and the hire period booked',
     ],
     correctAnswer: 1,
     explanation:
@@ -3979,7 +3979,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'Seismic bracing prevents damage to electrical installations during earthquakes, maintaining system integrity and safety.',
     section: '4.4.1',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Seismic Bracing',
   },
   {
@@ -3995,7 +3995,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'High-vibration environments require vibration-resistant fasteners with thread-locking compounds to prevent loosening.',
     section: '4.4.2',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Vibration-Resistant Fixings',
   },
   {
@@ -4011,7 +4011,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'Low-smoke, fire-performance cables in air-handling (plenum) spaces meet fire safety requirements by producing less smoke and fewer toxic gases when exposed to fire, protecting escape routes.',
     section: '4.4.3',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Plenum-Rated Cables',
   },
   {
@@ -4027,7 +4027,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'Flood-prone areas require waterproof equipment and elevated installation heights to prevent damage and maintain safety.',
     section: '4.4.4',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Flood Considerations',
   },
   {
@@ -4055,9 +4055,9 @@ export const module4QuestionBank: QuestionBank[] = [
     question:
       'Under BS 7671:2018+A4:2026, what is the status of AFDDs for AC final circuits supplying socket-outlets rated up to 32 A in dwellings?',
     options: [
-      'Prohibited on all socket-outlet circuits in dwellings',
-      'Mandatory on every final circuit regardless of building type',
-      'Required only where the supply is a TT earthing system',
+      'Prohibited on socket-outlet circuits in dwellings, because of nuisance tripping',
+      'Mandatory on every final circuit, whatever the type of building',
+      'Required only where the supply is a TT earthing system, whatever the premises',
       'Recommended, becoming a requirement in higher-risk residential buildings',
     ],
     correctAnswer: 3,
@@ -4089,10 +4089,10 @@ export const module4QuestionBank: QuestionBank[] = [
     question:
       'Regulation 522.8.5 in BS 7671:2018+A4:2026 requires cables to be supported so they are not exposed to undue mechanical strain. Which additional consideration does this regulation specifically include?',
     options: [
-      'Electromagnetic interference between adjacent circuits sharing a route',
+      'Electromagnetic interference between adjacent circuits, where they share a route',
       'Mechanical strain from the supported weight of the cable, including meter tails',
-      'The earth fault loop impedance measured at the far end of the cable',
-      'The ambient temperature correction factor applied to the cable rating',
+      'The earth fault loop impedance, measured at the far end of the run',
+      'The ambient temperature correction factor, applied to the tabulated rating',
     ],
     correctAnswer: 1,
     explanation:
@@ -4123,9 +4123,9 @@ export const module4QuestionBank: QuestionBank[] = [
     question:
       'Which voltage indicator standard should the device used for proving dead during safe isolation comply with?',
     options: [
-      'BS EN 60898',
-      'BS 1363',
-      'BS 88',
+      'BS EN 60898 (circuit-breakers)',
+      'BS 1363 (13 A plugs and socket-outlets)',
+      'BS 88 (low-voltage fuses)',
       'GS38 (HSE Guidance Note)',
     ],
     correctAnswer: 3,
@@ -4141,9 +4141,9 @@ export const module4QuestionBank: QuestionBank[] = [
       'During safe isolation, why must the voltage indicator be re-proved on a known live source after testing the circuit for dead?',
     options: [
       'To confirm the indicator was still working when it showed the circuit dead, ruling out a false-safe reading',
-      'To verify that the protective device has tripped and that it cannot be reset by another person working on site',
-      'To check that the polarity of the supply is correct before the isolator is locked off and labelled',
-      'To measure the prospective fault current at the point of work before any live conductors are exposed',
+      'To verify that the protective device has tripped, and that nobody else on site can reset it',
+      'To check that the polarity of the supply is correct, before the isolator is locked off and labelled',
+      'To measure the prospective fault current at the point of work, before any live conductors are exposed',
     ],
     correctAnswer: 0,
     explanation:
@@ -4259,9 +4259,9 @@ export const module4QuestionBank: QuestionBank[] = [
     question:
       'What test method does Regulation 643.2.2 of BS 7671:2018+A4:2026 set out for verifying the continuity of a ring final circuit?',
     options: [
-      'A single insulation resistance test between line and neutral taken at the board with the whole circuit isolated and locked off',
-      'A live earth fault loop impedance reading taken at one socket and compared with the tabulated maximum Zs for that device',
-      'A polarity check at each socket with the circuit energised, confirming that the line is at the right-hand terminal',
+      'A single insulation resistance test between line/neutral at the board (min 1.0 MΩ at 500 V DC), with the circuit isolated and locked off',
+      'A live line/earth fault loop impedance reading taken at one socket, compared with the tabulated maximum Zs (1.37 Ω for a 32 A Type B device)',
+      'A polarity check at each socket with the circuit energised, confirming the line/neutral pair (brown and blue) is not reversed',
       'A three-step end-to-end measurement of r1, rn and r2, then cross-connection, with readings at each socket about (r1 + rn)/4',
     ],
     correctAnswer: 3,
@@ -4370,7 +4370,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'Per BS 7671:2018+A4:2026, effectiveness of a general non-delay RCD is verified where the device disconnects within 300 ms when tested at rated residual operating current (IΔn) using an AC test. The previous 5 × IΔn / Table 3A timings have been superseded.',
     section: '4.6.4',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'RCD Trip Time',
   },
   {
@@ -4387,7 +4387,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'A Type S (selective) RCD has an intentional time delay so it can discriminate with downstream non-delay RCDs. Per the product standard BS EN 61008-1, at rated residual operating current it has a minimum non-actuating (delay) time of 130 ms and a maximum break time of 500 ms, giving an acceptable band of 130–500 ms.',
     section: '4.6.4',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Type S RCD',
   },
   {
@@ -4413,9 +4413,9 @@ export const module4QuestionBank: QuestionBank[] = [
       'Which of the following correctly describes a functional test under Regulation 643.10?',
     options: [
       'Verifying that switchgear, controls and interlocks operate correctly when energised',
-      'Measuring the insulation resistance of every final circuit at 500 V DC with the supply off',
-      'Confirming the earth fault loop impedance at the origin of the installation is low enough',
-      'Recording the prospective fault current measured at every distribution board on site',
+      'Measuring the insulation resistance of every final circuit at 500 V DC, with the supply off',
+      'Confirming that the earth fault loop impedance at the origin, Ze, is low enough',
+      'Recording the prospective fault current, measured at every distribution board on site',
     ],
     correctAnswer: 0,
     explanation:
@@ -4446,10 +4446,10 @@ export const module4QuestionBank: QuestionBank[] = [
     question:
       'Following the dead tests, which live tests are required before issuing the Electrical Installation Certificate?',
     options: [
-      'Insulation resistance, continuity of protective conductors and polarity, carried out with the supply dead',
-      'Ring final circuit continuity and insulation resistance at 500 V DC on each of the final circuits',
+      'Insulation resistance, continuity of protective conductors and polarity (all dead tests), with the supply isolated',
+      'Ring final circuit continuity, and insulation resistance (500 V DC), on each of the final circuits',
       'Earth fault loop impedance (Ze and Zs), prospective fault current, RCD operation, functional tests',
-      'Continuity of protective conductors and of the main protective bonding to each incoming service',
+      'Continuity of protective conductors and of the main protective bonding to each service (gas, water)',
     ],
     correctAnswer: 2,
     explanation:
@@ -4472,7 +4472,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'Table 41.3 of BS 7671:2018+A4:2026 gives a maximum Zs of 1.37 Ω for a 32 A Type B circuit-breaker. The previously published 1.44 Ω value (under earlier amendments) has been superseded; always work to the current A4 value.',
     section: '4.6.6',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Table 41.3 Zs',
   },
   {
@@ -4514,10 +4514,10 @@ export const module4QuestionBank: QuestionBank[] = [
     question:
       'After installing the cpc and main bonding, which test is performed first as part of initial verification?',
     options: [
-      'Insulation resistance between all live conductors and earth at 500 V DC',
-      'Earth fault loop impedance at the origin and at the end of every circuit',
+      'Insulation resistance between all live conductors and earth, at 500 V DC',
+      'Earth fault loop impedance, measured at the origin and at the end of every circuit',
       'Continuity of protective conductors, including main and supplementary bonding',
-      'Polarity of every socket-outlet and lighting switch on the completed installation',
+      'Polarity at every socket-outlet, switch, and lighting point in the installation',
     ],
     correctAnswer: 2,
     explanation:
@@ -4551,13 +4551,13 @@ export const module4QuestionBank: QuestionBank[] = [
       'About 50 N/mm² of conductor cross-section (≈ 5 kg/mm²)',
       'About 5 N/mm² of conductor cross-section (≈ 0.5 kg/mm²)',
       'About 500 N/mm² of conductor cross-section (≈ 50 kg/mm²)',
-      'About 50 N/mm² of the overall cable diameter',
+      'About 50 N/mm² of the overall cable diameter (≈ 5 kg/mm²)',
     ],
     correctAnswer: 0,
     explanation:
       'The IET Electrical Installation Design Guide recommends a maximum pulling tension of approximately 50 N/mm² (≈ 5 kg/mm²) of conductor cross-sectional area for copper cables pulled with a stocking grip. Excessive tension stretches the conductor and damages insulation.',
     section: '4.4.4',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Pulling Tension',
   },
   {
@@ -4591,7 +4591,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'Regulation 522.8.5 (escape route cable retention, A4:2026) requires that wiring systems on escape routes are supported so that they will not be liable to premature collapse in a fire. In practice this means using metallic clips, saddles, cleats or supports rather than relying on plastic cable clips, ties or trunking that would soften and release the cable.',
     section: '4.4.1',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Escape Route Retention',
   },
   {
@@ -4601,14 +4601,14 @@ export const module4QuestionBank: QuestionBank[] = [
     options: [
       'HSG47 — Avoiding danger from underground services',
       'HSG150 — Health and safety in construction',
-      'INDG236 - Maintaining portable electrical equipment',
+      'INDG236 — Maintaining portable electrical equipment',
       'HSG107 — Maintaining portable electric equipment',
     ],
     correctAnswer: 3,
     explanation:
       'HSG107 "Maintaining portable electric equipment" — used together with the IET Code of Practice for In-service Inspection and Testing of Electrical Equipment (5th edition) — is the appropriate HSE guidance for higher-risk environments such as construction sites. INDG236 is the lighter-touch leaflet aimed at low-risk office settings.',
     section: '4.7.3',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'HSG107 vs INDG236',
   },
   {
@@ -4617,9 +4617,9 @@ export const module4QuestionBank: QuestionBank[] = [
       'When selecting cable sizes from drawings (LO 4.1), which factor must be considered alongside the design current Ib?',
     options: [
       'Rating factors for ambient temperature, grouping and thermal insulation, so that Iz ≥ In ≥ Ib',
-      'The colour-coding scheme used for the conductors and the labelling applied at each termination',
+      'The colour-coding scheme used for the conductors, and the labelling applied at each termination',
       'Only the length of the cable run from the distribution board, since volt drop governs the size',
-      'The cost per metre of the chosen cable and the labour rate allowed for pulling it into the conduit',
+      'The cost per metre of the chosen cable, and the labour rate allowed for pulling it into the conduit',
     ],
     correctAnswer: 0,
     explanation:
@@ -4667,9 +4667,9 @@ export const module4QuestionBank: QuestionBank[] = [
     question:
       'A maintenance-free connection (e.g. a crimped or compression joint complying with the relevant standard) may be installed in an inaccessible position only if which of the following applies?',
     options: [
-      'It is wrapped in self-amalgamating tape and its exact position is recorded on the certificate so that it can be found again later',
-      'It is recorded on the Schedule of Test Results together with the depth and the position of the joint in the cable run',
-      'It is positioned within 600 mm of the consumer unit so that it can be found again without first lifting the floorboards',
+      'It is wrapped in self-amalgamating tape, and its position recorded on the certificate (Regulation 526.1), so that it can be found again later',
+      'It is recorded on the Schedule of Test Results (Regulation 643.2.1), together with the depth and position of the joint in the cable run',
+      'It is positioned within 600 mm of the consumer unit (Regulation 526.9.3), so that it can be found again without lifting the floorboards',
       'It is made in accordance with Regulation 526.3 (e.g. a compression, brazed or welded joint, or part of compliant equipment)',
     ],
     correctAnswer: 3,
@@ -4685,9 +4685,9 @@ export const module4QuestionBank: QuestionBank[] = [
       'When stripping the insulation from a single-core 2.5 mm² conductor for termination at a 13 A socket-outlet, which is the most important quality criterion?',
     options: [
       'Removing only the insulation needed so no bare conductor shows outside the terminal, with no strands nicked or broken',
-      'Stripping back as much insulation as possible so that the terminal screw has the longest possible grip on the conductor',
-      'Leaving a short length of bare conductor visible outside the terminal so that the connection can be inspected later on',
-      'Twisting the stripped conductor together with the core of the adjacent cable before inserting both into the same terminal',
+      'Stripping back as much insulation as possible, so that the terminal screw has the longest possible grip',
+      'Leaving a short length of bare conductor outside the terminal, so that the connection can be inspected later',
+      'Twisting the stripped conductor together with the core of the adjacent cable, then inserting both into one terminal',
     ],
     correctAnswer: 0,
     explanation:
@@ -4701,10 +4701,10 @@ export const module4QuestionBank: QuestionBank[] = [
     question:
       'Why must the line, neutral and cpc terminations at a 13 A socket-outlet be tightened to the manufacturer\'s specified torque?',
     options: [
-      'To make the terminal screws easier to release during future maintenance without damaging the accessory or its faceplate',
+      'To make the terminal screws easier to release during future maintenance, without damaging the accessory or its faceplate',
       'To ensure low-resistance connections that will not loosen and overheat, without over-tightening that shears strands',
-      'To increase the current-carrying capacity of the conductor by compressing all of its strands tightly in the terminal',
-      'To compensate for the use of a conductor one size smaller than the size that the design calculation required',
+      'To increase the current-carrying capacity of the conductor, by compressing all of its strands tightly in the terminal',
+      'To compensate for a conductor one size smaller, where the design calculation called for a larger one',
     ],
     correctAnswer: 1,
     explanation:
@@ -4753,9 +4753,9 @@ export const module4QuestionBank: QuestionBank[] = [
       'Why does the OSG conduit factor table reduce the allowable fill as the run length and number of bends increase?',
     options: [
       'Because friction and the risk of cable jamming rise with length and bends, so a lower fill keeps pulling tensions safe',
-      'Because a longer run carries more current and the cables then need extra space in which to dissipate the heat generated',
+      'Because a longer run carries more current, so the cables then need extra space in which to shed the heat generated',
       'Because a longer run needs a conduit with a thicker wall for strength, leaving less space inside for the cables to be drawn in',
-      'Because the regulations cap the length of any conduit run and the fill factor is what enforces that stated maximum length',
+      'Because the regulations cap the length of any conduit run, and the fill factor is what enforces that maximum',
     ],
     correctAnswer: 0,
     explanation:
@@ -4786,10 +4786,10 @@ export const module4QuestionBank: QuestionBank[] = [
     question:
       'When testing functionality of an RCBO that has both overcurrent and residual-current protection, which two checks should be performed?',
     options: [
-      'Measure the insulation resistance and the earth fault loop impedance of that circuit only',
-      'Press the integral test button only and record the result as a pass on the schedule',
+      'Measure the insulation resistance and the earth fault loop impedance of that circuit only (Reg 643.2.1)',
+      'Press the integral test button only and record the result as a pass on the schedule (Reg 643.6)',
       'Operate the integral test button and verify trip time with an RCD tester (Reg 643.8)',
-      'Confirm the polarity and the prospective fault current at the outgoing terminals of the device',
+      'Confirm the polarity and the prospective fault current at the outgoing terminals of the device (Reg 643.3)',
     ],
     correctAnswer: 2,
     explanation:
@@ -4804,7 +4804,7 @@ export const module4QuestionBank: QuestionBank[] = [
       'When recording test results on the Schedule of Test Results, which of the following must be included for each circuit?',
     options: [
       'The overall pass or fail result for the installation, together with the date and the certificate number',
-      'The insulation resistance reading for each circuit and the test voltage that was used for the measurement',
+      'The insulation resistance reading for each circuit, and the test voltage that was used for the measurement',
       'The names, addresses and signatures of the persons responsible for the design, construction and testing of the works',
       'Circuit reference, conductor sizes, device details, continuity, IR, polarity, Zs and RCD time where applicable',
     ],
@@ -4837,10 +4837,10 @@ export const module4QuestionBank: QuestionBank[] = [
     question:
       'What is a proving unit used for during safe isolation?',
     options: [
-      'Measure the earth fault loop impedance at the point of work before the circuit has been isolated',
+      'Measure the earth fault loop impedance at the point of work, before the circuit has been isolated',
       'Verify a voltage indicator is working before and after testing for dead, without using a live source',
-      'Confirm that the circuit-breaker has tripped correctly under simulated earth fault conditions at the board',
-      'Measure the insulation resistance of the isolated circuit at 500 V DC before any work is started on it',
+      'Confirm that the circuit-breaker has tripped correctly, under simulated earth fault conditions at the board',
+      'Measure the insulation resistance of the isolated circuit at 500 V DC, before any work is started on it',
     ],
     correctAnswer: 1,
     explanation:
@@ -4854,16 +4854,16 @@ export const module4QuestionBank: QuestionBank[] = [
     question:
       'What is the recommended approach when working on an installation where multiple circuits could be live in the same enclosure (e.g. a distribution board)?',
     options: [
-      'Isolate only the circuit being worked on and leave the remaining ways live, since they sit behind the board cover',
-      'Work live throughout using insulated tools and a rubber mat, so that none of the other circuits are disrupted for the occupier',
+      'Isolate only the circuit being worked on and leave the remaining ways live, since they sit behind the board cover (EAWR Reg 7)',
+      'Work live throughout using insulated tools and a rubber mat, so that the occupier\'s other circuits are not disrupted (EAWR Reg 4(4))',
       'Isolate the whole board where practicable, lock off circuits within reach, and barrier off remaining live parts (EAWR Reg 14)',
-      'Rely on the RCD to disconnect quickly enough to give protection while working on the live conductors in the board',
+      'Rely on the RCD to disconnect quickly enough to give protection, while working on the live conductors in the board (EAWR Reg 13)',
     ],
     correctAnswer: 2,
     explanation:
       'Where possible the entire board should be isolated. If only part can be isolated, every other circuit within reach should be locked off or live parts must be barriered/insulated to prevent inadvertent contact. Working live is permitted only where strict criteria of Electricity at Work Regulation 14 are met (unreasonable to work dead, reasonable to work live, suitable precautions).',
     section: '4.7.4',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'EAWR Reg 14',
   },
   {
@@ -4873,7 +4873,7 @@ export const module4QuestionBank: QuestionBank[] = [
     options: [
       'Issuing safety glasses and gloves to any members of the public who need to pass through or work near the area, and briefing them on the work',
       'Relying on a verbal warning given to all of the occupants at the start of each day, which is recorded in the site diary by the supervisor',
-      'Completing the work as quickly as possible so that the period during which the public are exposed to the hazard is kept to an absolute minimum',
+      'Completing the work as quickly as possible, so that the period during which the public are exposed to the hazard is kept to an absolute minimum',
       'Segregating the work area with barriers and signage, scheduling disruptive tasks out of hours, and using 110 V or RCD-protected tools',
     ],
     correctAnswer: 3,
@@ -4889,9 +4889,9 @@ export const module4QuestionBank: QuestionBank[] = [
       'After completing the dead and live tests on a new installation, which of the following must be issued before the installation is put into service under BS 7671:2018+A4:2026?',
     options: [
       'An EIC signed for design, construction and inspection/testing, with the Schedules of Inspections and Test Results',
-      'A Minor Electrical Installation Works Certificate covering the whole of the installation and all of its final circuits',
-      'An Electrical Installation Condition Report describing all of the new work and any observations made by the tester',
-      'A written confirmation from the person who carried out the testing that all readings were within the limits',
+      'A Minor Electrical Installation Works Certificate, covering the whole installation and all of its final/distribution circuits',
+      'An Electrical Installation Condition Report, describing all of the new work and any C1/C2 observations made by the tester',
+      'A written confirmation from the person who carried out the dead/live testing, stating that all readings were within limits',
     ],
     correctAnswer: 0,
     explanation:
@@ -4907,7 +4907,7 @@ export const module4QuestionBank: QuestionBank[] = [
     options: [
       'Within 150 mm of the top of the partition, or vertically in line with the switch',
       'Within 300 mm of the top of the partition, or diagonally between the two accessories',
-      'Within 50 mm of the finished surface at any point across the partition face',
+      'Within 50 mm of the finished surface, at any point across the partition face',
       'Within 150 mm of the floor, provided the run is kept clear of any noggins',
     ],
     correctAnswer: 0,
@@ -4922,10 +4922,10 @@ export const module4QuestionBank: QuestionBank[] = [
     question:
       'A socket-outlet is fixed on one face of a 90 mm thick stud partition. What does BS 7671 say about the prescribed zone on the opposite face?',
     options: [
-      'It does not carry through; the far face has no zone formed by that socket',
+      'It does not carry through; on the far face, no zone is formed by that socket',
       'It extends to the reverse side, because the partition is 100 mm thick or less',
-      'It extends to the reverse side only where the partition contains metallic parts',
-      'It forms a separate 150 mm zone measured from the floor on the far face',
+      'It extends to the reverse side only where the partition contains metallic parts, such as steel studs',
+      'It forms a separate zone on the far face, measured 150 mm up from the floor',
     ],
     correctAnswer: 1,
     explanation:
@@ -4942,7 +4942,7 @@ export const module4QuestionBank: QuestionBank[] = [
       'Nothing further, as installation within a prescribed zone is enough on its own',
       'Additional protection by a 30 mA RCD, or compliance with Regulation 522.6.204',
       'Plastic capping over the cable, which removes the need for any RCD protection',
-      'A warning notice at the consumer unit stating the depth of the buried cable',
+      'A warning notice at the consumer unit, stating the depth of the buried cable',
     ],
     correctAnswer: 1,
     explanation:
@@ -4956,10 +4956,10 @@ export const module4QuestionBank: QuestionBank[] = [
     question:
       'A cable is concealed inside a metal-framed stud partition. What does Table 52.1 require in this situation?',
     options: [
-      'That the cable is run only horizontally so that it stays well clear of the metal studs',
-      'That the cable is double-insulated and clipped away from every metal member of the frame',
+      'That the cable is run only horizontally, so that it stays well clear of the metal studs',
+      'That the cable is double-insulated, and clipped away from every metal member of the frame',
       'That additional protection by a 30 mA RCD is given, or 522.6.204 is complied with',
-      'That the cable is enclosed in plastic capping along the whole length of its concealed run',
+      'That the cable is enclosed in plastic capping, along the whole length of its concealed run',
     ],
     correctAnswer: 2,
     explanation:
@@ -4975,8 +4975,8 @@ export const module4QuestionBank: QuestionBank[] = [
     options: [
       'At least 50 mm from the top and bottom of the joist, or the cable protected',
       'At least 150 mm from the top of the joist, with no limit needed at the bottom',
-      'As close to the top of the joist as possible so that the cable can be inspected',
-      'At any height provided the cable is clipped to the side of each joist',
+      'As close to the top of the joist as possible, so that the cable can be inspected',
+      'At any height, provided the cable is clipped to the side of each joist',
     ],
     correctAnswer: 0,
     explanation:
@@ -5078,7 +5078,7 @@ export const module4QuestionBank: QuestionBank[] = [
       'Internal sealing to the fire resistance of the wall, as well as external sealing',
       'External sealing only, since the trunking itself is made of steel throughout',
       'Internal sealing only, because the outside of the wall is made good in plaster',
-      'A fire damper fitted inside the trunking on each side of the wall it passes through',
+      'A fire damper fitted inside the trunking, on each side of the wall it passes through',
     ],
     correctAnswer: 0,
     explanation:
@@ -5118,7 +5118,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'The exemption from internal sealing applies to a non-flame propagating system with a maximum internal cross-sectional area of 710 mm² that satisfies the BS EN 60529 test for IP33, subject to the further conditions in 527.2.3. Above 710 mm² the internal void is large enough to carry fire, so internal sealing is required whatever the material.',
     section: '4.4.2',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Fire Sealing',
   },
   {
@@ -5178,9 +5178,9 @@ export const module4QuestionBank: QuestionBank[] = [
       'A lighting circuit is to be run through a loft that will later be topped up with mineral wool. What does Regulation 523.9 require?',
     options: [
       'Fixing the cable, wherever practicable, so it will not be covered by insulation',
-      'Fixing the cable directly to the ceiling plasterboard beneath the layer of insulation',
-      'Fixing the cable within the thermal insulation and then derating it by a factor of two',
-      'Fixing the cable to the sides of the joists and then doubling its cross-sectional area',
+      'Fixing the cable to the ceiling plasterboard, beneath the layer of insulation',
+      'Fixing the cable within the thermal insulation, then derating it by a factor of two',
+      'Fixing the cable to the sides of the joists, then doubling its cross-sectional area',
     ],
     correctAnswer: 0,
     explanation:
@@ -5212,9 +5212,9 @@ export const module4QuestionBank: QuestionBank[] = [
       'Under what condition may a steel conduit system serve as the circuit protective conductor?',
     options: [
       'Where it meets the continuity, cross-sectional area and connection requirements',
-      'Where every circuit that it contains is also protected by a 30 mA RCD at the origin',
-      'Where a separate copper conductor is also drawn in and left disconnected',
-      'Where the conduit has been painted to prevent corrosion at each of its joints',
+      'Where every circuit that it contains is protected by a 30 mA RCD, fitted at the origin',
+      'Where a separate copper conductor is also drawn in, and left disconnected at both ends',
+      'Where the conduit has been painted at each of its joints, to prevent corrosion',
     ],
     correctAnswer: 0,
     explanation:
@@ -5254,7 +5254,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'BS 7671 defines a prescribed zone as within 150 mm from the top of a wall or partition, and equally within 150 mm of an angle formed by two adjoining walls. Cables run in that zone are still subject to the protections set out in Table 52.1 and Regulation 522.6.202. Learners often pick a figure taken from depth rules instead, but the depth a cable is buried into the wall and the width of the surface zone are two separate measurements and are not interchangeable.',
     section: '4.1.1',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Cable Routes and Safe Zones',
   },
   {
@@ -5271,7 +5271,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'Table 52.1 and Regulation 522.6.202 call for additional protection by a 30 mA RCD where a cable is concealed in a wall at a depth of less than 50 mm and does not have one of the alternative protections of Regulation 522.6.204. Reducing the protective device rating does nothing here, because the hazard is a nail or screw penetrating the cable and making an exposed metal part live, which only a residual current device can address quickly enough.',
     section: '4.1.2',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Cable Routes and Safe Zones',
   },
   {
@@ -5339,7 +5339,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'A steel conduit or trunking system may form the protective conductor where it is electrically continuous, bonded to the earthing terminal at the origin, and encloses all the line, neutral and protective conductors of the circuits concerned. Support spacing and section size matter for mechanical reasons but neither creates the earth path. Paint at joints works against the requirement, since it raises joint resistance and threatens the electrical continuity the arrangement depends on.',
     section: '4.2.2',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Containment Systems',
   },
   {
@@ -5373,7 +5373,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'Regulation 527.2.3 allows a conduit, trunking or ducting system classified as non-flame propagating to the relevant product standard, with a maximum internal cross-sectional area of 710 square millimetres, to go without internal sealing provided its further conditions are met. The concession applies to the internal seal alone, so the opening around the outside of the containment must still be sealed to the fire resistance of the element it penetrates.',
     section: '4.2.4',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Containment Systems',
   },
   {
@@ -5441,7 +5441,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'Regulation 521.10.202 requires wiring systems to be supported so that they cannot fall away prematurely, and its NOTE 3 precludes non-metallic clips or cable ties as the sole means of support where cables are clipped direct or suspended under a cable tray, and non-metallic trunking as the sole means of support. Clipping direct is not itself banned, so the fix is metallic support at suitable intervals rather than abandoning the method.',
     section: '4.4.1',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Cable Support and Fixings',
   },
   {
@@ -5503,7 +5503,7 @@ export const module4QuestionBank: QuestionBank[] = [
       'Prove the indicator on a known source, test the circuit, then prove it again',
       'Test the circuit, then prove the indicator on a known source once only',
       'Prove the indicator on a known source, then test the circuit and record it',
-      'Test the circuit twice using two different indicators of the same type',
+      'Test the circuit twice, using two different indicators of the same type',
     ],
     correctAnswer: 0,
     explanation:
@@ -5526,7 +5526,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'Regulation 537.2.2 requires a mechanical isolating device rather than a semiconductor device, because a solid state switch can pass leakage current and can fail in a conducting state, so it cannot guarantee separation between the working area and the supply. Thermal derating is a genuine property of semiconductors but it is a rating issue, not the reason the standard refuses them the isolation role.',
     section: '4.5.3',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Safe Isolation',
   },
   {
@@ -5534,16 +5534,16 @@ export const module4QuestionBank: QuestionBank[] = [
     question:
       'An installation is fed by the public supply and a standby generator. What does BS 7671 require in addition to a main switch for each source?',
     options: [
-      'A single main switch that disconnects both sources in one operation',
+      'A single main switch, disconnecting both sources in one operation',
       'A durable warning notice, or alternatively a suitable interlock system',
-      'A label giving the generator rating fixed to the consumer unit cover',
-      'A separate earth electrode dedicated to the generator neutral point',
+      'A label giving the generator rating, fixed to the consumer unit cover',
+      'A separate earth electrode, dedicated to the generator neutral point',
     ],
     correctAnswer: 1,
     explanation:
       'Where an installation is supplied from more than one source, each source needs a main switch suitable for isolation, plus either a durable warning notice telling the operator that all such switches must be opened or a suitable interlock system that prevents the sources being paralleled. The danger addressed is someone opening one switch, believing the whole installation is dead, and then working on conductors still energised by the second source.',
     section: '4.5.4',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Safe Isolation',
   },
   {
@@ -5560,7 +5560,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'BS 5467 covers thermosetting insulated armoured cables, so the insulation is cross-linked polyethylene and Table 52.2 gives thermosetting insulation a conductor limit of 90 degrees C. Calling it PVC at 70 degrees C is the usual error, and it also matters for earthing, because the armour of a cable to BS 5467 is one of the earthed metallic coverings Regulation 522.6.204 accepts where Table 52.1 stipulates one.',
     section: '4.6.1',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Cable Selection',
   },
   {
@@ -5594,7 +5594,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'Regulation 521.3 explains that Table 4A2 gives examples of installation methods together with the reference method to be used for obtaining current-carrying capacity, where the same capacities can safely be applied, while Table 4A3 points to the correct rating table for each cable construction. BS 7671 tabulates no bending radii at all, which is why that option cannot be right however plausible it looks.',
     section: '4.7.2',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Installation Methods',
   },
   {
@@ -5628,7 +5628,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'Arms reach in the overhead direction is 2.50 m measured from the surface a person occupies, and that figure is not reduced by any intermediate obstacle affording less than IPXXB or IP2X. Where a horizontal restriction such as a handrail or mesh screen gives less than that degree of protection, arms reach is measured from the obstacle itself, so a flimsy barrier moves the starting point rather than removing the risk.',
     section: '4.8.1',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Safe Working Practice',
   },
   {
@@ -5653,9 +5653,9 @@ export const module4QuestionBank: QuestionBank[] = [
     question: 'How should the foot of a leaning ladder be positioned on site?',
     options: [
       'On firm level ground, never packed up on bricks or loose blocks',
-      'On any surface provided a second worker holds the stiles throughout',
-      'On bricks or blocks where the ground falls away from the wall face',
-      'On soft ground so that the stiles bed in and cannot slide outwards',
+      'On any surface, provided a second worker holds the stiles throughout',
+      'On bricks or blocks, where the ground falls away from the wall face',
+      'On soft ground, so that the stiles bed in and cannot slide outwards',
     ],
     correctAnswer: 0,
     explanation:
@@ -5669,10 +5669,10 @@ export const module4QuestionBank: QuestionBank[] = [
     question:
       'What is the first control measure in the hierarchy for a hazardous substance at work?',
     options: [
-      'Enclose the process in which the substance is used',
-      'Provide local exhaust ventilation at the work position',
+      'Enclose the process, so that the substance cannot escape',
+      'Provide local exhaust ventilation, close to the work position',
       'Eliminate the need for the substance, for example by redesign',
-      'Issue respiratory protective equipment to those exposed',
+      'Issue respiratory protective equipment, face-fit tested, to those exposed',
     ],
     correctAnswer: 2,
     explanation:
@@ -5695,7 +5695,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'Fixings must be positioned and designed so that the required minimum bending radius is maintained and not made more severe by the fixing itself, and spaced to suit the cable type and weight so that spans do not sag while individual fixings do not crush the cable. Even spacing sounds tidy but is not the test, because the correct interval follows from the weight and construction of the cable rather than from the look of the run.',
     section: '4.4.3',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Cable Support and Fixings',
   },
   {
@@ -5712,7 +5712,7 @@ export const module4QuestionBank: QuestionBank[] = [
     explanation:
       'Regulation 527.2.1.2 requires sealing that has been disturbed to be reinstated as soon as practicable, and 527.2.1.1 requires temporary sealing during erection, so an opening is never simply left until handover. The material of the containment makes no difference either, since conduit, trunking and ducting penetrating a fire-resisting element must be sealed internally as well as around the outside.',
     section: '4.2.5',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Containment Systems',
   },
   {
@@ -5721,9 +5721,9 @@ export const module4QuestionBank: QuestionBank[] = [
       'Cable terminations are housed in an outdoor pit where water can collect around them. What does BS 7671 expect?',
     options: [
       'Provision for the escape of water, such as drainage from the pit',
-      'A desiccant sachet fitted inside the enclosure and changed yearly',
-      'The terminations to be raised above the highest recorded flood level',
-      'A heater fitted in the pit to hold the terminations above dew point',
+      'A desiccant sachet inside the enclosure, changed once a year',
+      'The terminations raised above the pit floor, clear of the flood level',
+      'A heater fitted in the pit, holding the terminations above dew point',
     ],
     correctAnswer: 0,
     explanation:
@@ -5737,9 +5737,9 @@ export const module4QuestionBank: QuestionBank[] = [
     question:
       'A cable is concealed in a partition built with metal studs. When is additional protection by a 30 mA RCD required?',
     options: [
-      'Where the cable lies shallower than 50 mm from the finished surface',
-      'Where the cable crosses a metal stud instead of running beside it',
-      'Where the circuit supplies socket-outlets fixed to that partition',
+      'Only where the cable lies shallower than 50 mm, measured from the surface',
+      'Only where the cable crosses a metal stud, rather than running beside it',
+      'Only where the circuit supplies socket-outlets, whatever the cable depth',
       'At any depth, because the partition contains metallic parts',
     ],
     correctAnswer: 3,
@@ -5821,17 +5821,17 @@ export const module4QuestionBank: QuestionBank[] = [
     correctAnswer: 1,
     explanation: 'With the winding centre-tapped to earth, each line sits at half the output voltage relative to earth, so contact with one conductor exposes the operator to 55 V rather than 110 V. Option D is a widespread and dangerous belief: reducing the shock voltage does not remove the need for fault protection.',
     section: '4.7.2',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: '110V Tool Safety',
   },
   {
     id: 356,
     question: 'What should be done first when a power tool is taken from the van at the start of a shift?',
     options: [
-      'Run the tool for a minute to warm the motor up',
+      'Run the tool up to speed, unloaded, to warm the motor',
       'Inspect the lead, plug and casing for damage',
-      'Record the tool serial number in the site diary',
-      'Fit a replacement set of accessories to the chuck',
+      'Record the tool serial number, date and time in the site diary',
+      'Fit a fresh bit, blade or disc to the chuck',
     ],
     correctAnswer: 1,
     explanation: 'A user check for damaged leads, cracked casings and loose plugs catches most faults before the tool is energised. Option C is administratively useful but does nothing about a damaged lead, and the checking of paperwork often crowds out the physical inspection.',
@@ -5873,9 +5873,9 @@ export const module4QuestionBank: QuestionBank[] = [
     id: 359,
     question: 'A site supply at 230 V feeds portable tools through a 30 mA RCD. Why is a 110 V centre-tapped supply still preferred?',
     options: [
-      'It removes the need to inspect tool leads',
-      'It stops the RCD tripping on inrush current',
-      'It allows longer leads without volt drop',
+      'It removes the need to inspect leads, plugs and casings',
+      'It stops the RCD tripping, even on motor inrush',
+      'It allows longer leads, with less volt drop',
       'It limits the shock voltage, not the shock time',
     ],
     correctAnswer: 3,
@@ -5896,7 +5896,7 @@ export const module4QuestionBank: QuestionBank[] = [
     correctAnswer: 2,
     explanation: 'Shorting the leads together should give a stable zero once nulled, which separates an instrument or lead fault from a genuine circuit fault. Option B is the shortcut that gets taken under time pressure, and it records a lead problem as though it were a circuit defect.',
     section: '4.6.1',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Instrument Reliability',
   },
   {
@@ -5956,7 +5956,7 @@ export const module4QuestionBank: QuestionBank[] = [
     correctAnswer: 3,
     explanation: 'Contaminated PPE carries the hazard with it, so the exposure happens the next time the gloves are pulled on rather than during the original task. Option C describes an inconvenience rather than the health risk, and it is the reason contaminated gloves get kept rather than disposed of.',
     section: '4.7.1',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'PPE Contamination',
   },
   {
@@ -5971,7 +5971,7 @@ export const module4QuestionBank: QuestionBank[] = [
     correctAnswer: 1,
     explanation: 'A deep chamber can hold a hazardous or oxygen-deficient atmosphere, and anyone overcome inside cannot self-rescue, so testing and a rescue arrangement come before entry. Option C is the reflex answer, but PPE does nothing about an atmosphere that will not support life.',
     section: '4.7.1',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Confined Space PPE',
   },
   {
@@ -6001,7 +6001,7 @@ export const module4QuestionBank: QuestionBank[] = [
     correctAnswer: 1,
     explanation: 'A loaded scissor lift concentrates several tonnes onto small wheels, and a suspended slab may not be designed for it. Option C is a genuine pre-use check but a trivial one by comparison, and it is the one people remember while the structural question goes unasked.',
     section: '4.7.3',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'MEWP Safety',
   },
   {
@@ -6106,7 +6106,7 @@ export const module4QuestionBank: QuestionBank[] = [
     correctAnswer: 0,
     explanation: 'A dimensional clash is resolved by the designer, who can see whether the position is critical and can record the change. Option D is the one that gets done quietly and it damages the structure of the partition, which is not the electrician\'s to alter.',
     section: '4.2.3',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Installation Tolerances',
   },
   {
@@ -6166,7 +6166,7 @@ export const module4QuestionBank: QuestionBank[] = [
     correctAnswer: 0,
     explanation: 'Below 50 mm depth the cable needs additional protection by a 30 mA RCD, unless one of the alternatives such as an earthed metallic covering is used instead. Option D is the false comfort: plastic conduit gives no earthed metallic covering and does not stop a screw reaching the conductors.',
     section: '4.4.1',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Cable Routes and Safe Zones',
   },
   {
@@ -6226,7 +6226,7 @@ export const module4QuestionBank: QuestionBank[] = [
     correctAnswer: 1,
     explanation: 'BS 7671 states that flexible or pliable conduit shall not be selected as a protective conductor, so the earth path must be carried across it by a separate conductor. Option D is required for other reasons entirely and is the answer given when the question is read as being about maintenance rather than earthing.',
     section: '4.4.5',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Protective Conductors',
   },
   {
@@ -6286,7 +6286,7 @@ export const module4QuestionBank: QuestionBank[] = [
     correctAnswer: 0,
     explanation: 'The cone traps the armour wires against the gland body, and the gland is earthed to the enclosure, which is what puts the armour into the earth path. Option C creates a direct connection between the armour and the neutral, which will make the armour live in normal use.',
     section: '4.5.3',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'SWA Termination',
   },
   {
@@ -6391,16 +6391,16 @@ export const module4QuestionBank: QuestionBank[] = [
     correctAnswer: 3,
     explanation: 'A durable label warning against removal of the safety electrical connection must be fixed at every bonding clamp. Option B appears on plenty of clamps in practice, but a contractor\'s name does not tell the next person that the conductor must stay in place.',
     section: '4.4.3',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'BS 951 Warning Notice',
   },
   {
     id: 394,
     question: 'A water service enters through a plastic pipe and changes to copper at a stop valve just inside the wall. Where does the bonding clamp go, if at all?',
     options: [
-      'On the plastic pipe before the stop valve position',
-      'On the copper immediately after the stop valve',
-      'On the copper at the furthest point from the valve',
+      'On the plastic pipe, upstream of the stop valve',
+      'On the copper, immediately after the stop valve',
+      'On the copper, at the furthest point from the valve',
       'No bonding is needed, the pipe is not extraneous',
     ],
     correctAnswer: 3,
@@ -6451,7 +6451,7 @@ export const module4QuestionBank: QuestionBank[] = [
     correctAnswer: 2,
     explanation: 'Dissimilar metals in contact with moisture present set up electrolytic action, which BS 7671 requires to be avoided, and the galvanising is what corrodes away. Option A follows later as a consequence, which is why the joint is often blamed on a loose clamp rather than the metals chosen.',
     section: '4.4.3',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Supplementary Bonding',
   },
   {
@@ -6466,7 +6466,7 @@ export const module4QuestionBank: QuestionBank[] = [
     correctAnswer: 2,
     explanation: 'A meter can be removed or fitted with insulating unions, so continuity across it must be maintained by a link. Option A is the answer given when the problem is read as one of conductor sizing, but no increase in size restores a path that has been broken by the meter body.',
     section: '4.4.3',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'BS 951 Position',
   },
   {
@@ -6631,7 +6631,7 @@ export const module4QuestionBank: QuestionBank[] = [
     correctAnswer: 0,
     explanation: 'An open circuit on one conductor means the loop is not continuous, and a terminal missed at a socket is the usual place to find it. Option B would show as a low insulation resistance rather than an open continuity reading, and the two tests answer different questions.',
     section: '4.6.2',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Ring Final Test',
   },
   {
@@ -6736,7 +6736,7 @@ export const module4QuestionBank: QuestionBank[] = [
     correctAnswer: 0,
     explanation: 'If the incoming tails are transposed the whole installation is reversed, and every accessory downstream will still test correct against itself. Option C is a genuine defect but has nothing to do with which conductor is which.',
     section: '4.6.5',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Polarity Test',
   },
   {
@@ -6781,7 +6781,7 @@ export const module4QuestionBank: QuestionBank[] = [
     correctAnswer: 0,
     explanation: 'Connections must be accessible unless they are of a type designed to be buried, and a screw block in a plastic box is not such a joint. Option B is the reasoning that leads to these being installed: watertightness addresses moisture, but it does nothing about a connection that can never be inspected or retightened.',
     section: '4.6.1',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Visual Inspection',
   },
   {

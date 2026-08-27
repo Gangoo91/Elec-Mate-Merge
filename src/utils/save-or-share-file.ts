@@ -141,10 +141,14 @@ export async function saveOrShareFile(
     return { method: 'share-sheet', cancelled };
   }
 
-  // Web. Fetching a remote file can fail on CORS — PDFMonkey's S3 host sends no
-  // CORS headers — and there is nothing to download if we cannot read the
-  // bytes. Opening the tab at least puts the file in front of the user, where
-  // the browser's own save button still works.
+  // Web. Fetching a remote file can fail on CORS, and there is nothing to
+  // download if we cannot read the bytes. Opening the tab at least puts the
+  // file in front of the user, where the browser's own save button still works.
+  // ⚠️ This used to say PDFMonkey's S3 host sends no CORS headers. It does:
+  // `access-control-allow-origin: *`, verified against a live download URL on
+  // 27 Aug 2026. The fallback stays for genuinely opaque hosts, but do not use
+  // that claim as a reason to avoid fetching a PDFMonkey document — including
+  // on native, where this path has no tab to fall back to.
   try {
     triggerDownload(await toBlob(source), name);
     return { method: 'download', cancelled: false };

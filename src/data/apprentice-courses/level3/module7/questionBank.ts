@@ -38,10 +38,10 @@ export const module7Questions: Question[] = [
     id: 2,
     question: 'A commercial electrician typically works in:',
     options: [
-      'New-build homes and consumer unit upgrades',
-      'Power stations and grid substation sites',
+      'Homes, flats, and consumer unit upgrades',
+      'Power stations, grids, and substations',
       'Shops, offices, and business premises',
-      'Mines and heavy underground installations',
+      'Mines, quarries, and underground works',
     ],
     correctAnswer: 2,
     explanation: 'Commercial electricians work in retail, office, and other business environments.',
@@ -52,9 +52,9 @@ export const module7Questions: Question[] = [
     id: 3,
     question: 'Industrial electricians are distinguished by their work in:',
     options: [
-      'Residential refurbishments and domestic consumer unit replacements',
-      'Independent retail units and high-street shop fit-outs',
-      'Small-scale rewires in tenanted residential properties',
+      'Residential refurbishments, rewires, and consumer unit replacements',
+      'Independent retail units, salons, and shop fit-outs',
+      'Small-scale rewires, repairs, and tenanted-property work',
       'Manufacturing plants, factories, and heavy industry',
     ],
     correctAnswer: 3,
@@ -112,8 +112,8 @@ export const module7Questions: Question[] = [
     question: 'An electrical project manager is responsible for:',
     options: [
       'Material take-offs, supplier orders, and goods-inwards reconciliation',
-      'Carrying out first-fix and second-fix installation work on site',
-      'Signing off completion certificates after final inspection and testing',
+      'Carrying out first-fix, second-fix, and final installation work',
+      'Signing off completion certificates, once inspection and testing are done',
       'Planning, coordinating, and delivering electrical projects',
     ],
     correctAnswer: 3,
@@ -156,10 +156,10 @@ export const module7Questions: Question[] = [
     id: 10,
     question: 'EV charger installation specialists need knowledge of:',
     options: [
-      'Standard BS 1363 13 A socket-outlet installation methods only',
-      'Domestic radial and ring final circuit configurations and protection',
+      'BS 1363 13 A socket-outlet wiring, fusing, and nothing else',
+      'Domestic radial circuits, ring finals, and their protection',
       'Charging standards, load management, and vehicle integration',
-      'Three-phase motor starter design and reactive power compensation',
+      'Three-phase motor starters, star-delta, and power factor correction',
     ],
     correctAnswer: 2,
     explanation:
@@ -186,9 +186,9 @@ export const module7Questions: Question[] = [
     question: 'What does a building services engineer do differently from an electrician?',
     options: [
       'Designs building systems at a higher technical/professional level',
-      'Carries out essentially the same on-site installation responsibilities',
-      'Performs hands-on physical installation rather than design work',
-      'Works exclusively on educational sector buildings such as schools',
+      'Carries out essentially the same on-site installation/testing duties',
+      'Performs hands-on installation/wiring rather than design work',
+      'Works only on educational buildings such as schools/colleges',
     ],
     correctAnswer: 0,
     explanation:
@@ -202,8 +202,8 @@ export const module7Questions: Question[] = [
     options: [
       'Domestic rewires, consumer unit changes, and residential additions',
       'Street lighting, traffic signals, and highway infrastructure',
-      'Heavy plant control wiring inside manufacturing facilities',
-      'Internal installations within commercial and public buildings',
+      'Heavy plant control wiring, panels, and factory machinery',
+      'Internal installations in shops, offices, and public buildings',
     ],
     correctAnswer: 1,
     explanation:
@@ -363,9 +363,9 @@ export const module7Questions: Question[] = [
     question: 'Theatre and entertainment electricians require knowledge of:',
     options: [
       'Temporary installations, special effects, and performance requirements',
-      'Domestic ring final circuits and consumer unit replacements only',
-      'Permanent commercial and office lighting installations only',
-      'Industrial control wiring and three-phase motor starter circuits only',
+      'Domestic ring finals, radials, and consumer unit changes only',
+      'Permanent shop, office, and commercial lighting only',
+      'Industrial control wiring, panels, and motor starter circuits only',
     ],
     correctAnswer: 0,
     explanation:
@@ -392,10 +392,10 @@ export const module7Questions: Question[] = [
     id: 26,
     question: 'Marine electricians work primarily on:',
     options: [
-      'Offshore oil and gas platforms only',
-      'Port infrastructure and container gear',
+      'Offshore oil, gas, and rig platforms only',
+      'Ports, quaysides, and container gear',
       'Ships, boats, and marine vessels',
-      'Naval submarine systems exclusively',
+      'Naval bases, dockyards, and submarines',
     ],
     correctAnswer: 2,
     explanation: 'Marine electricians install and maintain electrical systems on watercraft.',
@@ -422,8 +422,8 @@ export const module7Questions: Question[] = [
     question: 'HVAC electricians combine electrical skills with:',
     options: [
       'Heating, ventilation, and air conditioning system knowledge',
-      'Plumbing and pipefitting on hot and cold water distribution systems',
-      'Carpentry and joinery work on first-fix structural installations',
+      'Plumbing, pipefitting, and hot and cold water distribution systems',
+      'Carpentry, joinery, and first-fix structural timber installations',
       'Painting, decoration, and final-fix surface finishing trades',
     ],
     correctAnswer: 0,
@@ -435,10 +435,10 @@ export const module7Questions: Question[] = [
     id: 29,
     question: 'Renewable energy electricians focus on:',
     options: [
-      'Traditional fixed-wiring installation in domestic and commercial premises',
+      'Traditional fixed wiring in domestic, commercial, and retail premises',
       'Solar, wind, and other renewable energy installations',
-      'Fossil-fuel power stations and conventional thermal generation plants',
-      'Nuclear generation site electrical systems and safety-critical controls',
+      'Fossil-fuel power stations, boilers, and thermal generation plant',
+      'Nuclear generation systems, reactors, and safety-critical controls',
     ],
     correctAnswer: 1,
     explanation: 'Renewable energy specialists install and maintain green energy systems.',
@@ -554,14 +554,19 @@ export const module7Questions: Question[] = [
     id: 37,
     question: 'What distinguishes the Approved Electrician grade from the Installation Electrician grade?',
     options: [
-      'Approved is paid at the JIB rate while Installation is paid at SJIB rate',
-      'Approved requires AM2s assessment, Installation requires AM2e',
-      'Approved has more years of post-qualification site experience required',
-      'The two grades describe the same competence with different titles',
+      'Approved is paid at the JIB rate, Installation at the SJIB rate',
+      'Approved requires further post-qualification experience and responsibility, on top of the Electrician grade',
+      'Approved is awarded on employer nomination, Installation by examination',
+      'The two grades describe the same competence, under different titles',
     ],
     correctAnswer: 1,
     explanation:
-      'Approved Electricians complete AM2s; Installation Electricians complete AM2e assessment.',
+      // Was: "Approved Electricians complete AM2s; Installation Electricians
+      // complete AM2e assessment." That is not the distinction — AM2S and AM2E
+      // are two routes to the SAME grade. Corrected 2026-08-27; ⚠️ JIB grading
+      // sits outside the BS 7671 RAG, so this wording is from general knowledge
+      // and is worth checking against a JIB source.
+      'AM2S and AM2E are two routes to the same Electrician grade — AM2S through the apprenticeship, AM2E as the Experienced Worker Assessment. Approved Electrician sits above that grade and calls for further post-qualification experience and responsibility, not a different end-point assessment.',
     section: '7.2',
     difficulty: 'intermediate',
   },
@@ -746,10 +751,10 @@ export const module7Questions: Question[] = [
     id: 50,
     question: 'The Electrical Contracting Industry Welfare Benefits provide:',
     options: [
-      'Statutory holiday entitlement and nothing more',
-      'A pension contribution and no other cover',
+      'Holiday entitlement only, with no other cover',
+      'A pension contribution, with no other cover',
       'Death benefits, injury cover, and welfare support',
-      'No cover beyond minimum statutory rights',
+      'No cover at all, beyond minimum statutory rights',
     ],
     correctAnswer: 2,
     explanation:
@@ -1071,10 +1076,10 @@ export const module7Questions: Question[] = [
     id: 73,
     question: 'Higher education routes into electrical careers include:',
     options: [
-      'Apprenticeships only, with no academic pathway available post-Level 3',
+      'Apprenticeships only, with no academic/HE pathway available post-Level 3',
       'HNC, HND, and degree programmes in electrical/building services',
-      'No higher education provision exists in the electrotechnical sector',
-      'Academic research routes leading only to postgraduate study',
+      'Nothing beyond Level 3, as no HNC/HND provision exists in the sector',
+      'Academic research routes only, leading straight to a PhD/EngD',
     ],
     correctAnswer: 1,
     explanation: 'Higher education options include technician and engineer-level qualifications.',
@@ -1085,10 +1090,10 @@ export const module7Questions: Question[] = [
     id: 74,
     question: 'The difference between City & Guilds 2391-50 and 2391-52 is:',
     options: [
-      'They are alternative codes for an identical inspection and testing qualification',
-      'They differ only in the awarding body fee charged for examination entry',
+      'They are alternative codes, for one identical inspection and testing qualification',
+      'They differ only in the awarding body fee, not in the syllabus covered',
       '2391-50 covers initial verification only, 2391-52 includes periodic inspection',
-      'They have different course durations but cover the same syllabus material',
+      'They have different course durations, but cover the same syllabus material',
     ],
     correctAnswer: 2,
     explanation:
@@ -1100,9 +1105,9 @@ export const module7Questions: Question[] = [
     id: 75,
     question: 'Functional Skills requirements in apprenticeships cover:',
     options: [
-      'Manual dexterity tests using hand tools',
-      'Electrical theory and practical skills only',
-      'Verbal skills in a customer scenario',
+      'Hand tool dexterity, tested practically',
+      'Theory, practical skills, and nothing else',
+      'Customer role-play, scored by an assessor',
       'Maths, English, and sometimes ICT',
     ],
     correctAnswer: 3,
@@ -1176,9 +1181,9 @@ export const module7Questions: Question[] = [
     question: 'Assessment methods in electrical qualifications include:',
     options: [
       'Written exams, practical assessments, and portfolio evidence',
-      'A single written multiple-choice paper as the sole assessment method',
+      'A single multiple-choice paper, taken as the sole assessment',
       'Observation of site work only, without any written or portfolio component',
-      'A structured verbal interview as the only assessment of competence',
+      'A structured verbal interview, used as the only measure of competence',
     ],
     correctAnswer: 0,
     explanation:
@@ -1219,9 +1224,9 @@ export const module7Questions: Question[] = [
     id: 83,
     question: 'CSCS cards for electricians require:',
     options: [
-      'Photographic ID with no safety test',
-      'A full UK driving licence as proof of ID',
-      'A trade certificate with no assessment',
+      'Photographic ID, with no safety test',
+      'A full UK driving licence, as ID proof',
+      'A trade certificate, with no assessment',
       'CITB Health, Safety and Environment test',
     ],
     correctAnswer: 3,
@@ -1292,10 +1297,10 @@ export const module7Questions: Question[] = [
     id: 89,
     question: 'Apprenticeship standards define:',
     options: [
-      'Statutory minimum apprentice pay rates for each year of training',
+      'Statutory minimum pay rates, set for each year of training',
       'Knowledge, skills, and behaviours required for the occupation',
-      'The mandatory training duration in months for each occupational role',
-      'The geographical location where training providers must deliver the programme',
+      'The mandatory training duration, in months, for each occupational role',
+      'The geographical location, region by region, where providers must deliver',
     ],
     correctAnswer: 1,
     explanation:
@@ -1340,9 +1345,9 @@ export const module7Questions: Question[] = [
     question: 'After qualifying as an electrician, common progression includes:',
     options: [
       'Specialisation, supervision, or technical roles',
-      'Leaving the industry for an unrelated trade',
-      'Part-time hours with no progression',
-      'Staying at Installation grade for life',
+      'Leaving the industry, for an unrelated trade',
+      'Part-time hours only, with no progression',
+      'Staying at Installation grade, permanently',
     ],
     correctAnswer: 0,
     explanation:
@@ -1354,10 +1359,10 @@ export const module7Questions: Question[] = [
     id: 93,
     question: 'Becoming self-employed as an electrician requires:',
     options: [
-      'Nothing beyond a recognised trade qualification',
+      'Nothing, beyond a recognised trade qualification',
       'Business skills, insurance, and scheme registration',
-      'A government licence rather than scheme entry',
-      'Technical competence with no business setup',
+      'A government licence, rather than scheme entry',
+      'Technical competence, with no business setup',
     ],
     correctAnswer: 1,
     explanation:
@@ -1429,10 +1434,10 @@ export const module7Questions: Question[] = [
     id: 98,
     question: 'Health and safety career paths from electrical background include:',
     options: [
-      'No route from contracting into safety roles',
-      'First aid response with no risk assessment',
+      'No route at all, from contracting into safety roles',
+      'First aid response only, with no risk assessment',
       'Safety advisor, CDM coordinator, or compliance roles',
-      'Technical authoring with no safety remit',
+      'Technical authoring, with no safety remit',
     ],
     correctAnswer: 2,
     explanation:
@@ -1488,10 +1493,10 @@ export const module7Questions: Question[] = [
     id: 102,
     question: 'Starting your own electrical business requires consideration of:',
     options: [
-      'Electrical technical competence alone with no business administration setup',
-      'A reliable vehicle for site travel with no further business registration steps',
+      'Electrical competence alone, with no business administration setup',
+      'A reliable vehicle for site travel, with no further registration steps',
       'Registration, insurance, accounts, marketing, and legal requirements',
-      'A complete toolkit and stock of consumables as the primary business requirement',
+      'A complete toolkit, plus stock of consumables, as the main requirement',
     ],
     correctAnswer: 2,
     explanation:
@@ -1519,7 +1524,7 @@ export const module7Questions: Question[] = [
     question: 'International work opportunities for UK electricians include:',
     options: [
       'Project work abroad, especially in similar regulatory environments',
-      'No international opportunities exist outside of the United Kingdom',
+      'No international opportunities exist, anywhere outside the UK',
       'European Union member states only, with no recognition further afield',
       'Commonwealth countries only, with no opportunities elsewhere in the world',
     ],
@@ -1594,7 +1599,7 @@ export const module7Questions: Question[] = [
     options: [
       'Chronological age alone, regardless of experience or market conditions',
       'Experience level, market conditions, and personal circumstances',
-      'Random opportunity rather than structured planning of the transition',
+      'Random opportunity, rather than structured planning of the transition',
       'Employer-initiated decisions only, with no input from the individual',
     ],
     correctAnswer: 1,
@@ -1721,10 +1726,10 @@ export const module7Questions: Question[] = [
     id: 118,
     question: 'Later career options for electricians include:',
     options: [
-      'Full retirement with no transitional roles',
-      'First-fix work with no lighter alternative',
+      'Full retirement, with no transitional roles',
+      'First-fix work only, with no lighter alternative',
       'Consulting, training, inspection, or reduced-hours roles',
-      'No options once Approved grade is reached',
+      'No options at all, once Approved grade is reached',
     ],
     correctAnswer: 2,
     explanation:
@@ -1736,9 +1741,9 @@ export const module7Questions: Question[] = [
     id: 119,
     question: 'Industry body involvement can benefit careers by:',
     options: [
-      'Consuming time that would be better spent on direct billable site work',
-      'Adding no measurable benefit to a qualified electrician’s career progression',
-      'Limiting engagement to committee meetings with no broader professional value',
+      'Consuming time, which would be better spent on billable site work',
+      'Adding no measurable benefit, at any stage of a qualified electrician\'s career',
+      'Limiting engagement to committee meetings, with no broader value',
       'Providing networking, influence, and development opportunities',
     ],
     correctAnswer: 3,
@@ -1752,9 +1757,9 @@ export const module7Questions: Question[] = [
     question: 'Which factor should be settled first when drawing up a career plan?',
     options: [
       'Personal goals, industry trends, and skill development needs',
-      'The current employer’s preferences as the sole basis for planning',
+      'The current employer\'s preferences, taken as the sole basis',
       'Currently available vacancies alone, without forward-looking trend analysis',
-      'Short-term pay rates and bonuses as the only career planning input',
+      'Short-term pay rates and bonuses, as the only planning input',
     ],
     correctAnswer: 0,
     explanation: 'Effective career planning balances personal aspirations with industry realities.',
@@ -1812,9 +1817,9 @@ export const module7Questions: Question[] = [
     question: 'Which activity would be recorded as continuing professional development?',
     options: [
       'Training, reading, conferences, and practical skill development',
-      'Only formal classroom courses delivered by an awarding body',
+      'Only formal classroom courses, delivered by an awarding body',
       'Routine repetition of work already mastered, without reflection',
-      'Renewing tool insurance and updating vehicle documentation',
+      'Renewing tool insurance, plus updating vehicle documentation',
     ],
     correctAnswer: 0,
     explanation:
@@ -1841,9 +1846,9 @@ export const module7Questions: Question[] = [
     question: 'CPD records should include:',
     options: [
       'Only the total number of hours, with no further detail',
-      'Personal opinions on colleagues rather than learning gained',
+      'Personal opinions on colleagues, rather than learning gained',
       'Details of activities, dates, and learning outcomes',
-      'Copies of pay slips evidencing time spent away from site',
+      'Copies of pay slips, evidencing time spent away from site',
     ],
     correctAnswer: 2,
     explanation: 'CPD records should document what was learned, when, and how it applies to work.',
@@ -1854,9 +1859,9 @@ export const module7Questions: Question[] = [
     id: 127,
     question: 'Employer support for CPD typically includes:',
     options: [
-      'A legal duty to fund every external qualification in full',
-      'Guaranteed promotion on completion of any training course',
-      'Unpaid leave as the only mechanism for attending courses',
+      'A legal duty, to fund every external qualification in full',
+      'Guaranteed promotion, on completion of any training course',
+      'Unpaid leave, as the only mechanism for attending courses',
       'Training budgets, time allowance, and development planning',
     ],
     correctAnswer: 3,
@@ -1912,8 +1917,8 @@ export const module7Questions: Question[] = [
     id: 131,
     question: 'Trade exhibitions and conferences provide CPD through:',
     options: [
-      'Free product samples taken away from supplier stands',
-      'Reduced wholesale pricing offered to attendees',
+      'Free product samples, taken away from supplier stands',
+      'Reduced wholesale pricing, offered to attendees',
       'Attendance certificates alone, regardless of content',
       'Seminars, demonstrations, and networking',
     ],
@@ -1942,10 +1947,10 @@ export const module7Questions: Question[] = [
     id: 133,
     question: 'CPD planning should consider:',
     options: [
-      'Only the activities an employer is willing to pay for',
+      'Only those activities an employer will fund, and no others',
       'Career goals, skill gaps, and industry developments',
-      'The lowest-cost courses available regardless of relevance',
-      'Past achievements rather than future development needs',
+      'The lowest-cost courses available, regardless of relevance',
+      'Past achievements, rather than future development needs',
     ],
     correctAnswer: 1,
     explanation:
@@ -2220,9 +2225,9 @@ export const module7Questions: Question[] = [
     question: 'Benefits of professional body membership include:',
     options: [
       'Recognition, networking, resources, and professional development',
-      'A legal right to self-certify all notifiable work',
-      'Automatic award of Approved Electrician grade',
-      'Exemption from holding professional indemnity insurance',
+      'A legal right, to self-certify all notifiable work',
+      'Automatic award of Approved Electrician grade, on joining',
+      'Exemption from holding professional indemnity insurance, by law',
     ],
     correctAnswer: 0,
     explanation:
@@ -2434,9 +2439,9 @@ export const module7Questions: Question[] = [
     id: 167,
     question: 'Regional branches of professional bodies offer:',
     options: [
-      'Lower membership fees than the national body',
-      'Mandatory weekly attendance for all local members',
-      'Competent person scheme assessments for the region',
+      'Lower fees, cheaper than the national body',
+      'Mandatory weekly attendance, for all local members',
+      'Scheme assessments, carried out for the region',
       'Local networking, events, and professional support',
     ],
     correctAnswer: 3,
@@ -2477,10 +2482,10 @@ export const module7Questions: Question[] = [
     id: 170,
     question: 'Digital resources provided by professional bodies include:',
     options: [
-      'Discounted electrical materials and tools',
-      'Free professional indemnity insurance for all members',
+      'Discounted materials, cable, and tools',
+      'Free professional indemnity insurance, for all members',
       'Online learning, forums, and technical databases',
-      'Automated certification of completed installations',
+      'Automated certification of work, without inspection',
     ],
     correctAnswer: 2,
     explanation: 'Modern bodies provide extensive digital resources for member development.',
@@ -2509,9 +2514,9 @@ export const module7Questions: Question[] = [
     question: 'Effective communication with clients includes:',
     options: [
       'Clear explanations, listening, and managing expectations',
-      'Using technical jargon to demonstrate expertise',
-      'Avoiding discussion of costs until work is complete',
-      'Limiting contact to the initial quotation only',
+      'Using technical jargon, to demonstrate expertise',
+      'Avoiding discussion of costs, until work is complete',
+      'Limiting contact, to the initial quotation only',
     ],
     correctAnswer: 0,
     explanation: 'Good communication involves clear explanation and understanding client needs.',
@@ -2522,10 +2527,10 @@ export const module7Questions: Question[] = [
     id: 173,
     question: 'Time management for electricians affects:',
     options: [
-      'The technical requirements set out in BS 7671',
+      'The technical requirements, as set out in BS 7671',
       'Productivity, profitability, and customer satisfaction',
-      'The JIB grade a worker is entitled to hold',
-      'The validity period of an ECS card',
+      'The JIB grade, and the rate, a worker may hold',
+      'The validity period, in years, of an ECS card',
     ],
     correctAnswer: 1,
     explanation: 'Effective time management improves efficiency and customer satisfaction.',
@@ -2550,9 +2555,9 @@ export const module7Questions: Question[] = [
     id: 175,
     question: 'Basic accounting knowledge helps electricians understand:',
     options: [
-      'The technical content of the wiring regulations',
-      'How to carry out inspection and testing correctly',
-      'The competence levels required for each JIB grade',
+      'The technical content of the wiring regulations, in detail',
+      'How to inspect, test, and certify correctly',
+      'The competence levels required, for each JIB grade',
       'Profit, costs, and financial health of their work',
     ],
     correctAnswer: 3,
@@ -2565,9 +2570,9 @@ export const module7Questions: Question[] = [
     question: 'Marketing for electrical services includes:',
     options: [
       'Word of mouth, online presence, and professional reputation',
-      'Holding a valid ECS card and trade qualifications',
-      'Maintaining accurate records of completed jobs',
-      'Registering with a competent person scheme',
+      'Holding a valid ECS card, and trade qualifications',
+      'Maintaining accurate records, job by job',
+      'Registering with a competent person scheme, and nothing else',
     ],
     correctAnswer: 0,
     explanation: 'Effective marketing combines reputation, presence, and customer recommendations.',
@@ -2607,9 +2612,9 @@ export const module7Questions: Question[] = [
     id: 179,
     question: 'Self-employed electricians need to understand:',
     options: [
-      'Only the technical content of BS 7671',
-      'The JIB grading structure for employed operatives',
-      'Trade union negotiation procedures',
+      'Only the technical content of BS 7671, and nothing more',
+      'The JIB grading structure, for employed operatives',
+      'Trade union negotiation procedures, and pay bargaining',
       'Tax, insurance, and business legal requirements',
     ],
     correctAnswer: 3,
@@ -2622,8 +2627,8 @@ export const module7Questions: Question[] = [
     question: 'Record keeping for electrical work should include:',
     options: [
       'Job details, materials, time, and financial records',
-      'Only the final invoice issued to the customer',
-      'Personal opinions of the client and other trades',
+      'Only the final invoice, as issued to the customer',
+      'Personal opinions of the client, and of other trades',
       'Nothing, provided the work meets BS 7671',
     ],
     correctAnswer: 0,
@@ -2650,10 +2655,10 @@ export const module7Questions: Question[] = [
     id: 182,
     question: 'Digital skills for modern electricians include:',
     options: [
-      'Replacing all paper certificates with verbal sign-off',
-      'Avoiding the use of test instruments on site',
+      'Replacing all paper certificates, with verbal sign-off',
+      'Avoiding test instruments, and relying on inspection alone',
       'Using apps, software, and digital tools for efficiency',
-      'Relying solely on memory rather than reference material',
+      'Relying solely on memory, rather than reference material',
     ],
     correctAnswer: 2,
     explanation:
@@ -2680,9 +2685,9 @@ export const module7Questions: Question[] = [
     question: 'Problem-solving skills in electrical work extend to:',
     options: [
       'Technical, customer, and business challenges',
-      'Only fault-finding on electrical circuits',
-      'Matters that fall solely within BS 7671',
-      'Tasks delegated entirely to a supervisor',
+      'Only fault-finding, and nothing wider',
+      'Matters that fall within BS 7671, and no others',
+      'Tasks a supervisor delegates, and nothing else',
     ],
     correctAnswer: 0,
     explanation: 'Problem-solving applies to technical, interpersonal, and business situations.',
@@ -2707,10 +2712,10 @@ export const module7Questions: Question[] = [
     id: 186,
     question: 'Invoice presentation should be:',
     options: [
-      'Issued verbally to avoid creating a paper trail',
-      'Left until several months after the work is done',
+      'Issued verbally, to avoid creating a paper trail',
+      'Left for several months, well after the work is done',
       'Clear, professional, and detailed appropriately',
-      'A single total with no breakdown of charges',
+      'A single total, with no breakdown of charges',
     ],
     correctAnswer: 2,
     explanation: 'Professional invoices support timely payment and business credibility.',
@@ -2737,9 +2742,9 @@ export const module7Questions: Question[] = [
     question: 'Supplier relationships affect business by:',
     options: [
       'Influencing prices, availability, and support received',
-      'Determining the JIB grade of employed staff',
-      'Setting the technical standards work must meet',
-      'Replacing the need for professional indemnity cover',
+      'Determining the JIB grade, and rate, of employed staff',
+      'Setting the technical standards, that work must meet',
+      'Replacing the need for professional indemnity cover, entirely',
     ],
     correctAnswer: 0,
     explanation: 'Good supplier relationships provide better prices, availability, and support.',
@@ -2764,10 +2769,10 @@ export const module7Questions: Question[] = [
     id: 190,
     question: 'Risk management in electrical business includes:',
     options: [
-      'Only the technical risks covered by BS 7671',
-      'Risks faced by employees but not the business itself',
+      'Only the technical risks, as covered by BS 7671',
+      'Risks faced by employees, but not the business itself',
       'Financial, reputational, and operational risks',
-      'Risks that can be transferred entirely to the client',
+      'Risks that can be transferred, entirely, to the client',
     ],
     correctAnswer: 2,
     explanation:
@@ -2779,9 +2784,9 @@ export const module7Questions: Question[] = [
     id: 191,
     question: 'Stress management is important in electrical work because:',
     options: [
-      'Stress only affects office-based and managerial staff',
-      'It removes the need to follow safe working practices',
-      'Pressure has no effect on the quality of work',
+      'Stress affects office-based staff, but not site staff',
+      'Managing it removes the need, in law, to work safely',
+      'Pressure has no effect, either way, on the quality of work',
       'Deadlines, complexity, and responsibility can create pressure',
     ],
     correctAnswer: 3,
@@ -2822,10 +2827,10 @@ export const module7Questions: Question[] = [
     id: 194,
     question: 'Understanding insurance requirements includes:',
     options: [
-      "Vehicle breakdown cover and tool replacement only",
-      "A single policy covering every possible business risk",
+      'Vehicle breakdown, tool replacement, and nothing more',
+      'A single policy, covering every possible business risk',
       "Public liability, employer's liability, and professional indemnity",
-      "Cover that is only needed by limited companies",
+      'Cover needed only by limited companies, not sole traders',
     ],
     correctAnswer: 2,
     explanation: 'Appropriate insurance protects against various business and professional risks.',
@@ -2851,9 +2856,9 @@ export const module7Questions: Question[] = [
     question: 'Decision-making skills for electricians involve:',
     options: [
       'Balancing technical, practical, and business factors',
-      'Considering only the lowest-cost option each time',
-      'Following the customer’s wishes regardless of safety',
-      'Deferring every choice to a supervisor or manager',
+      'Considering only the lowest-cost option, every time',
+      'Following the customer\'s wishes, regardless of safety',
+      'Deferring every choice, to a supervisor or manager',
     ],
     correctAnswer: 0,
     explanation: 'Good decision-making balances multiple factors for optimal outcomes.',
@@ -2878,10 +2883,10 @@ export const module7Questions: Question[] = [
     id: 198,
     question: 'Ethics in electrical business includes:',
     options: [
-      'Maximising profit by whatever means available',
-      'Charging the highest price the customer will accept',
+      'Maximising profit, by whatever means available',
+      'Charging the highest price, that the customer will accept',
       'Honesty, fair dealing, and professional integrity',
-      'Disclosing only the information a client requests',
+      'Disclosing only what a client asks for, and no more',
     ],
     correctAnswer: 2,
     explanation: 'Ethical practice builds trust and sustainable business relationships.',
@@ -2931,7 +2936,7 @@ export const module7Questions: Question[] = [
     explanation:
       'Scheme registration is granted against a defined scope of work types and premises that the assessment actually covered, so the first question is whether this job falls inside it. Self-certification is the attractive wrong answer because the electrician does hold registration, but a domestic scope does not extend to commercial premises, and self-certification exists to satisfy building regulations for dwellings rather than to authorise any job anywhere.',
     section: '7.3',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 202,
@@ -2947,7 +2952,7 @@ export const module7Questions: Question[] = [
     explanation:
       'The Health and Safety at Work etc Act 1974 places duties on employers and on the self employed to protect themselves and anyone else affected by what they do. The tempting answer is that the main contractor carries everything, because the main contractor does hold coordination duties on site, but those duties sit alongside rather than replace the duty carried personally by the self employed worker.',
     section: '7.3',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 203,
@@ -2963,7 +2968,7 @@ export const module7Questions: Question[] = [
     explanation:
       'Professional indemnity responds to financial loss caused by professional advice, specification or design that turns out to be wrong. Public liability is the attractive distractor because contractors carry it routinely, but it is triggered by injury to people or damage to property belonging to others, and here the loss is purely the cost of putting a faulty design right.',
     section: '7.7',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 204,
@@ -2979,7 +2984,7 @@ export const module7Questions: Question[] = [
     explanation:
       'Employers liability insurance becomes a legal requirement once a business employs somebody, because it funds compensation if that worker is injured or made ill by the work. Public liability is the common wrong answer because almost every contractor holds it and clients often insist on it, but that pressure is commercial and contractual rather than a general statutory duty.',
     section: '7.7',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 205,
@@ -3011,7 +3016,7 @@ export const module7Questions: Question[] = [
     explanation:
       'Registration with a competent person scheme buys the right to self certify notifiable domestic work; without it the same work is still lawful, but it has to be notified to building control instead. Issuing a certificate is the attractive wrong answer because certification is genuinely required, yet a certificate satisfies the wiring standard and says nothing about the separate building regulations notification.',
     section: '7.3',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 207,
@@ -3035,9 +3040,9 @@ export const module7Questions: Question[] = [
       'Why does an experienced electrician still need continuing professional development long after qualifying?',
     options: [
       'Standards, technology and guidance change after qualification',
-      'Qualifications expire and have to be retaken every single year',
-      'Employers must by law fund a fixed number of training days',
-      'It replaces supervision when working on unfamiliar job types',
+      'Qualifications expire, and have to be retaken every single year',
+      'Employers must, by law, fund a fixed number of training days',
+      'It replaces supervision, when working on unfamiliar job types',
     ],
     correctAnswer: 0,
     explanation:
@@ -3059,7 +3064,7 @@ export const module7Questions: Question[] = [
     explanation:
       'Third party certification exists so that a customer who cannot judge technical competence can rely on an independent body having assessed it against published criteria. The transfer of responsibility option appeals because scheme bodies do run complaints procedures, but legal responsibility for the work stays with the contractor who carried it out and signed for it.',
     section: '7.3',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 210,
@@ -3075,7 +3080,7 @@ export const module7Questions: Question[] = [
     explanation:
       'Status is judged on how the relationship actually works, and the classic markers of employment are control over when and how the work is done, personal service with no right of substitution, and equipment provided by the engager. Invoicing is the attractive wrong answer because it looks like self employment on paper, but paperwork does not override the reality of the arrangement.',
     section: '7.7',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 211,
@@ -3091,7 +3096,7 @@ export const module7Questions: Question[] = [
     explanation:
       'A grading card is a means of confirming that the qualifications, training and status claimed by an individual have been checked by the issuing body, which is why sites ask for it at induction. Calling it a legal licence is the attractive error because many sites refuse entry without one, but that is a site access rule imposed by the contractor rather than a statutory requirement to hold a card before working.',
     section: '7.3',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 212,
@@ -3107,7 +3112,7 @@ export const module7Questions: Question[] = [
     explanation:
       'Competence for inspection and testing is built from underpinning knowledge plus real experience of the work under someone who already holds it, which is why the recognised route pairs a qualification with supervised practice. Registering a company is the tempting shortcut because it changes what can be signed, but forming a business does not create the technical competence that signing an inspection report depends on.',
     section: '7.2',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 213,
@@ -3123,7 +3128,7 @@ export const module7Questions: Question[] = [
     explanation:
       'A limited company is a separate legal person, so business debts and most claims sit against the company rather than against the owner personally, which is the main reason contractors incorporate. The idea that a sole trader cannot employ people is a common misunderstanding, because a sole trader can take on staff and apprentices and then carries full employer duties for them.',
     section: '7.7',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 214,
@@ -3155,7 +3160,7 @@ export const module7Questions: Question[] = [
     explanation:
       'Electrical safety law prohibits work on or near live conductors unless it is unreasonable for them to be dead, it is reasonable for the work to proceed live, and suitable precautions have been taken. Commercial pressure is the attractive answer because lost trading is a genuine cost, but inconvenience to the client does not make isolation unreasonable and cannot satisfy that test.',
     section: '7.3',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 216,
@@ -3171,7 +3176,7 @@ export const module7Questions: Question[] = [
     explanation:
       'Microgeneration certification is a product and installer standard that customers and funding bodies rely on, and access to certain support and incentive arrangements is conditional on the installation being certified. Treating it as the only notification route is wrong because building regulations notification is a separate matter handled through building control or a competent person scheme.',
     section: '7.4',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 217,
@@ -3187,7 +3192,7 @@ export const module7Questions: Question[] = [
     explanation:
       'Employees are entitled to a written statement of the main particulars of employment, covering matters such as pay, hours, holiday and place of work, so that the terms are not left to memory. The health and safety policy is a genuine document the employer may have to provide, but it addresses safety arrangements rather than the terms on which the person is employed.',
     section: '7.7',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 218,
@@ -3267,7 +3272,7 @@ export const module7Questions: Question[] = [
     explanation:
       'A quotation states a fixed price which, once accepted, forms part of the contract and cannot be raised unless the customer agrees a variation. Confusing it with an estimate is the classic error, because an estimate is a considered guide that can move as the job unfolds, and contractors who use the words interchangeably end up unable to justify their final figure.',
     section: '7.7',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 223,
@@ -3299,7 +3304,7 @@ export const module7Questions: Question[] = [
     explanation:
       'Where an immediate danger is identified, it must be recorded and the person responsible for the installation warned without delay, in writing as well as verbally, so that the risk is not left unknown. Carrying out repairs regardless is wrong because work needs the consent of the person who controls the installation, but consent being refused never excuses failing to warn.',
     section: '7.4',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 225,
@@ -3331,7 +3336,7 @@ export const module7Questions: Question[] = [
     explanation:
       'Competence means having the knowledge, skill and experience for the specific work, and the honest route into unfamiliar work is training or working alongside someone who already holds that competence. Treating a charge point as just a radial circuit is the seductive error, because the supply arrangement and protective measures involved go well beyond a standard final circuit.',
     section: '7.6',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 227,
@@ -3363,7 +3368,7 @@ export const module7Questions: Question[] = [
     explanation:
       'Without written terms there is no agreed record of what was to be done or what was to be paid, so any later disagreement comes down to one word against another. The certification option is wrong because a certificate depends on the work and the testing rather than on the commercial paperwork, and it can be issued whatever the contract arrangements.',
     section: '7.7',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 229,
@@ -3379,7 +3384,7 @@ export const module7Questions: Question[] = [
     explanation:
       'Teaching and assessing are separate skills from doing the work, so the move into training normally means gaining a teaching or assessor qualification while keeping trade knowledge up to date. Scheme registration is the plausible wrong answer because it signals competence to customers, but it certifies installation work rather than any ability to teach or assess others.',
     section: '7.2',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 230,
@@ -3395,7 +3400,7 @@ export const module7Questions: Question[] = [
     explanation:
       'The three declarations exist because design, construction and verification are distinct responsibilities, and whoever signs each one is accepting responsibility for that part of the work. Assuming three people are always needed is the common misreading, since on a small job one competent person may properly sign all three, and the split is about accountability rather than headcount.',
     section: '7.3',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 231,
@@ -3411,23 +3416,23 @@ export const module7Questions: Question[] = [
     explanation:
       'Employees are required by law to co-operate with their employer and to use safety equipment fully and correctly, so refusing to wear issued protection is a breach by the worker. Blaming the employer alone is attractive because employers do carry supervision duties, but the duty to provide and the duty to use sit on different people and both apply at once.',
     section: '7.3',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 232,
     question:
       'A newly self employed electrician sets an hourly charge by simply copying the hourly pay received in the last employed job. What is wrong with that approach?',
     options: [
-      'It ignores that customers expect to pay a lower rate',
-      'It ignores that employed rates already include profit',
-      'It ignores the need to charge for materials as well',
+      'It ignores that customers, in general, expect a lower rate',
+      'It ignores that employed rates, as paid, include profit',
+      'It ignores materials, which must be charged separately',
       'It ignores overheads, holidays and unbilled time',
     ],
     correctAnswer: 3,
     explanation:
       'A charge out rate has to carry van costs, insurance, tools, training, quoting time and unpaid holidays as well as the earnings the person wants, so it is always well above an employed hourly wage. Forgetting materials is the plausible distractor, but materials are normally charged separately and the real gap is the cost of running the business itself.',
     section: '7.7',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 233,
@@ -3443,7 +3448,7 @@ export const module7Questions: Question[] = [
     explanation:
       'The final practical assessment is the point at which the apprentice demonstrates the whole of the trade under test conditions, so qualified status and the grading that follows it depend on passing it. Claiming full status early is the tempting answer because the coursework is finished, yet the portfolio evidences progress rather than replacing the independent assessment.',
     section: '7.2',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 234,
@@ -3452,14 +3457,14 @@ export const module7Questions: Question[] = [
     options: [
       'Sign it, as the employer carries the legal responsibility',
       'Sign it, provided the other person confirms it was tested',
-      'Sign it and add a note that the work was not witnessed',
+      'Sign it, adding a note that the work was not witnessed',
       'Decline, as the signature confirms personal verification',
     ],
     correctAnswer: 3,
     explanation:
       'Signing the inspection and testing declaration is a personal statement that the signatory has verified the work, so signing for results someone else obtained is false certification whatever the employer says. Adding a caveat is the attractive compromise, but a note does not undo a declaration that the reader will rely on as evidence the installation was actually verified.',
     section: '7.3',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 235,
@@ -3491,7 +3496,7 @@ export const module7Questions: Question[] = [
     explanation:
       'New design work is expected to follow the current standard, so an electrician needs the amended document and needs to know what actually changed before the next job is designed or certified. Waiting for the employer to organise training is the passive answer many give, but responsibility for keeping personal competence current rests with the individual as well.',
     section: '7.6',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 237,
@@ -3507,7 +3512,7 @@ export const module7Questions: Question[] = [
     explanation:
       'Age is a protected characteristic, so rejecting an applicant on that basis is unlawful discrimination regardless of how informally the decision was made. The idea that it is safe if nothing is written down is a widespread and dangerous belief, because a decision can be shown to be discriminatory from the pattern of behaviour and evidence given by witnesses.',
     section: '7.7',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 238,
@@ -3539,7 +3544,7 @@ export const module7Questions: Question[] = [
     explanation:
       'Opened electrical equipment must not be left unattended: it is either secured against access or a competent person stays with it, because live parts may be exposed to people who cannot recognise the danger. A verbal warning is the tempting minimum, but a spoken caution to one person does not control access by everyone else who may walk past.',
     section: '7.3',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 240,
@@ -3563,9 +3568,9 @@ export const module7Questions: Question[] = [
       'Which development has most expanded the range of work available to electricians in recent years?',
     options: [
       'Growth in renewable generation, storage and vehicle charging',
-      'A general reduction in the number of homes being rewired',
-      'The move from steel conduit to plastic trunking on sites',
-      'The reduction in the number of test instruments needed',
+      'A general reduction, year on year, in homes being rewired',
+      'The move from steel conduit, to plastic trunking, on sites',
+      'The reduction, on most jobs, in test instruments needed',
     ],
     correctAnswer: 0,
     explanation:
@@ -3578,10 +3583,10 @@ export const module7Questions: Question[] = [
     question:
       'Why does a written handover matter when an installation passes from one electrician to another part way through?',
     options: [
-      'It proves who should be paid for each hour of the job',
+      'It proves who should be paid, hour by hour, on the job',
       'It records what is complete, tested and still isolated',
-      'It replaces the need for certification at the handover',
-      'It allows the second electrician to reprice the works',
+      'It replaces certification, at the point of handover',
+      'It allows the second electrician, on arrival, to reprice',
     ],
     correctAnswer: 1,
     explanation:
@@ -3594,16 +3599,16 @@ export const module7Questions: Question[] = [
     question:
       'What is the practical difference between joining a trade association and registering with a competent person scheme?',
     options: [
-      'A trade association assesses the technical work on site',
-      'A competent person scheme is chosen purely for marketing',
+      'A trade association assesses the work, a scheme does not',
+      'A competent person scheme, like an association, is marketing',
       'A scheme assesses the work, an association gives support',
-      'A trade association can notify work to building control',
+      'A trade association, not the scheme, notifies building control',
     ],
     correctAnswer: 2,
     explanation:
       'A competent person scheme carries out technical assessment against defined criteria and is the route to self certifying notifiable work, whereas a trade association mainly offers representation, guidance and business support. Both display a logo on a van, which is exactly why customers and candidates confuse them, but only one involves the work itself being assessed.',
     section: '7.4',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 244,
@@ -3629,13 +3634,13 @@ export const module7Questions: Question[] = [
       'Refuse and raise it, as the instruction creates danger',
       'Carry it out, since a supervisor gave the instruction',
       'Do it, but ask a colleague to watch from a distance',
-      'Do it and record the concern in the site diary later',
+      'Do it, then record the concern in the site diary later',
     ],
     correctAnswer: 0,
     explanation:
       'An instruction does not make unsafe work lawful, and an apprentice working alone on live equipment fails both the live working test and the requirement for adequate supervision of someone still training. Having a colleague watch is the tempting halfway house, because accompaniment sounds safer, but it does not address the fact that the work should be done dead.',
     section: '7.3',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 246,
@@ -3667,7 +3672,7 @@ export const module7Questions: Question[] = [
     explanation:
       'Grievance procedures exist so that a complaint is put in writing, investigated and answered inside the business, and using them first is expected before any external step is taken. Resigning on the spot is the emotional response, but leaving voluntarily weakens any later claim and removes the chance for the matter to be corrected internally.',
     section: '7.7',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 248,
@@ -3699,17 +3704,17 @@ export const module7Questions: Question[] = [
     explanation:
       'Registration is granted against the categories of work that were assessed, so advertising it as blanket approval for everything the business does overstates what the assessment covered. Saying registration cannot be advertised is wrong, because schemes actively encourage members to display their status, provided the claim reflects the scope actually held.',
     section: '7.4',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 250,
     question:
       'Why should an electrician confirm cable route positions with the other trades before first fix begins?',
     options: [
-      'To make sure the builder pays for any wasted materials',
+      'To make sure the builder, not the electrician, pays for waste',
       'To avoid clashes with pipework, ducts and structural parts',
-      'To decide who signs the installation certificate at the end',
-      'To agree which trade will complete the site paperwork',
+      'To decide who signs the installation certificate, at the end',
+      'To agree which trade, of those on site, does the paperwork',
     ],
     correctAnswer: 1,
     explanation:
@@ -3875,9 +3880,9 @@ export const module7Questions: Question[] = [
     id: 262,
     question: 'Who holds the registration when a contracting business joins a competent person scheme?',
     options: [
-      'The apprentice once they have completed training',
-      'Each electrician the business employs on site',
-      'The individual who signs the certificates',
+      'The apprentice, once they have completed training',
+      'Each electrician, individually, that the business employs',
+      'The individual, whoever signs the certificates',
       'The business, with a named qualified supervisor',
     ],
     correctAnswer: 3,
@@ -4009,7 +4014,7 @@ export const module7Questions: Question[] = [
     correctAnswer: 0,
     explanation: 'The classroom diploma proves knowledge and workshop skill, but recognition as a qualified electrician also requires assessed competence on real work and the final practical assessment. Adding an ECS card is the tempting answer because a card looks like proof, but the card is issued on the strength of those achievements rather than instead of them.',
     section: '7.3',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 272,
@@ -4023,7 +4028,7 @@ export const module7Questions: Question[] = [
     correctAnswer: 1,
     explanation: 'Registration rests on having a qualified supervisor in place, so the operator has to be notified and a suitable replacement identified rather than the business carrying on quietly. Waiting until renewal is the tempting answer because that is when paperwork is normally checked, but the condition is a continuing one.',
     section: '7.6',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 273,
@@ -4037,7 +4042,7 @@ export const module7Questions: Question[] = [
     correctAnswer: 2,
     explanation: 'Missing certification surfaces as a conveyancing enquiry, which usually leads to an indemnity policy, a retention or a demand for inspection before completion. Saying the sale cannot proceed is the tempting overstatement, because it is a commercial obstacle rather than a legal bar.',
     section: '7.6',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 274,
@@ -4051,7 +4056,7 @@ export const module7Questions: Question[] = [
     correctAnswer: 3,
     explanation: 'Professional registration is awarded by an institution licensed to assess candidates against the national competence standard, on evidence and interview. Assuming a qualification plus time is enough is the tempting error, because registration is assessed on demonstrated competence rather than on years served.',
     section: '7.6',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 275,
@@ -4065,7 +4070,7 @@ export const module7Questions: Question[] = [
     correctAnswer: 0,
     explanation: 'A goal you cannot act on directly leaves you waiting rather than working, so it should be restated as something you control, such as taking on a named task or qualification. Saying it cannot be recorded is the tempting answer, but anything can be written down; the problem is that it cannot be achieved by your own effort.',
     section: '7.4',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 276,
@@ -4079,7 +4084,7 @@ export const module7Questions: Question[] = [
     correctAnswer: 1,
     explanation: 'A goal with a date and a point at which progress is reviewed forces action while there is still time to correct course. Writing it down rather than saying it is the tempting answer because recording helps, but a written goal with no deadline drifts just as easily as a spoken one.',
     section: '7.4',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 277,
@@ -4093,7 +4098,7 @@ export const module7Questions: Question[] = [
     correctAnswer: 2,
     explanation: 'The skill that separates a working electrician from a business owner is pricing and controlling jobs, so learning it inside someone else\'s business is the natural bridge. Buying a van and tools is the tempting answer because it feels like starting up, but equipment does not teach anyone how to price work.',
     section: '7.4',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 278,
@@ -4107,7 +4112,7 @@ export const module7Questions: Question[] = [
     correctAnswer: 3,
     explanation: 'A plan is a working document, and reviewing it against what employers are actually recruiting for is the step that keeps it useful. Asking the employer to write a new one is the tempting answer because employers do support development, but a career plan that belongs to someone else stops being a career plan.',
     section: '7.4',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 279,
@@ -4121,7 +4126,7 @@ export const module7Questions: Question[] = [
     correctAnswer: 0,
     explanation: 'The portfolio is the record of workplace tasks performed and witnessed, which is what a review of on-site progress turns on. The training plan is the tempting answer because it comes to every review, but it states what was intended rather than what has been achieved.',
     section: '7.3',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 280,
@@ -4135,7 +4140,7 @@ export const module7Questions: Question[] = [
     correctAnswer: 1,
     explanation: 'Estimating and technical support use the same knowledge from an office, which is what the stated aim requires. Supervision is the tempting answer because it sounds like a step up from tools, but a supervisor is still on site and often at height.',
     section: '7.4',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 281,
@@ -4149,7 +4154,7 @@ export const module7Questions: Question[] = [
     correctAnswer: 2,
     explanation: 'Reporting on existing installations calls for judgement about what is found in service, which is built by doing exactly that work. Installation experience is the tempting answer because it teaches how systems are built, but knowing how something should be built is only half of judging what has degraded.',
     section: '7.4',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 282,
@@ -4200,7 +4205,7 @@ export const module7Questions: Question[] = [
       'At the design stage, by the customer\'s agent',
       'Before work starts, by the business directly',
       'After completion, through the scheme',
-      'Only if the customer asks for confirmation',
+      'Never, unless the customer asks for confirmation',
     ],
     correctAnswer: 2,
     explanation: 'A registered business certifies its own work and the scheme passes the notification to the authority after the job, which is the whole convenience of registration. Notifying before work starts is the tempting answer because that is exactly what an unregistered installer must do.',
@@ -4317,7 +4322,7 @@ export const module7Questions: Question[] = [
     correctAnswer: 2,
     explanation: 'Where notifiable work has gone through unnotified, the authority can require alteration or removal so that the work complies. Disconnection is the tempting answer because it sounds like the strongest sanction, but supply disconnection is a matter for the network operator on safety grounds.',
     section: '7.6',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 294,
@@ -4345,7 +4350,7 @@ export const module7Questions: Question[] = [
     correctAnswer: 0,
     explanation: 'Registrations are granted category by category, so the first step is to establish whether the work sits inside the one held and, if not, apply to extend it. Applying to a second operator is the tempting answer because more registrations sound safer, but the extension is made through the existing operator.',
     section: '7.6',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 296,
@@ -4359,21 +4364,21 @@ export const module7Questions: Question[] = [
     correctAnswer: 1,
     explanation: 'Registration depends on continuing conditions, principally having a qualified supervisor in post and maintaining insurance and calibrated instruments, not just on passing the visit. Submitting every certificate for approval is the tempting answer because schemes do sample them, but sampling is not prior approval.',
     section: '7.6',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 297,
     question: 'A customer compares two contractors registered with different scheme operators. What actually differs for the customer?',
     options: [
-      'The regulations the certificate is issued under',
-      'The standard the work is assessed against',
+      'The regulations, under which each certificate is issued',
+      'The standard, against which the work is assessed',
       'The operator, not the compliance route itself',
-      'The categories of work that can be certified',
+      'The categories of work, and the depth of assessment',
     ],
     correctAnswer: 2,
     explanation: 'All operators certify against the same Building Regulations requirement, so the choice of operator does not change what the customer receives in compliance terms. Assuming the standard differs is the tempting error that scheme marketing can encourage.',
     section: '7.6',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 298,
@@ -4387,7 +4392,7 @@ export const module7Questions: Question[] = [
     correctAnswer: 3,
     explanation: 'Certification rests on the firm holding the assessed competence, so without it new work cannot be offered as certified and customers cannot access export payments or grant funding for it. Existing customers losing payments is the tempting answer, but their installations were certified when they were completed.',
     section: '7.6',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 299,
@@ -4401,21 +4406,21 @@ export const module7Questions: Question[] = [
     correctAnswer: 0,
     explanation: 'The supervisor has to be technically competent in the work the registration covers, which for periodic inspection means inspecting, testing and coding what is found. A management qualification is the tempting answer because the title contains the word supervisor, but the role is technical rather than managerial.',
     section: '7.6',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 300,
     question: 'A customer asks whether scheme registration means their installation is guaranteed. What is the accurate answer?',
     options: [
-      'Registration guarantees the work for six years',
+      'Registration guarantees the work; six years minimum',
       'Registration certifies compliance; cover varies',
-      'Registration transfers all liability to the operator',
-      'Registration replaces the need for any insurance',
+      'Registration transfers liability; the operator carries it',
+      'Registration replaces insurance; no cover needed',
     ],
     correctAnswer: 1,
     explanation: 'The registration is about certifying compliance; any workmanship warranty is a separate benefit that differs between operators and has its own conditions. Assuming a fixed guarantee period is the tempting answer because warranties are heavily advertised, but they are not what registration itself provides.',
     section: '7.6',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 301,
@@ -4429,7 +4434,7 @@ export const module7Questions: Question[] = [
     correctAnswer: 2,
     explanation: 'The employer and the training provider own the plan between them, so the employer\'s training contact is the person who can change what work the apprentice is given. Going to the awarding body is the tempting answer because they own the qualification, but they have no say in what an employer allocates.',
     section: '7.3',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 302,
@@ -4443,7 +4448,7 @@ export const module7Questions: Question[] = [
     correctAnswer: 3,
     explanation: 'Vacancy and skills shortage data show what employers are actually recruiting for over time, which is the question being asked. Course availability is the tempting answer because training providers respond to demand, but courses are also created ahead of demand that never arrives.',
     section: '7.4',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 303,
@@ -4457,21 +4462,21 @@ export const module7Questions: Question[] = [
     correctAnswer: 0,
     explanation: 'Everything on a CV is the applicant\'s own account, and a referee is the first independent check on it. Confirming the card is the tempting answer because employers do verify cards, but that is done against the issuing register rather than through a referee.',
     section: '7.4',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 304,
     question: 'An apprentice sets five career goals all falling due in the same month. What is the flaw in that plan?',
     options: [
-      'The goals will not be measurable in any way',
+      'The goals, as written, cannot be measured at all',
       'Nothing is sequenced, so all five compete',
-      'The goals cannot be recorded in one document',
-      'The employer will not agree to fund all five',
+      'The goals, being five, cannot sit in one document',
+      'The employer, in any case, will not fund all five',
     ],
     correctAnswer: 1,
     explanation: 'Goals that all mature together leave no order of work and no capacity to complete any of them properly, so a plan needs staging as well as deadlines. Saying they are not measurable is the tempting answer, but each one may be perfectly measurable on its own.',
     section: '7.4',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 305,
@@ -4485,7 +4490,7 @@ export const module7Questions: Question[] = [
     correctAnswer: 2,
     explanation: 'The course may be specific, measurable, achievable and timed, and still take the electrician away from where they said they were going. Measurability is the tempting answer because it is the element people check first, but nothing about the measurement is at fault here.',
     section: '7.4',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 306,
@@ -4499,7 +4504,7 @@ export const module7Questions: Question[] = [
     correctAnswer: 3,
     explanation: 'A completed goal is both evidence of development and the point from which the next step is set, so it is recorded and built on. Waiting for the employer is the tempting answer because reviews are often employer led, but the plan belongs to the individual.',
     section: '7.4',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 307,
@@ -4513,7 +4518,7 @@ export const module7Questions: Question[] = [
     correctAnswer: 0,
     explanation: 'There is a deadline but nothing to measure against, so in December nobody can say whether the goal was reached. The missing date is the tempting answer because that is the usual fault, but a date is present here.',
     section: '7.4',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 308,
@@ -4527,7 +4532,7 @@ export const module7Questions: Question[] = [
     correctAnswer: 1,
     explanation: 'Valuing varied work against the contract is the quantity surveyor\'s function, which is why they hold the measured record. The estimator is the tempting answer because they set the original prices, but their work finished when the tender was submitted.',
     section: '7.1',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 309,
@@ -4541,7 +4546,7 @@ export const module7Questions: Question[] = [
     correctAnswer: 2,
     explanation: 'Design and consultancy decide the arrangement, capacity and protection before anything reaches site, which is the influence described. Site supervision is the tempting answer because it carries authority, but a supervisor delivers a design that has already been settled.',
     section: '7.4',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 310,
@@ -4555,7 +4560,7 @@ export const module7Questions: Question[] = [
     correctAnswer: 3,
     explanation: 'Planned maintenance in occupied buildings runs to a schedule, indoors, on predictable hours, which is what the stated aim requires. Emergency call-out work is the tempting answer because it is also away from new build sites, but it is by nature unplanned and out of hours.',
     section: '7.4',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 311,
@@ -4563,13 +4568,13 @@ export const module7Questions: Question[] = [
     options: [
       'The employer, with the training provider',
       'The apprentice, in their own unpaid time',
-      'The awarding body that issues the certificate',
-      'The main contractor controlling the site',
+      'The awarding body, which issues the certificate',
+      'The main contractor, who controls the site',
     ],
     correctAnswer: 0,
     explanation: 'Off-the-job learning is part of the apprenticeship the employer signed up to deliver, planned and evidenced jointly with the provider. Placing it on the apprentice\'s own time is the tempting answer because study does spill over, but it is a duty of the employer, not a favour to the apprentice.',
     section: '7.3',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 312,
@@ -4583,7 +4588,7 @@ export const module7Questions: Question[] = [
     correctAnswer: 1,
     explanation: 'Routes exist for experienced workers to have their competence assessed and gaps filled without repeating training they have long since exceeded. References are the tempting answer because they evidence the years worked, but grading turns on assessed competence rather than testimony.',
     section: '7.2',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 313,
@@ -4597,7 +4602,7 @@ export const module7Questions: Question[] = [
     correctAnswer: 2,
     explanation: 'An accounted-for gap is a fact; an unexplained one invites the reader to imagine the worst, so it is better addressed in the document. Using years only is the tempting answer because it hides the gap, but a reader who notices the technique distrusts the whole CV.',
     section: '7.4',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 314,
@@ -4611,7 +4616,7 @@ export const module7Questions: Question[] = [
     correctAnswer: 3,
     explanation: 'Writing down the requirements first means every applicant is measured against the same stated standard rather than against each other\'s impressions. Calling it a legal requirement is the tempting answer, because using one does help demonstrate fair recruitment without being compulsory.',
     section: '7.4',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 315,
@@ -4625,7 +4630,7 @@ export const module7Questions: Question[] = [
     correctAnswer: 0,
     explanation: 'The progress review checks how far the apprentice has moved through the planned programme, with the employer and provider both present. Linking it to pay is the tempting answer because appraisals often are, but a progress review is about learning rather than reward.',
     section: '7.3',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 316,
@@ -4639,7 +4644,7 @@ export const module7Questions: Question[] = [
     correctAnswer: 1,
     explanation: 'Moving sector changes the systems, voltages and hazards encountered, so the honest question is whether existing competence reaches them. Assuming qualifications expire after a period is the tempting error, because a qualification records what was achieved and does not lapse.',
     section: '7.3',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 317,
@@ -4653,7 +4658,7 @@ export const module7Questions: Question[] = [
     correctAnswer: 2,
     explanation: 'Firms close, providers archive and records go missing, and an apprentice who cannot produce evidence years later may have to redo work already completed. Site access is the tempting answer because cards are checked at the gate, but certificates are not what the gate asks for.',
     section: '7.3',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 318,
@@ -4667,7 +4672,7 @@ export const module7Questions: Question[] = [
     correctAnswer: 3,
     explanation: 'Grades reflect assessed qualifications and the competence they evidence, so time served alone moves nobody up. Saying the employer must apply is the tempting answer because employers do support applications, but the barrier is the evidence, not who submits it.',
     section: '7.2',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 319,
@@ -4681,7 +4686,7 @@ export const module7Questions: Question[] = [
     correctAnswer: 0,
     explanation: 'Estimating starts with reading drawings and specifications and turning them into quantities, so experience of doing exactly that transfers directly. Supervision is the tempting answer because it shows responsibility, but managing people is a different skill from measuring work.',
     section: '7.4',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 320,
@@ -4695,6 +4700,261 @@ export const module7Questions: Question[] = [
     correctAnswer: 1,
     explanation: 'Development needs are the distance between where someone is and where they said they were going, which is what makes them worth funding. Trade press coverage is the tempting answer because it signals where the industry is moving, but it says nothing about this individual\'s gap.',
     section: '7.5',
+    difficulty: 'basic',
+  },
+  {
+    id: 321,
+    question:
+      'A householder engages one electrician to rewire their own home and appoints nobody else. Under CDM 2015 who then carries the client duties?',
+    options: [
+      'The householder as the client',
+      'Nobody as CDM excludes domestic work',
+      'The local authority building control body',
+      'The contractor carrying out the work',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'A domestic client is in scope of CDM 2015, but Regulation 7 passes the client duties on: where only one contractor is involved that contractor carries them alongside its own contractor duties. Leaving the duties with the householder is the tempting answer because they commissioned the job and are paying for it, but the Regulations deliberately move them to the party who actually controls the work.',
+    section: '7.4',
+    difficulty: 'advanced',
+  },
+  {
+    id: 322,
+    question: 'A landlord has a rented flat rewired. How is the landlord treated under CDM 2015?',
+    options: [
+      'As a domestic client because a flat is a dwelling',
+      'As a commercial client because the work serves a business',
+      'As a designer because the landlord picked the specification',
+      'As outside CDM because only one contractor attends',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A domestic client is someone having work done on their own home, or the home of a family member, not in connection with a business. Letting property is a business whether or not it turns a profit, so a landlord is a commercial client and keeps the full client duties. The building type is the tempting answer because the work is plainly in a dwelling, but CDM classifies the client by why the work is being done, not by what is being worked on.',
+    section: '7.4',
+    difficulty: 'advanced',
+  },
+  {
+    id: 323,
+    question:
+      'A two day consumer unit replacement falls far below every CDM notification threshold. What follows for the construction phase plan?',
+    options: [
+      'One is still needed as every construction project requires it',
+      'One is needed once the project has been notified',
+      'One is needed where more than one contractor attends',
+      'One is replaced by the risk assessment on jobs this small',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'A construction phase plan is required for every construction project however small, and the requirements of CDM 2015 apply whether or not a project is notifiable. Tying the plan to notification is the tempting error because both look like paperwork triggered by scale, but only notification has a threshold. On a job this size a short written plan is enough to satisfy it.',
+    section: '7.3',
+    difficulty: 'advanced',
+  },
+  {
+    id: 324,
+    question:
+      'A project is scheduled to last 40 working days, with at most 12 workers on site at once and 300 person days in total. Is it notifiable to the Executive?',
+    options: [
+      'Yes because it exceeds 30 working days',
+      'Yes because a principal contractor is needed',
+      'No because neither condition is fully met',
+      'No because notification covers only new build',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Notification is triggered by work scheduled to last longer than 30 working days and to have more than 20 workers on site simultaneously, or alternatively to exceed 500 person days. This job passes the day count but never reaches 20 workers, and 300 person days is well short, so neither limb closes. Reading the 30 days on its own is the usual mistake, because it is the figure people remember and the worker count is quietly dropped.',
+    section: '7.3',
+    difficulty: 'advanced',
+  },
+  {
+    id: 325,
+    question:
+      'CDM 2015 stops a contractor starting construction work until it is satisfied of one thing about the client. What is that thing?',
+    options: [
+      'That welfare facilities have been arranged on site',
+      'That the client knows the duties the client owes',
+      'That the work has been notified to the Executive',
+      'That the client insures the construction work',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A contractor must not carry out construction work unless satisfied that the client is aware of the duties the client owes. Where the contractor is the only one involved that means raising it directly, early, and having enough knowledge of client duties to advise. Welfare and notification are the tempting picks because both are genuine client responsibilities, but the duty here is about the client understanding their position rather than any one arrangement being in place.',
+    section: '7.4',
+    difficulty: 'advanced',
+  },
+  {
+    id: 326,
+    question:
+      'A contractor sublets the containment on a job to another firm. What must the contractor establish before appointing it?',
+    options: [
+      'That the firm belongs to a competent person scheme',
+      'That the firm has been notified to the enforcing authority',
+      'That the firm will adopt the method statement supplied',
+      'That the firm has the skills and experience for the work',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'The duty on anyone appointing a contractor reaches a contractor appointing its own subcontractor. Reasonable steps must be taken to satisfy itself that the firm has the skills, knowledge and experience, and where it is an organisation the capability, to do the work safely. Scheme membership is the tempting answer because it is the credential the trade quotes most often, but the question CDM asks is whether they can do this particular work, not what they are registered for.',
+    section: '7.7',
+    difficulty: 'advanced',
+  },
+  {
+    id: 327,
+    question:
+      'An electrician is the only contractor on a small refurbishment. Who draws up the construction phase plan?',
+    options: [
+      'The client who commissioned the project',
+      'The principal designer for the project',
+      'The electrician',
+      'Nobody until a second contractor arrives',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Where a contractor is the only contractor on a project, that contractor prepares the construction phase plan. A principal designer and a principal contractor are appointed only where more than one contractor is involved, so on a single contractor job there is nobody else to hand it to. Looking up the chain to the client is the tempting move, but the client duty is to make suitable arrangements for managing the project, not to write the plan.',
+    section: '7.4',
+    difficulty: 'advanced',
+  },
+  {
+    id: 328,
+    question:
+      'On a job with no consultant an electrician selects the cable routes and fixes the position of every accessory. What is that electrician under CDM 2015?',
+    options: [
+      'A contractor only as the work is installation',
+      'A principal designer as nobody else designed',
+      'Neither as design means drawings by an architect',
+      'A designer as well as a contractor',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'A designer is anyone who prepares or modifies a design, and design covers specifications as well as drawings, so an electrician choosing routes and positions is designing and picks up the designer duties too. Reaching for principal designer is the tempting step up, but that is an appointment made by the client where more than one contractor is involved, not a title you fall into by being the only person making decisions.',
+    section: '7.4',
+    difficulty: 'advanced',
+  },
+  {
+    id: 329,
+    question:
+      "A labour only subcontractor turns up for the same firm every week on an hourly rate, uses the firm's tools and may not send anyone in his place. He pays his own tax and national insurance. How does health and safety law treat him?",
+    options: [
+      'As self employed because he settles his own tax',
+      'As self employed because the contract is labour only',
+      'As an employee on the balance of the indicators',
+      'As an employee only if he asks to be treated so',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Paying your own tax and national insurance does not make you self employed under health and safety law. The indicators here point the other way: he works regularly for the same firm, on an hourly rate, with their tools, and cannot subcontract his place. His tax position is the tempting answer because it is the one piece of paperwork everybody can see, but status is decided on the substance of the working arrangement.',
+    section: '7.7',
+    difficulty: 'advanced',
+  },
+  {
+    id: 330,
+    question:
+      'A one man firm takes on a single apprentice and employs nobody else. What does the Employers Liability Compulsory Insurance Act 1969 require?',
+    options: [
+      'Cover is required once five or more are employed',
+      'Cover is optional while the apprentice remains at college',
+      'Cover is required and the current certificate displayed',
+      'Cover is provided by the public liability policy held',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Wherever anyone is employed the cover is needed, and the current certificate has to be displayed by the employer. There is no headcount below which it stops applying, and an apprentice is an employee. Leaning on the public liability policy is the tempting answer because almost every firm holds one, but public liability answers claims by third parties such as customers and the public, while this Act is about claims by your own staff.',
+    section: '7.7',
+    difficulty: 'advanced',
+  },
+  {
+    id: 331,
+    question:
+      'An electrician is injured at work on a Monday and cannot do his normal work for the next ten days, counting the weekend. What does RIDDOR require?',
+    options: [
+      'Notification by the quickest practicable means',
+      'An accident book entry with no report at all',
+      'A report only where the injury is a specified one',
+      'A report to the enforcing authority within 15 days',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Where someone is incapacitated for more than seven consecutive days the report goes to the enforcing authority within 15 days of the accident. The seven days exclude the day of the accident but include days that would not have been working days, so the weekend counts. Three days is the figure that sticks in most people’s minds because that was the trigger before April 2013, and it has not been the rule for years.',
+    section: '7.3',
+    difficulty: 'advanced',
+  },
+  {
+    id: 332,
+    question:
+      'A member of the public walking past an electrician working in an occupied office is struck by falling trunking and taken to hospital for treatment. What does RIDDOR require?',
+    options: [
+      'Notification by the quickest practicable means',
+      'Nothing as the person injured was not at work',
+      'A report within 15 days if they lose a week',
+      'An accident book entry once the injury is confirmed',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'An accident taking someone who is not at work to hospital for treatment must be notified without delay by the quickest practicable means, with a written report to follow. How badly they turn out to be hurt does not enter into it, and neither does whether they were ever admitted. Assuming a non worker falls outside RIDDOR is the tempting error, because the rest of the injury reporting rules are written around people at work.',
+    section: '7.3',
+    difficulty: 'advanced',
+  },
+  {
+    id: 333,
+    question:
+      "A doctor confirms that an electrician's mate has fractured a finger on site. He is back on full duties two days later. What does RIDDOR require?",
+    options: [
+      'Immediate notification as a fracture was diagnosed',
+      'No report as neither reporting trigger is met',
+      'A report within 15 days as a doctor was involved',
+      'A dangerous occurrence report as it happened on site',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The specified injury list covers any bone fracture other than one to a finger, a thumb or a toe, so this diagnosis sits outside it. Two days off is also well short of the more than seven consecutive days that triggers the fifteen day report. Reporting anyway is the tempting call, because a confirmed fracture sounds serious and over reporting feels like the safe error, but the two triggers are drawn deliberately and this injury meets neither.',
+    section: '7.3',
+    difficulty: 'advanced',
+  },
+  {
+    id: 334,
+    question:
+      'A doctor diagnoses hand arm vibration syndrome in an electrician who uses breakers and rotary hammers most weeks. Why is that reportable under RIDDOR?',
+    options: [
+      'Because the diagnosis is linked to regular use of vibrating tools',
+      'Because any diagnosis by a doctor is reportable',
+      'Because he will lose more than seven days of work',
+      'Because the employer never measured the vibration',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Occupational disease reports turn on two things together: a diagnosis from the named list, and a work activity of the kind the listing attaches to it. Hand arm vibration syndrome qualifies where the work involves regular use of percussive or vibrating tools, which breakers and rotary hammers plainly are. The diagnosis on its own is the tempting answer, but without the work link there is nothing to report.',
+    section: '7.3',
+    difficulty: 'advanced',
+  },
+  {
+    id: 335,
+    question:
+      'A domestic client has used the same designer before and wants that designer rather than the builder to carry the client duties. When is that possible under CDM 2015?',
+    options: [
+      'When the designer is appointed principal designer',
+      'When the designer is the only person visiting site',
+      'When the local authority approves the arrangement',
+      'When client and designer agree it in writing beforehand',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Where a domestic client already has a relationship with their designer before the work starts, that designer can take the client duties on, but only if there is a written agreement between them saying so. Without it the duties pass to the contractor or the principal contractor by default. Appointment as principal designer is the tempting answer because it sounds like the senior role, but those duties are a separate set and do not absorb the client duties.',
+    section: '7.4',
+    difficulty: 'advanced',
+  },
+  {
+    id: 336,
+    question:
+      'An installation is found to conform fully with BS 7671. What does that establish about the Electricity at Work Regulations 1989?',
+    options: [
+      'Compliance is proved because the standard was written to satisfy them',
+      'Nothing as the two documents address different subjects',
+      'It is likely to satisfy the relevant parts but is no guarantee',
+      'It removes the duty to keep the system in a safe condition',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'An installation conforming to BS 7671 is likely to satisfy the relevant parts of the statutory regulations, but that is a general likelihood rather than a guarantee, and the statutory duty is the one that is enforced. Treating conformity as proof is the tempting shortcut, because the standard is written with those duties in mind, yet BS 7671 is not a statutory instrument and cannot discharge a duty on its own.',
+    section: '7.4',
     difficulty: 'advanced',
   },
 ];

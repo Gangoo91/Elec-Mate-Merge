@@ -38,6 +38,7 @@ import {
 } from '@/hooks/useCalendarEvents';
 import { useDiaryEvents } from '@/hooks/useDiaryEvents';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
+import { useCustomers } from '@/hooks/useCustomers';
 import { spawnFromBooking } from '@/lib/bookingSpawn';
 import { useCalendarPulse } from '@/hooks/useCalendarPulse';
 import { useGoogleCalendarSync } from '@/hooks/useGoogleCalendarSync';
@@ -83,6 +84,8 @@ const CalendarPageContent = () => {
   /** The "now tell them" step, offered after a booking with a customer on it. */
   const [tellSheetOpen, setTellSheetOpen] = useState(false);
   const [tellTarget, setTellTarget] = useState<TellCustomerTarget | null>(null);
+  /** The saved booking the email is sent against. */
+  const [tellEventId, setTellEventId] = useState<string | null>(null);
   const [tellBooking, setTellBooking] = useState<{
     title: string;
     start: Date;
@@ -164,6 +167,8 @@ const CalendarPageContent = () => {
 
   const queryClient = useQueryClient();
   const { companyProfile } = useCompanyProfile();
+  // Needed to resolve the customer on a booking made in another session.
+  const { customers } = useCustomers();
   const createMutation = useCreateCalendarEvent();
   const updateMutation = useUpdateCalendarEvent();
   const deleteMutation = useDeleteCalendarEvent();
@@ -422,6 +427,38 @@ const CalendarPageContent = () => {
     setEventSheetOpen(true);
   }, []);
 
+  /**
+   * Confirm a booking that already exists.
+   *
+   * The customer is looked up rather than carried: this event may have arrived
+   * through the public booking link months ago, so nothing in the current
+   * session knows their number or address. `customers` is already loaded on
+   * this page for the event form.
+   */
+  const handleTellCustomer = useCallback(
+    (event: CalendarEvent) => {
+      const match = customers.find((c) => c.id === event.client_id);
+      if (!match) {
+        toast({ title: 'That customer is no longer on your list', variant: 'destructive' });
+        return;
+      }
+      setDetailSheetOpen(false);
+      setTellTarget({ id: match.id, name: match.name, phone: match.phone, email: match.email });
+      setTellEventId(event.id);
+      setTellBooking({
+        title: event.title,
+        start: new Date(event.start_at),
+        end: new Date(event.end_at),
+        allDay: event.all_day,
+        location: event.location,
+        // Not a reschedule — this is the original booking, said again.
+        movedFrom: null,
+      });
+      setTellSheetOpen(true);
+    },
+    [customers]
+  );
+
   const handleDelete = useCallback(
     (eventId: string) => {
       deleteMutation.mutate(eventId);
@@ -453,6 +490,7 @@ const CalendarPageContent = () => {
                 new Date(before.end_at).getTime() !== new Date(updated.end_at).getTime();
               if (!moved || !extras.customer) return;
               setTellTarget(extras.customer);
+              setTellEventId(updated.id);
               setTellBooking({
                 title: updated.title,
                 start: new Date(updated.start_at),
@@ -516,6 +554,7 @@ const CalendarPageContent = () => {
           // Only worth offering when there is somebody to tell.
           if (extras.customer) {
             setTellTarget(extras.customer);
+            setTellEventId(created.id);
             setTellBooking({
               title: created.title,
               start: new Date(created.start_at),
@@ -596,6 +635,9 @@ const CalendarPageContent = () => {
                 onSwipeLeft={goNext}
                 onSwipeRight={goPrevious}
                 selectedDate={selectedDate}
+                workingHoursStart={settings.workingHoursStart}
+                workingHoursEnd={settings.workingHoursEnd}
+                capacity={settings.jobsAtOnce}
               />
             )}
 
@@ -673,6 +715,7 @@ const CalendarPageContent = () => {
         customer={tellTarget}
         booking={tellBooking}
         businessName={companyProfile?.company_name}
+        eventId={tellEventId}
       />
 
       <CalendarEventDetail
@@ -681,6 +724,7 @@ const CalendarPageContent = () => {
         event={viewingEvent}
         onEdit={handleEdit}
         onDelete={handleDelete}
+        onTellCustomer={handleTellCustomer}
       />
 
       <CalendarSettingsSheet

@@ -13,11 +13,16 @@ import { storageGetJSONSync, storageSetJSONSync, storageRemoveSync } from '@/uti
 import { reportCloud } from '@/utils/reportCloud';
 import { formatLimitationNoticePayload } from '@/utils/limitation-notice-formatter';
 
+/*
+ * Page styling comes from the shared kit. These were local copies that had
+ * drifted from every other Notices & Labels page — see components/forms/pageStyles.
+ */
+import { pageInputCn as inputCn, pageTextareaCn as textareaCn } from '@/components/forms/pageStyles';
+
+import { PageHeader } from '@/components/forms/PageHeader';
+
 const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.04 } } };
 const itemVariants = { hidden: { opacity: 0, y: 8 }, visible: { opacity: 1, y: 0, transition: { duration: 0.25 } } };
-const inputCn = 'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
-const textareaCn = 'textarea-soft rounded-xl border-0 bg-white/[0.05] px-3.5 py-3 text-base md:text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors focus:bg-white/[0.07] focus:ring-1 focus:ring-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/50 focus:outline-none focus:shadow-none min-h-[90px] touch-manipulation';
-
 // --- Types ---
 
 interface LimitationEntry {
@@ -327,22 +332,16 @@ export default function LimitationNoticePage() {
 
   return (
     <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06]">
-        <div className="px-4 pt-3 pb-3 lg:px-8">
-          <div className="mx-auto max-w-3xl lg:max-w-[1600px]">
-            <button onClick={() => navigate(-1)} className="h-11 pr-2 text-[13px] font-semibold text-white/90 transition-colors hover:text-white touch-manipulation">Back</button>
-            <div className="flex items-end justify-between gap-3">
-              <div>
-                <h1 className="text-2xl font-bold tracking-tight text-white sm:text-[28px]">Limitation Notice</h1>
-                <p className="mt-1 text-[13px] text-white/50"><span className="font-semibold text-elec-yellow">BS 7671 Section D.</span> Records the extent and limitations of inspection and testing, the reasons for them, and with whom they were agreed — accompanies the related EICR or EIC.</p>
-                <p className="mt-1 font-mono text-[12px] text-white/50">{data.referenceNumber}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <PageHeader
+        eyebrow="BS 7671"
+        title="Limitation Notice"
+        lead="BS 7671 Section D."
+        description="Records the extent and limitations of inspection and testing, the reasons for them, and with whom they were agreed — accompanies the related EICR or EIC."
+        reference={data.referenceNumber}
+      />
 
-      <motion.main variants={containerVariants} initial="hidden" animate="visible" className="px-4 py-4 space-y-5 mx-auto max-w-3xl lg:max-w-[1600px] lg:px-8 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
+
+      <motion.main variants={containerVariants} initial="hidden" animate="visible" className="px-4 py-4 space-y-5 mx-auto max-w-3xl lg:max-w-none xl:max-w-[1700px] lg:px-8 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
 
         {/* Reference */}
         <Section title="Reference">
@@ -382,7 +381,7 @@ export default function LimitationNoticePage() {
 
         {/* Extent of Installation Covered */}
         <Section title="Extent of installation covered" className="lg:col-span-2">
-          <p className="text-[12.5px] text-white/90">Tick the parts of the installation that WERE inspected and tested:</p>
+          <p className="text-[12.5px] text-white">Tick the parts of the installation that WERE inspected and tested:</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             {extentItems.map((item) => (
               <TickButton key={item.key} checked={data[item.key]} label={item.label} onChange={() => update(item.key, !data[item.key])} />

@@ -13,7 +13,7 @@ import {
 import { useSwipeable } from 'react-swipeable';
 import { cn } from '@/lib/utils';
 import { cardCn, eyebrowCn } from './calendarStyles';
-import { compareEvents, dayKey, effectiveEnd, eventsOnDay, isMultiDay } from './eventUtils';
+import { buildDayShape, compareEvents, dayKey, effectiveEnd, eventsOnDay, isMultiDay } from './eventUtils';
 import type { CalendarEvent } from '@/types/calendar';
 
 interface CalendarMonthViewProps {
@@ -23,6 +23,10 @@ interface CalendarMonthViewProps {
   onSwipeLeft: () => void;
   onSwipeRight: () => void;
   selectedDate?: Date;
+  /** Working day bounds and capacity — what makes a day "full". */
+  workingHoursStart: number;
+  workingHoursEnd: number;
+  capacity: number;
 }
 
 const WEEKDAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -114,6 +118,9 @@ const CalendarMonthView = ({
   onSwipeLeft,
   onSwipeRight,
   selectedDate,
+  workingHoursStart,
+  workingHoursEnd,
+  capacity,
 }: CalendarMonthViewProps) => {
   const swipeHandlers = useSwipeable({
     onSwipedLeft: onSwipeLeft,
@@ -132,6 +139,35 @@ const CalendarMonthView = ({
     for (let i = 0; i < days.length; i += 7) rows.push(days.slice(i, i + 7));
     return rows;
   }, [currentDate]);
+
+  /*
+   * Which days have nothing left in them.
+   *
+   * The grid could say what was ON a day and never whether you could take
+   * anything else — which is the question a month view is actually opened with.
+   * Someone on the phone asking "when can you come?" was being made to tap into
+   * days one at a time to find out.
+   *
+   * Same `buildDayShape` walk the day sheet uses, so a day the grid calls full
+   * cannot open onto a sheet offering slots.
+   */
+  const fullDays = useMemo(() => {
+    const full = new Set<string>();
+    for (const week of weeks) {
+      for (const day of week) {
+        const shape = buildDayShape(
+          eventsOnDay(events, day),
+          day,
+          workingHoursStart,
+          workingHoursEnd,
+          30,
+          capacity
+        );
+        if (shape.freeMinutes === 0) full.add(dayKey(day));
+      }
+    }
+    return full;
+  }, [weeks, events, workingHoursStart, workingHoursEnd, capacity]);
 
   return (
     <div {...swipeHandlers} className={cn(cardCn, 'select-none overflow-hidden')}>
@@ -167,20 +203,26 @@ const CalendarMonthView = ({
               const dotted = eventsOnDay(events, day).filter((e) => !e.all_day && !isMultiDay(e));
               const overflow = hidden.get(key) ?? 0;
               const extra = dotted.length + overflow - 3;
+              const full = inMonth && fullDays.has(key);
 
               return (
                 <button
                   key={key}
                   type="button"
                   onClick={() => onDateSelect(day)}
-                  aria-label={format(day, 'EEEE d MMMM')}
+                  aria-label={`${format(day, 'EEEE d MMMM')}${full ? ' — full' : ''}`}
                   aria-pressed={selected}
                   className={cn(
                     // Taller cells as the grid gets wider, so a wide window
                     // shows squares rather than stretched letterboxes.
-                    'flex min-h-[76px] touch-manipulation flex-col items-center pt-1.5 transition-colors sm:min-h-[104px] xl:min-h-[124px]',
+                    'relative flex min-h-[76px] touch-manipulation flex-col items-center pt-1.5 transition-colors sm:min-h-[104px] xl:min-h-[124px]',
                     col > 0 && 'border-l border-white/[0.05]',
                     weekend && inMonth && 'bg-white/[0.02]',
+                    // A day with nothing left in it. Deliberately a wash over
+                    // the whole cell rather than a badge — you should be able to
+                    // read the shape of a month's availability at a glance,
+                    // without stopping to decode anything.
+                    full && 'bg-orange-500/[0.10]',
                     // An out-of-month day dims as a whole cell. Greying the type
                     // instead would break the all-text-is-white rule and read as
                     // a different colour rather than a quieter day.
@@ -206,6 +248,10 @@ const CalendarMonthView = ({
                     className="w-full shrink-0"
                     style={{ height: MAX_LANES * LANE_PITCH }}
                   />
+
+                  {full && (
+                    <span className="pointer-events-none absolute inset-x-0 bottom-0 h-[2px] bg-orange-400/60" />
+                  )}
 
                   {/* Timed events */}
                   {(dotted.length > 0 || overflow > 0) && (

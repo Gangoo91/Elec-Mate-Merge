@@ -14,14 +14,20 @@
  * it is obvious WHY you cannot text someone (no number on file) instead of the
  * button quietly not being there.
  */
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { Copy, Mail, MessageCircle, MessageSquare } from 'lucide-react';
+import { Check, Copy, Loader2, Mail, MessageCircle, MessageSquare } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { toast } from '@/hooks/use-toast';
 import { copyToClipboard } from '@/utils/clipboard';
 import { openExternalUrl } from '@/utils/open-external-url';
 import { eyebrowCn } from './calendarStyles';
+import {
+  lastChannelFor,
+  rememberChannel,
+  useSendBookingConfirmation,
+  type TellChannel,
+} from '@/hooks/useBookingConfirmation';
 import {
   confirmationMailto,
   confirmationMessage,
@@ -32,6 +38,7 @@ import {
 } from './confirmationMessage';
 
 export interface TellCustomerTarget {
+  id?: string;
   name: string;
   phone?: string;
   email?: string;
@@ -44,6 +51,8 @@ interface TellCustomerSheetProps {
   /** `movedFrom` set turns this from a confirmation into a reschedule. */
   booking: Omit<ConfirmationParts, 'clientName' | 'businessName'> | null;
   businessName?: string | null;
+  /** The saved event, so the email can be sent server-side against it. */
+  eventId?: string | null;
 }
 
 const TellCustomerSheet = ({
@@ -52,7 +61,24 @@ const TellCustomerSheet = ({
   customer,
   booking,
   businessName,
+  eventId,
 }: TellCustomerSheetProps) => {
+  const { send, sending } = useSendBookingConfirmation();
+  const [emailed, setEmailed] = useState(false);
+  const [emailError, setEmailError] = useState<string | null>(null);
+
+  /*
+   * Reset per booking.
+   *
+   * These are about ONE event, and the sheet is reused for every one. Without
+   * this, emailing the first booking of the morning left the Email button
+   * reading "Emailed" and disabled for the rest of the day — the second
+   * customer never got told, and nothing said so.
+   */
+  useEffect(() => {
+    setEmailed(false);
+    setEmailError(null);
+  }, [open, eventId]);
   const parts = useMemo<ConfirmationParts | null>(
     () =>
       booking && customer
@@ -65,22 +91,58 @@ const TellCustomerSheet = ({
   const hasPhone = !!customer?.phone?.trim();
   const hasEmail = !!customer?.email?.trim();
 
-  const send = async (channel: 'whatsapp' | 'sms' | 'email') => {
+  /** WhatsApp and SMS hand off to the phone; nothing is sent by the app. */
+  const handOff = async (channel: 'whatsapp' | 'sms') => {
     if (!parts) return;
-    const url =
+    rememberChannel(customer?.id, channel);
+    await openExternalUrl(
       channel === 'whatsapp'
         ? confirmationWhatsapp(parts, customer?.phone)
-        : channel === 'sms'
-          ? confirmationSms(parts, customer?.phone)
-          : confirmationMailto(parts, customer?.email);
-    await openExternalUrl(url);
+        : confirmationSms(parts, customer?.phone)
+    );
     onOpenChange(false);
+  };
+
+  /**
+   * Email is the one the app sends itself — branded, with the .ics attached.
+   *
+   * Falls back to a plain `mailto:` when there is no saved event to send
+   * against (an unsaved preview), so the button is never dead.
+   */
+  const sendEmail = async () => {
+    if (!parts) return;
+    setEmailError(null);
+    if (!eventId) {
+      await openExternalUrl(confirmationMailto(parts, customer?.email));
+      onOpenChange(false);
+      return;
+    }
+    const result = await send(eventId, booking?.movedFrom ?? null);
+    if (result.ok) {
+      rememberChannel(customer?.id, 'email');
+      setEmailed(true);
+      toast({ title: `Emailed ${customer?.name ?? 'the customer'}`, variant: 'success' });
+      return;
+    }
+    // Kept on screen rather than toasted away: a suppressed address means they
+    // have to pick another channel, and the reason has to still be readable
+    // while they do it.
+    setEmailError(result.error ?? 'Could not send the email.');
   };
 
   const copy = async () => {
     const ok = await copyToClipboard(preview);
     toast(ok ? { title: 'Message copied' } : { title: 'Could not copy', variant: 'destructive' });
   };
+
+  /** The channel used last for this customer leads; the rest stay available. */
+  const preferred: TellChannel | null = useMemo(() => {
+    if (!open) return null;
+    const last = lastChannelFor(customer?.id);
+    if (last === 'whatsapp' || last === 'sms') return hasPhone ? last : null;
+    if (last === 'email') return hasEmail ? 'email' : null;
+    return null;
+  }, [open, customer?.id, hasPhone, hasEmail]);
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
@@ -104,27 +166,54 @@ const TellCustomerSheet = ({
               </pre>
             </div>
 
+            {emailError && (
+              <p className="rounded-xl border border-orange-500/30 bg-orange-500/10 px-3 py-2.5 text-[13px] text-orange-300">
+                {emailError}
+              </p>
+            )}
+
             <div className="grid grid-cols-2 gap-2">
               <ChannelButton
                 icon={<MessageCircle className="h-5 w-5" />}
                 label="WhatsApp"
                 hint={hasPhone ? undefined : 'No number on file'}
                 disabled={!hasPhone}
-                onClick={() => send('whatsapp')}
+                primary={preferred === 'whatsapp'}
+                onClick={() => handOff('whatsapp')}
               />
               <ChannelButton
                 icon={<MessageSquare className="h-5 w-5" />}
                 label="Text"
                 hint={hasPhone ? undefined : 'No number on file'}
                 disabled={!hasPhone}
-                onClick={() => send('sms')}
+                primary={preferred === 'sms'}
+                onClick={() => handOff('sms')}
               />
               <ChannelButton
-                icon={<Mail className="h-5 w-5" />}
-                label="Email"
-                hint={hasEmail ? undefined : 'No email on file'}
-                disabled={!hasEmail}
-                onClick={() => send('email')}
+                icon={
+                  sending ? (
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                  ) : emailed ? (
+                    <Check className="h-5 w-5" />
+                  ) : (
+                    <Mail className="h-5 w-5" />
+                  )
+                }
+                label={emailed ? 'Emailed' : 'Email'}
+                // Says what makes email different — it is the only channel that
+                // can put the job straight into the customer's own diary.
+                hint={
+                  !hasEmail
+                    ? 'No email on file'
+                    : emailed
+                      ? undefined
+                      : eventId
+                        ? 'With calendar file'
+                        : undefined
+                }
+                disabled={!hasEmail || sending || emailed}
+                primary={preferred === 'email'}
+                onClick={sendEmail}
               />
               <ChannelButton
                 icon={<Copy className="h-5 w-5" />}
@@ -159,12 +248,15 @@ function ChannelButton({
   label,
   hint,
   disabled,
+  primary,
   onClick,
 }: {
   icon: React.ReactNode;
   label: string;
   hint?: string;
   disabled?: boolean;
+  /** The channel used last for this customer — leads, rather than being found. */
+  primary?: boolean;
   onClick: () => void;
 }) {
   return (
@@ -173,7 +265,10 @@ function ChannelButton({
       onClick={onClick}
       disabled={disabled}
       className={cn(
-        'flex min-h-[76px] flex-col items-center justify-center gap-1 rounded-2xl border border-white/[0.12] bg-white/[0.05] px-3 py-3 text-white transition-colors touch-manipulation active:bg-white/[0.10]',
+        'flex min-h-[76px] flex-col items-center justify-center gap-1 rounded-2xl border px-3 py-3 transition-colors touch-manipulation',
+        primary
+          ? 'border-elec-yellow bg-elec-yellow text-black active:bg-elec-yellow/90'
+          : 'border-white/[0.12] bg-white/[0.05] text-white active:bg-white/[0.10]',
         // Dimmed as a whole rather than greyed type — the house rule.
         disabled && 'pointer-events-none opacity-40'
       )}

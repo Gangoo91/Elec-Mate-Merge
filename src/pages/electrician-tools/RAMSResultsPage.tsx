@@ -18,8 +18,7 @@ import { useRAMSJobPolling } from '@/hooks/useRAMSJobPolling';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
-import { generateRAMSPDF } from '@/utils/rams-pdf-professional';
-import { generateMethodStatementPDF } from '@/utils/method-statement-pdf';
+import { exportRAMS } from '@/utils/rams-export';
 import type { RAMSData, RAMSRisk } from '@/types/rams';
 import type { MethodStatementData, MethodStep } from '@/types/method-statement';
 
@@ -206,11 +205,21 @@ const RAMSResultsPage: React.FC = () => {
       setIsExporting(true);
       try {
         await handleSave();
-        if (kind === 'method') {
-          await generateMethodStatementPDF(doc.method as MethodStatementData);
-        } else {
-          await generateRAMSPDF(doc.rams, kind === 'combined' ? (doc.method as never) : undefined);
-        }
+        // Renders the PDFMonkey template, files it under Site Safety, and
+        // delivers the file (native filesystem + share sheet, or a download on
+        // web). Calling the jsPDF generators directly returned bytes nobody
+        // consumed, which is exactly how this screen shipped doing nothing.
+        const { filed, fileReason } = await exportRAMS(
+          kind,
+          doc.rams,
+          doc.method as MethodStatementData | undefined
+        );
+        toast({
+          title: filed ? 'Issued and saved' : 'Downloaded',
+          description: filed
+            ? 'Saved to your Site Safety documents.'
+            : fileReason || 'The document downloaded but was not filed.',
+        });
       } catch (err) {
         toast({
           title: 'Export failed',

@@ -384,10 +384,10 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 25,
     question: 'What is an atom?',
     options: [
-      'A single particle that carries only a negative charge and has no mass at all',
+      'A single particle carrying a negative charge, with no mass and no internal structure',
       'The basic unit of matter consisting of protons, neutrons, and electrons',
-      'A unit of electrical charge equal to exactly one coulomb of electrons',
-      'The smallest quantity of electric current that is able to flow in a conductor',
+      'A unit of electrical charge, equal to exactly one coulomb of electrons',
+      'The smallest quantity of electric current, measured in amperes, able to flow in a conductor',
     ],
     correctAnswer: 1,
     explanation:
@@ -510,10 +510,10 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 33,
     question: 'What causes current to flow in a circuit?',
     options: [
-      'High resistance in the conductor',
+      'High conductor resistance (ohms)',
       'Potential difference (voltage)',
-      'The presence of an insulator',
-      'A break in the circuit',
+      'The presence of an insulator (PVC)',
+      'An open circuit (a break)',
     ],
     correctAnswer: 1,
     explanation: 'Current flows when there is a potential difference (voltage) across a circuit.',
@@ -635,7 +635,7 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 41,
     question: 'What is the difference between earthing and bonding?',
     options: [
-      'The two terms describe exactly the same connection method',
+      'The two terms mean the same thing, and are interchangeable',
       'Earthing connects to earth, bonding connects metalwork together',
       'Bonding connects to earth, earthing connects all metalwork together',
       'Earthing applies only to AC circuits, bonding only to DC circuits',
@@ -729,7 +729,7 @@ export const module2QuestionBank: QuestionBank[] = [
     question: 'Which set shows the three forms of Ohm\'s law?',
     options: [
       'V = R/I, I = R/V, R = VI',
-      'V = I + R, I = V - R, R = V × I',
+      'V = I + R, I = V - R, R = V/I²',
       'V = I/R, I = VR, R = I/V',
       'V = IR, I = V/R, R = V/I',
     ],
@@ -788,9 +788,9 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 51,
     question: 'Before applying Ohm\'s law, what must be done with the values used?',
     options: [
-      'Convert everything to kilo-units',
-      'Leave the values in any units given',
-      'Round all values to whole numbers',
+      'Convert everything to kilo-units (kV, kA)',
+      'Leave the values as given (mV, mA)',
+      'Round all values (whole numbers), then calculate',
       'Convert to base units (V, A, Ω)',
     ],
     correctAnswer: 3,
@@ -942,10 +942,10 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 61,
     question: 'What mathematical operations are commonly needed for electrical calculations?',
     options: [
-      'Addition and subtraction of whole numbers only',
+      'Addition and subtraction of whole numbers, and nothing more',
       'Addition, subtraction, multiplication, division',
       'Multiplication and division, but never any addition',
-      'Calculus and differential equations only',
+      'Calculus, differentiation and integration only',
     ],
     correctAnswer: 1,
     explanation:
@@ -1059,23 +1059,23 @@ export const module2QuestionBank: QuestionBank[] = [
     explanation:
       'At high frequencies, reactive effects (capacitance and inductance) may become significant.',
     section: '2.2.5',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Frequency Effects',
   },
   {
     id: 69,
     question: "Does Ohm's Law apply to all materials?",
     options: [
-      'Yes, it applies equally to every material',
+      'Yes, to every material (ohmic or not)',
       'Only to ohmic materials (linear resistance)',
-      'Only to insulating materials such as PVC',
-      'To any material carrying alternating current',
+      'Only to insulating materials (PVC, rubber)',
+      'To any material carrying alternating current (AC)',
     ],
     correctAnswer: 1,
     explanation:
       "Ohm's Law only applies to ohmic materials that have linear voltage-current relationships.",
     section: '2.2.5',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Material Limitations',
   },
   {
@@ -1091,7 +1091,7 @@ export const module2QuestionBank: QuestionBank[] = [
     explanation:
       'An ohmic material has constant resistance regardless of the applied voltage (linear V-I relationship).',
     section: '2.2.5',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Ohmic Materials',
   },
   {
@@ -1107,7 +1107,7 @@ export const module2QuestionBank: QuestionBank[] = [
     explanation:
       'LEDs are non-ohmic - their resistance changes significantly with applied voltage.',
     section: '2.2.5',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Non-ohmic Devices',
   },
   {
@@ -1155,7 +1155,7 @@ export const module2QuestionBank: QuestionBank[] = [
     explanation:
       'Superconductivity is the phenomenon where certain materials have zero electrical resistance at very low temperatures.',
     section: '2.2.6',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Superconductivity',
   },
   {
@@ -1171,7 +1171,7 @@ export const module2QuestionBank: QuestionBank[] = [
     explanation:
       'Room-temperature superconductors would eliminate resistance losses in power transmission and electrical equipment.',
     section: '2.2.6',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Superconductor Applications',
   },
   {
@@ -1180,9 +1180,9 @@ export const module2QuestionBank: QuestionBank[] = [
       "In practical electrical work, what should always be considered along with Ohm's Law?",
     options: [
       'Safety, temperature effects, and component ratings',
-      'Only the colour of the cable insulation used',
-      'The purchase cost of the components rather than ratings',
-      'The brand name printed on the equipment casing',
+      'Cable colour, sheath colour, and accessory finish',
+      'Purchase cost, delivery time, and supplier discount',
+      'Brand name, packaging, and marketing claims',
     ],
     correctAnswer: 0,
     explanation:
@@ -1243,9 +1243,9 @@ export const module2QuestionBank: QuestionBank[] = [
     question: "When using Ohm's Law for circuit design, what must be considered?",
     options: [
       'Power ratings, current capacity, and safety margins',
-      'The supply voltage measured at the origin',
-      'The colour coding used on the components fitted',
-      'The physical size and weight of the enclosure chosen',
+      'Supply voltage at the origin, measured off load',
+      'Colour coding, labelling, and the finish of the components fitted',
+      'The physical size, weight and finish of the enclosure chosen',
     ],
     correctAnswer: 0,
     explanation:
@@ -1418,9 +1418,9 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 91,
     question: 'In a parallel circuit, how does current divide?',
     options: [
-      'Splitting equally between all branches regardless of resistance',
-      'Entirely through the highest-resistance branch',
-      'In direct proportion to each branch resistance',
+      'Splitting equally between all branches (regardless of resistance)',
+      'Entirely through the highest-resistance (largest R) branch',
+      'In direct proportion (not inverse) to each branch resistance',
       'According to branch resistance (inversely proportional)',
     ],
     correctAnswer: 3,
@@ -1435,9 +1435,9 @@ export const module2QuestionBank: QuestionBank[] = [
     question: 'How is total resistance calculated for two resistors in parallel?',
     options: [
       'R_total = (R1 × R2)/(R1 + R2)',
-      'R_total = R1 + R2',
+      'R_total = (R1 + R2)/2',
       'R_total = (R1 + R2)/(R1 × R2)',
-      'R_total = R1 × R2',
+      'R_total = 1/(R1 × R2)',
     ],
     correctAnswer: 0,
     explanation: 'For two resistors in parallel: R_total = (R1 × R2)/(R1 + R2)',
@@ -1467,7 +1467,7 @@ export const module2QuestionBank: QuestionBank[] = [
       'It increases (becomes more than the largest resistor)',
       'It increases (becomes the sum of the individual resistors)',
       'It decreases (becomes less than the smallest resistor)',
-      'It stays equal to the value of the smallest resistor',
+      'It stays the same (equal to the smallest resistor)',
     ],
     correctAnswer: 2,
     explanation: 'Parallel resistance is always less than the smallest individual resistor.',
@@ -1498,7 +1498,7 @@ export const module2QuestionBank: QuestionBank[] = [
       '1/R_total = 1/R1 + 1/R2 + 1/R3',
       '1/R_total = R1 + R2 + R3',
       'R_total = 1/R1 + 1/R2 + 1/R3',
-      'R_total = R1 × R2 × R3',
+      '1/R_total = R1 × R2 × R3',
     ],
     correctAnswer: 0,
     explanation: 'For parallel resistors: 1/R_total = 1/R1 + 1/R2 + 1/R3 + ...',
@@ -1588,10 +1588,10 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 102,
     question: 'What is a disadvantage of series-wired Christmas lights?',
     options: [
-      'Each bulb needs its own separate switch',
-      'They use far more cable than parallel wiring',
+      'Each bulb needs its own switch, fitted in its own branch',
+      'They use far more cable, since each lamp needs its own return leg',
       'If one bulb fails, all go out',
-      'Each bulb is overloaded by the full mains voltage',
+      'Each bulb sees the full mains voltage, and is overloaded as a result',
     ],
     correctAnswer: 2,
     explanation:
@@ -1716,9 +1716,9 @@ export const module2QuestionBank: QuestionBank[] = [
     question: 'How should mixed circuits be analysed?',
     options: [
       'Add every resistance value together, ignoring the layout',
-      'Apply the reciprocal formula to the whole circuit in a single step',
+      'Apply the reciprocal formula to every resistance, in a single step',
       'Break down into series and parallel sections, solve step by step',
-      'Treat the entire circuit as a single parallel combination',
+      'Treat the entire circuit as one parallel combination, whatever the layout',
     ],
     correctAnswer: 2,
     explanation:
@@ -1937,9 +1937,9 @@ export const module2QuestionBank: QuestionBank[] = [
     question: 'What happens to total power consumption when more loads are added in parallel?',
     options: [
       'Power increases (more total current drawn)',
-      'Power decreases as resistance falls',
-      'Power stays the same regardless of loads',
-      'Power drops to zero across the supply',
+      'Power decreases (as total resistance falls)',
+      'Power stays the same (regardless of load count)',
+      'Power drops to zero (across the supply)',
     ],
     correctAnswer: 0,
     explanation:
@@ -1963,10 +1963,10 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 126,
     question: 'What is the main safety advantage of parallel wiring in buildings?',
     options: [
-      'It uses much thinner cables throughout',
-      'It removes the need for any earthing',
+      'It uses much thinner cables throughout, saving on copper',
+      'No earthing is needed, on any branch',
       'If one circuit fails, others continue to work',
-      'It allows the whole building to share one fuse',
+      'It allows the whole building to share one fuse, at the origin',
     ],
     correctAnswer: 2,
     explanation:
@@ -1982,8 +1982,8 @@ export const module2QuestionBank: QuestionBank[] = [
     question: 'What is the fundamental difference between AC and DC?',
     options: [
       'AC flows in one direction; DC alternates direction',
-      'AC is always higher voltage than DC',
-      'DC can be transformed but AC cannot',
+      'AC is always higher voltage; DC is always lower',
+      'DC can be transformed; AC cannot be transformed',
       'AC alternates direction; DC flows in one direction',
     ],
     correctAnswer: 3,
@@ -2288,9 +2288,9 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 147,
     question: 'What generates the sinusoidal AC waveform?',
     options: [
-      'Chemical reactions inside a battery',
-      'Solar cells exposed to sunlight',
-      'Rectifying circuits converting DC into AC',
+      'Chemical reactions (inside a battery)',
+      'Solar cells (photovoltaic panels)',
+      'Rectifying circuits (diodes) converting DC to AC',
       'Rotating generators (alternators)',
     ],
     correctAnswer: 3,
@@ -2304,9 +2304,9 @@ export const module2QuestionBank: QuestionBank[] = [
     question: 'What is the advantage of sinusoidal waveforms?',
     options: [
       'Smooth, efficient, and easy to transform',
-      'They carry no current at the zero crossings',
-      'They cannot be stepped up or down',
-      'They produce only direct current',
+      'Flat, steady, and free of zero crossings',
+      'Fixed, rigid, and impossible to transform',
+      'Pulsing, unidirectional, and purely DC',
     ],
     correctAnswer: 0,
     explanation:
@@ -2332,12 +2332,17 @@ export const module2QuestionBank: QuestionBank[] = [
   },
   {
     id: 150,
-    question: 'Why will a transformer not operate from a steady DC supply?',
+    // Stem asked "why" while all four options answer "whether" — the key opened
+    // with "No" to a why-question. A stem was reworded in an earlier pass and
+    // the options were left behind. Reworded to the question the options
+    // actually answer; the key still carries the reason, and the explanation
+    // spells it out.
+    question: 'Will a transformer operate from a steady DC supply?',
     options: [
-      'Yes, they work equally well with AC and DC',
-      'Yes, but only at very high DC voltages',
+      'Yes, equally well with AC and DC (direct current)',
+      'Yes, but only at very high DC (kV) voltages',
       'No, they only work with changing (AC) currents',
-      'Yes, provided the DC is perfectly smooth',
+      'Yes, provided the DC is smooth (ripple-free)',
     ],
     correctAnswer: 2,
     explanation:
@@ -2382,10 +2387,10 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 153,
     question: 'Why are high voltages used for power transmission?',
     options: [
-      'Higher voltage increases the current and the losses',
+      'Higher voltage increases the current (and the I²R losses)',
       'Reduces current and therefore power losses (I²R losses)',
-      'It removes the need for any insulation',
-      'It allows thinner conductors to carry more current',
+      'It removes the need for insulation (bare conductors)',
+      'It allows thinner conductors (smaller csa) to carry more',
     ],
     correctAnswer: 1,
     explanation:
@@ -2398,10 +2403,10 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 154,
     question: 'What are common sources of DC supply?',
     options: [
-      'Mains sockets and the grid supply',
-      'Alternators and rotating generators',
+      'Mains sockets, ring finals, grid supply',
+      'Alternators, generators, slip rings',
       'Batteries, solar panels, DC power supplies',
-      'Step-down transformers and inverters',
+      'Transformers, autotransformers, inverters',
     ],
     correctAnswer: 2,
     explanation: 'DC is supplied by batteries, solar panels, DC power supplies, and rectified AC.',
@@ -2505,10 +2510,10 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 161,
     question: 'What applications commonly use DC power?',
     options: [
-      'Mains lighting and immersion heaters',
+      'Mains lighting, immersion heaters, showers',
       'Electronics, motors, battery-powered devices',
-      'High-voltage grid transmission lines',
-      'Domestic ring final socket circuits',
+      'Transmission lines, substations, pylons',
+      'Ring finals, radial circuits, cooker points',
     ],
     correctAnswer: 1,
     explanation:
@@ -2521,10 +2526,10 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 162,
     question: 'What applications commonly use AC power?',
     options: [
-      'Mobile phones and laptop electronics',
-      'Torches and other battery-powered devices',
+      'Mobile phones, laptops, battery electronics',
+      'Torches, hand lamps, battery-powered devices',
       'Mains-powered appliances, lighting, heating, motors',
-      'Solar panels and electric vehicle batteries',
+      'Solar panels, EV batteries, battery storage',
     ],
     correctAnswer: 2,
     explanation:
@@ -2538,7 +2543,7 @@ export const module2QuestionBank: QuestionBank[] = [
     question: 'Why do some motors use AC and others use DC?',
     options: [
       'All motors run equally well on either supply, so the choice is arbitrary',
-      'DC motors are always simpler and cheaper to build than any AC motor',
+      'DC motors are always simpler, and cheaper to build, than any AC motor',
       'AC motors cannot start under load, whereas a DC motor always can do so',
       'Different characteristics: AC motors are simpler, DC motors offer better speed control',
     ],
@@ -2585,10 +2590,10 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 166,
     question: 'Where would you find an inverter?',
     options: [
-      'Inside a simple torch or battery lamp',
-      'Within a mains plug-top fuse holder',
+      'Inside a torch, or a battery lamp',
+      'In a plug top, behind the BS 1362 fuse',
       'Solar power systems, UPS systems, motor drives',
-      'Between two resistors in a divider circuit',
+      'Between two resistors, in a divider',
     ],
     correctAnswer: 2,
     explanation:
@@ -2618,9 +2623,9 @@ export const module2QuestionBank: QuestionBank[] = [
     question: 'What is the main safety consideration when working on AC systems?',
     options: [
       'Risk of electric shock, proper earthing essential',
-      'No earthing is needed because AC is self-limiting',
-      'Polarity must never be reversed on any cable',
-      'AC carries no shock risk below the peak voltage',
+      'No earthing needed, since AC is self-limiting',
+      'Polarity must never be reversed, on any cable',
+      'No shock risk, below the peak voltage',
     ],
     correctAnswer: 0,
     explanation:
@@ -2650,10 +2655,10 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 170,
     question: 'Why is copper commonly used for electrical wiring?',
     options: [
-      'It is the cheapest of all metals',
-      'It is a very strong insulator',
+      'It is the cheapest metal, by weight and by volume',
+      'It is a strong insulator, with high breakdown voltage',
       'Good conductivity, ductility, and corrosion resistance',
-      'It is lighter than every other conductor',
+      'It is lighter than any conductor, aluminium included',
     ],
     correctAnswer: 2,
     explanation:
@@ -2810,8 +2815,8 @@ export const module2QuestionBank: QuestionBank[] = [
     options: [
       'Very few free electrons (high resistivity)',
       'Very many loosely bound electrons (low resistivity)',
-      'A high density of mobile charge carriers',
-      'A very low melting point under normal operation',
+      'A high density of mobile charge carriers (free ions)',
+      'A very low melting point (under normal operation)',
     ],
     correctAnswer: 0,
     explanation:
@@ -2839,10 +2844,10 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 182,
     question: 'Why is PVC used for cable insulation?',
     options: [
-      'It is an excellent conductor of electricity',
-      'It withstands very high temperatures indefinitely',
+      'It is an excellent conductor, better than copper at the same size',
+      'It withstands very high temperatures, indefinitely and without softening',
       'Excellent insulation, flexible, and durable',
-      'It is completely fireproof under all conditions',
+      'It is completely fireproof, under all conditions and temperatures',
     ],
     correctAnswer: 2,
     explanation:
@@ -2904,9 +2909,9 @@ export const module2QuestionBank: QuestionBank[] = [
     question: 'What factors affect the breakdown voltage of air?',
     options: [
       'Cable colour, length, and core count',
-      'Supply frequency and waveform shape only',
+      'Supply frequency, waveform shape, and nothing else',
       'Distance, humidity, pressure, pollution',
-      'Conductor material and earthing arrangement',
+      'Conductor material, conductor size, and earthing arrangement',
     ],
     correctAnswer: 2,
     explanation:
@@ -2975,7 +2980,7 @@ export const module2QuestionBank: QuestionBank[] = [
     explanation:
       'Doping involves adding controlled impurities to pure semiconductors to modify their electrical properties.',
     section: '2.5.4',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Semiconductor Doping',
   },
   {
@@ -2991,7 +2996,7 @@ export const module2QuestionBank: QuestionBank[] = [
     explanation:
       'Superconductors exhibit zero electrical resistance when cooled below their critical temperature.',
     section: '2.5.5',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Superconductors',
   },
   {
@@ -2999,15 +3004,15 @@ export const module2QuestionBank: QuestionBank[] = [
     question: 'What temperature range do conventional superconductors require?',
     options: [
       'Very low temperatures (near absolute zero)',
-      'Normal room temperature in a building',
-      'Very high temperatures, well above boiling point',
-      'Any temperature at all, as it makes no difference',
+      'Normal room temperature (about 20 °C)',
+      'Very high temperatures (well above boiling point)',
+      'Any temperature at all (it makes no difference)',
     ],
     correctAnswer: 0,
     explanation:
       'Conventional superconductors require very low temperatures, typically requiring liquid helium cooling.',
     section: '2.5.5',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Superconductor Temperatures',
   },
   {
@@ -3023,7 +3028,7 @@ export const module2QuestionBank: QuestionBank[] = [
     explanation:
       'Superconductors are used in MRI machines, particle accelerators, and some specialised power applications.',
     section: '2.5.5',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Superconductor Applications',
   },
   {
@@ -3080,8 +3085,8 @@ export const module2QuestionBank: QuestionBank[] = [
     options: [
       'Increases (the cable can carry more)',
       'Decreases (derating required)',
-      'Stays exactly the same',
-      'Falls to zero immediately',
+      'Stays the same (no correction factor)',
+      'Falls to zero (immediately)',
     ],
     correctAnswer: 1,
     explanation:
@@ -3110,9 +3115,9 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 199,
     question: "What factors determine a cable's current rating?",
     options: [
-      'Only the colour of the insulation and the overall length of the installed cable run',
-      'The nominal supply voltage and the frequency of the final circuit being supplied',
-      'The trade brand of the cable and the cost per metre when it was purchased',
+      'Only the colour of the insulation, and the overall length of the installed cable run',
+      'The nominal supply voltage, and the frequency of the final circuit being supplied',
+      'The trade brand of the cable, and the cost per metre when it was purchased',
       'Cross-sectional area, insulation type, installation method, ambient temperature',
     ],
     correctAnswer: 3,
@@ -3159,9 +3164,9 @@ export const module2QuestionBank: QuestionBank[] = [
     question: 'When might cable derating be necessary?',
     options: [
       'In cold, open and well-ventilated locations away from heat',
-      'When the cable chosen is much larger than the design current requires',
+      'When the cable chosen is much larger than the design current requires, and runs cool',
       'High ambient temperatures, grouped cables, enclosed installations',
-      'When the supply voltage is slightly below its nominal value',
+      'When the supply voltage is slightly below nominal, at times of heavy demand',
     ],
     correctAnswer: 2,
     explanation:
@@ -3183,7 +3188,7 @@ export const module2QuestionBank: QuestionBank[] = [
     explanation:
       'Skin effect causes AC current to concentrate near the conductor surface at high frequencies, increasing effective resistance.',
     section: '2.5.8',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Skin Effect',
   },
   {
@@ -3191,15 +3196,15 @@ export const module2QuestionBank: QuestionBank[] = [
     question: 'At what frequencies does skin effect become significant?',
     options: [
       'High frequencies (kHz and above)',
-      'Only at DC, where frequency is zero',
-      'At the 50 Hz mains frequency alone',
-      'At no frequency, as it does not exist',
+      'Only at DC (where frequency is zero)',
+      'At the mains frequency alone (50 Hz)',
+      'At no frequency (it does not exist)',
     ],
     correctAnswer: 0,
     explanation:
       'Skin effect becomes significant at high frequencies, typically above several kHz.',
     section: '2.5.8',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Skin Effect Frequency',
   },
   {
@@ -3215,7 +3220,7 @@ export const module2QuestionBank: QuestionBank[] = [
     explanation:
       'Eddy currents are circulating currents induced in conductors by changing magnetic fields, causing power losses.',
     section: '2.5.8',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Eddy Current Loss',
   },
   {
@@ -3231,7 +3236,7 @@ export const module2QuestionBank: QuestionBank[] = [
     explanation:
       'Laminated cores with insulated layers reduce eddy current paths, minimizing losses in transformers and motors.',
     section: '2.5.8',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Eddy Current Reduction',
   },
   {
@@ -3247,7 +3252,7 @@ export const module2QuestionBank: QuestionBank[] = [
     explanation:
       'Hysteresis loss occurs in magnetic materials when magnetization repeatedly changes direction, as in AC applications.',
     section: '2.5.8',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Hysteresis Loss',
   },
   {
@@ -3263,7 +3268,7 @@ export const module2QuestionBank: QuestionBank[] = [
     explanation:
       'Corona occurs when electric field strength around conductors is high enough to ionize surrounding air.',
     section: '2.5.9',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Corona Discharge',
   },
   {
@@ -3279,23 +3284,23 @@ export const module2QuestionBank: QuestionBank[] = [
     explanation:
       'Corona is commonly seen around high-voltage transmission lines and equipment, especially in humid conditions.',
     section: '2.5.9',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Corona Locations',
   },
   {
     id: 210,
     question: 'What problems can corona discharge cause?',
     options: [
-      'Improved efficiency and noticeably reduced power losses',
-      'A useful increase in the supply voltage reaching the load',
+      'Improved efficiency, lower losses, and a cooler conductor',
+      'A useful rise in supply voltage, measured at the load end',
       'Power losses, radio interference, ozone production',
-      'Better cooling of the overhead transmission line conductors',
+      'Better cooling of the overhead line conductors, especially in still air',
     ],
     correctAnswer: 2,
     explanation:
       'Corona causes power losses, radio frequency interference, produces ozone, and can degrade insulation over time.',
     section: '2.5.9',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Corona Problems',
   },
 
@@ -3350,7 +3355,7 @@ export const module2QuestionBank: QuestionBank[] = [
     question: "What are the alternative power formulas using Ohm's Law?",
     options: [
       'P = V/I, P = I/R, P = V/R',
-      'P = V + I, P = I + R, P = V + R',
+      'P = V + I, P = I + R, P = V/R + I',
       'P = VI, P = I²R, P = V²/R',
       'P = IR, P = V/R, P = V/I',
     ],
@@ -3443,8 +3448,8 @@ export const module2QuestionBank: QuestionBank[] = [
     options: [
       '3,600,000 J',
       '1,000,000 J',
-      '3600 J',
-      '1000 J',
+      '3,600 J',
+      '1,000 J',
     ],
     correctAnswer: 0,
     explanation: '1 kWh = 1000W × 3600s = 3,600,000 J = 3.6 MJ',
@@ -3504,8 +3509,8 @@ export const module2QuestionBank: QuestionBank[] = [
     options: [
       'Efficiency = Output/Input',
       'Efficiency = Input/Output',
-      'Efficiency = Input + Output',
-      'Efficiency = Input - Output',
+      'Efficiency = Losses/Total Input',
+      'Efficiency = Total Input/Losses',
     ],
     correctAnswer: 0,
     explanation: 'Efficiency = (Useful Output/Total Input) × 100%',
@@ -3548,9 +3553,9 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 227,
     question: "What happens to the 'lost' energy in inefficient devices?",
     options: [
-      'It is permanently destroyed and simply disappears',
-      'It is returned to the supply completely unchanged',
-      'It is stored inside the device ready for later use',
+      'It is permanently destroyed, and simply disappears',
+      'It is returned to the supply, completely unchanged',
+      'It is stored inside the device, ready for later use',
       "It's converted to heat, sound, or other forms",
     ],
     correctAnswer: 3,
@@ -3693,9 +3698,9 @@ export const module2QuestionBank: QuestionBank[] = [
     question: 'What is the power factor of a purely resistive load?',
     options: [
       '1 (unity)',
-      '0',
-      '0.5',
-      '2',
+      '0 (reactive)',
+      '0.5 (lagging)',
+      '2 (leading)',
     ],
     correctAnswer: 0,
     explanation:
@@ -3708,10 +3713,10 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 237,
     question: 'What causes poor power factor?',
     options: [
-      'Purely resistive loads such as heaters and kettles',
+      'Purely resistive loads (heaters, kettles and filament lamps)',
       'Reactive components (inductors, capacitors)',
-      'A high supply voltage at the origin of the installation',
-      'Using cables much larger than the design requires',
+      'A high supply voltage at the origin (above 230 V, measured off load)',
+      'Using cables larger than the design requires (higher csa, lower resistance)',
     ],
     correctAnswer: 1,
     explanation:
@@ -3724,10 +3729,10 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 238,
     question: 'Why is poor power factor undesirable?',
     options: [
-      'It reduces the current drawn from the supply cable',
-      'It lowers the supply voltage reaching the load',
+      'It reduces the current drawn from the supply, easing cable losses',
+      'It lowers the supply voltage, so less power flows',
       'Increases current for same real power, causing losses',
-      'It improves the overall efficiency of the whole system',
+      'It improves the efficiency of the whole system, cutting running cost',
     ],
     correctAnswer: 2,
     explanation:
@@ -3771,10 +3776,10 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 241,
     question: 'What is apparent power?',
     options: [
-      'Only the useful power delivered to the load',
+      'Only the useful power (real power, W) at the load',
       'The total power (combination of real and reactive power)',
-      'The power lost as heat in the cables',
-      'Power that oscillates between source and load without doing useful work',
+      'The power lost as heat (I²R) in the cables',
+      'Power that oscillates between source and load (reactive power, var)',
     ],
     correctAnswer: 1,
     explanation:
@@ -3803,15 +3808,15 @@ export const module2QuestionBank: QuestionBank[] = [
     question: 'What is the relationship between real, reactive, and apparent power?',
     options: [
       'S = P + Q (simple sum)',
-      'P = S² + Q²',
-      'Q = P × S',
+      'P = S² + Q² (rearranged)',
+      'Q = P × S (product form)',
       'S² = P² + Q² (power triangle)',
     ],
     correctAnswer: 3,
     explanation:
       'The power triangle shows: S² = P² + Q² where S=apparent, P=real, Q=reactive power.',
     section: '2.6.5',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Power Triangle',
   },
   {
@@ -3914,9 +3919,9 @@ export const module2QuestionBank: QuestionBank[] = [
     question: 'What is the overall purpose of understanding power and energy concepts?',
     options: [
       'To choose the colour coding used for the line, neutral and earth cores',
-      'To set the frequency and the nominal voltage of the incoming mains supply',
+      'To set the frequency, and the nominal voltage, of the incoming mains supply',
       'Efficient design, operation, and cost control of electrical systems',
-      'To decide the direction of conventional current flow around a circuit',
+      'To decide the direction of conventional current flow, which reverses as the load changes',
     ],
     correctAnswer: 2,
     explanation:
@@ -3948,9 +3953,9 @@ export const module2QuestionBank: QuestionBank[] = [
     question: 'How should a voltmeter be connected to measure voltage across a component?',
     options: [
       'In parallel (across) the component',
-      'After isolating the component',
-      'In series with the component',
-      'Between line and neutral at the origin',
+      'After isolating (dead) the component',
+      'In series (in line) with the component',
+      'Between line and neutral (L-N) at the origin',
     ],
     correctAnswer: 0,
     explanation:
@@ -4063,9 +4068,9 @@ export const module2QuestionBank: QuestionBank[] = [
     question:
       'What is the difference between conventional current flow and electron flow?',
     options: [
-      'They both flow from the positive terminal towards the negative terminal in exactly the same direction',
+      'They both flow from the positive terminal towards the negative terminal; the two run in exactly the same direction',
       'Conventional current flows from negative to positive; electron flow runs from positive to negative',
-      'Electron flow exists only in AC circuits, while conventional current is found only in DC circuits',
+      'Electron flow exists only in AC circuits; conventional current is found only in DC circuits',
       'Conventional current flows from positive to negative; electron flow is from negative to positive',
     ],
     correctAnswer: 3,
@@ -4088,7 +4093,7 @@ export const module2QuestionBank: QuestionBank[] = [
     explanation:
       'One coulomb is the charge of about 6.24 x 10^18 electrons. The reciprocal value 1.6 x 10^-19 C is the charge carried by a single electron.',
     section: '2.3.1',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Coulomb Definition',
   },
   // AC 4.2 — Conductors/insulators (section 2.3.2)
@@ -4451,10 +4456,10 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 282,
     question: 'What is the key advantage of an electromagnet over a permanent magnet?',
     options: [
-      'It produces a magnetic field without needing any electrical supply to be connected at all',
-      'It never loses any of its magnetism, unlike an ordinary permanent bar magnet',
+      'It produces a magnetic field (permanent flux) without any electrical supply connected',
+      'It never loses its magnetism (no decay), unlike an ordinary permanent bar magnet',
       'Its magnetic field can be switched on and off (and varied) by controlling the current',
-      'It has only a single magnetic pole instead of a separate north and south pole',
+      'It has a single magnetic pole (a monopole), not separate north and south poles',
     ],
     correctAnswer: 2,
     explanation:
@@ -4585,10 +4590,10 @@ export const module2QuestionBank: QuestionBank[] = [
     question:
       'In a single-loop AC generator, at what point in the rotation is the induced EMF greatest?',
     options: [
-      'When the coil lies flat alongside the pole faces, running parallel to the magnetic field',
-      'When the coil is momentarily stationary at the very end of its travel through the field',
+      'When the coil lies flat alongside the pole faces (parallel to the magnetic field)',
+      'When the coil is momentarily stationary (at zero speed) at the very end of its travel',
       'When the coil sides cut the field lines at right angles (perpendicular to the field)',
-      'When the coil sides move directly along the magnetic field lines instead of across them',
+      'When the coil sides move directly along the field lines (parallel to them), not across',
     ],
     correctAnswer: 2,
     explanation:
@@ -4602,9 +4607,9 @@ export const module2QuestionBank: QuestionBank[] = [
     question:
       'What is the difference between slip rings and a commutator on a rotating machine?',
     options: [
-      'They are simply two different names for exactly the same component',
-      'A commutator is fitted only to AC generators, not to DC ones',
-      'Slip rings are fitted only to very small machines and never to large ones',
+      'They are two names for the same component; either one may be fitted',
+      'A commutator is fitted only to AC generators; never to DC ones',
+      'Slip rings are fitted only to very small machines; never to large ones',
       'Slip rings give an AC output; a commutator rectifies the output to DC',
     ],
     correctAnswer: 3,
@@ -4688,9 +4693,9 @@ export const module2QuestionBank: QuestionBank[] = [
       'In a balanced three-phase star-connected system, what is the relationship between line voltage and phase voltage?',
     options: [
       'V_line = V_phase x sqrt(3)',
-      'They are equal',
+      'They are equal (a 1:1 ratio)',
       'V_line = V_phase / sqrt(3)',
-      'V_line = V_phase x 2',
+      'V_line = V_phase x 2 (double)',
     ],
     correctAnswer: 0,
     explanation:
@@ -4940,7 +4945,7 @@ export const module2QuestionBank: QuestionBank[] = [
     explanation:
       'Heat makes the metal ions vibrate more about their fixed positions, so electrons collide with them more often and drift less freely. Metals therefore have a positive temperature coefficient. Semiconductors behave the opposite way, gaining carriers as they warm.',
     section: '2.5.2',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Temperature Effects',
   },
   {
@@ -4983,9 +4988,9 @@ export const module2QuestionBank: QuestionBank[] = [
       'A ring final circuit is wired in 2.5 mm2 twin and earth. Why is the measured end-to-end line conductor resistance greater than that of one leg of the ring?',
     options: [
       'The ring is measured around the full loop, which is about twice the leg length there and back',
-      'The two legs connected in parallel double the effective resistance of the complete ring circuit',
-      'The circuit protective conductor is included in the line conductor measurement taken at the board',
-      'Ring circuits use a much smaller conductor size than the equivalent radial final circuit would',
+      'The two legs, connected in parallel, double the effective resistance of the complete ring circuit',
+      'The circuit protective conductor, being smaller in csa, is included in the line conductor measurement at the board',
+      'Ring circuits use a much smaller conductor size, so the resistance per metre is higher than in a radial final circuit',
     ],
     correctAnswer: 0,
     explanation:
@@ -5002,7 +5007,7 @@ export const module2QuestionBank: QuestionBank[] = [
       'It increases, because each parallel branch draws its own current from the same voltage',
       'It stays the same, because the supply voltage across the circuit does not change',
       'It decreases, because the total circuit resistance rises with each branch added',
-      'It increases only if the newly added appliance has a higher resistance than all the others',
+      'It increases only if the newly added appliance has a higher resistance than the others, and not otherwise',
     ],
     correctAnswer: 0,
     explanation:
@@ -5035,8 +5040,8 @@ export const module2QuestionBank: QuestionBank[] = [
     options: [
       'Conductance is the reciprocal of resistance, measured in siemens',
       'Conductance is the square of resistance, measured in ohms squared',
-      'Conductance equals resistance multiplied by the applied voltage',
-      'Conductance is another name for resistance in an AC circuit',
+      'Conductance equals resistance multiplied by the applied voltage, measured in volt-ohms',
+      'Conductance is another name for AC resistance, in ohms',
     ],
     correctAnswer: 0,
     explanation:
@@ -5102,15 +5107,15 @@ export const module2QuestionBank: QuestionBank[] = [
       'Why is aluminium sometimes used instead of copper for large distribution conductors despite its higher resistivity?',
     options: [
       'It is lighter and cheaper, so a larger CSA can still be the better overall choice',
-      'It has a much lower resistance than copper for the same cross-sectional area',
-      'It resists corrosion much better than copper in every single installation environment',
-      'It safely carries more current than copper for an identical conductor size and length',
+      'It has a much lower resistance than copper, for the same cross-sectional area',
+      'It resists corrosion much better than copper, in every installation environment there is',
+      'It safely carries more current than copper, for an identical conductor size and length',
     ],
     correctAnswer: 0,
     explanation:
       'Aluminium has roughly 1.6 times the resistivity of copper, so it needs a bigger cross-section for the same current. But it is far lighter and cheaper per metre, which wins on long overhead and large distribution runs where weight and cost dominate.',
     section: '2.5.1',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Conductor Materials',
   },
   {
@@ -5161,7 +5166,7 @@ export const module2QuestionBank: QuestionBank[] = [
     explanation:
       'In a star (wye) connection VL = 1.732 x VP, so VP = 400 / 1.732 = 231 V. The square root of 3 comes from the 120 degree phase displacement between windings, not from any simple arithmetic ratio.',
     section: '2.4.6',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Three-Phase',
   },
   {
@@ -5178,7 +5183,7 @@ export const module2QuestionBank: QuestionBank[] = [
     explanation:
       'With three equal loads the phase currents are 120 degrees apart and sum to zero, so the neutral carries nothing. Real installations are never perfectly balanced, and the neutral carries whatever difference remains. It is not an earth path.',
     section: '2.4.6',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Three-Phase',
   },
   {
@@ -5205,8 +5210,8 @@ export const module2QuestionBank: QuestionBank[] = [
     options: [
       'The directions of both the current and the field, given by Fleming left hand rule',
       'The size of the current alone, regardless of the orientation of the magnetic field',
-      'The resistance of the conductor and the working temperature of the permanent magnet',
-      'The frequency of the supply that feeds the current-carrying conductor in the field',
+      'The resistance of the conductor, and the working temperature of the permanent magnet',
+      'The frequency of the supply, which feeds the current-carrying conductor in the field',
     ],
     correctAnswer: 0,
     explanation:
@@ -5255,15 +5260,15 @@ export const module2QuestionBank: QuestionBank[] = [
       'Why does a purely inductive load cause the current to lag the voltage?',
     options: [
       'The induced back EMF opposes the change in current, delaying its rise',
-      'The inductor stores charge on its plates until the voltage reverses',
-      'The resistance of the winding increases as the current begins to flow',
-      'The magnetic field collapses faster than the supply voltage can change',
+      'The inductor stores charge on its plates, until reversal',
+      'The resistance of the winding rises as the current begins to flow, holding it back',
+      'The magnetic field collapses faster than the supply voltage can change, delaying the current',
     ],
     correctAnswer: 0,
     explanation:
       'A changing current in an inductor induces a back EMF that opposes that change, so current cannot rise instantly with the applied voltage and lags it by up to 90 degrees. Capacitors do the reverse, with current leading the voltage.',
     section: '2.4.5',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Inductance',
   },
   {
@@ -5272,15 +5277,15 @@ export const module2QuestionBank: QuestionBank[] = [
       'What is the main practical consequence of a poor power factor for a commercial installation?',
     options: [
       'More current is drawn for the same useful power, loading cables and switchgear',
-      'The supply voltage at the installation rises above its nominal value',
-      'The frequency of the supply drifts away from 50 Hz under load',
-      'The useful power delivered to the load falls below the rated value',
+      'The supply voltage rises above nominal, stressing the insulation',
+      'The frequency drifts away from 50 Hz under load, slowing every motor',
+      'The useful power delivered falls below its rated value, so output drops',
     ],
     correctAnswer: 0,
     explanation:
       'Apparent power S = P / power factor, so at 0.7 you draw about 43% more current than at unity for the same real work. That extra current heats cables, uses switchgear capacity and often attracts a supply charge, which is why correction equipment is fitted.',
     section: '2.4.5',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Power Factor',
   },
   {
@@ -5306,9 +5311,9 @@ export const module2QuestionBank: QuestionBank[] = [
       'What is the difference between EMF and potential difference?',
     options: [
       'EMF is the energy a source gives each coulomb; PD is energy used in part of a circuit',
-      'EMF is measured in volts while potential difference is measured in amperes',
-      'EMF applies only to DC sources and potential difference only to AC circuits',
-      'EMF is always smaller than the potential difference across the load',
+      'EMF is measured in volts; potential difference is measured in amperes instead',
+      'EMF applies only to DC sources; potential difference applies only to AC circuits',
+      'EMF is always the smaller quantity; PD across the load is always greater',
     ],
     correctAnswer: 0,
     explanation:
@@ -5357,9 +5362,9 @@ export const module2QuestionBank: QuestionBank[] = [
       'Why is a voltmeter connected in parallel and an ammeter in series?',
     options: [
       'A voltmeter has very high resistance to avoid drawing current; an ammeter has very low resistance',
-      'A voltmeter has very low resistance so it can measure the full supply voltage present',
-      'It is simply a wiring convention and either instrument may be connected either way',
-      'An ammeter must be in series so that it can display the circuit voltage as well',
+      'A voltmeter has very low resistance; that is how it measures the full supply voltage',
+      'It is simply a wiring convention; either instrument may be connected either way',
+      'An ammeter must be in series; that is how it displays the circuit voltage as well',
     ],
     correctAnswer: 0,
     explanation:
@@ -5433,7 +5438,7 @@ export const module2QuestionBank: QuestionBank[] = [
     explanation:
       'Impedance Z combines resistance and reactance, and because they act at 90 degrees to each other they add as Z = the square root of (R2 + X2), not by simple addition. In a purely resistive circuit Z equals R.',
     section: '2.4.4',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Impedance',
   },
   {
@@ -5459,15 +5464,15 @@ export const module2QuestionBank: QuestionBank[] = [
       'Why does a DC supply have no reactance while an AC supply does?',
     options: [
       'Reactance depends on a changing current, and steady DC does not change',
-      'DC operates at a much lower voltage than AC in a typical installation',
-      'Reactance is a property of the conductor material rather than the supply',
+      'DC runs at a much lower voltage than AC, in most installations',
+      'Reactance is a property of the conductor material, rather than of the supply',
       'DC circuits always use larger conductors, which removes the reactive effect',
     ],
     correctAnswer: 0,
     explanation:
       'Inductive and capacitive reactance both arise from a changing current or voltage. Steady DC has no rate of change once settled, so reactance is zero and impedance reduces to plain resistance. Reactance only appears at switch-on or switch-off.',
     section: '2.4.4',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Reactance',
   },
   {
@@ -5494,8 +5499,8 @@ export const module2QuestionBank: QuestionBank[] = [
     options: [
       'Series raises the total EMF; parallel raises the available current capacity',
       'Series raises the available current; parallel raises the total EMF produced',
-      'Both arrangements raise the EMF but only series raises the capacity',
-      'Neither arrangement changes EMF, only the internal resistance of the bank',
+      'Both arrangements raise the EMF; only series raises the capacity',
+      'Neither arrangement changes the EMF; only the internal resistance alters',
     ],
     correctAnswer: 0,
     explanation:
@@ -5518,7 +5523,7 @@ export const module2QuestionBank: QuestionBank[] = [
     explanation:
       'Flux density B is measured in teslas, where one tesla is one weber per square metre. The weber measures total flux; the tesla measures how concentrated it is. Force on a conductor depends on flux DENSITY, not total flux.',
     section: '2.5.5',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Magnetism',
   },
   {
@@ -5527,15 +5532,15 @@ export const module2QuestionBank: QuestionBank[] = [
       'A conductor cuts magnetic flux at a steady rate. What determines the magnitude of the induced EMF?',
     options: [
       'The rate at which flux is cut, and the number of turns doing the cutting',
-      'The resistance of the conductor and the temperature of the magnet',
+      'The resistance of the conductor, and the temperature of the magnet',
       'The direction of motion relative to the field, but not the speed',
-      'The cross-sectional area of the conductor cutting through the field',
+      'The cross-sectional area of the conductor, as it cuts through the field',
     ],
     correctAnswer: 0,
     explanation:
       'Faraday law: induced EMF is proportional to the rate of change of flux linkage, which is turns multiplied by rate of flux cutting. Move faster or add turns and the EMF rises. Lenz law then sets its direction, always opposing the change that produced it.',
     section: '2.5.5',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Electromagnetic Induction',
   },
   {
@@ -5552,7 +5557,7 @@ export const module2QuestionBank: QuestionBank[] = [
     explanation:
       'A changing flux induces currents in the core itself. In a solid core these eddy currents circulate freely and waste energy as heat. Thin insulated laminations restrict the loops they can form, cutting the loss substantially.',
     section: '2.5.6',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Transformers',
   },
   {
@@ -5595,8 +5600,8 @@ export const module2QuestionBank: QuestionBank[] = [
       'What happens to the current in a series circuit if one component goes open circuit?',
     options: [
       'Current stops everywhere, because there is only one path for it to take',
-      'Current continues through the remaining components at a reduced value',
-      'Current increases in the other components to compensate for the break',
+      'Current continues through the remaining components, at a reduced value',
+      'Current increases in the other components, to compensate for the break',
       'Current is unchanged, because series components share the same voltage',
     ],
     correctAnswer: 0,
@@ -5629,7 +5634,7 @@ export const module2QuestionBank: QuestionBank[] = [
     options: [
       'Mass in kilograms, weight in newtons',
       'Mass in kilograms, weight in kilograms',
-      'Mass in newtons and weight in kilograms',
+      'Mass in newtons, weight in kilograms',
       'Mass in kilograms, weight in joules',
     ],
     correctAnswer: 0,
@@ -5897,10 +5902,10 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 369,
     question: 'In an inefficient machine, what becomes of the energy that does not appear as useful output?',
     options: [
-      'It is stored until the machine needs it',
-      'It is returned as reactive power',
+      'It is stored, until the machine needs it',
+      'It is returned, as reactive power',
       'It is converted to heat, noise and vibration',
-      'It is destroyed inside the machine windings',
+      'It is destroyed, inside the machine windings',
     ],
     correctAnswer: 2,
     explanation: 'Energy cannot be destroyed, only converted. The lost portion leaves the machine as heat, noise and vibration. Saying it is destroyed breaks the principle of conservation of energy, which is why that option fails however tempting the word \'lost\' makes it.',
@@ -6017,7 +6022,7 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 377,
     question: 'A gearbox reduces speed by 5:1. Ignoring losses, what happens to the torque and the power at the output?',
     options: [
-      'Torque and power both rise five times',
+      'Torque rises five times, power with it',
       'Torque unchanged, power rises fivefold',
       'Torque rises five times, power unchanged',
       'Torque falls five times, power same',
@@ -6169,7 +6174,7 @@ export const module2QuestionBank: QuestionBank[] = [
     options: [
       'On the cathode, the negative electrode',
       'On the anode, the positive electrode',
-      'On both electrodes equally',
+      'On both electrodes, in equal thickness',
       'On the electrolyte, not on an electrode',
     ],
     correctAnswer: 0,
@@ -6190,7 +6195,7 @@ export const module2QuestionBank: QuestionBank[] = [
     correctAnswer: 1,
     explanation: 'Two dissimilar metals with moisture between them form a simple cell, and the chemical effect of the small current corrodes the more reactive metal, here the aluminium. The joint resistance then climbs and the connection overheats. Moisture does not alter the melting point of copper.',
     section: '2.4.7',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Electrolysis',
   },
   {
@@ -6325,7 +6330,7 @@ export const module2QuestionBank: QuestionBank[] = [
     correctAnswer: 2,
     explanation: 'Soft iron has a far lower reluctance than air, so the flux takes the easier path around the case and very little passes through the enclosed space. Flux cannot be destroyed or reflected in the way the other options suggest; it is simply diverted.',
     section: '2.5.5',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Magnetism',
   },
   {
@@ -6505,7 +6510,7 @@ export const module2QuestionBank: QuestionBank[] = [
     correctAnswer: 2,
     explanation: 'The induced current always flows in the direction that opposes the change producing it, so the coil pushes back against the incoming magnet and mechanical work must be done. If the induced current assisted the motion the magnet would accelerate on its own and energy would be created from nothing.',
     section: '2.5.5',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Electromagnetic Induction',
   },
   {

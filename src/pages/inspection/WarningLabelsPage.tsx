@@ -6,8 +6,13 @@ import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import { generateWarningLabelsPdf, type LabelForPdf } from '@/utils/generate-warning-labels-pdf';
 
-const inputCn =
-  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
+/*
+ * Page styling comes from the shared kit. These were local copies that had
+ * drifted from every other Notices & Labels page — see components/forms/pageStyles.
+ */
+import { pageInputCn as inputCn } from '@/components/forms/pageStyles';
+
+import { PageHeader } from '@/components/forms/PageHeader';
 
 interface LabelDef {
   id: string;
@@ -124,27 +129,13 @@ export default function WarningLabelsPage() {
   return (
     <div className="bg-background min-h-screen">
       {/* Header */}
-      <div className="px-4 pt-3 pb-1 lg:px-8">
-        <div className="mx-auto max-w-3xl lg:max-w-[1600px]">
-          <button
-            onClick={() => navigate(-1)}
-            className="h-11 pr-2 text-[13px] font-semibold text-white/90 transition-colors hover:text-white touch-manipulation"
-          >
-            Back
-          </button>
-          <div className="flex items-end justify-between gap-3">
-            <div>
-              <h1 className="text-2xl font-bold tracking-tight text-white sm:text-[28px]">Warning Labels</h1>
-              <p className="mt-1 text-[13px] text-white/50">
-                <span className="font-semibold text-elec-yellow">Printable BS 7671 labels.</span> Select labels and quantities — generates an A4 sheet with cut lines for self-adhesive label paper (Avery L7163) or plain A4.
-              </p>
-            </div>
-            {totalLabels > 0 && (
-              <span className="pb-0.5 text-[13px] font-semibold text-elec-yellow whitespace-nowrap">{totalLabels} selected</span>
-            )}
-          </div>
-        </div>
-      </div>
+      <PageHeader
+        eyebrow="BS 7671"
+        title="Warning Labels"
+        lead="Printable BS 7671 labels."
+        description="Select labels and quantities — generates an A4 sheet with cut lines for self-adhesive label paper (Avery L7163) or plain A4."
+      />
+
 
       <main className="mx-auto max-w-3xl px-4 py-4 pb-40 space-y-5 lg:max-w-[1600px] lg:px-8">
         {/* Category toggles */}
@@ -169,7 +160,7 @@ export default function WarningLabelsPage() {
         <div className="space-y-4">
           <div>
             <h2 className="text-[15px] font-semibold tracking-tight text-white">{activeCat?.title}</h2>
-            <p className="mt-1 text-[12.5px] text-white/90">{activeCat?.description}</p>
+            <p className="mt-1 text-[12.5px] text-white">{activeCat?.description}</p>
           </div>
 
           <div className="space-y-3 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
@@ -249,7 +240,7 @@ export default function WarningLabelsPage() {
       {/* Fixed generate button */}
       {totalLabels > 0 && (
         <div className="fixed bottom-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-t border-white/[0.12] px-4 py-3 lg:px-8">
-          <div className="mx-auto max-w-3xl lg:max-w-[1600px] lg:flex lg:justify-end">
+          <div className="mx-auto max-w-3xl lg:max-w-none xl:max-w-[1700px] lg:flex lg:justify-end">
             <button
               className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-all hover:bg-elec-yellow/90 active:scale-[0.99] touch-manipulation lg:w-auto lg:px-10"
               onClick={handleGenerate}

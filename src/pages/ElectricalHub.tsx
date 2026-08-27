@@ -50,27 +50,23 @@ import {
   HubMasthead,
   HubQuickStart,
   HubToolGrid,
-  HubWorkList,
   HubSectionHeading,
   HubKpi,
   HubKpiRow,
   type HubTool,
   type HubQuickAction,
-  type HubWorkItem,
 } from '@/components/hub/HubPrimitives';
 import { MateBar } from '@/components/business-hub/MateBar';
 import { Assistant } from '@/components/business-hub/Assistant';
 import { useSparkTasks } from '@/hooks/useSparkTasks';
-import { useUnfinishedCertificates } from '@/hooks/useUnfinishedCertificates';
-import { certificateHref, certificateTypeLabel } from '@/utils/certificate-href';
 import { ReferralRaceCard } from '@/components/referrals/ReferralRaceCard';
+
+import DiaryPanel from '@/components/calendar/DiaryPanel';
 
 // Exact — see Dashboard.tsx. Three pages were rounding this differently.
 const money = (v: number) =>
   `£${Math.round(v).toLocaleString('en-GB')}`;
 
-const DAY = 86_400_000;
-const daysSince = (d: Date) => Math.floor((Date.now() - d.getTime()) / DAY);
 
 const ElectricalHubInner = () => {
   const navigate = useNavigate();
@@ -79,7 +75,6 @@ const ElectricalHubInner = () => {
   const data = useSharedDashboardData();
   // Drives the Worker Tools card — an active employer seat is what grants it.
   const { data: hasWorkerSeat = false } = useWorkerSeat(profile?.id);
-  const unfinishedCerts = useUnfinishedCertificates();
   const { tasks, saveTask, updateTask, deleteTask, markDone } = useSparkTasks('all');
 
   const [mateOpen, setMateOpen] = useState(false);
@@ -202,53 +197,6 @@ const ElectricalHubInner = () => {
    * ever goes up and that you would never act on.
    */
   const certsInProgress = certificates.expiringSoon;
-
-  /*
-   * ── Needs you ────────────────────────────────────────────────────────
-   *
-   * Certificates, not money. The Business Hub's list already itemises every
-   * overdue invoice and quiet quote, and this page sits one tap above it —
-   * repeating those four rows here would be the third place the same £6,027
-   * appears.
-   *
-   * What only this page can show is the certificate backlog: 33 documents
-   * started and never issued, the oldest from January. That is unbilled work
-   * and, for anything already tested on site, a client still waiting on their
-   * paperwork. Money gets a single summary row that hands off to the Business
-   * Hub rather than restating it.
-   */
-  const needsYou = useMemo<HubWorkItem[]>(() => {
-    const items: HubWorkItem[] = unfinishedCerts.map((c) => {
-      const age = daysSince(c.updatedAt);
-      return {
-        id: `cert-${c.id}`,
-        title: c.clientName
-          ? `${certificateTypeLabel(c.reportType)} — ${c.clientName}`
-          : `${certificateTypeLabel(c.reportType)} (no client yet)`,
-        reason:
-          age === 0
-            ? 'Started today, not issued'
-            : `Untouched for ${age} day${age === 1 ? '' : 's'}`,
-        // Volt once it has been sitting long enough that the reader has
-        // forgotten it exists. A cert left over the weekend is not a problem.
-        urgent: age >= 30,
-        to: certificateHref(c.reportType, c.reportId),
-      };
-    });
-
-    if (business.overdueInvoices > 0) {
-      items.push({
-        id: 'overdue-money',
-        title: `${business.overdueInvoices} invoice${business.overdueInvoices === 1 ? '' : 's'} overdue`,
-        reason: 'Chase these in the Business Hub',
-        trailing: money(business.overdueValue),
-        urgent: true,
-        to: '/electrician/invoices?filter=overdue',
-      });
-    }
-
-    return items;
-  }, [unfinishedCerts, business.overdueInvoices, business.overdueValue]);
 
   // ── Start something ──────────────────────────────────────────────────
   const quickStart: HubQuickAction[] = [
@@ -467,7 +415,19 @@ const ElectricalHubInner = () => {
           />
         </HubKpiRow>
 
-        <HubWorkList items={needsYou} unit="job" />
+        {/*
+          The diary, not a backlog list.
+          "Needs you" listed every unfinished certificate by age, which on a
+          real account meant 35 rows all reading "Untouched for 206 days" — a
+          wall of identical text that says the same thing 35 times and is
+          impossible to act on. The certificate backlog is still reachable, and
+          better presented, from the certificates KPI above.
+          What this page was missing is what an electrician actually opens it
+          for: what is on today. DiaryPanel is the same panel the Dashboard and
+          Business Hub already use, so this is one calendar in three places
+          rather than a fourth thing to maintain.
+        */}
+        <DiaryPanel />
 
         <HubToolGrid label="Core tools" cards={coreTools} columns="four" />
 

@@ -320,16 +320,43 @@ const EICClientDetailsSection = ({ formData, onUpdate }: EICClientDetailsSection
             />
           </FormField>
 
-          {/* ELE-1387 — Description and Extent are the same thing for the vast
-              majority of jobs, so they're one field. The value populates both
-              the Description and the Extent boxes on the certificate. */}
-          <FormField label="Description of installation & extent covered" required>
+          {/*
+            ELE-1630 — two fields again, after ELE-1387 merged them into one.
+            They ARE the same thing on most jobs, which is why they were merged
+            and why the formatter mirrored one into the other. But the merge
+            made it impossible for them to differ, and on a rewire of part of a
+            property they genuinely do: the description is what the installation
+            IS, the extent is how much of it this certificate covers.
+
+            The convenience ELE-1387 was protecting is kept as a one-tap copy
+            rather than as a forced duplication.
+          */}
+          <FormField label="Description of installation" required>
             <Input
               value={localValues.description || ''}
               onChange={(e) => handleFieldChange('description', e.target.value)}
               placeholder="e.g., Full rewire of 3-bed semi-detached — all circuits from new consumer unit"
               className={inputCn}
             />
+          </FormField>
+
+          <FormField label="Extent covered by this certificate">
+            <div className="flex items-end gap-2">
+              <Input
+                value={localValues.extentOfInstallation || ''}
+                onChange={(e) => handleFieldChange('extentOfInstallation', e.target.value)}
+                placeholder="Leave blank if the same as the description"
+                className={inputCn}
+              />
+              <button
+                type="button"
+                onClick={() => handleFieldChange('extentOfInstallation', localValues.description || '')}
+                disabled={!localValues.description}
+                className="h-11 flex-shrink-0 rounded-xl border border-white/[0.16] bg-white/[0.06] px-3 text-[12px] font-semibold text-white transition-colors hover:bg-white/[0.12] touch-manipulation active:scale-[0.98] disabled:opacity-40"
+              >
+                Copy
+              </button>
+            </div>
           </FormField>
       </div>
 

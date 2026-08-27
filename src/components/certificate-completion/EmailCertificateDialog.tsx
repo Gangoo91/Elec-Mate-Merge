@@ -51,7 +51,8 @@ export interface EmailCertificateDialogProps {
     | 'EV Charging'
     | 'Fire Alarm'
     | 'Emergency Lighting'
-    | 'Minor Works';
+    | 'Minor Works'
+    | 'Board Schedule';
   certificateNumber?: string;
   clientName?: string;
   clientEmail?: string;

@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import { format } from 'date-fns';
+import { format, isToday, isTomorrow } from 'date-fns';
 import {
   Sheet,
   SheetContent,
@@ -17,6 +17,8 @@ import { useCustomers } from '@/hooks/useCustomers';
 import { useLinkableProjects } from '@/hooks/useLinkableProjects';
 import { useDayClashes } from '@/hooks/useDayClashes';
 import { useCalendarSettings } from '@/hooks/useCalendarSettings';
+import { useBookingHistory } from '@/hooks/useBookingHistory';
+import { useSlotSuggestions } from '@/hooks/useSlotSuggestions';
 import { textareaCn } from '@/components/forms/fieldStyles';
 import { chipBase, chipOff, chipOn, eyebrowCn, fieldCn, labelCn } from './calendarStyles';
 import { addWorkingDays, humanMinutes } from './eventUtils';
@@ -165,6 +167,9 @@ const CalendarEventSheet = ({
   const { customers, createOrFindCustomer } = useCustomers();
   const { settings } = useCalendarSettings();
   const { data: projects = [] } = useLinkableProjects(open);
+  // Only while the sheet is up, and only for a NEW booking — an edit already
+  // has its title and length, and suggesting others would just be noise.
+  const { data: history = [] } = useBookingHistory(open && !event);
   /*
    * Everything already booked across the WHOLE span, all-day included.
    *
@@ -409,6 +414,66 @@ const CalendarEventSheet = ({
     [startDate, startHour, startMinute]
   );
 
+  /**
+   * One tap for a job you book all the time.
+   *
+   * Sets the title, the type it is usually filed under, and how long it usually
+   * takes — the three things that were being retyped every time for work that
+   * has not changed since the last forty.
+   */
+  const applySuggestion = useCallback(
+    (suggestion: { title: string; minutes: number | null; eventType: CalendarEventType | null }) => {
+      setTitle(suggestion.title);
+      if (suggestion.eventType) setEventType(suggestion.eventType);
+      if (suggestion.minutes === null) {
+        setAllDay(true);
+        // Collapse the span too. Picking "2 weeks" and then a job that is
+        // usually a single all-day would otherwise keep the fortnight.
+        setEndDate(startDate);
+        return;
+      }
+      const from = new Date(
+        startDate.getFullYear(),
+        startDate.getMonth(),
+        startDate.getDate(),
+        startHour,
+        startMinute,
+        0
+      );
+      const end = new Date(from.getTime() + suggestion.minutes * 60_000);
+      setAllDay(false);
+      setEndDate(end);
+      setEndHour(end.getHours());
+      setEndMinute(end.getMinutes());
+    },
+    [startDate, startHour, startMinute]
+  );
+
+  /*
+   * Times that would actually work, offered rather than hunted for.
+   *
+   * Only for a new booking that has NOT come from a picked slot — arriving from
+   * the day sheet means the time is already the answer, and re-offering others
+   * would undermine the choice just made.
+   */
+  const wantsSuggestions = open && !event && defaultHour == null && !allDay;
+  const suggestionMinutes = Math.max(
+    30,
+    Math.round((endAt.getTime() - startAt.getTime()) / 60_000) || 60
+  );
+  const { suggestions } = useSlotSuggestions(suggestionMinutes, wantsSuggestions);
+
+  /** Move the booking to a suggested time, keeping everything else. */
+  const applySlot = useCallback((slot: { start: Date; end: Date }) => {
+    setAllDay(false);
+    setStartDate(slot.start);
+    setStartHour(slot.start.getHours());
+    setStartMinute(slot.start.getMinutes());
+    setEndDate(slot.end);
+    setEndHour(slot.end.getHours());
+    setEndMinute(slot.end.getMinutes());
+  }, []);
+
   const handleSubmit = () => {
     if (!title.trim() || endsBeforeItStarts) return;
     const chosen = customers.find((c) => c.id === clientId);
@@ -467,6 +532,15 @@ const CalendarEventSheet = ({
     }
   };
 
+  /** Everything that will happen besides the booking itself. */
+  const sideEffects = useMemo(() => {
+    const out: string[] = [];
+    if (createProject) out.push('starts a job');
+    if (createSiteVisit) out.push('starts a site visit');
+    if (selectedCustomer) out.push(`offers to tell ${selectedCustomer.name.split(/\s+/)[0]}`);
+    return out;
+  }, [createProject, createSiteVisit, selectedCustomer]);
+
   const rowButtonCn =
     'flex h-12 w-full items-center gap-3 px-4 text-left touch-manipulation active:bg-white/[0.04]';
 
@@ -486,6 +560,216 @@ const CalendarEventSheet = ({
           </SheetHeader>
 
           <div className="flex-1 space-y-5 overflow-y-auto px-4 pb-6">
+            {/* WHO, first.
+                
+                The form used to open on "What is it?". That is not how the call
+                goes — the phone rings, you know who it is, and only then what
+                they want. Asking in the wrong order meant picking the customer
+                was a scroll away from where you started, so it was skipped, and
+                `client_id` went unset on bookings that plainly had a customer.
+                
+                It also earns its place at the top: choosing someone fills the
+                location from their address. */}
+            <div>
+              <span className={labelCn}>Customer</span>
+              <div className="overflow-hidden rounded-2xl border border-white/[0.12] bg-white/[0.04]">
+                {/* Clear sits BESIDE the disclosure, not inside it — a button
+                    within a button is invalid and swallows its own taps. */}
+                <div className="flex items-center">
+                  <button
+                    type="button"
+                    onClick={() => togglePicker('customer')}
+                    className={cn(rowButtonCn, 'flex-1')}
+                  >
+                    <span className="flex-1 truncate text-[14px] font-medium text-white">
+                      {selectedCustomer?.name ?? 'None'}
+                    </span>
+                    {!clientId && (
+                      <ChevronDown
+                        className={cn(
+                          'h-4 w-4 text-white transition-transform',
+                          openPicker === 'customer' && 'rotate-180'
+                        )}
+                      />
+                    )}
+                  </button>
+                  {clientId && (
+                    <button
+                      type="button"
+                      aria-label="Clear customer"
+                      onClick={() => setClientId(undefined)}
+                      className="flex h-12 w-11 shrink-0 items-center justify-center text-white touch-manipulation active:bg-white/[0.06]"
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+                  )}
+                </div>
+
+                {openPicker === 'customer' && addingCustomer && (
+                  <div className="space-y-3 border-t border-white/[0.10] px-4 py-3">
+                    <div>
+                      <label className={labelCn} htmlFor="new-customer-name">
+                        Name
+                      </label>
+                      <input
+                        id="new-customer-name"
+                        value={draft.name}
+                        onChange={(e) => setDraft((d) => ({ ...d, name: e.target.value }))}
+                        placeholder="Who is it for?"
+                        autoFocus
+                        className={fieldCn}
+                      />
+                    </div>
+                    <div>
+                      <label className={labelCn} htmlFor="new-customer-phone">
+                        Phone
+                      </label>
+                      <input
+                        id="new-customer-phone"
+                        value={draft.phone}
+                        onChange={(e) => setDraft((d) => ({ ...d, phone: e.target.value }))}
+                        placeholder="07700 900123"
+                        inputMode="tel"
+                        autoComplete="tel"
+                        className={fieldCn}
+                      />
+                    </div>
+                    <div>
+                      <label className={labelCn} htmlFor="new-customer-email">
+                        Email
+                      </label>
+                      <input
+                        id="new-customer-email"
+                        value={draft.email}
+                        onChange={(e) => setDraft((d) => ({ ...d, email: e.target.value }))}
+                        placeholder="Optional"
+                        inputMode="email"
+                        autoComplete="email"
+                        className={fieldCn}
+                      />
+                    </div>
+                    <div>
+                      <label className={labelCn} htmlFor="new-customer-address">
+                        Address
+                      </label>
+                      <input
+                        id="new-customer-address"
+                        value={draft.address}
+                        onChange={(e) => setDraft((d) => ({ ...d, address: e.target.value }))}
+                        placeholder="Optional — fills the location too"
+                        className={fieldCn}
+                      />
+                    </div>
+
+                    {customerError && (
+                      <p className="rounded-xl border border-orange-500/30 bg-orange-500/10 px-3 py-2.5 text-[13px] text-orange-300">
+                        {customerError}
+                      </p>
+                    )}
+
+                    {/* A number, an email or neither — the phone is what a
+                        confirmation actually goes out on, so it is asked for
+                        first, but a doorstep booking with no details is still a
+                        booking and must not be refused. */}
+                    <div className="flex gap-2">
+                      <button
+                        type="button"
+                        onClick={saveDraftCustomer}
+                        disabled={!draft.name.trim() || savingCustomer}
+                        className="flex h-11 flex-1 items-center justify-center rounded-xl bg-elec-yellow text-[14px] font-semibold text-black touch-manipulation active:scale-[0.98] disabled:opacity-50"
+                      >
+                        {savingCustomer && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                        Add customer
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setAddingCustomer(false);
+                          setCustomerError(null);
+                        }}
+                        className="h-11 rounded-xl border border-white/[0.12] bg-white/[0.04] px-4 text-[13px] font-medium text-white touch-manipulation active:scale-[0.98]"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {openPicker === 'customer' && !addingCustomer && (
+                  <div className="border-t border-white/[0.10]">
+                    <div className="relative px-4 py-2">
+                      <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white" />
+                      <input
+                        value={customerSearch}
+                        onChange={(e) => setCustomerSearch(e.target.value)}
+                        placeholder="Search customers"
+                        className={cn(fieldCn, 'pl-6')}
+                      />
+                    </div>
+
+                    {/* New customer sits ABOVE the list, not under it. Someone
+                        booking in a stranger has just searched, found nothing,
+                        and would otherwise scroll a list of everyone they have
+                        ever worked for to find the way out of it. */}
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setDraft({ ...EMPTY_DRAFT, name: customerSearch.trim() });
+                        setAddingCustomer(true);
+                      }}
+                      className="flex h-12 w-full items-center gap-2 border-t border-white/[0.10] px-4 text-left text-[14px] font-semibold text-elec-yellow touch-manipulation active:bg-white/[0.06]"
+                    >
+                      <UserPlus className="h-4 w-4 shrink-0" />
+                      {customerSearch.trim()
+                        ? `New customer “${customerSearch.trim()}”`
+                        : 'New customer'}
+                    </button>
+
+                    <div className="max-h-56 overflow-y-auto">
+                      {filteredCustomers.length === 0 ? (
+                        <p className="px-4 py-3 text-[13px] text-white">No customers found.</p>
+                      ) : (
+                        filteredCustomers.map((c) => (
+                          <button
+                            key={c.id}
+                            type="button"
+                            onClick={() => {
+                              setClientId(c.id);
+                              // A customer with an address fills a location the
+                              // user would otherwise retype from memory.
+                              if (!location.trim() && c.address) setLocation(c.address);
+                              setOpenPicker(null);
+                            }}
+                            className="flex h-12 w-full items-center px-4 text-left text-[14px] text-white touch-manipulation active:bg-white/[0.06]"
+                          >
+                            <span className="truncate">{c.name}</span>
+                          </button>
+                        ))
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* WHERE, straight after WHO.
+                
+                Choosing a customer fills this from their address — and while it
+                sat five hundred lines further down, it filled silently where
+                nobody could see it happen. Next to the customer, picking someone
+                visibly answers two questions at once. */}
+            <div>
+              <label className={labelCn}>Location</label>
+              <GoogleMapsProvider>
+                <PlacesAutocomplete
+                  value={location}
+                  onChange={setLocation}
+                  placeholder="Add an address"
+                  className={fieldCn}
+                />
+              </GoogleMapsProvider>
+            </div>
+
             {/* Title */}
             <div>
               <label className={labelCn} htmlFor="event-title">
@@ -496,9 +780,31 @@ const CalendarEventSheet = ({
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="What is it?"
-                autoFocus
                 className={fieldCn}
               />
+
+              {/* The work you actually book, learned from your own diary. One
+                  tap sets the title, its usual type and its usual length —
+                  three things that were being retyped for jobs that have not
+                  changed in a year. Renders nothing until there is a habit to
+                  spot, so a new account never sees an empty row. */}
+              {history.length > 0 && (
+                <div className="scrollbar-hide -mx-4 mt-2 flex gap-2 overflow-x-auto px-4 pb-1">
+                  {history.map((h) => (
+                    <button
+                      key={h.title}
+                      type="button"
+                      onClick={() => applySuggestion(h)}
+                      className={cn(
+                        chipBase,
+                        title.trim().toLowerCase() === h.title.toLowerCase() ? chipOn : chipOff
+                      )}
+                    >
+                      {h.title}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Type */}
@@ -525,6 +831,46 @@ const CalendarEventSheet = ({
                 ))}
               </div>
             </div>
+
+            {/* When they could actually come.
+                
+                The question every booking starts with, previously answered by
+                opening days one at a time until a big enough gap turned up.
+                These are real gaps that fit this job, honouring how many jobs
+                can run at once and skipping anything already gone. */}
+            {suggestions.length > 0 && (
+              <div>
+                <span className={cn(eyebrowCn, 'mb-2 block')}>Next times that fit</span>
+                <div className="scrollbar-hide -mx-4 flex gap-2 overflow-x-auto px-4 pb-1">
+                  {suggestions.map((slot) => {
+                    const chosen = slot.start.getTime() === startAt.getTime();
+                    return (
+                      <button
+                        key={slot.start.toISOString()}
+                        type="button"
+                        onClick={() => applySlot(slot)}
+                        className={cn(
+                          chipBase,
+                          'flex-col items-start justify-center gap-0 px-3 py-1 leading-tight',
+                          chosen ? chipOn : chipOff
+                        )}
+                      >
+                        <span className="text-[11px] font-semibold">
+                          {isToday(slot.start)
+                            ? 'Today'
+                            : isTomorrow(slot.start)
+                              ? 'Tomorrow'
+                              : format(slot.start, 'EEE d MMM')}
+                        </span>
+                        <span className="text-[13px] font-bold tabular-nums">
+                          {format(slot.start, 'HH:mm')}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
 
             {/* How long. Sits above the schedule card because it is how the
                 length actually gets set nine times out of ten — the date and
@@ -762,204 +1108,6 @@ const CalendarEventSheet = ({
               </div>
             )}
 
-            {/* Location */}
-            <div>
-              <label className={labelCn}>Location</label>
-              <GoogleMapsProvider>
-                <PlacesAutocomplete
-                  value={location}
-                  onChange={setLocation}
-                  placeholder="Add an address"
-                  className={fieldCn}
-                />
-              </GoogleMapsProvider>
-            </div>
-
-            {/* Customer — client_id has existed on the table all along and no
-                screen ever set it. Without this, an event could never be tied
-                to the person it was for. */}
-            <div>
-              <span className={labelCn}>Customer</span>
-              <div className="overflow-hidden rounded-2xl border border-white/[0.12] bg-white/[0.04]">
-                {/* Clear sits BESIDE the disclosure, not inside it — a button
-                    within a button is invalid and swallows its own taps. */}
-                <div className="flex items-center">
-                  <button
-                    type="button"
-                    onClick={() => togglePicker('customer')}
-                    className={cn(rowButtonCn, 'flex-1')}
-                  >
-                    <span className="flex-1 truncate text-[14px] font-medium text-white">
-                      {selectedCustomer?.name ?? 'None'}
-                    </span>
-                    {!clientId && (
-                      <ChevronDown
-                        className={cn(
-                          'h-4 w-4 text-white transition-transform',
-                          openPicker === 'customer' && 'rotate-180'
-                        )}
-                      />
-                    )}
-                  </button>
-                  {clientId && (
-                    <button
-                      type="button"
-                      aria-label="Clear customer"
-                      onClick={() => setClientId(undefined)}
-                      className="flex h-12 w-11 shrink-0 items-center justify-center text-white touch-manipulation active:bg-white/[0.06]"
-                    >
-                      <X className="h-4 w-4" />
-                    </button>
-                  )}
-                </div>
-
-                {openPicker === 'customer' && addingCustomer && (
-                  <div className="space-y-3 border-t border-white/[0.10] px-4 py-3">
-                    <div>
-                      <label className={labelCn} htmlFor="new-customer-name">
-                        Name
-                      </label>
-                      <input
-                        id="new-customer-name"
-                        value={draft.name}
-                        onChange={(e) => setDraft((d) => ({ ...d, name: e.target.value }))}
-                        placeholder="Who is it for?"
-                        autoFocus
-                        className={fieldCn}
-                      />
-                    </div>
-                    <div>
-                      <label className={labelCn} htmlFor="new-customer-phone">
-                        Phone
-                      </label>
-                      <input
-                        id="new-customer-phone"
-                        value={draft.phone}
-                        onChange={(e) => setDraft((d) => ({ ...d, phone: e.target.value }))}
-                        placeholder="07700 900123"
-                        inputMode="tel"
-                        autoComplete="tel"
-                        className={fieldCn}
-                      />
-                    </div>
-                    <div>
-                      <label className={labelCn} htmlFor="new-customer-email">
-                        Email
-                      </label>
-                      <input
-                        id="new-customer-email"
-                        value={draft.email}
-                        onChange={(e) => setDraft((d) => ({ ...d, email: e.target.value }))}
-                        placeholder="Optional"
-                        inputMode="email"
-                        autoComplete="email"
-                        className={fieldCn}
-                      />
-                    </div>
-                    <div>
-                      <label className={labelCn} htmlFor="new-customer-address">
-                        Address
-                      </label>
-                      <input
-                        id="new-customer-address"
-                        value={draft.address}
-                        onChange={(e) => setDraft((d) => ({ ...d, address: e.target.value }))}
-                        placeholder="Optional — fills the location too"
-                        className={fieldCn}
-                      />
-                    </div>
-
-                    {customerError && (
-                      <p className="rounded-xl border border-orange-500/30 bg-orange-500/10 px-3 py-2.5 text-[13px] text-orange-300">
-                        {customerError}
-                      </p>
-                    )}
-
-                    {/* A number, an email or neither — the phone is what a
-                        confirmation actually goes out on, so it is asked for
-                        first, but a doorstep booking with no details is still a
-                        booking and must not be refused. */}
-                    <div className="flex gap-2">
-                      <button
-                        type="button"
-                        onClick={saveDraftCustomer}
-                        disabled={!draft.name.trim() || savingCustomer}
-                        className="flex h-11 flex-1 items-center justify-center rounded-xl bg-elec-yellow text-[14px] font-semibold text-black touch-manipulation active:scale-[0.98] disabled:opacity-50"
-                      >
-                        {savingCustomer && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                        Add customer
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setAddingCustomer(false);
-                          setCustomerError(null);
-                        }}
-                        className="h-11 rounded-xl border border-white/[0.12] bg-white/[0.04] px-4 text-[13px] font-medium text-white touch-manipulation active:scale-[0.98]"
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  </div>
-                )}
-
-                {openPicker === 'customer' && !addingCustomer && (
-                  <div className="border-t border-white/[0.10]">
-                    <div className="relative px-4 py-2">
-                      <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white" />
-                      <input
-                        value={customerSearch}
-                        onChange={(e) => setCustomerSearch(e.target.value)}
-                        placeholder="Search customers"
-                        className={cn(fieldCn, 'pl-6')}
-                      />
-                    </div>
-
-                    {/* New customer sits ABOVE the list, not under it. Someone
-                        booking in a stranger has just searched, found nothing,
-                        and would otherwise scroll a list of everyone they have
-                        ever worked for to find the way out of it. */}
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setDraft({ ...EMPTY_DRAFT, name: customerSearch.trim() });
-                        setAddingCustomer(true);
-                      }}
-                      className="flex h-12 w-full items-center gap-2 border-t border-white/[0.10] px-4 text-left text-[14px] font-semibold text-elec-yellow touch-manipulation active:bg-white/[0.06]"
-                    >
-                      <UserPlus className="h-4 w-4 shrink-0" />
-                      {customerSearch.trim()
-                        ? `New customer “${customerSearch.trim()}”`
-                        : 'New customer'}
-                    </button>
-
-                    <div className="max-h-56 overflow-y-auto">
-                      {filteredCustomers.length === 0 ? (
-                        <p className="px-4 py-3 text-[13px] text-white">No customers found.</p>
-                      ) : (
-                        filteredCustomers.map((c) => (
-                          <button
-                            key={c.id}
-                            type="button"
-                            onClick={() => {
-                              setClientId(c.id);
-                              // A customer with an address fills a location the
-                              // user would otherwise retype from memory.
-                              if (!location.trim() && c.address) setLocation(c.address);
-                              setOpenPicker(null);
-                            }}
-                            className="flex h-12 w-full items-center px-4 text-left text-[14px] text-white touch-manipulation active:bg-white/[0.06]"
-                          >
-                            <span className="truncate">{c.name}</span>
-                          </button>
-                        ))
-                      )}
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-
             {/* Project — the bridge that lets this block be logged as billable
                 time against a job (ELE-1472). Nothing in the UI could set it. */}
             <div>
@@ -1118,6 +1266,18 @@ const CalendarEventSheet = ({
             className="shrink-0 border-t border-white/[0.10] px-4 pt-3"
             style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
           >
+            {/* What pressing the button will actually do.
+                
+                It said "Create event" while also starting a job, opening a site
+                visit and putting a confirmation in front of you. Side effects
+                you did not ask about are how an app loses trust; side effects
+                you switched on yourself and were reminded of are just useful. */}
+            {!isEditing && sideEffects.length > 0 && (
+              <p className="mb-2 text-[12px] leading-snug text-white">
+                Also: {sideEffects.join(' · ')}
+              </p>
+            )}
+
             <button
               type="button"
               onClick={handleSubmit}
@@ -1125,7 +1285,7 @@ const CalendarEventSheet = ({
               className="flex h-12 w-full items-center justify-center rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-colors touch-manipulation active:scale-[0.98] disabled:opacity-50"
             >
               {saving && <Loader2 className="mr-2 h-5 w-5 animate-spin" />}
-              {isEditing ? 'Save changes' : 'Create event'}
+              {isEditing ? 'Save changes' : selectedCustomer ? 'Book it in' : 'Create event'}
             </button>
           </div>
         </div>

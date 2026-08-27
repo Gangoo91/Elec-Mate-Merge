@@ -102,7 +102,7 @@ export function useCalendarRealtimeInvalidation() {
 }
 
 // Fetch events for a date range
-export function useCalendarEvents(dateFrom: string, dateTo: string) {
+export function useCalendarEvents(dateFrom: string, dateTo: string, enabled = true) {
   return useQuery({
     queryKey: ['calendar-events', dateFrom, dateTo],
     queryFn: async (): Promise<CalendarEvent[]> => {
@@ -114,11 +114,24 @@ export function useCalendarEvents(dateFrom: string, dateTo: string) {
       const { data, error } = await supabase
         .from('calendar_events')
         .select(
+          /*
+           * The embed names its foreign key EXPLICITLY, and must keep doing so.
+           *
+           * On 27 Aug a second relationship between these tables was added
+           * (`spark_projects.calendar_event_id`), which made a bare
+           * `project:spark_projects(...)` ambiguous. PostgREST answers
+           * ambiguity with PGRST201 and fails the ENTIRE request — so every
+           * event disappeared from every calendar for ten hours, while the
+           * clash check went on finding them because it embeds nothing.
+           *
+           * The offending constraint has been dropped, but naming the key here
+           * means the same shape of change can never do this again.
+           */
           `
           *,
           customer:customers(id, name),
           job:employer_jobs(id, title),
-          project:spark_projects(id, title)
+          project:spark_projects!calendar_events_project_id_fkey(id, title)
         `
         )
         .eq('user_id', user.id)
@@ -139,7 +152,10 @@ export function useCalendarEvents(dateFrom: string, dateTo: string) {
       // Drop the double cast when types.ts is regenerated.
       return (data ?? []) as unknown as CalendarEvent[];
     },
-    enabled: !!dateFrom && !!dateTo,
+    // Both conditions, in one place. There was already an `enabled` here
+    // guarding an empty range; adding a second key silently replaced it —
+    // esbuild keeps the last and the range guard would have gone.
+    enabled: enabled && !!dateFrom && !!dateTo,
     staleTime: 30_000,
   });
 }
@@ -173,7 +189,7 @@ export function useTodayEvents() {
           *,
           customer:customers(id, name),
           job:employer_jobs(id, title),
-          project:spark_projects(id, title)
+          project:spark_projects!calendar_events_project_id_fkey(id, title)
         `
         )
         .eq('user_id', user.id)
@@ -230,7 +246,7 @@ export function useUpcomingEvents(days: number = 7) {
           *,
           customer:customers(id, name),
           job:employer_jobs(id, title),
-          project:spark_projects(id, title)
+          project:spark_projects!calendar_events_project_id_fkey(id, title)
         `
         )
         .eq('user_id', user.id)

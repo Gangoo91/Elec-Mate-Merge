@@ -156,6 +156,7 @@ export default function InspectionRoutes() {
         <Route path="permit-to-work/:id" element={<PermitToWorkPage />} />
         <Route path="warning-labels" element={<WarningLabelsPage />} />
         <Route path="board-schedule" element={<BoardSchedulePage />} />
+        <Route path="board-schedule/:id" element={<BoardSchedulePage />} />
         <Route path="client-handouts" element={<ClientHandoutsPage />} />
         <Route path="safe-isolation" element={<SafeIsolationPage />} />
         <Route path="safe-isolation/:id" element={<SafeIsolationPage />} />

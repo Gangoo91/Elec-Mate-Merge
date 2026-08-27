@@ -529,8 +529,8 @@ export const questionsPart1: StandardMockQuestion[] = [
     id: 30,
     question: 'Rearrange P = I²R to make I the subject.',
     options: [
-      'I = P ÷ R',
-      'I = P × R',
+      'I = (P ÷ R)²',
+      'I = (P × R)²',
       'I = √(P ÷ R)',
       'I = √(P × R)',
     ],
@@ -788,9 +788,9 @@ export const questionsPart1: StandardMockQuestion[] = [
     question: 'What does "C2" mean on an Electrical Installation Condition Report (EICR)?',
     options: [
       'Potentially dangerous — urgent remedial action required',
-      'Improvement recommended, but the installation is not unsafe',
-      'The installation is safe and satisfactory',
-      'Further investigation required without delay by the duty holder',
+      'Improvement recommended — no immediate action is needed, as the installation is not unsafe',
+      'The installation is safe and satisfactory — no classification code is required',
+      'Further investigation required — the duty holder must arrange it without delay',
     ],
     correctAnswer: 0,
     explanation:
@@ -933,9 +933,9 @@ export const questionsPart1: StandardMockQuestion[] = [
       'Which of the following is the most appropriate way to report a fault on a job sheet?',
     options: [
       '"Double socket outlet in kitchen — no earth continuity detected. Requires rewire of circuit from JB to accessory."',
-      '"Found a problem with one of the sockets in the kitchen, will need to come back and sort it out at some point."',
+      '"Found a problem with one of the sockets in the kitchen — will need to come back and sort it out at some point."',
       '"Kitchen socket not working properly — looks dodgy, probably needs a new one fitting at some point."',
-      '"There is an issue with some of the wiring in the kitchen that the customer should get somebody to look at fairly soon."',
+      '"There is an issue with some of the wiring in the kitchen — the customer should get somebody to look at it fairly soon."',
     ],
     correctAnswer: 0,
     explanation:
@@ -967,10 +967,10 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'When writing a variation order for additional work discovered on site, which information is essential?',
     options: [
-      'Only the name of the apprentice who first noticed the additional work while on site',
-      'A copy of the original quotation with the original prices crossed out by hand in pen',
+      'Only the name of the apprentice who first noticed the additional work, and the date they saw it',
+      'A copy of the original quotation, with the original prices crossed out by hand in pen',
       'A description of the extra work, the reason it is needed, and the additional cost',
-      'The manufacturer and catalogue details of the accessories used elsewhere on the job',
+      'The manufacturer, catalogue number and finish of the accessories used elsewhere on the job',
     ],
     correctAnswer: 2,
     explanation:
@@ -985,7 +985,7 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'An EIC (Electrical Installation Certificate) requires a "Description of the Installation". Which of the following is most appropriate?',
     options: [
-      '"Some new wiring installed throughout the property along with several extra sockets and lights fitted where the customer asked for them"',
+      '"Some new wiring installed throughout the property, along with several extra sockets and lights fitted where the customer asked for them"',
       '"Electrical work carried out to a good standard throughout, fully in line with the customer\'s wishes and the wiring regulations currently in force"',
       '"Rewire job completed at the above address, everything tested and left in full working order, certificate to follow by email shortly"',
       '"New domestic single-phase installation comprising consumer unit, 6 lighting circuits, 4 ring final circuits, cooker circuit, and shower circuit"',
@@ -1003,9 +1003,9 @@ export const questionsPart1: StandardMockQuestion[] = [
     question: 'When writing a daily site diary entry, which of the following should be included?',
     options: [
       'Date, weather, work carried out, materials used, personnel on site, and any issues encountered',
-      'Only a list of the tools and test instruments brought to site that morning',
-      'A detailed breakdown of every price quoted to the client for the works',
-      'Personal opinions about the other trades on site and about the way the client behaved during the day',
+      'Only a list of the tools, test instruments and leads brought to site that morning',
+      'A detailed breakdown of every price quoted to the client, line by line',
+      'Personal opinions about the other trades on site, and about how the client behaved during the day',
     ],
     correctAnswer: 0,
     explanation:
@@ -1038,8 +1038,8 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'A client asks for a written quote. Which of the following elements should be included?',
     options: [
-      'Just a single total figure so that the client cannot question the individual prices',
-      'The test results from the last job to show the quality of your work',
+      'Just a single total figure, so that the client cannot question the individual prices',
+      'The test results from the last job, to show the quality of your work',
       'Scope of work, itemised costs, payment terms, validity period, and exclusions',
       'A rough verbal estimate, confirmed later by text message once you are on site that day',
     ],
@@ -1056,9 +1056,9 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'When completing an EICR, observations must be recorded using specific classification codes. Which response best demonstrates correct technical writing?',
     options: [
-      '"The board looked a bit dodgy to me and the earthing did not seem right at all, so I would get someone to have a proper look at the distribution board soon."',
-      '"There is a definite problem with the earthing at the distribution board that will need sorting out fairly soon before it causes any trouble for the customer."',
-      '"Distribution board earthing is not great and really needs looking at, I have told the customer to get it properly fixed by someone as soon as they possibly can."',
+      '"The board looked a bit dodgy to me — the earthing did not seem right at all, so I would get someone to have a proper look at the distribution board soon."',
+      '"There is a definite problem with the earthing at the distribution board — it will need sorting out fairly soon, before it causes any trouble for the customer."',
+      '"Distribution board earthing is not great and really needs looking at — I have told the customer to get it properly fixed by someone as soon as they possibly can."',
       '"C2 — Lack of earthing to exposed-conductive-parts at distribution board. Remedial action: install main earthing conductor to meet Regulation 411.3.1.1."',
     ],
     correctAnswer: 3,
@@ -1114,9 +1114,9 @@ export const questionsPart1: StandardMockQuestion[] = [
       "During a site meeting, you disagree with the main contractor's proposed cable route. What is the most appropriate way to raise your concern?",
     options: [
       'Say nothing at all during the meeting, and then quietly install the cable your own way once work starts on site',
-      'Wait until after the meeting has finished and then complain about the cable route to the other trades on site',
+      'Wait until after the meeting has finished, then complain about the cable route to the other trades on site',
       'Clearly explain your technical reasoning and suggest an alternative route, referencing relevant regulations',
-      'Refuse to carry on with the installation until the main contractor agrees to change the cable route completely',
+      'Refuse to carry on with the installation, until the main contractor agrees to change the cable route completely',
     ],
     correctAnswer: 2,
     explanation:
@@ -1131,9 +1131,9 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'Which of the following demonstrates good professional practice when communicating with a client?',
     options: [
-      'Using complex technical jargon at every opportunity to show off your expertise to the client',
-      'Avoiding all technical detail and simply quoting a price with no explanation',
-      'Telling the client only what they want to hear in order to win the job quickly',
+      'Using complex technical jargon at every opportunity, to show off your expertise to the client',
+      'Avoiding all technical detail, and simply quoting a price with no explanation',
+      'Telling the client only what they want to hear, in order to win the job quickly',
       'Explaining work in clear, simple terms while being honest about costs and timescales',
     ],
     correctAnswer: 3,
@@ -1168,8 +1168,8 @@ export const questionsPart1: StandardMockQuestion[] = [
     options: [
       'To agree the prices, payment terms and completion dates for the work with the client beforehand',
       "To give a brief, focused safety briefing on a specific hazard relevant to the day's work",
-      'To record the inspection and test results from the circuits completed during the day on site',
-      'To formally discipline any workers who have breached the site safety rules during that week',
+      'To record the inspection and test results, circuit by circuit, at the end of the day on site',
+      'To formally discipline any worker who has breached the site safety rules, in front of the crew',
     ],
     correctAnswer: 1,
     explanation:
@@ -1240,7 +1240,7 @@ export const questionsPart1: StandardMockQuestion[] = [
     options: [
       'Carry out the work exactly as requested, since the client is paying for it and it is their own property to do as they wish with',
       "Explain clearly why the request is unsafe, reference the relevant regulation, and offer a compliant alternative that meets the client's needs",
-      'Do the work as asked but leave it off the certificate afterwards so that you cannot be held responsible if anything goes wrong later',
+      'Do the work as asked, but leave it off the certificate afterwards so that you cannot be held responsible if anything goes wrong later',
       'Walk off the job straight away and refuse to return to the property at all, without explaining your reasons to the client or the main contractor',
     ],
     correctAnswer: 1,
@@ -1256,10 +1256,10 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'During a handover meeting with a facilities manager, you need to explain the operation of a new lighting control system. Which approach is best?',
     options: [
-      'Hand over the manufacturer manuals at the panel and leave the manager to read through them all alone in their own time',
+      'Hand over the manufacturer manuals at the panel, and leave the manager to read through them all in their own time',
       'Give a quick verbal explanation at the panel only, as written notes are rarely needed afterwards',
       'Provide a verbal walkthrough at the panel, a written operating guide, and offer to answer any follow-up questions',
-      'Email a link to the manufacturer website and assume that the manager will work the new system out for themselves later on',
+      'Email a link to the manufacturer website, and assume that the manager will work the new system out for themselves',
     ],
     correctAnswer: 2,
     explanation:
@@ -1473,10 +1473,10 @@ export const questionsPart1: StandardMockQuestion[] = [
     id: 82,
     question: "Which folder structure would best organise an electrician's digital records?",
     options: [
-      'All of the files saved loose on the desktop so that they are quick to see and open again later',
+      'All of the files saved loose on the desktop, so that they are quick to see and open again later',
       'One single folder containing every file from every job, with everything mixed in together',
       'Folders by client name, with subfolders for quotes, certificates, photos, and invoices',
-      'Folders named only by the date on which each file happened to be created and saved to the computer',
+      'Folders named only by date, whenever each file happened to be created and saved to the computer',
     ],
     correctAnswer: 2,
     explanation:
@@ -1544,10 +1544,10 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'You need to find a specific EICR you completed last year. The file is somewhere on your computer. What is the fastest way to locate it?',
     options: [
-      'Open every folder on the computer one by one until you happen to come across the right file in the end',
-      'Reinstall the certification software you used last year and hope the missing file reappears on its own',
+      'Open every folder on the computer one by one (a manual sweep) until you come across the right file',
+      'Reinstall the certification software (the version used last year) and hope the file reappears on its own',
       "Use the operating system's search function (Windows Search or Spotlight) and type the client name or address",
-      'Restart the computer several times and then check whether the missing file has reappeared on the desktop by itself',
+      'Restart the computer several times (a hard reboot) and check whether the file has reappeared on the desktop',
     ],
     correctAnswer: 2,
     explanation:
@@ -1561,9 +1561,9 @@ export const questionsPart1: StandardMockQuestion[] = [
     id: 87,
     question: 'Which of the following is a benefit of backing up your work files to cloud storage?',
     options: [
-      'Files can only be opened on the single device that first uploaded them',
-      'Files stored in the cloud never need to be organised into any folders',
-      'Cloud storage is always free with unlimited space',
+      'Files can only be opened on the single device that first uploaded them, and nowhere else',
+      'Files stored in the cloud need no folders at all, whatever their number',
+      'Cloud storage is always free, with unlimited space',
       'Files are protected if your computer is lost, stolen, or damaged',
     ],
     correctAnswer: 3,
@@ -1615,10 +1615,10 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'You need to share a cloud folder containing sensitive client data (personal addresses, electrical certificates) with a colleague. What is the safest approach?',
     options: [
-      'Create a public link to the folder and post it where the colleague will be able to find it',
-      'Email the certificates as attachments to the whole company distribution list so nobody misses them',
+      'Create a public link to the folder, and post it where the colleague will be able to find it',
+      'Email the certificates as attachments to the whole company distribution list, so that nobody misses them',
       "Share the folder with specific permission settings, granting access only to your colleague's email address",
-      'Set the folder so that anyone on the internet who has the link can view and edit all of the contents of the folder',
+      'Set the folder so that anyone on the internet who has the link can view it, and edit all of the contents',
     ],
     correctAnswer: 2,
     explanation:
@@ -1655,9 +1655,9 @@ export const questionsPart1: StandardMockQuestion[] = [
       'When entering test results into a spreadsheet, why is it important to format cells containing resistance values as "Number" with appropriate decimal places?',
     options: [
       'It ensures consistent, accurate data that can be used in calculations and comparisons',
-      'It automatically colours each cell so that the finished spreadsheet looks more professional',
-      'It prevents anyone else from being able to edit the test results later',
-      'It converts the resistance values into the correct units for you automatically as you type',
+      'It automatically colours each cell, so that the finished spreadsheet looks more professional',
+      'It prevents anyone else from editing the test results later, however they open the file',
+      'It converts the resistance values into the correct units, automatically, as you type',
     ],
     correctAnswer: 0,
     explanation:
@@ -1780,9 +1780,9 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'You are entering data into a shared spreadsheet for a project. Another team member is entering data at the same time. What should you be aware of?',
     options: [
-      'Only one person at a time can have a shared spreadsheet open for editing, so you must wait your turn',
-      'Your changes will not be saved at all until the other person closes the file on their own computer',
-      'The spreadsheet will automatically lock you out of the file completely until the other person has finished editing it',
+      'Only one person at a time can have a shared spreadsheet open for editing — you must wait your turn',
+      'Your changes are held back — nothing is saved until the other person closes the file on their own computer',
+      'The spreadsheet locks you out of the file completely — no edits are possible until the other person has finished',
       "Changes may conflict if you edit the same cell simultaneously — communicate to avoid overwriting each other's work",
     ],
     correctAnswer: 3,

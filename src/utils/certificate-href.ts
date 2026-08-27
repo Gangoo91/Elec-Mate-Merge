@@ -30,6 +30,7 @@ const SECTION_ROUTED = new Set(['eicr', 'eic', 'minor-works']);
 /** Types with their own `<type>/:id` route (from InspectionRoutes). */
 const PATH_ROUTED = new Set([
   'bess',
+  'board-schedule',
   'completion-notice',
   'danger-notice',
   'disconnection',

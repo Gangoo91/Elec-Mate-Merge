@@ -12,6 +12,9 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { captureException } from '../_shared/sentry.ts';
+import { Resend, clientFacingSender, htmlToPlainText } from '../_shared/mailer.ts';
+import { buildBookingConfirmationEmail } from '../_shared/email-templates/booking-confirmation.ts';
+import { buildBookingIcs, bookingIcsFilename } from '../_shared/booking-ics.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -653,7 +656,7 @@ async function handleBookSlot(req: Request, supabase: ReturnType<typeof createCl
    */
   const { data: slotProfile } = await supabase
     .from('profiles')
-    .select('scheduling_slot_minutes')
+    .select('scheduling_slot_minutes, scheduling_auto_confirm, full_name')
     .eq('id', electrician_id)
     .maybeSingle();
 
@@ -661,6 +664,16 @@ async function handleBookSlot(req: Request, supabase: ReturnType<typeof createCl
     Number(slotProfile?.scheduling_slot_minutes) > 0
       ? Number(slotProfile.scheduling_slot_minutes)
       : SLOT_DURATION_MINUTES;
+
+  /*
+   * Whether to confirm to the customer, read from the same row.
+   *
+   * Strict `=== true`: the column is NOT NULL DEFAULT false, but reading it as
+   * truthy would mean a future null or a string from a hand-edited row started
+   * emailing customers on its own. An opt-in has to fail closed.
+   */
+  const autoConfirm = slotProfile?.scheduling_auto_confirm === true;
+  const profileRow = slotProfile;
 
   // Don't allow booking in the past
   const startAt = new Date(`${date}T${start_time}:00Z`);
@@ -841,6 +854,125 @@ async function handleBookSlot(req: Request, supabase: ReturnType<typeof createCl
     });
   } catch {
     /* non-critical */
+  }
+
+  /*
+   * Confirm it to the CUSTOMER — if the electrician has asked for that.
+   *
+   * The gap this closes: someone fills in the public booking form, presses
+   * submit, and gets a web page saying "confirmed" and nothing else. The
+   * electrician gets a push, a task and a diary entry; the customer gets
+   * nothing they can keep, nothing in their calendar, and no way to check what
+   * they agreed to.
+   *
+   * Gated on `scheduling_auto_confirm`, which is off for everyone until they
+   * turn it on. Every other confirmation in the product is written by the app
+   * and sent by the electrician; this is the one case where the customer has
+   * just asked for the slot themselves, so confirming it is transactional
+   * rather than the app speaking for them — but it is still their call.
+   *
+   * Non-critical throughout. The booking is already saved and must never fail
+   * because an email did.
+   */
+  try {
+    if (autoConfirm && client_email) {
+      const to = String(client_email).trim().toLowerCase();
+
+      // Read whole and compared lower-cased — `.in()` is case-SENSITIVE, so a
+      // stored `Foo@Bar.com` would never match a queued `foo@bar.com`.
+      const { data: suppressedRows } = await supabase
+        .from('email_suppressions')
+        .select('email')
+        .range(0, 49999);
+      const suppressed = new Set(
+        (suppressedRows ?? [])
+          .map((r) => String(r.email || '').trim().toLowerCase())
+          .filter(Boolean)
+      );
+
+      if (!suppressed.has(to)) {
+        const { data: companyRow } = await supabase
+          .from('company_profiles')
+          .select(
+            'company_name, company_email, company_phone, company_website, logo_url, accent_color'
+          )
+          .eq('user_id', electrician_id)
+          .maybeSingle();
+
+        const brandName =
+          (companyRow?.company_name as string) || (profileRow?.full_name as string) || 'Your electrician';
+        const title = `Booking: ${client_name}`;
+        const icsFilename = bookingIcsFilename(title, startAt.toISOString());
+
+        const built = buildBookingConfirmationEmail({
+          company: {
+            name: brandName,
+            logoUrl: (companyRow?.logo_url as string) ?? null,
+            primaryColor: (companyRow?.accent_color as string) ?? null,
+            email: (companyRow?.company_email as string) ?? null,
+            phone: (companyRow?.company_phone as string) ?? null,
+            website: (companyRow?.company_website as string) ?? null,
+          },
+          clientName: client_name,
+          title,
+          startIso: startAt.toISOString(),
+          endIso: endAt.toISOString(),
+          allDay: false,
+          location: client_address || null,
+          note: job_description || null,
+          icsFilename,
+        });
+
+        const ics = buildBookingIcs({
+          // Same UID scheme as send-booking-confirmation, so a later
+          // reschedule sent from the app UPDATES this entry rather than
+          // adding a second one to the customer's calendar.
+          uid: `booking-${event.id as string}@elec-mate.com`,
+          title,
+          startIso: startAt.toISOString(),
+          endIso: endAt.toISOString(),
+          allDay: false,
+          location: client_address || null,
+          description: job_description || null,
+          organiserName: brandName,
+          sequence: 0,
+        });
+
+        const sender = clientFacingSender({
+          companyName: brandName,
+          companyEmail: (companyRow?.company_email as string) ?? null,
+          userEmail: null,
+        });
+
+        const apiKey = Deno.env.get('RESEND_API_KEY');
+        if (apiKey) {
+          const { error: mailErr } = await new Resend(apiKey).emails.send({
+            from: sender.from,
+            replyTo: sender.replyTo,
+            to,
+            subject: built.subject,
+            html: built.html,
+            text: htmlToPlainText(built.html),
+            attachments: [
+              { filename: icsFilename, content: btoa(unescape(encodeURIComponent(ics))) },
+            ],
+          });
+          if (!mailErr) {
+            // `event.id` is `unknown` off the untyped service-role client —
+            // the same reason the surrounding code casts. Narrowed at the
+            // boundary rather than reaching for `any`.
+            await supabase
+              .from('calendar_events')
+              .update({ confirmation_sent_at: new Date().toISOString(), confirmation_sent_to: to })
+              .eq('id', event.id as string);
+          } else {
+            console.warn('portal confirmation failed (non-fatal):', mailErr.message);
+          }
+        }
+      }
+    }
+  } catch (confirmErr) {
+    console.warn('portal confirmation threw (non-fatal):', confirmErr);
   }
 
   // Push notification for the electrician — fires immediately, bypasses quiet hours

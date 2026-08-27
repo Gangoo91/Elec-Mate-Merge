@@ -13,11 +13,16 @@ import { storageGetJSONSync, storageSetJSONSync, storageRemoveSync } from '@/uti
 import { reportCloud } from '@/utils/reportCloud';
 import { formatCompletionNoticePayload } from '@/utils/completion-notice-formatter';
 
+/*
+ * Page styling comes from the shared kit. These were local copies that had
+ * drifted from every other Notices & Labels page — see components/forms/pageStyles.
+ */
+import { pageInputCn as inputCn, pageTextareaCn as textareaCn } from '@/components/forms/pageStyles';
+
+import { PageHeader } from '@/components/forms/PageHeader';
+
 const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.04 } } };
 const itemVariants = { hidden: { opacity: 0, y: 8 }, visible: { opacity: 1, y: 0, transition: { duration: 0.25 } } };
-const inputCn = 'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
-const textareaCn = 'textarea-soft rounded-xl border-0 bg-white/[0.05] px-3.5 py-3 text-base md:text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors focus:bg-white/[0.07] focus:ring-1 focus:ring-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/50 focus:outline-none focus:shadow-none min-h-[90px] touch-manipulation';
-
 interface WorkItem {
   id: string;
   description: string;
@@ -301,20 +306,17 @@ export default function CompletionNoticePage() {
 
   return (
     <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
-      <div className="px-4 pt-3 pb-1 lg:px-8">
-        <div className="mx-auto max-w-3xl lg:max-w-[1600px]">
-          <button onClick={() => navigate(-1)} className="h-11 pr-2 text-[13px] font-semibold text-white/90 transition-colors hover:text-white touch-manipulation">Back</button>
-          <div className="flex items-end justify-between gap-3">
-            <div>
-              <h1 className="text-2xl font-bold tracking-tight text-white sm:text-[28px]">Completion Notice</h1>
-              <p className="mt-1 text-[13px] text-white/50"><span className="font-semibold text-green-400">Work complete.</span> Formally confirms the work described below has been completed, tested and the installation is safe for use.</p>
-              <p className="mt-1 font-mono text-[12px] text-white/50">{data.referenceNumber}</p>
-            </div>
-          </div>
-        </div>
-      </div>
+      <PageHeader
+        eyebrow="General"
+        title="Completion Notice"
+        lead="Work complete."
+        leadTone="success"
+        description="Formally confirms the work described below has been completed, tested and the installation is safe for use."
+        reference={data.referenceNumber}
+      />
 
-      <motion.main variants={containerVariants} initial="hidden" animate="visible" className="px-4 py-4 lg:px-8 space-y-5 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4 mx-auto max-w-3xl lg:max-w-[1600px]">
+
+      <motion.main variants={containerVariants} initial="hidden" animate="visible" className="px-4 py-4 lg:px-8 space-y-5 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4 mx-auto max-w-3xl lg:max-w-none xl:max-w-[1700px]">
         {/* Reference */}
         <Section title="Reference">
           <Field label="Record No."><Input value={data.referenceNumber} onChange={(e) => update('referenceNumber', e.target.value)} className={inputCn} /></Field>
@@ -366,7 +368,7 @@ export default function CompletionNoticePage() {
 
         {/* Work Items Checklist */}
         <Section title="Work items" className="lg:col-span-2">
-          <p className="text-[13px] text-white/90">{completedCount}/{data.workItems.length} items completed</p>
+          <p className="text-[13px] text-white">{completedCount}/{data.workItems.length} items completed</p>
           {data.workItems.map((item, idx) => (
             <div key={item.id} className={cn('flex items-start gap-2', idx > 0 && 'border-t border-white/[0.08] pt-4')}>
               <button onClick={() => updateWorkItem(item.id, 'completed', !item.completed)} className={cn('w-6 h-6 mt-3 rounded border-2 flex items-center justify-center transition-all flex-shrink-0 touch-manipulation', item.completed ? 'bg-green-500 border-green-500' : 'border-white/30')}>
@@ -481,7 +483,7 @@ export default function CompletionNoticePage() {
 
         {/* Declaration & Signatures */}
         <Section title="Declaration" className="lg:col-span-2">
-          <p className="text-[12.5px] text-white/90 leading-relaxed">I hereby confirm that the electrical work described in this notice has been completed in accordance with BS 7671:2018+A3:2024 and is safe for continued use. Where applicable, the installation has been tested and the results are satisfactory.</p>
+          <p className="text-[12.5px] text-white leading-relaxed">I hereby confirm that the electrical work described in this notice has been completed in accordance with BS 7671:2018+A3:2024 and is safe for continued use. Where applicable, the installation has been tested and the results are satisfactory.</p>
           <SignatureInput label="Contractor Signature" value={data.inspectorSignature} onChange={(sig) => update('inspectorSignature', sig || '')} />
           <TickButton checked={data.clientRefusedToSign} label="Client declined to sign" onChange={() => update('clientRefusedToSign', !data.clientRefusedToSign)} />
           {!data.clientRefusedToSign && <SignatureInput label="Client Signature" value={data.clientSignature} onChange={(sig) => update('clientSignature', sig || '')} />}

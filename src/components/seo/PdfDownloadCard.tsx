@@ -36,7 +36,7 @@ import { EmailCaptureForm } from '@/components/landing/EmailCaptureForm';
 import { trackSeoToolUsed, trackLeadMagnetDownloaded } from '@/lib/analytics-events';
 import { saveOrShareFile } from '@/utils/save-or-share-file';
 
-type CaptureSource = 'lead_magnet_symbols_chart';
+type CaptureSource = 'lead_magnet_symbols_chart' | 'lead_magnet_zs_ze_reference';
 
 interface PdfDownloadCardProps {
   /** Public path to the PDF, e.g. /downloads/foo.pdf */

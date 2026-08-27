@@ -47,9 +47,9 @@ export const gsCat5Questions: StandardMockQuestion[] = [
     id: 163,
     question: 'What is the &ldquo;5-minute rule&rdquo; for overcoming procrastination?',
     options: [
-      'Take a 5-minute break every time a task starts to feel difficult or boring',
-      'Spend the first 5 minutes of any task planning it out in detail before starting',
-      'Reward yourself with a 5-minute treat each time you complete a task',
+      'Take a 5-minute break every single time a task starts to feel difficult, or boring',
+      'Spend the first 5 minutes of any task planning it out, in detail, before starting',
+      'Reward yourself with a 5-minute treat, each time you complete a task',
       'Commit to working on a task for just 5 minutes, then decide whether to continue',
     ],
     correctAnswer: 3,
@@ -99,10 +99,10 @@ export const gsCat5Questions: StandardMockQuestion[] = [
     id: 166,
     question: 'Why are 90-day planning cycles considered effective for goal achievement?',
     options: [
-      'They align neatly with the four quarters used in company financial reporting',
-      'They are the shortest period over which any meaningful habit can be formed',
+      'They align neatly with the four quarters used in standard company financial reporting cycles',
+      'They are the shortest period over which any genuinely meaningful habit can be formed at all',
       'They are long enough to make meaningful progress but short enough to maintain urgency',
-      'They guarantee a goal will be achieved regardless of the effort applied',
+      'They guarantee that a goal will be achieved regardless of the effort actually applied to it',
     ],
     correctAnswer: 2,
     explanation:
@@ -116,9 +116,9 @@ export const gsCat5Questions: StandardMockQuestion[] = [
     id: 167,
     question: 'What is the &ldquo;sunk cost fallacy&rdquo; in the context of goal pursuit?',
     options: [
-      'Abandoning a goal the moment it stops feeling enjoyable or exciting',
-      'Setting goals that are far too ambitious for the time you have available',
-      'Investing only in goals that promise the quickest possible financial return',
+      'Abandoning a goal the moment it stops feeling enjoyable, however much time you have already invested in it',
+      'Setting goals that are far too ambitious, given the time and the money you actually have available',
+      'Investing only in goals that promise the quickest possible financial return, and dropping the rest',
       'Continuing to invest in a goal because of what you have already spent, rather than future value',
     ],
     correctAnswer: 3,
@@ -187,9 +187,9 @@ export const gsCat5Questions: StandardMockQuestion[] = [
     question:
       'What popular saying captures the idea of overestimating short-term progress and underestimating long-term progress?',
     options: [
-      'A goal without a deadline is simply a wish that will never be achieved',
-      'If you can dream it, you can achieve it within a single year of effort',
-      'Success is 10 per cent inspiration and 90 per cent perspiration',
+      'A goal without a deadline is simply a wish that will never be achieved at all',
+      'If you can dream it, then you can achieve it within a single year of effort',
+      'Success is 10 per cent inspiration and 90 per cent sheer perspiration, year in and year out',
       'We overestimate what we can do in 1 year and underestimate what we can do in 10 years',
     ],
     correctAnswer: 3,
@@ -205,9 +205,9 @@ export const gsCat5Questions: StandardMockQuestion[] = [
     question: 'What is one key benefit of having a mentor in the electrical trade?',
     options: [
       'They provide guidance based on real experience, helping you avoid common mistakes',
-      'They take legal responsibility for any mistakes you make on site',
-      'They guarantee you will be promoted faster than colleagues without a mentor',
-      'They complete your continuing professional development records on your behalf',
+      'They take legal responsibility, on your behalf, for any mistakes that you make on site',
+      'They guarantee you will be promoted faster than colleagues who have no mentor, every time',
+      'They complete your continuing professional development records, on your behalf, every year',
     ],
     correctAnswer: 0,
     explanation:
@@ -221,10 +221,10 @@ export const gsCat5Questions: StandardMockQuestion[] = [
     id: 173,
     question: 'What is burnout prevention most closely related to in a growth plan?',
     options: [
-      'Pushing through tiredness so that productivity is never interrupted',
+      'Pushing through the tiredness so that your productivity is never once interrupted',
       'Building rest and recovery into your schedule as a non-negotiable part of growth',
-      'Setting goals so ambitious that they leave no time for breaks',
-      'Working the longest hours possible to get ahead of competitors',
+      'Setting goals so ambitious that they leave no time at all for any breaks or recovery',
+      'Working the longest hours you possibly can in order to get ahead of your competitors',
     ],
     correctAnswer: 1,
     explanation:
@@ -239,9 +239,9 @@ export const gsCat5Questions: StandardMockQuestion[] = [
     question: 'In the 4DX framework, what is a &ldquo;lead measure&rdquo;?',
     options: [
       'The final outcome you are working towards, such as passing an exam',
-      'A target that is reviewed only once at the very end of the goal period',
+      'A target that is reviewed only once, at the very end of the goal period',
       'A predictive, influenceable metric that drives progress towards the goal',
-      'A measure of how impressive your progress looks to other people',
+      'A measure of how impressive your progress looks, to other people',
     ],
     correctAnswer: 2,
     explanation:
@@ -255,9 +255,9 @@ export const gsCat5Questions: StandardMockQuestion[] = [
     id: 175,
     question: 'What is the purpose of an annual review in your growth action plan?',
     options: [
-      'To calculate the total income earned over the previous twelve months',
-      'To compare your performance directly against that of your competitors',
-      'To produce a record required by HMRC for self-assessment purposes',
+      'To calculate the total income earned, and the tax due on it, over the previous twelve months',
+      'To compare your performance directly against that of your local competitors, firm by firm',
+      'To produce the record required by HMRC, each January, for self-assessment purposes',
       'To reflect on what worked, what did not, and to set refreshed goals for the year ahead',
     ],
     correctAnswer: 3,
@@ -274,9 +274,9 @@ export const gsCat5Questions: StandardMockQuestion[] = [
       'Which of the following best describes a &ldquo;mastermind group&rdquo; for tradespeople?',
     options: [
       'A small peer group that meets regularly to share challenges, ideas, and hold each other accountable',
-      'A formal qualification that certifies an electrician as a business expert',
-      'A one-to-one relationship in which a senior expert directs a junior&rsquo;s career',
-      'A software tool that automatically tracks your business performance metrics',
+      'A formal qualification, awarded after examination, that certifies an electrician as a business expert',
+      'A one-to-one relationship, running for a fixed term, in which a senior expert directs a junior&rsquo;s career',
+      'A software tool that automatically tracks your business performance metrics, week by week, on a dashboard',
     ],
     correctAnswer: 0,
     explanation:
@@ -310,10 +310,10 @@ export const gsCat5Questions: StandardMockQuestion[] = [
     question:
       'Scott Belsky describes the &ldquo;messy middle&rdquo; of any project. What characterises this phase?',
     options: [
-      'A short burst of rapid and highly visible progress made during the first few weeks after a project begins',
-      'A smooth and entirely predictable plateau that follows once the most difficult work has already been completed',
+      'A short burst of rapid, highly visible progress made during the first few weeks after a project begins',
+      'A smooth, entirely predictable plateau that follows once the most difficult work has already been completed and signed off',
       'Volatile swings between moments of optimism and moments of doubt, far from the excitement of starting or finishing',
-      'A final sprint of energy and clarity experienced during the last few days before a project is finished',
+      'A final sprint of energy, and of clarity, that is experienced during the last few days before a project is finished',
     ],
     correctAnswer: 2,
     explanation:
@@ -327,9 +327,9 @@ export const gsCat5Questions: StandardMockQuestion[] = [
     id: 179,
     question: 'How does the 4DX &ldquo;cadence of accountability&rdquo; work in practice?',
     options: [
-      'A single annual meeting at which the whole year&rsquo;s progress is reviewed and next year&rsquo;s targets set',
+      'A single annual meeting at which the whole year&rsquo;s progress is reviewed, and next year&rsquo;s targets set',
       'An open-ended discussion held whenever convenient, with no fixed format, length, agenda or schedule',
-      'A one-way briefing in which the manager announces the goals and the rest of the team simply listens',
+      'A one-way briefing in which the manager announces the goals, and the rest of the team simply sits and listens',
       'Brief, regular meetings where each person reports on commitments made the previous week and makes new ones',
     ],
     correctAnswer: 3,
@@ -346,8 +346,8 @@ export const gsCat5Questions: StandardMockQuestion[] = [
       'According to Daniel Pink, why can large financial bonuses sometimes reduce performance on complex tasks?',
     options: [
       'They create anxiety and narrow focus, which impairs the creative thinking needed for complex work',
-      'They make the work feel so straightforward that people stop paying proper attention to it',
-      'They remove the deadline pressure that complex creative work normally depends upon to succeed',
+      'They make the work feel so straightforward that people stop paying attention to it, task by task',
+      'They remove the deadline pressure, on which complex creative work normally depends, to succeed',
       'They force workers to share the reward, which reduces the effort that each person makes',
     ],
     correctAnswer: 0,
@@ -365,8 +365,8 @@ export const gsCat5Questions: StandardMockQuestion[] = [
     options: [
       'How much time, money and effort have I already sunk into this goal up to now?',
       'If I were not already invested in this, would I start it today knowing what I now know?',
-      'What would the people around me think of me if I gave up on this goal now?',
-      'How close am I now to the deadline that I originally set myself for this goal?',
+      'What would the people around me think of me, if I gave up on this goal now?',
+      'How close am I now to the deadline that I originally set myself, back at the start?',
     ],
     correctAnswer: 1,
     explanation:
@@ -471,8 +471,8 @@ export const gsCat5Questions: StandardMockQuestion[] = [
     question:
       'What does Scott Belsky recommend for navigating the &ldquo;messy middle&rdquo; when motivation drops?',
     options: [
-      'Abandon the project and start fresh whenever motivation drops',
-      'Wait for inspiration to return before doing any further work',
+      'Abandon the project, and start fresh, whenever motivation drops',
+      'Wait for inspiration to return, before doing any further work',
       'Make one dramatic, sweeping change to reignite your enthusiasm',
       'Optimise what is working and cut what is not, in small steps',
     ],
@@ -490,8 +490,8 @@ export const gsCat5Questions: StandardMockQuestion[] = [
       'Why is it important to distinguish between &ldquo;lag measures&rdquo; and &ldquo;lead measures&rdquo; in your growth plan?',
     options: [
       'Lag measures tell you if you have achieved the goal but only lead measures tell you what to do daily to get there',
-      'Lag measures are always the more accurate of the two, so a growth plan should only ever track those ones',
-      'Lead measures describe the final result achieved, while lag measures describe the daily actions you take',
+      'Lag measures are always the more accurate of the two, so a sensible growth plan should only ever track those particular ones',
+      'Lead measures describe the final result that is achieved, while lag measures describe the daily actions that you take',
       'Lead and lag measures are interchangeable in practice, so it makes no difference which of them you track',
     ],
     correctAnswer: 0,
@@ -542,9 +542,9 @@ export const gsCat5Questions: StandardMockQuestion[] = [
     question:
       'Daniel Pink identifies &ldquo;autonomy&rdquo; as a key motivator. How might a self-employed electrician leverage this?',
     options: [
-      'By taking on as many clients as possible to maximise income',
-      'By following the same fixed daily routine without variation',
-      'By delegating all decisions to a manager to cut their workload',
+      'By taking on as many clients as possible, to maximise income',
+      'By following the same fixed daily routine, without variation',
+      'By delegating all decisions to a manager, to cut their workload',
       'By choosing their specialisms, clients and working week',
     ],
     correctAnswer: 3,
@@ -561,9 +561,9 @@ export const gsCat5Questions: StandardMockQuestion[] = [
       'What is one evidence-based strategy for preventing burnout while pursuing ambitious career goals?',
     options: [
       'Scheduling deliberate recovery periods and protecting non-work time as rigorously as work commitments',
-      'Resting only once the first clear physical signs of exhaustion have already begun to appear',
-      'Removing rest days from the week entirely in order to maximise the time spent on your goals',
-      'Relying on a single long holiday each year to recover from the workload accumulated since',
+      'Resting only once the first clear physical signs of exhaustion have already begun to appear on you',
+      'Removing rest days from the week entirely in order to maximise the total time you can spend on your goals',
+      'Relying on a single long holiday each year to recover from the workload accumulated since then',
     ],
     correctAnswer: 0,
     explanation:
@@ -580,10 +580,10 @@ export const gsCat5Questions: StandardMockQuestion[] = [
     question:
       'An electrician has spent 18 months studying for a specialism but market demand has shifted. Using the persist, pivot, or stop framework and accounting for sunk cost fallacy, what is the most rational approach?',
     options: [
-      'Persist with the original specialism regardless of demand, because abandoning 18 months of study would waste the investment already made',
+      'Persist with the original specialism regardless of demand, because abandoning 18 months of study would waste the whole of the investment already made in it',
       'Evaluate whether the specialism still has future value regardless of time already invested, and pivot the knowledge to a related growing area if not',
-      'Double down by investing even more time and money, on the basis that the breakthrough must be close after so much effort',
-      'Stop immediately and discard everything learned, treating the entire 18 months as a complete and unrecoverable loss',
+      'Double down by investing even more time and money into the specialism, on the basis that the breakthrough must now be close after so much sustained effort',
+      'Stop immediately and discard everything learned, treating the entire 18 months as a complete and wholly unrecoverable sunk loss',
     ],
     correctAnswer: 1,
     explanation:
@@ -598,10 +598,10 @@ export const gsCat5Questions: StandardMockQuestion[] = [
     question:
       'How would you design a 90-day growth plan using all four of McChesney&rsquo;s 4DX disciplines for achieving an electrical specialism qualification?',
     options: [
-      'Set a dozen equally important goals at once, track only the final exam result, and review progress just once at the very end of the ninety-day period',
-      'Focus solely on lag measures such as the final exam result, since the outcome is all that matters and daily study actions cannot really be controlled anyway',
+      'Set a dozen equally important goals at once (rather than one), track only the final exam result &mdash; and review progress just once, at the very end of the ninety-day period',
+      'Focus solely on lag measures (the final exam result), since the outcome is all that matters &mdash; daily study actions cannot really be controlled anyway',
       'Set one WIG (pass the exam), identify 2&ndash;3 lead measures (study hours, practice tests), create a visible scoreboard, and hold weekly accountability check-ins',
-      'Keep the scoreboard hidden from everyone else, avoid all accountability check-ins, and rely on motivation alone to sustain the study week after week',
+      'Keep the scoreboard hidden from everyone else (including your study partner), avoid all accountability check-ins &mdash; and rely on motivation alone week after week',
     ],
     correctAnswer: 2,
     explanation:
@@ -616,9 +616,9 @@ export const gsCat5Questions: StandardMockQuestion[] = [
     question:
       'An electrician is experiencing the &ldquo;messy middle&rdquo; of building their own business &mdash; 18 months in, initial excitement gone, profitability still inconsistent. Applying Belsky&rsquo;s framework and Duckworth&rsquo;s grit research, what combination of strategies is most likely to sustain them?',
     options: [
-      'Wait passively for the early excitement to return before taking any further action, running the business exactly as it is in the meantime and changing nothing',
-      'Make one dramatic, sweeping change to the whole business model in the hope of reigniting the original excitement overnight, then wait',
-      'Abandon the business immediately, since inconsistent profit after eighteen months proves beyond doubt that the venture was never going to be viable',
+      'Wait passively for the early excitement to return (doing nothing at all in the meantime) before taking any further action, running the business exactly as it is',
+      'Make one dramatic, sweeping change to the whole business model (a complete relaunch) in the hope of reigniting the original excitement overnight',
+      'Abandon the business immediately, since inconsistent profit after eighteen months (a year and a half) proves the venture was never going to be viable',
       'Optimise current processes (Belsky), reconnect with their long-term purpose (Duckworth), and use a mastermind group for accountability and perspective',
     ],
     correctAnswer: 3,
@@ -635,7 +635,7 @@ export const gsCat5Questions: StandardMockQuestion[] = [
       'How would you construct a comprehensive career progression calendar for an electrician transitioning from employed to self-employed over a 10-year period?',
     options: [
       'Map ECS renewal dates, BS 7671 amendment cycles, tax registration milestones, insurance renewals, and qualification targets onto a single timeline with 90-day execution sprints',
-      'List only the single end goal of becoming self-employed within ten years, with no intermediate dates, renewals or qualification milestones plotted along the way at all',
+      'List only the single end goal of becoming self-employed within ten years, with no intermediate dates, renewals or qualification milestones plotted along the way at any point at all',
       'Plan the first year in detail and leave the remaining nine years entirely open, reacting to regulatory and renewal deadlines only as and when they happen to arise',
       'Focus the calendar exclusively on annual income targets, since financial growth is the only milestone genuinely worth scheduling across a ten-year plan of this kind',
     ],
@@ -654,7 +654,7 @@ export const gsCat5Questions: StandardMockQuestion[] = [
     options: [
       'Abandon all paid work immediately and chase purpose first, trusting that money, security and mastery will each follow of their own accord once the work itself feels meaningful',
       'First secure a financial baseline that removes money anxiety, then progressively choose work that offers more autonomy, pursue mastery in a chosen specialism, and align work with personal purpose',
-      'Increase the external rewards steadily &mdash; higher hourly rates and ever more visible status symbols &mdash; until they eventually convert themselves into genuine intrinsic motivation',
+      'Increase the external rewards steadily &mdash; higher hourly rates, bigger contracts, and ever more visible status symbols &mdash; until they eventually convert themselves into genuine intrinsic motivation',
       'Pursue autonomy, mastery and purpose all at once on the very first day, treating financial stability as an entirely irrelevant distraction from the transition being made',
     ],
     correctAnswer: 1,
@@ -670,10 +670,10 @@ export const gsCat5Questions: StandardMockQuestion[] = [
     question:
       'Using James Clear&rsquo;s identity-based approach and Angela Duckworth&rsquo;s grit framework, how would you help an apprentice who repeatedly fails their AM2 assessment rebuild their motivation?',
     options: [
-      'Tell the apprentice that repeated failure proves a permanent lack of natural talent, and advise them to consider an entirely different trade before spending any more money on re-sits',
-      'Have them re-sit the whole assessment again and again without changing any part of their preparation, trusting that sheer persistence on its own will eventually produce a pass in the end',
+      'Tell the apprentice that repeated failure proves a permanent lack of natural talent (a &ldquo;fixed&rdquo; ceiling on ability), and advise them to consider an entirely different trade before spending any more money on re-sits',
+      'Have them re-sit the whole assessment again and again without changing any part of their preparation (no new revision at all), trusting that the apprentice&rsquo;s persistence will eventually produce a pass',
       'Shift focus from the outcome (&ldquo;I failed&rdquo;) to identity (&ldquo;I am someone who persists&rdquo;), analyse specific skill gaps with lead measures, and use deliberate practice on weak areas',
-      'Reduce the difficulty of their practice so that they always succeed, protecting their confidence by steering them well away from every area of the assessment they find hardest',
+      'Reduce the difficulty of their practice so that they always succeed (easy tasks only), protecting the apprentice&rsquo;s confidence by steering them away from every area of the assessment they find hardest',
     ],
     correctAnswer: 2,
     explanation:
@@ -688,7 +688,7 @@ export const gsCat5Questions: StandardMockQuestion[] = [
     question:
       'An electrician running their own business is showing early signs of burnout: irritability, reduced quality of work, and dreading Monday mornings. Using Maslach&rsquo;s burnout research and energy management principles, what is the optimal intervention strategy?',
     options: [
-      'Push through the symptoms by working even longer hours, on the basis that the dip in mood and in work quality is temporary and will pass without any change',
+      'Push through the symptoms by working even longer hours, on the basis that the dip in mood and in the quality of work is temporary and will pass without any real change',
       'Take a single two-week holiday and then return to exactly the same workload, schedule and client mix that produced the symptoms in the first place',
       'Address only the financial side by raising rates, assuming that a higher income will by itself resolve the irritability and the dread of Monday mornings',
       'Address all six Maslach burnout dimensions: reduce workload, increase control, ensure fair reward, strengthen community, restore fairness, and reconnect with values',
@@ -707,9 +707,9 @@ export const gsCat5Questions: StandardMockQuestion[] = [
       'How would you integrate the ASTD accountability research with McChesney&rsquo;s 4DX cadence of accountability and the IET mentoring scheme to create a maximally effective growth support system for an electrician pursuing Chartered Engineer status?',
     options: [
       'Combine an IET mentor (expert guidance), a 4DX accountability partner (weekly commitments and scoreboard reviews), and a mastermind group (peer support) into a layered support structure with different review cadences',
-      'Rely on a single annual review with one IET mentor, avoiding weekly commitments, scoreboard reviews and any peer accountability entirely, so that the whole support arrangement stays simple and low-pressure',
-      'Work entirely alone with no mentor, no accountability partner and no peer group at all, on the basis that Chartered status must only ever be earned through purely independent effort and nothing else',
-      'Use the same person as mentor, as weekly accountability partner and as the whole peer group at once, so that every kind of support arrives from one relationship on a single review cadence',
+      'Rely on a single annual review with one IET mentor (and nothing else at all), avoiding weekly commitments, scoreboard reviews and any peer accountability entirely, so that the arrangement stays simple',
+      'Work entirely alone with no mentor, no accountability partner and no peer group at all (complete self-reliance), on the basis that Chartered status must only ever be earned through independent effort',
+      'Use the same person as mentor, as weekly accountability partner and as the whole peer group at once (one relationship covering everything), so that every kind of support arrives on one single review cadence',
     ],
     correctAnswer: 0,
     explanation:

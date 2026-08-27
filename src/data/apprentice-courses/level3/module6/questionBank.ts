@@ -71,8 +71,8 @@ export const module6Questions: Question[] = [
     options: [
       'purpose of the installation, supply characteristics and environmental conditions',
       'the incoming device rating alone, since every other characteristic follows from it',
-      'the conductor colour identification and labelling scheme for the finished work',
-      'the schedule of test results and the inspection certificates issued on completion',
+      'conductor colour identification, cable tray finishes and labelling of the completed work',
+      'test result schedules, inspection certificates and handover documents issued at completion',
     ],
     correctAnswer: 0,
     explanation:
@@ -100,9 +100,9 @@ export const module6Questions: Question[] = [
     question: 'Maintainability must be considered during design so that the installation can:',
     options: [
       'operate indefinitely without any inspection, testing or repair',
-      'be completely dismantled and replaced rather than maintained in place',
+      'be completely dismantled and replaced, since maintenance in place is never permitted',
       'be safely accessed for future inspection, testing and maintenance',
-      'be maintained solely by the original installer of the work',
+      'be maintained solely by the original installer, who alone may open the equipment',
     ],
     correctAnswer: 2,
     explanation:
@@ -114,9 +114,9 @@ export const module6Questions: Question[] = [
     id: 7,
     question: 'Division of an installation into circuits is necessary to:',
     options: [
-      'reduce the total number of protective devices required at the distribution board',
-      'allow any single fault to disconnect every circuit in the installation at once',
-      'remove the need for a main switch at the origin of the installation',
+      'reduce the number of protective devices needed, so that one device serves several circuits',
+      'allow any single fault to disconnect the whole installation, giving the fastest possible shutdown',
+      'remove the need for a main switch at the origin, since each circuit can be isolated separately',
       'avoid danger, minimise inconvenience and facilitate safe operation on a fault',
     ],
     correctAnswer: 3,
@@ -130,9 +130,9 @@ export const module6Questions: Question[] = [
     question: 'Compatibility between equipment and the supply should ensure:',
     options: [
       'no harmful effects during normal operation, including switching',
-      'all equipment operates only at the rated voltage with no tolerance',
-      'the supply is uprated to suit the largest connected load',
-      'equipment from a single manufacturer is always used',
+      'all equipment operates at exactly its rated voltage, with no tolerance permitted either way',
+      'the supply is uprated to suit the largest single item connected, whatever the diversity',
+      'equipment is drawn from one manufacturer, so that compatibility never needs checking',
     ],
     correctAnswer: 0,
     explanation:
@@ -144,10 +144,10 @@ export const module6Questions: Question[] = [
     id: 9,
     question: 'Design documentation required by BS 7671 includes:',
     options: [
-      'a copy of the supplier’s tariff and metering arrangements',
+      'a copy of the supplier’s tariff, metering arrangements and connection charges',
       'diagrams, schedules and calculations as appropriate',
-      'photographs of every accessory before installation',
-      'the manufacturer’s sales literature for each product',
+      'photographs of every accessory, taken before it is installed',
+      'the manufacturer’s sales literature, catalogue pages and price list',
     ],
     correctAnswer: 1,
     explanation:
@@ -219,10 +219,10 @@ export const module6Questions: Question[] = [
     id: 14,
     question: 'British Standards relevant to electrical design include:',
     options: [
-      'building cost indices and tender pricing documents',
-      'the supplier’s connection charges schedule',
+      'building cost indices, tender pricing documents and contract programmes',
+      'the supplier’s connection charges, quoted per metre of service cable',
       'BS 7671, BS EN standards and product standards',
-      'health and safety policy statements only',
+      'health and safety policy statements, with no reference to technical standards',
     ],
     correctAnswer: 2,
     explanation:
@@ -250,9 +250,9 @@ export const module6Questions: Question[] = [
     question: 'The designer must verify that the supply is adequate for the:',
     options: [
       'maximum demand, fault current and operating characteristics',
-      'number of accessories the architect has specified on the drawings',
-      'colour scheme the client has requested for the distribution board',
-      'preferred manufacturer of the protective devices and enclosures',
+      'number of accessories, luminaires and outlets the architect has drawn',
+      'colour scheme the client has requested for the board, and its position in the room',
+      'preferred manufacturer of the protective devices, enclosures and accessories',
     ],
     correctAnswer: 0,
     explanation:
@@ -264,9 +264,9 @@ export const module6Questions: Question[] = [
     id: 17,
     question: 'Electromagnetic compatibility (EMC) in design ensures that:',
     options: [
-      'all circuits within the installation operate at the same supply frequency',
+      'all circuits within the installation operate at the same supply frequency, which cancels interference',
       'equipment does not cause, or suffer from, electromagnetic interference',
-      'cable routes are kept as short as physically possible to limit radiated noise',
+      'cable routes are kept as short as physically possible, since length alone determines interference',
       'only metallic wiring systems are used, since plastic offers no screening',
     ],
     correctAnswer: 1,
@@ -295,8 +295,8 @@ export const module6Questions: Question[] = [
     question: 'Designing for safety requires considering:',
     options: [
       'normal operation only, since faults cannot be foreseen at design',
-      'the appearance of the finished installation above every other factor',
-      'the working preferences of the installation team on site',
+      'the appearance of the finished installation, which ranks above every other factor',
+      'the working preferences of the installation team, which set the design standard',
       'normal operation, reasonably foreseeable faults and misuse',
     ],
     correctAnswer: 3,
@@ -324,10 +324,10 @@ export const module6Questions: Question[] = [
     id: 21,
     question: 'Design must ensure electrical equipment is accessible for:',
     options: [
-      'decorative purposes within the building',
+      'decorative purposes, so that it forms part of the interior scheme',
       'operation, inspection, maintenance and repair',
-      'concealment so that it cannot be seen by users',
-      'removal only at the end of the installation’s life',
+      'concealment, so that it cannot be seen or reached by any user',
+      'removal at the end of its life, with no access needed before then',
     ],
     correctAnswer: 1,
     explanation:
@@ -399,7 +399,7 @@ export const module6Questions: Question[] = [
     id: 26,
     question: 'Selection of equipment for a design requires considering:',
     options: [
-      'the brand favoured by the wholesaler and its availability from stock',
+      'the brand favoured by the wholesaler, and whether it is held in stock',
       'the rated voltage alone, as the current is limited by the protective device',
       'voltage, current, frequency, power and environmental conditions',
       'the date of manufacture, since older equipment must be derated',
@@ -414,9 +414,9 @@ export const module6Questions: Question[] = [
     id: 27,
     question: 'Responsibility for the electrical design ultimately rests with:',
     options: [
-      'the supply network operator providing the connection',
-      'the manufacturer of the protective devices fitted',
-      'the client who commissioned and paid for the installation work',
+      'the network operator/DNO providing the connection',
+      'the manufacturer/supplier of the protective devices fitted',
+      'the client/end user who commissioned and paid for the work',
       'the designer/contractor who signs the design certificate',
     ],
     correctAnswer: 3,
@@ -492,9 +492,9 @@ export const module6Questions: Question[] = [
     question: 'In a domestic ring final circuit, socket-outlets are assumed to share the load because:',
     options: [
       'based on diversity, often well below the full 13 A per socket',
-      'taken as the full 13 A at every socket used simultaneously',
-      'fixed at 32 A regardless of how many sockets are fitted on the ring',
-      'equal to the current-carrying capacity of the circuit cable',
+      'taken as the full 13 A at every socket, all assumed to be in use at once',
+      'fixed at 32 A, whatever number of sockets is fitted on the ring',
+      'equal to the current-carrying capacity of the circuit cable, taken at each outlet',
     ],
     correctAnswer: 0,
     explanation:
@@ -506,10 +506,10 @@ export const module6Questions: Question[] = [
     id: 33,
     question: 'A diversity factor is normally expressed as:',
     options: [
-      'a whole number greater than the connected load',
+      'a whole number greater than the connected load (in kW)',
       'a decimal or percentage less than 1 (or 100%)',
-      'a value always equal to exactly 1',
-      'a negative correction applied to the supply voltage',
+      'a value always equal to exactly 1 (or 100%)',
+      'a negative correction (in volts) applied to the supply voltage',
     ],
     correctAnswer: 1,
     explanation:
@@ -521,7 +521,7 @@ export const module6Questions: Question[] = [
     id: 34,
     question: 'The formula for current from single-phase power is:',
     options: [
-      'I = P × V × pf for all single-phase loads',
+      'I = (P × V) / pf for all single-phase loads',
       'I = V / (P × pf) for all power-factor loads',
       'I = P / (V × pf) for power-factor loads',
       'I = P × √3 / (V × pf) for single-phase loads',
@@ -569,7 +569,7 @@ export const module6Questions: Question[] = [
       '50% of the total cooker rating, with no allowance for a socket-outlet',
       'the first 10 A plus 30% of the remainder, plus 5 A if a socket is fitted',
       'the first 5 A plus 50% of the remainder, with no allowance for a socket',
-      'the full rated load of the cooking appliance with no diversity applied at all',
+      'the full rated load of the cooking appliance, with no diversity applied at all',
     ],
     correctAnswer: 1,
     explanation:
@@ -612,7 +612,7 @@ export const module6Questions: Question[] = [
     question: 'What minimum current demand is assumed for each lighting outlet in a dwelling?',
     options: [
       '100 W per outlet, or the actual connected load if higher',
-      '10 W per outlet regardless of the fittings installed',
+      '10 W per outlet, regardless of the fittings installed',
       '500 W per outlet in every case, whatever fittings are installed',
       '13 A per lighting point, regardless of the load connected to it',
     ],
@@ -628,8 +628,8 @@ export const module6Questions: Question[] = [
     options: [
       'true power (W) always exceeds apparent power (VA) on every load',
       'apparent power (VA) exceeds true power (W) for reactive loads',
-      'a low power factor alters the supply voltage measured at the origin',
-      'the power factor has no effect on the current drawn by the load',
+      'a low power factor alters the supply voltage (V) measured at the origin',
+      'the power factor has no effect on the current (A) drawn by the load',
     ],
     correctAnswer: 1,
     explanation:
@@ -852,15 +852,15 @@ export const module6Questions: Question[] = [
     question: 'Data-centre load calculations are typically based on:',
     options: [
       'watts per square metre with little diversity, due to continuous high loads',
-      'domestic diversity factors applied to each rack to allow for staggered use',
+      'domestic diversity factors applied to each rack, allowing for staggered use',
       'the general lighting load of the building, scaled up for the equipment rooms',
-      'the rating of a single socket-outlet multiplied by the number of racks',
+      'the rating of a single socket-outlet, multiplied by the number of racks',
     ],
     correctAnswer: 0,
     explanation:
       'Data centres have high continuous loads with limited diversity — often calculated per rack or per m².',
     section: '6.2',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 57,
@@ -926,16 +926,16 @@ export const module6Questions: Question[] = [
     id: 61,
     question: 'Harmonic currents affect neutral conductor sizing because:',
     options: [
-      'harmonics cancel completely in the neutral, so it may be reduced in size',
+      'harmonics cancel completely in the neutral (sum zero), so it may be reduced',
       'triple-N (third-order) harmonics add in the neutral rather than cancelling',
-      'they reduce the current in each line conductor, easing the loading on the neutral',
-      'they flow only in the circuit protective conductor and never in the neutral',
+      'they reduce the current in each line (phase) conductor, easing the neutral loading',
+      'they flow only in the circuit protective conductor (cpc) and never in the neutral',
     ],
     correctAnswer: 1,
     explanation:
       'Triple-N (third-order) harmonics do not cancel in the neutral and can cause significant neutral currents.',
     section: '6.2',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 62,
@@ -1003,10 +1003,10 @@ export const module6Questions: Question[] = [
     id: 66,
     question: 'The three main factors that govern cable sizing are:',
     options: [
-      'insulation colour, the length of the run and the manufacturer of the cable',
-      'cost, appearance and the availability of the cable from the wholesaler used',
+      'insulation colour, run length and the manufacturer (brand) of the cable',
+      'cost, appearance and the availability of the cable from the (local) wholesaler',
       'current-carrying capacity, voltage drop and fault (thermal) protection',
-      'ambient temperature, air humidity and the height above sea level',
+      'ambient temperature, humidity and the height (altitude) above sea level',
     ],
     correctAnswer: 2,
     explanation:
@@ -1020,7 +1020,7 @@ export const module6Questions: Question[] = [
     options: [
       'Ib is cable capacity, In is design current and Iz is the device rating',
       'Ib is device rating, In is cable capacity and Iz is the design current',
-      'all three symbols stand for the prospective fault current at the origin',
+      'all three symbols stand for prospective fault current, measured at the origin',
       'Ib is design current, In is device rating and Iz is cable capacity',
     ],
     correctAnswer: 3,
@@ -1034,9 +1034,9 @@ export const module6Questions: Question[] = [
     question: 'Rating factors reduce a cable\'s current-carrying capacity to account for:',
     options: [
       'higher ambient temperature, grouping and thermal insulation',
-      'longer cable runs and the resulting increase in voltage drop',
-      'the rated current of the overcurrent protective device',
-      'the colour and thickness of the cable insulation',
+      'longer cable runs, and the resulting increase in voltage drop',
+      'the rated current of the overcurrent protective device, and its breaking capacity',
+      'the colour, thickness and finish of the cable insulation',
     ],
     correctAnswer: 0,
     explanation:
@@ -1108,7 +1108,7 @@ export const module6Questions: Question[] = [
     id: 73,
     question: 'For cables of 16 mm2 or less, voltage drop is calculated from:',
     options: [
-      'V = I² × R (using the power dissipated in the cable)',
+      'V = I² × R (using the power loss per metre in W/m)',
       'V = I × R (using tabulated mV/A/m values)',
       'V = P / I (from the load power and the load current)',
       'V = I / R (current divided by the cable resistance)',
@@ -1183,7 +1183,7 @@ export const module6Questions: Question[] = [
     id: 78,
     question: 'Which quantities appear in the adiabatic equation for sizing a protective conductor?',
     options: [
-      'S = I × t × k, multiplying current, disconnection time and the constant',
+      'S = (I × t) / k, dividing current, disconnection time and the constant',
       'S = k / √(I²t), dividing the conductor constant by the let-through energy',
       'S = √(I²t) / k, relating fault current, time and a conductor constant',
       'S = V / (I × R), derived from the voltage across the fault path',
@@ -1192,7 +1192,7 @@ export const module6Questions: Question[] = [
     explanation:
       'The adiabatic equation S = √(I²t)/k calculates the minimum CPC size from fault current and disconnection time.',
     section: '6.3',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 79,
@@ -1258,9 +1258,9 @@ export const module6Questions: Question[] = [
     id: 83,
     question: 'In a TN system, within what time must a 32 A final circuit supplying socket-outlets disconnect under earth fault conditions?',
     options: [
-      '0.1 s for every circuit, irrespective of the system or circuit type',
-      '10 s for final circuits and 30 s for distribution circuits in a TN system',
-      '1 s for every circuit, whether that circuit is a final one or a distribution one',
+      '0.1 s for every circuit (any system or circuit type), without exception',
+      '10 s for final circuits, and 30 s for distribution circuits (TN system)',
+      '1 s for every circuit, final or distribution (TN and TT systems alike)',
       'the time specified for the circuit type (0.4 s for final, 5 s for distribution)',
     ],
     correctAnswer: 3,
@@ -1318,9 +1318,9 @@ export const module6Questions: Question[] = [
     id: 87,
     question: 'Fire-performance cables (e.g. fire-resistant, LSHF) are selected for:',
     options: [
-      'underground runs where the armouring provides the mechanical protection',
-      'flexible connections to portable or hand-held equipment on site',
-      'extra-low-voltage control and signalling wiring in dry indoor areas',
+      'underground runs, where the armouring provides the mechanical protection',
+      'flexible connections to portable, hand-held or vibrating equipment',
+      'extra-low-voltage control, signalling and data wiring in dry indoor areas',
       'emergency circuits, escape routes and limiting the spread of fire',
     ],
     correctAnswer: 3,
@@ -1334,9 +1334,9 @@ export const module6Questions: Question[] = [
     question: 'Flexible cables are typically selected for:',
     options: [
       'connections to moving equipment, or where flexibility is needed',
-      'permanent buried distribution runs between two separate buildings',
-      'high-current distribution runs in place of a busbar trunking system',
-      'buried circuits requiring the highest degree of mechanical protection',
+      'permanent buried runs, drawn into a duct between two separate buildings',
+      'high-current distribution runs, used in place of busbar trunking',
+      'buried circuits, where the highest degree of mechanical protection is needed',
     ],
     correctAnswer: 0,
     explanation:
@@ -1394,9 +1394,9 @@ export const module6Questions: Question[] = [
     question: 'A ring final circuit is normally wired with 2.5 mm² line conductors because:',
     options: [
       'two parallel paths share the current, which suits a 32 A protective device',
-      'a single 2.5 mm² conductor can carry 32 A in any installation method',
-      'larger conductors will not fit the terminals of BS 1363 socket-outlets',
-      '2.5 mm² is the only size permitted for socket-outlet circuits',
+      'a single 2.5 mm² conductor can carry 32 A, whatever the installation method',
+      'larger conductors will not fit BS 1363 terminals, so 2.5 mm² is the maximum',
+      '2.5 mm² is the only size permitted for socket-outlet circuits, ring or radial',
     ],
     correctAnswer: 0,
     explanation:
@@ -1417,7 +1417,7 @@ export const module6Questions: Question[] = [
     explanation:
       'Hazardous areas require cables and equipment certified for the specific zone classification.',
     section: '6.3',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 94,
@@ -1447,7 +1447,7 @@ export const module6Questions: Question[] = [
     explanation:
       'The cable must be protected so that I2 (the fuse operating current) does not exceed 1.45 times the cable capacity.',
     section: '6.3',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 96,
@@ -1511,12 +1511,12 @@ export const module6Questions: Question[] = [
   },
   {
     id: 100,
-    question: 'What is the minimum cross-sectional area of a protective conductor that is not part of a cable and is not enclosed?',
+    question: 'What determines the minimum cross-sectional area of a circuit protective conductor?',
     options: [
       'related to the phase-conductor size, via Table 54.7 or calculation',
-      'always 1.0 mm² regardless of the phase conductor',
-      'always equal to the phase-conductor size',
-      'fixed at 16 mm² for all final circuits',
+      'always 1.0 mm², whatever the size of the phase conductor',
+      'always equal to the phase-conductor size, whatever the installation method',
+      'fixed at 16 mm² for all final circuits, regardless of the load',
     ],
     correctAnswer: 0,
     explanation:
@@ -1530,10 +1530,10 @@ export const module6Questions: Question[] = [
     id: 101,
     question: 'Selectivity between protective devices means:',
     options: [
-      'all upstream devices operate together so the fault is cleared quickly',
+      'all upstream devices operate together, so the fault is cleared as fast as possible',
       'only the device nearest the fault operates, leaving other circuits unaffected',
       'the main switch always operates first, isolating the whole installation',
-      'no device operates until the fault current falls to a safe level',
+      'no device operates until the fault current falls to a safe level, protecting the supply',
     ],
     correctAnswer: 1,
     explanation:
@@ -1590,10 +1590,10 @@ export const module6Questions: Question[] = [
     id: 105,
     question: 'The MCB type (B, C or D) affects coordination because:',
     options: [
-      'different types have different rated voltages',
+      'different types have different rated voltages (Un)',
       'different types have different instantaneous (magnetic) trip levels',
-      'the type changes the device’s breaking capacity only',
-      'the type determines the cable colour',
+      'the type changes the device\'s breaking capacity (Icn) only',
+      'the type sets the cable colour (brown or blue)',
     ],
     correctAnswer: 1,
     explanation:
@@ -1650,10 +1650,10 @@ export const module6Questions: Question[] = [
     id: 109,
     question: 'RCD coordination between upstream and downstream RCDs requires:',
     options: [
-      'identical 30 mA instantaneous RCDs at every level, so both clear the fault',
+      'identical 30 mA instantaneous (no delay) Type A/AC RCDs at each level, so both clear',
       'an S-type (time-delayed) RCD upstream with appropriate current/time discrimination',
-      'an upstream RCD of lower residual operating current than the downstream one',
-      'instantaneous operation at every level, with no time delay anywhere',
+      'an upstream RCD of lower residual operating current (IΔn) and no time/current grading',
+      'instantaneous (general-type) operation at every level, with no upstream/downstream delay',
     ],
     correctAnswer: 1,
     explanation:
@@ -1696,9 +1696,9 @@ export const module6Questions: Question[] = [
     question: 'If the prospective fault current is 8 kA, the minimum device breaking capacity should be:',
     options: [
       'at least 8 kA (a 10 kA-rated device is typically used)',
-      'around 4 kA, allowing for diversity',
-      'equal to the device’s rated current in amps',
-      'no more than 6 kA to avoid over-specification',
+      'around 4 kA (allowing for diversity)',
+      'equal to the device\'s rated current (In) in amps',
+      'no more than 6 kA (to avoid over-specification)',
     ],
     correctAnswer: 0,
     explanation:
@@ -1710,16 +1710,16 @@ export const module6Questions: Question[] = [
     id: 113,
     question: 'Cascading (series rating) allows:',
     options: [
-      'downstream devices to have a higher rated current than the incoming supply',
+      'downstream devices to have a rated current higher than the incoming supply, without derating',
       'downstream devices of lower breaking capacity, if properly coordinated with the upstream device',
-      'the breaking-capacity requirement to be omitted for downstream devices entirely',
-      'two devices to share one enclosure and one common set of terminals',
+      'the breaking-capacity requirement to be omitted entirely, for every downstream device',
+      'two devices to share one enclosure, and one common set of terminals',
     ],
     correctAnswer: 1,
     explanation:
       'Properly coordinated cascading permits lower-rated downstream devices that are backed up by the upstream device.',
     section: '6.4',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 114,
@@ -1824,16 +1824,16 @@ export const module6Questions: Question[] = [
     explanation:
       'Ground-fault protection adds adjustable earth-fault detection coordinated with the other protection.',
     section: '6.4',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 121,
     question: 'Selectivity in RCD systems can be achieved by:',
     options: [
-      'fitting identical 30 mA RCDs throughout',
+      'fitting identical (30 mA) RCDs at every level',
       'using a time-delayed (S-type) and higher-rated RCD upstream',
-      'placing the most sensitive RCD upstream',
-      'removing the downstream RCD entirely',
+      'placing the most sensitive (10 mA) RCD upstream',
+      'removing the downstream (load-side) RCD entirely',
     ],
     correctAnswer: 1,
     explanation:
@@ -1869,7 +1869,7 @@ export const module6Questions: Question[] = [
     explanation:
       'Electronic loads can produce harmonics and DC components that affect standard protection.',
     section: '6.4',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 124,
@@ -1878,7 +1878,7 @@ export const module6Questions: Question[] = [
       'long-time, short-time, instantaneous and earth-fault settings',
       'voltage, frequency and power-factor settings',
       'colour, position and labelling settings',
-      'only a single fixed trip current',
+      'only a single fixed trip current, set by the manufacturer',
     ],
     correctAnswer: 0,
     explanation:
@@ -1929,7 +1929,7 @@ export const module6Questions: Question[] = [
     explanation:
       'Transformer impedance limits the secondary fault current, which affects protection sizing.',
     section: '6.4',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 128,
@@ -1944,7 +1944,7 @@ export const module6Questions: Question[] = [
     explanation:
       'Arc-flash mitigation uses fast protection and appropriate equipment design.',
     section: '6.4',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 129,
@@ -1959,16 +1959,16 @@ export const module6Questions: Question[] = [
     explanation:
       'ZSI provides communication between devices so that selective operation occurs with minimal delay.',
     section: '6.4',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 130,
     question: 'Documentation of protection coordination should include:',
     options: [
-      'the building’s decorative finishes schedule',
-      'the supplier’s connection charges',
+      'the building’s decorative finishes schedule, room by room',
+      'the supplier’s connection charges, and the metering agreement',
       'single-line diagrams, device settings and coordination curves',
-      'the manufacturer’s marketing literature',
+      'the manufacturer’s marketing literature, with product photographs',
     ],
     correctAnswer: 2,
     explanation:
@@ -1998,9 +1998,9 @@ export const module6Questions: Question[] = [
     question: 'The main earthing terminal is the common connection point for:',
     options: [
       'circuit CPCs, bonding conductors and the earthing conductor',
-      'the neutral conductors of every final circuit',
-      'the live conductors of the incoming supply',
-      'the metering and supply cut-out only',
+      'the neutral conductors of every final circuit, brought back to one bar',
+      'the line and neutral conductors of the incoming supply, ahead of the main switch',
+      'the meter tails, the cut-out and the supply fuse only',
     ],
     correctAnswer: 0,
     explanation:
@@ -2012,10 +2012,10 @@ export const module6Questions: Question[] = [
     id: 133,
     question: 'A TN-S earthing system has:',
     options: [
-      'a combined neutral-and-earth conductor throughout',
+      'a combined neutral-and-earth conductor throughout, in supply and installation alike',
       'separate neutral and earth conductors throughout, from the source',
-      'no connection to the supply earth at all',
-      'an earth electrode in place of a supply earth',
+      'no connection to the supply earth at all, the neutral being earthed locally',
+      'an earth electrode at the installation, in place of any supply earth',
     ],
     correctAnswer: 1,
     explanation:
@@ -2027,10 +2027,10 @@ export const module6Questions: Question[] = [
     id: 134,
     question: 'A TN-C-S (PME) system uses:',
     options: [
-      'separate PE and N conductors throughout the supply and the installation',
-      'a local earth electrode at the installation in place of a supply earth',
+      'separate PE and N conductors throughout, in both the supply and the installation',
+      'a local earth electrode at the installation, in place of any supply earth',
       'a combined PEN conductor in the supply, separated into PE and N at the origin',
-      'a combined PEN conductor carried throughout the whole installation',
+      'a combined PEN conductor carried throughout, into the installation itself',
     ],
     correctAnswer: 2,
     explanation:
@@ -2087,10 +2087,10 @@ export const module6Questions: Question[] = [
     id: 138,
     question: 'Supplementary bonding is required in locations where:',
     options: [
-      'the load current is particularly high for the size of cable used',
-      'cables are run underground between separate buildings',
+      'the load current is high, so the circuit conductors run warm in normal use',
+      'cables are run underground, where moisture may reach the armouring',
       'the risk of electric shock is increased, such as in bathrooms',
-      'a three-phase supply is present within the same building',
+      'a three-phase supply is present, whatever the type of location',
     ],
     correctAnswer: 2,
     explanation:
@@ -2147,10 +2147,10 @@ export const module6Questions: Question[] = [
     id: 142,
     question: 'In a TT system, the earth-electrode resistance must be low enough to:',
     options: [
-      'allow the overcurrent protective device on its own to disconnect the fault within 5 seconds',
-      'remove any need for an RCD, since the electrode itself is taken to give all the protection',
+      'allow the overcurrent protective device on its own to disconnect the fault (within 5 seconds)',
+      'remove any need for an RCD, the electrode itself giving all the protection (Ra alone)',
       'ensure the RCD operates so that the touch voltage does not exceed 50 V (Ra × IΔn ≤ 50 V)',
-      'keep the voltage at the origin of the installation within the declared tolerance',
+      'keep the voltage at the origin of the installation within the declared tolerance (Uo)',
     ],
     correctAnswer: 2,
     explanation:
@@ -2267,10 +2267,10 @@ export const module6Questions: Question[] = [
     id: 150,
     question: 'A combined protective-and-neutral (PEN) conductor in a TN-C system must be:',
     options: [
-      'no larger than 2.5 mm² copper',
-      'the same size as the smallest final-circuit conductor',
+      'no larger than 2.5 mm² copper, whatever the load carried',
+      'the same size as the smallest final-circuit conductor, whatever that is',
       'at least 10 mm² copper, or 16 mm² aluminium, minimum',
-      'insulated only at its terminations',
+      'insulated only at its terminations, and left bare elsewhere',
     ],
     correctAnswer: 2,
     explanation:
@@ -2315,7 +2315,7 @@ export const module6Questions: Question[] = [
       'always extend the PME earth to the outbuilding, since it is the supply earth for the property',
       'consider whether PME conditions permit extension, or whether a local TT system is needed',
       'omit the earthing arrangement completely, as the outbuilding stands as a separate structure',
-      'rely on the metal cladding of the outbuilding itself to act as the earth electrode for the supply',
+      'rely on the metal cladding of the outbuilding, which acts as the earth electrode for the supply',
     ],
     correctAnswer: 1,
     explanation:
@@ -2343,8 +2343,8 @@ export const module6Questions: Question[] = [
     question: 'A metallic gas installation pipe requires main bonding:',
     options: [
       'at the gas service main in the street, before the meter',
-      'only at the connection to the gas appliance',
-      'at any convenient point above the ground level',
+      'only at the appliance connection, where the pipe enters the equipment',
+      'at any convenient point, provided it is above ground level',
       'within 600 mm of the meter, on the consumer side',
     ],
     correctAnswer: 3,
@@ -2358,9 +2358,9 @@ export const module6Questions: Question[] = [
     question: 'A metallic water installation pipe requires main bonding where:',
     options: [
       'it enters the building (or within 600 mm of the internal stopcock)',
-      'it passes closest to the consumer unit, wherever that happens to be',
-      'it connects to the first draw-off tap or outlet found in the building',
-      'it is buried beneath the property, before it enters the wall',
+      'it passes closest to the consumer unit (wherever that happens to be)',
+      'it connects to the first draw-off tap (or outlet) found in the building',
+      'it is buried beneath the property (before it enters the wall)',
     ],
     correctAnswer: 0,
     explanation:
@@ -2387,10 +2387,10 @@ export const module6Questions: Question[] = [
     id: 158,
     question: 'A metallic oil supply pipe typically requires bonding where it is:',
     options: [
-      'made of plastic pipe for the whole of its run into the building',
-      'buried below the property, before it comes up above ground level',
+      'made of plastic pipe (non-conductive) for the whole of its run into the building',
+      'buried below the property (before it comes up above ground level)',
       'metal and within the building (an extraneous-conductive-part)',
-      'connected to a non-metallic oil storage tank outside the building',
+      'connected to a non-metallic (plastic) oil storage tank outside the building',
     ],
     correctAnswer: 2,
     explanation:
@@ -2480,9 +2480,9 @@ export const module6Questions: Question[] = [
     question: 'Equipment installed in zone 1 of a room containing a bath or shower must have a minimum degree of protection of:',
     options: [
       'IPX4 (or IPX5 where water jets are used for cleaning)',
-      'IP20, since zone 1 sits above the level of the rim of the bath',
-      'IPX8, since fittings within zone 1 may be immersed',
-      'IP2X only, with no requirement for any water rating at all',
+      'IP20 (zone 1 sits above the level of the rim of the bath)',
+      'IPX8 (fittings within zone 1 may be immersed in water)',
+      'IP2X only (no requirement for any water rating at all)',
     ],
     correctAnswer: 0,
     explanation:
@@ -2496,7 +2496,7 @@ export const module6Questions: Question[] = [
     options: [
       'a single zone throughout the site, treated in the same way as any ordinary domestic living room',
       'zones with strict requirements, including SELV and supplementary bonding where applicable',
-      'no special measures beyond 30 mA RCD protection applied to every circuit on the site itself',
+      'no special measures beyond 30 mA RCD protection, applied to every circuit on the site',
       'the lighting load of the building, which is taken to set the boundaries of the zones around it',
     ],
     correctAnswer: 1,
@@ -2540,8 +2540,8 @@ export const module6Questions: Question[] = [
     question: 'Agricultural and horticultural installations have special requirements due to the:',
     options: [
       'presence of livestock, dust, moisture and corrosive atmospheres',
-      'high prospective fault current found on rural distributor supplies',
-      'requirement for a three-phase supply to each building on the site',
+      'high prospective fault current, which is typical of rural distributor supplies',
+      'requirement for a three-phase supply, to every building on the site',
       'low ambient temperatures in the buildings, and nothing else',
     ],
     correctAnswer: 0,
@@ -2585,7 +2585,7 @@ export const module6Questions: Question[] = [
     question: 'Marina electrical installations must consider:',
     options: [
       'high ambient temperatures only, as the other factors are unchanged',
-      'the lighting load of the buildings standing on the shore side of the berths',
+      'the lighting load of the buildings, which stand on the shore side of the berths',
       'the use of PME earthing throughout, exactly as on a shore installation',
       'water proximity, floating structures and the harsh marine environment',
     ],
@@ -2617,7 +2617,7 @@ export const module6Questions: Question[] = [
       'AC isolation at the consumer unit only, as the DC side is fixed',
       'DC-system considerations, isolation provisions and specific labelling',
       'no isolation at all, since the array is inherently safe once disconnected',
-      'standard lighting-circuit protection for the whole of the system',
+      'standard lighting-circuit protection, applied to the whole of the system',
     ],
     correctAnswer: 1,
     explanation:
@@ -2644,16 +2644,16 @@ export const module6Questions: Question[] = [
     id: 175,
     question: 'Medical locations have specific requirements for:',
     options: [
-      'the colour of the socket-outlets that are used in each patient treatment area',
+      'the colour of the socket-outlets, which differs in each patient treatment area',
       'reduced bonding arrangements, to limit the fault current that reaches the patient',
-      'standard domestic levels of protection applied throughout the whole building',
+      'standard domestic levels of protection, applied throughout the whole building',
       'IT systems, equipotential bonding and supply reliability in critical areas',
     ],
     correctAnswer: 3,
     explanation:
       'Medical locations require specialised earthing, IT systems for critical areas and reliable supplies.',
     section: '6.6',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 176,
@@ -2668,16 +2668,16 @@ export const module6Questions: Question[] = [
     explanation:
       'Hazardous areas require certified equipment for the relevant zone (0, 1, 2 for gas; 20, 21, 22 for dust).',
     section: '6.6',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 177,
     question: 'Conducting locations with restricted movement require:',
     options: [
-      'an increased supply voltage',
+      'an increased supply voltage, to overcome the added resistance',
       'SELV, or other specific protective measures',
       'no protective measures, as movement is restricted',
-      'standard 230 V equipment without modification',
+      'standard 230 V equipment, used without modification',
     ],
     correctAnswer: 1,
     explanation:
@@ -2689,10 +2689,10 @@ export const module6Questions: Question[] = [
     id: 178,
     question: 'Operating and maintenance gangways must provide for:',
     options: [
-      'storage of spare cable and equipment near the boards',
-      'the routing of all the final circuits away from the switchgear',
+      'storage of spare cable, tools and equipment near the boards',
+      'the routing of every final circuit away from the switchgear, on a separate tray',
       'safe access, adequate working space and emergency escape',
-      'concealment of the distribution equipment behind wall panels',
+      'concealment of the distribution equipment, behind fixed wall panels',
     ],
     correctAnswer: 2,
     explanation:
@@ -2720,9 +2720,9 @@ export const module6Questions: Question[] = [
     question: 'Outdoor lighting installations must consider:',
     options: [
       'weather exposure, IP rating and mechanical protection',
-      'the internal lighting load of the building only',
-      'the colour temperature of the lamps chosen and nothing else',
-      'the omission of RCD protection from the circuit',
+      'the internal lighting load of the building, and nothing outside it',
+      'the colour temperature of the lamps chosen, and nothing else',
+      'the omission of RCD protection, since the circuit is outdoors',
     ],
     correctAnswer: 0,
     explanation:
@@ -2734,10 +2734,10 @@ export const module6Questions: Question[] = [
     id: 181,
     question: 'Fountains and water features have requirements similar to those for:',
     options: [
-      'agricultural and horticultural premises',
+      'agricultural premises, with their livestock requirements',
       'swimming pools, with defined zones',
-      'construction and demolition sites',
-      'medical locations and operating theatres',
+      'construction sites, with reduced low voltage supplies',
+      'medical locations, with their IT system requirements',
     ],
     correctAnswer: 1,
     explanation:
@@ -2780,9 +2780,9 @@ export const module6Questions: Question[] = [
     question: 'Emergency lighting design must ensure:',
     options: [
       'adequate illumination, for the required duration, with high reliability',
-      'illumination only while the mains supply is present at the luminaire itself',
+      'illumination only while the mains supply is present, and none once it fails',
       'the lowest possible light output at all times, so that energy is saved on site',
-      'lighting that operates for a maximum of 30 seconds after the supply fails',
+      'lighting that operates for 30 seconds after the supply fails, and no longer',
     ],
     correctAnswer: 0,
     explanation:
@@ -2871,10 +2871,10 @@ export const module6Questions: Question[] = [
     id: 190,
     question: 'Design calculations should demonstrate:',
     options: [
-      'the cheapest possible selection of materials and accessories for the job',
-      'the working methods preferred by the contractor doing the installing work',
+      'the cheapest possible selection of materials, accessories and fittings for the job',
+      'the working methods preferred by the contractor, rather than by the designer',
       'compliance with cable-sizing, protection and voltage-drop requirements',
-      'the connection charges quoted by the electricity supplier for the supply',
+      'the connection charges quoted by the supplier, and the metering agreement',
     ],
     correctAnswer: 2,
     explanation:
@@ -2886,9 +2886,9 @@ export const module6Questions: Question[] = [
     id: 191,
     question: 'Equipment schedules list:',
     options: [
-      'the labour hours allowed per task',
-      'the decorative finishes chosen for each room',
-      'the supply tariff and meter type',
+      'the labour hours allowed, task by task',
+      'the decorative finishes, chosen room by room',
+      'the supply tariff, and the type of meter fitted',
       'equipment types, ratings and locations',
     ],
     correctAnswer: 3,
@@ -2902,9 +2902,9 @@ export const module6Questions: Question[] = [
     question: 'Cable schedules should include:',
     options: [
       'cable types, sizes, routes and the associated protective devices',
-      'the colour scheme chosen for the consumer unit and its enclosures',
-      'the labour rates that were used to price the installation work on site',
-      'the contact details of the local distribution network operator',
+      'the colour scheme chosen for the consumer unit, and for its enclosures',
+      'the labour rates used to price the installation work, hour by hour',
+      'the contact details of the distribution network operator, and of the supplier',
     ],
     correctAnswer: 0,
     explanation:
@@ -2992,9 +2992,9 @@ export const module6Questions: Question[] = [
     question: 'Design documentation should be retained:',
     options: [
       'for 12 months only, and then destroyed securely',
-      'only until the installation has been energised and tested',
+      'only until the installation has been energised, tested and handed over',
       'for the life of the installation, for future reference',
-      'until the first periodic inspection has been carried out',
+      'until the first periodic inspection, and no longer than that',
     ],
     correctAnswer: 2,
     explanation:
@@ -3037,9 +3037,9 @@ export const module6Questions: Question[] = [
     question: 'What does applying diversity to a distribution board allow the designer to do?',
     options: [
       'Size the submain for realistic simultaneous load, not connected load',
-      'Size the submain for the total connected load of every final circuit',
-      'Exclude the largest single fixed load when totalling the board demand',
-      'Use a smaller device than the largest final circuit rating on the board',
+      'Size the submain for the total connected load, circuit by circuit',
+      'Exclude the largest single fixed load, such as a shower, from the total',
+      'Use a device smaller than the largest final circuit, since loads rarely coincide',
     ],
     correctAnswer: 0,
     explanation:
@@ -3158,7 +3158,7 @@ export const module6Questions: Question[] = [
     options: [
       '1.15 ohms, using 230 / 200 with no minimum voltage factor',
       '1.09 ohms, using 0.95 x 230 / 200 as Regulation 411.4.4 gives',
-      '0.87 ohms, using 0.8 x 1.09 as a measured-value comparison',
+      '0.87 ohms, using 0.8 x 0.95 x 230 / 200 from Guidance Note 3',
       '2.19 ohms, using 0.95 x 230 x 2 / 200 for the loop return path',
     ],
     correctAnswer: 1,
@@ -3195,7 +3195,7 @@ export const module6Questions: Question[] = [
     explanation:
       'Regulation 705.411.1 sets a three-way split, and it applies whatever the earthing system: socket-outlets rated up to 32 A need an RCD with the characteristics of 415.1.1, socket-outlets above 32 A need 100 mA or less, and all other circuits need 300 mA or less. The 300 mA tier is driven mainly by fire risk in livestock buildings rather than by shock protection, since burning dust and bedding are the real hazard. Answering 30 mA everywhere is the usual error and would give a farm installation that trips constantly.',
     section: '6.6',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 212,
@@ -3210,7 +3210,7 @@ export const module6Questions: Question[] = [
     explanation:
       'Regulation 536.4.1.2.1 does not allow selectivity to be assumed. It must be verified by a desk study of the time and current characteristics, by tests to the product standard, by suitable software using manufacturer data, or by a manufacturer declaration covering those specific devices. If the desk study route is used, the ambient temperature the published curves assume and the loading before the fault both have to be taken into account, because both shift where the curves actually sit. A large ratio of ratings is a hint, never a proof.',
     section: '6.4',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 213,
@@ -3218,7 +3218,7 @@ export const module6Questions: Question[] = [
     options: [
       '21.7 A, from 15 000 / (1.732 x 400) then multiplied by 0.85',
       '25.5 A, from 15 000 / (1.732 x 400 x 0.85) as the load current',
-      '37.5 A, from 15 000 / 400 with no three-phase factor applied',
+      '37.5 A, from 15 000 / 400 (no three-phase factor applied)',
       '44.1 A, from 15 000 / (400 x 0.85) leaving out the root three',
     ],
     correctAnswer: 1,
@@ -3233,8 +3233,8 @@ export const module6Questions: Question[] = [
     options: [
       'Only the readings taken, since circuit data sits on the certificate',
       'Circuit identification, characteristics and the results for each circuit',
-      'A summary of the worst reading found across the whole installation',
-      'The design calculations used to select each cable and each device',
+      'A summary of the worst reading found, taken across the whole installation',
+      'The design calculations, showing how each cable and each device was selected',
     ],
     correctAnswer: 1,
     explanation:
@@ -3255,16 +3255,16 @@ export const module6Questions: Question[] = [
     explanation:
       'Regulation 643.7.3 sets the verification test as an AC test at the rated residual operating current, with a maximum of 300 ms for a general non-delayed device, while a Type S delayed device is expected to fall in the 130 to 500 ms window. The 40 ms at five times figure is from the product standards BS EN 61008 and 61009 and describes what the device is built to do, not what you verify on site. Table 3A of Appendix 3 has been deleted, so quoting it as the site criterion is now wrong.',
     section: '6.8',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 216,
     question: 'How is Regulation 421.1.7 concerning arc fault detection devices expressed in BS 7671?',
     options: [
       'As a recommendation, without naming particular premises types',
-      'As a requirement for all socket-outlet circuits in dwellings',
+      'As a requirement for all socket-outlet circuits, in dwellings only',
       'As a requirement for care homes, halls of residence and flats',
-      'As a recommendation applying only to circuits above 32 A rating',
+      'As a recommendation, applying only to circuits rated above 32 A',
     ],
     correctAnswer: 0,
     explanation:
@@ -3285,7 +3285,7 @@ export const module6Questions: Question[] = [
     explanation:
       'The bonding required by 701.415.2 is local to the room and joins the protective conductor terminals of every circuit serving Class I and Class II equipment to the accessible extraneous-conductive-parts in that room, such as metal pipework or structural metalwork that can introduce a potential from outside. Its purpose is to hold everything a wet person can touch at the same potential during a fault. It never involves the neutral, and it does not replace main protective bonding at the origin.',
     section: '6.6',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 218,
@@ -3300,7 +3300,7 @@ export const module6Questions: Question[] = [
     explanation:
       'A cable surrounded by thermal insulation cannot shed heat, so its current-carrying capacity falls sharply and BS 7671 gives the reduced values for that installation condition. The circuit rating is set by the worst section of the route, so the buried length governs even though most of the run is clipped direct. There is no length below which the effect can be ignored. Raising the device rating is the most dangerous answer of the four, since it removes protection from the very stretch of cable that is overheating.',
     section: '6.2',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 219,
@@ -3330,7 +3330,7 @@ export const module6Questions: Question[] = [
     explanation:
       'Rated short-circuit capacity must be at least the prospective fault current at the point where the device is installed, so 6 kA covers 4.5 kA and 3 kA or 4 kA do not. There is no tolerance to trade away. The one permitted alternative is verified back-up protection, where an upstream device limits the energy passed and the manufacturer has confirmed that specific combination. An RCD is not a short-circuit protective device, and rated current must never be confused with breaking capacity.',
     section: '6.4',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 221,
@@ -3360,15 +3360,15 @@ export const module6Questions: Question[] = [
     explanation:
       'The nominal voltage of a reduced low voltage system shall not exceed 110 V AC rms between lines. The single-phase secondary is centre-tapped and that midpoint is earthed, giving 55 V to earth, while a three-phase reduced low voltage system gives 63.5 V from line to the earthed star point. The halving of the touch voltage is the whole point of the arrangement on a site. The frequent error is quoting 63.5 V for a single-phase tool transformer, which is the three-phase figure.',
     section: '6.6',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 223,
     question: 'Which protective measure does Section 704 exclude from use in construction and demolition site installations?',
     options: [
-      'Automatic disconnection of supply using an RCD and a breaker',
-      'Reduced low voltage from a site isolating transformer supply',
-      'SELV using a source that satisfies the requirements for safety',
+      'Automatic disconnection of supply, using an RCD and a circuit-breaker',
+      'Reduced low voltage, taken from a site isolating transformer',
+      'SELV, from a source that satisfies the requirements for safety',
       'Electrical separation, which is not to be used in these locations',
     ],
     correctAnswer: 3,
@@ -3420,7 +3420,7 @@ export const module6Questions: Question[] = [
     explanation:
       'The dead polarity test proves that every fuse and single-pole switching device sits in the line conductor and that centre contacts of lampholders are connected correctly. If a reversal is present and you energise anyway, the accessory stays live with its switch off, so the first person to change a lamp gets a shock from an apparently dead fitting. Polarity is confirmed again during the live tests, and insulation resistance readings themselves are unaffected by which way round the conductors are.',
     section: '6.8',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 227,
@@ -3435,7 +3435,7 @@ export const module6Questions: Question[] = [
     explanation:
       'With no distributor earth terminal the consumer must provide the earth, which means an electrode and a TT system. The loop path returns through soil, so Zs is high, variable with the weather and far too great for an overcurrent device to give automatic disconnection in time, which is why RCD protection is fundamental to a TT design rather than an optional extra. Never fabricate a TN-C-S by joining neutral and earth yourself, and IT is a supply arrangement not available to a consumer.',
     section: '6.1',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 228,
@@ -3495,7 +3495,7 @@ export const module6Questions: Question[] = [
     explanation:
       'Standard SWA to BS 5467 is insulated with cross-linked polyethylene, a thermosetting material with a 90 degrees C conductor operating temperature, so its tabulated capacities exceed those of a 70 degrees C thermoplastic cable. Calling SWA a 70 degrees C cable is a common and costly error. The caution is at the ends: where the cable terminates in equipment or an accessory rated only for 70 degrees C, the 70 degrees C values must be used. The armour is a protective conductor, not a load-carrying conductor.',
     section: '6.2',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 232,
@@ -3517,9 +3517,9 @@ export const module6Questions: Question[] = [
     question: 'Where does the value of k used in the adiabatic equation for a protective conductor come from?',
     options: [
       'From Tables 54.2 to 54.6, set by initial and final temperatures',
-      'From the rated current of the protective device that is fitted',
-      'From the measured earth fault loop impedance for that circuit',
-      'From the length of the circuit and the volt drop that results',
+      'From the rated current of the protective device, and from its type',
+      'From the measured earth fault loop impedance, circuit by circuit',
+      'From the circuit length, and the volt drop that results from it',
     ],
     correctAnswer: 0,
     explanation:
@@ -3540,7 +3540,7 @@ export const module6Questions: Question[] = [
     explanation:
       'Regulation 642.3 lists checking the selection of conductors for current-carrying capacity and voltage drop in accordance with the design among the items of inspection, so the inspector compares what has actually been installed against the design calculations rather than merely eyeballing the workmanship. This is why the designer file matters at verification: without the design figures for Iz and voltage drop there is nothing to inspect the installed cable against, and the item cannot honestly be ticked.',
     section: '6.8',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 235,
@@ -3555,7 +3555,7 @@ export const module6Questions: Question[] = [
     explanation:
       'Regulation 722.413.1.2 limits the separated-source measure to the supply of one electric vehicle from one unearthed source, provided by a fixed isolating transformer. The reason is inherent to separation: the safety of an unearthed system depends on there being no return path, and the moment a second load shares the same separated supply a fault on each circuit creates a path between them at full voltage. The NOTE points to Annex A722 for an example arrangement feeding a Class I charging point.',
     section: '6.6',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 236,
@@ -3600,7 +3600,7 @@ export const module6Questions: Question[] = [
     explanation:
       'Voltage drop is a design limit in its own right and a circuit must satisfy capacity, disconnection and voltage drop together, so failing on any one means the cable is too small. Increasing the conductor size lowers the mV/A/m figure and is the normal fix on a long run. Reducing the device rating does not help, because voltage drop is calculated on the design current the load actually draws. Long submains are routinely governed by voltage drop rather than by current, so calculate it early.',
     section: '6.2',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 239,
@@ -3615,22 +3615,22 @@ export const module6Questions: Question[] = [
     explanation:
       'Additional protection is a safety net for the failure of basic or fault protection or for carelessness by a user, such as a cable cut by a spade. The circuit still needs its protective conductor, and the disconnection time still has to be met by whatever device provides automatic disconnection of supply. Keep the roles separate in your head: where an RCD is itself relied on as the disconnecting device, as in a TT system, it is then the residual operating current that sets the loop impedance requirement.',
     section: '6.5',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 240,
     question: 'A shower without a basin is installed in a room. How are the zones around it determined?',
     options: [
-      'Zone 1 stops at the shower head and zone 2 extends beyond it',
-      'Zone 0 extends across the whole floor area of the entire room',
-      'Zone 2 extends 0.60 m outward from the boundary of zone 1',
+      'Zone 1 stops at the shower head, and zone 2 extends beyond it',
+      'Zone 0 extends across the whole floor, out to the walls of the room',
+      'Zone 2 extends 0.60 m outward, measured from the boundary of zone 1',
       'There is no zone 2, and zone 1 extends 1.20 m horizontally',
     ],
     correctAnswer: 3,
     explanation:
       'Where a shower has no basin, Regulation 701.32.3 gives an enlarged zone 1 defined by a 1.20 m horizontal dimension and there is no zone 2 at all. The 0.60 m zone 2 band belongs to the arrangement where a basin is present. Figure 701.1 shows the shapes, and the practical consequence is that the equipment restrictions and IPX4 requirement of zone 1 apply out to 1.20 m from the fixed water outlet rather than stopping at a tray edge that does not exist.',
     section: '6.6',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 241,
@@ -3735,15 +3735,15 @@ export const module6Questions: Question[] = [
     explanation:
       'Maximum demand is assessed by applying diversity to each load according to its type: a shower takes its full value because it runs at full power whenever it is on, a cooker is assessed on a first portion plus a percentage of the remainder, and socket circuits are assessed on realistic simultaneous use. Leaning on the supply fuse instead is not design. It means the tails are being protected by a device the designer does not control and cannot verify, and a sustained overload would sit on undersized conductors.',
     section: '6.2',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 248,
     question: 'What is the difference between an overload current and a short-circuit current?',
     options: [
-      'An overload occurs in a faulty circuit and a short circuit does not',
-      'An overload is always larger than a short-circuit current would be',
-      'An overload flows to earth while a short circuit flows to neutral',
+      'An overload occurs in a faulty circuit, and a short circuit does not',
+      'An overload is always larger, in amperes, than a short-circuit current',
+      'An overload flows to earth, while a short circuit flows to neutral',
       'An overload flows in a healthy circuit, a short circuit in a faulty one',
     ],
     correctAnswer: 3,
@@ -3780,7 +3780,7 @@ export const module6Questions: Question[] = [
     explanation:
       'On TT the fault path returns through the mass of earth, so the electrode resistance RA is measured and the RCD is verified as operating within the required time at its rated residual current, since the RCD is the device providing automatic disconnection. The design condition is that RA multiplied by the rated residual operating current keeps the touch voltage within the 50 V limit of Regulation 411.5.3. Continuity, insulation resistance and polarity are all required tests, but none of them assesses the electrode.',
     section: '6.8',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 251,
@@ -4038,10 +4038,10 @@ export const module6Questions: Question[] = [
     id: 269,
     question: 'What does a permit to work on an existing switchroom principally control?',
     options: [
-      'When the client is invoiced for the completed work',
-      'How the completed circuits are to be tested later',
+      'When the client is invoiced, and on what terms',
+      'How the completed circuits are tested, and by whom',
       'Who may work, on what, and under what conditions',
-      'Which cable sizes may be used',
+      'Which cable sizes may be used, and where',
     ],
     correctAnswer: 2,
     explanation: 'A permit defines the person, the equipment, the precautions and the limits of the work, so nobody re-energises equipment while someone is working on it. Test procedures are set by the inspection and testing requirements, not by the permit.',
@@ -4080,10 +4080,10 @@ export const module6Questions: Question[] = [
     id: 272,
     question: 'Existing damage is found that was not on the original survey. What should the contractor do?',
     options: [
-      'Note it on the Electrical Installation Certificate instead',
+      'Note it on the Electrical Installation Certificate, and nowhere else',
       'Record it, tell the customer, and agree it in writing',
-      'Repair it at once and add the cost to the bill',
-      'Treat it as fair wear and continue working',
+      'Repair it at once, and add the cost to the bill',
+      'Treat it as fair wear and tear, and carry on working',
     ],
     correctAnswer: 1,
     explanation: 'Recording, reporting and agreeing keeps the survey honest and protects both parties from a later dispute. Repairing it unilaterally and billing for it commits the customer to work they never authorised and destroys the evidence of its original state.',
@@ -4354,7 +4354,7 @@ export const module6Questions: Question[] = [
     correctAnswer: 0,
     explanation: 'The fault level at the origin depends on the transformer and the network feeding it, so the distributor declares it. Diversity is the designer\'s own assessment of how the load behaves and could never be supplied by the distributor.',
     section: '6.1',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 292,
@@ -4374,15 +4374,15 @@ export const module6Questions: Question[] = [
     id: 293,
     question: 'A wiring system runs through a boiler house at 50 degrees Celsius and the cables are also grouped on a tray. Which rating factors apply?',
     options: [
-      'Whichever factor the tray maker states',
-      'The two factors added and then halved',
+      'Whichever factor the tray maker states, in its catalogue',
+      'The two factors added, and then halved',
       'Both factors, multiplied together',
-      'The more onerous factor',
+      'The more onerous factor, on its own',
     ],
     correctAnswer: 2,
     explanation: 'Ambient temperature and grouping are independent thermal effects, so their factors multiply to give the combined figure. Taking only the more onerous factor is a common shortcut that leaves the cable undersized, because the second effect is still present.',
     section: '6.3',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 294,
@@ -4396,7 +4396,7 @@ export const module6Questions: Question[] = [
     correctAnswer: 3,
     explanation: 'The pipe creates a local hot spot, so the cable at that point is working at a higher ambient than the rest of the run and its capacity there is reduced. Continuity of the protective conductor is unaffected by what the cable is clipped to, so that reasoning misidentifies the fault.',
     section: '6.3',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 295,
@@ -4410,7 +4410,7 @@ export const module6Questions: Question[] = [
     correctAnswer: 0,
     explanation: 'If the distributor\'s PEN conductor is lost, all bonded metalwork rises towards line potential, and livestock are far more susceptible to that voltage than people are. A TT electrode almost always gives a higher loop impedance than a PME terminal, not a lower one.',
     section: '6.5',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 296,
@@ -4424,7 +4424,7 @@ export const module6Questions: Question[] = [
     correctAnswer: 1,
     explanation: 'The supply capacity is a hard constraint, so either the distributor agrees a larger supply or the load is reduced or managed. Applying diversity a second time to a figure that already has diversity in it manufactures a compliant-looking number from nothing.',
     section: '6.5',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 297,
@@ -4438,7 +4438,7 @@ export const module6Questions: Question[] = [
     correctAnswer: 2,
     explanation: 'Isolation for maintenance must be secured against inadvertent reclosure, which is why the device has to be capable of being locked or otherwise secured off. Breaking the protective conductor would remove fault protection and is specifically not permitted.',
     section: '6.5',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 298,
@@ -4452,7 +4452,7 @@ export const module6Questions: Question[] = [
     correctAnswer: 3,
     explanation: 'In normal service a protective conductor carries no appreciable current; its duty is the short, intense fault current until the device clears, which is what the adiabatic check assesses. It does not carry the line conductor\'s load current, so sizing it on load would be meaningless.',
     section: '6.5',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 299,
@@ -4466,7 +4466,7 @@ export const module6Questions: Question[] = [
     correctAnswer: 0,
     explanation: 'Supplementary bonding may be omitted only when all three conditions are satisfied together, and here they are. Insisting it is still needed at every pipe ignores the omission allowance; supplementary bonding also connects parts locally rather than running back to the main earthing terminal.',
     section: '6.5',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 300,
@@ -4480,7 +4480,7 @@ export const module6Questions: Question[] = [
     correctAnswer: 1,
     explanation: 'Distribution circuits in a TN system are permitted 5 s, because nobody is in contact with the equipment they supply in the way they are with a final circuit. The 0.4 s figure applies to final circuits up to 63 A with socket-outlets, and this is not a final circuit.',
     section: '6.8',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 301,
@@ -4494,7 +4494,7 @@ export const module6Questions: Question[] = [
     correctAnswer: 2,
     explanation: 'Zs is the whole loop, so the external impedance and the circuit\'s own conductor resistance add together. Subtracting them is a frequent slip that treats Ze as if it were already inside R1 plus R2, when in fact the two are in series.',
     section: '6.5',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 302,
@@ -4508,7 +4508,7 @@ export const module6Questions: Question[] = [
     correctAnswer: 3,
     explanation: 'In TN-S the return is a metallic protective conductor back to the source, whereas in TT it is through the installation electrode, the mass of earth and the source electrode. The line conductor and the circuit protective conductor within the circuit are the same in both arrangements.',
     section: '6.5',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 303,
@@ -4522,7 +4522,7 @@ export const module6Questions: Question[] = [
     correctAnswer: 0,
     explanation: 'A functional earth is provided for the equipment to work, and it carries no duty to disconnect a fault, so protective earthing must still be provided. Labelling it and running it as a separate identified conductor are both sound practice, not things to avoid.',
     section: '6.5',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 304,
@@ -4536,7 +4536,7 @@ export const module6Questions: Question[] = [
     correctAnswer: 1,
     explanation: 'Where the table produces a non-standard result, a conductor of the next larger standard cross-sectional area must be used. Rounding to the nearest size is the tempting error, because it can round downwards and leave the conductor below the minimum the table demands.',
     section: '6.3',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 305,
@@ -4550,7 +4550,7 @@ export const module6Questions: Question[] = [
     correctAnswer: 2,
     explanation: 'The k value depends on both the conductor material and the insulation\'s assumed initial and final temperatures, giving 115 for copper in 70 degree thermoplastic. Using 143 is the classic error of picking the copper thermosetting row, which assumes a 90 degree start and overstates what the conductor can survive.',
     section: '6.3',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 306,
@@ -4564,21 +4564,21 @@ export const module6Questions: Question[] = [
     correctAnswer: 3,
     explanation: 'Selectivity must be verified by a recognised route such as a manufacturer\'s declaration, tests to the product standard, suitable software using manufacturer data, or a desk study of the characteristics. A rule of thumb about the ratio of ratings is not verification and can fail badly at high fault currents.',
     section: '6.4',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 307,
     question: 'A consumer unit sits where the prospective fault current is 3.2 kA. Manufacturer\'s data shows a 6 kA breaker backed by the service fuse reaches a higher conditional rating. Which selection is sound?',
     options: [
       'The 6 kA breaker, with the fuse upstream of it',
-      'The 6 kA breaker with no upstream device',
+      'The 6 kA breaker, with no upstream device at all',
       'A 3 kA breaker, as 3.2 kA is under 6 kA',
-      'A 16 kA breaker with the fuse removed',
+      'A 16 kA breaker, with the service fuse removed',
     ],
     correctAnswer: 0,
     explanation: 'The 6 kA breaker exceeds the 3.2 kA present and the upstream fuse only adds margin, so the selection stands on its own rating. Choosing a 3 kA device fails immediately, because 3.2 kA is above its rated short-circuit capacity whatever sits upstream.',
     section: '6.4',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 308,
@@ -4592,7 +4592,7 @@ export const module6Questions: Question[] = [
     correctAnswer: 1,
     explanation: 'Selectivity needs both a current margin and a time margin, so the upstream device is deliberately delayed to let the downstream one clear first. Breaking capacity describes what a device can safely interrupt and has no bearing on which device operates first.',
     section: '6.4',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 309,
@@ -4606,7 +4606,7 @@ export const module6Questions: Question[] = [
     correctAnswer: 2,
     explanation: 'Both devices operating means the fault has taken out more of the installation than necessary, which is a failure of selectivity. Breaking capacity is about safely interrupting the fault, and both devices did interrupt it, so that is not what has gone wrong.',
     section: '6.4',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 310,
@@ -4620,7 +4620,7 @@ export const module6Questions: Question[] = [
     correctAnswer: 3,
     explanation: 'A single 30 A or 32 A ring is limited to a floor area of 100 square metres, so 140 square metres needs more than one circuit. Increasing the conductor to 4 mm2 does not extend the area limit, which exists to spread load and limit the consequence of a fault.',
     section: '6.3',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 311,
@@ -4634,7 +4634,7 @@ export const module6Questions: Question[] = [
     correctAnswer: 0,
     explanation: 'The circuit stands or falls on whether the cable\'s capacity, after the reference method and rating factors, still equals or exceeds the 20 A device. Insulation resistance is a verification result obtained after installation and cannot determine whether the design was viable.',
     section: '6.3',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 312,
@@ -4648,7 +4648,7 @@ export const module6Questions: Question[] = [
     correctAnswer: 1,
     explanation: 'Safety service and general circuits must be segregated so a fault or fire in one cannot disable the other. Putting both on one 30 mA RCD does the opposite, because a single nuisance trip would then take out the fire alarm supply as well.',
     section: '6.6',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 313,
@@ -4662,7 +4662,7 @@ export const module6Questions: Question[] = [
     correctAnswer: 2,
     explanation: 'Circuit demands are assessed with their own allowances, so adding them and then applying diversity again double-counts it; the correct route is to total the connected equipment and apply the installation allowances once. Power factor is handled inside each current calculation and is not the reason the method fails.',
     section: '6.2',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 314,
@@ -4718,7 +4718,7 @@ export const module6Questions: Question[] = [
     correctAnswer: 2,
     explanation: 'The device rating must be at least the design current, so the next standard rating above 27 A is the starting point. Choosing 25 A because it is nearest is the classic error, since the device would then be below Ib and would trip in normal service.',
     section: '6.4',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 318,
@@ -4746,7 +4746,7 @@ export const module6Questions: Question[] = [
     correctAnswer: 0,
     explanation: 'Those methods assume the cable can shed heat into a thermally conductive surface on one side, which is what the tabulated ratings are based on. Contact does not hold the cable clear of insulation; the methods deal specifically with cables that are partly covered by it.',
     section: '6.3',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 320,
@@ -4760,7 +4760,7 @@ export const module6Questions: Question[] = [
     correctAnswer: 1,
     explanation: 'For short lengths surrounded by insulation the guide gives a factor against the clipped direct rating, and 400 mm attracts 0.51. Reaching for 0.50 is the near miss, because that blanket figure applies only where the cable is surrounded for 0.5 m or more.',
     section: '6.3',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 321,
@@ -4788,7 +4788,7 @@ export const module6Questions: Question[] = [
     correctAnswer: 3,
     explanation: 'The cable must be able to carry whatever the device will allow to flow, so it is In that is divided by the factors to find the tabulated capacity needed. Using Ib is the most common error in the whole procedure, because the device may permit considerably more current than the design load.',
     section: '6.2',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 323,
@@ -4802,7 +4802,7 @@ export const module6Questions: Question[] = [
     correctAnswer: 0,
     explanation: 'Voltage drop falls as conductor area rises, so the cable is increased and both checks are then repeated on the new size. Raising the device rating does nothing for voltage drop and would leave the cable protected by a device it may no longer coordinate with.',
     section: '6.3',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 324,
@@ -4872,7 +4872,7 @@ export const module6Questions: Question[] = [
     correctAnswer: 1,
     explanation: 'The check compares the energy let through by the device with what the conductor can absorb in that time without exceeding its limiting temperature. It says nothing about load current, because a protective conductor carries no appreciable current in normal service.',
     section: '6.3',
-    difficulty: 'advanced',
+    difficulty: 'basic',
   },
   {
     id: 329,
@@ -4886,7 +4886,7 @@ export const module6Questions: Question[] = [
     correctAnswer: 2,
     explanation: 'The calculated value is a minimum, so the next standard size at or above it is selected, which is 4 mm2. Rounding down to 2.5 mm2 puts the conductor below the calculated minimum and it would exceed its limiting temperature during a fault.',
     section: '6.3',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
   {
     id: 330,
@@ -4900,7 +4900,7 @@ export const module6Questions: Question[] = [
     correctAnswer: 3,
     explanation: 'Repeated inrush from a bank of luminaires can operate the magnetic element of a Type B device, so a Type C may be needed and the Zs limit reassessed with it. Cable material is chosen on current, voltage drop and environment, none of which respond to a microsecond inrush pulse.',
     section: '6.7',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
   },
 ];
 

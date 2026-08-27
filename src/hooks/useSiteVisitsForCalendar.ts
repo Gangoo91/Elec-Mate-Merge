@@ -22,9 +22,10 @@ const SITE_VISIT_COLOUR = '#14B8A6';
  * Events mirror the exact shape of useTasksForCalendar / useProjectsForCalendar
  * so they slot straight into the Month/Week/Day views + agenda with no changes.
  */
-export function useSiteVisitsForCalendar(dateFrom: string, dateTo: string) {
+export function useSiteVisitsForCalendar(dateFrom: string, dateTo: string, enabled = true) {
   return useQuery({
     queryKey: ['site-visits-for-calendar', dateFrom, dateTo],
+    enabled,
     queryFn: async (): Promise<CalendarEvent[]> => {
       const {
         data: { user },

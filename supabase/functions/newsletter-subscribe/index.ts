@@ -370,6 +370,8 @@ serve(withSentry('newsletter-subscribe', async (req) => {
         // email's Getting Started guide — so delivery does not depend on a
         // site deploy, and the file is fetchable for the attachment.
         url: `${Deno.env.get('SUPABASE_URL') || 'https://jtwygbeceundfgnkirof.supabase.co'}/storage/v1/object/public/lead-magnets/elec-mate-electrical-symbols-chart.pdf`,
+        previewImage: `${Deno.env.get('SUPABASE_URL') || 'https://jtwygbeceundfgnkirof.supabase.co'}/storage/v1/object/public/lead-magnets/elec-mate-electrical-symbols-chart-preview.jpg`,
+        previewAlt: 'The symbols chart cover and reference pages, fanned out',
         filename: 'Elec-Mate-Electrical-Symbols-Chart.pdf',
         blurb:
           'All 114 IEC 60617 symbols on one A4 sheet, grouped by category — the standard referenced by BS 7671:2018+A4:2026 Regulation 514.9.1 for installation drawings.',
@@ -378,6 +380,25 @@ serve(withSentry('newsletter-subscribe', async (req) => {
           'All 114 symbols, grouped by category',
           'A4 and print-ready — pin it up in the van',
           'IEC 60617, per BS 7671 Regulation 514.9.1',
+        ],
+      },
+      lead_magnet_zs_ze_reference: {
+        // Short on purpose — `name` drives BOTH the subject ("Your … is here")
+        // and the H1. "Ze & Zs earth fault loop impedance reference" made a
+        // 56-character subject that truncates on a phone and buries "max Zs",
+        // which is the wording people actually searched for.
+        name: 'maximum Zs & Ze reference',
+        url: `${Deno.env.get('SUPABASE_URL') || 'https://jtwygbeceundfgnkirof.supabase.co'}/storage/v1/object/public/lead-magnets/elec-mate-zs-ze-reference.pdf`,
+        previewImage: `${Deno.env.get('SUPABASE_URL') || 'https://jtwygbeceundfgnkirof.supabase.co'}/storage/v1/object/public/lead-magnets/elec-mate-zs-ze-reference-preview.jpg`,
+        previewAlt: 'The three reference sheets, fanned out',
+        filename: 'Elec-Mate-Ze-and-Zs-Reference.pdf',
+        blurb:
+          'Every maximum Zs in BS 7671 Tables 41.2–41.5 on three A4 sheets — circuit-breakers, fuses, RCDs and the withdrawn BS 3871 types still sitting in older boards.',
+        utmMedium: 'zs_ze_reference',
+        facts: [
+          'Tables 41.2–41.5 as tabulated, Cmin 0.95',
+          'BS 3871 Types 1–4 for older boards',
+          'A4 and print-ready — pin it up in the van',
         ],
       },
     };

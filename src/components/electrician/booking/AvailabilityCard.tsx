@@ -3,6 +3,7 @@ import { cn } from '@/lib/utils';
 import { cardCn, chipBase, chipOff, chipOn, eyebrowCn } from '@/components/shared/surfaceStyles';
 import { inputCn, labelCn } from '@/components/forms/fieldStyles';
 import { toast } from '@/hooks/use-toast';
+import { Switch } from '@/components/ui/switch';
 import {
   DAY_ORDER,
   SLOT_LENGTHS,
@@ -248,6 +249,34 @@ const AvailabilityCard = ({ settings }: { settings: BookingSettings }) => {
         <p className="mt-2 text-[12px] leading-snug text-white">
           The buffer pads either side of everything already in your diary so you have travel time.
           Notice stops someone booking you for an hour from now.
+        </p>
+      </div>
+
+      {/* ── Confirming to the customer ────────────────────────────── */}
+      <div className="mt-5 border-t border-white/[0.1] pt-4">
+        <h3 className="text-sm font-semibold text-white">When someone books</h3>
+        <label className="mt-3 flex cursor-pointer items-center justify-between gap-4">
+          <span className="min-w-0">
+            <span className="block text-[13.5px] font-medium text-white">
+              Email them a confirmation
+            </span>
+            <span className="mt-0.5 block text-[12px] leading-snug text-white">
+              Sends straight away, with a calendar file they can tap to add the job to their own
+              diary. Off unless you turn it on.
+            </span>
+          </span>
+          <Switch
+            checked={draft.autoConfirm}
+            onCheckedChange={(v) => setDraft((p) => ({ ...p, autoConfirm: v }))}
+          />
+        </label>
+        {/* Said plainly. This is the ONLY thing in the app that emails a
+            customer without the electrician pressing send, and someone who
+            does not realise that will be surprised in the worst possible
+            place — in front of a client. */}
+        <p className="mt-2 text-[12px] leading-snug text-white">
+          It goes out under your name, from your details, and replies come back to you. Everywhere
+          else in the app you press send yourself.
         </p>
       </div>
 

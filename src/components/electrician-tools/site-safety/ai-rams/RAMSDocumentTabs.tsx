@@ -138,7 +138,13 @@ export const RAMSDocumentTabs: React.FC<RAMSDocumentTabsProps> = ({
   const md = (methodData ?? {}) as MethodStatementData;
 
   return (
-    <div className="pb-[calc(7rem+env(safe-area-inset-bottom,0px))] sm:pb-24">
+    // Full-height flex column so the action bar can sit at the BOTTOM.
+    // `sticky bottom-0` alone only pins to the viewport when the content is
+    // taller than the screen; on a short tab (the Issue tab is three buttons)
+    // it just lands wherever the content ends, stranded mid-page. The column
+    // plus `mt-auto` on the bar gives both behaviours: pinned to the bottom
+    // when content is short, sticky while scrolling when it is long.
+    <div className="flex min-h-[calc(100svh-var(--header-height,56px)-2rem)] flex-col">
       {/* Step rail — one row, completion ticks, same weight as the cert tabs */}
       <div className="mb-5 grid grid-cols-4 gap-0 border-b border-white/[0.1]">
         {TABS.map((t, i) => {
@@ -351,9 +357,20 @@ export const RAMSDocumentTabs: React.FC<RAMSDocumentTabsProps> = ({
       {/* Sticky footer nav — cert pattern, slides away while typing */}
       <div
         className={cn(
-          'fixed inset-x-0 bottom-0 z-40 border-t border-white/[0.1] bg-elec-dark/95 px-4 pt-3 backdrop-blur-sm transition-transform duration-200 sm:px-6 md:px-10 lg:px-16',
-          // Clear the home indicator on iOS — a fixed bar pinned to
-          // bottom-0 puts the primary action under it otherwise.
+          // 🔴 STICKY, NOT FIXED. `fixed inset-x-0` is positioned against the
+          // viewport, so it escaped the content column and ran straight under
+          // the w-64 sidebar. A left offset would not fix it either: the
+          // sidebar collapses (`desktopCollapsed` lives up in Layout), so any
+          // hard-coded inset is wrong half the time.
+          // Sticky keeps the bar inside the flex column, which is what every
+          // other action bar in the app does — including this feature's own
+          // input screen (`AIRAMSInput`).
+          'mt-auto sticky bottom-0 z-40 border-t border-white/[0.1] bg-elec-dark/95 pt-3 backdrop-blur-sm transition-transform duration-200',
+          // Cancel Layout's page padding so the bar still spans the column
+          // edge-to-edge, then re-apply its own.
+          '-mx-3 px-3 sm:-mx-4 sm:px-4 md:-mx-6 md:px-6 lg:-mx-8 lg:px-8',
+          // Clear the home indicator on iOS — a bar pinned to the bottom puts
+          // the primary action under it otherwise.
           'pb-[calc(0.75rem+env(safe-area-inset-bottom,0px))]',
           typing && 'translate-y-full'
         )}

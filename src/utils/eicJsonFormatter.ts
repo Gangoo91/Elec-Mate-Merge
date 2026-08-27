@@ -319,10 +319,20 @@ export async function formatEicJson(
         formData.installationType,
         formData.workType
       ),
-      // ELE-1387 — Description and Extent are now a single input. Mirror the
-      // description into the Extent box so both model-form entries print the
-      // same text; fall back to a distinct legacy extentOfInstallation value on
-      // certs saved before the merge.
+      /*
+       * ELE-1630 — Extent is its own field again.
+       *
+       * ELE-1387 had made it a mirror of the description, so both boxes on the
+       * certificate always printed identical text and there was no way to say
+       * "the installation is X, this certificate covers Y". Alex asked for them
+       * back (27 Aug 2026).
+       *
+       * The mirror is KEPT as the fallback, not removed: every certificate
+       * saved between ELE-1387 and now has an empty extentOfInstallation, and
+       * dropping the fallback would blank that box on every one of them when
+       * their PDF is next regenerated. Blank only ever means "not stated
+       * separately", so falling back to the description stays correct.
+       */
       extent_of_installation:
         formData.extentOfInstallation ||
         buildInstallationDescription(

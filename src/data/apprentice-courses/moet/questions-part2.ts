@@ -85,10 +85,10 @@ export const questionsPart2: StandardMockQuestion[] = [
     id: 45,
     question: 'What is the function of a bus-section switch in a main switchboard?',
     options: [
-      'To limit the prospective fault current available at each outgoing way so that smaller protective devices can be used on the board',
+      'To limit the prospective fault current available at each outgoing way, so that smaller and cheaper protective devices can be used on the board',
       'To divide the busbars into sections, allowing part of the board to be isolated for maintenance while maintaining supply to other sections',
-      'To correct the overall power factor of the loads on the switchboard by switching capacitor stages in and out as demand varies',
-      'To provide the overcurrent and short-circuit protection for every individual outgoing circuit supplied from the switchboard',
+      'To correct the overall power factor of the loads on the switchboard, by switching capacitor stages in and out as demand varies',
+      'To provide the overcurrent and short-circuit protection for every individual outgoing circuit, and for the incoming supply to the switchboard',
     ],
     correctAnswer: 1,
     explanation:
@@ -140,9 +140,9 @@ export const questionsPart2: StandardMockQuestion[] = [
     question: 'What is the purpose of a star-delta starter for a three-phase induction motor?',
     options: [
       'To reduce the starting current to approximately one-third of the DOL starting current by initially connecting windings in star, then switching to delta',
-      'To raise the starting torque well above the direct-on-line value by connecting the windings in delta first and then switching to star',
-      'To vary the motor speed continuously by adjusting the frequency of the supply once the windings have been switched from star into delta',
-      'To reverse the direction of rotation of the motor by swapping two of the three supply phases as the starter changes over from star into delta',
+      'To raise the starting torque well above the direct-on-line value, by connecting the windings in delta first and then switching to star',
+      'To vary the motor speed continuously, by adjusting the frequency of the supply to the stator once the windings have been switched from star into delta for running',
+      'To reverse the direction of rotation of the motor, by swapping two of the three supply phases as the starter changes over from star into delta at the end of the timed period',
     ],
     correctAnswer: 0,
     explanation:
@@ -156,10 +156,10 @@ export const questionsPart2: StandardMockQuestion[] = [
     id: 49,
     question: 'A variable speed drive (VSD) controls motor speed by varying which parameters?',
     options: [
-      'The supply voltage alone, with the frequency held fixed',
+      'The supply voltage alone (a rising V/Hz ratio at 50 Hz)',
       'Frequency and voltage (V/f ratio) of the supply to the motor',
-      'The winding resistance of the motor stator and rotor',
-      'The number of pole pairs formed by the stator winding',
+      'The winding resistance of the stator and rotor (ohms/phase)',
+      'The number of stator pole pairs (p) and hence the rev/min',
     ],
     correctAnswer: 1,
     explanation:
@@ -190,9 +190,9 @@ export const questionsPart2: StandardMockQuestion[] = [
     id: 51,
     question: 'In a motor control centre (MCC), what is the function of a contactor?',
     options: [
-      'To interrupt the high prospective short-circuit fault current of the motor circuit without help from any upstream device',
-      'To protect the motor windings from a sustained overload by opening the circuit when excessive current is drawn for too long',
-      'To vary the speed of the driven motor by adjusting the frequency of the supply delivered to its stator windings',
+      'To interrupt the high prospective short-circuit fault current (Ipf) of the motor circuit, without help from any upstream fuse/MCCB',
+      'To protect the motor windings from a sustained overload, by opening the circuit when the current exceeds the set full-load current (FLC/FLA)',
+      'To vary the speed of the driven motor, by adjusting the supply frequency (V/f control) delivered to its stator windings',
       'To provide a means of frequently switching the motor on and off under control of external signals (start/stop, PLC output)',
     ],
     correctAnswer: 3,
@@ -208,9 +208,9 @@ export const questionsPart2: StandardMockQuestion[] = [
     question: 'What is the purpose of an overload relay in a motor starter?',
     options: [
       'To protect the motor windings from damage caused by sustained overcurrent (overload) conditions',
-      'To interrupt the high fault current that flows during a short circuit at the motor terminals',
-      'To provide isolation of the motor circuit for safe maintenance and lock-off',
-      'To smooth the motor starting current by ramping the voltage up gradually on start',
+      'To interrupt the high fault current (Ipf) that flows during a short circuit at the motor terminals',
+      'To provide isolation (secure lock-off) of the motor circuit for safe maintenance',
+      'To smooth the motor starting current by ramping the voltage up gradually (soft start)',
     ],
     correctAnswer: 0,
     explanation:
@@ -225,10 +225,10 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       "A VSD displays an 'overcurrent' fault during motor acceleration. What is the most likely cause?",
     options: [
-      'The deceleration ramp time is set too long, causing the DC bus voltage to rise',
+      'The deceleration ramp time is set too long, causing the DC bus voltage to rise above its trip threshold',
       'The acceleration time is set too short for the mechanical load, or there is a mechanical seizure',
-      'The motor is lightly loaded and running well below its rated full-load current',
-      'The supply frequency is too high, causing the motor to overspeed on start-up',
+      'The motor is lightly loaded, and is running well below its rated full-load current on all three phases',
+      'The supply frequency is too high, causing the motor to overspeed as it starts against the load inertia',
     ],
     correctAnswer: 1,
     explanation:
@@ -243,10 +243,10 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       'What type of control panel enclosure rating would be required for a motor starter installed in a washdown area of a food processing plant?',
     options: [
-      'IP20',
-      'IP54',
+      'IP20 or IP21',
+      'IP54 or IP55',
       'IP65 or IP66',
-      'IP00',
+      'IP00 or IP10',
     ],
     correctAnswer: 2,
     explanation:
@@ -263,9 +263,9 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       'What is the purpose of an uninterruptible power supply (UPS) in a critical installation?',
     options: [
-      'To correct the power factor of the critical load so that less reactive power is drawn from the incoming mains supply',
-      'To step the incoming supply voltage up or down so that it always matches the rated input voltage of the critical equipment',
-      'To provide the overcurrent and earth fault protection for every critical load circuit fed from the distribution board',
+      'To correct the power factor of the critical load, so that less reactive power is drawn from the incoming mains supply',
+      'To step the incoming supply voltage up or down, so that it always matches the rated input voltage of the equipment',
+      'To provide the overcurrent and earth fault protection for every critical load circuit, in place of the distribution board',
       'To provide continuous, conditioned power to critical loads during mains supply disturbances or failure, with no break in supply',
     ],
     correctAnswer: 3,
@@ -282,9 +282,9 @@ export const questionsPart2: StandardMockQuestion[] = [
       'What type of UPS topology provides the highest level of protection with zero transfer time?',
     options: [
       'Online double-conversion UPS',
-      'Line-interactive UPS',
-      'Offline (standby) UPS',
-      'Rotary UPS',
+      'Line-interactive UPS with an automatic voltage regulator',
+      'Offline standby UPS with a mechanical transfer switch',
+      'Rotary UPS with a short break while the flywheel runs up',
     ],
     correctAnswer: 0,
     explanation:
@@ -299,10 +299,10 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       'A maintenance technician is required to replace a fluorescent luminaire with an LED equivalent. What important consideration must be addressed regarding the control gear?',
     options: [
-      'The supply voltage must be reduced to 110 V at a transformer before an LED luminaire can be connected to the circuit',
+      'The supply voltage must be reduced to 110 V at a site transformer, before an LED luminaire can be connected to the circuit',
       'The existing fluorescent ballast must be bypassed or removed, and the circuit verified for compatibility with the LED driver',
       'A dedicated radial circuit must be installed for every individual LED luminaire, each with its own protective device',
-      'The lighting circuit must be converted from an AC supply to a DC supply to suit the rectifier stage in the LED driver',
+      'The lighting circuit must be converted from an AC supply to a DC supply, to suit the rectifier stage in the LED driver',
     ],
     correctAnswer: 1,
     explanation:
@@ -335,9 +335,9 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       'What safety measure is required before working on a photovoltaic (PV) solar panel system?',
     options: [
-      'Isolate the AC side at the inverter alone, because the DC side of the array is made safe automatically as soon as the inverter stops exporting to the grid',
-      'Cover the array with an opaque sheet, because this removes the DC voltage at the panel terminals and makes the whole string safe to work on',
-      'Wait until after dark and then work on the array, because a PV panel cannot produce a hazardous DC voltage once the daylight has gone',
+      'Isolate the AC side at the inverter alone (AC isolator only), because the DC side is made safe automatically as soon as the inverter stops exporting to the grid',
+      'Cover the array with an opaque sheet (blackout cover), because this removes the DC voltage at the panel terminals and makes the whole string safe to touch',
+      'Wait until after dark (no daylight) and then work on the array, because a PV panel cannot produce a hazardous DC voltage once the daylight has gone',
       'Isolate both the DC side (PV array isolator) and AC side (inverter and AC isolator), and be aware that PV panels generate DC voltage whenever exposed to light',
     ],
     correctAnswer: 3,
@@ -354,9 +354,9 @@ export const questionsPart2: StandardMockQuestion[] = [
       'What is the purpose of an anti-islanding protection system on a grid-connected inverter?',
     options: [
       'To ensure the inverter disconnects from the grid when the mains supply fails, preventing back-feeding of the network',
-      'To maximise the power exported by continuously tracking the peak power point of the PV array as the irradiance changes',
-      'To correct the power factor of the exported supply so that it matches the requirement set by the network operator',
-      'To protect the PV array against overvoltage caused by lightning strikes or by switching surges on the grid',
+      'To maximise the power exported, by continuously tracking the peak power point of the PV array as the irradiance changes',
+      'To correct the power factor of the exported supply, so that it matches the requirement set by the network operator',
+      'To protect the PV array against overvoltage, caused by lightning strikes or by switching surges on the grid',
     ],
     correctAnswer: 0,
     explanation:
@@ -377,10 +377,10 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       'What is the primary difference between planned preventive maintenance (PPM) and reactive maintenance?',
     options: [
-      'PPM is carried out only by external specialist contractors, while reactive maintenance is always handled by the in-house team',
+      'PPM is carried out only by external specialist contractors under contract, while reactive maintenance is always handled by the in-house maintenance team',
       'PPM is scheduled maintenance carried out at predetermined intervals to prevent failures, while reactive maintenance responds to breakdowns after they occur',
-      'PPM is triggered by condition-monitoring readings taken on the plant, while reactive maintenance follows a fixed time-based schedule of tasks',
-      'PPM applies only to mechanical plant such as pumps and gearboxes, while reactive maintenance applies only to electrical plant and switchgear',
+      'PPM is triggered by condition-monitoring readings taken on the plant, while reactive maintenance follows a fixed time-based schedule of routine inspection tasks',
+      'PPM applies only to mechanical plant such as pumps and gearboxes, while reactive maintenance applies only to electrical plant such as motors, drives and switchgear',
     ],
     correctAnswer: 1,
     explanation:
@@ -413,9 +413,9 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       'What does vibration analysis typically indicate when monitoring rotating electrical machinery?',
     options: [
-      'Gradual degradation of the stator winding insulation resistance and moisture ingress over the working life of the machine',
-      'Loose or high-resistance electrical connections inside the terminal box and at the incoming supply cable glands',
-      'Excessive leakage current flowing to earth from the stator windings and the resulting fall in insulation readings',
+      'Gradual degradation of the stator winding insulation, and moisture ingress over the working life of the machine',
+      'Loose or high-resistance electrical connections, inside the terminal box and at the incoming cable glands',
+      'Excessive leakage current flowing to earth from the stator windings, and the resulting fall in the insulation readings',
       'Mechanical issues such as bearing wear, misalignment, unbalance, looseness, and electrical faults such as rotor bar defects',
     ],
     correctAnswer: 3,
@@ -448,10 +448,10 @@ export const questionsPart2: StandardMockQuestion[] = [
     id: 65,
     question: 'What is condition-based maintenance (CBM)?',
     options: [
-      'Maintenance activities carried out strictly at fixed calendar intervals, regardless of the measured condition of the equipment served',
+      'Maintenance activities carried out strictly at fixed calendar intervals, regardless of the measured condition of the individual item of equipment served',
       'Maintenance activities triggered by the actual measured condition of the equipment, using monitoring techniques to determine when maintenance is needed',
       'Maintenance activities performed once the equipment has already broken down, restoring it to service as quickly as the spares allow',
-      'Maintenance activities limited to a complete overhaul of every item of plant during a single annual shutdown of the whole production facility',
+      'Maintenance activities limited to a complete overhaul of every item of plant, carried out during a single annual shutdown of the whole production facility',
     ],
     correctAnswer: 1,
     explanation:
@@ -466,10 +466,10 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       'A motor insulation resistance test shows a reading that has been steadily declining over successive tests from 50 megohm to 5 megohm over two years. The motor has not yet failed. What action should be taken?',
     options: [
-      'Leave the motor in service and take no further action, as 5 megohm is still above the 1 megohm minimum',
+      'Leave the motor in service and take no further action, as 5 megohm is still well above the 1 megohm minimum for a machine of this rating',
       'Run the motor through to failure and replace it then, since insulation trends cannot predict a breakdown',
       'Schedule the motor for rewinding or replacement during the next planned shutdown, and increase monitoring frequency',
-      'Reduce the test voltage used at the next test so that the recorded reading is brought back above 50 megohm',
+      'Reduce the test voltage used at the next test, so that the recorded reading is brought back above 50 megohm',
     ],
     correctAnswer: 2,
     explanation:
@@ -484,9 +484,9 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       'What is the purpose of oil analysis as a condition monitoring technique for oil-filled transformers?',
     options: [
-      'To top up the oil level in the tank and so restore the dielectric strength of the insulation to the value stated by the transformer maker',
-      'To measure the secondary output voltage of the transformer as the load varies, confirming that the tap changer has been set correctly for the site',
-      'To monitor the operating temperature of the windings and the core so that the cooling fans and pumps are started at the correct moment on load',
+      'To top up the oil level in the tank, and so restore the dielectric strength of the insulation to the value stated by the maker',
+      'To measure the secondary output voltage of the transformer as the load varies, confirming that the tap changer has been set correctly for the site conditions',
+      'To monitor the operating temperature of the windings and the core, so that the cooling fans and oil pumps are started at the correct moment as the load rises',
       'To detect degradation products, moisture content, dissolved gases, and contaminants that indicate the condition of the insulation system and internal faults',
     ],
     correctAnswer: 3,
@@ -505,9 +505,9 @@ export const questionsPart2: StandardMockQuestion[] = [
       'A three-phase motor fails to start. The overload relay has not tripped and the contactor is not pulling in. What is the logical first step in fault diagnosis?',
     options: [
       'Check the control circuit: verify the control supply is present, check start/stop buttons, check for open circuits in the control wiring and safety interlocks',
-      'Strip and rewind the motor straight away, because a contactor that fails to pull in shows that the stator windings have gone open circuit',
-      'Replace all three of the main power fuses first, because blown power fuses are by far the most likely reason that a motor will not start',
-      'Measure the earth fault loop impedance at the motor terminals before making any other check, since this proves that the supply to the motor is healthy',
+      'Strip and rewind the motor straight away, because a contactor that fails to pull in shows the stator windings have gone open circuit at the star/delta links',
+      'Replace all three of the main power fuses first, because blown power fuses are by far the most likely reason a motor will not start on a DOL/star-delta starter',
+      'Measure the earth fault loop impedance Zs/Ze at the motor terminals before making any other check, since this proves the supply is healthy',
     ],
     correctAnswer: 0,
     explanation:
@@ -522,10 +522,10 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       'When measuring earth fault loop impedance (Zs) on a circuit, what does a high reading indicate?',
     options: [
-      'The insulation resistance of the circuit has fallen too low and the cable must be replaced before the circuit is re-energised',
+      'The insulation resistance of the circuit has fallen too low, and the cable must be replaced before the circuit is re-energised',
       'The earth fault path has high impedance, which may prevent the protective device from operating within the required disconnection time',
-      'The prospective short-circuit current at the distribution board is dangerously high and exceeds the breaking capacity of the device',
-      'The protective device is oversized for the circuit it protects and will trip too quickly whenever the normal load current is drawn',
+      'The prospective short-circuit current at the distribution board is dangerously high, and exceeds the breaking capacity of the device',
+      'The protective device is oversized for the circuit it protects, and will trip whenever the normal load current is drawn',
     ],
     correctAnswer: 1,
     explanation:
@@ -539,10 +539,10 @@ export const questionsPart2: StandardMockQuestion[] = [
     id: 70,
     question: 'What is the half-split method of fault finding?',
     options: [
-      'Testing every component in turn from the supply end towards the load end until the faulty item is finally reached and identified',
-      'Replacing each suspect component one at a time and re-energising the equipment after every change until it works correctly again',
+      'Testing every component in turn, from the supply end towards the load end, until the faulty item is finally reached',
+      'Replacing each suspect component one at a time, and re-energising the equipment after every change until it works correctly again without further fault',
       'Testing at the midpoint of a system or circuit to determine which half contains the fault, then repeating to narrow down the fault location',
-      'Dividing the circuit permanently into two halves, each protected by its own device, so that any fault can affect only one half',
+      'Dividing the circuit permanently into two halves, each protected by its own device, so that any fault can affect only one half of the installation',
     ],
     correctAnswer: 2,
     explanation:
@@ -557,9 +557,9 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       'After replacing a faulty component in a motor starter, what tests should be performed before returning the equipment to service?',
     options: [
-      'Visual inspection and functional test alone, since the replacement component was supplied new and already tested by the manufacturer',
-      'Visual inspection alone before energising and handing back to operations, with further testing left to the next planned maintenance visit',
-      'A continuity check on the replaced conductors alone, since the original fault has been removed and the starter is known to have worked before',
+      'Visual inspection and functional test alone, since the replacement component was supplied new and had already been tested and certified by the manufacturer before dispatch',
+      'Visual inspection alone before energising and handing back to operations, with all further testing left until the next planned maintenance visit',
+      'A continuity check on the replaced conductors alone, since the original fault has been removed and the starter is known to have worked correctly before',
       'Visual inspection, continuity check, insulation resistance test, functional test, and confirmation that all safety interlocks and protection are operative',
     ],
     correctAnswer: 3,
@@ -592,10 +592,10 @@ export const questionsPart2: StandardMockQuestion[] = [
     id: 73,
     question: 'What is the purpose of a loop impedance test on a final circuit?',
     options: [
-      'To confirm that the insulation resistance between the live conductors and earth is high enough to meet the minimum value specified in BS 7671',
+      'To confirm that the insulation resistance between the live conductors and earth is high enough to meet the minimum value given in Table 64 of BS 7671',
       'To verify that the earth fault loop impedance is low enough to ensure the protective device will operate within the required disconnection time specified in BS 7671',
-      'To measure the continuity of the circuit protective conductor from the distribution board out to the furthest point of the circuit and record it in ohms',
-      'To check that the residual current device protecting the circuit disconnects within the operating time specified in BS 7671 for its rated current',
+      'To measure the continuity of the circuit protective conductor from the distribution board out to the furthest point of the circuit and record the measured value in ohms',
+      'To check that the residual current device protecting the circuit disconnects within the operating time specified in BS 7671 for its rated residual operating current and type',
     ],
     correctAnswer: 1,
     explanation:
@@ -610,10 +610,10 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       'A three-phase motor is running but drawing significantly more current on one phase than the other two. What is the most likely cause?',
     options: [
-      'The motor is correctly loaded and the current difference is normal and expected',
-      'The supply frequency has drifted slightly above its nominal 50 Hz value',
+      'The motor is correctly loaded, and a current difference of this size is normal and expected in service',
+      'The supply frequency has drifted slightly above its nominal 50 Hz value, raising the current in one phase',
       'A single-phasing condition or winding fault on one phase, or a supply voltage imbalance',
-      'The motor is running unloaded and is drawing only its magnetising current',
+      'The motor is running unloaded, and is drawing only its no-load magnetising current on that phase',
     ],
     correctAnswer: 2,
     explanation:
@@ -629,9 +629,9 @@ export const questionsPart2: StandardMockQuestion[] = [
     id: 75,
     question: 'What is root cause analysis (RCA) in the context of maintenance engineering?',
     options: [
-      'A structured process for restoring a failed asset to service in the shortest possible time after a breakdown has been reported',
-      'A programme of routine inspections carried out at fixed calendar intervals in order to catch failures on the plant as they develop',
-      'A technique for ranking spare parts by their purchase cost so that the most expensive items are always held in the stores',
+      'A structured process for restoring a failed asset to service in the shortest possible time, once a breakdown has been reported to the maintenance team',
+      'A programme of routine inspections carried out at fixed calendar intervals, in order to catch failures on the plant as they develop into breakdowns',
+      'A technique for ranking spare parts by their purchase cost, so that the most expensive items are always the ones held in the stores and reordered first',
       'A systematic process for identifying the fundamental underlying cause of a failure, not just the immediate symptoms, to prevent recurrence',
     ],
     correctAnswer: 3,
@@ -647,9 +647,9 @@ export const questionsPart2: StandardMockQuestion[] = [
     question: "In reliability-centred maintenance (RCM), what is a 'failure mode'?",
     options: [
       'The specific way in which a component or system can fail to perform its required function',
-      'The total cost incurred by the business each time a particular asset fails',
-      'The average time taken by the maintenance team to repair a failed component',
-      'The probability that a given asset will operate without failure over a set period',
+      'The total cost incurred by the business each time a particular asset fails in normal service',
+      'The average time taken by the maintenance team to repair a failed component and return it to duty',
+      'The probability that a given asset will operate without any failure over a set period of time',
     ],
     correctAnswer: 0,
     explanation:
@@ -664,10 +664,10 @@ export const questionsPart2: StandardMockQuestion[] = [
     question:
       'A motor bearing failure keeps recurring every 6 months despite being replaced each time. Using the 5 Whys technique, what approach should be taken?',
     options: [
-      'Fit a higher-specification bearing at each replacement and accept that the six-monthly failures will continue until the motor is replaced',
+      'Fit a higher-specification bearing at each replacement, and accept that the six-monthly failures will continue until the motor is replaced',
       "Ask 'why' repeatedly to trace back from the bearing failure to identify the root cause, such as misalignment, incorrect lubrication, or shaft current damage",
-      'Shorten the replacement interval to three months so that the bearing is always changed out before it can reach the point of failure',
-      'Replace the complete motor at the next failure instead of the bearing, so that the new machine starts its life with a full set of new bearings fitted',
+      'Shorten the replacement interval to three months, so that the bearing is always changed out before it can reach the point of failure',
+      'Replace the complete motor at the next failure instead of the bearing, so that the new machine starts its life with a complete set of new bearings fitted',
     ],
     correctAnswer: 1,
     explanation:
@@ -681,10 +681,10 @@ export const questionsPart2: StandardMockQuestion[] = [
     id: 78,
     question: 'What does MTBF (Mean Time Between Failures) represent?',
     options: [
-      'The average time taken to repair equipment once it has failed',
-      'The total number of failures recorded against an asset over its working life',
+      'The average time taken to repair a piece of equipment once it has failed, expressed in hours per repair',
+      'The total number of failures recorded against an asset over its working life, whatever their cause',
       'The average time a piece of equipment operates between failures, used as a measure of reliability',
-      'The maximum time equipment can be left out of service before it must be replaced',
+      'The maximum time a piece of equipment can be left out of service, before it must be scrapped and replaced',
     ],
     correctAnswer: 2,
     explanation:
@@ -718,9 +718,9 @@ export const questionsPart2: StandardMockQuestion[] = [
       'A maintenance team is reviewing their strategy for a critical production line. Which of the following describes a reliability-centred maintenance (RCM) approach?',
     options: [
       'Selecting the most appropriate maintenance strategy for each failure mode based on its consequences and the ability to predict or prevent it',
-      'Applying the same fixed time-based replacement schedule uniformly to every asset on the line, whatever its duty or criticality',
-      'Running every item on the line through to failure and then repairing it as quickly as the available spares and labour allow',
-      'Choosing the maintenance tasks for each asset solely from its purchase cost, with the most expensive plant maintained most often',
+      'Applying the same fixed time-based replacement schedule uniformly to every asset on the production line whatever its duty or criticality may be',
+      'Running every item on the line through to failure and then repairing it as quickly as the available spares and labour will allow on the day of the breakdown',
+      'Choosing the maintenance tasks for each asset solely from its purchase cost with the most expensive items of plant maintained most often of all',
     ],
     correctAnswer: 0,
     explanation:

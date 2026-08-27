@@ -6,7 +6,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from '@/components/ui/sheet';
-import { Navigation, Pencil, Trash2 } from 'lucide-react';
+import { Navigation, Pencil, Send, Trash2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { navigateToAddress } from '@/utils/navigate-to-address';
 import { eyebrowCn, ghostButtonCn } from './calendarStyles';
@@ -20,6 +20,15 @@ interface CalendarEventDetailProps {
   event: CalendarEvent | null;
   onEdit: (event: CalendarEvent) => void;
   onDelete: (eventId: string) => void;
+  /**
+   * Send this booking to the customer.
+   *
+   * Confirmations were only ever offered in the moment a booking was created or
+   * moved. Anything that arrived another way — every booking taken through the
+   * public link, and every one where the prompt was dismissed — could never be
+   * confirmed at all without editing the time to trigger it.
+   */
+  onTellCustomer?: (event: CalendarEvent) => void;
 }
 
 /** Row of a detail list — label above, value below, separated by a rule. */
@@ -51,8 +60,14 @@ const CalendarEventDetail = ({
   event,
   onEdit,
   onDelete,
+  onTellCustomer,
 }: CalendarEventDetailProps) => {
   if (!event) return null;
+
+  // Synthetic events (tasks, projects, visits) never reach this sheet, so
+  // anything here with a customer on it is a real booking that can be sent.
+  const canTell = !!onTellCustomer && !!event.client_id;
+  const sentAt = event.confirmation_sent_at ? new Date(event.confirmation_sent_at) : null;
 
   /**
    * Open the address in whatever maps app the device has.
@@ -134,15 +149,46 @@ const CalendarEventDetail = ({
               </DetailRow>
             )}
 
+            {/* Whether the customer has actually been told.
+                
+                Only email can be known for certain — WhatsApp and a text hand
+                off to the phone and the app never learns what happened. Saying
+                nothing at all was worse: there was no way to tell a confirmed
+                booking from one the customer has never heard about. */}
+            {event.client_id && (
+              <DetailRow label="Customer told">
+                {sentAt ? (
+                  <span>
+                    Emailed {format(sentAt, 'd MMM')} at {format(sentAt, 'HH:mm')}
+                    {event.confirmation_sent_to ? ` · ${event.confirmation_sent_to}` : ''}
+                  </span>
+                ) : (
+                  <span>Not emailed yet</span>
+                )}
+              </DetailRow>
+            )}
+
             {event.sync_status === 'synced' && (
               <DetailRow label="Sync">Synced with Google Calendar</DetailRow>
             )}
           </div>
 
           <div
-            className="flex shrink-0 gap-2 border-t border-white/[0.10] px-4 pt-3 sm:px-5"
+            className="shrink-0 space-y-2 border-t border-white/[0.10] px-4 pt-3 sm:px-5"
             style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
           >
+            {canTell && (
+              <button
+                type="button"
+                onClick={() => onTellCustomer?.(event)}
+                className={cn(ghostButtonCn, 'h-12 w-full text-[14px]')}
+              >
+                <Send className="mr-2 inline h-4 w-4" />
+                {sentAt ? 'Send again' : 'Tell the customer'}
+              </button>
+            )}
+
+            <div className="flex gap-2">
             <button
               type="button"
               onClick={() => onDelete(event.id)}
@@ -162,6 +208,7 @@ const CalendarEventDetail = ({
               <Pencil className="mr-2 inline h-4 w-4" />
               Edit
             </button>
+            </div>
           </div>
         </div>
       </SheetContent>
